@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trees Radio Dev</title>
+	<link rel="stylesheet" type="text/css" href="include/css/bootstrap.min.css">
+	<link href="include/css/video-js.min.css" rel="stylesheet">
+	<link href="https://code.jquery.com/ui/1.11.4/themes/overcast/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="include/css/treesradio.css">
+
+</head>
+
+
+<body>
+	
+
+	<!-- START NAVBAR -->
+	<div id="tr-nav">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">TreesRadio</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="#home">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#submit">Submit</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#login" onclick="$('#loginModal').modal('show')">Login</a></li>
+						<li><a href="#register" onclick="$('#registerModal').modal('show')">Register</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+		<div id="nav-divider"></div>
+	</div>
+	<!-- END NAVBAR -->
+
+	<!-- START CONTENT -->
+	<div class="container-fluid tr-maxheight">
+		<div class="row tr-maxrowheight">
+			<div class="col-lg-2 col-md-2 hidden-sm hidden-xs col-trees-radio" id="votingtoplevel">
+				<h2 class="placeholder-txt">Voting</h2>
+			</div>
+			<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 col-trees-radio" id="videotoplevel">
+				<div id="vidcontainer">
+					<div class="bg-fill-l"></div>
+					<div class="bg-fill-r"></div>
+					<video id="player" class="video-js vjs-default-skin" width="1024" height="576">
+						<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+					</video>
+				</div>
+				 <div id="progress" class="section-divider"></div>
+				 <br>
+				 <div id="volslider"></div><br>
+				 <button id="syncbtn" onclick="SyncUp()">Sync</button>
+				<div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-trees-radio" id="chattoplevel">
+				<h2 class="placeholder-txt">Chat</h2>
+			</div>
+		</div>
+	</div>
+	<!-- END CONTENT -->
+
+
+	<!-- BEGIN MODALS -->
+	<!-- USER REGISTRATION MODAL -->
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="userRegistrationModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="userRegistrationModal">Register</h4>
+				</div>
+				<div class="modal-body">
+					<div class="input-group">
+						<span class="input-group-addon">@</span>
+						<input class="form-control" id="user-register-email" type="email" placeholder="email"></input>
+					</div>
+					&nbsp;<br>
+					<input class="form-control" id="user-regsiter-password" type="password" placeholder="password"></input><br>
+					&nbsp;<br>
+					<div class="g-recaptcha" data-sitekey="6Lc8jw4TAAAAAPssBr5nTyPMjHPJxqju77XJ1-F8"></div>
+					&nbsp;<br>		      
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" onclick="callRegisterUser()">Register</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- USER LOGIN MODAL -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="userLoginModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="userLoginModal">Login</h4>
+				</div>
+				<div class="modal-body">
+						<div class="input-group">
+							<span class="input-group-addon">@</span>
+							<input class="form-control" id="user-login-email" type="email" placeholder="email"></input>
+						</div>
+					&nbsp;<br>
+					<input class="form-control" id="user-login-password" type="password" placeholder="password"></input><br>
+					&nbsp;<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" onclick="callAuthUser()">Login</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- END MODALS -->
+
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https:////js.pusher.com/3.0/pusher.min.js"></script>
+	<script type="text/javascript" src="include/js/video.js"></script>
+	<script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
+	<script type="text/javascript" src="bower_components/videojs-youtube/dist/vjs.youtube.js"></script>
+	<script type="text/javascript" src="include/js/treesradio.js"></script>
+</body>
+
+
+
+</html>
