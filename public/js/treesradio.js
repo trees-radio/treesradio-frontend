@@ -7,9 +7,11 @@
 //
 //
 
+// Important Style Things
 $('#syncbtn').hide();
 
-
+// Register firebase module
+var app = angular.module("treesradio", ["firebase"]);
 
 // PRE-FIREBASE
 /*
