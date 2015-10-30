@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html ng-app>
 <head>
 	<title>Trees Radio Dev</title>
+	<!-- <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
 
 	<!-- CSS INCLUDES -->
 	<!-- Bootstrap Base (Modified BootSwatch Cyborg; Zach has Less files) -->
@@ -53,29 +54,55 @@
 	<!-- END NAVBAR -->
 
 	<!-- START CONTENT -->
-	<div class="container-fluid tr-maxheight">
-		<div class="row tr-maxrowheight">
-			<div class="col-lg-2 col-md-2 hidden-sm hidden-xs col-trees-radio" id="votingtoplevel">
+	<div class="container-fluid maxitbro">
+		<div class="row maxitbro">
+			<div class="col-lg-2 col-md-2 hidden-sm hidden-xs maxitbro" id="votingtoplevel">
 				<h2 class="placeholder-txt">Voting</h2>
 			</div>
-			<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 col-trees-radio" id="videotoplevel">
-				<div id="vidcontainer">
-					<div class="bg-fill-l"></div>
-					<div class="bg-fill-r"></div>
-					<video id="player" class="video-js vjs-default-skin" width="1024" height="576">
-						<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-					</video>
-				</div>
-				 <div id="progress" class="section-divider"></div>
-				 <br>
-				 <div id="volslider"></div><br>
-				 <button id="syncbtn" onclick="SyncUp()">Sync</button>
-				 
-				<div>
-				</div>
+			<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 maxitbro" id="videotoplevel">
+				
+					<div class="row maxitbro">
+						
+							<div id="vidcontainer" class="row">
+								<div class="bg-fill-l col-md-2 maxitbro"></div>
+								
+								<video id="player" class="video-js vjs-default-skin col-md-8" height="500">
+									<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+								</video>
+
+								<div class="bg-fill-r col-md-2 maxitbro"></div>
+							</div>
+						
+						
+							<div class="row maxitbro">
+								<div id="progress" class="section-divider"></div>
+								<br>
+								<div id="volslider"></div><br>
+								<button id="syncbtn" onclick="SyncUp()">Sync</button>
+
+								<div>
+								</div>
+							</div>
+						
+					</div>
+				
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-trees-radio" id="chattoplevel">
-				<h2 class="placeholder-txt">Chat</h2>
+			<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 maxitbro" id="chattoplevel">
+				<!-- <h2 class="placeholder-txt">Chat</h2> -->
+				<div id="chatcontainer">
+					<div id="chatscroll">
+						<ul id="chatbox">
+							<li class="chat-item">
+								<span class="chat-username">thrawn93</span><br>
+								<span class="chat-text">Lorem ipsum.</span>
+							</li>
+						</ul>
+					</div>
+					<div id="sendbox">
+						<input type="text" placeholder="enter to send" id="chatinput" class="form-control" onkeypress="fakeChat(event)"></input>
+						<!-- <button id="sendchat" class="btn">Send</button> -->
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

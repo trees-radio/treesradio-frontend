@@ -10,8 +10,36 @@
 // Important Style Things
 $('#syncbtn').hide();
 
+var windowHeight = $(window).height();
+$("body").css("height", windowHeight);
+
+
+$(window).resize(function() {
+	var windowHeight = $(window).height();
+
+	$("body").css("height", windowHeight);
+
+});
+
 // Register firebase module
 var app = angular.module("treesradio", ["firebase"]);
+
+
+
+// TEST CODE
+function fakeChat(e){
+	if(e.keyCode === 13){
+		var msgTosend = $("#chatinput").val();
+		$("#chatscroll").append("<li class='chat-item'><span class='chat-username'>thrawn93</span><br><span class='chat-text'>" + msgTosend + "</span></li>");
+		$("#chatinput").val("");
+		$("#chatscroll").animate({ scrollTop: $('#chatscroll').prop("scrollHeight")}, 1000);
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // PRE-FIREBASE
 /*
