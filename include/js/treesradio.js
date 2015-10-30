@@ -10,6 +10,9 @@
 $('#syncbtn').hide();
 
 
+
+// PRE-FIREBASE
+/*
 //==============================================================
 // Some Globals
 //==============================================================
@@ -123,5 +126,5 @@ function callAuthUser () {
 	console.log("password = " + passToAuth);
 	$('#loginModal').modal('hide');
 
-}
+}*/
 
