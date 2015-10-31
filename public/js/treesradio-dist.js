@@ -1,0 +1,2 @@
+function fakeChat(a){if(13===a.keyCode){var t=$("#chatinput").val();$("#chatscroll").append("<li class='chat-item'><span class='chat-username'>thrawn93</span><br><span class='chat-text'>"+t+"</span></li>"),$("#chatinput").val(""),$("#chatscroll").animate({scrollTop:$("#chatscroll").prop("scrollHeight")},1e3)}}$("#syncbtn").hide();var windowHeight=$(window).height();$("html").css("height",windowHeight),$(window).resize(function(){var a=$(window).height();$("html").css("height",a)});var app=angular.module("treesradio",["firebase"]);
+//# sourceMappingURL=treesradio-dist.js.map

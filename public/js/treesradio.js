@@ -11,13 +11,13 @@
 $('#syncbtn').hide();
 
 var windowHeight = $(window).height();
-$("body").css("height", windowHeight);
+$("html").css("height", windowHeight);
 
 
 $(window).resize(function() {
 	var windowHeight = $(window).height();
 
-	$("body").css("height", windowHeight);
+	$("html").css("height", windowHeight);
 
 });
 
