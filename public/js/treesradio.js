@@ -8,21 +8,24 @@
 //
 
 // Important Style Things
-$('#syncbtn').hide();
+$(document).ready(function() {
 
-var windowHeight = $(window).height();
-$("html").css("height", windowHeight);
+	$('#syncbtn').hide();
 
-
-$(window).resize(function() {
 	var windowHeight = $(window).height();
-
 	$("html").css("height", windowHeight);
 
-});
 
-// Register firebase module
-var app = angular.module("treesradio", ["firebase"]);
+	$(window).resize(function() {
+		var windowHeight = $(window).height();
+
+		$("html").css("height", windowHeight);
+
+	});
+
+}); 
+
+
 
 
 
@@ -35,6 +38,33 @@ function fakeChat(e){
 		$("#chatscroll").animate({ scrollTop: $('#chatscroll').prop("scrollHeight")}, 1000);
 	}
 }
+
+
+
+
+//==============================================================
+// USER REGISTRATION
+//==============================================================
+function callRegisterUser() {
+	var desiredemail = $("#user-register-email").val();
+	var desiredpass = $("#user-regsiter-password").val();
+	var desireduser = $("#user-register-username").val();
+	
+	
+	var ref = new Firebase("https://treesadio.firebaseio.com");
+	ref.createUser({
+		email: desiredemail,
+		password: desiredpass
+	}, function(error, userData) {
+		if (error) {
+			console.log("Error creating user:", error);
+		} else {
+			console.log("Successfully created user with uid:", userData.uid);
+		}
+	});
+}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
