@@ -2,6 +2,7 @@
 <html ng-app="treesRadio">
 <head>
 	<title>Trees Radio Dev</title>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 	<!-- <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
 
 	<!-- CSS INCLUDES -->
@@ -15,14 +16,12 @@
 		<link rel="stylesheet" type="text/css" href="css/treesradio.css">
 
 	<!-- JS INCLUDES -->
-		<!-- React JS -->
-		<script src="https://fb.me/react-0.13.3.min.js"></script>
-		<script src="https://fb.me/react-dom-0.13.3.min.js"></script>
-		<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+		<!-- AngularJS -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
 		<!-- Firebase -->
-		<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
-		<!-- ReactFire -->
-		<script src="https://cdn.firebase.com/libs/reactfire/0.5.1/reactfire.min.js"></script>
+		<script src="https://cdn.firebase.com/js/client/2.3.0/firebase.js"></script>
+		<!-- AngularFire -->
+		<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
 		<!-- jQuery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<!-- jQueryUI -->
@@ -39,7 +38,7 @@
 
 
 <body>
-	
+
 
 	<!-- START NAVBAR -->
 	<div id="tr-nav">
@@ -81,20 +80,20 @@
 				<h2 class="placeholder-txt">Voting</h2>
 			</div>
 			<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 maxitbro" id="videotoplevel">
-				
+
 					<div class="row maxitbro">
-						
+
 							<div id="vidcontainer" class="row">
 								<div class="bg-fill-l col-md-2 maxitbro"></div>
-								
+
 								<video id="player" class="video-js vjs-default-skin col-md-8" height="500">
 									<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
 								</video>
 
 								<div class="bg-fill-r col-md-2 maxitbro"></div>
 							</div>
-						
-						
+
+
 							<div class="row maxitbro">
 								<div id="progress" class="section-divider"></div>
 								<br>
@@ -104,9 +103,9 @@
 								<div>
 								</div>
 							</div>
-						
+
 					</div>
-				
+
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 maxitbro" id="chattoplevel">
 				<!-- <h2 class="placeholder-txt">Chat</h2> -->
@@ -192,7 +191,7 @@
 
 	<!-- END MODALS -->
 
-	
+
 </body>
 
 

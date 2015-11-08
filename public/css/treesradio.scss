@@ -1,19 +1,19 @@
 
 /*
 *	TREES RADIO PRE-MINIFICATION CSS
-*	
+*
 *	Bootswatch Bootstrap Theme: https://bootswatch.com/cyborg/
 *	Success and primary colors swapped.
-*	
+*
 *	Common colors:
 *		main: #77B300  (used for bootswatch primary color)
-*		
+*
 *
 */
 
 
 /*************************************************************
-* VARIABLES
+* VARIABLES (SASS FEATURE, IGNORE POST-COMPILE)
 **************************************************************/
 $trees-primary: #77B300;
 $trees-bg: #060606;
@@ -96,7 +96,7 @@ html,body {
 	// position: absolute;
 	// top: 0px;
 	// left: 0px;
-	// width:300px; 
+	// width:300px;
 	height: 100%;
 	background-image: url("../img/escheresque_ste.png");
 	background-repeat: repeat;
