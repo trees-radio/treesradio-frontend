@@ -42,16 +42,16 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************************!*\
-  !*** ./app/components/Main.js ***!
-  \********************************/
+/*!*********************!*\
+  !*** ./app/Main.js ***!
+  \*********************/
 /***/ function(module, exports, __webpack_require__) {
 
 	//MAIN JS
 	
 	'use strict';
 	
-	__webpack_require__(/*! ../../public/css/treesradio.scss */ 1);
+	__webpack_require__(/*! ../public/css/treesradio.scss */ 1);
 	
 	var React = __webpack_require__(/*! react */ 6);
 	
