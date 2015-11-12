@@ -1,7 +1,7 @@
 //MAIN JS
 
 var React = require('react');
-import '../public/css/treesradio.scss';
+import './Main.scss';
 
 var Main = React.createClass({
   render: function(){

@@ -51,7 +51,7 @@
 	
 	'use strict';
 	
-	__webpack_require__(/*! ../public/css/treesradio.scss */ 1);
+	__webpack_require__(/*! ./Main.scss */ 1);
 	
 	var React = __webpack_require__(/*! react */ 6);
 	
@@ -71,9 +71,9 @@
 
 /***/ },
 /* 1 */
-/*!************************************!*\
-  !*** ./public/css/treesradio.scss ***!
-  \************************************/
+/*!***********************!*\
+  !*** ./app/Main.scss ***!
+  \***********************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
@@ -20928,4 +20928,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=app.js.map

@@ -6,7 +6,7 @@ module.exports = {
   entry: path.resolve(__dirname, './app/Main.js'),
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: "bundle.js"
+    filename: "app.js"
   },
   module: {
     loaders: [
@@ -19,6 +19,11 @@ module.exports = {
         test: /\.scss$/,
         //loader: 'style!css!sass'
         loader: ExtractTextPlugin.extract("style", "css!sass")
+      },
+      {
+        test: /\.css$/,
+        //loader: 'style!css!sass'
+        loader: ExtractTextPlugin.extract("style", "css")
       },
       {
         test: /\.png$/,
