@@ -1,4 +1,9 @@
 #################
+## Bower (working already but let's make sure I guess?)
+#################
+bower_components
+
+#################
 ## SASS
 #################
 .sass-cache/
