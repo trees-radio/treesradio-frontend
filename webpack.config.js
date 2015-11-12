@@ -1,7 +1,11 @@
+var webpack = require("webpack");
+var path = require('path');
+
 module.exports = {
-  entry: "./app/components/Main.js",
+  entry: path.resolve(__dirname, './app/components/Main.js'),
   output: {
-    filename: "public/bundle.js"
+    path: path.resolve(__dirname, 'public'),
+    filename: "bundle.js"
   },
   module: {
     loaders: [
@@ -9,7 +13,20 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel'
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style!css!sass'
+      },
+      {
+        test: /\.png$/,
+        loader: 'url?limit=25000'
+      },
+      {
+        test: /\.jpg$/,
+        loader: 'file'
       }
     ]
-  }
+  },
+
 };
