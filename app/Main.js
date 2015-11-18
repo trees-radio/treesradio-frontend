@@ -2,11 +2,12 @@
 
 var React = require('react');
 import './Main.scss';
+import Nav from './components/Nav.js';
 
 var Main = React.createClass({
   render: function(){
     return (
-      <div>Hello Trees</div>
+      <Nav />
     )
   }
 });

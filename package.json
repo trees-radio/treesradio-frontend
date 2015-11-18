@@ -28,6 +28,7 @@
     "webpack": "*"
   },
   "dependencies": {
+    "lodash": "^3.10.1",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "reactfire": "^0.5.1",
