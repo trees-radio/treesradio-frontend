@@ -13,3 +13,4 @@ This repo comprises the front-end of Trees Radio. Backend served by Firebase.
   - Use `webpack -d` for sourcemaps
   - Use `webpack -p` before deploying to production
   - Use `--progress` and `--colors` for niceness
+* Use `npm start` for local dev server. Requires `webpack-dev-server`.
