@@ -1,8 +1,12 @@
 /**
  * Created by zachb on 2015-11-12.
+ *
+ * Navigation!
+ *
  */
 
 var React = require('react');
+import Userbit from './Userbit/Userbit.js';
 
 var Nav = React.createClass({
     render: function(){
@@ -27,10 +31,7 @@ var Nav = React.createClass({
                                 <li><a href="#about">About</a></li>
                                 <li><a href="#submit">Submit</a></li>
                             </ul>
-                            <ul className="nav navbar-nav navbar-right">
-                                <li><a href="#login" onclick="$('#loginModal').modal('show')">Login</a></li>
-                                <li><a href="#register" onclick="$('#registerModal').modal('show')">Register</a></li>
-                            </ul>
+                            <Userbit />
                         </div>{ /* .navbar-collapse */}
                     </div> { /* .container-fluid */}
                 </nav>
