@@ -9,6 +9,10 @@ var React = require('react');
 import Userbit from './Userbit/Userbit.js';
 
 var Nav = React.createClass({
+    propTypes: {
+        loginstate: React.PropTypes.bool.isRequired,
+        loginhandle: React.PropTypes.func.isRequired
+    },
     render: function(){
         return (
             <div id="tr-nav">
@@ -31,7 +35,9 @@ var Nav = React.createClass({
                                 <li><a href="#about">About</a></li>
                                 <li><a href="#submit">Submit</a></li>
                             </ul>
-                            <Userbit />
+                            <div className="nav navbar-nav navbar-right">
+                                <Userbit loginstate={this.props.loginstate} />
+                            </div>
                         </div>{ /* .navbar-collapse */}
                     </div> { /* .container-fluid */}
                 </nav>
