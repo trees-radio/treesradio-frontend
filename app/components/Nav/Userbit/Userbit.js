@@ -20,11 +20,14 @@ var Userbit = React.createClass({
         this.props.loginhandler(useremail, userpassword);
     },
     render: function(){
-
         if (this.props.loginstate){
             // User is logged in
+            var userlevel = "user";
+            if (this.props.logindata.admin === 1) { this.userlevel = "admin";}
+            if (this.props.logindata.moderator === 1) { this.userlevel = "mod";}
             return (
                 <div>
+                    <span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span>
                     <button className="btn btn-primary" onClick={this.props.logouthandler}>Logout</button>
                 </div>
             )
