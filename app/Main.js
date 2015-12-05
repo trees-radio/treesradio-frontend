@@ -26,23 +26,32 @@ var Main = React.createClass({
     },
     authHandler: function(error, authData){
         if (error) {
-            console.log("Auth error");
+            console.log("Auth error", error);
         } else {
-            console.log("Auth success");
+            console.log("Auth success", authData);
         }
+        
     },
     authDataCallback: function(authData){
         if (authData) {
-            console.log(authData.uid + "logged in");
+            console.log(authData.uid + " logged in");
+            this.setState({ loginstate: true });
         } else {
             console.log("Logged out");
+            this.setState({ loginstate: false });
         }
+
+    },
+    logoutUser: function(){
+        this.ref.unauth();
+        location.reload();
     },
     render: function(){
       return (
         <Nav
             loginstate={this.state.loginstate}
-            loginhandle={this.authenticateUser}
+            loginhandler={this.authenticateUser}
+            logouthandler={this.logoutUser}
         />
     )
   }

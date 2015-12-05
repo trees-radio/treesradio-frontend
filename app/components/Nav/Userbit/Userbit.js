@@ -11,26 +11,34 @@ var React = require('react');
 var Userbit = React.createClass({
     propTypes: {
         loginstate: React.PropTypes.bool.isRequired,
-        loginhandle: React.PropTypes.func.isRequired
+        loginhandler: React.PropTypes.func.isRequired,
+        logouthandler: React.PropTypes.func.isRequired
+    },
+    loginButton: function(){
+        let useremail = this.refs.email.getDOMNode().value;
+        let userpassword = this.refs.password.getDOMNode().value;
+        this.props.loginhandler(useremail, userpassword);
     },
     render: function(){
 
         if (this.props.loginstate){
             // User is logged in
             return (
-                <div></div>
+                <div>
+                    <button className="btn btn-primary" onClick={this.props.logouthandler}>Logout</button>
+                </div>
             )
          } else {
             // User is not logged in
             return (
-                <form className="form-inline">
+                <div className="form-inline">
                     <div className="form-group">
                             <input type="email" className="form-control" id="emailInput" ref="email" placeholder="Email" />
                             <input type="password" className="form-control" id="passInput" ref="password" placeholder="Password" />
                     </div>
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary" onClick={this.loginButton}>Login</button>
                     <button className="btn btn-default">Register</button>
-                </form>
+                </div>
             )
          }
     }
