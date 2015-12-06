@@ -15,9 +15,7 @@ import ReactFireMixin from 'reactfire';
 
 var Chat = React.createClass({
     componentDidMount: function(){
-        //var msgRef = new Firebase('https://treesradio.firebaseio.com/chat/messages');
-        //debugger;
-        //this.bindAsArray(msgRef, "messages");
+      
     },
     render: function(){
         return (
