@@ -145,16 +145,20 @@ body {
 // Chat
 //
 
-#chatcontainer {
+.chatcontainer {
+  width: 100%;
   height: 100%;
+  padding: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-#chatbox {
+.chatbox {
   list-style: none;
   padding-left: 0;
 }
 
-#chatscroll {
+.chatscroll {
   height: 88%;
   overflow: auto;
 	//overflow-y: hidden;
@@ -178,7 +182,7 @@ body {
 }
 
 .chat-username {
-  color: #800080;
+  color: green;
   font-size: small;
   font-weight: bold;
 }
@@ -188,11 +192,11 @@ body {
 }
 
 #sendbox {
-  padding-left: 5px;
-  padding-top: 5px;
-	//margin-bottom: 10px;
-	//bottom: 10px;
-	//width: 90%;
+    padding-left: 5px;
+    padding-top: 5px;
+  	margin-bottom: 10px;
+  	bottom: 10px;
+  	width: 90%;
 }
 
 #chatinput {
@@ -209,3 +213,158 @@ body {
 /*************************************************************
 * Michael's Section
 **************************************************************/
+#votingtoplevel {
+  height:100%;
+  padding: 5px;
+}
+
+#votingcontainer {
+  height: 100%;
+  width: 100%;
+  margin-top: 100%;
+}
+
+#votebox {
+  list-style: none;
+  padding-left: 0;
+}
+
+#votescroll {
+  overflow: auto;
+  height: 88%;
+}
+
+.vote-item {
+  color: black;
+  list-style-type: none;
+  list-style-position: inside;
+  border-color: gray;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin: 0;
+  padding-left: 25%;
+  padding-top: 20%;
+}
+
+.song-name {
+  font-size: small;
+  font-weight: bold;
+  color: Gray;
+}
+
+.vote-user {
+  font-size: small;
+  font-weight: bold;
+  color: Gray;
+}
+
+.vote-buttons {
+  padding-left: 20%;
+  padding-top: 20%;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  color: black;
+  list-style-type: none;
+  list-style-position: inside;
+  border-color: gray;
+}
+
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
+/*
+ * Styles copied from the Grid example to make grid rows & columns visible.
+ */
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+h4 {
+  margin-top: 25px;
+}
+.row {
+  margin-bottom: 20px;
+}
+.row .row {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+[class*="col-lg-2"] {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #eee;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid #ddd;
+  border: 1px solid rgba(86,61,124,.2);
+}
+/*
+ * Callout styles copied from Bootstrap's main docs.
+ */
+/* Common styles for all types */
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border-left: 3px solid #eee;
+}
+.bs-callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code {
+  background-color: #fff;
+  border-radius: 3px;
+}
+/* Variations */
+.bs-callout-danger {
+  background-color: #fdf7f7;
+  border-color: #d9534f;
+}
+.bs-callout-danger h4 {
+  color: #d9534f;
+}
+.bs-callout-warning {
+  background-color: #fcf8f2;
+  border-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+  color: #f0ad4e;
+}
+.bs-callout-info {
+  background-color: #f4f8fa;
+  border-color: #5bc0de;
+}
+.bs-callout-info h4 {
+  color: #5bc0de;
+}
+
+/* Userbit */
+
+#emailInput {
+  margin-top: 5px;
+}
+
+#passInput  {
+  margin-top: 5px;
+}
+
+#loginbutton{
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#regbutton {
+  margin-top: 5px;
+}

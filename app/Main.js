@@ -154,7 +154,7 @@ var Main = React.createClass({
 
             {/* Start Container */}
               <div className="container-fluid">
-                  <div className="row-fluid">
+                  <div className="row row-eq-height">
 
             {/* Voting Component */}
                       <div className="col-lg-2" id="votingtoplevel">
@@ -183,10 +183,10 @@ var Main = React.createClass({
 
             {/* Chat Component */}
                       <div className="col-lg-3" id="chattoplevel">
-                        <div id="chatcontainer" className="row"></div>
-                        <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
+                        <div id="chatcontainer" className="row">
+                              <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
                       </div>
-
+                    </div>
             {/* End Container */}
                   </div>
                 </div>
