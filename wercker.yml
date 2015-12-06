@@ -3,11 +3,6 @@ box: node
 build:
   # The steps that will be executed on build
   steps:
-    # A step that executes `npm install` command
-    - npm-install
-    # A step that executes `npm test` command
-    #- npm-test
-
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
     - script:
@@ -15,8 +10,22 @@ build:
         code: |
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
+
+    # A step that executes `npm install` command
+    - npm-install
+
+    # A step that executes `npm test` command
+    #- npm-test
+
     ###
+    #
     - script:
         name: npm run build-prod
         code: |
           npm run build-prod
+
+# Deployment definition
+deploy:
+  steps:
+    - maxon/npm-run@0.1.2:
+      script: deploy-dev-ci

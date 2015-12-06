@@ -11,7 +11,8 @@
     "build-dev": "npm run bolt-compile && webpack -d --progress --colors",
     "build-prod": "npm run bolt-compile && webpack -p --progress --colors",
     "deploy-dev": "npm run build-dev && firebase deploy",
-    "deploy-prod": "npm run build-prod && firebase deploy"
+    "deploy-prod": "npm run build-prod && firebase deploy",
+    "deploy-dev-ci": "npm run build-dev && npm i -g firebase-tools && firebase deploy --token -K1gUPDLDY1-gqa_SUNN|770c90dd52cb5901b9ab79afd13f5427"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.4",
     "firebase-bolt": "^0.5.0",
+    "firebase-tools": "^2.1.0",
     "node-sass": "^3.4.1",
     "sass-loader": "^3.1.1",
     "style-loader": "^0.13.0",
