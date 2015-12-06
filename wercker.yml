@@ -23,22 +23,21 @@ build:
         name: npm run build-prod
         code: |
           npm run build-prod
-
   after-steps:
     -wantedly/pretty-slack-notify:
       webhook_url: $SLACK_WEBHOOK_URL
 
-# Deployment definition
-deploy:
-  steps:
-    Dev:
-      - script:
-        name: deploy
-        code: |
-          npm run build-dev
-          npm i -g firebase-tools
-          firebase deploy --token $firebase
-
-  after-steps:
-    -wantedly/pretty-slack-notify:
-      webhook_url: $SLACK_WEBHOOK_URL
+# # Deployment definition
+# deploy:
+#   steps:
+#     Dev:
+#       - script:
+#         name: deploy
+#         code: |
+#           npm run build-dev
+#           npm i -g firebase-tools
+#           firebase deploy --token $firebase
+#
+#   after-steps:
+#     -wantedly/pretty-slack-notify:
+#       webhook_url: $SLACK_WEBHOOK_URL
