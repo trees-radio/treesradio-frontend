@@ -44,9 +44,13 @@ deploy:
 
   Dev:
     - script:
-        name: deploy
+        name: npm run builddev
         code: |
           npm run build-dev
+
+    - script:
+        name: firebase deploy
+        code: |
           npm i -g firebase-tools
           firebase deploy --token $firebase
 
