@@ -154,10 +154,10 @@ var Main = React.createClass({
 
             {/* Start Container */}
               <div className="container-fluid">
-                  <div className="row row-eq-height">
+                  <div className="row">
 
             {/* Voting Component */}
-                      <div className="col-lg-2" id="votingtoplevel">
+                      <div className="col-lg-2 no-float" id="votingtoplevel">
                         <h2 className="placeholder-txt">Voting Component</h2>
                           <div id="votingcontainer">
                             <div id="votescroll">
@@ -176,15 +176,15 @@ var Main = React.createClass({
                         </div>
 
             {/* Video Component */}
-                      <div className="col-lg-7" id="videotoplevel">
+                      <div className="col-lg-7 no-float" id="videotoplevel">
                         <h2 className="placeholder-txt">Video</h2>
                           <div id="vidcontainer" className="row"></div>
                       </div>
 
             {/* Chat Component */}
-                      <div className="col-lg-3" id="chattoplevel">
+                      <div className="col-lg-3 no-float" id="chattoplevel">
                         <div id="chatcontainer" className="row">
-                              <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
+                          <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
                       </div>
                     </div>
             {/* End Container */}
