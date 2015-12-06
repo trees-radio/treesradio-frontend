@@ -23,9 +23,28 @@ var Userbit = React.createClass({
     registerButton: function(){
       let desiredEml = this.refs.email.getDOMNode().value;
       let desiredPw = this.refs.password.getDOMNode().value;
-      this.props.handleRegister(desiredEml, desiredPw);
       this.refs.email.getDOMNode().value = '';
       this.refs.password.getDOMNode().value = '';
+      if (!desiredEml) {
+        sweetAlert({
+          "title": "Registration Error",
+          "text": "You did not provide an email address!",
+          "type": "error",
+          "timer": 3000
+        });
+      } else {
+        if (!desiredPw) {
+          sweetAlert({
+            "title": "Registration Error",
+            "text": "You did not provide a password!",
+            "type": "error",
+            "timer": 3000
+          });
+        } else {
+          this.props.handleRegister(desiredEml, desiredPw);
+        }
+      }
+
     },
     render: function(){
         if (this.props.loginstate){

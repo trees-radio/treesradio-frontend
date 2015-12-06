@@ -6,8 +6,11 @@ var Firebase = require('firebase');
 import ReactFireMixin from 'reactfire';
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
+import Video from './components/Video/Video.js';
+import Voting from './components/Voting/Voting.js';
 import './Main.scss';
 import sweetAlert from 'sweetalert';
+
 
 var Main = React.createClass({
     mixins: [ReactFireMixin],
@@ -121,8 +124,7 @@ var Main = React.createClass({
                 sweetAlert({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
-                  "type": "success",
-                  "timer": 3000
+                  "type": "success"
                 });
               }
             });
@@ -142,6 +144,11 @@ var Main = React.createClass({
       //debugger;
     },
     render: function(){
+
+      // ///////////
+      // MAIN RENDER
+      // ///////////
+
       return (
           <div>
               <Nav
@@ -155,9 +162,11 @@ var Main = React.createClass({
                   <div className="row">
                       <div className="col-lg-2 col-md-2 hidden-sm hidden-xs" id="votingtoplevel">
                           <h2 className="placeholder-txt">Voting</h2>
+                          <Voting />
                       </div>
                       <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="videotoplevel">
                           <h2 className="placeholder-txt">Video</h2>
+                          <Video />
                           {/*
                            <div class="row maxitbro">
 
