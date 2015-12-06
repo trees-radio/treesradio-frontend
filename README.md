@@ -1,5 +1,6 @@
 # Trees Radio Frontend
 This repo comprises the front-end of Trees Radio. Backend served by Firebase.
+[![wercker status](https://app.wercker.com/status/cc27bc23e90eea7d0c16679e8d382e5f/m "wercker status")](https://app.wercker.com/project/bykey/cc27bc23e90eea7d0c16679e8d382e5f)
 
 ## How to build:
 * Install NPM
