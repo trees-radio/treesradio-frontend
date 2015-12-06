@@ -13,12 +13,15 @@ var Main = React.createClass({
     getInitialState: function(){
       return {
           loginstate: false,
-          user: {}
+          user: {},
+          chat: []
       }
     },
     componentDidMount: function(){
         this.ref = new Firebase('https://treesradio.firebaseio.com');
         this.ref.onAuth(this.authDataCallback);
+        let chatRef = new Firebase('https://treesradio.firebaseio.com/chat/messages');
+        this.bindAsArray(chatRef, "chat");
     },
     authenticateUser: function(eml, pw){
         this.ref.authWithPassword({
@@ -95,7 +98,7 @@ var Main = React.createClass({
                           */}
                       </div>
                       <div className="col-lg-3 col-md-3 col-sm-5 col-xs-5" id="chattoplevel">
-                        <Chat logindata={this.state.user} />
+                        <Chat loginData={this.state.user} />
                       </div>
                   </div>
               </div>

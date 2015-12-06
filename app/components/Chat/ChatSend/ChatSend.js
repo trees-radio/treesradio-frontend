@@ -5,12 +5,19 @@
 var React = require('react');
 
 var ChatSend = React.createClass({
-    render: function(){
-        return (
-            <div id="sendbox">
-                <input type="text" placeholder="enter to send" id="chatinput" className="form-control" onKeyDown={this.props.send}> </input>
-                {/* <button id="sendchat" type="submit" class="btn">Send</button> */}
-            </div>
+  handleSubmit: function(){
+      //this.set(this.state.messages.concat([{msg, user}]));
+      let userSending = this.props.loginData.username;
+      let newMsg = this.refs.sendbox.getDOMNode().value;
+      this.refs.sendbox.getDOMNode.value = '';
+      this.props.sendMsg(newMsg, userSending);
+  },
+  render: function(){
+    return (
+      <div id="sendbox">
+        <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" />
+        <button id="sendchat" type="submit" className="btn" onClick={this.handleSubmit}>Send</button>
+      </div>
         )
 
     }

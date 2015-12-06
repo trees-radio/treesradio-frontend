@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --content-base public/"
+    "start": "webpack-dev-server --inline --content-base public/",
+    "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
+    "bolt-deploy": "npm run bolt-compile && firebase deploy:rules",
+    "build-dev": "npm run bolt-compile && webpack -d --progress --colors",
+    "build-prod": "npm run bolt-compile && webpack -p --progress --colors",
+    "deploy-dev": "npm run build-dev && firebase deploy",
+    "deploy-prod": "npm run build-prod && firebase deploy"
   },
   "repository": {
     "type": "git",

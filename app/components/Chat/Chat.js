@@ -10,7 +10,8 @@ var React = require('react');
 import ChatContent from './ChatContent/ChatContent.js';
 import ChatSend from './ChatSend/ChatSend.js';
 var Firebase = require('firebase');
-var ReactFireMixin = require('reactfire');
+//var ReactFireMixin = require('reactfire');
+import ReactFireMixin from 'reactfire';
 
 var Chat = React.createClass({
     mixins: [ReactFireMixin],
@@ -20,18 +21,19 @@ var Chat = React.createClass({
         }
     },
     componentDidMount: function(){
-        let msgRef = new Firebase('https://treesradio.firebaseio.com/chat/messages');
-        this.bindAsArray(msgRef, "messages");
+        //var msgRef = new Firebase('https://treesradio.firebaseio.com/chat/messages');
+        //debugger;
+        //this.bindAsArray(msgRef, "messages");
     },
-    sendMsg: function(msg, user){
-        this.msgRef.set(this.state.messages.concat([{msg, user}]));
+    handleSendMsg: function(newMsg, userSending) {
+      //this.state.messages.concat([newMsg, userSending]);
     },
     render: function(){
         return (
             <div>
                 <div id="chatcontainer">
                     <ChatContent msgs={this.state.messages} />
-                    <ChatSend send={this.sendMsg} />
+                    <ChatSend msgs={this.state.messages} sendMsg={this.handleSendMsg} loginData={this.props.loginData} />
                 </div>
             </div>
         )
