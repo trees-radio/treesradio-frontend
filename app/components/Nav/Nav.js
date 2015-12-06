@@ -30,7 +30,13 @@ var Nav = React.createClass({
                                 <li><a href="#submit">Submit</a></li>
                             </ul>
                             <div className="nav navbar-nav navbar-right">
-                                <Userbit loginstate={this.props.loginstate} loginhandler={this.props.loginhandler} logouthandler={this.props.logouthandler} logindata={this.props.logindata} />
+                                <Userbit
+                                  handleRegister={this.props.handleRegister}
+                                  loginstate={this.props.loginstate}
+                                  loginhandler={this.props.loginhandler}
+                                  logouthandler={this.props.logouthandler}
+                                  logindata={this.props.logindata}
+                                  />
                             </div>
                         </div>{ /* .navbar-collapse */}
                     </div> { /* .container-fluid */}

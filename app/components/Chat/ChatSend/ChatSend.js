@@ -3,14 +3,21 @@
  */
 
 var React = require('react');
+var Notify = require('react-notification-system');
 
 var ChatSend = React.createClass({
+
   handleSubmit: function(e){
       if (e.key === 'Enter') {
-        let userSending = this.props.loginData.username;
         let newMsg = this.refs.sendbox.getDOMNode().value;
-        this.refs.sendbox.getDOMNode().value = '';
-        this.props.sendMsg({msg: newMsg, user: userSending});
+        if (newMsg === '') {
+          console.log("User attempted to send an empty chat message");
+        } else {
+          let userSending = this.props.loginData.username;
+          this.refs.sendbox.getDOMNode().value = '';
+          this.props.sendMsg({msg: newMsg, user: userSending});
+        }
+
     }
   },
   render: function(){

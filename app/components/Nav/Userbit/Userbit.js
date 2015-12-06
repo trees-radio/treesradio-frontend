@@ -7,6 +7,7 @@
 
 
 var React = require('react');
+var sweetAlert = require('sweetalert');
 
 var Userbit = React.createClass({
     propTypes: {
@@ -18,6 +19,13 @@ var Userbit = React.createClass({
         let useremail = this.refs.email.getDOMNode().value;
         let userpassword = this.refs.password.getDOMNode().value;
         this.props.loginhandler(useremail, userpassword);
+    },
+    registerButton: function(){
+      let desiredEml = this.refs.email.getDOMNode().value;
+      let desiredPw = this.refs.password.getDOMNode().value;
+      this.props.handleRegister(desiredEml, desiredPw);
+      this.refs.email.getDOMNode().value = '';
+      this.refs.password.getDOMNode().value = '';
     },
     render: function(){
         if (this.props.loginstate){
@@ -40,7 +48,7 @@ var Userbit = React.createClass({
                             <input type="password" className="form-control" id="passInput" ref="password" placeholder="Password" />
                     </div>
                     <button className="btn btn-primary" onClick={this.loginButton}>Login</button>
-                    <button className="btn btn-default">Register</button>
+                    <button className="btn btn-default" onClick={this.registerButton}>Register</button>
                 </div>
             )
          }
@@ -48,4 +56,3 @@ var Userbit = React.createClass({
 });
 
 module.exports = Userbit;
-

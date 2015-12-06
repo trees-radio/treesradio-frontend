@@ -7,6 +7,7 @@ import ReactFireMixin from 'reactfire';
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
 import './Main.scss';
+import sweetAlert from 'sweetalert';
 
 var Main = React.createClass({
     mixins: [ReactFireMixin],
@@ -31,7 +32,13 @@ var Main = React.createClass({
     },
     authHandler: function(error, authData){
         if (error) {
-            console.log("Auth error", error);
+            console.log("Auth", error);
+            sweetAlert({
+              "title": "Login Error",
+              "text": error,
+              "type": "error",
+              timer: 3000
+            });
         } else {
             console.log("Auth success", authData);
         }
@@ -54,6 +61,78 @@ var Main = React.createClass({
         this.ref.unauth();
         location.reload();
     },
+    handleRegister: function(desiredEml, desiredPw){
+      sweetAlert({
+        title: "Register",
+        text: "Choose your username!",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "Username"
+      }, function(inputValue){
+        let desiredUn = inputValue;
+        let registeredNamesRef = new Firebase("https://treesradio.firebaseio.com/users/registeredNames");
+        registeredNamesRef.once("value", function(snapshot){
+          let unExists = snapshot.child(desiredUn).exists();
+          if (unExists) {
+            sweetAlert({
+              "title": "Registration Error",
+              "text": "Desired username '" + desiredUn + "' already exists!",
+              "type": "error",
+              "timer": 3000
+            });
+          } else {
+            let regRef = new Firebase("https://treesradio.firebaseio.com");
+            regRef.createUser({
+              email: desiredEml,
+              password: desiredPw
+            },function(error, userData){
+              if (error) {
+                switch (error.code) {
+                  case "EMAIL_TAKEN":
+                      sweetAlert({
+                        "title": "Registration Error",
+                        "text": "That email address is already registered: " + desiredEml,
+                        "type": "error",
+                        "timer": 3000
+                      });
+                    break;
+                  case "INVALID_EMAIL":
+                      sweetAlert({
+                        "title": "Registration Error",
+                        "text": "That is not a valid email address: " + desiredEml,
+                        "type": "error",
+                        "timer": 3000
+                      });
+                    break;
+                  default:
+                    sweetAlert({
+                      "title": "Registration Error",
+                      "text": "An unknown registration error occurred: " + error,
+                      "type": "error",
+                      "timer": 3000
+                    });
+                }
+              } else {
+                let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + userData.uid);
+                userRef.child('username').set(desiredUn);
+                registeredNamesRef.child(desiredUn).set(1);
+                sweetAlert({
+                  "title": "Registration Successful",
+                  "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
+                  "type": "success",
+                  "timer": 3000
+                });
+              }
+            });
+
+          }
+
+        })
+
+      });
+    },
     handleSendMsg: function(newMsgData) {
       //debugger;
       //this.state.chat.push([[newMsg]]);
@@ -70,6 +149,7 @@ var Main = React.createClass({
                 loginhandler={this.authenticateUser}
                 logouthandler={this.logoutUser}
                 logindata={this.state.user}
+                handleRegister={this.handleRegister}
               />
               <div className="container-fluid">
                   <div className="row">
