@@ -166,6 +166,7 @@ var Main = React.createClass({
             {/* Voting Component */}
                       <div className="col-lg-2 no-float" id="votingtoplevel">
                         <h2 className="placeholder-txt">Voting Component</h2>
+                        <Voting />
                           <div id="votingcontainer">
                             <div id="votescroll">
                               <ul id="votebox"></ul>
@@ -185,13 +186,6 @@ var Main = React.createClass({
                       <div className="col-lg-7 no-float" id="videotoplevel">
                         <h2 className="placeholder-txt">Video</h2>
                           <div id="vidcontainer" className="row"></div>
-=======
-                      <div className="col-lg-2 col-md-2 hidden-sm hidden-xs" id="votingtoplevel">
-                          <h2 className="placeholder-txt">Voting</h2>
-                          <Voting />
-                      </div>
-                      <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="videotoplevel">
-                          <h2 className="placeholder-txt">Video</h2>
                           <Video />
                           {/*
                            <div class="row maxitbro">
@@ -230,7 +224,6 @@ var Main = React.createClass({
             {/* End Container */}
                   </div>
                 </div>
-            </div>
       </div>
     )
   }
