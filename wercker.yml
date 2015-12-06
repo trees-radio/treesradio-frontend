@@ -23,9 +23,9 @@ build:
         name: npm run build-prod
         code: |
           npm run build-prod
-  after-steps:
-    -wantedly/pretty-slack-notify:
-      webhook_url: $SLACK_WEBHOOK_URL
+  # after-steps:
+  #   -wantedly/pretty-slack-notify:
+  #     webhook_url: $SLACK_WEBHOOK_URL
 
 # # Deployment definition
 # deploy:
