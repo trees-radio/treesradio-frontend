@@ -215,7 +215,7 @@ body {
 
 /*************************************************************
 * Michael's Section
-*************************************************************
+*************************************************************/
 #votingtoplevel {
   height:100%;
   padding: 5px;
@@ -226,7 +226,7 @@ body {
   width: 100%;
   margin-top: 100%;
 }
-*/
+
 
 #votebox {
   list-style: none;
@@ -337,7 +337,6 @@ span#username {
 }
 
 .col-lg-2.no-float, .col-lg-7.no-float, .col-lg-3.no-float {
-    float: none; /* thanks baxabbit */
 }
 .col-lg-2
 {
@@ -346,7 +345,6 @@ span#username {
 .col-lg-7
 {
     display: table-cell;
-  	float: none;
 }
 .col-lg-3
 {
