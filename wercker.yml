@@ -1,3 +1,7 @@
+#
+# Config file for Wercker Continuous Integration
+#
+
 box: node
 # Build definition
 build:
