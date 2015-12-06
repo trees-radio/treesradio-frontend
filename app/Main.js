@@ -124,7 +124,6 @@ var Main = React.createClass({
                 sweetAlert({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
-                  "type": "success",
                   "type": "success"
                 });
               }
