@@ -162,7 +162,7 @@ var Main = React.createClass({
             {/* Start Container */}
               <div className="container-fluid">
                   <div className="row">
-<<<<<<< HEAD
+
             {/* Voting Component */}
                       <div className="col-lg-2 no-float" id="votingtoplevel">
                         <h2 className="placeholder-txt">Voting Component</h2>
@@ -219,7 +219,7 @@ var Main = React.createClass({
 
                            </div>
                           */}
->>>>>>> refs/remotes/origin/master
+
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
@@ -230,7 +230,7 @@ var Main = React.createClass({
             {/* End Container */}
                   </div>
                 </div>
-
+            </div>
       </div>
     )
   }
