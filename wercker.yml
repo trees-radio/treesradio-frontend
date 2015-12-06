@@ -31,14 +31,20 @@ build:
 
 # Deployment definition
 deploy:
+
   steps:
-    Dev:
-      - script:
-        name: deploy
-        code: |
-          npm run build-dev
-          npm i -g firebase-tools
-          firebase deploy --token $firebase
+    - script:
+      name: no deploy selected
+      code: |
+        echo "no deploy selected"
+
+  Dev:
+    - script:
+      name: deploy
+      code: |
+        npm run build-dev
+        npm i -g firebase-tools
+        firebase deploy --token $firebase
 
   after-steps:
     - wercker/slack-notifier:
