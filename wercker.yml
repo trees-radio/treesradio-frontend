@@ -25,20 +25,22 @@ build:
           npm run build-prod
 
   after-steps:
-    - wantedly/pretty-slack-notify@0.2.13:
-      webhook_url: $SLACK_WEBHOOK_URL2
+    - wercker/slack-notifier:
+      url: $SLACK_WEBHOOK_URL
+      username: wercker
 
-# # Deployment definition
-# deploy:
-#   steps:
-#     Dev:
-#       - script:
-#         name: deploy
-#         code: |
-#           npm run build-dev
-#           npm i -g firebase-tools
-#           firebase deploy --token $firebase
-#
-#   after-steps:
-#     -wantedly/pretty-slack-notify:
-#       webhook_url: $SLACK_WEBHOOK_URL
+# Deployment definition
+deploy:
+  steps:
+    Dev:
+      - script:
+        name: deploy
+        code: |
+          npm run build-dev
+          npm i -g firebase-tools
+          firebase deploy --token $firebase
+
+  after-steps:
+    - wercker/slack-notifier:
+      url: $SLACK_WEBHOOK_URL
+      username: wercker
