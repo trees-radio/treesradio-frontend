@@ -2,10 +2,11 @@
 
 var React = require('react');
 var Firebase = require('firebase');
-var ReactFireMixin = require('reactfire');
-import './Main.scss';
+//var ReactFireMixin = require('reactfire');
+import ReactFireMixin from 'reactfire';
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
+import './Main.scss';
 
 var Main = React.createClass({
     mixins: [ReactFireMixin],
