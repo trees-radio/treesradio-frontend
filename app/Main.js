@@ -151,61 +151,46 @@ var Main = React.createClass({
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
               />
+
+            {/* Start Container */}
               <div className="container-fluid">
                   <div className="row-fluid">
+
+            {/* Voting Component */}
                       <div className="col-lg-2" id="votingtoplevel">
                         <h2 className="placeholder-txt">Voting Component</h2>
                           <div id="votingcontainer">
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-                                  <button id="upvote-button" class="btn btn-primary"></button><br/>
-                                  <button id ="downvote-button" class="btn btn-danger"></button>
+                                  <button id="upvote-button" className="btn btn-primary"></button><br/>
+                                  <button id ="downvote-button" className="btn btn-danger"></button>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
                                   <span className="vote-user">Submitted by: GryphonEDM</span>
+                                </div>
+                              </div>
                             </div>
+                          </div>
+                        </div>
 
-                          <h2 className="placeholder-txt">Voting</h2>
-                      </div>
+            {/* Video Component */}
                       <div className="col-lg-7" id="videotoplevel">
-                          <h2 className="placeholder-txt">Video</h2>
-                          {/*
-                           <div class="row maxitbro">
-
-                           <div id="vidcontainer" class="row">
-                           <div class="bg-fill-l col-md-2 maxitbro"></div>
-
-                           <video id="player" class="video-js vjs-default-skin col-md-8" height="500">
-                           <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-                           </video>
-
-                           <div class="bg-fill-r col-md-2 maxitbro"></div>
-                           </div>
-
-
-                           <div class="row maxitbro">
-                           <div id="progress" class="section-divider"></div>
-                           <br>
-                           <div id="volslider"></div><br>
-                           <button id="syncbtn" onclick="SyncUp()">Sync</button>
-
-                           <div>
-                           </div>
-                           </div>
-
-                           </div>
-                          */}
+                        <h2 className="placeholder-txt">Video</h2>
+                          <div id="vidcontainer" className="row"></div>
                       </div>
-                      <div className="col-lg-3 col-md-3 col-sm-5 col-xs-5" id="chattoplevel">
+
+            {/* Chat Component */}
+                      <div className="col-lg-3" id="chattoplevel">
+                        <div id="chatcontainer" className="row"></div>
                         <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
                       </div>
-                  </div>
 
+            {/* End Container */}
+                  </div>
+                </div>
               </div>
-          </div>
-        </div>  
     )
   }
 });
