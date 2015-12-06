@@ -192,11 +192,19 @@ body {
 }
 
 #sendbox {
-    padding-left: 5px;
-    padding-top: 5px;
-  	margin-bottom: 10px;
-  	bottom: 10px;
-  	width: 90%;
+padding-left: 5px;
+padding-top: 5px;
+}
+
+.sendbox input[type="text"] {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+.sendbox input[type="text"]:focus,
+.sendbox input[type="text"].focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
 }
 
 #chatinput {
