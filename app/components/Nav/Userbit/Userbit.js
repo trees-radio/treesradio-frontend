@@ -36,7 +36,7 @@ var Userbit = React.createClass({
             return (
                 <div>
                     <span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span>
-                    <button className="btn btn-primary" onClick={this.props.logouthandler}>Logout</button>
+                    <button className="btn btn-primary" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
                 </div>
             )
          } else {

@@ -352,19 +352,32 @@ h4 {
 /* Userbit */
 
 #emailInput {
-  margin-top: 5px;
+  margin-top: 7px;
+  margin-right: 5px;
 }
 
 #passInput  {
-  margin-top: 5px;
+  margin-top: 7px;
 }
 
 #loginbutton{
-  margin-top: 5px;
+  margin-top: 7px;
   margin-left: 5px;
   margin-right: 5px;
 }
 
 #regbutton {
-  margin-top: 5px;
+  margin-top: 7px;
+}
+
+#logoutbutton {
+  margin-top: 7px;
+  margin-left: 5px;
+}
+
+span#username {
+  position: relative;
+  right: 10px;
+  top: 5px;
+  color: green;
 }
