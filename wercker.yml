@@ -26,6 +26,7 @@ build:
 
 # Deployment definition
 deploy:
-  steps:
-    - maxon/npm-run@0.1.2:
-      script: deploy-dev-ci
+  Dev:
+    - script:
+      name: deploy
+      code: npm run build-dev && npm i -g firebase-tools && firebase deploy --token $firebase
