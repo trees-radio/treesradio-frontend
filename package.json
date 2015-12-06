@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --content-base public/",
+    "start": "webpack-dev-server --inline --colors --content-base public/",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase deploy:rules",
     "build-dev": "npm run bolt-compile && webpack -d --progress --colors",
@@ -35,7 +35,7 @@
     "node-sass": "^3.4.1",
     "sass-loader": "^3.1.1",
     "style-loader": "^0.13.0",
-    "webpack": "*"
+    "webpack": "^1.12.9"
   },
   "dependencies": {
     "jquery": "^2.1.4",

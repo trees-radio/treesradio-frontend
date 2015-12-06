@@ -54,6 +54,14 @@ var Main = React.createClass({
         this.ref.unauth();
         location.reload();
     },
+    handleSendMsg: function(newMsgData) {
+      //debugger;
+      //this.state.chat.push([[newMsg]]);
+      //console.log(this.state.chat);
+      //this.state.chat.push([newMsgData]);
+      this.firebaseRefs["chat"].push(newMsgData);
+      //debugger;
+    },
     render: function(){
       return (
           <div>
@@ -98,7 +106,7 @@ var Main = React.createClass({
                           */}
                       </div>
                       <div className="col-lg-3 col-md-3 col-sm-5 col-xs-5" id="chattoplevel">
-                        <Chat loginData={this.state.user} />
+                        <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
                       </div>
                   </div>
               </div>
