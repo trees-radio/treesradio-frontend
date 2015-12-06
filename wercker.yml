@@ -35,9 +35,9 @@ deploy:
       - script:
         name: deploy
         code: |
-        npm run build-dev
-        npm i -g firebase-tools
-        firebase deploy --token $firebase
+          npm run build-dev
+          npm i -g firebase-tools
+          firebase deploy --token $firebase
 
   after-steps:
     -wantedly/pretty-slack-notify:
