@@ -55,7 +55,7 @@ var Userbit = React.createClass({
             return (
                 <div>
                     <span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span>
-                    <button className="btn btn-primary" onClick={this.props.logouthandler}>Logout</button>
+                    <button className="btn btn-primary" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
                 </div>
             )
          } else {
@@ -66,8 +66,8 @@ var Userbit = React.createClass({
                             <input type="email" className="form-control" id="emailInput" ref="email" placeholder="Email" />
                             <input type="password" className="form-control" id="passInput" ref="password" placeholder="Password" />
                     </div>
-                    <button className="btn btn-primary" onClick={this.loginButton}>Login</button>
-                    <button className="btn btn-default" onClick={this.registerButton}>Register</button>
+                    <button className="btn btn-primary" id="loginbutton" onClick={this.loginButton}>Login</button>
+                    <button className="btn btn-default" id="regbutton" onClick={this.registerButton}>Register</button>
                 </div>
             )
          }
