@@ -1,43 +1,45 @@
-
-/*
-*	TREES RADIO PRE-MINIFICATION SASS
-*
-*	Bootswatch Bootstrap Theme: https://bootswatch.com/cyborg/
-*	Success and primary colors swapped.
-*
-*	Common colors:
-*		main: #77B300  (used for bootswatch primary color)
-*
-*
-*/
+//	TREES RADIO PRE-MINIFICATION SASS
+//
+//	Bootswatch Bootstrap Theme: https://bootswatch.com/cyborg/
+//	Success and primary colors swapped.
+//
+//	Common colors:
+//		main: #77b300  (used for bootswatch primary color)
+//
 
 
-/*************************************************************
-* VARIABLES (SASS FEATURE, IGNORE POST-COMPILE)
-**************************************************************/
-$trees-primary: #77B300;
+
+//
+// VARIABLES (SASS FEATURE, IGNORE POST-COMPILE)
+//
+$trees-primary: #77b300;
 $trees-bg: #060606;
+$videotoplevel-bg: #171717;
+$votingtoplevel-bg: #ffa500;
+$chattoplevel-bg: #e9eef0;
+$chat-item-border: #808080;
+$chat-item-color: #000;
 
 
 
-/*************************************************************
-* SCAFFOLDING
-**************************************************************/
+//
+// SCAFFOLDING
+//
 
-/* @-ms-viewport{
-  width: device-width;
-  height: device-height;
-} */
+// @-ms-viewport{
+//   width: device-width;
+//   height: device-height;
+// }
 
-html,body {
-	/* height of all parent elems of .col-trees-radio must be 100% to make those cols 100% */
-	height: 100%;
-	overflow-y: hidden;
+html,
+body {
+// height of all parent elems of .col-trees-radio must be 100% to make those cols 100% */
+  height: 100%;
+  overflow-y: hidden;
 }
 
 .navbar {
-	margin-bottom: 1px;
-
+  margin-bottom: 1px;
 }
 
 #tr-nav {
@@ -45,47 +47,47 @@ html,body {
 }
 
 #nav-divider {
-	height: 5px;
-	background-color: $trees-primary;
+  background-color: $trees-primary;
+  height: 5px;
 }
 
 .maxitbro {
-	height: 100%;
+  height: 100%;
 	//padding-left: 0;
 	//padding-right: 0;
 }
 
 #votingtoplevel {
-	background-color: orange;
-	z-index: 1;
+  background-color: $votingtoplevel-bg;
+  z-index: 1;
 }
 
 #videotoplevel {
-	/*background-color: red;*/
-	background-color: #171717;
+	// background-color: red;
+  background-color: $videotoplevel-bg;
 }
 
 #chattoplevel {
-	background-color: #e9eef0;
+  background-color: $chattoplevel-bg;
 }
 
 .placeholder-txt {
-	text-align: center;
-	vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 
 
-/*************************************************************
-* Video Section
-**************************************************************/
+//
+// Video Section
+//
 
 #player {
-	margin-left: auto;
-	margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #vidcontainer {
-	height: 500px;
+  height: 500px;
 	//width: 100%;
 	//margin-left: auto;
 	//margin-right: auto;
@@ -97,76 +99,78 @@ html,body {
 	// top: 0px;
 	// left: 0px;
 	// width:300px;
-	height: 100%;
-	background-image: url("img/escheresque_ste.png");
-	background-repeat: repeat;
+  background-image: url('img/escheresque_ste.png');
+  background-repeat: repeat;
+  height: 100%;
 }
 
 .bg-fill-r {
 	// position: absolute;
 	// top: 0px;
 	// right: 0px;
-	// width: 300px;
-	height: 100%;
-	background-image: url("img/escheresque_ste.png");
-	background-repeat: repeat;
+  // width: 300px;
+  background-image: url('img/escheresque_ste.png');
+  background-repeat: repeat;
+  height: 100%;
 }
 
 .section-divider {
-	width: 100%;
-	height: 5px;
-	background-color: $trees-primary;
+  background-color: $trees-primary;
+  height: 5px;
+  width: 100%;
 }
 
 #volslider {
-	width: 20%;
-	height: 10px;
-}
+  height: 10px;
+  width: 20%;
+  }
+
 .ui-slider-range {
-	background: $trees-primary;
+  background: $trees-primary;
 }
+
 .ui-slider-handle {
-	border-color: $trees-primary;
+  border-color: $trees-primary;
 }
 
 
 
-/* KEEP NEAR BOTTOM */
-/*.video-js {padding-top: 56.25%}
-.vjs-fullscreen {padding-top: 0px}*/
+// /* KEEP NEAR BOTTOM */
+// .video-js {padding-top: 56.25%}
+// .vjs-fullscreen {padding-top: 0px}
 
 
 
-/*************************************************************
-* Chat
-**************************************************************/
+//
+// Chat
+//
 
 #chatcontainer {
-	height: 100%;
+  height: 100%;
 }
 
 #chatbox {
-	list-style: none;
-	padding-left: 0;
+  list-style: none;
+  padding-left: 0;
 }
 
 #chatscroll {
-	overflow: auto;
+  height: 88%;
+  overflow: auto;
 	//overflow-y: hidden;
-	height: 88%;
 }
 
 .chat-item {
-	color: black;
-	list-style-type: none;
-	list-style-position: inside;
-	border-color: gray;
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
-	margin: 0;
-	padding-left: 5px;
-	padding-bottom: 3px;
-	padding-top: 3px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: $chat-item-border;
+  color: $chat-item-color;
+  list-style-position: inside;
+  list-style-type: none;
+  margin: 0;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-top: 3px;
 }
 
 .chat-text {
@@ -174,30 +178,30 @@ html,body {
 }
 
 .chat-username {
-	font-size: small;
-	font-weight: bold;
-	color: purple;
+  color: #800080;
+  font-size: small;
+  font-weight: bold;
 }
 
 ::-webkit-scrollbar {
-		display: none;
+  display: none;
 }
 
 #sendbox {
-	padding-left: 5px;
-	padding-top: 5px;
+  padding-left: 5px;
+  padding-top: 5px;
 	//margin-bottom: 10px;
 	//bottom: 10px;
 	//width: 90%;
 }
 
 #chatinput {
-	width: 100%;
+  width: 100%;
 	//margin-bottom: 20px;
 }
 
 #sendchat {
-	width: 10%;
-	padding-left: 5px;
+  padding-left: 5px;
+  width: 10%;
 	//margin-bottom: 20px;
 }
