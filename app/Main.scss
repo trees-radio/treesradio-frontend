@@ -60,6 +60,7 @@ body {
 #votingtoplevel {
   background-color: $votingtoplevel-bg;
   z-index: 1;
+  height: 100%;
 }
 
 #videotoplevel {
@@ -87,11 +88,11 @@ body {
 }
 
 #vidcontainer {
-  height: 500px;
-	//width: 100%;
-	//margin-left: auto;
-	//margin-right: auto;
-	//overflow: auto;
+  height: 100%;
+  width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: auto;
 }
 
 .bg-fill-l {
@@ -147,6 +148,7 @@ body {
 
 #chatcontainer {
   height: 100%;
+  width: 100%;
 }
 
 #chatbox {

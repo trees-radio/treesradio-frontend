@@ -152,11 +152,24 @@ var Main = React.createClass({
                 handleRegister={this.handleRegister}
               />
               <div className="container-fluid">
-                  <div className="row">
-                      <div className="col-lg-2 col-md-2 hidden-sm hidden-xs" id="votingtoplevel">
+                  <div className="row-fluid">
+                      <div className="col-lg-2" id="votingtoplevel">
+                        <h2 className="placeholder-txt">Voting Component</h2>
+                          <div id="votingcontainer">
+                            <div id="votescroll">
+                              <ul id="votebox"></ul>
+                                <div className="vote-buttons">
+                                  <button id="upvote-button" class="btn btn-primary"></button><br/>
+                                  <button id ="downvote-button" class="btn btn-danger"></button>
+                                <div className="vote-item">
+                                  <span className="songthumbnail"></span>
+                                  <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
+                                  <span className="vote-user">Submitted by: GryphonEDM</span>
+                            </div>
+
                           <h2 className="placeholder-txt">Voting</h2>
                       </div>
-                      <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="videotoplevel">
+                      <div className="col-lg-7" id="videotoplevel">
                           <h2 className="placeholder-txt">Video</h2>
                           {/*
                            <div class="row maxitbro">
@@ -189,8 +202,10 @@ var Main = React.createClass({
                         <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
                       </div>
                   </div>
+
               </div>
           </div>
+        </div>  
     )
   }
 });
