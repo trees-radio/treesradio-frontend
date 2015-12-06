@@ -158,8 +158,34 @@ var Main = React.createClass({
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
               />
+
+            {/* Start Container */}
               <div className="container-fluid">
                   <div className="row">
+<<<<<<< HEAD
+            {/* Voting Component */}
+                      <div className="col-lg-2 no-float" id="votingtoplevel">
+                        <h2 className="placeholder-txt">Voting Component</h2>
+                          <div id="votingcontainer">
+                            <div id="votescroll">
+                              <ul id="votebox"></ul>
+                                <div className="vote-buttons">
+                                  <button id="upvote-button" className="btn btn-primary"></button><br/>
+                                  <button id ="downvote-button" className="btn btn-danger"></button>
+                                <div className="vote-item">
+                                  <span className="songthumbnail"></span>
+                                  <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
+                                  <span className="vote-user">Submitted by: GryphonEDM</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+            {/* Video Component */}
+                      <div className="col-lg-7 no-float" id="videotoplevel">
+                        <h2 className="placeholder-txt">Video</h2>
+                          <div id="vidcontainer" className="row"></div>
+=======
                       <div className="col-lg-2 col-md-2 hidden-sm hidden-xs" id="votingtoplevel">
                           <h2 className="placeholder-txt">Voting</h2>
                           <Voting />
@@ -193,13 +219,19 @@ var Main = React.createClass({
 
                            </div>
                           */}
+>>>>>>> refs/remotes/origin/master
                       </div>
-                      <div className="col-lg-3 col-md-3 col-sm-5 col-xs-5" id="chattoplevel">
-                        <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
+            {/* Chat Component */}
+                      <div className="col-lg-3 no-float" id="chattoplevel">
+                        <div id="chatcontainer" className="row">
+                          <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
                       </div>
+                    </div>
+            {/* End Container */}
                   </div>
-              </div>
-          </div>
+                </div>
+
+      </div>
     )
   }
 });

@@ -60,6 +60,7 @@ body {
 #votingtoplevel {
   background-color: $votingtoplevel-bg;
   z-index: 1;
+  height: 100%;
 }
 
 #videotoplevel {
@@ -86,13 +87,14 @@ body {
   margin-right: auto;
 }
 
+/*
 #vidcontainer {
-  height: 500px;
-	//width: 100%;
-	//margin-left: auto;
-	//margin-right: auto;
-	//overflow: auto;
+  width: 100%;
+  height: 100%;
+  margin-top: 100%;
+  margin-left: 16%;
 }
+*/
 
 .bg-fill-l {
 	// position: absolute;
@@ -145,9 +147,12 @@ body {
 // Chat
 //
 
+/*
 #chatcontainer {
+  width: 100%;
   height: 100%;
 }
+*/
 
 #chatbox {
   list-style: none;
@@ -155,9 +160,9 @@ body {
 }
 
 #chatscroll {
-  height: 88%;
+  height: 23.25%;
   overflow: auto;
-	//overflow-y: hidden;
+	overflow-y: hidden;
 }
 
 .chat-item {
@@ -178,7 +183,7 @@ body {
 }
 
 .chat-username {
-  color: #800080;
+  color: green;
   font-size: small;
   font-weight: bold;
 }
@@ -190,9 +195,11 @@ body {
 #sendbox {
   padding-left: 5px;
   padding-top: 5px;
-	//margin-bottom: 10px;
-	//bottom: 10px;
-	//width: 90%;
+  position: absolute;
+  width: 100%;
+  top: 23.25%;
+  left: 0;
+  right: 5px;
 }
 
 #chatinput {
@@ -204,4 +211,142 @@ body {
   padding-left: 5px;
   width: 10%;
 	//margin-bottom: 20px;
+}
+
+/*************************************************************
+* Michael's Section
+*************************************************************/
+#votingtoplevel {
+  height:100%;
+  padding: 5px;
+}
+
+#votingcontainer {
+  height: 100%;
+  width: 100%;
+  margin-top: 100%;
+}
+
+
+#votebox {
+  list-style: none;
+  padding-left: 0;
+}
+
+#votescroll {
+  overflow: auto;
+  height: 88%;
+}
+
+.vote-item {
+  color: black;
+  list-style-type: none;
+  list-style-position: inside;
+  border-color: gray;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin: 0;
+  padding-left: 25%;
+  padding-top: 20%;
+}
+
+.song-name {
+  font-size: small;
+  font-weight: bold;
+  color: Gray;
+}
+
+.vote-user {
+  font-size: small;
+  font-weight: bold;
+  color: Gray;
+}
+
+.vote-buttons {
+  padding-left: 20%;
+  padding-top: 20%;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  color: black;
+  list-style-type: none;
+  list-style-position: inside;
+  border-color: gray;
+}
+
+
+/* Userbit */
+
+#emailInput {
+  margin-top: 7px;
+  margin-right: 5px;
+}
+
+#passInput  {
+  margin-top: 7px;
+}
+
+#loginbutton{
+  margin-top: 7px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#regbutton {
+  margin-top: 7px;
+}
+
+#logoutbutton {
+  margin-top: 7px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.navbar-brand {
+  position: relative;
+  left: 5px;
+}
+
+span#username {
+  position: relative;
+  right: 10px;
+  top: 5px;
+  color: green;
+  font-size: 120%;
+}
+
+/* Components Container */
+
+.container-fluid
+{
+    height:100%;
+}
+.container-fluid
+{
+    display:table;
+    width: 100%;
+    margin-top: -50px;
+    padding: 50px 0 0 0; /*set left/right padding according to needs*/
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.row
+{
+    height: 100%;
+    display: table-row;
+}
+
+.col-lg-2.no-float, .col-lg-7.no-float, .col-lg-3.no-float {
+}
+.col-lg-2
+{
+    display: table-cell;
+}
+.col-lg-7
+{
+    display: table-cell;
+}
+.col-lg-3
+{
+    display: table-cell;
 }
