@@ -1,5 +1,5 @@
 /**
- * Created by zachb on 2015-12-05.
+ * Sendbox for Trees Radio Chat
  */
 
 var React = require('react');
