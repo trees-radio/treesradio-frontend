@@ -185,17 +185,14 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-<<<<<<< HEAD
+
                                   <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
                                   <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
-=======
-                                  <button type="button" button id="upvote-button"><span className=""></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span className=""></span></button>
->>>>>>> refs/remotes/origin/zach-activeDev
+
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
-                                  <span className="vote-user">Submitted by: GryphonEDM</span>
+                                  <span className="submitted-by">Submitted by: <a className="vote-user" href="#">GryphonEDM</a></span>
 
                                 </div>
                               </div>
@@ -208,12 +205,8 @@ var Main = React.createClass({
                           <div id="vidcontainer" className="row">
                             <Video />
                           </div>
-<<<<<<< HEAD
                           <Video />
-                          
 
-=======
->>>>>>> refs/remotes/origin/zach-activeDev
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
