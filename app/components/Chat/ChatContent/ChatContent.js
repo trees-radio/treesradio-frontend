@@ -1,7 +1,7 @@
 /**
  * Created by zachb on 2015-12-05.
  *
- * Displays chat entries inside the Chat component 
+ * Displays chat entries inside the Chat component
  *
  */
 
@@ -31,6 +31,7 @@ var ChatContent = React.createClass({
           }
           // add any new classes in string below, keep trailing space
           let chatLineClasses = "chat-item " + chatPosClass;
+          // individual
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
                   <span className="chat-username">{ msg['user'] }</span><br />
