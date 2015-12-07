@@ -4,6 +4,7 @@
 
 var React = require('react');
 var Notify = require('react-notification-system');
+var $ = require('jQuery');
 
 var ChatSend = React.createClass({
 
@@ -20,7 +21,6 @@ var ChatSend = React.createClass({
     }
   },
   render: function(){
-
     return (
       <div id="sendbox">
         <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyPress={this.handleSubmit} />

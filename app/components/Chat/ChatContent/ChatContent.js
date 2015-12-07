@@ -7,6 +7,10 @@ var React = require('react');
 //var _ = require('lodash');
 
 var ChatContent = React.createClass({
+    componentDidUpdate: function() {
+      let chatScroll = this.refs.chatScroll.getDOMNode();
+      chatScroll.scrollTop = chatScroll.scrollHeight;
+    },
     render: function(){
       let msgs = this.props.chatData.map(function(msg){
           return (
@@ -18,7 +22,7 @@ var ChatContent = React.createClass({
         });
 
         return (
-            <div id="chatscroll">
+            <div id="chatscroll" ref="chatScroll">
                 <ul id="chatbox">
                     {msgs}
                 </ul>
