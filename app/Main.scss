@@ -205,7 +205,7 @@ body {
 }
 
 .chat-username {
-  color: #006600;
+  color: black;
   font-size: small;
   font-weight: bold;
 }
@@ -269,16 +269,20 @@ body {
   color: Gray;
 }
 
-/* Userbit */
+/* Chat */
 
-#emailInput {
-  margin-top: 7px;
-  margin-right: 5px;
+.chat-line-0 {
+  background-color: #e9eef0;
 }
 
-#passInput  {
+.chat-line-1 {
+    background-color: #cbd6dc;
+}
+
+/* Userbit */
+
+#emailpassfields  {
   margin-top: 7px;
-  margin-right: 5px;
 }
 
 #loginbutton{
@@ -289,12 +293,12 @@ body {
 
 #regbutton {
   margin-top: 7px;
+  margin-right: 10px;
 }
 
 #logoutbutton {
-  margin-top: 7px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-top: 6px;
+  margin-right: 10px;
 }
 
 .navbar-brand {
@@ -306,8 +310,13 @@ span#username {
   position: relative;
   right: 10px;
   top: 5px;
-  color: green;
+  color: black;
   font-size: 120%;
+  border-radius: 10px;
+  background: gray;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
 }
 
 /* Components Container */
