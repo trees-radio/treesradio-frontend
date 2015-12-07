@@ -6,8 +6,9 @@
  */
 
 
-var React = require('react');
-var _ = require('lodash');
+import React from 'react';
+//var _ = require('lodash');
+import _ from 'lodash';
 
 var ChatContent = React.createClass({
     componentDidUpdate: function() {
@@ -34,7 +35,7 @@ var ChatContent = React.createClass({
           // individual
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
-                  <span className="chat-username">{ msg['user'] }</span><br />
+                  <span className="chat-username">{ msg['user'] }:</span><br />
                   <span className="chat-text">{ msg['msg'] }</span>
               </li>
           )

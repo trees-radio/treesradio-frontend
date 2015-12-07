@@ -15,6 +15,11 @@ var Userbit = React.createClass({
         loginhandler: React.PropTypes.func.isRequired,
         logouthandler: React.PropTypes.func.isRequired
     },
+    handleSubmit: function(e){
+      if (e.key === 'Enter'){
+        this.loginButton();
+      }
+    },
     loginButton: function(){
         let useremail = this.refs.email.getDOMNode().value;
         let userpassword = this.refs.password.getDOMNode().value;
@@ -70,7 +75,7 @@ var Userbit = React.createClass({
 
                     <div className="input-group">
                       <span className="input-group-addon"><i className="fa fa-key fa-fw"></i></span>
-                      <input className="form-control" type="password" id="passInput" ref="password" />
+                      <input className="form-control" type="password" id="passInput" ref="password" onKeyPress={this.handleSubmit} />
                     </div>
 
                   </div>

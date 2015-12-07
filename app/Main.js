@@ -1,8 +1,7 @@
 //MAIN JS
 
-var React = require('react');
-var Firebase = require('firebase');
-//var ReactFireMixin = require('reactfire');
+import React from 'react';
+import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
@@ -54,9 +53,9 @@ var Main = React.createClass({
             let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + authData.uid);
             this.bindAsObject(userRef, "user");
             this.setState({ loginstate: true });
+            debugger;
             if (this.state.user.admin === 1) {
               this.state.userLevel === 2;
-              debugger;
             } else {
               if (this.state.moderator === 1) {
                 this.state.userLevel === 1;
@@ -234,7 +233,12 @@ var Main = React.createClass({
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
                         <div id="chatcontainer" className="row">
-                          <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
+                          <Chat
+                            loginData={this.state.user}
+                            chatData={this.state.chat}
+                            sendMsg={this.handleSendMsg}
+                            loginState={this.state.loginstate}
+                            />
                       </div>
                     </div>
             {/* End Container */}
