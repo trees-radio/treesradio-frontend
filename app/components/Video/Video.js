@@ -1,10 +1,20 @@
 
-var React = require('react');
+
+import React from 'react';
+import ReactPlayer from 'react-player';
 
 var Video = React.createClass({
+  shouldBePlaying: function(){
+    return true;
+  },
   render: function() {
     return(
-      <div></div>
+      <div>
+        <ReactPlayer
+          url='https://www.youtube.com/watch?v=fgF7O_-vQzc'
+          playing={this.shouldBePlaying()}
+          />
+      </div>
     )
   }
 

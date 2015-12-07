@@ -2,21 +2,32 @@
  * Sendbox for Trees Radio Chat
  */
 
-var React = require('react');
-var Notify = require('react-notification-system');
-var $ = require('jQuery');
+import React from 'react';
+//var $ = require('jQuery');
+import sweetAlert from 'sweetalert';
 
 var ChatSend = React.createClass({
 
   handleSubmit: function(e){
       if (e.key === 'Enter') {
-        let newMsg = this.refs.sendbox.getDOMNode().value.trim();
+        let newMsg = this.refs.sendbox.value.trim();
         if (newMsg === '') {
           console.log("User attempted to send an empty chat message");
         } else {
-          let userSending = this.props.loginData.username;
-          this.refs.sendbox.getDOMNode().value = '';
-          this.props.sendMsg({msg: newMsg, user: userSending});
+          if ( this.props.loginState ) {
+            let userSending = this.props.loginData.username;
+            this.refs.sendbox.value = '';
+            this.props.sendMsg({msg: newMsg, user: userSending});
+          } else {
+            this.refs.sendbox.value = '';
+            sweetAlert({
+              "title": "No Login Found",
+              "text": "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
+              "type": "error",
+              "timer": 3000
+            });
+          }
+
         }
     }
   },
