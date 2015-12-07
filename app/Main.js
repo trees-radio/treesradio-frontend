@@ -181,8 +181,17 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
+
                                   <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
                                   <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
+
+                                <div className="vote-item">
+                                  <span className="songthumbnail"></span>
+                                  <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
+                                  <span className="submitted-by">Submitted by: <a className="vote-user" href="#">GryphonEDM</a></span>
+                                  <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
+                                  <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
+                                </div>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
@@ -198,7 +207,6 @@ var Main = React.createClass({
                           <div id="vidcontainer" className="row">
                             <Video />
                           </div>
-                          <Video />
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
@@ -220,5 +228,3 @@ var Main = React.createClass({
 });
 
 ReactDOM.render(<Main />, document.getElementById('app'));
-
-//React.render(<Main />, document.getElementById('app'));

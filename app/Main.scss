@@ -206,7 +206,7 @@ body {
 
 .chat-username {
   color: black;
-  font-size: small;
+  font-size: normal;
   font-weight: bold;
 }
 
@@ -247,10 +247,16 @@ body {
   color: Gray;
 }
 
+.submitted-by {
+  font-size: small;
+  color: Gray;
+}
+
+
 .vote-user {
   font-size: small;
   font-weight: bold;
-  color: Gray;
+  color: black;
 }
 
 /* Chat */
