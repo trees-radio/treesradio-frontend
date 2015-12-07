@@ -9,7 +9,7 @@ var ChatSend = React.createClass({
 
   handleSubmit: function(e){
       if (e.key === 'Enter') {
-        let newMsg = this.refs.sendbox.getDOMNode().value.trim();
+        let newMsg = this.refs.sendbox.getDOMNode().value;
         if (newMsg === '') {
           console.log("User attempted to send an empty chat message");
         } else {
