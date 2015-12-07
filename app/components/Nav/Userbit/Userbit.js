@@ -59,8 +59,17 @@ var Userbit = React.createClass({
             if (this.props.logindata.admin === 1) { this.userlevel = "admin";}
             if (this.props.logindata.moderator === 1) { this.userlevel = "mod";}
             return (
-                <div>
-                    <span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span>
+                <div className="btn-group">
+                    <a className="btn btn-primary" id="usernametop" href="#account"><i className="fa fa-user fa-fw"></i><span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span></a>
+                    <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown" href="#">
+                        <span className="fa fa-caret-down"></span></a>
+                        <ul className="dropdown-menu">
+                          <li><a href="#"><i className="fa fa-pencil fa-fw"></i> Edit Profile</a></li>
+                          <li><a href="#"><i className="fa fa-cog fa-fw"></i> Edit Site Settings</a></li>
+                          <li className="divider"></li>
+                          <li><a href="#"><i className="fa fa-cog fa-fw"></i> Admin Settings</a></li>
+                        </ul>
+
                     <button className="btn btn-primary" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
                 </div>
             )
