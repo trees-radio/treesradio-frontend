@@ -1,6 +1,7 @@
 //MAIN JS
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
 import Nav from './components/Nav/Nav.js';
@@ -53,7 +54,7 @@ var Main = React.createClass({
             let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + authData.uid);
             this.bindAsObject(userRef, "user");
             this.setState({ loginstate: true });
-            debugger;
+            //debugger;
             if (this.state.user.admin === 1) {
               this.state.userLevel === 2;
             } else {
@@ -184,8 +185,8 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-                                  <button type="button" button id="upvote-button"><span class="glyphicon glyphicon-thumbs-up"></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                  <button type="button" button id="upvote-button"><span className=""></span></button><br/>
+                                  <button type="button" button id ="downvote-button"><span className=""></span></button>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
@@ -249,4 +250,6 @@ var Main = React.createClass({
   }
 });
 
-React.render(<Main />, document.getElementById('app'));
+ReactDOM.render(<Main />, document.getElementById('app'));
+
+//React.render(<Main />, document.getElementById('app'));

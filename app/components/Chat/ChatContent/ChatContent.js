@@ -13,7 +13,7 @@ import _ from 'lodash';
 var ChatContent = React.createClass({
     componentDidUpdate: function() {
       //forces chat to scroll to bottom after updating
-      let chatScroll = this.refs.chatScroll.getDOMNode();
+      let chatScroll = this.refs.chatScroll;
       chatScroll.scrollTop = chatScroll.scrollHeight;
     },
     render: function(){

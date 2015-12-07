@@ -21,13 +21,14 @@ var Userbit = React.createClass({
       }
     },
     loginButton: function(){
-        let useremail = this.refs.email.getDOMNode().value;
-        let userpassword = this.refs.password.getDOMNode().value;
+        let useremail = this.refs.email.value;
+        let userpassword = this.refs.password.value;
+        this.refs.password.value = '';
         this.props.loginhandler(useremail, userpassword);
     },
     registerButton: function(){
-      let desiredEml = this.refs.email.getDOMNode().value;
-      let desiredPw = this.refs.password.getDOMNode().value;
+      let desiredEml = this.refs.email.value;
+      let desiredPw = this.refs.password.value;
       this.refs.email.getDOMNode().value = '';
       this.refs.password.getDOMNode().value = '';
       if (!desiredEml) {

@@ -10,16 +10,16 @@ var ChatSend = React.createClass({
 
   handleSubmit: function(e){
       if (e.key === 'Enter') {
-        let newMsg = this.refs.sendbox.getDOMNode().value.trim();
+        let newMsg = this.refs.sendbox.value.trim();
         if (newMsg === '') {
           console.log("User attempted to send an empty chat message");
         } else {
           if ( this.props.loginState ) {
             let userSending = this.props.loginData.username;
-            this.refs.sendbox.getDOMNode().value = '';
+            this.refs.sendbox.value = '';
             this.props.sendMsg({msg: newMsg, user: userSending});
           } else {
-            this.refs.sendbox.getDOMNode().value = '';
+            this.refs.sendbox.value = '';
             sweetAlert({
               "title": "No Login Found",
               "text": "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
