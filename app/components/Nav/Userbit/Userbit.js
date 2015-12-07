@@ -62,12 +62,22 @@ var Userbit = React.createClass({
             // User is not logged in
             return (
                 <div className="form-inline">
-                    <div className="form-group">
-                            <input type="email" className="form-control" id="emailInput" ref="email" placeholder="Email" />
-                            <input type="password" className="form-control" id="passInput" ref="password" placeholder="Password" />
+                  <div className="form-group">
+                    <div className="input-group margin-bottom-sm">
+                      <span className="input-group-addon"><i className="fa fa-envelope-o fa-fw"></i></span>
+                      <input className="form-control" type="text" placeholder="Email address" id="emailInput" ref="email" />
                     </div>
+
+                    <div className="input-group">
+                      <span className="input-group-addon"><i className="fa fa-key fa-fw"></i></span>
+                      <input className="form-control" type="password" placeholder="Password" id="passInput" ref="password" />
+                    </div>
+
+                  </div>
+
                     <button className="btn btn-primary" id="loginbutton" onClick={this.loginButton}>Login</button>
                     <button className="btn btn-default" id="regbutton" onClick={this.registerButton}>Register</button>
+
                 </div>
             )
          }
