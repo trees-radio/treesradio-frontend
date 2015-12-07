@@ -177,6 +177,7 @@ var Main = React.createClass({
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
                                   <span className="vote-user">Submitted by: GryphonEDM</span>
+
                                 </div>
                               </div>
                             </div>
@@ -185,7 +186,8 @@ var Main = React.createClass({
             {/* Video Component */}
                       <div className="col-lg-7 no-float" id="videotoplevel">
                         <h2 className="placeholder-txt">Video</h2>
-                          <div id="vidcontainer" className="row"></div>
+                          <div id="vidcontainer" className="row">
+                          </div>
                           <Video />
                           {/*
                            <div class="row maxitbro">
