@@ -13,15 +13,29 @@ var ChatContent = React.createClass({
       chatScroll.scrollTop = chatScroll.scrollHeight;
     },
     render: function(){
+      // tracking msg color
+      var chatPos = 0;
       // don't render entire chat state on page
       let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 100));
       let msgs = chatCompact.map(function(msg){
+          //debugger;
+          var chatPosClass = "";
+          if (chatPos === 0) {
+            chatPosClass = "chat-line-1";
+            chatPos = 1;
+          } else {
+            chatPosClass = "chat-line-0";
+            chatPos = 0;
+          }
+          // add any new classes here, keep trailing space
+          let chatLineClasses = "chat-item " + chatPosClass;
           return (
-              <li key={ msg['.key'] } className="chat-item">
+              <li key={ msg['.key'] } className={chatLineClasses}>
                   <span className="chat-username">{ msg['user'] }</span><br />
                   <span className="chat-text">{ msg['msg'] }</span>
               </li>
           )
+
         });
 
         return (
