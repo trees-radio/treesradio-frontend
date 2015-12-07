@@ -16,7 +16,7 @@
 $trees-primary: #77b300;
 $trees-bg: #060606;
 $videotoplevel-bg: #171717;
-$votingtoplevel-bg: #1a1a1a;
+$votingtoplevel-bg: #808080;
 $chattoplevel-bg: #e9eef0;
 $chat-item-border: #808080;
 $chat-item-color: #000;
@@ -147,12 +147,13 @@ body {
 // Chat
 //
 
-/*
+
 #chatcontainer {
   width: 100%;
   height: 100%;
+  margin-top: 100%;
 }
-*/
+
 
 #chatbox {
   list-style: none;
@@ -216,17 +217,12 @@ body {
 /*************************************************************
 * Michael's Section
 *************************************************************/
-#votingtoplevel {
-  height:100%;
-  padding: 5px;
-}
 
 #votingcontainer {
   height: 100%;
   width: 100%;
   margin-top: 100%;
 }
-
 
 #votebox {
   list-style: none;
@@ -341,12 +337,21 @@ span#username {
 .col-lg-2
 {
     display: table-cell;
+    padding-bottom: 1000px;
+    margin-bottom: -1000px;
+    height: 100%;
 }
 .col-lg-7
 {
   display: table-cell;
+  padding-bottom: 1000px;
+  margin-bottom: -1000px;
+  height: 100%;
 }
 .col-lg-3
 {
   display: table-cell;
+  padding-bottom: 1000px;
+  margin-bottom: -1000px;
+  height: 100%;
 }
