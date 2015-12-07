@@ -189,13 +189,7 @@ var Main = React.createClass({
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
                                   <span className="submitted-by">Submitted by: <a className="vote-user" href="#">GryphonEDM</a></span>
-                                  <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
-                                </div>
-                                <div className="vote-item">
-                                  <span className="songthumbnail"></span>
-                                  <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
-                                  <span className="vote-user">Submitted by: GryphonEDM</span>
+
                                 </div>
                               </div>
                             </div>
