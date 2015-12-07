@@ -18,6 +18,7 @@ var Main = React.createClass({
       return {
           loginstate: false,
           user: {},
+          userLevel: 0,
           chat: []
       }
     },
@@ -53,6 +54,14 @@ var Main = React.createClass({
             let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + authData.uid);
             this.bindAsObject(userRef, "user");
             this.setState({ loginstate: true });
+            if (this.state.user.admin === 1) {
+              this.state.userLevel === 2;
+              debugger;
+            } else {
+              if (this.state.moderator === 1) {
+                this.state.userLevel === 1;
+              }
+            }
             //alert(this.state.user);
         } else {
             console.log("Logged out");
@@ -136,12 +145,17 @@ var Main = React.createClass({
       });
     },
     handleSendMsg: function(newMsgData) {
-      //debugger;
-      //this.state.chat.push([[newMsg]]);
-      //console.log(this.state.chat);
-      //this.state.chat.push([newMsgData]);
       this.firebaseRefs["chat"].push(newMsgData);
-      //debugger;
+    },
+    checkUserLevel: function(){
+      if (this.state.user.admin === 1) {
+        this.state.userLevel === 2;
+        debugger;
+      } else {
+        if (this.state.moderator === 1) {
+          this.state.userLevel === 1;
+        }
+      }
     },
     render: function(){
 
