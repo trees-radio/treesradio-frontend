@@ -35,7 +35,8 @@ var ChatContent = React.createClass({
           // individual
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
-                  <span className="chat-username">{ msg['user'] }:</span><br />
+
+                  <span className="chatusername"><a className="chat-username" href="#">{ msg['user'] }:</a></span><br />
                   <span className="chat-text">{ msg['msg'] }</span>
               </li>
           )
