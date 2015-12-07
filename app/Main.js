@@ -1,8 +1,8 @@
 //MAIN JS
 
-var React = require('react');
-var Firebase = require('firebase');
-//var ReactFireMixin = require('reactfire');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
@@ -54,9 +54,9 @@ var Main = React.createClass({
             let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + authData.uid);
             this.bindAsObject(userRef, "user");
             this.setState({ loginstate: true });
+            //debugger;
             if (this.state.user.admin === 1) {
               this.state.userLevel === 2;
-              debugger;
             } else {
               if (this.state.moderator === 1) {
                 this.state.userLevel === 1;
@@ -185,8 +185,8 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-                                  <button type="button" button id="upvote-button"><span class="glyphicon glyphicon-thumbs-up"></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                  <button type="button" button id="upvote-button"><span className=""></span></button><br/>
+                                  <button type="button" button id ="downvote-button"><span className=""></span></button>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
@@ -234,7 +234,12 @@ var Main = React.createClass({
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
                         <div id="chatcontainer" className="row">
-                          <Chat loginData={this.state.user} chatData={this.state.chat} sendMsg={this.handleSendMsg} />
+                          <Chat
+                            loginData={this.state.user}
+                            chatData={this.state.chat}
+                            sendMsg={this.handleSendMsg}
+                            loginState={this.state.loginstate}
+                            />
                       </div>
                     </div>
             {/* End Container */}
@@ -245,4 +250,6 @@ var Main = React.createClass({
   }
 });
 
-React.render(<Main />, document.getElementById('app'));
+ReactDOM.render(<Main />, document.getElementById('app'));
+
+//React.render(<Main />, document.getElementById('app'));
