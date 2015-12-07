@@ -199,10 +199,10 @@ var Main = React.createClass({
                         </div>
             {/* Video Component */}
                       <div className="col-lg-7 no-float" id="videotoplevel">
-                        <h2 className="placeholder-txt">Video</h2>
+                        {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="row">
+                            <Video />
                           </div>
-                          <Video />
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
