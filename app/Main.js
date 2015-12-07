@@ -19,14 +19,22 @@ var Main = React.createClass({
           loginstate: false,
           user: {},
           userLevel: 0,
-          chat: []
+          chat: [],
+          registeredNames: {}
       }
     },
     componentDidMount: function(){
+        // grab base ref and listen for auth
         this.ref = new Firebase('https://treesradio.firebaseio.com');
         this.ref.onAuth(this.authDataCallback);
+
+        // grab chat messages and bind to chat array in state
         let chatRef = new Firebase('https://treesradio.firebaseio.com/chat/messages');
         this.bindAsArray(chatRef, "chat");
+
+        // grab registeredNames and bind in state
+        let registeredNamesRef = new Firebase("https://treesradio.firebaseio.com/registeredNames");
+        this.bindAsObject(registeredNamesRef, "registeredNames");
     },
     authenticateUser: function(eml, pw){
         this.ref.authWithPassword({
@@ -54,15 +62,6 @@ var Main = React.createClass({
             let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + authData.uid);
             this.bindAsObject(userRef, "user");
             this.setState({ loginstate: true });
-            //debugger;
-            if (this.state.user.admin === 1) {
-              this.state.userLevel === 2;
-            } else {
-              if (this.state.moderator === 1) {
-                this.state.userLevel === 1;
-              }
-            }
-            //alert(this.state.user);
         } else {
             console.log("Logged out");
             this.setState({ loginstate: false });
@@ -84,7 +83,7 @@ var Main = React.createClass({
         inputPlaceholder: "Username"
       }, function(inputValue){
         let desiredUn = inputValue;
-        let registeredNamesRef = new Firebase("https://treesradio.firebaseio.com/users/registeredNames");
+        let registeredNamesRef = new Firebase("https://treesradio.firebaseio.com/registeredNames");
         registeredNamesRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
@@ -128,8 +127,11 @@ var Main = React.createClass({
                 }
               } else {
                 let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + userData.uid);
+                // create user entry
                 userRef.child('username').set(desiredUn);
-                registeredNamesRef.child(desiredUn).set(1);
+                // create registeredNames entry
+                registeredNamesRef.child(desiredUn).child("uid").set(userData.uid);
+                registeredNamesRef.child(desiredUn).child("email").set(desiredEml);
                 sweetAlert({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
@@ -147,15 +149,8 @@ var Main = React.createClass({
     handleSendMsg: function(newMsgData) {
       this.firebaseRefs["chat"].push(newMsgData);
     },
-    checkUserLevel: function(){
-      if (this.state.user.admin === 1) {
-        this.state.userLevel === 2;
-        debugger;
-      } else {
-        if (this.state.moderator === 1) {
-          this.state.userLevel === 1;
-        }
-      }
+    checkUserLevel: function(user){
+
     },
     render: function(){
 
@@ -171,6 +166,7 @@ var Main = React.createClass({
                 logouthandler={this.logoutUser}
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
+                checkUserLevel={this.checkUserLevel}
               />
 
             {/* Start Container */}
@@ -185,15 +181,12 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-                                  <button type="button" button id="upvote-button"><span className=""></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span className=""></span></button>
                                   <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
                                   <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
                                   <span className="vote-user">Submitted by: GryphonEDM</span>
-
                                 </div>
                               </div>
                             </div>

@@ -13,7 +13,11 @@ var Userbit = React.createClass({
     propTypes: {
         loginstate: React.PropTypes.bool.isRequired,
         loginhandler: React.PropTypes.func.isRequired,
-        logouthandler: React.PropTypes.func.isRequired
+        logouthandler: React.PropTypes.func.isRequired,
+        checkUserLevel: React.PropTypes.func.isRequired
+    },
+    checkLevel: function() {
+      this.props.checkUserLevel();
     },
     handleSubmit: function(e){
       if (e.key === 'Enter'){
