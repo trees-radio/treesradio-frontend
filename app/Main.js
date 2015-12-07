@@ -203,6 +203,33 @@ var Main = React.createClass({
                           <div id="vidcontainer" className="row">
                           </div>
                           <Video />
+                          {/*
+                           <div class="row maxitbro">
+
+                           <div id="vidcontainer" class="row">
+                           <div class="bg-fill-l col-md-2 maxitbro"></div>
+
+                           <video id="player" class="video-js vjs-default-skin col-md-8" height="500">
+                           <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                           </video>
+
+                           <div class="bg-fill-r col-md-2 maxitbro"></div>
+                           </div>
+
+
+                           <div class="row maxitbro">
+                           <div id="progress" class="section-divider"></div>
+                           <br>
+                           <div id="volslider"></div><br>
+                           <button id="syncbtn" onclick="SyncUp()">Sync</button>
+
+                           <div>
+                           </div>
+                           </div>
+
+                           </div>
+                          */}
+
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel">
