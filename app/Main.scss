@@ -157,15 +157,34 @@ body {
 #chatbox {
   list-style: none;
   padding-left: 0;
-  width:450px;
-
+  width:1000px;
 }
+
 
 #chatscroll {
   height: 23%;
   overflow: auto;
 }
 
+#sendbox {
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  width: 100%;
+  top: 1;
+  left: 0;
+  right: 5px;
+}
+
+#chatinput {
+  width: 100%;
+	//margin-bottom: 20px;
+}
+
+#sendchat {
+
+	//margin-bottom: 20px;
+}
 .chat-item {
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -193,25 +212,7 @@ body {
   display: none;
 }
 
-#sendbox {
-  padding-left: 5px;
-  padding-right: 5px;
-  position: relative;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 5px;
-}
 
-#chatinput {
-  width: 100%;
-	//margin-bottom: 20px;
-}
-
-#sendchat {
-
-	//margin-bottom: 20px;
-}
 
 /*************************************************************
 * Michael's Section
