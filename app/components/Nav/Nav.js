@@ -36,6 +36,7 @@ var Nav = React.createClass({
                                   logouthandler={this.props.logouthandler}
                                   logindata={this.props.logindata}
                                   checkUserLevel={this.props.checkUserLevel}
+                                  registeredNames={this.props.registeredNames}
                                   />
                             </div>
                         </div>{ /* .navbar-collapse */}

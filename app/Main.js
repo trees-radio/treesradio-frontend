@@ -1,15 +1,26 @@
 //MAIN JS
 
+// React
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+// Firebase
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
+
+// More libraries
+import sweetAlert from 'sweetalert';
+import _ from 'lodash';
+
+// Components
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
 import Video from './components/Video/Video.js';
 import Voting from './components/Voting/Voting.js';
+
+// (S)CSS
 import './Main.scss';
-import sweetAlert from 'sweetalert';
+
 
 
 var Main = React.createClass({
@@ -150,7 +161,7 @@ var Main = React.createClass({
       this.firebaseRefs["chat"].push(newMsgData);
     },
     checkUserLevel: function(user){
-
+      return _.get(this.state.registeredNames, user + ".level");
     },
     render: function(){
 
@@ -167,6 +178,7 @@ var Main = React.createClass({
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
                 checkUserLevel={this.checkUserLevel}
+                registeredNames={this.state.registeredNames}
               />
 
             {/* Start Container */}

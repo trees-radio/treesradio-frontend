@@ -17,7 +17,7 @@ var Userbit = React.createClass({
         checkUserLevel: React.PropTypes.func.isRequired
     },
     checkLevel: function() {
-      this.props.checkUserLevel();
+      //this.props.checkUserLevel();
     },
     handleSubmit: function(e){
       if (e.key === 'Enter'){
@@ -58,10 +58,16 @@ var Userbit = React.createClass({
     },
     render: function(){
         if (this.props.loginstate){
-            // User is logged in
-            var userlevel = "user";
-            if (this.props.logindata.admin === 1) { this.userlevel = "admin";}
-            if (this.props.logindata.moderator === 1) { this.userlevel = "mod";}
+            //
+            // IF user is logged in
+            //
+            // check user level
+            var userlevel = "user-level-user";
+            if (this.props.checkUserLevel(this.props.logindata.username) === 2) {
+              userlevel = "user-level-admin";
+            } else if (this.props.checkUserLevel(this.props.logindata.username) === 1) {
+              userlevel = "user-level-mod";
+            }
             return (
                 <div className="btn-group">
                     <a className="btn btn-primary" id="usernametop" href="#account"><i className="fa fa-user fa-fw"></i><span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span></a>
