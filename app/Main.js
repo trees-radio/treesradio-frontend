@@ -178,7 +178,6 @@ var Main = React.createClass({
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
                 checkUserLevel={this.checkUserLevel}
-                registeredNames={this.state.registeredNames}
               />
 
             {/* Start Container */}
