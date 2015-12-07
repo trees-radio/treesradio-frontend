@@ -1,5 +1,8 @@
 /**
  * Created by zachb on 2015-12-05.
+ *
+ * Displays chat entries inside the Chat component
+ *
  */
 
 
@@ -18,7 +21,6 @@ var ChatContent = React.createClass({
       // don't render entire chat state on page
       let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 100));
       let msgs = chatCompact.map(function(msg){
-          //debugger;
           var chatPosClass = "";
           if (chatPos === 0) {
             chatPosClass = "chat-line-1";
@@ -27,8 +29,9 @@ var ChatContent = React.createClass({
             chatPosClass = "chat-line-0";
             chatPos = 0;
           }
-          // add any new classes here, keep trailing space
+          // add any new classes in string below, keep trailing space
           let chatLineClasses = "chat-item " + chatPosClass;
+          // individual
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
                   <span className="chat-username">{ msg['user'] }</span><br />
