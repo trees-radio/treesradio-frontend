@@ -185,8 +185,8 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-                                  <button type="button" button id="upvote-button"><span class="glyphicon glyphicon-thumbs-up"></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                  <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
+                                  <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
@@ -203,32 +203,7 @@ var Main = React.createClass({
                           <div id="vidcontainer" className="row">
                           </div>
                           <Video />
-                          {/*
-                           <div class="row maxitbro">
-
-                           <div id="vidcontainer" class="row">
-                           <div class="bg-fill-l col-md-2 maxitbro"></div>
-
-                           <video id="player" class="video-js vjs-default-skin col-md-8" height="500">
-                           <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-                           </video>
-
-                           <div class="bg-fill-r col-md-2 maxitbro"></div>
-                           </div>
-
-
-                           <div class="row maxitbro">
-                           <div id="progress" class="section-divider"></div>
-                           <br>
-                           <div id="volslider"></div><br>
-                           <button id="syncbtn" onclick="SyncUp()">Sync</button>
-
-                           <div>
-                           </div>
-                           </div>
-
-                           </div>
-                          */}
+                          
 
                       </div>
             {/* Chat Component */}
