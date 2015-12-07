@@ -171,8 +171,8 @@ var Main = React.createClass({
                             <div id="votescroll">
                               <ul id="votebox"></ul>
                                 <div className="vote-buttons">
-                                  <button id="upvote-button" className="btn btn-primary"></button><br/>
-                                  <button id ="downvote-button" className="btn btn-danger"></button>
+                                  <button type="button" button id="upvote-button"><span class="glyphicon glyphicon-thumbs-up"></span></button><br/>
+                                  <button type="button" button id ="downvote-button"><span class="glyphicon glyphicon-thumbs-down"></span></button>
                                 <div className="vote-item">
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>

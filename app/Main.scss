@@ -163,7 +163,8 @@ body {
 
 #chatscroll {
   height: 23%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 #sendbox {
@@ -224,14 +225,23 @@ body {
   margin-top: 100%;
 }
 
+#votescroll {
+  overflow: auto;
+  height: 88%;
+}
+
 #votebox {
   list-style: none;
   padding-left: 0;
 }
 
-#votescroll {
-  overflow: auto;
-  height: 88%;
+.vote-buttons {
+  padding-left: 5%;
+  padding-top: 5%;
+  color: black;
+  list-style-type: none;
+  list-style-position: inside;
+  border-color: gray;
 }
 
 .vote-item {
@@ -257,18 +267,6 @@ body {
   font-weight: bold;
   color: Gray;
 }
-
-.vote-buttons {
-  padding-left: 20%;
-  padding-top: 20%;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  color: black;
-  list-style-type: none;
-  list-style-position: inside;
-  border-color: gray;
-}
-
 
 /* Userbit */
 
