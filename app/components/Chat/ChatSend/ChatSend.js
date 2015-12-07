@@ -17,10 +17,10 @@ var ChatSend = React.createClass({
           this.refs.sendbox.getDOMNode().value = '';
           this.props.sendMsg({msg: newMsg, user: userSending});
         }
-
     }
   },
   render: function(){
+
     return (
       <div id="sendbox">
         <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyPress={this.handleSubmit} />
