@@ -202,14 +202,15 @@ body {
 }
 
 .chat-text {
-	//vertical-align: bottom;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .chat-username {
   color: black;
   font-size: normal;
-  font-weight: bold;
-  text-decoration: underline;
+  font-weight: bolder;
+  font-size: 110%;
+  //text-decoration: underline;
 }
 
 ::-webkit-scrollbar {
@@ -253,11 +254,13 @@ user agent stylesheeta:-webkit-any-link {
   font-size: small;
   font-weight: bold;
   color: Gray;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .submitted-by {
   font-size: small;
   color: Gray;
+  font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -265,6 +268,7 @@ user agent stylesheeta:-webkit-any-link {
   font-size: small;
   font-weight: bold;
   color: black;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* Chat */
@@ -290,6 +294,7 @@ user agent stylesheeta:-webkit-any-link {
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 #regbutton {
@@ -298,6 +303,7 @@ user agent stylesheeta:-webkit-any-link {
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 #logoutbutton {
@@ -306,7 +312,8 @@ user agent stylesheeta:-webkit-any-link {
   border-radius: 5px;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.75px;
+  letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 .navbar-brand {
@@ -322,7 +329,8 @@ user agent stylesheeta:-webkit-any-link {
 margin-right: 0;
 margin-top: 6px;
 text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-letter-spacing: 1.75px;
+letter-spacing: 1.5px;
+font-size: 110%;
 }
 
 #usernamedropdown {
@@ -330,6 +338,7 @@ letter-spacing: 1.75px;
   margin-right: 5px;
   margin-top: 6px;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+    font-size: 110%;
 }
 
 #emailbox {
