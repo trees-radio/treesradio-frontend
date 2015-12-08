@@ -87,7 +87,7 @@ var Userbit = React.createClass({
                   <div className="form-group" id="emailpassfields">
                     <div className="input-group margin-bottom-sm">
                       <span className="input-group-addon"><i className="fa fa-envelope-o fa-fw"></i></span>
-                      <input className="form-control" type="text" id="emailInput" ref="email" />
+                      <input className="form-control" type="email" id="emailInput" ref="email" />
                     </div>
 
                     <div className="input-group">
