@@ -209,6 +209,7 @@ body {
   color: black;
   font-size: normal;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 ::-webkit-scrollbar {
@@ -220,6 +221,12 @@ body {
 /*******************************************************
 * Michael's Section
 *******************************************************/
+
+user agent stylesheeta:-webkit-any-link {
+    text-decoration: underline;
+    cursor: auto;
+}
+
 
 .vote-buttons {
   padding-left: 5%;
@@ -299,7 +306,7 @@ body {
   border-radius: 5px;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.75px;
 }
 
 .navbar-brand {
@@ -308,13 +315,14 @@ body {
   font-size: 150%;
   font-family: 'Open Sans', sans-serif;
   letter-spacing: 1px;
+  vertical-align: baseline;
 }
 
 #usernametop {
 margin-right: 0;
 margin-top: 6px;
 text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-letter-spacing: 1.5px;
+letter-spacing: 1.75px;
 }
 
 #usernamedropdown {
