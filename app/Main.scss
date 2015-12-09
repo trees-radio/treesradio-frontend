@@ -160,7 +160,7 @@ body {
 
 
 #chatcontainer {
-  height: 3650px;
+  height: 100%;//3650px;
   width: 100%;
 }
 
@@ -171,12 +171,12 @@ body {
 }
 
 #sendbox {
+  left: 0;
   padding: 12px;
   position: absolute;
-  width: 100%;
-  top: 6.075%;
-  left: 0;
   right: 5px;
+  top: 6.075%;
+  width: 100%;
 }
 
 
@@ -208,6 +208,10 @@ body {
   font-weight: bolder;
   font-size: 110%;
   //text-decoration: underline;
+}
+
+#chatavatar {
+  margin-left: -10px;
 }
 
 ::-webkit-scrollbar {
@@ -390,4 +394,5 @@ font-size: 110%;
   padding-bottom: 10000px;
   margin-bottom: -10000px;
   height: 100%;
+  margin: 0;
 }
