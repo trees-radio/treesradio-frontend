@@ -74,6 +74,7 @@ body {
 #chattoplevel {
   background-color: $chattoplevel-bg;
   border-left: 5px solid #73AD21;
+  border-bottom: 5px solid #73AD21;
 }
 
 .placeholder-txt {
@@ -163,14 +164,6 @@ body {
   width: 100%;
 }
 
-
-#chatbox {
-  list-style: none;
-  padding-left: 0;
-  width:100%;
-}
-
-
 #chatscroll {
   height: 23%; //23
   overflow-x: hidden;
@@ -181,7 +174,6 @@ body {
   padding: 12px;
   position: absolute;
   width: 100%;
-
   top: 6.075%;
   left: 0;
   right: 5px;
@@ -192,6 +184,7 @@ body {
 
 	//margin-bottom: 20px;
 }
+
 .chat-item {
   border-bottom-style: solid;
   border-bottom-width: 1px;
