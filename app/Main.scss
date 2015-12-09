@@ -19,9 +19,9 @@ $trees-primary: #77b300;
 $trees-bg: #060606;
 $videotoplevel-bg: #171717;
 $votingtoplevel-bg: #272727;
-$chattoplevel-bg: #e9eef0;
-$chat-item-border: #808080;
-$chat-item-color: #000;
+$chattoplevel-bg: #0A0A0A; //light skin e9eef0
+$chat-item-border: #000; //light skin 808080
+$chat-item-color: #c0c0c0; //light skin #000
 
 
 //
@@ -95,7 +95,7 @@ body {
 }
 
 #vidcontainer {
-  
+
 }
 
 .reactplayer {
@@ -213,7 +213,7 @@ body {
 }
 
 .chat-username {
-  color: black;
+  color: #0040ff;
   font-size: normal;
   font-weight: bolder;
   font-size: 110%;
@@ -282,13 +282,13 @@ user agent stylesheeta:-webkit-any-link {
 
 .chat-line-0 {
   border-radius: 15px;
-  background-color: #e9eef0;
+  background-color: #121317; //light skin e9eef0
   padding: 10px;
 }
 
 .chat-line-1 {
   border-radius: 15px;
-  background-color: #cbd6dc;
+  background-color: #0A0A0A; //light skin cbd6dc
   padding: 10px;
 }
 
