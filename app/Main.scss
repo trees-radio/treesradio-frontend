@@ -86,10 +86,6 @@ body {
   vertical-align: middle;
 }
 
-#container-fluid {
-  height: 100%;
-  overflow: hidden;
-}
 
 #app {
   height: 100%;
@@ -171,6 +167,15 @@ body {
 // Chat
 //
 
+div#app > div {
+  height: 100%;
+
+}
+
+div#chatcontainertop > div {
+  height: 100%;
+
+}
 
 #chatcontainertop {
   height: 100%;
@@ -184,11 +189,10 @@ body {
   width: 100%;
   bottom: -25px;
   overflow: hidden;
-  max-height: 1000%;
 }
 
 #chatscroll {
-  height: 23%; //23
+  height: 100%; //23
   overflow-x: hidden;
   overflow-y: hidden;
 }
@@ -204,7 +208,7 @@ body {
 
 #chatbox {
   bottom: 0;
-  height: 10%;
+  height: 100%;
   overflow: hidden
 }
 
@@ -382,17 +386,12 @@ font-size: 110%;
 
 .container-fluid
 {
-    height:100%;
-}
-.container-fluid
-{
-    display:table;
+    height: 100%;
     width: 100%;
     margin-top: -50px;
     padding: 50px 0 0 0; /*set left/right padding according to needs*/
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    height: 100%
 }
 
 .row
