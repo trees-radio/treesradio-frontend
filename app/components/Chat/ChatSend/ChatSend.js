@@ -3,8 +3,10 @@
  */
 
 import React from 'react';
-//var $ = require('jQuery');
 import sweetAlert from 'sweetalert';
+
+// import scss
+import './ChatSend.scss';
 
 var ChatSend = React.createClass({
 

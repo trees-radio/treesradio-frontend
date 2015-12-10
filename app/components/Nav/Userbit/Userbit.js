@@ -6,8 +6,12 @@
  */
 
 
-var React = require('react');
-var sweetAlert = require('sweetalert');
+import React from 'react';
+import sweetAlert from 'sweetalert';
+
+// import scss
+import './Userbit.scss'
+
 
 var Userbit = React.createClass({
     propTypes: {
