@@ -6,12 +6,12 @@
  *
  */
 
-var React = require('react');
+import React from 'react';
 import ChatContent from './ChatContent/ChatContent.js';
 import ChatSend from './ChatSend/ChatSend.js';
-var Firebase = require('firebase');
-//var ReactFireMixin = require('reactfire');
-import ReactFireMixin from 'reactfire';
+
+// import scss
+// import './Chat.scss';
 
 var Chat = React.createClass({
     componentDidMount: function(){
