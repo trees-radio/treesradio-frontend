@@ -69,6 +69,7 @@ body {
 	// background-color: red;
   // background-color: $videotoplevel-bg;
   background-image: url('img/backgroundvideo.png');
+  height: 100%;
 }
 
 #chattoplevel {
@@ -185,7 +186,7 @@ div#chatcontainertop > div {
 }
 
 #chatcontainer {
-  height: 95%;
+  height: 92.4%;
   width: 100%;
   bottom: -25px;
   overflow: hidden;
