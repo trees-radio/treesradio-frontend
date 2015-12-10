@@ -170,12 +170,10 @@ body {
 div#app > div {
   height: 99%;
   width: 99%;
-
 }
 
 div#chatcontainertop > div {
   height: 100%;
-
 }
 
 #chatcontainertop {
@@ -363,6 +361,10 @@ a:-webkit-any-link {
   vertical-align: baseline;
 }
 
+.navbar-header {
+
+}
+
 #usernametop {
 margin-right: 0;
 margin-top: 6px;
@@ -399,30 +401,3 @@ font-size: 110%;
 {
     height: 100%;
 }
-
-/*
-.col-lg-2.no-float, .col-lg-9.no-float, .col-lg-3.no-float {
-}
-.col-lg-2
-{
-    display: table-cell;
-    padding-bottom: 10000px;
-    margin-bottom: -10000px;
-    height: 100%;
-}
-.col-lg-9
-{
-  display: table-cell;
-  padding-bottom: 10000px;
-  margin-bottom: -10000px;
-  height: 100%;
-}
-.col-lg-3
-{
-  display: table-cell;
-  padding-bottom: 10000px;
-  margin-bottom: -10000px;
-  height: 100%;
-  margin: 0;
-}
-*/
