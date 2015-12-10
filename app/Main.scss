@@ -75,11 +75,24 @@ body {
   background-color: $chattoplevel-bg;
   border-left: 5px solid #73AD21;
   border-bottom: 5px solid #73AD21;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  padding-right: 0;
 }
 
 .placeholder-txt {
   text-align: center;
   vertical-align: middle;
+}
+
+#container-fluid {
+  height: 100% !important;
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
 }
 
 
@@ -159,9 +172,18 @@ body {
 //
 
 
-#chatcontainer {
-  height: 100%;//3650px;
+#chatcontainertop {
+  height: 100%;
   width: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+
+#chatcontainer {
+  height: 95%;
+  width: 100%;
+  bottom: -25px;
+  overflow: hidden;
 }
 
 #chatscroll {
@@ -175,10 +197,15 @@ body {
   padding: 12px;
   position: absolute;
   right: 5px;
-  top: 6.075%;
   width: 100%;
+  bottom: 5px;
 }
 
+#chatbox {
+  bottom: 0;
+  height: 10%;
+  overflow: hidden
+}
 
 #sendchat {
 
@@ -196,6 +223,7 @@ body {
   padding-bottom: 3px;
   padding-left: 5px;
   padding-top: 3px;
+  width: 100%;
 }
 
 .chat-text {
@@ -224,8 +252,7 @@ body {
 * Michael's Section
 *******************************************************/
 
-user agent stylesheeta:-webkit-any-link {
-    text-decoration: underline;
+a:-webkit-any-link {
     cursor: auto;
 }
 
@@ -364,14 +391,15 @@ font-size: 110%;
     padding: 50px 0 0 0; /*set left/right padding according to needs*/
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    height: 100%
 }
 
 .row
 {
     height: 100%;
-    display: table-row;
 }
 
+/*
 .col-lg-2.no-float, .col-lg-9.no-float, .col-lg-3.no-float {
 }
 .col-lg-2
@@ -396,3 +424,4 @@ font-size: 110%;
   height: 100%;
   margin: 0;
 }
+*/

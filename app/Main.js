@@ -214,8 +214,8 @@ var Main = React.createClass({
                           </div>
                       </div>
             {/* Chat Component */}
-                      <div className="col-lg-3 no-float" id="chattoplevel">
-                        <div id="chatcontainer" className="row">
+                      <div className="col-lg-3 no-float" id="chattoplevel" >
+                        <div id="chatcontainertop" className="row">
                           <Chat
                             loginData={this.state.user}
                             chatData={this.state.chat}
