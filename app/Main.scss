@@ -20,6 +20,7 @@
 @import './components/Chat/ChatSend/ChatSend';
 @import './components/Video/Video';
 @import './components/Queue/Queue';
+@import './components/Playlists/Playlists';
 // @import './components/';
 
 
@@ -109,7 +110,7 @@ body {
 
 #youtube-player {
   margin-left: 8%;
-  
+
 }
 
 #player {

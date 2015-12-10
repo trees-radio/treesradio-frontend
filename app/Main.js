@@ -16,6 +16,7 @@ import _ from 'lodash';
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
 import Video from './components/Video/Video.js';
+import Playlists from './components/Playlists/Playlists.js';
 
 // (S)CSS
 import './Main.scss';
@@ -187,6 +188,7 @@ var Main = React.createClass({
                         {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="row">
                             <Video />
+                            <Playlists />
                           </div>
                       </div>
             {/* Chat Component */}
