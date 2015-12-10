@@ -87,7 +87,7 @@ body {
 }
 
 #container-fluid {
-  height: 100% !important;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -184,6 +184,7 @@ body {
   width: 100%;
   bottom: -25px;
   overflow: hidden;
+  max-height: 1000%;
 }
 
 #chatscroll {
