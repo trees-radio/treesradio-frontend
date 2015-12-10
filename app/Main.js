@@ -34,6 +34,9 @@ var Main = React.createClass({
           registeredNames: {}
       }
     },
+    componentWillMount: function(){
+      
+    },
     componentDidMount: function(){
         // grab base ref and listen for auth
         this.ref = new Firebase('https://treesradio.firebaseio.com');

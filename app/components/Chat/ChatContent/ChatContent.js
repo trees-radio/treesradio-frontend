@@ -57,7 +57,7 @@ var ChatContent = React.createClass({
                   <img src={chatAvatar} />
                 </div>
                 <div className="chat-msg">
-                  <span className="chatusername"><a className="chat-username" href="#">{ msg['user'] }:</a></span><br />
+                  <span className="chat-username">{ msg['user'] }</span><br />
                   <span className="chat-text">{ msg['msg'] }</span>
                 </div>
 
