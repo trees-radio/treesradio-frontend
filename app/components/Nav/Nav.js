@@ -8,7 +8,7 @@
 import React from 'react';
 import Userbit from './Userbit/Userbit.js';
 
-import './Nav.scss';
+// import './Nav.scss';
 
 var Nav = React.createClass({
     propTypes: {

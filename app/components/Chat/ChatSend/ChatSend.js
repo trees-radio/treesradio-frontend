@@ -6,7 +6,7 @@ import React from 'react';
 import sweetAlert from 'sweetalert';
 
 // import scss
-import './ChatSend.scss';
+// import './ChatSend.scss';
 
 var ChatSend = React.createClass({
 

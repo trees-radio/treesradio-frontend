@@ -10,7 +10,7 @@ import React from 'react';
 import sweetAlert from 'sweetalert';
 
 // import scss
-import './Userbit.scss'
+// import './Userbit.scss'
 
 
 var Userbit = React.createClass({

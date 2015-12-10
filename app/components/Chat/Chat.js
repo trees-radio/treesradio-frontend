@@ -11,7 +11,7 @@ import ChatContent from './ChatContent/ChatContent.js';
 import ChatSend from './ChatSend/ChatSend.js';
 
 // import scss
-import './Chat.scss';
+// import './Chat.scss';
 
 var Chat = React.createClass({
     componentDidMount: function(){

@@ -7,9 +7,24 @@
 //		main: #77b300  (used for bootswatch primary color)
 //
 
-@import '../node_modules/sweetalert/dist/sweetalert.css';
-@import '../node_modules/font-awesome/css/font-awesome.css';
+
+// IMPORT EXTERNALS
+@import '~sweetalert/dist/sweetalert.css';
+@import '~font-awesome/css/font-awesome.css';
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+// IMPORT COMPONENTS
+@import './components/Nav/Nav';
+@import './components/Nav/Userbit/Userbit';
+@import './components/Chat/Chat';
+@import './components/Chat/ChatContent/ChatContent';
+@import './components/Chat/ChatSend/ChatSend';
+@import './components/Video/Video';
+@import './components/Queue/Queue';
+// @import './components/';
+
+
+
 
 
 //
