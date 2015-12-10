@@ -9,6 +9,7 @@
 
 @import '../node_modules/sweetalert/dist/sweetalert.css';
 @import '../node_modules/font-awesome/css/font-awesome.css';
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 
 //
@@ -18,9 +19,9 @@ $trees-primary: #77b300;
 $trees-bg: #060606;
 $videotoplevel-bg: #171717;
 $votingtoplevel-bg: #272727;
-$chattoplevel-bg: #e9eef0;
-$chat-item-border: #808080;
-$chat-item-color: #000;
+$chattoplevel-bg: #0A0A0A; //light skin e9eef0
+$chat-item-border: #000; //light skin 808080
+$chat-item-color: #c0c0c0; //light skin #000
 
 
 //
@@ -66,11 +67,18 @@ body {
 
 #videotoplevel {
 	// background-color: red;
-  background-color: $videotoplevel-bg;
+  // background-color: $videotoplevel-bg;
+  background-image: url('img/backgroundvideo.png');
+  height: 100%;
 }
 
 #chattoplevel {
   background-color: $chattoplevel-bg;
+  border-left: 5px solid #73AD21;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  padding-right: 0;
 }
 
 .placeholder-txt {
@@ -79,23 +87,34 @@ body {
 }
 
 
+#app {
+  height: 100%;
+}
+
+
 //
 // Video Section
 //
 
 #player {
-  margin-left: auto;
-  margin-right: auto;
+
 }
 
-/*
-#vidcontainer {
-  width: 100%;
-  height: 100%;
-  margin-top: 100%;
-  margin-left: 16%;
+#playerdiv {
+
 }
-*/
+
+#vidcontainer {
+
+}
+
+.reactplayer {
+
+}
+
+#reactplayerid {
+
+}
 
 .bg-fill-l {
 	// position: absolute;
@@ -148,45 +167,54 @@ body {
 // Chat
 //
 
+div#app > div {
+  height: 99%;
+  width: 99%;
+}
+
+div#chatcontainertop > div {
+  height: 100%;
+}
+
+#chatcontainertop {
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
 
 #chatcontainer {
-  height: 3650px;
+  height: 92.4%;
   width: 100%;
+  bottom: -25px;
+  overflow: hidden;
 }
-
-
-#chatbox {
-  list-style: none;
-  padding-left: 0;
-  width:450px;
-}
-
 
 #chatscroll {
-  height: 23%;
+  height: 100%; //23
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 #sendbox {
-  padding-left: 5px;
-  padding-right: 5px;
-  position: absolute;
-  width: 100%;
-  top: 1;
   left: 0;
+  padding: 12px;
+  position: absolute;
   right: 5px;
+  width: 100%;
+  bottom: 5px;
 }
 
-#chatinput {
-  width: 100%;
-	//margin-bottom: 20px;
+#chatbox {
+  bottom: 0;
+  height: 100%;
 }
 
 #sendchat {
 
 	//margin-bottom: 20px;
 }
+
 .chat-item {
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -198,16 +226,23 @@ body {
   padding-bottom: 3px;
   padding-left: 5px;
   padding-top: 3px;
+  width: 100%;
 }
 
 .chat-text {
-	//vertical-align: bottom;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .chat-username {
-  color: black;
+  color: #0040ff;
   font-size: normal;
-  font-weight: bold;
+  font-weight: bolder;
+  font-size: 110%;
+  //text-decoration: underline;
+}
+
+#chatavatar {
+  margin-left: -10px;
 }
 
 ::-webkit-scrollbar {
@@ -219,6 +254,11 @@ body {
 /*******************************************************
 * Michael's Section
 *******************************************************/
+
+a:-webkit-any-link {
+    cursor: auto;
+}
+
 
 .vote-buttons {
   padding-left: 5%;
@@ -245,11 +285,13 @@ body {
   font-size: small;
   font-weight: bold;
   color: Gray;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .submitted-by {
   font-size: small;
   color: Gray;
+  font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -257,16 +299,21 @@ body {
   font-size: small;
   font-weight: bold;
   color: black;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* Chat */
 
 .chat-line-0 {
-  background-color: #e9eef0;
+  border-radius: 10px;
+  background-color: #121317; //light skin e9eef0
+  padding: 10px;
 }
 
 .chat-line-1 {
-    background-color: #cbd6dc;
+  border-radius: 10px;
+  background-color: #0A0A0A; //light skin cbd6dc
+  padding: 10px;
 }
 
 /* Userbit */
@@ -279,11 +326,19 @@ body {
   margin-top: 7px;
   margin-left: 5px;
   margin-right: 5px;
+  font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 #regbutton {
   margin-top: 7px;
   margin-right: 10px;
+  font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 #logoutbutton {
@@ -291,33 +346,49 @@ body {
   margin-right: 10px;
   border-radius: 5px;
   font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 .navbar-brand {
   position: relative;
-  left: 5px;
+  left: 10px;
+  font-size: 150%;
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 1px;
+  vertical-align: baseline;
+}
+
+.navbar-header {
+
 }
 
 #usernametop {
 margin-right: 0;
 margin-top: 6px;
+text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+letter-spacing: 1.5px;
+font-size: 110%;
 }
 
 #usernamedropdown {
   margin-left: 0;
   margin-right: 5px;
   margin-top: 6px;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+    font-size: 110%;
+}
+
+#emailbox {
+  margin-right: 5px;
 }
 
 /* Components Container */
 
 .container-fluid
 {
-    height:100%;
-}
-.container-fluid
-{
-    display:table;
+    height: 100%;
     width: 100%;
     margin-top: -50px;
     padding: 50px 0 0 0; /*set left/right padding according to needs*/
@@ -328,29 +399,4 @@ margin-top: 6px;
 .row
 {
     height: 100%;
-    display: table-row;
-}
-
-.col-lg-2.no-float, .col-lg-7.no-float, .col-lg-3.no-float {
-}
-.col-lg-2
-{
-    display: table-cell;
-    padding-bottom: 10000px;
-    margin-bottom: -10000px;
-    height: 100%;
-}
-.col-lg-7
-{
-  display: table-cell;
-  padding-bottom: 10000px;
-  margin-bottom: -10000px;
-  height: 100%;
-}
-.col-lg-3
-{
-  display: table-cell;
-  padding-bottom: 10000px;
-  margin-bottom: -10000px;
-  height: 100%;
 }
