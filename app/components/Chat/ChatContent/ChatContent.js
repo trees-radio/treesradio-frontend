@@ -23,7 +23,7 @@ var ChatContent = React.createClass({
 
 
       // don't render entire chat state on page
-      let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 100));
+      let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 50));
       let msgs = chatCompact.map(function(msg){
 
           // handling msg color alternation

@@ -193,7 +193,7 @@ div#chatcontainertop > div {
 #chatscroll {
   height: 100%; //23
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 #sendbox {
@@ -208,7 +208,6 @@ div#chatcontainertop > div {
 #chatbox {
   bottom: 0;
   height: 100%;
-  overflow: hidden
 }
 
 #sendchat {
