@@ -25,7 +25,7 @@ var Nav = React.createClass({
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul className="nav navbar-nav">
+                            <ul className="nav navbar-nav" id="nav-about">
                                 <li><a href="#about">About</a></li>
                             </ul>
                             <div className="nav navbar-nav navbar-right">

@@ -16,9 +16,6 @@ var Userbit = React.createClass({
         logouthandler: React.PropTypes.func.isRequired,
         checkUserLevel: React.PropTypes.func.isRequired
     },
-    checkLevel: function() {
-      this.props.checkUserLevel();
-    },
     handleSubmit: function(e){
       if (e.key === 'Enter'){
         this.loginButton();
@@ -58,13 +55,19 @@ var Userbit = React.createClass({
     },
     render: function(){
         if (this.props.loginstate){
-            // User is logged in
-            var userlevel = "user";
-            if (this.props.logindata.admin === 1) { this.userlevel = "admin";}
-            if (this.props.logindata.moderator === 1) { this.userlevel = "mod";}
+            //
+            // IF user is logged in
+            //
+            // check user level
+            var userLevel = "user-level-user";
+            if (this.props.checkUserLevel(this.props.logindata.username) === 2) {
+              userLevel = "user-level-admin";
+            } else if (this.props.checkUserLevel(this.props.logindata.username) === 1) {
+              userLevel = "user-level-mod";
+            }
             return (
                 <div className="btn-group">
-                    <a className="btn btn-primary" id="usernametop" href="#account"><i className="fa fa-user fa-fw"></i><span id="username" className={userlevel}><b>{this.props.logindata.username}</b></span></a>
+                    <a className="btn btn-primary" id="usernametop" href="#account"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
                     <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown" href="#">
                         <span className="fa fa-caret-down"></span></a>
                         <ul className="dropdown-menu">
@@ -82,9 +85,9 @@ var Userbit = React.createClass({
             return (
                 <div className="form-inline">
                   <div className="form-group" id="emailpassfields">
-                    <div className="input-group margin-bottom-sm">
+                    <div className="input-group margin-bottom-sm" id="emailbox">
                       <span className="input-group-addon"><i className="fa fa-envelope-o fa-fw"></i></span>
-                      <input className="form-control" type="text" id="emailInput" ref="email" />
+                      <input className="form-control" type="email" id="emailInput" ref="email" />
                     </div>
 
                     <div className="input-group">

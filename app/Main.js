@@ -1,15 +1,26 @@
 //MAIN JS
 
+// React
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+// Firebase
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
+
+// More libraries
+import sweetAlert from 'sweetalert';
+import _ from 'lodash';
+
+// Components
 import Nav from './components/Nav/Nav.js';
 import Chat from './components/Chat/Chat.js';
 import Video from './components/Video/Video.js';
 import Voting from './components/Voting/Voting.js';
+
+// (S)CSS
 import './Main.scss';
-import sweetAlert from 'sweetalert';
+
 
 
 var Main = React.createClass({
@@ -150,7 +161,7 @@ var Main = React.createClass({
       this.firebaseRefs["chat"].push(newMsgData);
     },
     checkUserLevel: function(user){
-
+      return _.get(this.state.registeredNames, user + ".level");
     },
     render: function(){
 
@@ -174,7 +185,7 @@ var Main = React.createClass({
                   <div className="row">
 
             {/* Voting Component */}
-                      <div className="col-lg-2 no-float" id="votingtoplevel">
+{/*                      <div className="col-lg-2 no-float" id="votingtoplevel">
                         <h2 className="placeholder-txt">Voting Component</h2>
                         <Voting />
                           <div id="votingcontainer">
@@ -189,28 +200,22 @@ var Main = React.createClass({
                                   <span className="songthumbnail"></span>
                                   <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
                                   <span className="submitted-by">Submitted by: <a className="vote-user" href="#">GryphonEDM</a></span>
-                                  <button type="button" button id="upvote-button"><span className="fa fa-thumbs-up"></span></button><br/>
-                                  <button type="button" button id ="downvote-button"><span className="fa fa-thumbs-down"></span></button>
-                                </div>
-                                <div className="vote-item">
-                                  <span className="songthumbnail"></span>
-                                  <span className="song-name">Send Me on My Way - Rusted Root</span><br/>
-                                  <span className="vote-user">Submitted by: GryphonEDM</span>
+
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div>    */}
             {/* Video Component */}
-                      <div className="col-lg-7 no-float" id="videotoplevel">
+                      <div className="col-lg-9 no-float" id="videotoplevel">
                         {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="row">
                             <Video />
                           </div>
                       </div>
             {/* Chat Component */}
-                      <div className="col-lg-3 no-float" id="chattoplevel">
-                        <div id="chatcontainer" className="row">
+                      <div className="col-lg-3 no-float" id="chattoplevel" >
+                        <div id="chatcontainertop" className="row">
                           <Chat
                             loginData={this.state.user}
                             chatData={this.state.chat}
