@@ -19,7 +19,7 @@ $trees-primary: #77b300;
 $trees-bg: #060606;
 $videotoplevel-bg: #171717;
 $votingtoplevel-bg: #272727;
-$chattoplevel-bg: #0A0A0A; //light skin e9eef0
+$chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
 $chat-item-border: #000; //light skin 808080
 $chat-item-color: #c0c0c0; //light skin #000
 
@@ -45,7 +45,7 @@ body {
 }
 
 #tr-nav {
-	//height: 6%;
+
 }
 
 #nav-divider {
@@ -169,7 +169,7 @@ body {
 
 div#app > div {
   height: 99%;
-  width: 99%;
+  width: 100%;
 }
 
 div#chatcontainertop > div {
@@ -197,17 +197,17 @@ div#chatcontainertop > div {
 }
 
 #sendbox {
-  left: 0;
-  padding: 12px;
+  left: 10px;
   position: absolute;
-  right: 5px;
-  width: 100%;
+  right: 10px;
+  width: 93%;
   bottom: 5px;
 }
 
 #chatbox {
   bottom: 0;
   height: 100%;
+  margin: 0;
 }
 
 #sendchat {
@@ -305,13 +305,13 @@ a:-webkit-any-link {
 /* Chat */
 
 .chat-line-0 {
-  border-radius: 10px;
+  // border-radius: 10px;
   background-color: #121317; //light skin e9eef0
   padding: 10px;
 }
 
 .chat-line-1 {
-  border-radius: 10px;
+  // border-radius: 10px;
   background-color: #0A0A0A; //light skin cbd6dc
   padding: 10px;
 }
