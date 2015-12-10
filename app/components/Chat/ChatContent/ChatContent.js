@@ -7,8 +7,10 @@
 
 
 import React from 'react';
-//var _ = require('lodash');
 import _ from 'lodash';
+
+// Import SCSS
+// import './ChatContent.scss';
 
 var ChatContent = React.createClass({
     componentDidUpdate: function() {
@@ -39,13 +41,20 @@ var ChatContent = React.createClass({
           // add any new whole-line classes in string below, keep trailing space
           let chatLineClasses = "chat-item " + chatPosClass;
 
+          let chatAvatar = "//api.adorable.io/avatars/50/"+ msg['user'] +".png";
+
 
           // individual
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
 
-                  <span className="chatusername"><a className="chat-username" href="#">{ msg['user'] }:</a></span><br />
-                  <span className="chat-text">{ msg['msg'] }</span>
+                  <div className="chat-avatar">
+                    <img src={chatAvatar} />
+                  </div>
+                  <div className="chat-msg">
+                    <span className="chatusername"><a className="chat-username" href="#">{ msg['user'] }:</a></span><br />
+                    <span className="chat-text">{ msg['msg'] }</span>
+                  </div>
 
               </li>
           )
