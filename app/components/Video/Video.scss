@@ -4,8 +4,8 @@ $videotoplevel-bg: #171717;
 #videotoplevel {
 	// background-color: red;
   // background-color: $videotoplevel-bg;
-  background-image: url('img/backgroundvideo.png');
   height: 100%;
+  background-image: url('img/backgroundvideo.png');
 }
 
 #youtube-player {
@@ -23,7 +23,8 @@ $videotoplevel-bg: #171717;
 }
 
 #vidcontainer {
-
+  height: 90%;
+  max-height: 90%;
 }
 
 .reactplayer {
@@ -58,17 +59,4 @@ $videotoplevel-bg: #171717;
   background-color: $trees-primary;
   height: 5px;
   width: 100%;
-}
-
-#volslider {
-  height: 10px;
-  width: 20%;
-  }
-
-.ui-slider-range {
-  background: $trees-primary;
-}
-
-.ui-slider-handle {
-  border-color: $trees-primary;
 }

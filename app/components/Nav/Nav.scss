@@ -1,14 +1,33 @@
 
-//
+// Nav
 //
 
+#tr-nav {
 
+}
 
 .navbar {
   margin-bottom: 1px;
 }
 
-#tr-nav {
+.navbar-header {
+
+}
+
+.navbar-brand {
+  position: relative;
+  left: 10px;
+  font-size: 150%;
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 1px;
+  vertical-align: baseline;
+}
+
+.collapse {
+
+}
+
+#nav-about {
 
 }
 
@@ -50,25 +69,12 @@
   font-size: 110%;
 }
 
-.navbar-brand {
-  position: relative;
-  left: 10px;
-  font-size: 150%;
-  font-family: 'Open Sans', sans-serif;
-  letter-spacing: 1px;
-  vertical-align: baseline;
-}
-
-.navbar-header {
-
-}
-
 #usernametop {
-margin-right: 0;
-margin-top: 6px;
-text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-letter-spacing: 1.5px;
-font-size: 110%;
+  margin-right: 0;
+  margin-top: 6px;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
 }
 
 #usernamedropdown {
