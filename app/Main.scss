@@ -90,6 +90,7 @@ body {
   height: 100%;
   overflow: hidden;
   padding-right: 0;
+
 }
 
 .placeholder-txt {
@@ -191,12 +192,15 @@ div#app > div {
 
 div#chatcontainertop > div {
   height: 100%;
+  width: 100%;
 }
 
 #chatcontainertop {
+
   height: 100%;
   width: 100%;
   bottom: 0;
+  margin-right: 0;
   overflow: hidden;
 }
 
@@ -421,4 +425,5 @@ font-size: 110%;
 .row
 {
     height: 100%;
+    width: 100%;
 }
