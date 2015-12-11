@@ -20,6 +20,7 @@
 @import './components/Chat/ChatSend/ChatSend';
 @import './components/Video/Video';
 @import './components/Queue/Queue';
+@import './components/Playlists/Playlists';
 // @import './components/';
 
 
@@ -90,6 +91,7 @@ body {
   height: 100%;
   overflow: hidden;
   padding-right: 0;
+
 }
 
 .placeholder-txt {
@@ -109,7 +111,8 @@ body {
 
 #youtube-player {
   margin-left: 8%;
-  
+  width: 50%;
+  height: 50%
 }
 
 #player {
@@ -190,12 +193,14 @@ div#app > div {
 
 div#chatcontainertop > div {
   height: 100%;
+  width: 100%;
 }
 
 #chatcontainertop {
   height: 100%;
   width: 100%;
   bottom: 0;
+  margin-right: 0;
   overflow: hidden;
 }
 
@@ -222,13 +227,14 @@ div#chatcontainertop > div {
 }
 
 #chatbox {
+  width: 100%;
   bottom: 0;
   height: 100%;
   margin: 0;
+  padding-left: 0;
 }
 
 #sendchat {
-
 	//margin-bottom: 20px;
 }
 
@@ -242,12 +248,14 @@ div#chatcontainertop > div {
   margin: 0;
   padding-bottom: 3px;
   padding-left: 5px;
-  padding-top: 3px;
+  // padding-top: 3px;
   width: 100%;
+  display: flex;
+
 }
 
-.chat-text {
-  font-family: 'Open Sans', sans-serif;
+.chat-msg {
+  vertical-align: bottom;
 }
 
 .chat-username {
@@ -258,8 +266,17 @@ div#chatcontainertop > div {
   //text-decoration: underline;
 }
 
-#chatavatar {
-  margin-left: -10px;
+
+.chat-text {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  // left: 50px;
+}
+
+.chat-avatar {
+  padding-right: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -416,4 +433,5 @@ font-size: 110%;
 .row
 {
     height: 100%;
+    width: 100%;
 }

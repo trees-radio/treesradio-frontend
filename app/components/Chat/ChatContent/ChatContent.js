@@ -13,6 +13,11 @@ import _ from 'lodash';
 // import './ChatContent.scss';
 
 var ChatContent = React.createClass({
+    componentDidMount: function() {
+      //forces chat to scroll to bottom after updating
+      let chatScroll = this.refs.chatScroll;
+      chatScroll.scrollTop = chatScroll.scrollHeight;
+    },
     componentDidUpdate: function() {
       //forces chat to scroll to bottom after updating
       let chatScroll = this.refs.chatScroll;
@@ -48,13 +53,13 @@ var ChatContent = React.createClass({
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
 
-                  <div className="chat-avatar">
-                    <img src={chatAvatar} />
-                  </div>
-                  <div className="chat-msg">
-                    <span className="chatusername"><a className="chat-username" href="#">{ msg['user'] }:</a></span><br />
-                    <span className="chat-text">{ msg['msg'] }</span>
-                  </div>
+                <div className="chat-avatar">
+                  <img src={chatAvatar} />
+                </div>
+                <div className="chat-msg">
+                  <span className="chat-username">{ msg['user'] }</span><br />
+                  <span className="chat-text">{ msg['msg'] }</span>
+                </div>
 
               </li>
           )
