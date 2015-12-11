@@ -14,10 +14,10 @@ var Video = React.createClass({
       <div>
         <ReactPlayer
           className="reactplayer"
-          width="1280px"
-          height="720px"
+          width="1920px"
+          height="1080px"
           id="reactplayerid"
-          url='https://www.youtube.com/watch?v=fgF7O_-vQzc'
+          url='https://www.youtube.com/watch?v=aame895RBG0'
           playing={this.shouldBePlaying()}
           />
       </div>
@@ -27,6 +27,9 @@ var Video = React.createClass({
 });
 
 module.exports = Video;
+
+// fgF7O_-vQzc - 10HR youtube buffer video
+
 
 // "L41cCGnnjiw", //YTcracker - The Link
 // "nDopn_p2wk4", //Syn Cole - Miami 82 (Kygo Remix)
