@@ -5,27 +5,24 @@
     <title>Trees Radio</title>
     <meta name="application-name" content="TreesRadio">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-  <!-- CSS INCLUDES -->
-    <!-- Bootstrap Base (Modified BootSwatch Cyborg; Zach has the Less files) -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <!-- VideoJS -->
-    <!--<link rel="stylesheet" type="text/css" href="css/video-js.min.css">-->
-    <!-- jQueryUI -->
-    <!--<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/overcast/jquery-ui.css">-->
-    <!-- TreesRadio -->
     <link rel="stylesheet" type="text/css" href="app.css">
 </head>
 <body>
     <div id="app"></div>
+    <!-- <script>
+      var ENV_FIREBASE_ORIGIN = 'https://treesradio.firebaseio.com';
+      /////////////////////////////////////
+      function __loadFirebaseEnv(data) {
+        window.__env = data || {};
+        document.dispatchEvent(new CustomEvent('env', {detail: data || {}}));
+      }
+      var jsonp = document.createElement('script')
+      jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g,',') + '.json?callback=__loadFirebaseEnv';
+      document.head.appendChild(jsonp);
+    </script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="app.js"></script>
-    <script src="/node_modules/jquery.fitvids.js"></script>
-    <script>
-  $(document).ready(function(){
-    // Target your .container, .wrapper, .post, etc.
-    $("#thing-with-videos").fitVids();
-  });
-  </script>
 </body>
 </html>

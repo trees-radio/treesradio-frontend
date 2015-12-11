@@ -20,6 +20,7 @@
 @import './components/Chat/ChatSend/ChatSend';
 @import './components/Video/Video';
 @import './components/Queue/Queue';
+@import './components/Playlists/Playlists';
 // @import './components/';
 
 
@@ -196,7 +197,6 @@ div#chatcontainertop > div {
 }
 
 #chatcontainertop {
-
   height: 100%;
   width: 100%;
   bottom: 0;
@@ -228,11 +228,13 @@ div#chatcontainertop > div {
 
 #chatbox {
   width: 100%;
-  padding-left: 0
+  bottom: 0;
+  height: 100%;
+  margin: 0;
+  padding-left: 0;
 }
 
 #sendchat {
-
 	//margin-bottom: 20px;
 }
 
@@ -246,8 +248,14 @@ div#chatcontainertop > div {
   margin: 0;
   padding-bottom: 3px;
   padding-left: 5px;
-  padding-top: 3px;
+  // padding-top: 3px;
   width: 100%;
+  display: flex;
+
+}
+
+.chat-msg {
+  vertical-align: bottom;
 }
 
 .chat-username {
@@ -258,17 +266,17 @@ div#chatcontainertop > div {
   //text-decoration: underline;
 }
 
+
 .chat-text {
   font-family: 'Open Sans', sans-serif;
   height: 100%;
   width: 100%;
   position: relative;
-  left: 50px;
+  // left: 50px;
 }
 
 .chat-avatar {
-  position: relative;
-  margin-right: 2%;
+  padding-right: 5px;
 }
 
 ::-webkit-scrollbar {

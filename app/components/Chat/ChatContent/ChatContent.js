@@ -13,6 +13,11 @@ import _ from 'lodash';
 // import './ChatContent.scss';
 
 var ChatContent = React.createClass({
+    componentDidMount: function() {
+      //forces chat to scroll to bottom after updating
+      let chatScroll = this.refs.chatScroll;
+      chatScroll.scrollTop = chatScroll.scrollHeight;
+    },
     componentDidUpdate: function() {
       //forces chat to scroll to bottom after updating
       let chatScroll = this.refs.chatScroll;
@@ -41,19 +46,20 @@ var ChatContent = React.createClass({
           // add any new whole-line classes in string below, keep trailing space
           let chatLineClasses = "chat-item " + chatPosClass;
 
-          let chatAvatar = "//api.adorable.io/avatars/25/"+ msg['user'] +".png";
+          let chatAvatar = "//api.adorable.io/avatars/50/"+ msg['user'] +".png";
 
 
           // individual
           return (
               <li key={ msg['.key'] } className={chatLineClasses}>
 
-
-
-                  <div className="chat-msg">
-                    <span className="chat-username"><img className="chat-avatar" src={chatAvatar} />{ msg['user'] }</span><br />
-                    <span className="chat-text">{ msg['msg'] }</span>
-                  </div>
+                <div className="chat-avatar">
+                  <img src={chatAvatar} />
+                </div>
+                <div className="chat-msg">
+                  <span className="chat-username">{ msg['user'] }</span><br />
+                  <span className="chat-text">{ msg['msg'] }</span>
+                </div>
 
               </li>
           )
