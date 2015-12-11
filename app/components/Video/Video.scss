@@ -1,1 +1,74 @@
 
+$videotoplevel-bg: #171717;
+
+#videotoplevel {
+	// background-color: red;
+  // background-color: $videotoplevel-bg;
+  background-image: url('img/backgroundvideo.png');
+  height: 100%;
+}
+
+#youtube-player {
+//  margin-left: 8%;
+  width: 100%;
+  height: 100%
+}
+
+#player {
+
+}
+
+#playerdiv {
+
+}
+
+#vidcontainer {
+
+}
+
+.reactplayer {
+
+}
+
+#reactplayerid {
+
+}
+
+.bg-fill-l {
+	// position: absolute;
+	// top: 0px;
+	// left: 0px;
+	// width:300px;
+  background-image: url('img/escheresque_ste.png');
+  background-repeat: repeat;
+  height: 100%;
+}
+
+.bg-fill-r {
+	// position: absolute;
+	// top: 0px;
+	// right: 0px;
+  // width: 300px;
+  background-image: url('img/escheresque_ste.png');
+  background-repeat: repeat;
+  height: 100%;
+}
+
+.section-divider {
+  background-color: $trees-primary;
+  height: 5px;
+  width: 100%;
+}
+
+#volslider {
+  height: 10px;
+  width: 20%;
+  }
+
+.ui-slider-range {
+  background: $trees-primary;
+}
+
+.ui-slider-handle {
+  border-color: $trees-primary;
+}
