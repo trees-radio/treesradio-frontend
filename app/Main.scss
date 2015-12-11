@@ -110,9 +110,9 @@ body {
 //
 
 #youtube-player {
-  margin-left: 8%;
-  width: 50%;
-  height: 50%
+//  margin-left: 8%;
+  width: 100%;
+  height: 100%
 }
 
 #player {
@@ -220,10 +220,11 @@ div#chatcontainertop > div {
 
 #sendbox {
   left: 10px;
-  position: absolute;
   right: 10px;
-  width: 93%;
+  position: absolute;
+  width: 96%;
   bottom: 5px;
+
 }
 
 #chatbox {
