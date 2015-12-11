@@ -194,8 +194,6 @@ var Main = React.createClass({
                           </div>
                           <div id="playlists-container">
                             <Playlists />
-                          </div>
-                          <div id="joinwaitlist-container">
                             <Waitlist />
                           </div>
                       </div>
