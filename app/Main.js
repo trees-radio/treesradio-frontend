@@ -2,7 +2,6 @@
 
 // React
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // Firebase
 import Firebase from 'firebase';
@@ -35,7 +34,7 @@ var Main = React.createClass({
       }
     },
     componentWillMount: function(){
-      
+
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -213,4 +212,4 @@ var Main = React.createClass({
   }
 });
 
-ReactDOM.render(<Main />, document.getElementById('app'));
+module.exports = Main;
