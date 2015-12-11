@@ -109,7 +109,8 @@ body {
 
 #youtube-player {
   margin-left: 8%;
-
+  width: 50%;
+  height: 50%
 }
 
 #player {
@@ -245,17 +246,20 @@ div#chatcontainertop > div {
   width: 100%;
 }
 
-.chat-text {
-  font-family: 'Open Sans', sans-serif;
-
-}
-
 .chat-username {
   color: #0040ff;
   font-size: normal;
   font-weight: bolder;
   font-size: 110%;
   //text-decoration: underline;
+}
+
+.chat-text {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  left: 50px;
 }
 
 .chat-avatar {
