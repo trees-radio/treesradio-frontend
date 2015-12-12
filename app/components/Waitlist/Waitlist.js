@@ -6,9 +6,8 @@
  var Waitlist = React.createClass({
    render: function() {
      return(
-       <div id="joinwaitlist-bar">
-         <div id="joinwaitlist-button">
-           <i id="joinwaitlist-icon" className="fa fa-bars fa-4x"></i>
+       <div id="joinwaitlist-button">
+         <div id="joinwaitlist-text"><a>Join Waitlist</a>
          </div>
        </div>
      )

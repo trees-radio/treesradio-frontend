@@ -1,16 +1,31 @@
 
+#playlists-container {
+  height: 10%;
+  max-height: 10%;
+  width: 100%;
+}
+
 #playlists-bar {
   width: 84%;
   height: 80px;
   background-color: #0A0A0A;
-  border-radius: 10px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #77b300;
   bottom: 0;
   left: 0;
   float: left;
 }
 
-#playlists-container {
-  height: 10%;
-  max-height: 10%;
-  width: 100%;
+#playlists-open-button {
+  height: 100%;
+  width: 5%;
+  border-right: solid;
+  border-color: #77b300;
+}
+
+#playlists-open-icon {
+  height: 100%;
+  padding-top: 5px;
+  padding-left: 10px;
 }

@@ -1,9 +1,18 @@
-#joinwaitlist-bar {
+#joinwaitlist-button {
   width: 15%;
   max-width: 15%;
   height: 80px;
   background-color: #0A0A0A;
-  border-radius: 10px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #77b300;
   bottom: 0;
   float: right;
+}
+
+#joinwaitlist-text {
+  height: 100%;
+  line-height: 75px;
+  font-size: 200%;
+  text-align: center;
 }
