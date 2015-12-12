@@ -54,7 +54,7 @@ var ChatContent = React.createClass({
               <li key={ msg['.key'] } className={chatLineClasses}>
 
                 <div className="chat-avatar">
-                  <img src={chatAvatar} />
+                  <img id="avatarimg" src={chatAvatar} />
                 </div>
                 <div className="chat-msg">
                   <span className="chat-username">{ msg['user'] }</span><br />
