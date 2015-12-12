@@ -15,7 +15,7 @@
 }
 
 .navbar-default {
-  background-color: black;
+  background-color: 0A0A0A;
 }
 
 .navbar-brand {
@@ -27,12 +27,26 @@
   vertical-align: baseline;
 }
 
+//Trees Radio Logo Color
+.navbar-default .navbar-brand {
+  color: #77b300;
+}
+
 .collapse {
 
 }
 
 #nav-about {
 
+}
+
+//About Color
+.navbar-default .navbar-nav>li>a {
+  color: #77b300;
+  text-align: center;
+  height: 100%;
+  font-size: 110%;
+  padding-top: 23%;
 }
 
 #nav-divider {
