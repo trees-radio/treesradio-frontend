@@ -31,7 +31,8 @@ var Main = React.createClass({
           user: {},
           userLevel: 0,
           chat: [],
-          registeredNames: {}
+          registeredNames: {},
+          playlistsOpen: false
       }
     },
     componentWillMount: function(){

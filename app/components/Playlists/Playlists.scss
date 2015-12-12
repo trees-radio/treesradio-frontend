@@ -6,14 +6,13 @@
 }
 
 #playlists-bar {
+  position: absolute;
   width: 84%;
   height: 80px;
-  background-color: #0A0A0A;
+  background-color: $trees-bg;
   border-radius: 5px;
   border-style: solid;
   border-color: #77b300;
-  bottom: 0;
-  left: 0;
   float: left;
 }
 
@@ -22,6 +21,7 @@
   width: 5%;
   border-right: solid;
   border-color: #77b300;
+  cursor: pointer;
 }
 
 #playlists-open-icon {
@@ -30,4 +30,11 @@
   width: 100%;
   line-height: 75px;
   text-align: center;
+}
+
+#playlists-panel {
+  position:absolute;
+  height: 0px;
+  width: 84%;
+
 }

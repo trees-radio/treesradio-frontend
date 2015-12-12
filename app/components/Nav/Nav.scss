@@ -46,12 +46,13 @@
   text-align: center;
   height: 100%;
   font-size: 110%;
-  padding-top: 23%;
+  cursor: pointer;
 }
 
 #nav-divider {
-  background-color: $trees-primary;
-  height: 5px;
+  border-color: $trees-primary;
+  border-bottom: solid;
+  border-color: #77b300;
 }
 
 #emailpassfields  {
