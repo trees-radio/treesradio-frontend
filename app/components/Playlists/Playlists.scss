@@ -5,6 +5,12 @@
   width: 100%;
 }
 
+#playlists-panel {
+  position:absolute;
+  height: 0px;
+  width: 84%;
+}
+
 #playlists-bar {
   position: absolute;
   width: 84%;
@@ -18,7 +24,6 @@
 
 #playlists-open-button {
   height: 100%;
-  width: 5%;
   border-right: solid;
   border-color: #77b300;
   cursor: pointer;
@@ -32,9 +37,54 @@
   text-align: center;
 }
 
-#playlists-panel {
-  position:absolute;
-  height: 0px;
-  width: 84%;
+#playlist-metadata {
+  height: 100%;
+  border-right: solid;
+  border-color: #77b300;
+  cursor: pointer;
+  font-size: 150%;
+  line-height: 1.5;
+}
 
+#playlist-metadata a {
+  text-decoration: none;
+}
+
+#currentsong-metadata {
+  height: 100%;
+  border-right: solid;
+  border-color: #77b300;
+  cursor: pointer;
+  font-size: 150%;
+  line-height: 1.5;
+}
+
+#currentsong-metadata a {
+  text-decoration: none;
+}
+
+#grabtrack {
+  height: 100%;
+  border-right: solid;
+  border-color: #77b300;
+  cursor: pointer;
+  font-size: 150%;
+  line-height: 75px;
+  text-align: center;
+}
+
+#grabtrack a {
+  text-decoration: none;
+}
+
+#vote {
+  height: 100%;
+  cursor: pointer;
+  font-size: 150%;
+  line-height: 1.8;
+  text-align: center;
+}
+
+#vote a {
+  text-decoration: none;
 }
