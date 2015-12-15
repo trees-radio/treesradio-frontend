@@ -37,8 +37,8 @@ import $ from 'jquery';
             <a>Grab Track</a>
           </div>
           <div id="vote" className="col-lg-1">
-            <a>Like</a><br/>
-            <a>Dislike</a>
+            <a className="button blue"><div class="light"></div>Like</a><br/>
+            <a className="button red"><div class="light"></div>Dislike</a>
           </div>
        </div>
      </div>
