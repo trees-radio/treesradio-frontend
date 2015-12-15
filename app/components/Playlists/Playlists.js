@@ -25,7 +25,7 @@ import $ from 'jquery';
           <div id="playlists-open-button" className="col-lg-1" onClick={this.toggleDropUp}>
             <i id="playlists-open-icon" className="fa fa-angle-double-up fa-4x"></i>
           </div>
-          <div id="playlist-metadata" className="col-lg-4">
+          <div id="playlist-metadata" className="col-lg-3">
             <a>Current Playlist Name</a><br/>
             <a>Next Song in Playlist</a>
           </div>
@@ -33,12 +33,15 @@ import $ from 'jquery';
             <a>Current Song Name</a><br/>
             <a>Current Artist Name</a>
           </div>
-          <div id="grabtrack" className="col-lg-2">
+          <div id="grabtrack" className="col-lg-1">
             <a>Grab Track</a>
           </div>
           <div id="vote" className="col-lg-1">
-            <a className="button blue"><div class="light"></div>Like</a><br/>
-            <a className="button red"><div class="light"></div>Dislike</a>
+            <a className="button blue"><div className="light"></div>Like</a><br/>
+            <a className="button red"><div className="light"></div>Dislike</a>
+          </div>
+          <div id="waitlist" className="col-lg-2">
+            <a>Join Waitlist</a>
           </div>
        </div>
      </div>
