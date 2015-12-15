@@ -34,7 +34,7 @@ import $ from 'jquery';
             <a>Current Artist Name</a>
           </div>
           <div id="grabtrack" className="col-lg-1">
-            <a>Grab Track</a>
+            <a className="button purple"><div className="light"></div>Grab</a>
           </div>
           <div id="vote" className="col-lg-1">
             <a className="button blue"><div className="light"></div>Like</a><br/>
