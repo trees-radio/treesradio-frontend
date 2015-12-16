@@ -1,16 +1,5 @@
 //MAIN JS
 
-var ENV_FIREBASE_ORIGIN = 'https://treesradio.firebaseio.com';
-/////////////////////////////////////
-function __loadFirebaseEnv(data) {
-  window.__env = data || {};
-  document.dispatchEvent(new CustomEvent('env', {detail: data || {}}));
-}
-var jsonp = document.createElement('script');
-jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g,',') + '.json?callback=__loadFirebaseEnv';
-document.head.appendChild(jsonp);
-
-
 // React
 import React from 'react';
 
@@ -18,7 +7,7 @@ import React from 'react';
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
 import Rebase from 're-base';
-let base = Rebase.createClass(window.__env.firebase_origin);
+var base = Rebase.createClass(window.__env.firebase_origin);
 
 // More libraries
 import sweetAlert from 'sweetalert';
@@ -206,7 +195,9 @@ var Main = React.createClass({
                             <Video />
                           </div>
                           <div id="playlists-container">
-                            <Playlists />
+                            <Playlists
+                              playlistsOpen={this.state.playlistsOpen}
+                               />
                           </div>
                       </div>
             {/* Chat Component */}

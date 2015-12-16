@@ -8,7 +8,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
  var Playlists = React.createClass({
    propTypes: {
-     playlistsOpen: React.PropTypes.func.isRequired
+     playlistsOpen: React.PropTypes.bool.isRequired
    },
    toggleDropUp: function() {
      if (!this.props.playlistsOpen) {
