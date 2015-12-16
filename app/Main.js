@@ -1,11 +1,24 @@
 //MAIN JS
 
+var ENV_FIREBASE_ORIGIN = 'https://treesradio.firebaseio.com';
+/////////////////////////////////////
+function __loadFirebaseEnv(data) {
+  window.__env = data || {};
+  document.dispatchEvent(new CustomEvent('env', {detail: data || {}}));
+}
+var jsonp = document.createElement('script');
+jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g,',') + '.json?callback=__loadFirebaseEnv';
+document.head.appendChild(jsonp);
+
+
 // React
 import React from 'react';
 
 // Firebase
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
+import Rebase from 're-base';
+let base = Rebase.createClass(window.__env.firebase_origin);
 
 // More libraries
 import sweetAlert from 'sweetalert';
@@ -31,7 +44,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           registeredNames: {},
-          playlistsOpen: false
+          playlistsOpen: true
       }
     },
     componentWillMount: function(){
@@ -39,7 +52,7 @@ var Main = React.createClass({
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
-        this.ref = new Firebase('https://treesradio.firebaseio.com');
+        this.ref = new Firebase(window.__env.firebase_origin);
         this.ref.onAuth(this.authDataCallback);
 
         // grab chat messages and bind to chat array in state
