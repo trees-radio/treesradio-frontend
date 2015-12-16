@@ -6,6 +6,8 @@ import React from 'react';
 // Firebase
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
+import Rebase from 're-base';
+var base = Rebase.createClass(window.__env.firebase_origin);
 
 // More libraries
 import sweetAlert from 'sweetalert';
@@ -31,7 +33,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           registeredNames: {},
-          playlistsOpen: false
+          playlistsOpen: true
       }
     },
     componentWillMount: function(){
@@ -39,15 +41,15 @@ var Main = React.createClass({
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
-        this.ref = new Firebase('https://treesradio.firebaseio.com');
+        this.ref = new Firebase(window.__env.firebase_origin);
         this.ref.onAuth(this.authDataCallback);
 
         // grab chat messages and bind to chat array in state
-        let chatRef = new Firebase('https://treesradio.firebaseio.com/chat/messages');
+        let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
         this.bindAsArray(chatRef, "chat");
 
         // grab registeredNames and bind in state
-        let registeredNamesRef = new Firebase("https://treesradio.firebaseio.com/registeredNames");
+        let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
         this.bindAsObject(registeredNamesRef, "registeredNames");
     },
     authenticateUser: function(eml, pw){
@@ -73,7 +75,7 @@ var Main = React.createClass({
     authDataCallback: function(authData){
         if (authData) {
             console.log(authData.uid + " logged in");
-            let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + authData.uid);
+            let userRef = new Firebase(window.__env.firebase_origin + "/users/" + authData.uid);
             this.bindAsObject(userRef, "user");
             this.setState({ loginstate: true });
         } else {
@@ -97,7 +99,7 @@ var Main = React.createClass({
         inputPlaceholder: "Username"
       }, function(inputValue){
         let desiredUn = inputValue;
-        let registeredNamesRef = new Firebase("https://treesradio.firebaseio.com/registeredNames");
+        let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
         registeredNamesRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
@@ -108,7 +110,7 @@ var Main = React.createClass({
               "timer": 3000
             });
           } else {
-            let regRef = new Firebase("https://treesradio.firebaseio.com");
+            let regRef = new Firebase(window.__env.firebase_origin);
             regRef.createUser({
               email: desiredEml,
               password: desiredPw
@@ -140,7 +142,7 @@ var Main = React.createClass({
                     });
                 }
               } else {
-                let userRef = new Firebase("https://treesradio.firebaseio.com/users/" + userData.uid);
+                let userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
                 // create user entry
                 userRef.child('username').set(desiredUn);
                 // create registeredNames entry
@@ -193,7 +195,9 @@ var Main = React.createClass({
                             <Video />
                           </div>
                           <div id="playlists-container">
-                            <Playlists />
+                            <Playlists
+                              playlistsOpen={this.state.playlistsOpen}
+                               />
                           </div>
                       </div>
             {/* Chat Component */}

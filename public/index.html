@@ -10,19 +10,29 @@
 </head>
 <body>
     <div id="app"></div>
-    <!-- <script>
+    <script>
       var ENV_FIREBASE_ORIGIN = 'https://treesradio.firebaseio.com';
       /////////////////////////////////////
       function __loadFirebaseEnv(data) {
         window.__env = data || {};
         document.dispatchEvent(new CustomEvent('env', {detail: data || {}}));
       }
-      var jsonp = document.createElement('script')
+      var jsonp = document.createElement('script');
       jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g,',') + '.json?callback=__loadFirebaseEnv';
       document.head.appendChild(jsonp);
-    </script> -->
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      var init = function() {
+        if (!window.__env) return;
+        // var ref = new Firebase(__env.firebase_origin);
+        // start your application logic here!
+        $.getScript("app.js");
+      }
+      document.addEventListener('env', init);
+      init();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
 </body>
 </html>
