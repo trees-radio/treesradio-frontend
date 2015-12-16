@@ -34,11 +34,11 @@ import $ from 'jquery';
             <a>Current Artist Name</a>
           </div>
           <div id="grabtrack" className="col-lg-1">
-            <a className="button purple"><div className="light"></div>Grab</a>
+            <a className="button purple"><div className="light"></div>Grab</a> {/* //clicked className="button ppurple" */}
           </div>
           <div id="vote" className="col-lg-1">
-            <a className="button blue"><div className="light"></div>Like</a><br/>
-            <a className="button red"><div className="light"></div>Dislike</a>
+            <a className="button blue"><div className="light"></div>Like</a><br/> {/* //clicked className="button pblue" */}
+            <a className="button red"><div className="light"></div>Dislike</a> {/* //clicked className="button pred" */}
           </div>
           <div id="waitlist" className="col-lg-2">
             <a>Join Waitlist</a>
