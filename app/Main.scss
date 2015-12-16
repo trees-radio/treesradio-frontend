@@ -17,7 +17,7 @@
 // Must come before component imports
 //
 $trees-primary: #77b300;
-$trees-bg: #060606;
+$trees-bg: #0A0A0A;
 
 // IMPORT COMPONENTS
 @import './components/Nav/Nav';
@@ -25,7 +25,6 @@ $trees-bg: #060606;
 @import './components/Video/Video';
 @import './components/Queue/Queue';
 @import './components/Playlists/Playlists';
-@import './components/Waitlist/Waitlist';
 // @import './components/';
 
 html,

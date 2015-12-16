@@ -1,21 +1,55 @@
 
 
 
- import React from 'react';
+import React from 'react';
+import $ from 'jquery';
 
  var Playlists = React.createClass({
+   propTypes: {
+     playlistsOpen: React.PropTypes.func.isRequired
+   },
+   toggleDropUp: function() {
+     if (!this.props.playlistsOpen) {
+
+     } else {
+
+     }
+   },
    render: function() {
      return(
-       <div id="playlists-bar">
-         <div id="playlists-open-button">
-           <i id="playlists-open-icon" className="fa fa-angle-double-up fa-4x"></i>
-         </div>
+      <div id="playlists-component">
+        <div id="playlists-panel" ref="playlists-panel">
+          <p>Some text.</p>
+        </div>
+        <div id="playlists-bar" className="row">
+          <div id="playlists-open-button" className="col-lg-1" onClick={this.toggleDropUp}>
+            <i id="playlists-open-icon" className="fa fa-angle-double-up fa-4x"></i>
+          </div>
+          <div id="playlist-metadata" className="col-lg-3">
+            <a>Current Playlist Name</a><br/>
+            <a>Next Song in Playlist</a>
+          </div>
+          <div id="currentsong-metadata" className="col-lg-4">
+            <a>Current Song Name</a><br/>
+            <a>Current Artist Name</a>
+          </div>
+          <div id="grabtrack" className="col-lg-1">
+            <a className="button purple"><div className="light"></div>Grab</a> {/* clicked className="button ppurple" */}
+          </div>
+          <div id="vote" className="col-lg-1">
+            <a className="button blue"><div className="light"></div>Like</a><br/> {/* clicked className="button pblue" */}
+            <a className="button red"><div className="light"></div>Dislike</a> {/* clicked className="button pred" */}
+          </div>
+          <div id="waitlist" className="col-lg-2">
+            <a>Join Waitlist</a>
+          </div>
        </div>
+     </div>
      )
    }
  });
 
-module.exports = Playlists;
+module.exports = Playlists
 
 /////////////////////////////////////
 // Font Awesomes for Playlist Boards
