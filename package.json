@@ -11,7 +11,7 @@
     "update-env": "firebase data:set /_admin/env firebase/env.json -y -f treesradio",
     "build-dev": "npm run bolt-compile && webpack -d --progress --colors",
     "build-prod": "npm run bolt-compile && webpack -p --progress --colors",
-    "deploy-dev": "npm run build-dev && firebase deploy",
+    "deploy-dev": "npm run build-dev && firebase deploy -f treesradio-dev",
     "deploy-prod": "npm run build-prod && firebase deploy"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "font-awesome": "^4.5.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
+    "re-base": "^1.3.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-notification-system": "^0.1.17",
