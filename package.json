@@ -11,7 +11,7 @@
     "update-env": "firebase data:set /_admin/env firebase/env.json -y -f treesradio",
     "build-dev": "npm run bolt-compile && webpack -d --progress --colors",
     "build-prod": "npm run bolt-compile && webpack -p --progress --colors",
-    "deploy-dev": "npm run build-dev && firebase deploy -f treesradio-dev",
+    "deploy-dev": "npm run build-prod && firebase deploy -f treesradio-dev",
     "deploy-prod": "npm run build-prod && firebase deploy"
   },
   "repository": {
