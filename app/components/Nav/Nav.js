@@ -8,8 +8,6 @@
 import React from 'react';
 import Userbit from './Userbit/Userbit.js';
 
-// import './Nav.scss';
-
 var Nav = React.createClass({
     propTypes: {
         loginstate: React.PropTypes.bool.isRequired,
@@ -18,12 +16,16 @@ var Nav = React.createClass({
         checkUserLevel: React.PropTypes.func.isRequired
     },
     render: function(){
+        let Title = "TreesRadio";
+        if (this.props.devCheck) {
+          Title = "TreesRadio DEV";
+        }
         return (
             <div id="tr-nav">
                 <nav className="navbar navbar-default">
                     <div className="container-fluid">
                         <div className="navbar-header">
-                            <a className="navbar-brand" href="#">TreesRadio</a>
+                            <a className="navbar-brand" href="#">{Title}</a>
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

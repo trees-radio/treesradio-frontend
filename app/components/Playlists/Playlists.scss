@@ -25,6 +25,13 @@
   border-radius: 5px;
 }
 
+#playlists-panel-display {
+  li {
+    list-style-position: inside;
+    list-style-type: none;
+  }
+}
+
 #playlists-bar {
   position: absolute;
   width: 98%;

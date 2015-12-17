@@ -5,7 +5,6 @@ import React from 'react';
 
 // Firebase
 import Firebase from 'firebase';
-// import ReactFireMixin from 'reactfire';
 import Rebase from 're-base';
 var base = Rebase.createClass(window.__env.firebase_origin);
 
@@ -27,20 +26,27 @@ import Playlists from './components/Playlists/Playlists.js';
 import './Main.scss';
 
 
-// class Main extends React.Component{
-//
-//
-// };
-
 var Main = React.createClass({
+    ///////////////////////////////////////////////////////////////////////
+    // REACT-SPECIFIC & CONSTRUCTION
+    ///////////////////////////////////////////////////////////////////////
     getInitialState: function(){
+      let devCheckResult = false;
+      if (window.__env.firebase_origin === "https://treesradio-dev.firebaseio.com") {
+        devCheckResult = true;
+      }
       return {
+          devCheck: devCheckResult,
           loginstate: false,
           user: {},
           userLevel: 0,
           chat: [],
           registeredNames: {},
-          playlistsOpen: true
+          playlistsOpen: true,
+          playlistsPanelView: {
+            type: "blank",
+            playlist: ""
+          }
       }
     },
     componentWillMount: function(){
@@ -69,6 +75,9 @@ var Main = React.createClass({
             state: 'registeredNames',
         });
     },
+    ///////////////////////////////////////////////////////////////////////
+    // LOGIN & REGISTRATION
+    ///////////////////////////////////////////////////////////////////////
     authenticateUser: function(eml, pw){
         this.ref.authWithPassword({
             email: eml,
@@ -183,6 +192,9 @@ var Main = React.createClass({
 
       });
     },
+    ///////////////////////////////////////////////////////////////////////
+    // CHAT
+    ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
       this.setState({
         chat: this.state.chat.concat([newMsgData])
@@ -191,9 +203,9 @@ var Main = React.createClass({
     checkUserLevel: function(user){
       return _.get(this.state.registeredNames, user + ".level");
     },
-    // ///////////
-    // Playlists
-    // ///////////
+    ///////////////////////////////////////////////////////////////////////
+    // PLAYLISTS
+    ///////////////////////////////////////////////////////////////////////
     playlistsOpenToggle: function() {
       if (!this.state.playlistsOpen) {
         this.setState({ playlistsOpen: true });
@@ -201,9 +213,9 @@ var Main = React.createClass({
         this.setState({ playlistsOpen: false });
       }
     },
-    // ///////////
-    // MAIN RENDER
-    // ///////////
+    ///////////////////////////////////////////////////////////////////////
+    // RENDER
+    ///////////////////////////////////////////////////////////////////////
     render: function(){
       return (
           <div>
@@ -214,6 +226,7 @@ var Main = React.createClass({
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
                 checkUserLevel={this.checkUserLevel}
+                devCheck={this.state.devCheck}
               />
 
             {/* Start Container */}

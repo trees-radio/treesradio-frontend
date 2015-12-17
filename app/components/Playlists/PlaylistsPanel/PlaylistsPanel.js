@@ -24,7 +24,14 @@ var PlaylistsPanel = React.createClass({
 
     return (
       <div id="playlists-panel" ref="playlists-panel" className={appliedClasses}>
-        <p>Some text.</p>
+        <div id="playlists-panel-head">
+
+        </div>
+        <div id="playlists-panel-display">
+          <ul>
+            <li className=""><img src="http://placehold.it/60x40" /><span>Media Title</span><span>00:00</span></li>
+          </ul>
+        </div>
       </div>
     );
   }

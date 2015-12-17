@@ -26,11 +26,11 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           </div>
           <div id="playlist-metadata" className="col-lg-3">
             <a>Current Playlist Name</a><br/>
-            <a>Next Song in Playlist</a>
+            <a>Next Media in Playlist</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4">
-            <a>Current Song Name</a><br/>
-            <a>Current Artist Name</a>
+            <a>Current Media Title</a><br/>
+            <a>Player: Gryphon</a>
           </div>
           <div id="grabtrack" className="col-lg-1">
             <a className="button ppurple"><div className="light"></div>Grab</a> {/* clicked className="button purple" */}
