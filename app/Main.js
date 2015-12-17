@@ -191,12 +191,20 @@ var Main = React.createClass({
     checkUserLevel: function(user){
       return _.get(this.state.registeredNames, user + ".level");
     },
+    // ///////////
+    // Playlists
+    // ///////////
+    playlistsOpenToggle: function() {
+      if (!this.state.playlistsOpen) {
+        this.setState({ playlistsOpen: true });
+      } else {
+        this.setState({ playlistsOpen: false });
+      }
+    },
+    // ///////////
+    // MAIN RENDER
+    // ///////////
     render: function(){
-
-      // ///////////
-      // MAIN RENDER
-      // ///////////
-
       return (
           <div>
               <Nav
@@ -220,6 +228,7 @@ var Main = React.createClass({
                           <div id="playlists-container">
                             <Playlists
                               playlistsOpen={this.state.playlistsOpen}
+                              playlistsOpenToggle={this.playlistsOpenToggle}
                                />
                           </div>
                       </div>

@@ -10,22 +10,19 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
    propTypes: {
      playlistsOpen: React.PropTypes.bool.isRequired
    },
-   toggleDropUp: function() {
-     if (!this.props.playlistsOpen) {
-
-     } else {
-
-     }
-   },
    render: function() {
+     let openButtonIcon = "fa fa-angle-double-up fa-4x";
+     if (this.props.playlistsOpen) {
+       openButtonIcon = "fa fa-angle-double-down fa-4x"
+     }
      return(
       <div id="playlists-component">
         <PlaylistsPanel
           playlistsOpen={this.props.playlistsOpen}
           />
         <div id="playlists-bar" className="row">
-          <div id="playlists-open-button" className="col-lg-1" onClick={this.toggleDropUp}>
-            <i id="playlists-open-icon" className="fa fa-angle-double-up fa-4x"></i>
+          <div id="playlists-open-button" className="col-lg-1" onClick={this.props.playlistsOpenToggle}>
+            <i id="playlists-open-icon" className={openButtonIcon}></i>
           </div>
           <div id="playlist-metadata" className="col-lg-3">
             <a>Current Playlist Name</a><br/>

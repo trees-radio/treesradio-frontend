@@ -11,10 +11,16 @@ var PlaylistsPanel = React.createClass({
     //
     // added class logic
     let addedClass = "";
-    if (!this.props.playlistsOpen) {
+    if (this.props.playlistsOpen) {
       addedClass = "playlists-panel-open";
+    } else {
+      addedClass = "playlists-panel-closed";
     }
-    let appliedClasses = initialClasses + " " + addedClass;
+    var classSpacer = "";
+    if (initialClasses != "") {
+      classSpacer = " ";
+    }
+    let appliedClasses = initialClasses + classSpacer + addedClass;
 
     return (
       <div id="playlists-panel" ref="playlists-panel" className={appliedClasses}>
