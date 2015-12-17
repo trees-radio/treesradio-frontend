@@ -46,7 +46,7 @@ var ChatContent = React.createClass({
           // add any new whole-line classes in string below, keep trailing space
           let chatLineClasses = "chat-item " + chatPosClass;
 
-          let chatAvatar = "//api.adorable.io/avatars/50/"+ msg['user'] +".png";
+          let chatAvatar = "http://api.adorable.io/avatars/50/"+ msg['user'] +".png";
 
 
           // individual
@@ -54,7 +54,7 @@ var ChatContent = React.createClass({
               <li key={ msg['.key'] } className={chatLineClasses}>
 
                 <div className="chat-avatar">
-                  <img src={chatAvatar} />
+                  <img id="avatarimg" src={chatAvatar} />
                 </div>
                 <div className="chat-msg">
                   <span className="chat-username">{ msg['user'] }</span><br />

@@ -12,85 +12,25 @@
 @import '~font-awesome/css/font-awesome.css';
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
+//
+// VARIABLES (SASS FEATURE, IGNORE POST-COMPILE)
+// Must come before component imports
+//
+$trees-primary: #77b300;
+$trees-bg: #0A0A0A;
+
 // IMPORT COMPONENTS
 @import './components/Nav/Nav';
-@import './components/Nav/Userbit/Userbit';
 @import './components/Chat/Chat';
-@import './components/Chat/ChatContent/ChatContent';
-@import './components/Chat/ChatSend/ChatSend';
 @import './components/Video/Video';
 @import './components/Queue/Queue';
 @import './components/Playlists/Playlists';
 // @import './components/';
 
-
-//
-// VARIABLES (SASS FEATURE, IGNORE POST-COMPILE)
-//
-$trees-primary: #77b300;
-$trees-bg: #060606;
-$videotoplevel-bg: #171717;
-$votingtoplevel-bg: #272727;
-$chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
-$chat-item-border: #000; //light skin 808080
-$chat-item-color: #c0c0c0; //light skin #000
-
-
-//
-// SCAFFOLDING
-//
-
-// @-ms-viewport{
-//   width: device-width;
-//   height: device-height;
-// }
-
 html,
 body {
-// height of all parent elems of .col-trees-radio must be 100% to make those cols 100% */
   height: 100%;
   overflow-y: hidden;
-}
-
-.navbar {
-  margin-bottom: 1px;
-}
-
-#tr-nav {
-
-}
-
-#nav-divider {
-  background-color: $trees-primary;
-  height: 5px;
-}
-
-.maxitbro {
-  height: 100%;
-	//padding-left: 0;
-	//padding-right: 0;
-}
-
-#votingtoplevel {
-  background-color: $votingtoplevel-bg;
-  z-index: 1;
-  height: 100%;
-}
-
-#videotoplevel {
-	// background-color: red;
-  // background-color: $videotoplevel-bg;
-  background-image: url('img/backgroundvideo.png');
-  height: 100%;
-}
-
-#chattoplevel {
-  background-color: $chattoplevel-bg;
-  border-left: 5px solid #73AD21;
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-  padding-right: 0;
 }
 
 .placeholder-txt {
@@ -98,315 +38,17 @@ body {
   vertical-align: middle;
 }
 
-
 #app {
   height: 100%;
 }
-
-
-//
-// Video Section
-//
-
-#youtube-player {
-  margin-left: 8%;
-
-}
-
-#player {
-
-}
-
-#playerdiv {
-
-}
-
-#vidcontainer {
-
-}
-
-.reactplayer {
-
-}
-
-#reactplayerid {
-
-}
-
-.bg-fill-l {
-	// position: absolute;
-	// top: 0px;
-	// left: 0px;
-	// width:300px;
-  background-image: url('img/escheresque_ste.png');
-  background-repeat: repeat;
-  height: 100%;
-}
-
-.bg-fill-r {
-	// position: absolute;
-	// top: 0px;
-	// right: 0px;
-  // width: 300px;
-  background-image: url('img/escheresque_ste.png');
-  background-repeat: repeat;
-  height: 100%;
-}
-
-.section-divider {
-  background-color: $trees-primary;
-  height: 5px;
-  width: 100%;
-}
-
-#volslider {
-  height: 10px;
-  width: 20%;
-  }
-
-.ui-slider-range {
-  background: $trees-primary;
-}
-
-.ui-slider-handle {
-  border-color: $trees-primary;
-}
-
-
-
-// /* KEEP NEAR BOTTOM */
-// .video-js {padding-top: 56.25%}
-// .vjs-fullscreen {padding-top: 0px}
-
-
-
-//
-// Chat
-//
 
 div#app > div {
   height: 99%;
   width: 100%;
 }
 
-div#chatcontainertop > div {
-  height: 100%;
-}
-
-#chatcontainertop {
-  height: 100%;
-  width: 100%;
-  bottom: 0;
-  overflow: hidden;
-}
-
-#chatcontainer {
-  height: 100%;
-  padding-bottom: 53px;
-  width: 100%;
-  bottom: -25px;
-  overflow: hidden;
-}
-
-#chatscroll {
-  height: 100%; //23
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-#sendbox {
-  left: 10px;
-  position: absolute;
-  right: 10px;
-  width: 93%;
-  bottom: 5px;
-}
-
-#chatbox {
-  bottom: 0;
-  height: 100%;
-  margin: 0;
-  padding-left: 0;
-}
-
-#sendchat {
-
-	//margin-bottom: 20px;
-}
-
-.chat-item {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-color: $chat-item-border;
-  color: $chat-item-color;
-  list-style-position: inside;
-  list-style-type: none;
-  margin: 0;
-  padding-bottom: 3px;
-  padding-left: 5px;
-  padding-top: 3px;
-  width: 100%;
-  display: flex;
-
-}
-
-.chat-msg {
-  vertical-align: bottom;
-}
-
-.chat-text {
-  font-family: 'Open Sans', sans-serif;
-}
-
-.chat-username {
-  color: #0040ff;
-  font-size: normal;
-  font-weight: bolder;
-  font-size: 110%;
-  //text-decoration: underline;
-}
-
-.chat-avatar {
-  padding-right: 5px;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-
-
-/*******************************************************
-* Michael's Section
-*******************************************************/
-
 a:-webkit-any-link {
     cursor: auto;
-}
-
-
-.vote-buttons {
-  padding-left: 5%;
-  padding-top: 5%;
-  color: black;
-  list-style-type: none;
-  list-style-position: inside;
-  border-color: gray;
-}
-
-.vote-item {
-  color: black;
-  list-style-type: none;
-  list-style-position: inside;
-  border-color: gray;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  margin: 0;
-  padding-left: 25%;
-  padding-top: 20%;
-}
-
-.song-name {
-  font-size: small;
-  font-weight: bold;
-  color: Gray;
-  font-family: 'Open Sans', sans-serif;
-}
-
-.submitted-by {
-  font-size: small;
-  color: Gray;
-  font-family: 'Open Sans', sans-serif;
-}
-
-
-.vote-user {
-  font-size: small;
-  font-weight: bold;
-  color: black;
-  font-family: 'Open Sans', sans-serif;
-}
-
-/* Chat */
-
-.chat-line-0 {
-  // border-radius: 10px;
-  background-color: #121317; //light skin e9eef0
-  padding: 10px;
-}
-
-.chat-line-1 {
-  // border-radius: 10px;
-  background-color: #0A0A0A; //light skin cbd6dc
-  padding: 10px;
-}
-
-/* Userbit */
-
-#emailpassfields  {
-  margin-top: 7px;
-}
-
-#loginbutton{
-  margin-top: 7px;
-  margin-left: 5px;
-  margin-right: 5px;
-  font-weight: bold;
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.5px;
-  font-size: 110%;
-}
-
-#regbutton {
-  margin-top: 7px;
-  margin-right: 10px;
-  font-weight: bold;
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.5px;
-  font-size: 110%;
-}
-
-#logoutbutton {
-  margin-top: 6px;
-  margin-right: 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.5px;
-  font-size: 110%;
-}
-
-.navbar-brand {
-  position: relative;
-  left: 10px;
-  font-size: 150%;
-  font-family: 'Open Sans', sans-serif;
-  letter-spacing: 1px;
-  vertical-align: baseline;
-}
-
-.navbar-header {
-
-}
-
-#usernametop {
-margin-right: 0;
-margin-top: 6px;
-text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-letter-spacing: 1.5px;
-font-size: 110%;
-}
-
-#usernamedropdown {
-  margin-left: 0;
-  margin-right: 5px;
-  margin-top: 6px;
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    font-size: 110%;
-}
-
-#emailbox {
-  margin-right: 5px;
 }
 
 /* Components Container */
@@ -424,4 +66,6 @@ font-size: 110%;
 .row
 {
     height: 100%;
+    width: 100%;
+    margin: 0;
 }
