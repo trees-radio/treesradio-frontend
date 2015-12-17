@@ -5,13 +5,17 @@ import React from 'react';
 
 // Firebase
 import Firebase from 'firebase';
-import ReactFireMixin from 'reactfire';
+// import ReactFireMixin from 'reactfire';
 import Rebase from 're-base';
 var base = Rebase.createClass(window.__env.firebase_origin);
 
 // More libraries
 import sweetAlert from 'sweetalert';
 import _ from 'lodash';
+
+// TreesRadio utility functions
+import TRreg from './utils/registration.js';
+// TRreg.example();
 
 // Components
 import Nav from './components/Nav/Nav.js';
@@ -23,9 +27,12 @@ import Playlists from './components/Playlists/Playlists.js';
 import './Main.scss';
 
 
+// class Main extends React.Component{
+//
+//
+// };
 
 var Main = React.createClass({
-    mixins: [ReactFireMixin],
     getInitialState: function(){
       return {
           loginstate: false,
@@ -45,12 +52,22 @@ var Main = React.createClass({
         this.ref.onAuth(this.authDataCallback);
 
         // grab chat messages and bind to chat array in state
-        let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
-        this.bindAsArray(chatRef, "chat");
+        base.syncState(`chat/messages`, {
+            context: this,
+            state: 'chat',
+            asArray: true,
+            queries: {
+              limitToLast: 100
+            }
+        });
 
         // grab registeredNames and bind in state
-        let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
-        this.bindAsObject(registeredNamesRef, "registeredNames");
+        // let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
+        // this.bindAsObject(registeredNamesRef, "registeredNames");
+        base.syncState(`registeredNames`, {
+            context: this,
+            state: 'registeredNames',
+        });
     },
     authenticateUser: function(eml, pw){
         this.ref.authWithPassword({
@@ -75,8 +92,12 @@ var Main = React.createClass({
     authDataCallback: function(authData){
         if (authData) {
             console.log(authData.uid + " logged in");
-            let userRef = new Firebase(window.__env.firebase_origin + "/users/" + authData.uid);
-            this.bindAsObject(userRef, "user");
+            // let userRef = new Firebase(window.__env.firebase_origin + "/users/" + authData.uid);
+            // this.bindAsObject(userRef, "user");
+            base.syncState(`users/` + authData.uid, {
+              context: this,
+              state: 'user'
+            });
             this.setState({ loginstate: true });
         } else {
             console.log("Logged out");
@@ -163,7 +184,9 @@ var Main = React.createClass({
       });
     },
     handleSendMsg: function(newMsgData) {
-      this.firebaseRefs["chat"].push(newMsgData);
+      this.setState({
+        chat: this.state.chat.concat([newMsgData])
+      });
     },
     checkUserLevel: function(user){
       return _.get(this.state.registeredNames, user + ".level");
@@ -219,4 +242,4 @@ var Main = React.createClass({
   }
 });
 
-module.exports = Main;
+export default Main;
