@@ -31,7 +31,6 @@ var Nav = React.createClass({
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav" id="nav-about">
                                 <li><a>About</a></li>
-                                <li><a>Who's Online</a></li>
                             </ul>
                             <div className="nav navbar-nav navbar-right">
                                 <Userbit

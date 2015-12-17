@@ -13,6 +13,7 @@
 
 .playlists-panel-closed {
   height: 0px;
+  overflow: hidden;
 }
 
 .playlists-panel-open {
@@ -29,8 +30,36 @@
   li {
     list-style-position: inside;
     list-style-type: none;
+    padding: 20px;
+    color: #77b300;
   }
 }
+
+#playlist-search-box {
+  width: 80%;
+  margin-left: 1%;
+  margin-top: 1%;
+  float: left;
+}
+
+#pl-current-playlist {
+  float: right;
+}
+
+#playlists-panel-head {
+  width: 100%;
+}
+
+.pl-media-title {
+  padding-left: 5%;
+  padding-right: 75%;
+  font-size: 125%;
+}
+
+.pl-timestamp{
+  font-size: 125%;
+}
+
 
 #playlists-bar {
   position: absolute;
