@@ -28,7 +28,16 @@ var PlaylistsPanel = React.createClass({
       <div id="playlists-panel" ref="playlists-panel" className={appliedClasses}>
         <div id="playlists-panel-head">
           <input type="text" id="playlist-search-box" ref="searchbox" placeholder="Search YouTube" className="form-control" onKeyPress={this.handleSubmit} />
-          <button id="pl-current-playlist">Current Playlist</button>
+
+            <div className="btn-group" id="playlist-btn">
+                <a className="btn btn-primary" id="pl-current-playlist" href="#">Current Playlist</a>
+                <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#">
+                    <span className="fa fa-caret-down"></span></a>
+                    <ul className="dropdown-menu">
+                      <li><a href="#">Electronic</a></li>
+                      <li><a href="#">Rock</a></li>
+                    </ul>
+            </div>
 
         </div>
         <div id="playlists-panel-display">
