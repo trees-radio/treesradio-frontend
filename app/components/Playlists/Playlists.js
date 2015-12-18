@@ -8,17 +8,23 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
  var Playlists = React.createClass({
    propTypes: {
-     playlistsOpen: React.PropTypes.bool.isRequired
+     playlistsOpen: React.PropTypes.bool.isRequired,
+     searchForVideo: React.PropTypes.func.isRequired,
+     playlistsPanelView: React.PropTypes.object.isRequired,
+     currentSearch: React.PropTypes.object.isRequired
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
      if (this.props.playlistsOpen) {
-       openButtonIcon = "fa fa-angle-double-down fa-4x"
+       openButtonIcon = "fa fa-angle-double-down fa-4x";
      }
      return(
       <div id="playlists-component">
         <PlaylistsPanel
           playlistsOpen={this.props.playlistsOpen}
+          searchForVideo={this.props.searchForVideo}
+          playlistsPanelView={this.props.playlistsPanelView}
+          currentSearch={this.props.currentSearch}
           />
         <div id="playlists-bar" className="row">
           <div id="playlists-open-button" className="col-lg-1" onClick={this.props.playlistsOpenToggle}>
