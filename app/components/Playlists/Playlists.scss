@@ -72,11 +72,14 @@
   width: 24%;
 }
 
+
+
 #playlist-dropdown {
   background-color: $trees-bg;
   border-color: $trees-bg;
   float: right;
   padding-left: 20%;
+  padding-bottom: 0;
   margin-top: 3%;
   margin-right: 25%;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
@@ -91,6 +94,9 @@
 #pl-dd-menu {
   margin-left: 30%;
   font-size: 110%;
+  padding-top: 0;
+  border-top-width: 0;
+  margin-top: 0;
 }
 
 #playlists-panel-head {
