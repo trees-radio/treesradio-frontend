@@ -47,8 +47,9 @@ var Main = React.createClass({
           chat: [],
           registeredNames: {},
           playlistsOpen: true,
+          currentPlaylist: "",
           playlistsPanelView: {
-            type: "search",
+            type: "blank",
             playlist: ""
           },
           playlists: {},
@@ -237,6 +238,9 @@ var Main = React.createClass({
             items: response.data.items
           } });
         }.bind(this));
+      this.setState({ playlistsPanelView: {
+        type: "search"
+      } });
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER

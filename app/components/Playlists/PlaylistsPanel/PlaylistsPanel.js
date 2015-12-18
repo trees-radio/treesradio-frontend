@@ -69,13 +69,13 @@ var PlaylistsPanel = React.createClass({
 
     let playlistPos = 0;
     let playlistsCurrentView = "";
-    let currentPlaylistName = " Current Playlist";
+    let currentPlaylistName = "Current Playlist";
     if (this.props.playlistsPanelView.type === "blank") {
       playlistsCurrentView = this.emptyPlaylistView();
     } else if (this.props.playlistsPanelView.type === "playlist") {
       playlistsCurrentView = this.dummyData();
     } else if (this.props.playlistsPanelView.type === "search") {
-      currentPlaylistName = "Search";
+      // currentPlaylistName = "Search";
       let searchItems = this.props.currentSearch.items.map(function(item){
         let playlistPosClass = "";
         if (playlistPos === 0) {
