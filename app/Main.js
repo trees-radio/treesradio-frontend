@@ -11,6 +11,7 @@ var base = Rebase.createClass(window.__env.firebase_origin);
 // More libraries
 import sweetAlert from 'sweetalert';
 import _ from 'lodash';
+import axios from 'axios';
 
 // TreesRadio utility functions
 import TRreg from './utils/registration.js';
@@ -24,6 +25,9 @@ import Playlists from './components/Playlists/Playlists.js';
 
 // (S)CSS
 import './Main.scss';
+
+// YouTube API Key
+var ytAPIkey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
 
 
 var Main = React.createClass({
@@ -44,8 +48,13 @@ var Main = React.createClass({
           registeredNames: {},
           playlistsOpen: true,
           playlistsPanelView: {
-            type: "blank",
+            type: "search",
             playlist: ""
+          },
+          playlists: {},
+          currentSearch: {
+            data: {},
+            items: []
           }
       }
     },
@@ -67,13 +76,15 @@ var Main = React.createClass({
             }
         });
 
-        // grab registeredNames and bind in state
-        // let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
-        // this.bindAsObject(registeredNamesRef, "registeredNames");
         base.syncState(`registeredNames`, {
             context: this,
             state: 'registeredNames',
         });
+
+        /////////////
+        // TEST CODE
+        /////////////
+        // axios.get('https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=' + )
     },
     ///////////////////////////////////////////////////////////////////////
     // LOGIN & REGISTRATION
@@ -106,6 +117,10 @@ var Main = React.createClass({
             base.syncState(`users/` + authData.uid, {
               context: this,
               state: 'user'
+            });
+            base.syncState(`playlists/` + authData.uid, {
+              context: this,
+              state: 'playlists'
             });
             this.setState({ loginstate: true });
         } else {
@@ -213,6 +228,16 @@ var Main = React.createClass({
         this.setState({ playlistsOpen: false });
       }
     },
+    searchForVideo: function(searchQuery) {
+      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
+        .then(function (response) {
+          // console.log("Test YT search:", response);
+          this.setState({ currentSearch: {
+            data: response.data,
+            items: response.data.items
+          } });
+        }.bind(this));
+    },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -242,6 +267,9 @@ var Main = React.createClass({
                             <Playlists
                               playlistsOpen={this.state.playlistsOpen}
                               playlistsOpenToggle={this.playlistsOpenToggle}
+                              searchForVideo={this.searchForVideo}
+                              playlistsPanelView={this.state.playlistsPanelView}
+                              currentSearch={this.state.currentSearch}
                                />
                           </div>
                       </div>
