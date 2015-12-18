@@ -33,7 +33,7 @@ var PlaylistsPanel = React.createClass({
                 <a className="btn btn-primary" id="pl-current-playlist" href="#">Current Playlist</a>
                 <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#">
                     <span className="fa fa-caret-down"></span></a>
-                    <ul className="dropdown-menu">
+                    <ul className="dropdown-menu" id="pl-dd-menu">
                       <li><a href="#">Electronic</a></li>
                       <li><a href="#">Rock</a></li>
                     </ul>
