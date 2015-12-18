@@ -61,14 +61,11 @@
 }
 
 #pl-current-playlist {
-
-  margin-left: 20%;
-  margin-right: 0;
-  margin-top: 7.5%;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 125%;
   float:left;
+  color: #77b300;
 }
 
 #playlist-btn {
@@ -80,9 +77,14 @@
   border-color: $trees-bg;
   float: right;
   margin-top: 5%;
-  margin-right: 27%;
+  margin-right: 25%;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   font-size: 120%;
+}
+
+#pl-carat {
+  margin-left: 4%;
+  margin-top: 4%;
 }
 
 #pl-dd-menu {
@@ -158,7 +160,7 @@
   border-color: #77b300;
   font-size: 150%;
   line-height: 1.5;
-    padding: 5px;
+  padding: 5px;
 }
 
 #currentsong-metadata a {
