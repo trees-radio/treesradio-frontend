@@ -29,7 +29,7 @@ var PlaylistsPanel = React.createClass({
         <div id="playlists-panel-head">
           <input type="text" id="playlist-search-box" ref="searchbox" placeholder="Search YouTube" className="form-control" onKeyPress={this.handleSubmit} />
           <button id="pl-current-playlist">Current Playlist</button>
-          
+
         </div>
         <div id="playlists-panel-display">
           <ul id="playlist-ul">
