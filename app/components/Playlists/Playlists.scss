@@ -62,10 +62,10 @@
 
 #pl-current-playlist {
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.5px;
-  font-size: 125%;
+  letter-spacing: 1.25px;
+  font-size: 150%;
   float:left;
-  color: #77b300;
+
 }
 
 #playlist-btn {
@@ -76,7 +76,8 @@
   background-color: $trees-bg;
   border-color: $trees-bg;
   float: right;
-  margin-top: 5%;
+  padding-left: 20%;
+  margin-top: 3%;
   margin-right: 25%;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   font-size: 120%;
@@ -84,7 +85,7 @@
 
 #pl-carat {
   margin-left: 4%;
-  margin-top: 4%;
+  margin-top: 5%;
 }
 
 #pl-dd-menu {
