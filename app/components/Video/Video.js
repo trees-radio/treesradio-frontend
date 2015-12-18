@@ -3,8 +3,6 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-// import './Video.scss';
-
 var Video = React.createClass({
   shouldBePlaying: function(){
     return false;
