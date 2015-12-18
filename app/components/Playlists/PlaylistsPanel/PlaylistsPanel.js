@@ -87,7 +87,7 @@ var PlaylistsPanel = React.createClass({
         }
         let videoURL = "https://www.youtube.com/watch?v=" + item.id.videoId;
         return (
-            <li className={playlistPosClass} key={item.id.videoId}><a target="_blank" href={videoURL}><img src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">{item.snippet.channelTitle}</span>{/*<span className="pl-timestamp">00:00</span>*/}</li>
+            <li className={playlistPosClass} key={item.id.videoId}><a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">{item.snippet.channelTitle}</span>{/*<span className="pl-timestamp">00:00</span>*/}</li>
         )
       });
 
