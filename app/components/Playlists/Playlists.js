@@ -33,14 +33,16 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
             <a>Player: Gryphon</a>
           </div>
           <div id="grabtrack" className="col-lg-1">
-            <a className="button ppurple"><div className="light"></div>Grab</a> {/* clicked className="button purple" */}
+            <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
           </div>
           <div id="vote" className="col-lg-1">
-            <a className="button pblue"><div className="light"></div>Like</a><br/> {/* clicked className="button blue" */}
-            <a className="button pred"><div className="light"></div>Dislike</a> {/* clicked className="button red" */}
+            {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
+            <div className="like-button"><i className="fa fa-thumbs-o-up"></i></div><br/>
+            {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
+            <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i></div>
           </div>
           <div id="waitlist" className="col-lg-2">
-            <a>Join Waitlist</a>
+            <div className="join-waitlist">Join Waitlist</div>
           </div>
        </div>
      </div>
