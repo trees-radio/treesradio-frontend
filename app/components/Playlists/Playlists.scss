@@ -32,6 +32,14 @@
   border-radius: 5px;
 }
 
+.pl-thumbnail {
+  width: 5%;
+}
+
+.pl-channel {
+  float: right;
+}
+
 #playlists-panel-display {
   height: 100%;
 }
@@ -41,6 +49,7 @@
   margin-top: 1%;
   padding-left: 0;
   padding-right: 0;
+  overflow-y: auto;
 }
 
 #playlists-panel-display {
@@ -53,7 +62,7 @@
 }
 
 #playlist-search-box {
-  width: 75%;
+  width: 70%;
   height: 45px;
   margin-left: 1%;
   margin-top: 1%;
@@ -65,6 +74,7 @@
   letter-spacing: 1.25px;
   font-size: 150%;
   float:left;
+  margin-left: 20%;
 
 }
 
@@ -113,7 +123,7 @@
 
 .pl-media-title {
   padding-left: 3%;
-  padding-right: 77%;
+  padding-right: 2%;
   font-size: 125%;
 }
 
