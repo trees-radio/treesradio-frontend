@@ -8,7 +8,7 @@ var PlaylistsPanel = React.createClass({
     playlistsPanelView: React.PropTypes.object.isRequired,
     currentSearch: React.PropTypes.object.isRequired,
     addNewPlaylist: React.PropTypes.func.isRequired,
-    currentPlaylist: React.PropTypes.string.isRequired,
+    currentPlaylist: React.PropTypes.object.isRequired,
     playlists: React.PropTypes.array.isRequired,
     removePlaylist: React.PropTypes.func.isRequired
   },
@@ -61,7 +61,7 @@ var PlaylistsPanel = React.createClass({
     let playlistPos = 0;
     let playlistsCurrentView = "";
     let currentPlaylistName = "";
-    if (this.props.currentPlaylist === "") {
+    if (this.props.currentPlaylist.name === "") {
       currentPlaylistName = "No Playlist Selected";
     }
     if (this.props.playlistsPanelView.type === "blank") {

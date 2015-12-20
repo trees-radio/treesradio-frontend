@@ -50,7 +50,10 @@ var Main = React.createClass({
           chat: [],
           registeredNames: {},
           playlistsOpen: true,
-          currentPlaylist: "",
+          currentPlaylist: {
+            name: "",
+            index: -1
+          },
           playlistsPanelView: {
             type: "blank",
             playlist: ""
@@ -300,6 +303,9 @@ var Main = React.createClass({
           timer: 3000
         });
       });
+    },
+    selectPlaylist: function(index) {
+
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER

@@ -13,7 +13,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
      playlistsPanelView: React.PropTypes.object.isRequired,
      currentSearch: React.PropTypes.object.isRequired,
      addNewPlaylist: React.PropTypes.func.isRequired,
-     currentPlaylist: React.PropTypes.string.isRequired,
+     currentPlaylist: React.PropTypes.object.isRequired,
      playlists: React.PropTypes.array.isRequired,
      removePlaylist: React.PropTypes.func.isRequired
    },
@@ -23,10 +23,10 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
        openButtonIcon = "fa fa-angle-double-down fa-4x";
      }
      let currentPlaylistName = "";
-     if (this.props.currentPlaylist === "") {
+     if (this.props.currentPlaylist.name === "") {
        currentPlaylistName = "No Playlist Selected";
      } else {
-       currentPlaylistName = this.props.currentPlaylist;
+       currentPlaylistName = this.props.currentPlaylist.name;
      }
      return(
       <div id="playlists-component">
