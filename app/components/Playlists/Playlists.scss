@@ -90,6 +90,8 @@
 .dropdown-menu>li>a {
   float:left;
   width: 80%;
+  max-width: 80%;
+  overflow-x: hidden;
 }
 
 #playlist-dropdown {
