@@ -1,11 +1,16 @@
 
 import React from 'react';
+import sweetAlert from 'sweetalert';
 
 var PlaylistsPanel = React.createClass({
   propTypes: {
     searchForVideo: React.PropTypes.func.isRequired,
     playlistsPanelView: React.PropTypes.object.isRequired,
-    currentSearch: React.PropTypes.object.isRequired
+    currentSearch: React.PropTypes.object.isRequired,
+    addNewPlaylist: React.PropTypes.func.isRequired,
+    currentPlaylist: React.PropTypes.string.isRequired,
+    playlists: React.PropTypes.array.isRequired,
+    removePlaylist: React.PropTypes.func.isRequired
   },
   handleSubmit: function(e) {
     if (e.key === 'Enter') {
@@ -18,31 +23,22 @@ var PlaylistsPanel = React.createClass({
       }
     }
   },
+  handleAdd: function(index) {
+    console.log("Adding search item of index", index, "to playlist");
+  },
+  handleSelectPlaylist: function(index) {
+    console.log("Selected playlist of index", index);
+  },
+  handleRemovePlaylist: function(index) {
+    this.props.removePlaylist(index);
+  },
   emptyPlaylistView: function() {
-    return (<ul id="playlist-ul"></ul>)
-  },
-  dummyData: function() {
-    return (
-      <ul id="playlist-ul">
-      <li className="playlist-item playlist-item-1"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-2"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-1"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-2"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-1"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-2"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-1"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-2"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-1"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-2"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-1"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      <li className="playlist-item playlist-item-2"><img src="http://placehold.it/60x40" /><span className="pl-media-title">Media Title</span><span className="pl-timestamp">00:00</span></li>
-      </ul>
-    )
-  },
-  getCurrentSearchItems: function() {
-
+    return (<ul id="playlist-ul" className="no-playlist-selected"/>)
   },
   render: function() {
+    ///////////////////////////////////////////////////////////////////////
+    // PANEL
+    ///////////////////////////////////////////////////////////////////////
     // classes for container div
     //
     // add initial classes here
@@ -61,35 +57,35 @@ var PlaylistsPanel = React.createClass({
     }
     let appliedClasses = initialClasses + classSpacer + addedClass;
 
-    // processing search data
-    // console.log(this.props.currentSearch.items);
-
     // What we're looking at
-    // console.log(this.props.currentSearch.items);
-
     let playlistPos = 0;
     let playlistsCurrentView = "";
-    let currentPlaylistName = "Current Playlist";
+    let currentPlaylistName = "";
+    if (this.props.currentPlaylist === "") {
+      currentPlaylistName = "No Playlist Selected";
+    }
     if (this.props.playlistsPanelView.type === "blank") {
+      // currentPlaylistName = "No Playlist Selected";
       playlistsCurrentView = this.emptyPlaylistView();
     } else if (this.props.playlistsPanelView.type === "playlist") {
-      playlistsCurrentView = this.dummyData();
+      // playlistsCurrentView = this.dummyData();
+
     } else if (this.props.playlistsPanelView.type === "search") {
-      // currentPlaylistName = "Search";
-      let searchItems = this.props.currentSearch.items.map(function(item){
+      let searchItems = this.props.currentSearch.items.map(function(item, index){
         let playlistPosClass = "";
         if (playlistPos === 0) {
           playlistPosClass = "playlist-item-2";
           playlistPos = 1;
         } else {
-          playlistPosClass = "playlist-item-1"
+          playlistPosClass = "playlist-item-1";
           playlistPos = 0;
         }
         let videoURL = "https://www.youtube.com/watch?v=" + item.id.videoId;
+        let boundClick = this.handleAdd.bind(this, index);
         return (
-            <li className={playlistPosClass} key={item.id.videoId}><a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">{item.snippet.channelTitle}</span>{/*<span className="pl-timestamp">00:00</span>*/}</li>
+            <li className={playlistPosClass} key={index}><a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">{item.snippet.channelTitle}</span><i onClick={boundClick} className="fa fa-2x fa-plus add-to-playlist-btn"></i></li>
         )
-      });
+      }, this); // use 'this' as second arg to map to preserve scope
 
 
       let computeSearchView = function(list) {
@@ -97,6 +93,19 @@ var PlaylistsPanel = React.createClass({
       }
       playlistsCurrentView = computeSearchView(searchItems);
     }
+    ///////////////////////////////////////////////////////////////////////
+    // Playlists List (dropdown)
+    ///////////////////////////////////////////////////////////////////////
+    let playlistsList = this.props.playlists.map(function(playlist, index){
+      let boundClickSelect = this.handleSelectPlaylist.bind(this, index);
+      let boundClickRemove = this.handleRemovePlaylist.bind(this, index);
+      return (
+        <li key={playlist.key}><a onClick={boundClickSelect} href="#">{playlist.name}</a><div onClick={boundClickRemove} className="fa fa-trash remove-playlist"/></li>
+      )
+    }, this);
+    ///////////////////////////////////////////////////////////////////////
+    // RENDER
+    ///////////////////////////////////////////////////////////////////////
     return (
       <div id="playlists-panel" ref="playlists-panel" className={appliedClasses}>
         <div id="playlists-panel-head">
@@ -105,8 +114,8 @@ var PlaylistsPanel = React.createClass({
                 <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#"><p id="pl-current-playlist">{currentPlaylistName}</p>
                     <span id="pl-carat" className="fa fa-caret-down"></span></a>
                     <ul className="dropdown-menu" id="pl-dd-menu">
-                      <li><a href="#">Electronic</a></li>
-                      <li><a href="#">Rock</a></li>
+                      <li><a href="#" onClick={this.props.addNewPlaylist}><i className="fa fa-plus"/> New Playlist</a></li>
+                      {playlistsList}
                     </ul>
             </div>
         </div>

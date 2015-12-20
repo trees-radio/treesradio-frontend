@@ -28,7 +28,7 @@
   border-left: solid;
   border-right: solid;
   border-top: solid;
-  border-color: #77b300;
+  border-color: black;
   border-radius: 5px;
 }
 
@@ -37,7 +37,12 @@
 }
 
 .pl-channel {
-  float: right;
+  color: gray;
+}
+
+.add-to-playlist-btn {
+  float:right;
+  cursor: pointer;
 }
 
 #playlists-panel-display {
@@ -82,7 +87,10 @@
   width: 24%;
 }
 
-
+.dropdown-menu>li>a {
+  float:left;
+  width: 80%;
+}
 
 #playlist-dropdown {
   background-color: $trees-bg;
@@ -229,4 +237,15 @@
   a {
     text-decoration: none;
   }
+}
+
+.add-to-playlist-button {
+  cursor: pointer;
+}
+
+.remove-playlist {
+  cursor: pointer;
+  float: right;
+  margin-right: 5%;
+  margin-top: 4%;
 }
