@@ -82,17 +82,20 @@
   font-size: 150%;
   float:left;
   margin-left: 20%;
-
 }
 
 #playlist-btn {
   width: 24%;
 }
 
+.dropdown-menu {
+  max-width: 85%;
+  width: 85%;
+}
 .dropdown-menu>li>a {
   float:left;
-  width: 82.5%;
-  max-width: 82.5%;
+  width: 85%;
+  max-width: 85%;
   overflow-x: hidden;
 }
 
