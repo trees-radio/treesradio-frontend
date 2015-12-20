@@ -83,7 +83,7 @@ var PlaylistsPanel = React.createClass({
         let videoURL = "https://www.youtube.com/watch?v=" + item.id.videoId;
         let boundClick = this.handleAdd.bind(this, index);
         return (
-            <li className={playlistPosClass} key={index}><a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">{item.snippet.channelTitle}</span><i onClick={boundClick} className="fa fa-2x fa-plus add-to-playlist-btn"></i></li>
+            <li className={playlistPosClass} key={index}><a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">UPLOADED BY: {item.snippet.channelTitle}</span><i onClick={boundClick} className="fa fa-2x fa-plus add-to-playlist-btn"></i></li>
         )
       }, this); // use 'this' as second arg to map to preserve scope
 
