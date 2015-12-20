@@ -32,6 +32,14 @@
   border-radius: 5px;
 }
 
+.pl-thumbnail {
+  width: 5%;
+}
+
+.pl-channel {
+  float: right;
+}
+
 #playlists-panel-display {
   height: 100%;
 }
@@ -54,7 +62,7 @@
 }
 
 #playlist-search-box {
-  width: 75%;
+  width: 70%;
   height: 45px;
   margin-left: 1%;
   margin-top: 1%;
@@ -66,6 +74,7 @@
   letter-spacing: 1.25px;
   font-size: 150%;
   float:left;
+  margin-left: 20%;
 
 }
 
