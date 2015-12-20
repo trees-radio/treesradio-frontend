@@ -10,12 +10,14 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
    propTypes: {
      playlistsOpen: React.PropTypes.bool.isRequired,
      searchForVideo: React.PropTypes.func.isRequired,
-     playlistsPanelView: React.PropTypes.object.isRequired,
+     playlistsPanelView: React.PropTypes.string.isRequired,
      currentSearch: React.PropTypes.object.isRequired,
      addNewPlaylist: React.PropTypes.func.isRequired,
      currentPlaylist: React.PropTypes.object.isRequired,
      playlists: React.PropTypes.array.isRequired,
-     removePlaylist: React.PropTypes.func.isRequired
+     removePlaylist: React.PropTypes.func.isRequired,
+     selectPlaylist: React.PropTypes.func.isRequired,
+     addToPlaylist: React.PropTypes.func.isRequired
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
@@ -39,6 +41,8 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           currentPlaylist={this.props.currentPlaylist}
           playlists={this.props.playlists}
           removePlaylist={this.props.removePlaylist}
+          selectPlaylist={this.props.selectPlaylist}
+          addToPlaylist={this.props.addToPlaylist}
           />
         <div id="playlists-bar" className="row">
           <div id="playlists-open-button" className="col-lg-1" onClick={this.props.playlistsOpenToggle}>
