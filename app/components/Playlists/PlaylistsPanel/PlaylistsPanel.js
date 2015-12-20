@@ -6,7 +6,11 @@ var PlaylistsPanel = React.createClass({
   propTypes: {
     searchForVideo: React.PropTypes.func.isRequired,
     playlistsPanelView: React.PropTypes.object.isRequired,
-    currentSearch: React.PropTypes.object.isRequired
+    currentSearch: React.PropTypes.object.isRequired,
+    addNewPlaylist: React.PropTypes.func.isRequired,
+    currentPlaylist: React.PropTypes.string.isRequired,
+    playlists: React.PropTypes.array.isRequired,
+    removePlaylist: React.PropTypes.func.isRequired
   },
   handleSubmit: function(e) {
     if (e.key === 'Enter') {
@@ -19,17 +23,22 @@ var PlaylistsPanel = React.createClass({
       }
     }
   },
-  handleAdd: function(item) {
-    console.log("Clicked a thing!", item);
+  handleAdd: function(index) {
+    console.log("Adding search item of index", index, "to playlist");
   },
-  newPlaylist: function() {
-    // console.log("Clicked a different thing!");
-
+  handleSelectPlaylist: function(index) {
+    console.log("Selected playlist of index", index);
+  },
+  handleRemovePlaylist: function(index) {
+    this.props.removePlaylist(index);
   },
   emptyPlaylistView: function() {
     return (<ul id="playlist-ul" className="no-playlist-selected"/>)
   },
   render: function() {
+    ///////////////////////////////////////////////////////////////////////
+    // PANEL
+    ///////////////////////////////////////////////////////////////////////
     // classes for container div
     //
     // add initial classes here
@@ -51,8 +60,12 @@ var PlaylistsPanel = React.createClass({
     // What we're looking at
     let playlistPos = 0;
     let playlistsCurrentView = "";
-    let currentPlaylistName = "Current Playlist";
+    let currentPlaylistName = "";
+    if (this.props.currentPlaylist === "") {
+      currentPlaylistName = "No Playlist Selected";
+    }
     if (this.props.playlistsPanelView.type === "blank") {
+      // currentPlaylistName = "No Playlist Selected";
       playlistsCurrentView = this.emptyPlaylistView();
     } else if (this.props.playlistsPanelView.type === "playlist") {
       // playlistsCurrentView = this.dummyData();
@@ -80,6 +93,19 @@ var PlaylistsPanel = React.createClass({
       }
       playlistsCurrentView = computeSearchView(searchItems);
     }
+    ///////////////////////////////////////////////////////////////////////
+    // Playlists List (dropdown)
+    ///////////////////////////////////////////////////////////////////////
+    let playlistsList = this.props.playlists.map(function(playlist, index){
+      let boundClickSelect = this.handleSelectPlaylist.bind(this, index);
+      let boundClickRemove = this.handleRemovePlaylist.bind(this, index);
+      return (
+        <li key={playlist.key}><a onClick={boundClickSelect} href="#">{playlist.name}</a><div onClick={boundClickRemove} className="fa fa-trash remove-playlist"/></li>
+      )
+    }, this);
+    ///////////////////////////////////////////////////////////////////////
+    // RENDER
+    ///////////////////////////////////////////////////////////////////////
     return (
       <div id="playlists-panel" ref="playlists-panel" className={appliedClasses}>
         <div id="playlists-panel-head">
@@ -88,8 +114,8 @@ var PlaylistsPanel = React.createClass({
                 <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#"><p id="pl-current-playlist">{currentPlaylistName}</p>
                     <span id="pl-carat" className="fa fa-caret-down"></span></a>
                     <ul className="dropdown-menu" id="pl-dd-menu">
-                      <li><a href="#" onClick={this.newPlaylist}><i className="fa fa-plus"/> New Playlist</a></li>
-                      <li><a href="#">Example</a></li>
+                      <li><a href="#" onClick={this.props.addNewPlaylist}><i className="fa fa-plus"/> New Playlist</a></li>
+                      {playlistsList}
                     </ul>
             </div>
         </div>

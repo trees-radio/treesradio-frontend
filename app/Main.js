@@ -1,5 +1,8 @@
 //MAIN JS
 
+// Sentry Error Reporting
+Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
+
 // React
 import React from 'react';
 
@@ -52,7 +55,7 @@ var Main = React.createClass({
             type: "blank",
             playlist: ""
           },
-          playlists: {},
+          playlists: [],
           currentSearch: {
             data: {},
             items: []
@@ -113,22 +116,20 @@ var Main = React.createClass({
     authDataCallback: function(authData){
         if (authData) {
             console.log(authData.uid + " logged in");
-            // let userRef = new Firebase(window.__env.firebase_origin + "/users/" + authData.uid);
-            // this.bindAsObject(userRef, "user");
             base.syncState(`users/` + authData.uid, {
               context: this,
               state: 'user'
             });
             base.syncState(`playlists/` + authData.uid, {
               context: this,
-              state: 'playlists'
+              state: 'playlists',
+              asArray: true
             });
             this.setState({ loginstate: true });
         } else {
             console.log("Logged out");
             this.setState({ loginstate: false });
         }
-
     },
     logoutUser: function(){
         this.ref.unauth();
@@ -241,6 +242,65 @@ var Main = React.createClass({
         type: "search"
       } });
     },
+    addNewPlaylist: function(newName) {
+      let currentAuth = base.getAuth();
+      // debugger;
+      if (currentAuth === null) {
+        sweetAlert({
+          "title": "Unable to Create Playlist",
+          "text": "You are not logged in!",
+          "type": "error",
+          "timer": 3000
+        });
+        return;
+      }
+      sweetAlert({
+        title: "New Playlist",
+        text: "Choose a name for your playlist!",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "Playlist Name"
+      }, function(inputValue){
+        let newPlaylistName = inputValue;
+        let newPlaylistCallback = function() {
+          sweetAlert({
+            "title": "Playlist Created",
+            "text": "Playlist " + newPlaylistName + " is now created!",
+            "type": "success",
+            timer: 3000
+          });
+        }
+        base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          data: {name: newPlaylistName},
+          then(){
+            newPlaylistCallback();
+          }
+        });
+      });
+    },
+    removePlaylist: function(index) {
+      let currentAuth = base.getAuth();
+      let copyofPlaylists = this.state.playlists.slice(); //get copy of array
+      sweetAlert({
+        title: "Are you sure?",
+        text: "You are about to remove a playlist, are you sure?",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false
+      }, function(inputValue){
+        console.log("Removing playlist of index", index);
+        copyofPlaylists.splice(index, 1); //remove item from copy of array
+        base.post('playlists/' + currentAuth.uid, { data: copyofPlaylists }); //update Firebase
+        sweetAlert({
+          "title": "Playlist Removed",
+          "text": "Playlist has been removed!",
+          "type": "success",
+          timer: 3000
+        });
+      });
+    },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -273,6 +333,10 @@ var Main = React.createClass({
                               searchForVideo={this.searchForVideo}
                               playlistsPanelView={this.state.playlistsPanelView}
                               currentSearch={this.state.currentSearch}
+                              addNewPlaylist={this.addNewPlaylist}
+                              playlists={this.state.playlists}
+                              currentPlaylist={this.state.currentPlaylist}
+                              removePlaylist={this.removePlaylist}
                                />
                           </div>
                       </div>
