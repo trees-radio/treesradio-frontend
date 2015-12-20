@@ -11,12 +11,22 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
      playlistsOpen: React.PropTypes.bool.isRequired,
      searchForVideo: React.PropTypes.func.isRequired,
      playlistsPanelView: React.PropTypes.object.isRequired,
-     currentSearch: React.PropTypes.object.isRequired
+     currentSearch: React.PropTypes.object.isRequired,
+     addNewPlaylist: React.PropTypes.func.isRequired,
+     currentPlaylist: React.PropTypes.string.isRequired,
+     playlists: React.PropTypes.array.isRequired,
+     removePlaylist: React.PropTypes.func.isRequired
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
      if (this.props.playlistsOpen) {
        openButtonIcon = "fa fa-angle-double-down fa-4x";
+     }
+     let currentPlaylistName = "";
+     if (this.props.currentPlaylist === "") {
+       currentPlaylistName = "No Playlist Selected";
+     } else {
+       currentPlaylistName = this.props.currentPlaylist;
      }
      return(
       <div id="playlists-component">
@@ -25,13 +35,17 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           searchForVideo={this.props.searchForVideo}
           playlistsPanelView={this.props.playlistsPanelView}
           currentSearch={this.props.currentSearch}
+          addNewPlaylist={this.props.addNewPlaylist}
+          currentPlaylist={this.props.currentPlaylist}
+          playlists={this.props.playlists}
+          removePlaylist={this.props.removePlaylist}
           />
         <div id="playlists-bar" className="row">
           <div id="playlists-open-button" className="col-lg-1" onClick={this.props.playlistsOpenToggle}>
             <i id="playlists-open-icon" className={openButtonIcon}></i>
           </div>
           <div id="playlist-metadata" className="col-lg-3">
-            <a>Current Playlist Name</a><br/>
+            <a>{currentPlaylistName}</a><br/>
             <a>Next Media in Playlist</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4">

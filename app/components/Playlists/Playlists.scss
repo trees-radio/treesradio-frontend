@@ -82,7 +82,9 @@
   width: 24%;
 }
 
-
+.dropdown-menu>li>a {
+  float:left;
+}
 
 #playlist-dropdown {
   background-color: $trees-bg;
@@ -229,4 +231,15 @@
   a {
     text-decoration: none;
   }
+}
+
+.add-to-playlist-button {
+  cursor: pointer;
+}
+
+.remove-playlist {
+  cursor: pointer;
+  float: right;
+  margin-right: 5%;
+  margin-top: 4%;
 }
