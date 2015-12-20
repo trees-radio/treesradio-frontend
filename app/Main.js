@@ -15,6 +15,7 @@ var base = Rebase.createClass(window.__env.firebase_origin);
 import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
+import cookie from 'react-cookie';
 
 // TreesRadio utility functions
 import TRreg from './utils/registration.js';
@@ -85,6 +86,17 @@ var Main = React.createClass({
             state: 'registeredNames',
         });
 
+        // get last playlist from cookie and select it
+        let selectPlaylist = this.selectPlaylist;
+        let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
+        if (lastSelectedPlaylist === 0) {
+          window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+        } else if (lastSelectedPlaylist) {
+          window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+        } else {
+          // no last playlist to set
+        }
+
         /////////////
         // TEST CODE
         /////////////
@@ -120,12 +132,12 @@ var Main = React.createClass({
               context: this,
               state: 'user'
             });
+            this.setState({ loginstate: true });
             base.syncState(`playlists/` + authData.uid, {
               context: this,
               state: 'playlists',
               asArray: true
             });
-            this.setState({ loginstate: true });
         } else {
             console.log("Logged out");
             this.setState({ loginstate: false });
@@ -213,9 +225,13 @@ var Main = React.createClass({
     // CHAT
     ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
-      this.setState({
-        chat: this.state.chat.concat([newMsgData])
-      });
+      // debugger;
+      base.post('chat/messages', {
+        data: this.state.chat.concat([newMsgData])
+      })
+      // this.setState({
+      //   chat: this.state.chat.concat([newMsgData])
+      // });
     },
     checkUserLevel: function(user){
       return _.get(this.state.registeredNames, user + ".level");
@@ -261,24 +277,29 @@ var Main = React.createClass({
         animation: "slide-from-top",
         inputPlaceholder: "Playlist Name"
       }, function(inputValue){
-        let newPlaylistName = inputValue;
-        let newPlaylistCallback = function() {
-          sweetAlert({
-            "title": "Playlist Created",
-            "text": "Playlist " + newPlaylistName + " is now created!",
-            "type": "success",
-            timer: 3000
-          });
-        }
-        base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
-          data: { name: newPlaylistName },
-          then(){
-            newPlaylistCallback();
+        if (inputValue) {
+          let newPlaylistName = inputValue;
+          let newPlaylistCallback = function() {
+            sweetAlert({
+              "title": "Playlist Created",
+              "text": "Playlist " + newPlaylistName + " is now created!",
+              "type": "success",
+              timer: 3000
+            });
           }
-        });
+          base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+            data: { name: newPlaylistName },
+            then(){
+              newPlaylistCallback();
+            }
+          });
+        } else {
+
+        }
       });
     },
     removePlaylist: function(index) {
+      // debugger;
       let currentAuth = base.getAuth();
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
       sweetAlert({
@@ -306,12 +327,14 @@ var Main = React.createClass({
     selectPlaylist: function(index) {
       // debugger;
       let currentAuth = base.getAuth();
+      // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
       let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
         id: index
       } });
+      cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
     },
     addToPlaylist: function(index) {
@@ -346,8 +369,14 @@ var Main = React.createClass({
       } else {
         base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", {data: [objectToAdd]});
       }
-
       this.setState({ playlistsPanelView: "playlist" });
+    },
+    removeFromPlaylist: function(index){
+      console.log("Removing playlist item of index", index);
+      let currentAuth = base.getAuth();
+      let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
+      copyofPlaylist.splice(index, 1); //remove item from copy of array
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", { data: copyofPlaylist }); //update Firebase
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
@@ -386,6 +415,7 @@ var Main = React.createClass({
                               removePlaylist={this.removePlaylist}
                               selectPlaylist={this.selectPlaylist}
                               addToPlaylist={this.addToPlaylist}
+                              removeFromPlaylist={this.removeFromPlaylist}
                                />
                           </div>
                       </div>

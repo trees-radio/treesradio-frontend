@@ -17,7 +17,8 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
      playlists: React.PropTypes.array.isRequired,
      removePlaylist: React.PropTypes.func.isRequired,
      selectPlaylist: React.PropTypes.func.isRequired,
-     addToPlaylist: React.PropTypes.func.isRequired
+     addToPlaylist: React.PropTypes.func.isRequired,
+     removeFromPlaylist: React.PropTypes.func.isRequired
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
@@ -43,6 +44,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           removePlaylist={this.props.removePlaylist}
           selectPlaylist={this.props.selectPlaylist}
           addToPlaylist={this.props.addToPlaylist}
+          removeFromPlaylist={this.props.removeFromPlaylist}
           />
         <div id="playlists-bar" className="row">
           <div id="playlists-open-button" className="col-lg-1" onClick={this.props.playlistsOpenToggle}>
