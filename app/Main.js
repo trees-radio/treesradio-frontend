@@ -316,7 +316,6 @@ var Main = React.createClass({
                 checkUserLevel={this.checkUserLevel}
                 devCheck={this.state.devCheck}
               />
-
             {/* Start Container */}
               <div className="container-fluid">
                   <div className="row">
