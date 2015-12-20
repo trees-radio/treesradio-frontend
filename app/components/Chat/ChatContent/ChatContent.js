@@ -31,7 +31,7 @@ var ChatContent = React.createClass({
 
       // don't render entire chat state on page
       // let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 50));
-      let msgs = this.props.chatData.map(function(msg){
+      let msgs = this.props.chatData.map(function(msg, index){
 
           // handling msg color alternation
           var chatPosClass = "";
@@ -51,14 +51,13 @@ var ChatContent = React.createClass({
 
           // individual
           return (
-              <li key={ msg['key'] } className={chatLineClasses}>
-
+              <li key={index} className={chatLineClasses}>
                 <div className="chat-avatar">
                   <img id="avatarimg" src={chatAvatar} />
                 </div>
                 <div className="chat-msg">
-                  <span className="chat-username">{ msg['user'] }</span><br />
-                  <span className="chat-text">{ msg['msg'] }</span>
+                  <span className="chat-username">{ msg.user }</span><br />
+                  <span className="chat-text">{ msg.msg }</span>
                 </div>
 
               </li>
