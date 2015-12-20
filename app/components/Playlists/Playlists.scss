@@ -28,7 +28,7 @@
   border-left: solid;
   border-right: solid;
   border-top: solid;
-  border-color: #77b300;
+  border-color: black;
   border-radius: 5px;
 }
 
@@ -37,7 +37,12 @@
 }
 
 .pl-channel {
-  float: right;
+  color: gray;
+}
+
+.add-to-playlist-btn {
+  float:right;
+  cursor: pointer;
 }
 
 #playlists-panel-display {
@@ -62,10 +67,12 @@
 }
 
 #playlist-search-box {
-  width: 70%;
+  width: 65%;
+  max-width: 65%;
   height: 45px;
   margin-left: 1%;
   margin-top: 1%;
+  margin-right: 4%;
   float: left;
 }
 
@@ -84,13 +91,16 @@
 
 .dropdown-menu>li>a {
   float:left;
+  width: 82.5%;
+  max-width: 82.5%;
+  overflow-x: hidden;
 }
 
 #playlist-dropdown {
   background-color: $trees-bg;
   border-color: $trees-bg;
   float: right;
-  padding-left: 20%;
+
   padding-bottom: 0;
   margin-top: 3%;
   margin-right: 25%;
@@ -241,5 +251,5 @@
   cursor: pointer;
   float: right;
   margin-right: 5%;
-  margin-top: 4%;
+  margin-top: 3%;
 }
