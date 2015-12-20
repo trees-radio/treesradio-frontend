@@ -12,7 +12,8 @@ var PlaylistsPanel = React.createClass({
     playlists: React.PropTypes.array.isRequired,
     removePlaylist: React.PropTypes.func.isRequired,
     selectPlaylist: React.PropTypes.func.isRequired,
-    addToPlaylist: React.PropTypes.func.isRequired
+    addToPlaylist: React.PropTypes.func.isRequired,
+    removeFromPlaylist: React.PropTypes.func.isRequired
   },
   handleSubmit: function(e) {
     if (e.key === 'Enter') {
@@ -26,8 +27,11 @@ var PlaylistsPanel = React.createClass({
     }
   },
   handleAdd: function(index) {
-    console.log("Adding search item of index", index, "to playlist");
+    // console.log("Adding search item of index", index, "to playlist");
     this.props.addToPlaylist(index);
+  },
+  handleRemove: function(index) {
+    this.props.removeFromPlaylist(index);
   },
   handleSelectPlaylist: function(index) {
     // console.log("Selected playlist of index", index);
@@ -37,7 +41,7 @@ var PlaylistsPanel = React.createClass({
     this.props.removePlaylist(index);
   },
   emptyPlaylistView: function() {
-    return (<ul id="playlist-ul" className="no-playlist-selected"/>)
+    return (<ul id="playlist-ul" className="no-playlist-selected">Nothing here!</ul>)
   },
   render: function() {
     ///////////////////////////////////////////////////////////////////////
@@ -88,11 +92,11 @@ var PlaylistsPanel = React.createClass({
             playlistPosClass = "playlist-item-1";
             playlistPos = 0;
           }
-          let boundClick = function() {}
+          let boundClick = this.handleRemove.bind(this, index);
           return (
             <li className={playlistPosClass} key={index}><a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a><span className="pl-media-title">{item.title}</span><span className="pl-channel">{item.channel}</span><i onClick={boundClick} className="fa fa-2x fa-trash remove-from-playlist-btn"></i></li>
           )
-        });
+        }, this);
         let computePlaylistView = function(list) {
           return ( <ul id="playlist-ul">{list}</ul> )
         }

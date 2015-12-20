@@ -349,6 +349,13 @@ var Main = React.createClass({
 
       this.setState({ playlistsPanelView: "playlist" });
     },
+    removeFromPlaylist: function(index){
+      console.log("Removing playlist item of index", index);
+      let currentAuth = base.getAuth();
+      let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
+      copyofPlaylist.splice(index, 1); //remove item from copy of array
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", { data: copyofPlaylist }); //update Firebase
+    },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -386,6 +393,7 @@ var Main = React.createClass({
                               removePlaylist={this.removePlaylist}
                               selectPlaylist={this.selectPlaylist}
                               addToPlaylist={this.addToPlaylist}
+                              removeFromPlaylist={this.removeFromPlaylist}
                                />
                           </div>
                       </div>
