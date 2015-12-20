@@ -232,7 +232,6 @@ var Main = React.createClass({
     searchForVideo: function(searchQuery) {
       axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
         .then(function (response) {
-          // console.log("Test YT search:", response);
           this.setState({ currentSearch: {
             data: response.data,
             items: response.data.items
