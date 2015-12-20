@@ -33,6 +33,9 @@ var PlaylistsPanel = React.createClass({
   handleRemove: function(index) {
     this.props.removeFromPlaylist(index);
   },
+  handleMoveTop: function(index) {
+    console.log("Moving top");
+  },
   handleSelectPlaylist: function(index) {
     // console.log("Selected playlist of index", index);
     this.props.selectPlaylist(index);
@@ -92,9 +95,10 @@ var PlaylistsPanel = React.createClass({
             playlistPosClass = "playlist-item-1";
             playlistPos = 0;
           }
-          let boundClick = this.handleRemove.bind(this, index);
+          let boundClickRemove = this.handleRemove.bind(this, index);
+          let boundClickTop = this.handleMoveTop.bind(this, index);
           return (
-            <li className={playlistPosClass} key={index}><a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a><span className="pl-media-title">{item.title}</span><span className="pl-channel">{item.channel}</span><i onClick={boundClick} className="fa fa-2x fa-trash remove-from-playlist-btn"></i></li>
+            <li className={playlistPosClass} key={index}><a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a><span className="pl-media-title">{item.title}</span><span className="pl-channel">{item.channel}</span><i onClick={boundClickTop} className="fa fa-2x fa-arrow-up pl-move-to-top"></i><i onClick={boundClickRemove} className="fa fa-2x fa-trash remove-from-playlist-btn"></i></li>
           )
         }, this);
         let computePlaylistView = function(list) {
