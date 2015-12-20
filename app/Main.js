@@ -50,11 +50,11 @@ var Main = React.createClass({
           chat: [],
           registeredNames: {},
           playlistsOpen: true,
-          currentPlaylist: "",
-          playlistsPanelView: {
-            type: "blank",
-            playlist: ""
+          currentPlaylist: {
+            name: "",
+            id: -1
           },
+          playlistsPanelView: "blank",
           playlists: [],
           currentSearch: {
             data: {},
@@ -238,9 +238,7 @@ var Main = React.createClass({
             items: response.data.items
           } });
         }.bind(this));
-      this.setState({ playlistsPanelView: {
-        type: "search"
-      } });
+      this.setState({ playlistsPanelView: "search" });
     },
     addNewPlaylist: function(newName) {
       let currentAuth = base.getAuth();
@@ -273,7 +271,7 @@ var Main = React.createClass({
           });
         }
         base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
-          data: {name: newPlaylistName},
+          data: { name: newPlaylistName },
           then(){
             newPlaylistCallback();
           }
@@ -290,16 +288,66 @@ var Main = React.createClass({
         showCancelButton: true,
         closeOnConfirm: false
       }, function(inputValue){
-        console.log("Removing playlist of index", index);
-        copyofPlaylists.splice(index, 1); //remove item from copy of array
-        base.post('playlists/' + currentAuth.uid, { data: copyofPlaylists }); //update Firebase
-        sweetAlert({
-          "title": "Playlist Removed",
-          "text": "Playlist has been removed!",
-          "type": "success",
-          timer: 3000
-        });
+        if (inputValue) {
+          console.log("Removing playlist of index", index);
+          copyofPlaylists.splice(index, 1); //remove item from copy of array
+          base.post('playlists/' + currentAuth.uid, { data: copyofPlaylists }); //update Firebase
+          sweetAlert({
+            "title": "Playlist Removed",
+            "text": "Playlist has been removed!",
+            "type": "success",
+            timer: 3000
+          });
+        } else {
+
+        }
       });
+    },
+    selectPlaylist: function(index) {
+      // debugger;
+      let currentAuth = base.getAuth();
+      let nameToSelect = this.state.playlists[index].name;
+      let indexToSelect = index;
+      this.setState({ currentPlaylist: {
+        name: nameToSelect,
+        id: index
+      } });
+      this.setState({ playlistsPanelView: "playlist" });
+    },
+    addToPlaylist: function(index) {
+      // debugger;
+      let currentAuth = base.getAuth();
+      if (!this.state.playlists[this.state.currentPlaylist.id]) {
+        sweetAlert({
+          "title": "No Playlist Selected",
+          "text": "You don't have a playlist selected to add to!",
+          "type": "error",
+          "timer": 3000
+        });
+        return;
+      }
+
+      let itemToAdd = this.state.currentSearch.items[index];
+      let videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id.videoId;
+      let videoTitle = itemToAdd.snippet.title;
+      let videoThumb = itemToAdd.snippet.thumbnails.default.url;
+      let videoChannel = itemToAdd.snippet.channelTitle;
+      let objectToAdd = {
+        url: videoUrl,
+        title: videoTitle,
+        thumb: videoThumb,
+        channel: videoChannel
+      }
+
+      if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) {
+        let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
+        copyofPlaylist.unshift(objectToAdd);
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", {data: copyofPlaylist});
+      } else {
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", {data: [objectToAdd]});
+      }
+
+      this.setState({ playlistsPanelView: "playlist" });
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
@@ -336,6 +384,8 @@ var Main = React.createClass({
                               playlists={this.state.playlists}
                               currentPlaylist={this.state.currentPlaylist}
                               removePlaylist={this.removePlaylist}
+                              selectPlaylist={this.selectPlaylist}
+                              addToPlaylist={this.addToPlaylist}
                                />
                           </div>
                       </div>

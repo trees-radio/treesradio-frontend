@@ -5,12 +5,14 @@ import sweetAlert from 'sweetalert';
 var PlaylistsPanel = React.createClass({
   propTypes: {
     searchForVideo: React.PropTypes.func.isRequired,
-    playlistsPanelView: React.PropTypes.object.isRequired,
+    playlistsPanelView: React.PropTypes.string.isRequired,
     currentSearch: React.PropTypes.object.isRequired,
     addNewPlaylist: React.PropTypes.func.isRequired,
-    currentPlaylist: React.PropTypes.string.isRequired,
+    currentPlaylist: React.PropTypes.object.isRequired,
     playlists: React.PropTypes.array.isRequired,
-    removePlaylist: React.PropTypes.func.isRequired
+    removePlaylist: React.PropTypes.func.isRequired,
+    selectPlaylist: React.PropTypes.func.isRequired,
+    addToPlaylist: React.PropTypes.func.isRequired
   },
   handleSubmit: function(e) {
     if (e.key === 'Enter') {
@@ -25,9 +27,11 @@ var PlaylistsPanel = React.createClass({
   },
   handleAdd: function(index) {
     console.log("Adding search item of index", index, "to playlist");
+    this.props.addToPlaylist(index);
   },
   handleSelectPlaylist: function(index) {
-    console.log("Selected playlist of index", index);
+    // console.log("Selected playlist of index", index);
+    this.props.selectPlaylist(index);
   },
   handleRemovePlaylist: function(index) {
     this.props.removePlaylist(index);
@@ -60,17 +64,44 @@ var PlaylistsPanel = React.createClass({
     // What we're looking at
     let playlistPos = 0;
     let playlistsCurrentView = "";
-    let currentPlaylistName = "";
-    if (this.props.currentPlaylist === "") {
+    let currentPlaylistName = this.props.currentPlaylist.name;
+    let currentPlaylistIndex = this.props.currentPlaylist.id;
+    if (currentPlaylistName === "") {
       currentPlaylistName = "No Playlist Selected";
     }
-    if (this.props.playlistsPanelView.type === "blank") {
-      // currentPlaylistName = "No Playlist Selected";
-      playlistsCurrentView = this.emptyPlaylistView();
-    } else if (this.props.playlistsPanelView.type === "playlist") {
-      // playlistsCurrentView = this.dummyData();
+    if (this.props.playlistsPanelView === "blank") {
 
-    } else if (this.props.playlistsPanelView.type === "search") {
+      playlistsCurrentView = this.emptyPlaylistView();
+
+    } else if (this.props.playlistsPanelView === "playlist") {
+
+      if (!this.props.playlists[currentPlaylistIndex].entries) {
+        playlistsCurrentView = this.emptyPlaylistView();
+      } else {
+        // console.log(this.props.playlists[currentPlaylistIndex].entries);
+        let playlistItems = this.props.playlists[currentPlaylistIndex].entries.map(function(item, index){
+          let playlistPosClass = "";
+          if (playlistPos === 0) {
+            playlistPosClass = "playlist-item-2";
+            playlistPos = 1;
+          } else {
+            playlistPosClass = "playlist-item-1";
+            playlistPos = 0;
+          }
+          let boundClick = function() {}
+          return (
+            <li className={playlistPosClass} key={index}><a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a><span className="pl-media-title">{item.title}</span><span className="pl-channel">{item.channel}</span><i onClick={boundClick} className="fa fa-2x fa-trash remove-from-playlist-btn"></i></li>
+          )
+        });
+        let computePlaylistView = function(list) {
+          return ( <ul id="playlist-ul">{list}</ul> )
+        }
+        playlistsCurrentView = computePlaylistView(playlistItems);
+      }
+
+
+
+    } else if (this.props.playlistsPanelView === "search") {
       let searchItems = this.props.currentSearch.items.map(function(item, index){
         let playlistPosClass = "";
         if (playlistPos === 0) {
