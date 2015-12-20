@@ -261,24 +261,29 @@ var Main = React.createClass({
         animation: "slide-from-top",
         inputPlaceholder: "Playlist Name"
       }, function(inputValue){
-        let newPlaylistName = inputValue;
-        let newPlaylistCallback = function() {
-          sweetAlert({
-            "title": "Playlist Created",
-            "text": "Playlist " + newPlaylistName + " is now created!",
-            "type": "success",
-            timer: 3000
-          });
-        }
-        base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
-          data: { name: newPlaylistName },
-          then(){
-            newPlaylistCallback();
+        if (inputValue) {
+          let newPlaylistName = inputValue;
+          let newPlaylistCallback = function() {
+            sweetAlert({
+              "title": "Playlist Created",
+              "text": "Playlist " + newPlaylistName + " is now created!",
+              "type": "success",
+              timer: 3000
+            });
           }
-        });
+          base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+            data: { name: newPlaylistName },
+            then(){
+              newPlaylistCallback();
+            }
+          });
+        } else {
+
+        }
       });
     },
     removePlaylist: function(index) {
+      // debugger;
       let currentAuth = base.getAuth();
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
       sweetAlert({
@@ -346,7 +351,6 @@ var Main = React.createClass({
       } else {
         base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", {data: [objectToAdd]});
       }
-
       this.setState({ playlistsPanelView: "playlist" });
     },
     removeFromPlaylist: function(index){
