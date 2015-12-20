@@ -15,6 +15,7 @@ var base = Rebase.createClass(window.__env.firebase_origin);
 import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
+import cookie from 'react-cookie';
 
 // TreesRadio utility functions
 import TRreg from './utils/registration.js';
@@ -85,6 +86,17 @@ var Main = React.createClass({
             state: 'registeredNames',
         });
 
+        // get last playlist from cookie and select it
+        let selectPlaylist = this.selectPlaylist;
+        let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
+        if (lastSelectedPlaylist === 0) {
+          window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+        } else if (lastSelectedPlaylist) {
+          window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+        } else {
+          // no last playlist to set
+        }
+
         /////////////
         // TEST CODE
         /////////////
@@ -120,12 +132,12 @@ var Main = React.createClass({
               context: this,
               state: 'user'
             });
+            this.setState({ loginstate: true });
             base.syncState(`playlists/` + authData.uid, {
               context: this,
               state: 'playlists',
               asArray: true
             });
-            this.setState({ loginstate: true });
         } else {
             console.log("Logged out");
             this.setState({ loginstate: false });
@@ -213,9 +225,13 @@ var Main = React.createClass({
     // CHAT
     ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
-      this.setState({
-        chat: this.state.chat.concat([newMsgData])
-      });
+      // debugger;
+      base.post('chat/messages', {
+        data: this.state.chat.concat([newMsgData])
+      })
+      // this.setState({
+      //   chat: this.state.chat.concat([newMsgData])
+      // });
     },
     checkUserLevel: function(user){
       return _.get(this.state.registeredNames, user + ".level");
@@ -311,12 +327,14 @@ var Main = React.createClass({
     selectPlaylist: function(index) {
       // debugger;
       let currentAuth = base.getAuth();
+      // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
       let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
         id: index
       } });
+      cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
     },
     addToPlaylist: function(index) {

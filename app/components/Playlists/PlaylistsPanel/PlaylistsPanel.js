@@ -1,6 +1,7 @@
 
 import React from 'react';
 import sweetAlert from 'sweetalert';
+import cookie from 'react-cookie';
 
 var PlaylistsPanel = React.createClass({
   propTypes: {
@@ -14,6 +15,10 @@ var PlaylistsPanel = React.createClass({
     selectPlaylist: React.PropTypes.func.isRequired,
     addToPlaylist: React.PropTypes.func.isRequired,
     removeFromPlaylist: React.PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+
+
   },
   handleSubmit: function(e) {
     if (e.key === 'Enter') {
