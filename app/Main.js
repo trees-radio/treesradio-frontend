@@ -86,16 +86,7 @@ var Main = React.createClass({
             state: 'registeredNames',
         });
 
-        // get last playlist from cookie and select it
-        let selectPlaylist = this.selectPlaylist;
-        let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
-        if (lastSelectedPlaylist === 0) {
-          window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
-        } else if (lastSelectedPlaylist) {
-          window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
-        } else {
-          // no last playlist to set
-        }
+
 
         /////////////
         // TEST CODE
@@ -138,6 +129,16 @@ var Main = React.createClass({
               state: 'playlists',
               asArray: true
             });
+            // get last playlist from cookie and select it
+            let selectPlaylist = this.selectPlaylist;
+            let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
+            if (lastSelectedPlaylist === 0) {
+              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+            } else if (lastSelectedPlaylist) {
+              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+            } else {
+              // no last playlist to set
+            }
         } else {
             console.log("Logged out");
             this.setState({ loginstate: false });
