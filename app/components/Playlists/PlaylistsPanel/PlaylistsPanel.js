@@ -14,7 +14,8 @@ var PlaylistsPanel = React.createClass({
     removePlaylist: React.PropTypes.func.isRequired,
     selectPlaylist: React.PropTypes.func.isRequired,
     addToPlaylist: React.PropTypes.func.isRequired,
-    removeFromPlaylist: React.PropTypes.func.isRequired
+    removeFromPlaylist: React.PropTypes.func.isRequired,
+    moveTopPlaylist: React.PropTypes.func.isRequired
   },
   componentDidMount: function() {
 
@@ -39,7 +40,8 @@ var PlaylistsPanel = React.createClass({
     this.props.removeFromPlaylist(index);
   },
   handleMoveTop: function(index) {
-    console.log("Moving top");
+    // console.log("Moving top");
+    this.props.moveTopPlaylist(index);
   },
   handleSelectPlaylist: function(index) {
     // console.log("Selected playlist of index", index);

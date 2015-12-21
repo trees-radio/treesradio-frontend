@@ -363,10 +363,10 @@ var Main = React.createClass({
         channel: videoChannel
       }
 
-      if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) {
-        let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
-        copyofPlaylist.unshift(objectToAdd);
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist});
+      if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
+        let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
+        copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push new array to Firebase
       } else {
         base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: [objectToAdd]});
       }
@@ -378,6 +378,17 @@ var Main = React.createClass({
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
       base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", { data: copyofPlaylist }); //update Firebase
+    },
+    moveTopPlaylist: function(index){
+      // console.log("Moving top", index);
+      let currentAuth = base.getAuth();
+      let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
+      let movingItem = copyofPlaylist.splice(index, 1); // remove item from array
+      // console.log(copyofPlaylist);
+      // console.log("Moving item", movingItem);
+      copyofPlaylist.unshift(movingItem[0]); // put item at front of array
+      // console.log(copyofPlaylist);
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push update to Firebase
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
@@ -417,6 +428,7 @@ var Main = React.createClass({
                               selectPlaylist={this.selectPlaylist}
                               addToPlaylist={this.addToPlaylist}
                               removeFromPlaylist={this.removeFromPlaylist}
+                              moveTopPlaylist={this.moveTopPlaylist}
                                />
                           </div>
                       </div>

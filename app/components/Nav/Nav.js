@@ -29,9 +29,9 @@ var Nav = React.createClass({
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul className="nav navbar-nav" id="nav-about">
+                            {/* <ul className="nav navbar-nav" id="nav-about">
                                 <li><a>About</a></li>
-                            </ul>
+                            </ul> */}
                             <div className="nav navbar-nav navbar-right">
                                 <Userbit
                                   handleRegister={this.props.handleRegister}
