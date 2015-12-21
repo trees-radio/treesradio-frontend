@@ -50,7 +50,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           registeredNames: {},
-          playlistsOpen: true,
+          playlistsOpen: false,
           currentPlaylist: {
             name: "",
             id: -1
@@ -365,9 +365,9 @@ var Main = React.createClass({
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) {
         let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
         copyofPlaylist.unshift(objectToAdd);
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", {data: copyofPlaylist});
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist});
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", {data: [objectToAdd]});
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: [objectToAdd]});
       }
       this.setState({ playlistsPanelView: "playlist" });
     },
@@ -376,7 +376,7 @@ var Main = React.createClass({
       let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.id + "/entries", { data: copyofPlaylist }); //update Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", { data: copyofPlaylist }); //update Firebase
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
