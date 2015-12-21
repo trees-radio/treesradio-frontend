@@ -95,8 +95,8 @@
 }
 .dropdown-menu>li>a {
   float:left;
-  width: 85%;
-  max-width: 85%;
+  width: 87%;
+  max-width: 87%;
   overflow-x: hidden;
 }
 
@@ -258,5 +258,6 @@
   cursor: pointer;
   float: right;
   margin-right: 5%;
-  margin-top: 3%;
+  margin-top: 2%;
+  background-color: inherit;
 }
