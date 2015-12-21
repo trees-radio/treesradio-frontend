@@ -133,9 +133,9 @@ var Main = React.createClass({
             let selectPlaylist = this.selectPlaylist;
             let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
             if (lastSelectedPlaylist === 0) {
-              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 1000);
             } else if (lastSelectedPlaylist) {
-              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 3000);
+              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 1000);
             } else {
               // no last playlist to set
             }
