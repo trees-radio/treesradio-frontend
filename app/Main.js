@@ -271,7 +271,7 @@ var Main = React.createClass({
       }
       sweetAlert({
         title: "New Playlist",
-        text: "Choose a name for your playlist!",
+        text: "Choose a name for your playlist!\n Note: Playlists will be limited to 23 characters.",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -338,6 +338,10 @@ var Main = React.createClass({
       let currentAuth = base.getAuth();
       // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
+      if (nameToSelect.length > 23) {
+        let maxLength = 23;
+        nameToSelect = nameToSelect.substring(0,maxLength) + "...";
+      }
       let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
