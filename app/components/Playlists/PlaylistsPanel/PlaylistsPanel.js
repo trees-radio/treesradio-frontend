@@ -145,8 +145,13 @@ var PlaylistsPanel = React.createClass({
     let playlistsList = this.props.playlists.map(function(playlist, index){
       let boundClickSelect = this.handleSelectPlaylist.bind(this, index);
       let boundClickRemove = this.handleRemovePlaylist.bind(this, index);
+      let playlistName = playlist.name;
+      if (playlistName.length > 23) {
+        let maxLength = 23;
+        playlistName = playlistName.substring(0,maxLength) + "...";
+      }
       return (
-        <li key={playlist.key}><a onClick={boundClickSelect} href="#">{playlist.name}</a><div onClick={boundClickRemove} className="fa fa-trash remove-playlist"/></li>
+        <li key={playlist.key}><a onClick={boundClickSelect} href="#">{playlistName}</a><div onClick={boundClickRemove} className="fa fa-trash remove-playlist"/></li>
       )
     }, this);
     ///////////////////////////////////////////////////////////////////////
