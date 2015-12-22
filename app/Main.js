@@ -119,12 +119,12 @@ var Main = React.createClass({
     authDataCallback: function(authData){
         if (authData) {
             console.log(authData.uid + " logged in");
-            base.syncState(`users/` + authData.uid, {
+            this.userBindRef = base.syncState(`users/` + authData.uid, {
               context: this,
               state: 'user'
             });
             this.setState({ loginstate: true });
-            base.syncState(`playlists/` + authData.uid, {
+            this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
               context: this,
               state: 'playlists',
               asArray: true
@@ -302,6 +302,7 @@ var Main = React.createClass({
     removePlaylist: function(index) {
       // debugger;
       let currentAuth = base.getAuth();
+      let playlistsBindRef = this.playlistsBindRef;
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
       sweetAlert({
         title: "Are you sure?",
@@ -311,7 +312,7 @@ var Main = React.createClass({
         closeOnConfirm: false
       }, function(inputValue){
         if (inputValue) {
-          console.log("Removing playlist of index", index);
+          // console.log("Removing playlist of index", index);
           copyofPlaylists.splice(index, 1); //remove item from copy of array
           base.post('playlists/' + currentAuth.uid, { data: copyofPlaylists }); //update Firebase
           sweetAlert({
@@ -323,6 +324,13 @@ var Main = React.createClass({
         } else {
 
         }
+      });
+      this.setState({
+        currentPlaylist: {
+          name: "",
+          id: -1
+        },
+        playlistsPanelView: "blank"
       });
     },
     selectPlaylist: function(index) {
