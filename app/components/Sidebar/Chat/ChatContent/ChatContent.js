@@ -9,8 +9,6 @@
 import React from 'react';
 import _ from 'lodash';
 
-// Import SCSS
-// import './ChatContent.scss';
 
 var ChatContent = React.createClass({
     componentDidMount: function() {
@@ -21,7 +19,7 @@ var ChatContent = React.createClass({
     componentDidUpdate: function() {
       //forces chat to scroll to bottom after updating
       let chatScroll = this.refs.chatScroll;
-      chatScroll.scrollTop = chatScroll.scrollHeight;
+      // chatScroll.scrollTop = chatScroll.scrollHeight;/
     },
     render: function(){
       // tracking msg color

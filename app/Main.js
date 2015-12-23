@@ -447,15 +447,13 @@ var Main = React.createClass({
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel" >
-                        <div id="chatcontainertop" className="row">
-                          <Sidebar
-                            loginData={this.state.user}
-                            chatData={this.state.chat}
-                            sendMsg={this.handleSendMsg}
-                            loginState={this.state.loginstate}
-                            />
+                        <Sidebar
+                          loginData={this.state.user}
+                          chatData={this.state.chat}
+                          sendMsg={this.handleSendMsg}
+                          loginState={this.state.loginstate}
+                          />
                       </div>
-                    </div>
             {/* End Container */}
                   </div>
                 </div>

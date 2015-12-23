@@ -16,18 +16,16 @@ var Chat = React.createClass({
     },
     render: function(){
         return (
-            <div>
-                <div id="chatcontainer">
-                    <ChatContent
-                      chatData={this.props.chatData}
-                      />
-                    <ChatSend
-                      sendMsg={this.props.sendMsg}
-                      loginData={this.props.loginData}
-                      loginState={this.props.loginState}
-                      />
-                </div>
-            </div>
+              <div id="chatcontainer">
+                  <ChatContent
+                    chatData={this.props.chatData}
+                    />
+                  <ChatSend
+                    sendMsg={this.props.sendMsg}
+                    loginData={this.props.loginData}
+                    loginState={this.props.loginState}
+                    />
+              </div>
         )
     }
 });
