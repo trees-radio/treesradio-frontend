@@ -18,6 +18,8 @@
     "react"
   ],
 
+  extends: "eslint:recommended",
+
   "rules": {
     "strict": 0
   }
