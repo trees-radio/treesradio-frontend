@@ -11,10 +11,10 @@ $videotoplevel-bg: #171717;
 
 #youtube-player {
 //  margin-left: 8%;
-  width: 102%;  //fullscreen = 102% + small = 45%
-  height: 95%;  //fulscreen = 95% + small = 40%
+  width: 45%;  //fullscreen = 102% + small = 45%
+  height: 40%;  //fulscreen = 95% + small = 40%
   position: absolute;
-  top: 50%;  //fullscreen = 50% + small = 20%
+  top: 20%;  //fullscreen = 50% + small = 20%
   left: 50%;
   transform: translate(-50%, -50%);
 }
