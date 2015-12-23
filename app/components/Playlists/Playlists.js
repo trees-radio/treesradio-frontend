@@ -69,7 +69,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
             <a>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4">
-            <a>Current Media Title</a><br/>
+            <a>Koan Sound - 7th Dimension</a><br/>
             <a>Player: Gryphon</a>
           </div>
           <div id="grabtrack" className="col-lg-1">

@@ -25,8 +25,6 @@ var ChatContent = React.createClass({
       // tracking msg color
       var chatPos = 0;
 
-
-
       // don't render entire chat state on page
       // let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 50));
       let msgs = this.props.chatData.map(function(msg, index){
@@ -40,12 +38,19 @@ var ChatContent = React.createClass({
             chatPosClass = "chat-line-0";
             chatPos = 0;
           }
-
           // add any new whole-line classes in string below, keep trailing space
           let chatLineClasses = "chat-item " + chatPosClass;
-
           let chatAvatar = "http://api.adorable.io/avatars/50/"+ msg['user'] +".png";
 
+          // console.log(msg.msgs);
+
+
+
+          let innerMsgs = msg.msgs.map(function(msg, index){
+            return (
+              <span key={index}>{msg}<br/></span>
+            )
+          });
 
           // individual
           return (
@@ -55,7 +60,7 @@ var ChatContent = React.createClass({
                 </div>
                 <div className="chat-msg">
                   <span className="chat-username">{ msg.user }</span><br />
-                  <span className="chat-text">{ msg.msg }</span>
+                  <span className="chat-text">{ innerMsgs }</span>
                 </div>
 
               </li>
