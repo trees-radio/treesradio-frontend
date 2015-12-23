@@ -164,10 +164,10 @@
   position: absolute;
   width: 98%;
   height: 9%;
-  background-color: $trees-bg;
+  background-color: #0d0d0d;
   border-radius: 5px;
   border-style: solid;
-  border-color: #77b300;
+  border-color: #333333;
   float: left;
 }
 
@@ -191,7 +191,7 @@
   height: 100%;
   width: 30%;
   border-right: solid;
-  border-color: #77b300;
+  border-color: #333333;
   font-size: 1.15vw;
   line-height: 1.55vw;
   padding: 5px 5px 5px 5px;
@@ -205,7 +205,7 @@
 #currentsong-metadata {
   height: 100%;
   border-right: solid;
-  border-color: #77b300;
+  border-color: #333333;
   font-size: 1.15vw;
   line-height: 1.55vw;
   padding: 5px;
@@ -218,7 +218,7 @@
 #grabtrack {
   height: 100%;
   border-right: solid;
-  border-color: #77b300;
+  border-color: #333333;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -241,7 +241,7 @@
   text-align: center;
   padding: 0;
   border-right: solid;
-  border-color: #77b300;
+  border-color: #333333;
   a {
     text-decoration: none;
   }
