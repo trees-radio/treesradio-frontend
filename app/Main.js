@@ -23,7 +23,8 @@ import TRreg from './utils/registration.js';
 
 // Components
 import Nav from './components/Nav/Nav.js';
-import Chat from './components/Chat/Chat.js';
+// import Chat from './components/Chat/Chat.js';
+import Sidebar from './components/Sidebar/Sidebar'
 import Video from './components/Video/Video.js';
 import Playlists from './components/Playlists/Playlists.js';
 
@@ -446,15 +447,13 @@ var Main = React.createClass({
                       </div>
             {/* Chat Component */}
                       <div className="col-lg-3 no-float" id="chattoplevel" >
-                        <div id="chatcontainertop" className="row">
-                          <Chat
-                            loginData={this.state.user}
-                            chatData={this.state.chat}
-                            sendMsg={this.handleSendMsg}
-                            loginState={this.state.loginstate}
-                            />
+                        <Sidebar
+                          loginData={this.state.user}
+                          chatData={this.state.chat}
+                          sendMsg={this.handleSendMsg}
+                          loginState={this.state.loginstate}
+                          />
                       </div>
-                    </div>
             {/* End Container */}
                   </div>
                 </div>
