@@ -11,11 +11,11 @@ $videotoplevel-bg: #171717;
 
 #youtube-player {
 //  margin-left: 8%;
-  width: 102%;
-  height: 95%;
+  width: 113%;  //fullscreen = 102% (or 113?) + small = 45%
+  height: 95%;  //fulscreen = 95% + small = 40%
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%;  //fullscreen = 50% + small = 20%
+  left: 55%; // small = 50%
   transform: translate(-50%, -50%);
 }
 
@@ -30,7 +30,10 @@ $videotoplevel-bg: #171717;
 #vidcontainer {
   height: 90%;
   max-height: 90%;
+  float:left;
   position: relative;
+  background-image: url('img/spacepineapples.jpg');
+  background-size: contain;
 }
 
 .reactplayer {
