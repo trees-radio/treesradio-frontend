@@ -228,9 +228,50 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
       // debugger;
-      base.post('chat/messages', {
-        data: this.state.chat.concat([newMsgData])
-      })
+      let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
+      // chatRef.push({
+      //   user: newMsgData.user,
+      //   msgs: {
+      //     0: newMsgData.msg
+      //   }
+      // });
+      let lastMsg = this.state.chat[this.state.chat.length - 1];
+      if (!lastMsg) {
+        chatRef.push({
+          user: newMsgData.user,
+          msgs: {
+            0: newMsgData.msg
+          }
+        });
+        return;
+      }
+      console.log("lastmsg:", lastMsg);
+      if (lastMsg.user === this.state.user.username) {
+        // let innerMsgRef = new Firebase(window.__env.firebase_origin + "/chat/messages/" + lastMsg.key + "/msgs");
+        // console.log("newmsg", newMsgData);
+        // let lastInnerMsg = lastMsg.msgs[lastMsg.msgs.length - 1];
+        lastMsg.msgs.push(newMsgData.msg);
+        // console.log("newmsg", lastMsg);
+
+        // let newText = newMsgData.msg;
+        // console.log("newtext", newText);
+        // innerMsgRef.push({
+        //
+        // });
+        base.post('chat/messages/' + lastMsg.key + '/msgs', {
+          data: lastMsg.msgs
+        });
+      } else {
+        chatRef.push({
+          user: newMsgData.user,
+          msgs: {
+            0: newMsgData.msg
+          }
+        });
+      }
+      // base.post('chat/messages', {
+      //   data: this.state.chat.concat([newMsgData])
+      // })
       // this.setState({
       //   chat: this.state.chat.concat([newMsgData])
       // });
