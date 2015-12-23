@@ -27,11 +27,23 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
        openButtonIcon = "fa fa-angle-double-down fa-4x";
      }
      let currentPlaylistName = "";
+     let currentPlaylistId = this.props.currentPlaylist.id;
+     let currentSelectedMedia = "";
      if (this.props.currentPlaylist.name === "") {
        currentPlaylistName = "No Playlist Selected";
      } else {
        currentPlaylistName = this.props.currentPlaylist.name;
+       if (this.props.playlists[currentPlaylistId].entries) {
+         currentSelectedMedia = this.props.playlists[currentPlaylistId].entries[0].title;
+         if (currentSelectedMedia.length > 35) {
+           let maxLength = 35;
+           currentSelectedMedia = currentSelectedMedia.substring(0,maxLength) + "...";
+         }
+       }
      }
+
+
+
      return(
       <div id="playlists-component">
         <PlaylistsPanel
@@ -54,7 +66,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           </div>
           <div id="playlist-metadata" className="col-lg-3">
             <a>{currentPlaylistName}</a><br/>
-            <a>Next Media in Playlist</a>
+            <a>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4">
             <a>Current Media Title</a><br/>
