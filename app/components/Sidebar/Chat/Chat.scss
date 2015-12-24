@@ -66,6 +66,9 @@ div#chatcontainertop > div {
 
 .chat-msg {
   vertical-align: bottom;
+  width: 80%;
+  max-width: 80%;
+  word-wrap: break-word;
 }
 
 .chat-item {
@@ -81,6 +84,7 @@ div#chatcontainertop > div {
   // padding-top: 3px;
   width: 100%;
   display: flex;
+
 }
 
 .chat-username {
@@ -99,6 +103,7 @@ div#chatcontainertop > div {
   position: relative;
   font-size: .865vw;
   // left: 50px;
+
 }
 
 .chat-avatar {
