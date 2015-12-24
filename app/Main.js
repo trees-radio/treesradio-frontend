@@ -18,7 +18,7 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 
 // TreesRadio utility functions
-import TRreg from './utils/registration.js';
+// import TRreg from './utils/registration.js';
 // TRreg.example();
 
 // Components
