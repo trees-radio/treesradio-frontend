@@ -1,7 +1,7 @@
 //MAIN JS
 
 // Sentry Error Reporting
-Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
+// Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
 
 // React
 import React from 'react';
