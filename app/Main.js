@@ -1,7 +1,7 @@
 //MAIN JS
 
 // Sentry Error Reporting
-Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
+// Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
 
 // React
 import React from 'react';
@@ -84,7 +84,7 @@ var Main = React.createClass({
 
         base.syncState(`registeredNames`, {
             context: this,
-            state: 'registeredNames',
+            state: 'registeredNames'
         });
 
 
@@ -105,7 +105,7 @@ var Main = React.createClass({
     },
     authHandler: function(error, authData){
         if (error) {
-            console.log("Auth", error);
+            // console.log("Auth", error);
             sweetAlert({
               "title": "Login Error",
               "text": error,
@@ -119,7 +119,7 @@ var Main = React.createClass({
     },
     authDataCallback: function(authData){
         if (authData) {
-            console.log(authData.uid + " logged in");
+            // console.log(authData.uid + " logged in");
             this.userBindRef = base.syncState(`users/` + authData.uid, {
               context: this,
               state: 'user'
@@ -134,14 +134,18 @@ var Main = React.createClass({
             let selectPlaylist = this.selectPlaylist;
             let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
             if (lastSelectedPlaylist === 0) {
-              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 1000);
+              window.setTimeout(function() {
+                selectPlaylist(lastSelectedPlaylist);
+              }, 1000);
             } else if (lastSelectedPlaylist) {
-              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 1000);
+              window.setTimeout(function() {
+                selectPlaylist(lastSelectedPlaylist);
+              }, 1000);
             } else {
               // no last playlist to set
             }
         } else {
-            console.log("Logged out");
+              // console.log("Logged out");
             this.setState({ loginstate: false });
         }
     },
@@ -245,7 +249,7 @@ var Main = React.createClass({
         });
         return;
       }
-      console.log("lastmsg:", lastMsg);
+      // console.log("lastmsg:", lastMsg);
       if (lastMsg.user === this.state.user.username) {
         // let innerMsgRef = new Firebase(window.__env.firebase_origin + "/chat/messages/" + lastMsg.key + "/msgs");
         // console.log("newmsg", newMsgData);
@@ -299,7 +303,7 @@ var Main = React.createClass({
         }.bind(this));
       this.setState({ playlistsPanelView: "search" });
     },
-    addNewPlaylist: function(newName) {
+    addNewPlaylist: function() {
       let currentAuth = base.getAuth();
       // debugger;
       if (currentAuth === null) {
@@ -337,14 +341,14 @@ var Main = React.createClass({
             }
           });
         } else {
-
+          return;
         }
       });
     },
     removePlaylist: function(index) {
       // debugger;
       let currentAuth = base.getAuth();
-      let playlistsBindRef = this.playlistsBindRef;
+      // let playlistsBindRef = this.playlistsBindRef;
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
       sweetAlert({
         title: "Are you sure?",
@@ -364,7 +368,7 @@ var Main = React.createClass({
             timer: 3000
           });
         } else {
-
+          return;
         }
       });
       this.setState({
@@ -377,14 +381,14 @@ var Main = React.createClass({
     },
     selectPlaylist: function(index) {
       // debugger;
-      let currentAuth = base.getAuth();
+      // let currentAuth = base.getAuth();
       // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
       if (nameToSelect.length > 23) {
         let maxLength = 23;
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
       }
-      let indexToSelect = index;
+      // let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
         id: index
@@ -427,7 +431,7 @@ var Main = React.createClass({
       this.setState({ playlistsPanelView: "playlist" });
     },
     removeFromPlaylist: function(index){
-      console.log("Removing playlist item of index", index);
+      // console.log("Removing playlist item of index", index);
       let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array

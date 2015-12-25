@@ -17,6 +17,10 @@ build:
     # A step that executes `npm install` command
     - npm-install
 
+    - script:
+        name: npm run lint
+        code: |
+          npm run lint
     # A step that executes `npm test` command
     #- npm-test
 
