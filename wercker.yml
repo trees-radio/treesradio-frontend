@@ -45,13 +45,13 @@ deploy:
           echo "no deploy selected"
   Dev:
     - script:
-        name: npm run builddev
+        name: npm run build-prod
         code: |
-          npm run build-dev
-    - zbuttram/wercker-firebase-deploy@0.1.1:
-        name: "treesradio-dev"
+          npm run build-prod
+    - zbuttram/wercker-firebase-deploy@0.1.2:
+        firebase: "treesradio-dev"
         token: "-K1gUPDLDY1-gqa_SUNN|0ff924bf01360975d71d3ddcf7328193"
-        
+
   after-steps:
     - wercker/slack-notifier:
         url: $SLACK_WEBHOOK_URL
