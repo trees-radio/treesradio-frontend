@@ -44,13 +44,14 @@ deploy:
         code: |
           echo "no deploy selected"
   Dev:
+    - npm-install
     - script:
         name: npm run build-prod
         code: |
           npm run build-prod
     - zbuttram/wercker-firebase-deploy@0.1.2:
         firebase: "treesradio-dev"
-        token: "-K1gUPDLDY1-gqa_SUNN|0ff924bf01360975d71d3ddcf7328193"
+        token: $FIREBASE_DEPLOY_KEY
 
   after-steps:
     - wercker/slack-notifier:
