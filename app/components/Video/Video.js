@@ -15,7 +15,7 @@ var Video = React.createClass({
           width="1280px"
           height="720px"
           id="reactplayerid"
-          url='https://www.youtube.com/watch?v=3CkUmuNuA1g'
+          url='https://www.youtube.com/watch?v=6pxRHBw-k8M'
           playing={this.shouldBePlaying()}
           />
       </div>
