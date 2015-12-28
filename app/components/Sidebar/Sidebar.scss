@@ -7,14 +7,15 @@
 }
 
 .sidebar-changer {
-  height: 5% !important;
+  height: 5% !important; //do not unimportant this is seriously fucking important
   color:white;
   text-align: center;
   line-height: 2vw;
+  cursor: pointer;
   }
 
 .sidebar-selected {
-  height: 100% !important;
+  height: 100% !important; //do not unimportant this is seriously fucking important
   color:white;
   text-align: center;
   background-color:#121317;
