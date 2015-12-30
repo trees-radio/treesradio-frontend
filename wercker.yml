@@ -17,6 +17,10 @@ build:
     # A step that executes `npm install` command
     - npm-install
 
+    - script:
+        name: npm run lint
+        code: |
+          npm run lint
     # A step that executes `npm test` command
     #- npm-test
 
@@ -40,15 +44,15 @@ deploy:
         code: |
           echo "no deploy selected"
   Dev:
+    - npm-install
     - script:
-        name: npm run builddev
+        name: npm run build-prod
         code: |
-          npm run build-dev
-    - script:
-        name: firebase deploy
-        code: |
-          npm i -g firebase-tools
-          firebase deploy --token $firebase
+          npm run build-prod
+    - zbuttram/wercker-firebase-deploy@0.1.2:
+        firebase: "treesradio-dev"
+        token: $FIREBASE_DEPLOY_KEY
+
   after-steps:
     - wercker/slack-notifier:
         url: $SLACK_WEBHOOK_URL
