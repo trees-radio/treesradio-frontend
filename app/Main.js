@@ -62,7 +62,8 @@ var Main = React.createClass({
           currentSearch: {
             data: {},
             items: []
-          }
+          },
+          currentSidebar: 0
       }
     },
     componentWillMount: function(){
@@ -157,7 +158,7 @@ var Main = React.createClass({
     handleRegister: function(desiredEml, desiredPw){
       sweetAlert({
         title: "Register",
-        text: "Choose your username!",
+        text: "Choose your username!\nYou must be 18 years of age or older to register!",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -457,6 +458,14 @@ var Main = React.createClass({
       // console.log(copyofPlaylist);
       base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push update to Firebase
     },
+
+    ///////////////////////////////////////////////////////////////////////
+    // SIDEBAR CHANGER
+    ///////////////////////////////////////////////////////////////////////
+    changeSidebar: function(n) {
+      this.setState({ currentSidebar: n });
+    },
+
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -506,6 +515,8 @@ var Main = React.createClass({
                           chatData={this.state.chat}
                           sendMsg={this.handleSendMsg}
                           loginState={this.state.loginstate}
+                          currentSidebar={this.state.currentSidebar}
+                          changeSidebar={this.changeSidebar}
                           />
                       </div>
             {/* End Container */}
