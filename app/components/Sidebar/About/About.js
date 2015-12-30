@@ -5,7 +5,9 @@ var About = React.createClass({
 
   render: function() {
     return (
-      <div />
+      <div>
+        <h3>TreesRadio</h3>
+      </div>
     );
   }
 
