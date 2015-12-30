@@ -1,11 +1,12 @@
 {
   "name": "treesradio-frontend",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "TreesRadio Frontend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --inline --colors --content-base public/",
+    "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase deploy:rules",
     "update-env": "firebase data:set /_admin/env firebase/env.json -y -f treesradio",
@@ -45,7 +46,7 @@
     "font-awesome": "^4.5.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
-    "re-base": "^1.3.1",
+    "re-base": "^1.4.0",
     "react": "^0.14.3",
     "react-cookie": "^0.4.3",
     "react-dom": "^0.14.3",

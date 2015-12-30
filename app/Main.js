@@ -1,7 +1,7 @@
 //MAIN JS
 
 // Sentry Error Reporting
-Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
+// Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install()
 
 // React
 import React from 'react';
@@ -18,7 +18,7 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 
 // TreesRadio utility functions
-import TRreg from './utils/registration.js';
+// import TRreg from './utils/registration.js';
 // TRreg.example();
 
 // Components
@@ -54,7 +54,8 @@ var Main = React.createClass({
           playlistsOpen: false,
           currentPlaylist: {
             name: "",
-            id: -1
+            id: -1,
+            key: ""
           },
           playlistsPanelView: "blank",
           playlists: [],
@@ -84,7 +85,7 @@ var Main = React.createClass({
 
         base.syncState(`registeredNames`, {
             context: this,
-            state: 'registeredNames',
+            state: 'registeredNames'
         });
 
 
@@ -105,7 +106,7 @@ var Main = React.createClass({
     },
     authHandler: function(error, authData){
         if (error) {
-            console.log("Auth", error);
+            // console.log("Auth", error);
             sweetAlert({
               "title": "Login Error",
               "text": error,
@@ -119,7 +120,7 @@ var Main = React.createClass({
     },
     authDataCallback: function(authData){
         if (authData) {
-            console.log(authData.uid + " logged in");
+            // console.log(authData.uid + " logged in");
             this.userBindRef = base.syncState(`users/` + authData.uid, {
               context: this,
               state: 'user'
@@ -134,14 +135,18 @@ var Main = React.createClass({
             let selectPlaylist = this.selectPlaylist;
             let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
             if (lastSelectedPlaylist === 0) {
-              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 1000);
+              window.setTimeout(function() {
+                selectPlaylist(lastSelectedPlaylist);
+              }, 1000);
             } else if (lastSelectedPlaylist) {
-              window.setTimeout(function() { selectPlaylist(lastSelectedPlaylist); }, 1000);
+              window.setTimeout(function() {
+                selectPlaylist(lastSelectedPlaylist);
+              }, 1000);
             } else {
               // no last playlist to set
             }
         } else {
-            console.log("Logged out");
+              // console.log("Logged out");
             this.setState({ loginstate: false });
         }
     },
@@ -245,7 +250,7 @@ var Main = React.createClass({
         });
         return;
       }
-      console.log("lastmsg:", lastMsg);
+      // console.log("lastmsg:", lastMsg);
       if (lastMsg.user === this.state.user.username) {
         // let innerMsgRef = new Firebase(window.__env.firebase_origin + "/chat/messages/" + lastMsg.key + "/msgs");
         // console.log("newmsg", newMsgData);
@@ -299,7 +304,7 @@ var Main = React.createClass({
         }.bind(this));
       this.setState({ playlistsPanelView: "search" });
     },
-    addNewPlaylist: function(newName) {
+    addNewPlaylist: function() {
       let currentAuth = base.getAuth();
       // debugger;
       if (currentAuth === null) {
@@ -330,21 +335,27 @@ var Main = React.createClass({
               timer: 3000
             });
           }
-          base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          // base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          //   data: { name: newPlaylistName },
+          //   then(){
+          //     newPlaylistCallback();
+          //   }
+          // });
+          base.push('playlists/' + currentAuth.uid, {
             data: { name: newPlaylistName },
             then(){
               newPlaylistCallback();
             }
           });
         } else {
-
+          return;
         }
       });
     },
     removePlaylist: function(index) {
       // debugger;
       let currentAuth = base.getAuth();
-      let playlistsBindRef = this.playlistsBindRef;
+      // let playlistsBindRef = this.playlistsBindRef;
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
       sweetAlert({
         title: "Are you sure?",
@@ -364,7 +375,7 @@ var Main = React.createClass({
             timer: 3000
           });
         } else {
-
+          return;
         }
       });
       this.setState({
@@ -377,17 +388,19 @@ var Main = React.createClass({
     },
     selectPlaylist: function(index) {
       // debugger;
-      let currentAuth = base.getAuth();
+      // let currentAuth = base.getAuth();
       // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
+      let keyToSelect = this.state.playlists[index].key;
       if (nameToSelect.length > 23) {
         let maxLength = 23;
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
       }
-      let indexToSelect = index;
+      // let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
-        id: index
+        id: index,
+        key: keyToSelect
       } });
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
@@ -420,18 +433,18 @@ var Main = React.createClass({
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
         let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
         copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push new array to Firebase
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push new array to Firebase
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: [objectToAdd]});
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: [objectToAdd]});
       }
       this.setState({ playlistsPanelView: "playlist" });
     },
     removeFromPlaylist: function(index){
-      console.log("Removing playlist item of index", index);
+      // console.log("Removing playlist item of index", index);
       let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", { data: copyofPlaylist }); //update Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { data: copyofPlaylist }); //update Firebase
     },
     moveTopPlaylist: function(index){
       // console.log("Moving top", index);
@@ -442,7 +455,7 @@ var Main = React.createClass({
       // console.log("Moving item", movingItem);
       copyofPlaylist.unshift(movingItem[0]); // put item at front of array
       // console.log(copyofPlaylist);
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push update to Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push update to Firebase
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
