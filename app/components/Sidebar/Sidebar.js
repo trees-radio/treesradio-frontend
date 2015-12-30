@@ -1,6 +1,9 @@
 import React from 'react';
 import SidebarChanger from './SidebarChanger/SidebarChanger';
 import Chat from './Chat/Chat';
+import OnlineUsers from './OnlineUsers/OnlineUsers';
+import Waitlist from './Waitlist/Waitlist';
+import About from './About/About';
 
 
 var Sidebar = React.createClass({
@@ -19,17 +22,17 @@ var Sidebar = React.createClass({
         break;
       case 1:
         currentSidebar = (
-          <div>Online Ents</div>
+          <OnlineUsers/>
         )
         break;
       case 2:
       currentSidebar = (
-        <div>Waitlist</div>
+        <Waitlist/>
       )
         break;
       case 3:
         currentSidebar = (
-          <div>About</div>
+          <About/>
         )
         break;
       default:
