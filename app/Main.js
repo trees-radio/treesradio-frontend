@@ -54,7 +54,8 @@ var Main = React.createClass({
           playlistsOpen: false,
           currentPlaylist: {
             name: "",
-            id: -1
+            id: -1,
+            key: ""
           },
           playlistsPanelView: "blank",
           playlists: [],
@@ -334,7 +335,13 @@ var Main = React.createClass({
               timer: 3000
             });
           }
-          base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          // base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          //   data: { name: newPlaylistName },
+          //   then(){
+          //     newPlaylistCallback();
+          //   }
+          // });
+          base.push('playlists/' + currentAuth.uid, {
             data: { name: newPlaylistName },
             then(){
               newPlaylistCallback();
@@ -384,6 +391,7 @@ var Main = React.createClass({
       // let currentAuth = base.getAuth();
       // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
+      let keyToSelect = this.state.playlists[index].key;
       if (nameToSelect.length > 23) {
         let maxLength = 23;
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
@@ -391,7 +399,8 @@ var Main = React.createClass({
       // let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
-        id: index
+        id: index,
+        key: keyToSelect
       } });
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
@@ -424,9 +433,9 @@ var Main = React.createClass({
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
         let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
         copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push new array to Firebase
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push new array to Firebase
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: [objectToAdd]});
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: [objectToAdd]});
       }
       this.setState({ playlistsPanelView: "playlist" });
     },
@@ -435,7 +444,7 @@ var Main = React.createClass({
       let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", { data: copyofPlaylist }); //update Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { data: copyofPlaylist }); //update Firebase
     },
     moveTopPlaylist: function(index){
       // console.log("Moving top", index);
@@ -446,7 +455,7 @@ var Main = React.createClass({
       // console.log("Moving item", movingItem);
       copyofPlaylist.unshift(movingItem[0]); // put item at front of array
       // console.log(copyofPlaylist);
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push update to Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push update to Firebase
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
