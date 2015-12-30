@@ -30,4 +30,4 @@ var Chat = React.createClass({
     }
 });
 
-module.exports = Chat;
+export default Chat;
