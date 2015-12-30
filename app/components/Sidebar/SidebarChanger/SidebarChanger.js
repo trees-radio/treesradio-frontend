@@ -16,11 +16,25 @@ var SidebarChanger = React.createClass({
     this.props.changeSidebar(3);
   },
   render: function() {
-    let chatSelected;
-    let onlineSelected;
-    let waitlistSelected;
-    let aboutSelected;
-
+    let chatSelected = false;
+    let onlineSelected = false;
+    let waitlistSelected = false;
+    let aboutSelected = false;
+    switch (this.props.currentSidebar) {
+      case 0:
+        chatSelected = true;
+        break;
+      case 1:
+        onlineSelected = true;
+        break;
+      case 2:
+        waitlistSelected = true;
+        break;
+      case 3:
+        aboutSelected = true;
+        break;
+      default:
+    }
     let chatBtnClass = classNames(
       'show-chat-btn',
       'col-lg-3',
