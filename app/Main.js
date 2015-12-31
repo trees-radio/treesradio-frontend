@@ -23,7 +23,6 @@ import cookie from 'react-cookie';
 
 // Components
 import Nav from './components/Nav/Nav.js';
-// import Chat from './components/Chat/Chat.js';
 import Sidebar from './components/Sidebar/Sidebar'
 import Video from './components/Video/Video.js';
 import Playlists from './components/Playlists/Playlists.js';
@@ -51,6 +50,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           registeredNames: {},
+          userPresence: [],
           playlistsOpen: false,
           currentPlaylist: {
             name: "",
@@ -63,7 +63,7 @@ var Main = React.createClass({
             data: {},
             items: []
           },
-          currentSidebar: 0
+          currentSidebar: 1
       }
     },
     componentWillMount: function(){
@@ -84,10 +84,18 @@ var Main = React.createClass({
             }
         });
 
+        base.bindToState('presence', {
+          context: this,
+          state: 'userPresence',
+          asArray: true
+        })
+
         base.syncState(`registeredNames`, {
             context: this,
             state: 'registeredNames'
         });
+
+
 
 
 
@@ -124,7 +132,12 @@ var Main = React.createClass({
             // console.log(authData.uid + " logged in");
             this.userBindRef = base.syncState(`users/` + authData.uid, {
               context: this,
-              state: 'user'
+              state: 'user',
+              then(){
+                let presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+                presenceRef.onDisconnect().remove();
+                presenceRef.child('online').set(true);
+              }
             });
             this.setState({ loginstate: true });
             this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
@@ -517,6 +530,7 @@ var Main = React.createClass({
                           loginState={this.state.loginstate}
                           currentSidebar={this.state.currentSidebar}
                           changeSidebar={this.changeSidebar}
+                          userPresence={this.state.userPresence}
                           />
                       </div>
             {/* End Container */}
