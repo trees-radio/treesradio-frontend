@@ -5,6 +5,7 @@
   display: flex;
   padding-top: 2%;
   padding-left: 2%;
+  cursor: pointer;
 }
 
 .users-avatar {
@@ -16,6 +17,8 @@
 .users-avatarimg {
   width: 2.5vw;
   height: 2.5vw;
+  border-radius: 5px;
+
 }
 
 
@@ -30,4 +33,14 @@
 
 .users-name {
 
+}
+
+.user-line-1 {
+  background-color: #0A0A0A; //light skin cbd6dc
+  padding: 10px;
+}
+
+.user-line-0 {
+  background-color: #121317; //light skin e9eef0
+  padding: 10px;
 }
