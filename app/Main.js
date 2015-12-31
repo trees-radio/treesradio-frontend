@@ -23,7 +23,6 @@ import cookie from 'react-cookie';
 
 // Components
 import Nav from './components/Nav/Nav.js';
-// import Chat from './components/Chat/Chat.js';
 import Sidebar from './components/Sidebar/Sidebar'
 import Video from './components/Video/Video.js';
 import Playlists from './components/Playlists/Playlists.js';
@@ -124,7 +123,12 @@ var Main = React.createClass({
             // console.log(authData.uid + " logged in");
             this.userBindRef = base.syncState(`users/` + authData.uid, {
               context: this,
-              state: 'user'
+              state: 'user',
+              then(){
+                let presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+                presenceRef.onDisconnect().remove();
+                presenceRef.set(true);
+              }
             });
             this.setState({ loginstate: true });
             this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
