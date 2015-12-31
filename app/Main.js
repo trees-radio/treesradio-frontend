@@ -50,6 +50,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           registeredNames: {},
+          userPresence: [],
           playlistsOpen: false,
           currentPlaylist: {
             name: "",
@@ -62,7 +63,7 @@ var Main = React.createClass({
             data: {},
             items: []
           },
-          currentSidebar: 0
+          currentSidebar: 1
       }
     },
     componentWillMount: function(){
@@ -83,10 +84,18 @@ var Main = React.createClass({
             }
         });
 
+        base.bindToState('presence', {
+          context: this,
+          state: 'userPresence',
+          asArray: true
+        })
+
         base.syncState(`registeredNames`, {
             context: this,
             state: 'registeredNames'
         });
+
+
 
 
 
@@ -127,7 +136,7 @@ var Main = React.createClass({
               then(){
                 let presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
                 presenceRef.onDisconnect().remove();
-                presenceRef.set(true);
+                presenceRef.child('online').set(true);
               }
             });
             this.setState({ loginstate: true });
@@ -521,6 +530,7 @@ var Main = React.createClass({
                           loginState={this.state.loginstate}
                           currentSidebar={this.state.currentSidebar}
                           changeSidebar={this.changeSidebar}
+                          userPresence={this.state.userPresence}
                           />
                       </div>
             {/* End Container */}

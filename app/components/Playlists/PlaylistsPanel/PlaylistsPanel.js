@@ -1,7 +1,7 @@
 
 import React from 'react';
-import sweetAlert from 'sweetalert';
-import cookie from 'react-cookie';
+// import sweetAlert from 'sweetalert';
+// import cookie from 'react-cookie';
 
 var PlaylistsPanel = React.createClass({
   propTypes: {
@@ -25,7 +25,7 @@ var PlaylistsPanel = React.createClass({
     if (e.key === 'Enter') {
       let searchQuery = this.refs.searchbox.value.trim();
       if (searchQuery === '') {
-        console.log("User attempted to send an empty search query");
+        // console.log("User attempted to send an empty search query");
       } else {
         this.refs.searchbox.value = '';
         this.props.searchForVideo(searchQuery);
@@ -178,4 +178,5 @@ var PlaylistsPanel = React.createClass({
 
 });
 
-module.exports = PlaylistsPanel;
+// module.exports = PlaylistsPanel;
+export default PlaylistsPanel;
