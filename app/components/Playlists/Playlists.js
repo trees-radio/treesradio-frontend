@@ -77,7 +77,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           </div>
           <div id="vote" className="col-lg-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
-            <div className="like-button"><i className="fa fa-thumbs-o-up"></i></div><br/>
+            <div className="like-button"><i className="fa fa-thumbs-o-up"></i></div>
             {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
             <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i></div>
           </div>
