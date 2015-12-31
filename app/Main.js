@@ -63,7 +63,7 @@ var Main = React.createClass({
             data: {},
             items: []
           },
-          currentSidebar: 0
+          currentSidebar: 0 // 0 - 3 Chat -> About
       }
     },
     componentWillMount: function(){

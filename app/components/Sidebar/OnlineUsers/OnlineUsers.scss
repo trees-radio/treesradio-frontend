@@ -1,0 +1,33 @@
+.user-item {
+  width: 100%;
+  list-style-position: inside;
+  list-style-type: none;
+  display: flex;
+  padding-top: 2%;
+  padding-left: 2%;
+}
+
+.users-avatar {
+  width: 10%;
+  max-width: 10%;
+
+}
+
+.users-avatarimg {
+  width: 2.5vw;
+  height: 2.5vw;
+}
+
+
+.users-info {
+  width: 85%;
+  max-width: 85%;
+  height: 1vw;
+  padding-top: 2.5%;
+  padding-left: 2%;
+  font-size: 1vw;
+}
+
+.users-name {
+
+}
