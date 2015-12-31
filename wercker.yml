@@ -15,14 +15,13 @@ build:
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
 
+    # A step that executes `npm install` command
+    - npm-install
+
     - script:
         name: npm run lint
         code: |
           npm run lint
-
-    # A step that executes `npm install` command
-    - npm-install
-
 
     # A step that executes `npm test` command
     #- npm-test
@@ -55,7 +54,7 @@ deploy:
 
   Dev:
     - npm-install
-    
+
     - script:
         name: full production compile
         code: |
