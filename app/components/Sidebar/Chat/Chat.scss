@@ -32,7 +32,7 @@ div#chatcontainertop > div {
 
 #chatcontainer {
   height: 100%;
-  padding-bottom: 53px;
+  padding-bottom: 7%;
   width: 100%;
   bottom: -25px;
   overflow: hidden;
@@ -113,6 +113,8 @@ div#chatcontainertop > div {
 
 #avatarimg {
   border-radius: 5px;
+  height: 2.5vw;
+  width: 2.5vw;
 }
 
 #sendbox {
