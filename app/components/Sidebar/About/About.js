@@ -32,13 +32,13 @@ var About = React.createClass({
         <div className="about-bugs">
           <div>
             <h5>Bug Report:</h5>
-            <p>Found a bug on TreesRadio? Help us fix it by reporting it, just click the link <a href="#">HERE </a>to send us a report!</p>
+            <p>Found a bug on TreesRadio? Help us fix it by reporting it, just click the link <a href="#" target="_blank">HERE </a>to send us a report!</p>
           </div>
         </div>
         <div className="about-suggestions">
           <div>
             <h5>Suggestions Form:</h5>
-            <a href="#">Send us a suggestion report!</a>
+            <a href="http://goo.gl/forms/j7hua7F8aN" target="_blank">Send us a suggestion report!</a>
           </div>
         </div>
       </div>
