@@ -22,7 +22,9 @@ var Sidebar = React.createClass({
         break;
       case 1:
         currentSidebar = (
-          <OnlineUsers/>
+          <OnlineUsers
+            userPresence={this.props.userPresence}
+            />
         )
         break;
       case 2:
