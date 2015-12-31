@@ -1,3 +1,9 @@
+// Things we want in the about section:
+//  Brief Summary of site
+//  Rules
+//  Bug Reports
+//  Suggestions Form
+
 
 import React from 'react';
 
