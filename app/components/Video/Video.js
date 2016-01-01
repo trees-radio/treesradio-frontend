@@ -25,7 +25,7 @@ var Video = React.createClass({
 
 });
 
-module.exports = Video;
+export default Video;
 
 // fgF7O_-vQzc - 10HR youtube buffer video
 
