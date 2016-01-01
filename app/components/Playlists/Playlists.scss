@@ -239,11 +239,6 @@
   }
 }
 
-.volume-slider {
-  div {
-    margin-top:.2vw !important;
-  }
-}
 
 #vote {
   height: 100%;
@@ -287,16 +282,26 @@
 
 .volume-slider {
   height: 100%;
+  border-bottom-style:solid;
+  border-color: #2d2f39;
 }
 
 .volume-slider-icon {
   position: absolute;
   z-index: 2;
+  cursor: pointer;
+  font-size: 125%;
+  text-align: right;
+  padding: 0;
+  line-height: 2.25vw;
+  margin-left: 25%;
+  color: white;
 }
 
 .volume-slider-node {
   height: 100%;
   overflow-x: hidden;
+
 }
  .volume-slider-handle {
    height: 20px;
