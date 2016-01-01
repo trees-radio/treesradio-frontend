@@ -23,7 +23,7 @@ div#chatcontainertop > div {
 }
 
 #chatcontainertop {
-  height: 92%;
+  height: 100%;
   width: 100%;
   bottom: 0;
   margin-right: 0;
@@ -39,7 +39,7 @@ div#chatcontainertop > div {
 }
 
 #chatscroll {
-  height: 100%; //23
+  height: 92%; //23
   overflow-x: hidden;
   overflow-y: auto;
 }
