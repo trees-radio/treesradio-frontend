@@ -104,6 +104,7 @@ var Playlists = React.createClass({
               handleActiveClassName="volume-slider-handle-active"
               barClassName="volume-slider-bar"
               onChange={this.updateVolume}
+              withBars={true}
               />
           </div>
           <div id="vote" className="col-lg-1">
