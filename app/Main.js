@@ -545,6 +545,7 @@ var Main = React.createClass({
                               removeFromPlaylist={this.removeFromPlaylist}
                               moveTopPlaylist={this.moveTopPlaylist}
                               updateVolume={this.updateVolume}
+                              controls={this.state.controls}
                                />
                           </div>
                       </div>

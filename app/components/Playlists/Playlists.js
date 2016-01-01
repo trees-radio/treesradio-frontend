@@ -98,7 +98,8 @@ var Playlists = React.createClass({
             <ReactSlider
               max={1}
               step={0.01}
-              defaultValue={0.5}
+              defaultValue={0}
+              value={this.props.controls.volume}
               className="volume-slider-node"
               handleClassName="volume-slider-handle"
               handleActiveClassName="volume-slider-handle-active"
