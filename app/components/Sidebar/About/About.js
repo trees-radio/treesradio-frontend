@@ -44,7 +44,7 @@ var About = React.createClass({
         <div className="about-credits">
           <div>
             <h5>Additional Thanks:</h5>
-            <a href="#" target="_blank"><p>Small Player/Space Pineapples Theme by @Luxx Luma</p></a>
+            <a href="#" target="_blank"><p>Small Player/Space Pineapples Background by @Luxx Luma</p></a>
           </div>
         </div>
         </div>
