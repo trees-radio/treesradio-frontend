@@ -45,7 +45,6 @@ var About = React.createClass({
           <div>
             <h5>Additional Thanks:</h5>
             <a href="#" target="_blank"><p>"Space Pineapples" by @Luxx Luma</p></a>
-            <a href="https://goo.gl/hA14Xx" target="_blank"><p>"The Rift" by Jason Jenkins</p></a>
           </div>
         </div>
         </div>
