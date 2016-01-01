@@ -134,9 +134,11 @@ var Main = React.createClass({
               context: this,
               state: 'user',
               then(){
-                let presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
-                presenceRef.onDisconnect().remove();
-                presenceRef.child('online').set(true);
+                // let presenceRef;
+                this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+                this.presenceRef.onDisconnect().remove();
+                this.presenceRef.child('online').set(true);
+                window.setInterval(this.presencePing, 30000);
               }
             });
             this.setState({ loginstate: true });
@@ -163,6 +165,10 @@ var Main = React.createClass({
               // console.log("Logged out");
             this.setState({ loginstate: false });
         }
+    },
+    presencePing: function() {
+      console.log("Sending presence ping...");
+      this.presenceRef.child('online').set(true);
     },
     logoutUser: function(){
         this.ref.unauth();
