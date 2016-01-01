@@ -289,6 +289,11 @@
   height: 100%;
 }
 
+.volume-slider-icon {
+  position: absolute;
+  z-index: 2;
+}
+
 .volume-slider-node {
   height: 100%;
   overflow-x: hidden;

@@ -96,6 +96,7 @@ var Playlists = React.createClass({
           <div id="grabtrack" className="col-lg-1">
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
             <div className="volume-slider">
+              <i className="fa fa-volume-down volume-slider-icon"></i>
               <ReactSlider
                 max={1}
                 step={0.01}
@@ -108,6 +109,7 @@ var Playlists = React.createClass({
                 onChange={this.updateVolume}
                 withBars={true}
                 />
+
             </div>
 
           </div>
