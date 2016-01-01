@@ -41,6 +41,13 @@ var About = React.createClass({
             <h5>Suggestions Form:</h5>
             <a href="http://goo.gl/forms/j7hua7F8aN" target="_blank">Send us a suggestion report!</a>
           </div>
+        <div className="about-credits">
+          <div>
+            <h5>Additional Thanks:</h5>
+            <a href="#" target="_blank"><p>"Space Pineapples" by @Luxx Luma</p></a>
+            <a href="https://goo.gl/hA14Xx" target="_blank"><p>"The Rift" by Jason Jenkins</p></a>
+          </div>
+        </div>
         </div>
       </div>
     );
