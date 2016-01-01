@@ -30,8 +30,10 @@ var OnlineUsers = React.createClass({
       )
     }, this);
     return (
-      <div>
-        {users}
+      <div className="users-scroll">
+        <ul className="users-list">
+          {users}
+        </ul>
       </div>
     );
   }

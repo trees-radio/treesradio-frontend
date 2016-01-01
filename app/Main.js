@@ -63,7 +63,10 @@ var Main = React.createClass({
             data: {},
             items: []
           },
-          currentSidebar: 3 // 0 - 3 Chat -> About
+          currentSidebar: 3, // 0 - 3 Chat -> About
+          controls: {
+            volume: 0.5
+          }
       }
     },
     componentWillMount: function(){
@@ -238,6 +241,8 @@ var Main = React.createClass({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
                   "type": "success"
+                }, function() {
+                  location.reload();
                 });
               }
             });
@@ -485,6 +490,19 @@ var Main = React.createClass({
       this.setState({ currentSidebar: n });
     },
 
+
+
+    ///////////////////////////////////////////////////////////////////////
+    // VIDEO CONTROLS
+    ///////////////////////////////////////////////////////////////////////
+    updateVolume: function(event, value) {
+      this.setState({
+        controls: {
+          volume: value
+        }
+      })
+    },
+
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -507,7 +525,9 @@ var Main = React.createClass({
                       <div className="col-lg-9 no-float" id="videotoplevel">
                         {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="">
-                            <Video />
+                            <Video
+                              controls={this.state.controls}
+                              />
                           </div>
                           <div id="playlists-container">
                             <Playlists
@@ -524,6 +544,7 @@ var Main = React.createClass({
                               addToPlaylist={this.addToPlaylist}
                               removeFromPlaylist={this.removeFromPlaylist}
                               moveTopPlaylist={this.moveTopPlaylist}
+                              updateVolume={this.updateVolume}
                                />
                           </div>
                       </div>

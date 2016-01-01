@@ -2,12 +2,26 @@
 
 
 import React from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
+
+// Material-UI imports
+import Slider from 'material-ui/lib/slider';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import treesradioMuiTheme from '../../utils/muiTheme.js'
+
 
 import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
- var Playlists = React.createClass({
-   propTypes: {
+var Playlists = React.createClass({
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getMuiTheme(treesradioMuiTheme)
+    };
+  },
+  propTypes: {
      playlistsOpen: React.PropTypes.bool.isRequired,
      searchForVideo: React.PropTypes.func.isRequired,
      playlistsPanelView: React.PropTypes.string.isRequired,
@@ -20,6 +34,9 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
      addToPlaylist: React.PropTypes.func.isRequired,
      removeFromPlaylist: React.PropTypes.func.isRequired,
      moveTopPlaylist: React.PropTypes.func.isRequired
+   },
+   updateVolume: function(event, value) {
+     this.props.updateVolume(event, value);
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
@@ -74,6 +91,14 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           </div>
           <div id="grabtrack" className="col-lg-1">
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
+            <div>
+              <Slider
+                className=""
+                name="volume"
+                defaultValue={0.5}
+                onChange={this.updateVolume}
+              />
+            </div>
           </div>
           <div id="vote" className="col-lg-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
@@ -90,7 +115,7 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
    }
  });
 
-module.exports = Playlists
+export default Playlists;
 
 /////////////////////////////////////
 // Font Awesomes for Playlist Boards
