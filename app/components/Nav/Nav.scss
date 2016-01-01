@@ -31,7 +31,7 @@
 
 //Trees Radio Logo Color
 .navbar-default .navbar-brand {
-  color: #77b300;
+  color: #77b300; // old color = 77b300
 }
 
 .collapse {
@@ -42,14 +42,7 @@
 
 }
 
-//About Color
-.navbar-default .navbar-nav>li>a {
-  color: #77b300;
-  text-align: center;
-  height: 100%;
-  font-size: 110%;
-  cursor: pointer;
-}
+
 
 #nav-divider {
 
@@ -67,6 +60,8 @@
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 110%;
+  border-radius:0;
+
 }
 
 #regbutton {
@@ -76,6 +71,8 @@
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 110%;
+  border-radius:0;
+
 }
 
 #logoutbutton {
@@ -86,6 +83,8 @@
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 110%;
+  border-radius:0;
+
 }
 
 #usernametop {
@@ -94,6 +93,8 @@
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 110%;
+  border-radius:0;
+
 }
 
 #usernamedropdown {
@@ -102,6 +103,8 @@
   margin-top: 6px;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
     font-size: 110%;
+    border-radius:0;
+
 }
 
 #emailbox {

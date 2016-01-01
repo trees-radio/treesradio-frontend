@@ -32,7 +32,8 @@ var About = React.createClass({
         <div className="about-bugs">
           <div>
             <h5>Bug Report:</h5>
-            <p>Found a bug on TreesRadio? Help us fix it by reporting it, just click the link <a href="#" target="_blank">HERE </a>to send us a report!</p>
+            <p>Found a bug on TreesRadio? Help us fix it by reporting it, just click the link <a href="https://github.com/TreesRadio/treesradio-issues/blob/master/README.md" target="_blank">HERE </a>to find out how!</p>
+            <p id="bug-github">(Requires registering with GitHub)</p>
           </div>
         </div>
         <div className="about-suggestions">
