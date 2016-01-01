@@ -95,18 +95,23 @@ var Playlists = React.createClass({
           </div>
           <div id="grabtrack" className="col-lg-1">
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
-            <ReactSlider
-              max={1}
-              step={0.01}
-              defaultValue={0}
-              value={this.props.controls.volume}
-              className="volume-slider-node"
-              handleClassName="volume-slider-handle"
-              handleActiveClassName="volume-slider-handle-active"
-              barClassName="volume-slider-bar"
-              onChange={this.updateVolume}
-              withBars={true}
-              />
+            <div className="volume-slider">
+              <i className="fa fa-volume-down volume-slider-icon"></i>
+              <ReactSlider
+                max={1}
+                step={0.01}
+                defaultValue={0}
+                value={this.props.controls.volume}
+                className="volume-slider-node"
+                handleClassName="volume-slider-handle"
+                handleActiveClassName="volume-slider-handle-active"
+                barClassName="volume-slider-bar"
+                onChange={this.updateVolume}
+                withBars={true}
+                />
+
+            </div>
+
           </div>
           <div id="vote" className="col-lg-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
