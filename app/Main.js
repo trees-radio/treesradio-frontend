@@ -241,6 +241,8 @@ var Main = React.createClass({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
                   "type": "success"
+                }, function() {
+                  location.reload();
                 });
               }
             });
