@@ -6,5 +6,29 @@
 
 path / {
   read() = true;
+}
+
+path /chat {
+  read() = true;
+}
+
+path /chat/messages {
+  read() = true;
   write() = true;
+}
+
+path /playlists {
+  read() = true;
+}
+
+path /presence {
+  read() = true;
+}
+
+path /registeredNames {
+  read() = true;
+}
+
+path /users {
+  read() = true;
 }
