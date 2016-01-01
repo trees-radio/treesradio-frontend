@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   max-height: 100%;
-  background-image: url('img/about-bg.jpg');
+  background-image: url('img/about.jpg');
   background-size: cover;
 }
 
@@ -11,8 +11,8 @@
 }
 
 .about-summary {
-  height: 15%;
-  max-height: 20%;
+  height: 12.5%;
+  max-height: 12.5%;
   font-family: 'Open Sans', sans-serif;
   font-size: .75vw;
   width: 95%;
@@ -22,8 +22,8 @@
 }
 
 .about-rules {
-  height: 50%;
-  max-height: 45%;
+  height: 40%;
+  max-height: 40%;
   width: 100%;
   font-size: .75vw;
   padding-left: 5%;
@@ -36,8 +36,8 @@
 }
 
 .about-bugs {
-  height: 20%;
-  max-height: 15%;
+  height: 12.5%;
+  max-height: 12.5%;
   width: 95%;
   padding-left: 5%;
   font-size: .75vw;
@@ -45,12 +45,17 @@
 
 
 .about-suggestions {
-  height: 20%;
-  max-height: 15%;
+  height: 30%;
+  max-height: 30%;
   width: 95%;
   padding-left: 5%;
   padding-top: 5%;
   font-size: .75vw;
+}
+
+.about-credits {
+  height: 10%;
+  margin-top: 5%;
 }
 
 #rules-1 {
