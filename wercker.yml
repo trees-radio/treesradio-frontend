@@ -14,6 +14,7 @@ build:
         code: |
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
+
     # A step that executes `npm install` command
     - npm-install
 
@@ -21,15 +22,22 @@ build:
         name: npm run lint
         code: |
           npm run lint
+
     # A step that executes `npm test` command
     #- npm-test
 
     ###
     #
     - script:
-        name: npm run build-prod
+        name: firebase-bolt compile
         code: |
-          npm run build-prod
+          npm run ci-build-bolt
+
+    - script:
+        name: webpack production compile
+        code: |
+          npm run ci-build-app
+
   after-steps:
     - wercker/slack-notifier:
         url: $SLACK_WEBHOOK_URL
@@ -43,12 +51,15 @@ deploy:
         name: no deploy selected
         code: |
           echo "no deploy selected"
+
   Dev:
     - npm-install
+
     - script:
-        name: npm run build-prod
+        name: full production compile
         code: |
-          npm run build-prod
+          npm run ci-build-prod
+
     - zbuttram/wercker-firebase-deploy@0.1.3:
         firebase: "treesradio-dev"
         token: $FIREBASE_DEPLOY_KEY
