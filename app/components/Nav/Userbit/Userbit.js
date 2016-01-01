@@ -81,7 +81,7 @@ var Userbit = React.createClass({
                           <li><a href="#"><i className="fa fa-cog fa-fw"></i> Admin Settings</a></li>
                         </ul>
 
-                    <button className="btn btn-primary" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
+                    <button className="btn btn-default" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
                 </div>
             )
          } else {
