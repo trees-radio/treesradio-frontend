@@ -93,7 +93,7 @@ var Playlists = React.createClass({
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
             <div>
               <Slider
-                className=""
+                className="volume-slider"
                 name="volume"
                 defaultValue={0.5}
                 onChange={this.updateVolume}
