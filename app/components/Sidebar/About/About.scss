@@ -2,6 +2,12 @@
   width: 100%;
   height: 100%;
   max-height: 100%;
+  background-image: url('img/about-bg.jpg');
+  background-size: cover;
+}
+
+.sidebar-about div {
+  color: silver;
 }
 
 .about-summary {
@@ -17,7 +23,7 @@
 
 .about-rules {
   height: 50%;
-  max-height: 50%;
+  max-height: 45%;
   width: 100%;
   font-size: .75vw;
   padding-left: 5%;
@@ -30,16 +36,13 @@
 }
 
 .about-bugs {
-  height: 15%;
+  height: 20%;
   max-height: 15%;
   width: 95%;
   padding-left: 5%;
   font-size: .75vw;
 }
 
-#bug-github {
-  color: silver;
-}
 
 .about-suggestions {
   height: 20%;
