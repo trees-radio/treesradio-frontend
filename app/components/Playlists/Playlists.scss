@@ -198,7 +198,7 @@
   border-right: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 1.55vw;
+  line-height: 2vw;
   padding: 5px 5px 5px 5px;
   overflow-x: hidden;
 }
@@ -212,7 +212,7 @@
   border-right: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 1.55vw;
+  line-height: 2vw;
   padding: 5px;
 }
 
@@ -295,6 +295,7 @@
   line-height: 2.25vw;
   margin-left: -40%;
   color: white;
+  pointer-events: none;
 }
 
 .volume-slider-node {

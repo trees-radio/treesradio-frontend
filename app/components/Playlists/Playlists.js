@@ -130,11 +130,7 @@ var Playlists = React.createClass({
 
 export default Playlists;
 
-/////////////////////////////////////
-// Font Awesomes for Playlist Boards
-// open = fa-angle-double-up
-// upvote = fa-thumbs-up
-// downvote = fa-thumbs-down
+
 /////////////////////////////////////
 // Controls:
 // stop = fa-stop-circle-o
