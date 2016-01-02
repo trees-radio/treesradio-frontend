@@ -198,7 +198,7 @@
   border-right: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 1.55vw;
+  line-height: 2vw;
   padding: 5px 5px 5px 5px;
   overflow-x: hidden;
 }
@@ -212,7 +212,7 @@
   border-right: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 1.55vw;
+  line-height: 2vw;
   padding: 5px;
 }
 
@@ -289,13 +289,13 @@
 .volume-slider-icon {
   position: absolute;
   z-index: 2;
-  cursor: pointer;
   font-size: 125%;
   text-align: right;
   padding: 0;
   line-height: 2.25vw;
-  margin-left: 25%;
+  margin-left: -40%;
   color: white;
+  pointer-events: none;
 }
 
 .volume-slider-node {
@@ -333,7 +333,7 @@
 
 .volume-slider-bar {
   background-color:#77b300;
-  height: 100%;
+  height: 50%;
 }
 
 .volume-slider-bar-active {
