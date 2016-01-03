@@ -139,8 +139,9 @@ var Main = React.createClass({
               then(){
                 // let presenceRef;
                 this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
-                this.presenceRef.onDisconnect().remove();
                 this.presenceRef.child('online').set(true);
+                this.presenceRef.child('online').onDisconnect().remove();
+                this.presencePing();
                 window.setInterval(this.presencePing, 30000);
               }
             });
@@ -171,7 +172,9 @@ var Main = React.createClass({
     },
     presencePing: function() {
       console.log("Sending presence ping...");
-      this.presenceRef.child('online').set(true);
+      // this.presenceRef.child('online').set(true);
+      let timestamp = _.now();
+      this.presenceRef.child('lastseen').set(timestamp);
     },
     logoutUser: function(){
         this.ref.unauth();
