@@ -35,8 +35,12 @@
   color: #77b300; // old color = 77b300
 }
 
-.btn-primary {
-  background-color: #77b300 !important;
+a#usernametop.btn.btn-primary {
+  background-color: #77b300;
+}
+
+a#usernamedropdown.btn.btn-primary.dropdown-toggle {
+  background-color: #77b300;
 }
 
 .collapse {
