@@ -31,7 +31,6 @@
   border-right: solid;
   border-top: solid;
   border-color: black;
-  border-radius: 5px;
 }
 
 .pl-thumbnail {
@@ -175,7 +174,7 @@
 #playlists-open-button {
   height: 100%;
   cursor: pointer;
-  width: 5vw;
+  width: 4vw;
   font-size: 0.75vw;
   line-height: 3.5vw;
   border-right: solid;
@@ -194,7 +193,7 @@
 
 #playlist-metadata {
   height: 100%;
-  width: 28.3%;
+  width: 29.66%;
   border-right: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
@@ -222,8 +221,6 @@
 
 #grabtrack {
   height: 100%;
-  border-right: solid;
-  border-color: #2d2f39;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -301,8 +298,8 @@
 .volume-slider-node {
   height: 100%;
   overflow-x: hidden;
-
 }
+
  .volume-slider-handle {
    height: 20px;
    width: 5px;
@@ -314,7 +311,7 @@
    background-color: #77b300;
    border:solid;
    border-size:1px;
-   border-color:#17171c;
+   border-color:#2e2e38;
  }
 
 .volume-slider-handle-active {
@@ -328,7 +325,7 @@
   background-color: #77b300;
   border:solid;
   border-size:1px;
-  border-color:#17171c;
+  border-color:#2e2e38;
 }
 
 .volume-slider-bar {
@@ -345,5 +342,5 @@
 }
 
 .volume-slider-bar-1 {
-  background-color: #17171c;
+  background-color: #2e2e38;
 }
