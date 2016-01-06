@@ -71,8 +71,8 @@ var Userbit = React.createClass({
             }
             return (
                 <div className="btn-group">
-                    <a className="btn btn-primary" id="usernametop" href="#account"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
-                    <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown" href="#">
+                    <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
+                    <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown">
                         <span className="fa fa-caret-down"></span></a>
                         <ul className="dropdown-menu">
                           <li><a href="#"><i className="fa fa-pencil fa-fw"></i> Edit Profile</a></li>
