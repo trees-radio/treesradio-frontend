@@ -110,4 +110,4 @@ var Userbit = React.createClass({
     }
 });
 
-module.exports = Userbit;
+export default Userbit;
