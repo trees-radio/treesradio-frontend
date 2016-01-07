@@ -7,7 +7,7 @@ $videotoplevel-bg: #171717;
   padding: 0;
 }
 
-#youtube-player {
+#youtube-player-lg {
   width: 100%;  //fullscreen = 102% + small = 40%
   height: 98%;  //fulscreen = 95% + small = 39%
   position: absolute;
@@ -16,7 +16,7 @@ $videotoplevel-bg: #171717;
   transform: translate(-50%, -50%);
 }
 
-#youtube-player-sm {
+#youtube-player {
   width: 39%;  //fullscreen = 102% + small = 40%
   height: 39%;  //fulscreen = 95% + small = 39%
   position: absolute;
