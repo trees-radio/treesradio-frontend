@@ -46,7 +46,6 @@
   "dependencies": {
     "axios": "^0.8.1",
     "classnames": "^2.2.1",
-    "fbjs": "^0.2.1",
     "font-awesome": "^4.5.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
