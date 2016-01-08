@@ -23,7 +23,6 @@ import cookie from 'react-cookie';
 
 // Components
 import Nav from './components/Nav/Nav.js';
-// import Chat from './components/Chat/Chat.js';
 import Sidebar from './components/Sidebar/Sidebar'
 import Video from './components/Video/Video.js';
 import Playlists from './components/Playlists/Playlists.js';
@@ -51,16 +50,22 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           registeredNames: {},
+          userPresence: [],
           playlistsOpen: false,
           currentPlaylist: {
             name: "",
-            id: -1
+            id: -1,
+            key: ""
           },
           playlistsPanelView: "blank",
           playlists: [],
           currentSearch: {
             data: {},
             items: []
+          },
+          currentSidebar: 3, // 0 - 3 Chat -> About
+          controls: {
+            volume: 0.5
           }
       }
     },
@@ -82,10 +87,18 @@ var Main = React.createClass({
             }
         });
 
+        base.bindToState('presence', {
+          context: this,
+          state: 'userPresence',
+          asArray: true
+        })
+
         base.syncState(`registeredNames`, {
             context: this,
             state: 'registeredNames'
         });
+
+
 
 
 
@@ -122,7 +135,15 @@ var Main = React.createClass({
             // console.log(authData.uid + " logged in");
             this.userBindRef = base.syncState(`users/` + authData.uid, {
               context: this,
-              state: 'user'
+              state: 'user',
+              then(){
+                // let presenceRef;
+                this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+                this.presenceRef.child('online').set(true);
+                this.presenceRef.child('online').onDisconnect().remove();
+                this.presencePing();
+                window.setInterval(this.presencePing, 30000);
+              }
             });
             this.setState({ loginstate: true });
             this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
@@ -149,6 +170,12 @@ var Main = React.createClass({
             this.setState({ loginstate: false });
         }
     },
+    presencePing: function() {
+      console.log("Sending presence ping...");
+      // this.presenceRef.child('online').set(true);
+      let timestamp = _.now();
+      this.presenceRef.child('lastseen').set(timestamp);
+    },
     logoutUser: function(){
         this.ref.unauth();
         location.reload();
@@ -156,7 +183,7 @@ var Main = React.createClass({
     handleRegister: function(desiredEml, desiredPw){
       sweetAlert({
         title: "Register",
-        text: "Choose your username!",
+        text: "Choose your username!\nYou must be 18 years of age or older to register!",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -217,6 +244,8 @@ var Main = React.createClass({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
                   "type": "success"
+                }, function() {
+                  location.reload();
                 });
               }
             });
@@ -334,7 +363,13 @@ var Main = React.createClass({
               timer: 3000
             });
           }
-          base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          // base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
+          //   data: { name: newPlaylistName },
+          //   then(){
+          //     newPlaylistCallback();
+          //   }
+          // });
+          base.push('playlists/' + currentAuth.uid, {
             data: { name: newPlaylistName },
             then(){
               newPlaylistCallback();
@@ -384,6 +419,7 @@ var Main = React.createClass({
       // let currentAuth = base.getAuth();
       // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
+      let keyToSelect = this.state.playlists[index].key;
       if (nameToSelect.length > 23) {
         let maxLength = 23;
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
@@ -391,7 +427,8 @@ var Main = React.createClass({
       // let indexToSelect = index;
       this.setState({ currentPlaylist: {
         name: nameToSelect,
-        id: index
+        id: index,
+        key: keyToSelect
       } });
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
@@ -424,9 +461,9 @@ var Main = React.createClass({
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
         let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
         copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push new array to Firebase
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push new array to Firebase
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: [objectToAdd]});
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: [objectToAdd]});
       }
       this.setState({ playlistsPanelView: "playlist" });
     },
@@ -435,7 +472,7 @@ var Main = React.createClass({
       let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", { data: copyofPlaylist }); //update Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { data: copyofPlaylist }); //update Firebase
     },
     moveTopPlaylist: function(index){
       // console.log("Moving top", index);
@@ -446,8 +483,29 @@ var Main = React.createClass({
       // console.log("Moving item", movingItem);
       copyofPlaylist.unshift(movingItem[0]); // put item at front of array
       // console.log(copyofPlaylist);
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.name + "/entries", {data: copyofPlaylist}); // push update to Firebase
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push update to Firebase
     },
+
+    ///////////////////////////////////////////////////////////////////////
+    // SIDEBAR CHANGER
+    ///////////////////////////////////////////////////////////////////////
+    changeSidebar: function(n) {
+      this.setState({ currentSidebar: n });
+    },
+
+
+
+    ///////////////////////////////////////////////////////////////////////
+    // VIDEO CONTROLS
+    ///////////////////////////////////////////////////////////////////////
+    updateVolume: function(value) {
+      this.setState({
+        controls: {
+          volume: value
+        }
+      });
+    },
+
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -470,7 +528,9 @@ var Main = React.createClass({
                       <div className="col-lg-9 no-float" id="videotoplevel">
                         {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="">
-                            <Video />
+                            <Video
+                              controls={this.state.controls}
+                              />
                           </div>
                           <div id="playlists-container">
                             <Playlists
@@ -487,6 +547,8 @@ var Main = React.createClass({
                               addToPlaylist={this.addToPlaylist}
                               removeFromPlaylist={this.removeFromPlaylist}
                               moveTopPlaylist={this.moveTopPlaylist}
+                              updateVolume={this.updateVolume}
+                              controls={this.state.controls}
                                />
                           </div>
                       </div>
@@ -497,6 +559,9 @@ var Main = React.createClass({
                           chatData={this.state.chat}
                           sendMsg={this.handleSendMsg}
                           loginState={this.state.loginstate}
+                          currentSidebar={this.state.currentSidebar}
+                          changeSidebar={this.changeSidebar}
+                          userPresence={this.state.userPresence}
                           />
                       </div>
             {/* End Container */}

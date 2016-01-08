@@ -1,5 +1,9 @@
 
 @import './Chat/Chat';
+@import './About/About';
+@import './OnlineUsers/OnlineUsers';
+@import './SidebarChanger/SidebarChanger';
+@import './Waitlist/Waitlist';
 
 
 #sidebar {
@@ -18,6 +22,6 @@
   height: 100% !important; //do not unimportant this is seriously fucking important
   color:white;
   text-align: center;
-  background-color:#121317;
+  background-color:#17171c;
   line-height: 2.25vw;
 }

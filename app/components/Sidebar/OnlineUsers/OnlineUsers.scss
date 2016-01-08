@@ -1,0 +1,56 @@
+
+.users-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.user-item {
+  width: 100%;
+  list-style-position: inside;
+  list-style-type: none;
+  display: flex;
+  padding-top: 2%;
+  padding-left: 2%;
+}
+
+.users-avatar {
+  width: 10%;
+  max-width: 10%;
+  cursor: pointer;
+}
+
+.users-avatarimg {
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 5px;
+
+}
+
+
+.users-list {
+  padding: 0;
+}
+
+.users-info {
+  width: 85%;
+  max-width: 85%;
+  height: 1vw;
+  padding-top: 2.5%;
+  padding-left: 2%;
+  font-size: 1vw;
+  cursor: pointer;
+}
+
+.users-name {
+
+}
+
+.user-line-1 {
+  background-color: #0A0A0A; //light skin cbd6dc
+  padding: 10px;
+}
+
+.user-line-0 {
+  background-color: #121317; //light skin e9eef0
+  padding: 10px;
+}

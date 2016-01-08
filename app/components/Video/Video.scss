@@ -1,0 +1,56 @@
+
+$videotoplevel-bg: #171717;
+
+#videotoplevel {
+  height: 100%;
+  background-color: black;
+  padding: 0;
+}
+
+#youtube-player-lg {
+  width: 100%;  //fullscreen = 102% + small = 40%
+  height: 98%;  //fulscreen = 95% + small = 39%
+  position: absolute;
+  top: 49%;  //fullscreen = 49% + small = 20%
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#youtube-player {
+  width: 39%;  //fullscreen = 102% + small = 40%
+  height: 39%;  //fulscreen = 95% + small = 39%
+  position: absolute;
+  top: 23%;  //fullscreen = 49% + small = 23%
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#player {
+
+}
+
+#playerdiv {
+
+}
+
+#vidcontainer {
+  height: 90%;
+  max-height: 90%;
+  position: relative;
+  background-image: url('img/spacepineapples.jpg');
+  background-size:cover;
+}
+
+.reactplayer {
+
+}
+
+#reactplayerid {
+
+}
+
+.section-divider {
+  background-color: $trees-primary;
+  height: 5px;
+  width: 100%;
+}
