@@ -1,4 +1,3 @@
-
 @import './PlaylistsPanel/PlaylistsPanel';
 @import './Buttons/join-waitlist';
 @import './Buttons/grab-button';
@@ -24,8 +23,17 @@
   overflow: hidden;
 }
 
-.playlists-panel-open {
+.playlists-panel-open-lg {
   height: 86%;
+  background-color: $trees-bg;
+  border-left: solid;
+  border-right: solid;
+  border-top: solid;
+  border-color: black;
+}
+
+.playlists-panel-open {
+  height: 52%;
   background-color: $trees-bg;
   border-left: solid;
   border-right: solid;
