@@ -1,4 +1,5 @@
 
+@import './PlaylistsPanel/PlaylistsPanel';
 @import './Buttons/join-waitlist';
 @import './Buttons/grab-button';
 @import './Buttons/like-button';
@@ -13,7 +14,7 @@
 
 #playlists-panel {
   position:absolute;
-  width: 98%;
+  width: 100%;
   bottom: 10%;
   overflow: hidden;
 }
@@ -30,7 +31,6 @@
   border-right: solid;
   border-top: solid;
   border-color: black;
-  border-radius: 5px;
 }
 
 .pl-thumbnail {
@@ -162,25 +162,29 @@
 
 #playlists-bar {
   position: absolute;
-  width: 98%;
-  height: 9%;
-  background-color: #0d0d0d;
-  border-radius: 5px;
-  border-style: solid;
-  border-color: #333333;
+  width: 100%;
+  height: 9.5%;
+  background-color:#17171c;
+  border-top-style: solid;
+  border-bottom-style:solid;
+  border-color: #22232b;
   float: left;
 }
 
 #playlists-open-button {
   height: 100%;
   cursor: pointer;
-  width: 5%;
+  width: 4vw;
   font-size: 0.75vw;
   line-height: 3.5vw;
+  border-right: solid;
+  border-color: #2d2f39;
+  background-color: #77b300;
 }
 
 #playlists-open-icon {
-  color: #77b300;
+  padding-top:5px;
+  color: white;
   height: 100%;
   width: 100%;
   line-height: 3.5vw;
@@ -189,11 +193,11 @@
 
 #playlist-metadata {
   height: 100%;
-  width: 30%;
+  width: 29.66%;
   border-right: solid;
-  border-color: #333333;
+  border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 1.55vw;
+  line-height: 2vw;
   padding: 5px 5px 5px 5px;
   overflow-x: hidden;
 }
@@ -205,9 +209,9 @@
 #currentsong-metadata {
   height: 100%;
   border-right: solid;
-  border-color: #333333;
+  border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 1.55vw;
+  line-height: 2vw;
   padding: 5px;
 }
 
@@ -217,8 +221,6 @@
 
 #grabtrack {
   height: 100%;
-  border-right: solid;
-  border-color: #333333;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -234,6 +236,7 @@
   }
 }
 
+
 #vote {
   height: 100%;
   cursor: pointer;
@@ -241,7 +244,7 @@
   text-align: center;
   padding: 0;
   border-right: solid;
-  border-color: #333333;
+  border-color: #2d2f39;
   a {
     text-decoration: none;
   }
@@ -272,4 +275,72 @@
   margin-right: 5%;
   margin-top: 2%;
   background-color: inherit;
+}
+
+.volume-slider {
+  height: 100%;
+  border-bottom-style:solid;
+  border-color: #2d2f39;
+}
+
+.volume-slider-icon {
+  position: absolute;
+  z-index: 2;
+  font-size: 125%;
+  text-align: right;
+  padding: 0;
+  line-height: 2.25vw;
+  margin-left: -40%;
+  color: white;
+  pointer-events: none;
+}
+
+.volume-slider-node {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+ .volume-slider-handle {
+   height: 20px;
+   width: 5px;
+   border-radius: 5px;
+   font-size: 0.9em;
+   text-align: center;
+   cursor: pointer;
+   margin-top: .4vw;
+   background-color: #77b300;
+   border:solid;
+   border-size:1px;
+   border-color:#2e2e38;
+ }
+
+.volume-slider-handle-active {
+  height: 25px;
+  width: 5px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  text-align: center;
+  cursor: pointer;
+  margin-top: .3vw;
+  background-color: #77b300;
+  border:solid;
+  border-size:1px;
+  border-color:#2e2e38;
+}
+
+.volume-slider-bar {
+  background-color:#77b300;
+  height: 50%;
+}
+
+.volume-slider-bar-active {
+  background-color:white;
+}
+
+.volume-slider-bar-0 {
+  background-color: #77b300;
+}
+
+.volume-slider-bar-1 {
+  background-color: #2e2e38;
 }

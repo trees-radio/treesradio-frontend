@@ -2,12 +2,30 @@
 
 
 import React from 'react';
-import $ from 'jquery';
+import ReactSlider from 'react-slider';
+// import $ from 'jquery';
+
+// // Material-UI imports
+// import Slider from 'material-ui/lib/slider';
+// import ThemeManager from 'material-ui/lib/styles/theme-manager';
+// import treesradioMuiTheme from '../../utils/muiTheme.js'
+
+
+
 
 import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
- var Playlists = React.createClass({
-   propTypes: {
+var Playlists = React.createClass({
+  // // MUI stuff
+  // childContextTypes: {
+  //   muiTheme: React.PropTypes.object
+  // },
+  // getChildContext: function() {
+  //   return {
+  //     muiTheme: ThemeManager.getMuiTheme(treesradioMuiTheme)
+  //   };
+  // },
+  propTypes: {
      playlistsOpen: React.PropTypes.bool.isRequired,
      searchForVideo: React.PropTypes.func.isRequired,
      playlistsPanelView: React.PropTypes.string.isRequired,
@@ -20,6 +38,9 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
      addToPlaylist: React.PropTypes.func.isRequired,
      removeFromPlaylist: React.PropTypes.func.isRequired,
      moveTopPlaylist: React.PropTypes.func.isRequired
+   },
+   updateVolume: function(value) {
+     this.props.updateVolume(value);
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
@@ -74,10 +95,27 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
           </div>
           <div id="grabtrack" className="col-lg-1">
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
+            <div className="volume-slider">
+              <i className="fa fa-volume-down volume-slider-icon"></i>
+              <ReactSlider
+                max={1}
+                step={0.01}
+                defaultValue={0}
+                value={this.props.controls.volume}
+                className="volume-slider-node"
+                handleClassName="volume-slider-handle"
+                handleActiveClassName="volume-slider-handle-active"
+                barClassName="volume-slider-bar"
+                onChange={this.updateVolume}
+                withBars={true}
+                />
+
+            </div>
+
           </div>
           <div id="vote" className="col-lg-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
-            <div className="like-button"><i className="fa fa-thumbs-o-up"></i></div><br/>
+            <div className="like-button"><i className="fa fa-thumbs-o-up"></i></div>
             {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
             <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i></div>
           </div>
@@ -90,13 +128,9 @@ import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
    }
  });
 
-module.exports = Playlists
+export default Playlists;
 
-/////////////////////////////////////
-// Font Awesomes for Playlist Boards
-// open = fa-angle-double-up
-// upvote = fa-thumbs-up
-// downvote = fa-thumbs-down
+
 /////////////////////////////////////
 // Controls:
 // stop = fa-stop-circle-o

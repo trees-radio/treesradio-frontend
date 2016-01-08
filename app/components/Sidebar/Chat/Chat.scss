@@ -1,7 +1,4 @@
-//  font-size: 1.15vw;
-//  line-height: 2vw;
-//
-//
+
 
 $chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
 $chat-item-border: #000; //light skin 808080
@@ -9,7 +6,6 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 #chattoplevel {
   background-color: $chattoplevel-bg;
-  //border-left: solid #77b300; //5px
   position: relative;
   height: 100%;
   overflow: hidden;
@@ -23,7 +19,7 @@ div#chatcontainertop > div {
 }
 
 #chatcontainertop {
-  height: 92%;
+  height: 100%;
   width: 100%;
   bottom: 0;
   margin-right: 0;
@@ -32,14 +28,14 @@ div#chatcontainertop > div {
 
 #chatcontainer {
   height: 100%;
-  padding-bottom: 53px;
+  padding-bottom: 7%;
   width: 100%;
   bottom: -25px;
   overflow: hidden;
 }
 
 #chatscroll {
-  height: 100%; //23
+  height: 92%; //23
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -53,13 +49,11 @@ div#chatcontainertop > div {
 }
 
 .chat-line-0 {
-  // border-radius: 10px;
   background-color: #121317; //light skin e9eef0
   padding: 10px;
 }
 
 .chat-line-1 {
-  // border-radius: 10px;
   background-color: #0A0A0A; //light skin cbd6dc
   padding: 10px;
 }
@@ -81,7 +75,6 @@ div#chatcontainertop > div {
   margin: 0;
   padding-bottom: 3px;
   padding-left: 5px;
-  // padding-top: 3px;
   width: 100%;
   display: flex;
 
@@ -89,11 +82,8 @@ div#chatcontainertop > div {
 
 .chat-username {
   color: #0040ff;
-  font-size: normal;
   font-weight: bolder;
   font-size: .865vw;
-
-  //text-decoration: underline;
 }
 
 .chat-text {
@@ -102,8 +92,6 @@ div#chatcontainertop > div {
   width: 100%;
   position: relative;
   font-size: .865vw;
-  // left: 50px;
-
 }
 
 .chat-avatar {
@@ -113,6 +101,8 @@ div#chatcontainertop > div {
 
 #avatarimg {
   border-radius: 5px;
+  height: 2.5vw;
+  width: 2.5vw;
 }
 
 #sendbox {
