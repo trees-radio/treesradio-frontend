@@ -2,6 +2,8 @@
 
 [![wercker status](https://app.wercker.com/status/cc27bc23e90eea7d0c16679e8d382e5f/m "wercker status")](https://app.wercker.com/project/bykey/cc27bc23e90eea7d0c16679e8d382e5f)
 
+[![Dependency Status](https://david-dm.org/zbuttram/treesradio-frontend.svg)](https://david-dm.org/zbuttram/treesradio-frontend)
+
 This repo comprises the front-end of Trees Radio. Backend served by Firebase.
 
 
