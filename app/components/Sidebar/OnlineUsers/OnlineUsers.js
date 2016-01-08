@@ -8,26 +8,31 @@ var OnlineUsers = React.createClass({
     let users;
     let userPos = 0;
     users = this.props.userPresence.map(function(user, index) {
-      let userPosClass = "";
-      if (userPos == 0) {
-        userPosClass = "user-line-1";
-        userPos = 1;
+      if (user['online']) {
+        let userPosClass = "";
+        if (userPos == 0) {
+          userPosClass = "user-line-1";
+          userPos = 1;
+        } else {
+          userPosClass = "user-line-0";
+          userPos = 0;
+        }
+        let userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
+        let userAvatar = "http://api.adorable.io/avatars/50/" + user['key'] + ".png";
+        return (
+          <li key={index} className={userLineClasses}>
+            <div className="users-avatar">
+              <img className="users-avatarimg" src={userAvatar}></img>
+            </div>
+            <div className="users-info">
+              <span className="users-name">{user['key']}</span>
+            </div>
+          </li>
+        )
       } else {
-        userPosClass = "user-line-0";
-        userPos = 0;
+        return "";
       }
-      let userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
-      let userAvatar = "http://api.adorable.io/avatars/50/" + user['key'] + ".png";
-      return (
-        <li key={index} className={userLineClasses}>
-          <div className="users-avatar">
-            <img className="users-avatarimg" src={userAvatar}></img>
-          </div>
-          <div className="users-info">
-            <span className="users-name">{user['key']}</span>
-          </div>
-        </li>
-      )
+
     }, this);
     return (
       <div className="users-scroll">
