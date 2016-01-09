@@ -23,8 +23,6 @@ This repo comprises the front-end of Trees Radio. Backend served by Firebase.
   - `npm run build-dev`: builds Bolt rules and unminified app code with source maps
   - `npm run build-prod`: builds Bolt rules and minified app code
   - `npm run bolt-deploy`: builds and deploys only Firebase Bolt rules
-  - `npm run deploy-dev`: runs `build-dev` and deploys to Firebase prod environment
-  - `npm run deploy-prod`: runs `build-prod` and deploys to Firebase dev environment
   - `npm run update-env`: updates environment info in prod Firebase from `./firebase/env.json`
 
 See wiki for recommended Atom packages.
