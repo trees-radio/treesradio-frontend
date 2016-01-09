@@ -90,8 +90,8 @@ var Playlists = React.createClass({
             <a>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4">
-            <a>KOAN Sound - 7th Dimension</a><br/>
-            <a>Player: Gryphon</a>
+            <a>Current Song Title</a><br/>
+            <a>Player: DJ NAME</a>
           </div>
           <div id="grabtrack" className="col-lg-1">
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
