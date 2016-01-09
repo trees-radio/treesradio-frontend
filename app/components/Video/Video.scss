@@ -7,26 +7,31 @@ $videotoplevel-bg: #171717;
   padding: 0;
 }
 
-#youtube-player {
-  width: 100%;  //fullscreen = 102% + small = 40%
-  height: 98%;  //fulscreen = 95% + small = 39%
-  position: absolute;
-  top: 49%;  //fullscreen = 49% + small = 20%
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
-#youtube-player-sm {
-  width: 39%;  //fullscreen = 102% + small = 40%
-  height: 39%;  //fulscreen = 95% + small = 39%
-  position: absolute;
-  top: 23%;  //fullscreen = 49% + small = 23%
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+/////////////////////////////// OLD SHIT FOR SIZING VIDEO (please dont delete)
+// #youtube-player {
+//   width: 100%;  //fullscreen = 102% + small = 40%
+//   height: 100%;  //fulscreen = 95% + small = 39%
+//   position: absolute;
+//   top: 49%;  //fullscreen = 49% + small = 20%
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+//
+// #youtube-player-sm {
+//   width: 39%;  //fullscreen = 102% + small = 40%
+//   height: 39%;  //fulscreen = 95% + small = 39%
+//   position: absolute;
+//   top: 23%;  //fullscreen = 49% + small = 23%
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
 
-#player {
 
+// NEW SHIT FOR SIZING VIDEO
+#player-size {
+  height: 99.35%; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
 }
 
 #playerdiv {
@@ -36,6 +41,7 @@ $videotoplevel-bg: #171717;
 #vidcontainer {
   height: 90%;
   max-height: 90%;
+  width: 100%;
   position: relative;
   background-image: url('img/spacepineapples.jpg');
   background-size:cover;

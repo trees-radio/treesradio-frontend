@@ -9,13 +9,13 @@ var Video = React.createClass({
   },
   render: function() {
     return(
-      <div>
+      <div id="player-size">
         <ReactPlayer
           className="reactplayer"
-          width="1280px"
-          height="720px"
+          width="100%"
+          height="100%"
           id="reactplayerid"
-          url='https://www.youtube.com/watch?v=3CkUmuNuA1g'
+          url='https://www.youtube.com/watch?v=ggLh9P9x24Q'
           playing={this.shouldBePlaying()}
           volume={this.props.controls.volume}
           />

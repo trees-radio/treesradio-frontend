@@ -77,7 +77,6 @@ var Userbit = React.createClass({
                         <ul className="dropdown-menu">
                           <li><a href="#"><i className="fa fa-pencil fa-fw"></i> Edit Profile</a></li>
                           <li><a href="#"><i className="fa fa-cog fa-fw"></i> Edit Site Settings</a></li>
-                          <li className="divider"></li>
                           <li><a href="#"><i className="fa fa-cog fa-fw"></i> Admin Settings</a></li>
                         </ul>
 
