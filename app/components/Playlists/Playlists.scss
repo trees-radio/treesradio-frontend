@@ -29,15 +29,7 @@
   border-left: solid;
   border-right: solid;
   border-top: solid;
-  border-color: black;
-}
-
-.playlists-panel-open-sm {
-  height: 52%;
-  background-color: $trees-bg;
-  border-left: solid;
-  border-right: solid;
-  border-top: solid;
+  border-width:thin;
   border-color: black;
 }
 
@@ -294,7 +286,7 @@
 .volume-slider-icon {
   position: absolute;
   z-index: 2;
-  font-size: 125%;
+  font-size: 1.15vw;
   text-align: right;
   padding: 0;
   line-height: 2.25vw;
