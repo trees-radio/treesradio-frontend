@@ -51,7 +51,7 @@ var PlaylistsPanel = React.createClass({
     this.props.removePlaylist(index);
   },
   emptyPlaylistView: function() {
-    return (<ul id="playlist-ul" className="no-playlist-selected">Nothing here!</ul>)
+    return (<ul id="playlist-ul" className="no-playlist-selected">You don't have a playlist selected.</ul>)
   },
   render: function() {
     ///////////////////////////////////////////////////////////////////////
