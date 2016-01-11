@@ -42,6 +42,9 @@ var Playlists = React.createClass({
    updateVolume: function(value) {
      this.props.updateVolume(value);
    },
+   handleWaitlistButton: function(e) {
+     this.props.toggleWaiting();
+   },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
      if (this.props.playlistsOpen) {
@@ -97,7 +100,7 @@ var Playlists = React.createClass({
             <a>Player: {this.props.playingMedia.playback.user}</a>
           </div>
           <div id="grabtrack" className="col-lg-1">
-            <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i></div>
+            <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i><span>{this.props.playingMedia.feedback.grabs}</span></div>
             <div className="volume-slider">
               <i className="fa fa-volume-down volume-slider-icon"></i>
               <ReactSlider
@@ -118,9 +121,9 @@ var Playlists = React.createClass({
           </div>
           <div id="vote" className="col-lg-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
-            <div className="like-button"><i className="fa fa-thumbs-o-up"></i></div>
+            <div className="like-button"><i className="fa fa-thumbs-o-up"></i><span>{this.props.playingMedia.feedback.likes}</span></div>
             {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
-            <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i></div>
+            <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i><span>{this.props.playingMedia.feedback.dislikes}</span></div>
           </div>
           <div id="waitlist" className="col-lg-2">
             <div className="join-waitlist" onClick={this.handleWaitlistButton}>{waitlistButtonText}</div>

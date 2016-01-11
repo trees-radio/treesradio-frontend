@@ -20,12 +20,13 @@ import cookie from 'react-cookie';
 // TreesRadio utility functions
 // import TRreg from './utils/registration.js';
 // TRreg.example();
+import emitUserError from './utils/userError'
 
 // Components
-import Nav from './components/Nav/Nav.js';
-import Sidebar from './components/Sidebar/Sidebar'
-import Video from './components/Video/Video.js';
-import Playlists from './components/Playlists/Playlists.js';
+import Nav from './components/Nav/Nav';
+import Sidebar from './components/Sidebar/Sidebar';
+import Video from './components/Video/Video';
+import Playlists from './components/Playlists/Playlists';
 
 // (S)CSS
 import './Main.scss';
@@ -75,6 +76,11 @@ var Main = React.createClass({
             playback: {
               time: 0,
               user: "Nobody"
+            },
+            feedback: {
+              dislikes: 0,
+              likes: 0,
+              grabs: 0
             }
           },
           inWaitlist: {
@@ -137,12 +143,7 @@ var Main = React.createClass({
     authHandler: function(error, authData){
         if (error) {
             // console.log("Auth", error);
-            sweetAlert({
-              "title": "Login Error",
-              "text": error,
-              "type": "error",
-              timer: 3000
-            });
+            emitUserError("Login Error", error);
         } else {
             console.log("Auth success", authData);
         }
@@ -189,7 +190,7 @@ var Main = React.createClass({
         }
     },
     presencePing: function() {
-      console.log("Sending presence ping...");
+      // console.log("Sending presence ping...");
       // this.presenceRef.child('online').set(true);
       let timestamp = _.now();
       this.presenceRef.child('lastseen').set(timestamp);
@@ -213,12 +214,7 @@ var Main = React.createClass({
         registeredNamesRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
-            sweetAlert({
-              "title": "Registration Error",
-              "text": "Desired username '" + desiredUn + "' already exists!",
-              "type": "error",
-              "timer": 3000
-            });
+            emitUserError("Registration Error", "Desired username '" + desiredUn + "' already exists!");
           } else {
             let regRef = new Firebase(window.__env.firebase_origin);
             regRef.createUser({
@@ -228,28 +224,13 @@ var Main = React.createClass({
               if (error) {
                 switch (error.code) {
                   case "EMAIL_TAKEN":
-                      sweetAlert({
-                        "title": "Registration Error",
-                        "text": "That email address is already registered: " + desiredEml,
-                        "type": "error",
-                        "timer": 3000
-                      });
-                    break;
+                    emitUserError("Registration Error", "That email address is already registered: " + desiredEml);
+                  break;
                   case "INVALID_EMAIL":
-                      sweetAlert({
-                        "title": "Registration Error",
-                        "text": "That is not a valid email address: " + desiredEml,
-                        "type": "error",
-                        "timer": 3000
-                      });
-                    break;
+                    emitUserError("Registration Error", "That is not a valid email address: " + desiredEml);
+                  break;
                   default:
-                    sweetAlert({
-                      "title": "Registration Error",
-                      "text": "An unknown registration error occurred: " + error,
-                      "type": "error",
-                      "timer": 3000
-                    });
+                    emitUserError("Registration Error", "An unknown registration error occurred: " + error);
                 }
               } else {
                 let userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
@@ -354,12 +335,7 @@ var Main = React.createClass({
       let currentAuth = base.getAuth();
       // debugger;
       if (currentAuth === null) {
-        sweetAlert({
-          "title": "Unable to Create Playlist",
-          "text": "You are not logged in!",
-          "type": "error",
-          "timer": 3000
-        });
+        emitUserError("Unable to Create Playlist", "You are not logged in!");
         return;
       }
       sweetAlert({
@@ -455,12 +431,7 @@ var Main = React.createClass({
       // debugger;
       let currentAuth = base.getAuth();
       if (!this.state.playlists[this.state.currentPlaylist.id]) {
-        sweetAlert({
-          "title": "No Playlist Selected",
-          "text": "You don't have a playlist selected to add to!",
-          "type": "error",
-          "timer": 3000
-        });
+        emitUserError("No Playlist Selected", "You don't have a playlist selected to add to!");
         return;
       }
 
@@ -525,6 +496,37 @@ var Main = React.createClass({
     },
 
     ///////////////////////////////////////////////////////////////////////
+    // WAITLIST CONTROLS
+    ///////////////////////////////////////////////////////////////////////
+    toggleWaiting: function() {
+      if (this.state.inWaitlist.waiting) {
+        this.setState({
+          inWaitlist: {
+            waiting: false
+          }
+        });
+      } else {
+        var waitlistRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks");
+        var currentPlaylistId;
+        if (this.state.currentPlaylist.id === -1) {
+          emitUserError("Join Waitlist Error", "You don't have a playlist selected!");
+          return;
+        } else {
+          currentPlaylistId = this.state.currentPlaylist.id;
+        }
+        if (!this.state.playlists[currentPlaylistId].entries[0]) {
+          emitUserError("Join Waitlist Error", "Your playlist is empty!");
+        }
+
+        // this.setState({
+        //   inWaitlist: {
+        //     waiting: true
+        //   }
+        // });
+      }
+    },
+
+    ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
     render: function(){
@@ -570,6 +572,7 @@ var Main = React.createClass({
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
                               inWaitlist={this.state.inWaitlist}
+                              toggleWaiting={this.toggleWaiting}
                                />
                           </div>
                       </div>
