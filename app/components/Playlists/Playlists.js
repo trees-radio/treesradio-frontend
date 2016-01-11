@@ -43,7 +43,7 @@ var Playlists = React.createClass({
      this.props.updateVolume(value);
    },
    handleWaitlistButton: function(e) {
-     console.log(e);
+     this.props.toggleWaiting();
    },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";

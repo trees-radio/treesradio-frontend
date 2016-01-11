@@ -525,6 +525,25 @@ var Main = React.createClass({
     },
 
     ///////////////////////////////////////////////////////////////////////
+    // WAITLIST CONTROLS
+    ///////////////////////////////////////////////////////////////////////
+    toggleWaiting: function() {
+      if (this.state.inWaitlist.waiting) {
+        this.setState({
+          inWaitlist: {
+            waiting: false
+          }
+        });
+      } else {
+        this.setState({
+          inWaitlist: {
+            waiting: true
+          }
+        });
+      }
+    },
+
+    ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
     render: function(){
@@ -570,6 +589,7 @@ var Main = React.createClass({
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
                               inWaitlist={this.state.inWaitlist}
+                              toggleWaiting={this.toggleWaiting}
                                />
                           </div>
                       </div>
