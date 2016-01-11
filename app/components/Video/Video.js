@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 
 var Video = React.createClass({
   shouldBePlaying: function(){
-    return false;
+    return true;
   },
   render: function() {
     return(
