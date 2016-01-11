@@ -42,6 +42,9 @@ var Playlists = React.createClass({
    updateVolume: function(value) {
      this.props.updateVolume(value);
    },
+   handleWaitlistButton: function(e) {
+     console.log(e);
+   },
    render: function() {
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
      if (this.props.playlistsOpen) {

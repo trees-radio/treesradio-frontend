@@ -189,7 +189,7 @@ var Main = React.createClass({
         }
     },
     presencePing: function() {
-      console.log("Sending presence ping...");
+      // console.log("Sending presence ping...");
       // this.presenceRef.child('online').set(true);
       let timestamp = _.now();
       this.presenceRef.child('lastseen').set(timestamp);
