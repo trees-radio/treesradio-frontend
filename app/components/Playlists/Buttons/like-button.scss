@@ -3,7 +3,14 @@
 // http://enjoycss.com/zbuttram/item/rQW/2
 
 .fa-thumbs-o-up {
-  padding-right: 20%;
+  position: absolute;
+  padding-top: 10%;
+  right: 3.75vw;
+}
+
+.feedback-likes {
+  float: right;
+  padding-right: 25%;
 }
 
 .like-button {

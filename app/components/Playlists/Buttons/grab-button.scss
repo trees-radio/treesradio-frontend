@@ -3,9 +3,15 @@
 
 
 .fa-arrow-circle-o-down {
-  padding-right: 20%;
-  padding-top: 7.5%;
+  position: absolute;
+  padding-top: 7%;
+  right: 3.75vw;
+}
 
+.feedback-grab {
+  float: right;
+  padding-right: 22.5%;
+  padding-top: 2%;
 }
 
 .grab-button {
