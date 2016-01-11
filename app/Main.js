@@ -66,6 +66,16 @@ var Main = React.createClass({
           currentSidebar: 0, // 0 - 3 Chat -> About
           controls: {
             volume: 0.5
+          },
+          playingMedia: {
+            info: {
+              title: "Loading...",
+              url: ""
+            },
+            playback: {
+              time: 0,
+              user: "Nobody"
+            }
           }
       }
     },
@@ -96,6 +106,11 @@ var Main = React.createClass({
         base.syncState(`registeredNames`, {
             context: this,
             state: 'registeredNames'
+        });
+
+        base.bindToState('playing_media', {
+          context: this,
+          state: 'playingMedia'
         });
 
 
@@ -530,6 +545,7 @@ var Main = React.createClass({
                           <div id="vidcontainer" className="">
                             <Video
                               controls={this.state.controls}
+                              playingMedia={this.state.playingMedia}
                               />
                           </div>
                           <div id="playlists-container">
@@ -549,6 +565,7 @@ var Main = React.createClass({
                               moveTopPlaylist={this.moveTopPlaylist}
                               updateVolume={this.updateVolume}
                               controls={this.state.controls}
+                              playingMedia={this.state.playingMedia}
                                />
                           </div>
                       </div>
