@@ -76,6 +76,9 @@ var Main = React.createClass({
               time: 0,
               user: "Nobody"
             }
+          },
+          inWaitlist: {
+            waiting: false
           }
       }
     },
@@ -566,6 +569,7 @@ var Main = React.createClass({
                               updateVolume={this.updateVolume}
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
+                              inWaitlist={this.state.inWaitlist}
                                />
                           </div>
                       </div>

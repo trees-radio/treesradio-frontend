@@ -62,7 +62,10 @@ var Playlists = React.createClass({
          }
        }
      }
-
+     let waitlistButtonText = "Join Waitlist";
+     if (this.props.inWaitlist.waiting) {
+       waitlistButtonText = "Leave Waitlist";
+     }
 
 
      return(
@@ -120,7 +123,7 @@ var Playlists = React.createClass({
             <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i></div>
           </div>
           <div id="waitlist" className="col-lg-2">
-            <div className="join-waitlist">Join Waitlist</div>
+            <div className="join-waitlist" onClick={this.handleWaitlistButton}>{waitlistButtonText}</div>
           </div>
        </div>
      </div>
