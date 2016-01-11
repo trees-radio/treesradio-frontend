@@ -22,7 +22,7 @@ var Waitlist = React.createClass({
       return (
           <li key={index} className={waitlistLineClasses}>
             <div className="waitlist-position">
-              <span>{waitlistPlace}</span>
+              <span>#{waitlistPlace}</span>
             </div>
             <div className="waitlist-avatar">
               <img className="waitlist-avatarimg" src={userAvatar}></img>

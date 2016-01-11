@@ -1,0 +1,54 @@
+.waitlist-item {
+  width: 100%;
+  list-style-position: inside;
+  list-style-type: none;
+  display: flex;
+  padding-top: 2%;
+  padding-left: 2%;
+}
+
+.waitlist-avatar {
+  width: 10%;
+  max-width: 10%;
+  cursor: pointer;
+}
+
+.waitlist-avatarimg {
+  width: 2vw;
+  height: 2vw;
+  border-radius: 5px;
+}
+
+.waitlist-name {
+  width: 80%;
+  max-width: 80%;
+  padding-top: 5%;
+  padding-left: 20%;
+  font-size: 1.125vw;
+  line-height: 2vw;
+  cursor: pointer;
+}
+
+.waitlist-list {
+  padding: 0;
+}
+
+.waitlist-position {
+  width: 10%;
+  max-width: 10%;
+  margin-left: 2.5%;
+  margin-top: .25vw;
+  font-size: 1.125vw;
+}
+
+
+
+.waitlist-line-1 {
+  background-color: #0A0A0A; //light skin cbd6dc
+  padding: 10px;
+}
+
+.waitlist-line-0 {
+  background-color: #121317; //light skin e9eef0
+  padding: 10px;
+}
