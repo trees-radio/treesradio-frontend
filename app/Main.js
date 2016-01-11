@@ -620,6 +620,7 @@ var Main = React.createClass({
                           currentSidebar={this.state.currentSidebar}
                           changeSidebar={this.changeSidebar}
                           userPresence={this.state.userPresence}
+                          waitlist={this.state.waitlist}
                           />
                       </div>
             {/* End Container */}

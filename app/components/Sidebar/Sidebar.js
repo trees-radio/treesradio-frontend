@@ -29,7 +29,9 @@ var Sidebar = React.createClass({
         break;
       case 2:
       currentSidebar = (
-        <Waitlist/>
+        <Waitlist
+          waitlist={this.props.waitlist}
+          />
       )
         break;
       case 3:
