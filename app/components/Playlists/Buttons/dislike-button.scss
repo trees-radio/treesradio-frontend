@@ -2,7 +2,14 @@
 // http://enjoycss.com/zbuttram/item/rQX/3
 
 .fa-thumbs-o-down {
-  padding-right: 65%;
+  position: absolute;
+  padding-top: 10%;
+  right: 3.75vw;
+}
+
+.feedback-dislikes {
+  float: right;
+  padding-right: 22.5%;
 }
 
 .dislike-button {

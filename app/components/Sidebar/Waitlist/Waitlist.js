@@ -27,7 +27,7 @@ var Waitlist = React.createClass({
             <div className="waitlist-avatar">
               <img className="waitlist-avatarimg" src={userAvatar}></img>
             </div>
-            <div>
+            <div className="waitlist-name-top">
               <span className="waitlist-name">{waitlistItem['user']}</span>
             </div>
           </li>
