@@ -84,8 +84,10 @@ var Main = React.createClass({
             }
           },
           inWaitlist: {
-            waiting: false
-          }
+            waiting: false,
+            id: ""
+          },
+          waitlist: []
       }
     },
     componentWillMount: function(){
@@ -122,6 +124,11 @@ var Main = React.createClass({
           state: 'playingMedia'
         });
 
+        base.bindToState('waitlist/tasks', {
+          context: this,
+          state: 'waitlist',
+          asArray: true
+        });
 
 
 
@@ -500,6 +507,10 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     toggleWaiting: function() {
       if (this.state.inWaitlist.waiting) {
+        if (this.state.inWaitlist.id != "") {
+          var waitlistPlaceRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks/" + this.state.inWaitlist.id);
+          waitlistPlaceRef.remove();
+        }
         this.setState({
           inWaitlist: {
             waiting: false
@@ -516,13 +527,36 @@ var Main = React.createClass({
         }
         if (!this.state.playlists[currentPlaylistId].entries[0]) {
           emitUserError("Join Waitlist Error", "Your playlist is empty!");
+          return;
         }
 
-        // this.setState({
-        //   inWaitlist: {
-        //     waiting: true
-        //   }
-        // });
+
+
+        var waitlistId = waitlistRef.push({
+          user: this.state.user.username,
+          url: this.state.playlists[currentPlaylistId].entries[0].url
+          }
+        );
+
+        // console.log(waitlistId.toString());
+
+        var waitlistIdUrl = waitlistId.toString();
+
+        var waitlistDiscRef = new Firebase(waitlistIdUrl);
+        waitlistDiscRef.onDisconnect().remove();
+
+        var waitlistIdExplode = waitlistIdUrl.split("/");
+
+        var waitlistIdKey = waitlistIdExplode[waitlistIdExplode.length - 1];
+
+        // console.log(waitlistIdExplode[waitlistIdExplode.length - 1]);
+
+        this.setState({
+          inWaitlist: {
+            waiting: true,
+            id: waitlistIdKey
+          }
+        });
       }
     },
 
