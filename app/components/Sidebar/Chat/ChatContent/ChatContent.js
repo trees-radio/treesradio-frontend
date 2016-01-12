@@ -7,7 +7,9 @@
 
 
 import React from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
+// import linkify from 'linkify';
+import Linkify from 'react-linkify';
 
 
 var ChatContent = React.createClass({
@@ -45,10 +47,11 @@ var ChatContent = React.createClass({
           // console.log(msg.msgs);
 
 
+          var linkifyProperties = {target: '_blank'};
 
           let innerMsgs = msg.msgs.map(function(msg, index){
             return (
-              <span key={index}>{msg}<br/></span>
+              <Linkify properties={linkifyProperties}><span key={index}>{msg}<br/></span></Linkify>
             )
           });
 
