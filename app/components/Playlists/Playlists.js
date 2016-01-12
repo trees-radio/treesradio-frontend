@@ -3,6 +3,7 @@
 
 import React from 'react';
 import ReactSlider from 'react-slider';
+import classNames from 'classnames';
 // import $ from 'jquery';
 
 // // Material-UI imports
@@ -66,8 +67,10 @@ var Playlists = React.createClass({
        }
      }
      let waitlistButtonText = "Join Waitlist";
+     var waitlistButtonClass = classNames("join-waitlist");
      if (this.props.inWaitlist.waiting) {
        waitlistButtonText = "Leave Waitlist";
+       waitlistButtonClass = classNames("join-waitlist", "join-waitlist-pressed");
      }
 
 

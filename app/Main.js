@@ -20,7 +20,7 @@ import cookie from 'react-cookie';
 // TreesRadio utility functions
 // import TRreg from './utils/registration.js';
 // TRreg.example();
-import emitUserError from './utils/userError'
+import emitUserError from './utils/userError';
 
 // Components
 import Nav from './components/Nav/Nav';
@@ -64,7 +64,7 @@ var Main = React.createClass({
             data: {},
             items: []
           },
-          currentSidebar: 2, // 0 - 3 Chat -> About
+          currentSidebar: 0, // 0 - 3 Chat -> About
           controls: {
             volume: 0.5
           },
@@ -525,7 +525,7 @@ var Main = React.createClass({
         } else {
           currentPlaylistId = this.state.currentPlaylist.id;
         }
-        if (!this.state.playlists[currentPlaylistId].entries[0]) {
+        if (!this.state.playlists[currentPlaylistId].entries) {
           emitUserError("Join Waitlist Error", "Your playlist is empty!");
           return;
         }
