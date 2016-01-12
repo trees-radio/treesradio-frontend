@@ -51,7 +51,7 @@ var ChatContent = React.createClass({
 
           let innerMsgs = msg.msgs.map(function(msg, index){
             return (
-              <Linkify properties={linkifyProperties}><span key={index}>{msg}<br/></span></Linkify>
+              <Linkify key={index} properties={linkifyProperties}><span>{msg}<br/></span></Linkify>
             )
           });
 
