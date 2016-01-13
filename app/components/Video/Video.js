@@ -4,10 +4,10 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 
 var Video = React.createClass({
-  componentWillRecieveProps: function() {
+  componentWillReceiveProps: function() {
     var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.1;
     var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.1;
-    if (this.state.localPlayerPos > playbackFastThreshold || this.state.localPlayerPos < playbackSlowThreshold) {
+    if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
       this.refs.TRplayer.seekTo(this.props.playingMedia.playback.fraction);
     }
   },
