@@ -579,7 +579,7 @@ var Main = React.createClass({
               <div className="container-fluid">
                   <div className="row">
             {/* Video Component */}
-                      <div className="col-lg-9 no-float" id="videotoplevel">
+                      <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-float" id="videotoplevel">
                         {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="">
                             <Video
@@ -611,7 +611,7 @@ var Main = React.createClass({
                           </div>
                       </div>
             {/* Chat Component */}
-                      <div className="col-lg-3 no-float" id="chattoplevel" >
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-float" id="chattoplevel" >
                         <Sidebar
                           loginData={this.state.user}
                           chatData={this.state.chat}

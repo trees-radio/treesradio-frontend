@@ -11,11 +11,14 @@ $chat-item-color: #c0c0c0; //light skin #000
   overflow: hidden;
   padding-right: 0;
   padding-left: 0;
+  float: left;
+
 }
 
 div#chatcontainertop > div {
   height: 100%;
   width: 100%;
+
 }
 
 #chatcontainertop {
@@ -24,6 +27,7 @@ div#chatcontainertop > div {
   bottom: 0;
   margin-right: 0;
   overflow: hidden;
+
 }
 
 #chatcontainer {
@@ -32,6 +36,7 @@ div#chatcontainertop > div {
   width: 100%;
   bottom: -25px;
   overflow: hidden;
+
 }
 
 #chatscroll {
