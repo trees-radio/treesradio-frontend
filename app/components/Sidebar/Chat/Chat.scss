@@ -111,13 +111,11 @@ div#chatcontainertop > div {
 }
 
 #sendbox {
-  left: 10px;
-  right: 10px;
   position: absolute;
-  width: 96%;
-  bottom: 5px;
-  padding: 1%;
-  margin-bottom: 0.5%;
+  width: 99.5%;
+  height: 3.75vh;
+  position: absolute;
+  bottom: 1.35vh;
 }
 
 ::-webkit-scrollbar {
@@ -125,8 +123,6 @@ div#chatcontainertop > div {
 }
 
 input#chatinput.form-control {
-  height: 3.75vh;
-  position: absolute;
-  bottom: .5vh;
-  left: .01vw;
+
+
 }
