@@ -90,7 +90,8 @@ var Main = React.createClass({
               grabs: 0
             }
           },
-          waitlist: []
+          waitlist: [],
+          localPlayerPos: 0
       }
     },
     componentWillMount: function(){
@@ -607,6 +608,7 @@ var Main = React.createClass({
           });
         }
       }
+      this.setState({localPlayerPos: progress.played});
     },
     videoBadPause: function() {
       var setControlsOff = {
@@ -653,6 +655,7 @@ var Main = React.createClass({
                               videoOnProgress={this.videoOnProgress}
                               videoBadPause={this.videoBadPause}
                               vidProgress={this.state.user.vidProgress}
+                              localPlayerPos={this.state.localPlayerPos}
                               />
                           </div>
                           <div id="playlists-container">
