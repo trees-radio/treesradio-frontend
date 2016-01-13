@@ -76,6 +76,7 @@ var Playlists = React.createClass({
      }
 
 
+
      return(
       <div id="playlists-component">
         <PlaylistsPanel
@@ -93,18 +94,18 @@ var Playlists = React.createClass({
           moveTopPlaylist={this.props.moveTopPlaylist}
           />
         <div id="playlists-bar" className="row">
-          <div id="playlists-open-button" className="col-lg-1" onClick={this.props.playlistsOpenToggle}>
+          <div id="playlists-open-button" className="col-lg-1 col-md-1 col-sm-1 col-xs-1" onClick={this.props.playlistsOpenToggle}>
             <i id="playlists-open-icon" className={openButtonIcon}></i>
           </div>
-          <div id="playlist-metadata" className="col-lg-3">
+          <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <a>{currentPlaylistName}</a><br/>
             <a>{currentSelectedMedia}</a>
           </div>
-          <div id="currentsong-metadata" className="col-lg-4">
+          <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <a>{this.props.playingMedia.info.title}</a><br/>
             <a>Player: {this.props.playingMedia.playback.user}</a>
           </div>
-          <div id="grabtrack" className="col-lg-1">
+          <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
             <div className="volume-slider">
               <i className="fa fa-volume-down volume-slider-icon"></i>
@@ -124,13 +125,13 @@ var Playlists = React.createClass({
             </div>
 
           </div>
-          <div id="vote" className="col-lg-1">
+          <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
             <div className="like-button"><i className="fa fa-thumbs-o-up"></i><span className="feedback-likes">{this.props.playingMedia.feedback.likes}</span></div>
             {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
             <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i><span className="feedback-dislikes">{this.props.playingMedia.feedback.dislikes}</span></div>
           </div>
-          <div id="waitlist" className="col-lg-2">
+          <div id="waitlist" className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div className={waitlistButtonClass} onClick={this.handleWaitlistButton}>{waitlistButtonText}</div>
           </div>
        </div>
