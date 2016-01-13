@@ -4,20 +4,31 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 
 var Video = React.createClass({
-  shouldBePlaying: function(){
-    return true;
+  onProgress: function(progress) {
+    // console.log(progress);
+    this.props.videoOnProgress(progress);
+  },
+  onPause: function() {
+    if (this.props.vidProgress.sendNow) {
+      this.props.videoBadPause();
+    } else {
+      //
+    }
   },
   render: function() {
     return(
       <div id="player-size">
         <ReactPlayer
+          ref="TRplayer"
           className="reactplayer"
           width="100%"
           height="100%"
           id="reactplayerid"
           url={this.props.playingMedia.info.url}
-          playing={this.shouldBePlaying()}
+          playing={this.props.controls.playing}
           volume={this.props.controls.volume}
+          onProgress={this.onProgress}
+          onPause={this.onPause}
           />
       </div>
     )

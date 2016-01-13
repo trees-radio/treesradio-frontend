@@ -72,7 +72,8 @@ var Main = React.createClass({
           },
           currentSidebar: 0, // 0 - 3 Chat -> About
           controls: {
-            volume: 0.5
+            volume: 0.5,
+            playing: true
           },
           playingMedia: {
             info: {
@@ -560,7 +561,10 @@ var Main = React.createClass({
         var waitlistId = waitlistRef.push({
           user: this.state.user.username,
           uid: authCheckData.uid,
-          url: this.state.playlists[currentPlaylistId].entries[0].url
+          url: this.state.playlists[currentPlaylistId].entries[0].url,
+          title: this.state.playlists[currentPlaylistId].entries[0].title,
+          thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
+          channel: this.state.playlists[currentPlaylistId].entries[0].channel
           }
         );
 
@@ -584,6 +588,41 @@ var Main = React.createClass({
           }
         });
       }
+    },
+
+    ///////////////////////////////////////////////////////////////////////
+    // VIDEO DATA HANDLING
+    ///////////////////////////////////////////////////////////////////////
+    videoOnProgress: function(progress) {
+      if (this.state.user.vidProgress.sendNow) {
+        base.post('users/' + this.state.user.uid + '/vidProgress/fraction', {
+          data: progress
+        });
+        if (progress.played > 0.98) {
+          base.post('users/' + this.state.user.uid + '/vidProgress/donePlaying', {
+            data: true
+          });
+          base.post('users/' + this.state.user.uid + '/vidProgress/sendNow', {
+            data: false
+          });
+        }
+      }
+    },
+    videoBadPause: function() {
+      var setControlsOff = {
+        controls: {
+          volume: this.state.controls.volume,
+          playing: false
+        }
+      }
+      this.setState(setControlsOff);
+      var setControlsOn = {
+        controls: {
+          volume: this.state.controls.volume,
+          playing: true
+        }
+      }
+      this.setState(setControlsOn);
     },
 
     ///////////////////////////////////////////////////////////////////////
@@ -611,6 +650,9 @@ var Main = React.createClass({
                             <Video
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
+                              videoOnProgress={this.videoOnProgress}
+                              videoBadPause={this.videoBadPause}
+                              vidProgress={this.state.user.vidProgress}
                               />
                           </div>
                           <div id="playlists-container">
