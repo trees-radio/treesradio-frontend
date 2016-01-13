@@ -5,6 +5,7 @@
 
 // React
 import React from 'react';
+import update from 'react-addons-update';
 
 // Firebase
 import Firebase from 'firebase';
@@ -47,7 +48,12 @@ var Main = React.createClass({
       return {
           devCheck: devCheckResult,
           loginstate: false,
-          user: {},
+          user: {
+            inWaitlist: {
+              waiting: false,
+              id: ""
+            }
+          },
           userLevel: 0,
           chat: [],
           registeredNames: {},
@@ -82,10 +88,6 @@ var Main = React.createClass({
               likes: 0,
               grabs: 0
             }
-          },
-          inWaitlist: {
-            waiting: false,
-            id: ""
           },
           waitlist: []
       }
@@ -169,6 +171,21 @@ var Main = React.createClass({
                 this.presenceRef.child('online').onDisconnect().remove();
                 this.presencePing();
                 window.setInterval(this.presencePing, 30000);
+
+                // check for missing user items
+                if (!this.state.user.inWaitlist) {
+                  base.post('users/' + authData.uid + '/inWaitlist', {
+                    data: {
+                      waiting: false,
+                      id: ""
+                    }
+                  });
+                }
+                if (!this.state.user.uid) {
+                  base.post('users/' + authData.uid + '/uid', {
+                    data: authData.uid
+                  });
+                }
               }
             });
             this.setState({ loginstate: true });
@@ -242,7 +259,12 @@ var Main = React.createClass({
               } else {
                 let userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
                 // create user entry
-                userRef.child('username').set(desiredUn);
+                userRef.set({
+                  username: desiredUn,
+                  inWaitlist: {
+                    waiting: false
+                  }
+                });
                 // create registeredNames entry
                 registeredNamesRef.child(desiredUn).child("uid").set(userData.uid);
                 registeredNamesRef.child(desiredUn).child("email").set(desiredEml);
@@ -506,14 +528,15 @@ var Main = React.createClass({
     // WAITLIST CONTROLS
     ///////////////////////////////////////////////////////////////////////
     toggleWaiting: function() {
-      if (this.state.inWaitlist.waiting) {
-        if (this.state.inWaitlist.id != "") {
-          var waitlistPlaceRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks/" + this.state.inWaitlist.id);
+      if (this.state.user.inWaitlist.waiting) {
+        if (this.state.user.inWaitlist.id != "") {
+          var waitlistPlaceRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks/" + this.state.user.inWaitlist.id);
           waitlistPlaceRef.remove();
         }
-        this.setState({
-          inWaitlist: {
-            waiting: false
+        base.post('users/' + this.state.user.uid + '/inWaitlist',{
+          data: {
+            waiting: false,
+            id: ""
           }
         });
       } else {
@@ -530,10 +553,13 @@ var Main = React.createClass({
           return;
         }
 
+        var authCheckRef = new Firebase(window.__env.firebase_origin);
+        var authCheckData = authCheckRef.getAuth();
 
 
         var waitlistId = waitlistRef.push({
           user: this.state.user.username,
+          uid: authCheckData.uid,
           url: this.state.playlists[currentPlaylistId].entries[0].url
           }
         );
@@ -551,8 +577,8 @@ var Main = React.createClass({
 
         // console.log(waitlistIdExplode[waitlistIdExplode.length - 1]);
 
-        this.setState({
-          inWaitlist: {
+        base.post('users/' + this.state.user.uid + '/inWaitlist', {
+          data: {
             waiting: true,
             id: waitlistIdKey
           }
@@ -605,7 +631,7 @@ var Main = React.createClass({
                               updateVolume={this.updateVolume}
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
-                              inWaitlist={this.state.inWaitlist}
+                              inWaitlist={this.state.user.inWaitlist}
                               toggleWaiting={this.toggleWaiting}
                                />
                           </div>

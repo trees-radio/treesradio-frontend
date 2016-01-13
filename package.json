@@ -52,6 +52,7 @@
     "material-ui": "^0.14.0",
     "re-base": "^1.4.0",
     "react": "^0.14.3",
+    "react-addons-update": "^0.14.6",
     "react-cookie": "^0.4.3",
     "react-dom": "^0.14.3",
     "react-linkify": "^0.1.1",
