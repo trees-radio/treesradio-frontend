@@ -115,7 +115,7 @@ div#chatcontainertop > div {
   width: 99.5%;
 
   position: absolute;
-  bottom: 1.35vh;
+  bottom: .75vh;
 }
 
 ::-webkit-scrollbar {
@@ -123,6 +123,6 @@ div#chatcontainertop > div {
 }
 
 input#chatinput.form-control {
-  height: 3.75vh;
-
+  height: 5vh;
+  font-size: 1.65vh;
 }
