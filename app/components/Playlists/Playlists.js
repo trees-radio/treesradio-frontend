@@ -68,10 +68,13 @@ var Playlists = React.createClass({
      }
      let waitlistButtonText = "Join Waitlist";
      var waitlistButtonClass = classNames("join-waitlist");
-     if (this.props.inWaitlist.waiting) {
-       waitlistButtonText = "Leave Waitlist";
-       waitlistButtonClass = classNames("join-waitlist", "join-waitlist-pressed");
+     if (this.props.inWaitlist) {
+       if (this.props.inWaitlist.waiting) {
+         waitlistButtonText = "Leave Waitlist";
+         waitlistButtonClass = classNames("join-waitlist", "join-waitlist-pressed");
+       }
      }
+
 
 
      return(
