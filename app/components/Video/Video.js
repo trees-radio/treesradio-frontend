@@ -6,10 +6,11 @@ import Progress from 'react-progressbar';
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
-    if (this.props.playingMedia.playback.fraction < 0.98) {
+    if (this.props.playingMedia.playback.fraction < 0.98 && !this.props.user.vidProgress.sendNow && this.props.playingMedia.playback.playing) {
       var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.1;
       var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.1;
       if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
+        console.log("Triggering sync.");
         this.refs.TRplayer.seekTo(this.props.playingMedia.playback.fraction);
       }
     }
