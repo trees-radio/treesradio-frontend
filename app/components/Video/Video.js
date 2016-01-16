@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactPlayer from 'react-player';
+import Progress from 'react-progressbar';
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
@@ -24,18 +25,24 @@ var Video = React.createClass({
   },
   render: function() {
     return(
-      <div id="player-size">
-        <ReactPlayer
-          ref="TRplayer"
-          className="reactplayer"
-          width="100%"
-          height="100%"
-          id="reactplayerid"
-          url={this.props.playingMedia.info.url}
-          playing={this.props.controls.playing}
-          volume={this.props.controls.volume}
-          onProgress={this.onProgress}
-          onPause={this.onPause}
+      <div>
+        <div id="player-size">
+          <ReactPlayer
+            ref="TRplayer"
+            className="reactplayer"
+            width="100%"
+            height="100%"
+            id="reactplayerid"
+            url={this.props.playingMedia.info.url}
+            playing={this.props.controls.playing}
+            volume={this.props.controls.volume}
+            onProgress={this.onProgress}
+            onPause={this.onPause}
+            />
+        </div>
+        <Progress
+          completed={this.props.localPlayerPos * 100}
+          color="#77b300"
           />
       </div>
     )
