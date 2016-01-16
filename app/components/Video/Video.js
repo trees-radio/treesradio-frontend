@@ -6,11 +6,14 @@ import Progress from 'react-progressbar';
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
-    var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.1;
-    var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.1;
-    if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
-      this.refs.TRplayer.seekTo(this.props.playingMedia.playback.fraction);
+    if (this.props.playingMedia.playback.fraction < 0.98) {
+      var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.1;
+      var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.1;
+      if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
+        this.refs.TRplayer.seekTo(this.props.playingMedia.playback.fraction);
+      }
     }
+
   },
   onProgress: function(progress) {
     // console.log(progress);
