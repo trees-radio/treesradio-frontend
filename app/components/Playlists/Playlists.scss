@@ -21,6 +21,8 @@
 .playlists-panel-closed {
   height: 0px;
   overflow: hidden;
+  transition: all 0.25s ease-in 100ms;
+  background-color: $trees-bg;
 }
 
 .playlists-panel-open {
@@ -31,6 +33,7 @@
   border-top: solid;
   border-width:thin;
   border-color: black;
+  transition: all 0.25s ease-in 100ms;
 }
 
 .pl-thumbnail {
