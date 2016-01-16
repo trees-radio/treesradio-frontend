@@ -279,17 +279,28 @@
 
 @media (min-width: 0px) {
 .waitlist {
-    width: 14.9%;
+    width: 14.825%;
   }
 }
 
+@media (min-width: 800px) {
+.waitlist {
+    width: 14.875%;
+}
+}
 
 @media (min-width: 1300px) {
+.waitlist {
+    width: 14.925%;
+}
+}
+
+
+@media (min-width: 1600px) {
 .waitlist {
     width: 14.98%;
 }
 }
-
 .add-to-playlist-button {
   cursor: pointer;
 }
