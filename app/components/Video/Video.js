@@ -46,11 +46,11 @@ var Video = React.createClass({
             onPause={this.onPause}
             youtubeConfig={rPlayerYoutubeConfig}
             />
-            <Progress
-              className="progress-bar"
-              completed={this.props.localPlayerPos * 100}
-              color="#77b300"
-              />
+          <Progress
+            className="progress-bar"
+            completed={this.props.localPlayerPos * 100}
+            color="#77b300"
+            />
         </div>
       </div>
     )
