@@ -57,6 +57,7 @@
     "react-dom": "^0.14.3",
     "react-linkify": "^0.1.1",
     "react-player": "^0.3.7",
+    "react-progressbar": "^1.2.0",
     "react-slider": "^0.6.0",
     "react-tap-event-plugin": "^0.2.0",
     "sweetalert": "^1.1.3"
