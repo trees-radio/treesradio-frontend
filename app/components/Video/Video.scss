@@ -29,9 +29,19 @@ $videotoplevel-bg: #171717;
 
 
 // NEW SHIT FOR SIZING VIDEO
+
+@media (min-height: 0px) {
 #player-size {
   height: 85vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+}
+}
+
+@media (min-height: 2000px) {
+#player-size {
+  height: 86vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
 }
 
 #playerdiv {

@@ -39,11 +39,12 @@ var Video = React.createClass({
             onProgress={this.onProgress}
             onPause={this.onPause}
             />
+            <Progress
+              className="progress-bar"
+              completed={this.props.localPlayerPos * 100}
+              color="#77b300"
+              />
         </div>
-        <Progress
-          completed={this.props.localPlayerPos * 100}
-          color="#77b300"
-          />
       </div>
     )
   }
