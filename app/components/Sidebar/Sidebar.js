@@ -48,6 +48,8 @@ var Sidebar = React.createClass({
         <SidebarChanger
           changeSidebar={this.props.changeSidebar}
           currentSidebar={this.props.currentSidebar}
+          userPresence={this.props.userPresence}
+          waitlist={this.props.waitlist}
           />
         <div id="chatcontainertop" className="">
           {currentSidebar}
