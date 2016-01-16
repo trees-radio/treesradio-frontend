@@ -656,6 +656,7 @@ var Main = React.createClass({
                               videoBadPause={this.videoBadPause}
                               vidProgress={this.state.user.vidProgress}
                               localPlayerPos={this.state.localPlayerPos}
+                              user={this.state.user}
                               />
                           </div>
                           <div id="playlists-container">
