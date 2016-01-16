@@ -39,7 +39,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 1920px) {
 #player-size {
-  height: 86vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  height: 86.15vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
 }
 }
