@@ -134,6 +134,28 @@ var Main = React.createClass({
           asArray: true
         });
 
+        base.listenTo('playing_media/playback/playing', {
+          context: this,
+          then(playing){
+            if (playing) {
+              var setControlsOff = {
+                controls: {
+                  volume: this.state.controls.volume,
+                  playing: false
+                }
+              }
+              this.setState(setControlsOff);
+              var setControlsOn = {
+                controls: {
+                  volume: this.state.controls.volume,
+                  playing: true
+                }
+              }
+              this.setState(setControlsOn);
+            }
+          }
+        })
+
 
 
 
