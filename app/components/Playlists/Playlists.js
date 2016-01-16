@@ -131,7 +131,7 @@ var Playlists = React.createClass({
             {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
             <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i><span className="feedback-dislikes">{this.props.playingMedia.feedback.dislikes}</span></div>
           </div>
-          <div id="waitlist" className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div className={waitlistButtonClass} onClick={this.handleWaitlistButton}>{waitlistButtonText}</div>
           </div>
        </div>

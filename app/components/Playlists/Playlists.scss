@@ -22,6 +22,9 @@
   height: 0px;
   overflow: hidden;
   transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
   background-color: $trees-bg;
 }
 
@@ -34,6 +37,9 @@
   border-width:thin;
   border-color: black;
   transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 
 .pl-thumbnail {
@@ -258,11 +264,10 @@
 }
 
 
-#waitlist {
+.waitlist {
+  height: 100%;
   padding-left: 0;
   padding-right: 0;
-  height: 100%;
-  max-width: 14.98%;
   line-height: 75px;
   font-size: 200%;
   text-align: center;
@@ -272,6 +277,30 @@
   }
 }
 
+@media (min-width: 0px) {
+.waitlist {
+    width: 14.825%;
+  }
+}
+
+@media (min-width: 800px) {
+.waitlist {
+    width: 14.875%;
+}
+}
+
+@media (min-width: 1300px) {
+.waitlist {
+    width: 14.925%;
+}
+}
+
+
+@media (min-width: 1600px) {
+.waitlist {
+    width: 14.98%;
+}
+}
 .add-to-playlist-button {
   cursor: pointer;
 }
