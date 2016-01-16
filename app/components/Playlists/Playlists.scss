@@ -258,11 +258,10 @@
 }
 
 
-#waitlist {
+.waitlist {
+  height: 100%;
   padding-left: 0;
   padding-right: 0;
-  height: 100%;
-  max-width: 14.98%;
   line-height: 75px;
   font-size: 200%;
   text-align: center;
@@ -270,6 +269,19 @@
   a {
     text-decoration: none;
   }
+}
+
+@media (min-width: 0px) {
+.waitlist {
+    width: 14.9%;
+  }
+}
+
+
+@media (min-width: 1300px) {
+.waitlist {
+    width: 14.98%;
+}
 }
 
 .add-to-playlist-button {
