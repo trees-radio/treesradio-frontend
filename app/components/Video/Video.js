@@ -4,6 +4,8 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import Progress from 'react-progressbar';
 
+var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
+
 var Video = React.createClass({
   componentWillReceiveProps: function() {
     if (this.props.playingMedia.playback.fraction < 0.98 && !this.props.user.vidProgress.sendNow && this.props.playingMedia.playback.playing) {
@@ -42,6 +44,7 @@ var Video = React.createClass({
             volume={this.props.controls.volume}
             onProgress={this.onProgress}
             onPause={this.onPause}
+            youtubeConfig={rPlayerYoutubeConfig}
             />
             <Progress
               className="progress-bar"
