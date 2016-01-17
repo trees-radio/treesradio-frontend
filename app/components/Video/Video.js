@@ -24,8 +24,8 @@ var Video = React.createClass({
       }
     }
     if (this.props.playingMedia.playback.fraction < 0.98 && !checkSendNow(this) && this.props.playingMedia.playback.playing) {
-      var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.1;
-      var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.1;
+      var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.075;
+      var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.075;
       if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
         console.log("Triggering sync.");
         this.refs.TRplayer.seekTo(this.props.playingMedia.playback.fraction);
