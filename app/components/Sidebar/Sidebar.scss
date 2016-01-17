@@ -16,7 +16,7 @@
   text-align: center;
   line-height: 2vw;
   cursor: pointer;
-  }
+}
 
 .sidebar-selected {
   height: 100% !important; //do not unimportant this is seriously fucking important
@@ -24,4 +24,20 @@
   text-align: center;
   background-color:#17171c;
   line-height: 2.25vw;
+}
+
+.show-chat-btn {
+  padding: 0;
+}
+
+.show-ousers-btn {
+  padding: 0;
+}
+
+.show-waitlist-btn {
+  padding: 0;
+}
+
+.show-about-btn {
+  padding: 0;
 }
