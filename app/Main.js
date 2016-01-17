@@ -1,7 +1,10 @@
 //MAIN JS
 
 // Sentry Error Reporting
-Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873').install();
+// Raven is defined globally in index.html
+Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873', {
+  release: '0.1.0'
+}).install();
 
 // React
 import React from 'react';
@@ -184,58 +187,67 @@ var Main = React.createClass({
     },
     authDataCallback: function(authData){
         if (authData) {
-            // console.log(authData.uid + " logged in");
-            this.userBindRef = base.syncState(`users/` + authData.uid, {
-              context: this,
-              state: 'user',
-              then(){
-                // let presenceRef;
-                this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
-                this.presenceRef.child('online').set(true);
-                this.presenceRef.child('online').onDisconnect().remove();
-                this.presencePing();
-                window.setInterval(this.presencePing, 30000);
+          //
+          // START UPON LOGIN
+          //
+          Raven.setUserContext({ // Raven is defined globally in index.html
+            id: authData.uid
+          });
+          this.userBindRef = base.syncState(`users/` + authData.uid, {
+            context: this,
+            state: 'user',
+            then(){
+              // let presenceRef;
+              this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+              this.presenceRef.child('online').set(true);
+              this.presenceRef.child('online').onDisconnect().remove();
+              this.presencePing();
+              window.setInterval(this.presencePing, 30000);
 
-                // check for missing user items
-                if (!this.state.user.inWaitlist) {
-                  base.post('users/' + authData.uid + '/inWaitlist', {
-                    data: {
-                      waiting: false,
-                      id: ""
-                    }
-                  });
-                }
-                if (!this.state.user.uid) {
-                  base.post('users/' + authData.uid + '/uid', {
-                    data: authData.uid
-                  });
-                }
+              // check for missing user items
+              if (!this.state.user.inWaitlist) {
+                base.post('users/' + authData.uid + '/inWaitlist', {
+                  data: {
+                    waiting: false,
+                    id: ""
+                  }
+                });
               }
-            });
-            this.setState({ loginstate: true });
-            this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
-              context: this,
-              state: 'playlists',
-              asArray: true
-            });
-            // get last playlist from cookie and select it
-            let selectPlaylist = this.selectPlaylist;
-            let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
-            if (lastSelectedPlaylist === 0) {
-              window.setTimeout(function() {
-                selectPlaylist(lastSelectedPlaylist);
-              }, 1000);
-            } else if (lastSelectedPlaylist) {
-              window.setTimeout(function() {
-                selectPlaylist(lastSelectedPlaylist);
-              }, 1000);
-            } else {
-              // no last playlist to set
+              if (!this.state.user.uid) {
+                base.post('users/' + authData.uid + '/uid', {
+                  data: authData.uid
+                });
+              }
             }
-        } else {
-              // console.log("Logged out");
-            this.setState({ loginstate: false });
-        }
+          });
+          this.setState({ loginstate: true });
+          this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
+            context: this,
+            state: 'playlists',
+            asArray: true
+          });
+          // get last playlist from cookie and select it
+          let selectPlaylist = this.selectPlaylist;
+          let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
+          if (lastSelectedPlaylist === 0) {
+            window.setTimeout(function() {
+              selectPlaylist(lastSelectedPlaylist);
+            }, 1000);
+          } else if (lastSelectedPlaylist) {
+            window.setTimeout(function() {
+              selectPlaylist(lastSelectedPlaylist);
+            }, 1000);
+          } else {
+            // no last playlist to set
+          }
+
+          //
+          // END UPON LOGIN
+          //
+      } else {
+          // console.log("Logged out");
+          this.setState({ loginstate: false });
+      }
     },
     presencePing: function() {
       // console.log("Sending presence ping...");
