@@ -70,7 +70,7 @@ var Userbit = React.createClass({
               userLevel = "user-level-mod";
             }
             return (
-                <div className="btn-group">
+                <div className="form-inline">
                     <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
                     <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown">
                         <span className="fa fa-caret-down"></span></a>
