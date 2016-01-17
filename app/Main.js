@@ -8,7 +8,7 @@ Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873',
 
 // React
 import React from 'react';
-import update from 'react-addons-update';
+// import update from 'react-addons-update';
 
 // Firebase
 import Firebase from 'firebase';
@@ -75,7 +75,7 @@ var Main = React.createClass({
           },
           currentSidebar: 0, // 0 - 3 Chat -> About
           controls: {
-            volume: 0.5,
+            volume: 0.25,
             playing: true
           },
           playingMedia: {
@@ -181,7 +181,7 @@ var Main = React.createClass({
             // console.log("Auth", error);
             emitUserError("Login Error", error);
         } else {
-            console.log("Auth success", authData);
+            // console.log("Auth success", authData);
         }
 
     },
@@ -664,6 +664,30 @@ var Main = React.createClass({
     },
 
     ///////////////////////////////////////////////////////////////////////
+    // FEEDBACK BUTTONS
+    ///////////////////////////////////////////////////////////////////////
+    handleGrabButton: function() {
+      if (this.state.user.uid) {
+        base.push('queues/feedback/tasks', {
+          data: {type: 'grab', user: this.state.user.uid}
+        });
+      }
+    },
+    handleLikeButton: function() {
+      if (this.state.user.uid) {
+        base.push('queues/feedback/tasks', {
+          data: {type: 'like', user: this.state.user.uid}
+        });
+      }
+    },
+    handleDislikeButton: function() {
+      if (this.state.user.uid) {
+        base.push('queues/feedback/tasks', {
+          data: {type: 'dislike', user: this.state.user.uid}
+        });
+      }
+    },
+    ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
     render: function(){
@@ -714,6 +738,9 @@ var Main = React.createClass({
                               playingMedia={this.state.playingMedia}
                               inWaitlist={this.state.user.inWaitlist}
                               toggleWaiting={this.toggleWaiting}
+                              handleLikeButton={this.handleLikeButton}
+                              handleDislikeButton={this.handleDislikeButton}
+                              handleGrabButton={this.handleGrabButton}
                                />
                           </div>
                       </div>

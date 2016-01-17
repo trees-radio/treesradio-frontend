@@ -106,7 +106,7 @@ var Playlists = React.createClass({
             <a>Player: {this.props.playingMedia.playback.user}</a>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div className="grab-button"><i className="fa fa-arrow-circle-o-down"></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
+            <div className="grab-button" onClick={this.props.handleGrabButton}><i className="fa fa-arrow-circle-o-down"></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
             <div className="volume-slider">
               <i className="fa fa-volume-down volume-slider-icon"></i>
               <ReactSlider
@@ -127,9 +127,9 @@ var Playlists = React.createClass({
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
-            <div className="like-button"><i className="fa fa-thumbs-o-up"></i><span className="feedback-likes">{this.props.playingMedia.feedback.likes}</span></div>
+            <div className="like-button" onClick={this.props.handleLikeButton}><i className="fa fa-thumbs-o-up"></i><span className="feedback-likes">{this.props.playingMedia.feedback.likes}</span></div>
             {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
-            <div className="dislike-button"><i className="fa fa-thumbs-o-down"></i><span className="feedback-dislikes">{this.props.playingMedia.feedback.dislikes}</span></div>
+            <div className="dislike-button" onClick={this.props.handleDislikeButton}><i className="fa fa-thumbs-o-down"></i><span className="feedback-dislikes">{this.props.playingMedia.feedback.dislikes}</span></div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div className={waitlistButtonClass} onClick={this.handleWaitlistButton}>{waitlistButtonText}</div>
