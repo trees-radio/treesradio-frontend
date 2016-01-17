@@ -93,6 +93,10 @@ var Main = React.createClass({
               grabs: 0
             }
           },
+          userFeedback: {
+            opinion: "none",
+            grab: false
+          },
           waitlist: [],
           localPlayerPos: 0
       }
@@ -135,6 +139,16 @@ var Main = React.createClass({
           context: this,
           state: 'waitlist',
           asArray: true
+        });
+
+        base.listenTo('playing_media/playback/url', {
+          context: this,
+          then() {
+            this.setState({userFeedback: {
+              opinion: "none",
+              grab: false
+            }});
+          }
         });
 
         base.listenTo('playing_media/playback/playing', {
@@ -668,23 +682,42 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     handleGrabButton: function() {
       if (this.state.user.uid) {
-        base.push('queues/feedback/tasks', {
-          data: {type: 'grab', user: this.state.user.uid}
-        });
+        if (!this.state.userFeedback.grab) {
+          base.push('queues/feedback/tasks', {
+            data: {type: 'grab', user: this.state.user.uid}
+          });
+          this.setState({userFeedback: {
+            opinion: this.state.userFeedback.opinion,
+            grab: true
+          }});
+        }
       }
     },
     handleLikeButton: function() {
+
       if (this.state.user.uid) {
-        base.push('queues/feedback/tasks', {
-          data: {type: 'like', user: this.state.user.uid}
-        });
+        if (!(this.state.userFeedback.opinion === "like")) {
+          base.push('queues/feedback/tasks', {
+            data: {type: 'like', user: this.state.user.uid}
+          });
+          this.setState({userFeedback: {
+            opinion: "like",
+            grab: this.state.userFeedback.grab
+          }});
+        }
       }
     },
     handleDislikeButton: function() {
       if (this.state.user.uid) {
-        base.push('queues/feedback/tasks', {
-          data: {type: 'dislike', user: this.state.user.uid}
-        });
+        if (!(this.state.userFeedback.opinion === "dislike")) {
+          base.push('queues/feedback/tasks', {
+            data: {type: 'dislike', user: this.state.user.uid}
+          });
+          this.setState({userFeedback: {
+            opinion: "dislike",
+            grab: this.state.userFeedback.grab
+          }});
+        }
       }
     },
     ///////////////////////////////////////////////////////////////////////
@@ -741,6 +774,7 @@ var Main = React.createClass({
                               handleLikeButton={this.handleLikeButton}
                               handleDislikeButton={this.handleDislikeButton}
                               handleGrabButton={this.handleGrabButton}
+                              userFeedback={this.state.userFeedback}
                                />
                           </div>
                       </div>
