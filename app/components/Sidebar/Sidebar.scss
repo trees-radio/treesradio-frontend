@@ -16,6 +16,7 @@
   text-align: center;
   line-height: 2vw;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .sidebar-selected {
@@ -60,4 +61,20 @@
   padding-top: 2%;
   padding-bottom: 2%;
   border-radius: 100px;
+}
+
+.sel-chat {
+
+}
+
+.sel-online {
+  margin-left: 1%;
+}
+
+.sel-waitlist {
+  margin-left: 1%;
+}
+
+.sel-about {
+
 }
