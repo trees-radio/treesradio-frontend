@@ -8,7 +8,22 @@ var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
-    if (this.props.playingMedia.playback.fraction < 0.98 && !this.props.user.vidProgress.sendNow && this.props.playingMedia.playback.playing) {
+    function checkSendNow(that) {
+      var outcome = false;
+      if (that.props.user) {
+        if (that.props.user.vidProgress) {
+          if (that.props.user.vidProgress.sendNow) {
+            outcome = true;
+          }
+        }
+      }
+      if (outcome) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (this.props.playingMedia.playback.fraction < 0.98 && !checkSendNow(this) && this.props.playingMedia.playback.playing) {
       var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.1;
       var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.1;
       if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
@@ -23,7 +38,7 @@ var Video = React.createClass({
     this.props.videoOnProgress(progress);
   },
   onPause: function() {
-    if (this.props.vidProgress.sendNow) {
+    if (this.props.user.vidProgress.sendNow) {
       this.props.videoBadPause();
     } else {
       //

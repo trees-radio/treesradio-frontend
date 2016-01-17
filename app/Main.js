@@ -629,17 +629,19 @@ var Main = React.createClass({
     // VIDEO DATA HANDLING
     ///////////////////////////////////////////////////////////////////////
     videoOnProgress: function(progress) {
-      if (this.state.user.vidProgress.sendNow) {
-        base.post('users/' + this.state.user.uid + '/vidProgress/fraction', {
-          data: progress
-        });
-        if (progress.played > 0.98) {
-          base.post('users/' + this.state.user.uid + '/vidProgress/donePlaying', {
-            data: true
+      if (this.state.user.vidProgress) {
+        if (this.state.user.vidProgress.sendNow) {
+          base.post('users/' + this.state.user.uid + '/vidProgress/fraction', {
+            data: progress
           });
-          base.post('users/' + this.state.user.uid + '/vidProgress/sendNow', {
-            data: false
-          });
+          if (progress.played > 0.98) {
+            base.post('users/' + this.state.user.uid + '/vidProgress/donePlaying', {
+              data: true
+            });
+            base.post('users/' + this.state.user.uid + '/vidProgress/sendNow', {
+              data: false
+            });
+          }
         }
       }
       this.setState({localPlayerPos: progress.played});
@@ -688,7 +690,6 @@ var Main = React.createClass({
                               playingMedia={this.state.playingMedia}
                               videoOnProgress={this.videoOnProgress}
                               videoBadPause={this.videoBadPause}
-                              vidProgress={this.state.user.vidProgress}
                               localPlayerPos={this.state.localPlayerPos}
                               user={this.state.user}
                               />
