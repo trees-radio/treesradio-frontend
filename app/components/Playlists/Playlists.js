@@ -88,6 +88,11 @@ var Playlists = React.createClass({
        grabClass = classNames("fa", "fa-arrow-circle-down");
      }
 
+     var currentPlayingMedia = this.props.playingMedia.info.title;
+     if (currentPlayingMedia.length > 35) {
+       let maxLength = 35;
+       currentPlayingMedia = currentPlayingMedia.substring(0,maxLength) + "...";
+     }
 
 
      return(
@@ -115,7 +120,7 @@ var Playlists = React.createClass({
             <a>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <a>{this.props.playingMedia.info.title}</a><br/>
+            <a>{currentPlayingMedia}</a><br/>
             <a>Player: {this.props.playingMedia.playback.user}</a>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
