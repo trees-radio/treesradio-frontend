@@ -41,12 +41,12 @@ body {
   height: 100%;
 }
 
-div#app > div {
+#app > div {
   height: 100%;
   width: 100%;
 }
 
-a:-webkit-any-link {
+#app:-webkit-any-link {
     cursor: auto;
 }
 

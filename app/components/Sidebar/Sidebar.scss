@@ -43,6 +43,13 @@
   padding: 0;
 }
 
+@media (min-width: 0px) {
+.online-count {
+display: none;
+}
+}
+
+@media (min-width: 1500px) {
 .online-count {
   color: black;
   background-color: white;
@@ -51,8 +58,17 @@
   padding-top: 2%;
   padding-bottom: 2%;
   border-radius: 100px;
+  display: inline;
+}
 }
 
+@media (min-width: 0px) {
+.waitlist-count {
+  display: none;
+}
+}
+
+@media (min-width: 1500px) {
 .waitlist-count {
   color: black;
   background-color: white;
@@ -61,7 +77,10 @@
   padding-top: 2%;
   padding-bottom: 2%;
   border-radius: 100px;
+  display: inline;
 }
+}
+
 
 .sel-chat {
 
@@ -69,6 +88,7 @@
 
 .sel-online {
   margin-left: 1%;
+
 }
 
 .sel-waitlist {
