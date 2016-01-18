@@ -4,18 +4,34 @@ $chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
 $chat-item-border: #000; //light skin 808080
 $chat-item-color: #c0c0c0; //light skin #000
 
+@media (min-width: 0px) {
 #chattoplevel {
   background-color: $chattoplevel-bg;
   position: relative;
   height: 100%;
+  width: 100%;
   overflow: hidden;
   padding-right: 0;
   padding-left: 0;
   float: left;
-
+}
 }
 
-div#chatcontainertop > div {
+@media (min-width: 1000px) {
+#chattoplevel {
+  background-color: $chattoplevel-bg;
+  position: relative;
+  height: 100%;
+  width: 25%;
+  overflow: hidden;
+  padding-right: 0;
+  padding-left: 0;
+  float: left;
+}
+}
+
+
+#chatcontainertop > div {
   height: 100%;
   width: 100%;
 

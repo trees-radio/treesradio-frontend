@@ -1,10 +1,19 @@
 
 $videotoplevel-bg: #171717;
 
+@media (min-width: 0px) {
+#videotoplevel {
+  display: none;
+}
+}
+
+@media (min-width: 1000px) {
 #videotoplevel {
   height: 100%;
   background-color: black;
   padding: 0;
+  display: block;
+}
 }
 
 
