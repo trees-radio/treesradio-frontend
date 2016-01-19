@@ -8,21 +8,16 @@ var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
-    var sendingNow = false;
-    if (this.props.user) {
-      if (this.props.user.vidProgress) {
-        if (this.props.user.vidProgress.sendNow) {
-          sendingNow = true;
-          console.log("sendingNow is true");
-        }
-      }
-    }
-    if (this.props.playingMedia.playback.fraction < 0.98 && !sendingNow && this.props.playingMedia.playback.playing) {
-      var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.075;
-      var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.075;
-      if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
+    var playbackSlowThreshold = this.props.playingMedia.playback.time - 10;
+    var playbackFastThreshold = this.props.playingMedia.playback.time + 10;
+    var playbackSyncCap = this.props.playingMedia.playback.duration - 10;
+    var localPlayerTime = this.props.playingMedia.playback.duration * this.props.localPlayerPos;
+    console.log(localPlayerTime);
+    if (this.props.playingMedia.playback.time < playbackSyncCap && this.props.playingMedia.playback.playing) {
+      if (localPlayerTime > playbackFastThreshold || localPlayerTime < playbackSlowThreshold) {
         console.log("Triggering sync.");
-        this.refs.TRplayer.seekTo(this.props.playingMedia.playback.fraction);
+        var fraction = this.props.playingMedia.playback.time / this.props.playingMedia.playback.duration;
+        this.refs.TRplayer.seekTo(fraction);
       }
     }
 
