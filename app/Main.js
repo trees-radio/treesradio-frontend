@@ -172,14 +172,6 @@ var Main = React.createClass({
             }
           }
         })
-
-
-
-
-        /////////////
-        // TEST CODE
-        /////////////
-        // axios.get('https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=' + )
     },
     ///////////////////////////////////////////////////////////////////////
     // LOGIN & REGISTRATION
@@ -389,6 +381,23 @@ var Main = React.createClass({
     },
     checkUserLevel: function(user){
       return _.get(this.state.registeredNames, user + ".level");
+    },
+    chatCommands: function(command) {
+      switch (command) {
+        case 'skip':
+          if (this.state.user.uid === "1ec8bd39-ef00-478f-aa42-e01e8112cafa" || this.state.user.uid === "88fbeeb3-fbd3-4147-96af-8c605af6d87c") {
+            base.post('playing_media/admin/skip', {
+              data: true,
+              then() {
+                console.log('Skip sent');
+              }
+            });
+          }
+        break;
+        default:
+          console.log('Unrecognized chat command');
+        break;
+      }
     },
     ///////////////////////////////////////////////////////////////////////
     // PLAYLISTS
@@ -643,38 +652,7 @@ var Main = React.createClass({
     // VIDEO DATA HANDLING
     ///////////////////////////////////////////////////////////////////////
     videoOnProgress: function(progress) {
-      if (this.state.user.vidProgress) {
-        if (this.state.user.vidProgress.sendNow) {
-          base.post('users/' + this.state.user.uid + '/vidProgress/fraction', {
-            data: progress
-          });
-          if (progress.played > 0.98) {
-            base.post('users/' + this.state.user.uid + '/vidProgress/donePlaying', {
-              data: true
-            });
-            base.post('users/' + this.state.user.uid + '/vidProgress/sendNow', {
-              data: false
-            });
-          }
-        }
-      }
       this.setState({localPlayerPos: progress.played});
-    },
-    videoBadPause: function() {
-      var setControlsOff = {
-        controls: {
-          volume: this.state.controls.volume,
-          playing: false
-        }
-      }
-      this.setState(setControlsOff);
-      var setControlsOn = {
-        controls: {
-          volume: this.state.controls.volume,
-          playing: true
-        }
-      }
-      this.setState(setControlsOn);
     },
 
     ///////////////////////////////////////////////////////////////////////
@@ -789,6 +767,7 @@ var Main = React.createClass({
                           changeSidebar={this.changeSidebar}
                           userPresence={this.state.userPresence}
                           waitlist={this.state.waitlist}
+                          chatCommands={this.chatCommands}
                           />
                       </div>
             {/* End Container */}

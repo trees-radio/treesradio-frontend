@@ -17,9 +17,17 @@ var ChatSend = React.createClass({
           console.log("User attempted to send an empty chat message");
         } else {
           if ( this.props.loginState ) {
-            let userSending = this.props.loginData.username;
             this.refs.sendbox.value = '';
-            this.props.sendMsg({msg: newMsg, user: userSending});
+            let userSending = this.props.loginData.username;
+            switch (newMsg) {
+              case "/skip":
+                this.props.chatCommands('skip');
+              break;
+              default:
+                this.props.sendMsg({msg: newMsg, user: userSending});
+              break;
+            }
+
           } else {
             this.refs.sendbox.value = '';
             sweetAlert({
