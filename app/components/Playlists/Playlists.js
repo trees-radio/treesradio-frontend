@@ -94,6 +94,14 @@ var Playlists = React.createClass({
        currentPlayingMedia = currentPlayingMedia.substring(0,maxLength) + "...";
      }
 
+     var volClass;
+     if (this.props.controls.volume < 0.1) {
+       volClass = classNames("fa", "fa-volume-off", "volume-slider-icon");
+     } else if (this.props.controls.volume < 0.6) {
+       volClass = classNames("fa", "fa-volume-down", "volume-slider-icon");
+     } else {
+       volClass = classNames("fa", "fa-volume-up", "volume-slider-icon");
+     }
 
      return(
       <div id="playlists-component">
@@ -126,7 +134,7 @@ var Playlists = React.createClass({
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="grab-button" onClick={this.props.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
             <div className="volume-slider">
-              <i className="fa fa-volume-down volume-slider-icon"></i>
+              <i className={volClass}></i>
               <ReactSlider
                 max={1}
                 step={0.01}
