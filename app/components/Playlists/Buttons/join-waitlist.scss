@@ -17,9 +17,9 @@
   color: silver;
   -o-text-overflow: clip;
   text-overflow: clip;
-  background-color: rgba(119,179,0,1);
-  background: "@include" filter-gradient(#77b300, #88cd00, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(119,179,0,1) 0%, rgba(136,205,0,1) 100%));
+  background-color: rgba(102,153,0,1);
+  background: "@include" filter-gradient(#669900, #88cd00, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(102,153,0,1) 0%, rgba(136,205,0,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -34,9 +34,9 @@
 }
 
 .join-waitlist:hover {
-  background-color: rgba(102,153,0,1);
-  background: "@include" filter-gradient(#669900, #88cd00, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(102,153,0,1) 0%, rgba(136,205,0,1) 100%));
+  background-color: rgba(85,128,0,1);
+  background: "@include" filter-gradient(#558000, #88cd00, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(85,128,0,1) 0%, rgba(136,205,0,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
