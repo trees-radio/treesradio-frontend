@@ -105,6 +105,7 @@ $chat-item-color: #c0c0c0; //light skin #000
   color: #0040ff;
   font-weight: bolder;
   font-size: 16px;
+  cursor:pointer;
 }
 
 .chat-text {
@@ -118,6 +119,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .chat-avatar {
   padding-right: 5px;
   padding-bottom: 5px;
+  cursor:pointer;
 }
 
 #avatarimg {
