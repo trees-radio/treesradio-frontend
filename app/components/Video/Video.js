@@ -8,22 +8,16 @@ var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
-    function checkSendNow(that) {
-      var outcome = false;
-      if (that.props.user) {
-        if (that.props.user.vidProgress) {
-          if (that.props.user.vidProgress.sendNow) {
-            outcome = true;
-          }
+    var sendingNow = false;
+    if (this.props.user) {
+      if (this.props.user.vidProgress) {
+        if (this.props.user.vidProgress.sendNow) {
+          outcome = true;
+          console.log("sendingNow is true");
         }
       }
-      if (outcome) {
-        return true;
-      } else {
-        return false;
-      }
     }
-    if (this.props.playingMedia.playback.fraction < 0.98 && !checkSendNow(this) && this.props.playingMedia.playback.playing) {
+    if (this.props.playingMedia.playback.fraction < 0.98 && !sendingNow && this.props.playingMedia.playback.playing) {
       var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.075;
       var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.075;
       if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {

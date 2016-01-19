@@ -15,7 +15,7 @@ import Linkify from 'react-linkify';
 var ChatContent = React.createClass({
     componentDidMount: function() {
       // var chatScroll = this.refs.chatScroll;
-      window.setTimeout(function (chatScroll) {
+      window.setTimeout(function () {
         var chatScroll = this.refs.chatScroll;
         chatScroll.scrollTop = chatScroll.scrollHeight;
       }.bind(this), 1000);
