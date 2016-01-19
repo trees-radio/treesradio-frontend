@@ -260,6 +260,7 @@ var Main = React.createClass({
       // this.presenceRef.child('online').set(true);
       let timestamp = _.now();
       this.presenceRef.child('lastseen').set(timestamp);
+      this.presenceRef.child('online').set(true);
     },
     logoutUser: function(){
         this.ref.unauth();
@@ -578,7 +579,8 @@ var Main = React.createClass({
     updateVolume: function(value) {
       this.setState({
         controls: {
-          volume: value
+          volume: value,
+          playing: this.state.controls.playing
         }
       });
     },
