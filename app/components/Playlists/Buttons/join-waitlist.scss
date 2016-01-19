@@ -18,8 +18,8 @@
   -o-text-overflow: clip;
   text-overflow: clip;
   background-color: rgba(102,153,0,1);
-  background: "@include" filter-gradient(#669900, #88cd00, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(102,153,0,1) 0%, rgba(136,205,0,1) 100%));
+  background: filter-gradient(#669900, #88cd00, horizontal);
+  background: background-image(linear-gradient(left, rgba(102,153,0,1) 0%, rgba(136,205,0,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -32,56 +32,56 @@
   -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
   transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
 }
-
-.join-waitlist:hover {
-  background-color: rgba(85,128,0,1);
-  background: "@include" filter-gradient(#558000, #88cd00, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(85,128,0,1) 0%, rgba(136,205,0,1) 100%));
-  background-position: 50% 50%;
-  -webkit-background-origin: padding-box;
-  background-origin: padding-box;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-background-size: auto auto;
-  background-size: auto auto;
-}
-
-.join-waitlist:active {
-  background-color: rgba(102,154,0,1);
-  background: "@include" filter-gradient(#669a00, #88cd00, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(102,154,0,1) 0%, rgba(136,205,0,1) 100%));
-  background-position: 50% 50%;
-  -webkit-background-origin: padding-box;
-  background-origin: padding-box;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-background-size: auto auto;
-  background-size: auto auto;
-}
-
-
-.join-waitlist-pressed {
-  background-color: rgba(255,69,0,1);
-  background: "@include" filter-gradient(#ff4500, #ff581a, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(255,69,0,1) 0%, rgba(255,88,26,1) 100%));
-  background-position: 50% 50%;
-  -webkit-background-origin: padding-box;
-  background-origin: padding-box;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-background-size: auto auto;
-  background-size: auto auto;
-}
-
-.join-waitlist-pressed:hover {
-  background-color: rgba(255,106,51,1);
-  background: "@include" filter-gradient(#ff6a33, #ff581a, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(255,106,51,1) 0%, rgba(255,88,26,1) 100%));
-  background-position: 50% 50%;
-  -webkit-background-origin: padding-box;
-  background-origin: padding-box;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-background-size: auto auto;
-  background-size: auto auto;
-}
+//
+// .join-waitlist:hover {
+//   background-color: rgba(85,128,0,1);
+//   background: @include filter-gradient(#558000, #88cd00, horizontal);
+//   background: @include background-image(linear-gradient(left, rgba(85,128,0,1) 0%, rgba(136,205,0,1) 100%));
+//   background-position: 50% 50%;
+//   -webkit-background-origin: padding-box;
+//   background-origin: padding-box;
+//   -webkit-background-clip: border-box;
+//   background-clip: border-box;
+//   -webkit-background-size: auto auto;
+//   background-size: auto auto;
+// }
+//
+// .join-waitlist:active {
+//   background-color: rgba(102,154,0,1);
+//   background: @include filter-gradient(#669a00, #88cd00, horizontal);
+//   background: @include background-image(linear-gradient(left, rgba(102,154,0,1) 0%, rgba(136,205,0,1) 100%));
+//   background-position: 50% 50%;
+//   -webkit-background-origin: padding-box;
+//   background-origin: padding-box;
+//   -webkit-background-clip: border-box;
+//   background-clip: border-box;
+//   -webkit-background-size: auto auto;
+//   background-size: auto auto;
+// }
+//
+//
+// .join-waitlist-pressed {
+//   background-color: rgba(255,69,0,1);
+//   background: @include filter-gradient(#ff4500, #ff581a, horizontal);
+//   background: @include background-image(linear-gradient(left, rgba(255,69,0,1) 0%, rgba(255,88,26,1) 100%));
+//   background-position: 50% 50%;
+//   -webkit-background-origin: padding-box;
+//   background-origin: padding-box;
+//   -webkit-background-clip: border-box;
+//   background-clip: border-box;
+//   -webkit-background-size: auto auto;
+//   background-size: auto auto;
+// }
+//
+// .join-waitlist-pressed:hover {
+//   background-color: rgba(255,106,51,1);
+//   background: @include filter-gradient(#ff6a33, #ff581a, horizontal);
+//   background: @include background-image(linear-gradient(left, rgba(255,106,51,1) 0%, rgba(255,88,26,1) 100%));
+//   background-position: 50% 50%;
+//   -webkit-background-origin: padding-box;
+//   background-origin: padding-box;
+//   -webkit-background-clip: border-box;
+//   background-clip: border-box;
+//   -webkit-background-size: auto auto;
+//   background-size: auto auto;
+// }
