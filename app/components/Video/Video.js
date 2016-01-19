@@ -23,7 +23,7 @@ var Video = React.createClass({
         return false;
       }
     }
-    if (this.props.playingMedia.playback.fraction > 0.02 && this.props.playingMedia.playback.fraction < 0.98 && !checkSendNow(this) && this.props.playingMedia.playback.playing) {
+    if (this.props.playingMedia.playback.fraction < 0.98 && !checkSendNow(this) && this.props.playingMedia.playback.playing) {
       var playbackSlowThreshold = this.props.playingMedia.playback.fraction - 0.075;
       var playbackFastThreshold = this.props.playingMedia.playback.fraction + 0.075;
       if (this.props.localPlayerPos > playbackFastThreshold || this.props.localPlayerPos < playbackSlowThreshold) {
