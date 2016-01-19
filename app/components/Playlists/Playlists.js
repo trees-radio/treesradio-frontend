@@ -89,8 +89,8 @@ var Playlists = React.createClass({
      }
 
      var currentPlayingMedia = this.props.playingMedia.info.title;
-     if (currentPlayingMedia.length > 40) {
-       let maxLength = 40;
+     if (currentPlayingMedia.length > 35) {
+       let maxLength = 35;
        currentPlayingMedia = currentPlayingMedia.substring(0,maxLength) + "...";
      }
 
