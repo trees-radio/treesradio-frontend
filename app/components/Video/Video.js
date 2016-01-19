@@ -12,7 +12,7 @@ var Video = React.createClass({
     if (this.props.user) {
       if (this.props.user.vidProgress) {
         if (this.props.user.vidProgress.sendNow) {
-          outcome = true;
+          sendingNow = true;
           console.log("sendingNow is true");
         }
       }

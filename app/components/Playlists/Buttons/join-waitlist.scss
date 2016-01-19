@@ -14,12 +14,12 @@
   cursor: pointer;
   // padding-left: -30px;
   // font: normal 16px/normal "open-sans", Helvetica, sans-serif;
-  color: rgba(255,255,255,0.9);
+  color: silver;
   -o-text-overflow: clip;
   text-overflow: clip;
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #77b300;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #77b300;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #77b300;
+  background-color: rgba(102,153,0,1);
+  background: "@include" filter-gradient(#669900, #88cd00, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(102,153,0,1) 0%, rgba(136,205,0,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -34,9 +34,9 @@
 }
 
 .join-waitlist:hover {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #669900;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #669900;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #669900;
+  background-color: rgba(85,128,0,1);
+  background: "@include" filter-gradient(#558000, #88cd00, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(85,128,0,1) 0%, rgba(136,205,0,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -47,9 +47,9 @@
 }
 
 .join-waitlist:active {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #62b247;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #62b247;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #62b247;
+  background-color: rgba(102,154,0,1);
+  background: "@include" filter-gradient(#669a00, #88cd00, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(102,154,0,1) 0%, rgba(136,205,0,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -61,9 +61,9 @@
 
 
 .join-waitlist-pressed {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff4500;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff4500;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff4500;
+  background-color: rgba(255,69,0,1);
+  background: "@include" filter-gradient(#ff4500, #ff581a, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(255,69,0,1) 0%, rgba(255,88,26,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -74,9 +74,9 @@
 }
 
 .join-waitlist-pressed:hover {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff6a33;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff6a33;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff6a33;
+  background-color: rgba(255,106,51,1);
+  background: "@include" filter-gradient(#ff6a33, #ff581a, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(255,106,51,1) 0%, rgba(255,88,26,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;

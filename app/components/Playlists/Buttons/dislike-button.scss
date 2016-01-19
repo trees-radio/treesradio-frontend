@@ -35,9 +35,9 @@
   text-align: center;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff3440;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff3440;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff3440;
+  background-color: rgba(255,25,40,1);
+  background: "@include" filter-gradient(#ff1a28, #ff3440, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(255,25,40,1) 0%, rgba(255,52,64,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -53,9 +53,9 @@
 }
 
 .dislike-button:hover {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff1a28;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff1a28;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff1a28;
+  background-color: rgba(234,73,75,1);
+  background: "@include" filter-gradient(#ea494b, #ff3440, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(234,73,75,1) 0%, rgba(255,52,64,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -70,9 +70,9 @@
 }
 
 .dislike-button:active {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #e6000e;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #e6000e;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #e6000e;
+  background-color: rgba(255,0,16,1);
+  background: "@include" filter-gradient(#ff0010, #ff3440, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(255,0,16,1) 0%, rgba(255,52,64,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -83,9 +83,9 @@
 }
 
 .dislike-button-active {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #e6000e;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #e6000e;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #e6000e;
+  background-color: rgba(255,0,16,1);
+  background: "@include" filter-gradient(#ff0010, #ff3440, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(255,0,16,1) 0%, rgba(255,52,64,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
