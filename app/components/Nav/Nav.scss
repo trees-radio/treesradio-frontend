@@ -14,9 +14,16 @@
 }
 
 .navbar-header {
-
+  max-width:50%;
+  max-height: 50px;
+  float:left;
 }
 
+.navbar-collapse {
+  max-width: 50%;
+  max-height: 50px;
+  float:right;
+}
 .navbar-default {
   background-color: 0A0A0A;
 }
@@ -44,7 +51,7 @@
 }
 
 .collapse {
-
+  display: block;
 }
 
 #nav-about {
