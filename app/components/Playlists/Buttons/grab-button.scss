@@ -39,9 +39,9 @@
   text-align: center;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #7d0093;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #7d0093;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #7d0093;
+  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff018f;
+  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff018f;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff018f;
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -58,9 +58,9 @@
 }
 
 .grab-button:hover {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #560066;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #560066;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #560066;
+  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff35a6;
+  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff35a6;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #ff35a6;
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -75,9 +75,22 @@
 }
 
 .grab-button:active {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #41004c;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #41004c;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #41004c;
+  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #9a0056;
+  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #9a0056;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #9a0056;
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+}
+
+.grab-button.active {
+  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #9a0056;
+  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #9a0056;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #9a0056;
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
