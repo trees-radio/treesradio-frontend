@@ -12,7 +12,7 @@ var Video = React.createClass({
     var playbackFastThreshold = this.props.playingMedia.playback.time + 10;
     var playbackSyncCap = this.props.playingMedia.playback.duration - 10;
     var localPlayerTime = this.props.playingMedia.playback.duration * this.props.localPlayerPos;
-    console.log(localPlayerTime);
+    // console.log(localPlayerTime);
     if (this.props.playingMedia.playback.time < playbackSyncCap && this.props.playingMedia.playback.playing) {
       if (localPlayerTime > playbackFastThreshold || localPlayerTime < playbackSlowThreshold) {
         console.log("Triggering sync.");
@@ -27,11 +27,7 @@ var Video = React.createClass({
     this.props.videoOnProgress(progress);
   },
   onPause: function() {
-    if (this.props.user.vidProgress.sendNow) {
-      this.props.videoBadPause();
-    } else {
-      //
-    }
+
   },
   render: function() {
     return(
