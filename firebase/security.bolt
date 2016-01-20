@@ -10,15 +10,13 @@
 // GLOBAL FUNCTIONS
 ////////////////////////////////////////////////////////////////
 isUser(uid) { auth != null && auth.uid == uid }
-//isWorker(uid) { uid == 'offline-worker' || uid == 'waitlist-worker' || uid == 'feedback-worker' || uid == 'tr-worker' }
 
 
 ////////////////////////////////////////////////////////////////
 // MAIN PATH
 ////////////////////////////////////////////////////////////////
 path / {
-  //read() = isWorker(auth.uid);
-  //write() = isWorker(auth.uid);
+
 }
 
 ////////////////////////////////////////////////////////////////
@@ -60,11 +58,13 @@ path /playing_media {
   read() = true;
 }
 
+path /playing_media/admin {
+  write() = root.child('users').child(auth.uid).child('level').val() > 0;
+}
+
 ////////////////////////////////////////////////////////////////
 // PRESENCE
 ////////////////////////////////////////////////////////////////
-
-//isUserName(username) = root.child('users').child(auth.uid).child('username') == username;
 
 path /presence {
   read() = true;
