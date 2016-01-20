@@ -9,16 +9,16 @@
 ////////////////////////////////////////////////////////////////
 // GLOBAL FUNCTIONS
 ////////////////////////////////////////////////////////////////
-isUser(uid) = auth != null && auth.uid == uid;
-isWorker() = auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker';
+isUser(uid) { auth != null && auth.uid == uid }
+//isWorker(uid) { uid == 'offline-worker' || uid == 'waitlist-worker' || uid == 'feedback-worker' || uid == 'tr-worker' }
 
 
 ////////////////////////////////////////////////////////////////
 // MAIN PATH
 ////////////////////////////////////////////////////////////////
 path / {
-  read() = isWorker();
-  write() = isWorker();
+  //read() = isWorker(auth.uid);
+  //write() = isWorker(auth.uid);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -64,14 +64,14 @@ path /playing_media {
 // PRESENCE
 ////////////////////////////////////////////////////////////////
 
-isUserName(username) = root.child('users').child(auth.uid).child('username') == username;
+//isUserName(username) = root.child('users').child(auth.uid).child('username') == username;
 
 path /presence {
   read() = true;
 }
 
 path /presence/$username {
-  write() = isUserName($username);
+  write() = isUser(newData.child('uid').val());
 }
 
 ////////////////////////////////////////////////////////////////
