@@ -1,6 +1,40 @@
 {
   "rules": {
     ".read": "true",
-    ".write": "true"
+    ".write": "auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker'",
+    "chat": {
+      ".read": "true",
+      "messages": {
+        ".read": "true",
+        "$msgs": {
+          ".validate": "newData.hasChildren(['avatar', 'user', 'msgs'])",
+          "avatar": {
+            ".validate": "newData.isString()"
+          },
+          "user": {
+            ".validate": "newData.isString()"
+          },
+          "msgs": {
+            ".validate": "newData.hasChildren()"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".write": "true"
+        }
+      }
+    },
+    "playlists": {
+      ".read": "true",
+      "$userid": {
+        ".write": "auth != null && auth.uid == $userid"
+      }
+    },
+    "presence": {
+      ".read": "true"
+    },
+    "users": {
+      ".read": "true"
+    }
   }
 }

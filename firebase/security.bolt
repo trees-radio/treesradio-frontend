@@ -4,8 +4,30 @@
 // https://www.firebase.com/docs/security/bolt/index.html
 //
 
+
+
+////////////////////////////////////////////////////////////////
+// GLOBAL FUNCTIONS
+////////////////////////////////////////////////////////////////
+isUser(uid) = auth != null && auth.uid == uid;
+isWorker() = auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker';
+
+
+////////////////////////////////////////////////////////////////
+// MAIN PATH
+////////////////////////////////////////////////////////////////
 path / {
   read() = true;
+  write() = isWorker();
+}
+
+////////////////////////////////////////////////////////////////
+// CHAT
+////////////////////////////////////////////////////////////////
+type MsgNode {
+  avatar: String,
+  user: String,
+  msgs: Object
 }
 
 path /chat {
@@ -14,19 +36,41 @@ path /chat {
 
 path /chat/messages {
   read() = true;
+}
+
+path /chat/messages/$msgs is MsgNode {
   write() = true;
+}
+
+////////////////////////////////////////////////////////////////
+// PLAYLISTS
+////////////////////////////////////////////////////////////////
+type Playlist {
+  entries: Object,
+  key: Any,
+  name: String
 }
 
 path /playlists {
   read() = true;
 }
 
+path /playlists/$userid {
+  write() = isUser($userid);
+}
+
+////////////////////////////////////////////////////////////////
+// PRESENCE
+////////////////////////////////////////////////////////////////
+
+isUserName($username) = root.child('users').child(auth.uid)
+
 path /presence {
   read() = true;
 }
 
-path /registeredNames {
-  read() = true;
+path /presence/$username {
+
 }
 
 path /users {
