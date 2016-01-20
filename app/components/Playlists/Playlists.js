@@ -61,9 +61,10 @@ var Playlists = React.createClass({
        currentPlaylistName = this.props.currentPlaylist.name;
        if (this.props.playlists[currentPlaylistId].entries) {
          currentSelectedMedia = this.props.playlists[currentPlaylistId].entries[0].title;
-         if (currentSelectedMedia.length > 35) {
-           currentSelectedMedia = currentSelectedMedia + "  ---  " + currentSelectedMedia;
-           currentSelectedMediaClass = classNames("current-selected-media", "marquee");
+         var maxLength = 35;
+         if (currentSelectedMedia.length > maxLength) {
+           currentSelectedMedia = currentSelectedMedia.substring(0,maxLength) + "...";
+           currentSelectedMediaClass = classNames("current-selected-media");
          }
        }
      }
