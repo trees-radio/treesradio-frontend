@@ -199,6 +199,7 @@ var Main = React.createClass({
             then(){
               // let presenceRef;
               this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+              this.presenceRef.child('uid').set(authData.uid);
               this.presenceRef.child('online').set(true);
               this.presenceRef.child('online').onDisconnect().remove();
               this.presencePing();
