@@ -60,8 +60,8 @@ var Playlists = React.createClass({
        currentPlaylistName = this.props.currentPlaylist.name;
        if (this.props.playlists[currentPlaylistId].entries) {
          currentSelectedMedia = this.props.playlists[currentPlaylistId].entries[0].title;
-         if (currentSelectedMedia.length > 35) {
-           let maxLength = 35;
+         if (currentSelectedMedia.length > 99) {
+           let maxLength = 99;
            currentSelectedMedia = currentSelectedMedia.substring(0,maxLength) + "...";
          }
        }
