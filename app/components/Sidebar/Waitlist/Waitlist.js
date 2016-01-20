@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import ReactImageFallback from 'react-image-fallback';
 
 var Waitlist = React.createClass({
 
@@ -17,7 +18,15 @@ var Waitlist = React.createClass({
         waitlistPos = 0;
       }
       var waitlistLineClasses = classNames('waitlist-item', waitlistPosClass);
-      var userAvatar = "http://api.adorable.io/avatars/50/" + waitlistItem['user'] + ".png";
+
+      var userAvatar;
+      if (waitlistItem['avatar']) {
+        userAvatar = "//" + waitlistItem['avatar'];
+      } else {
+        userAvatar = "http://api.adorable.io/avatars/50/" + waitlistItem['user'] + ".png";
+      }
+      var avatarFallback = "http://api.adorable.io/avatars/50/" + waitlistItem['user'] + ".png";
+
       waitlistPlace++;
       return (
           <li key={index} className={waitlistLineClasses}>
@@ -25,7 +34,12 @@ var Waitlist = React.createClass({
               <span>#{waitlistPlace}</span>
             </div>
             <div className="waitlist-avatar">
-              <img className="waitlist-avatarimg" src={userAvatar}></img>
+              <ReactImageFallback
+                className="waitlist-avatarimg"
+                src={userAvatar}
+                fallbackImage={avatarFallback}
+                initialImage="/img/no-avatar.gif"
+                />
             </div>
             <div className="waitlist-name-top">
               <span className="waitlist-name">{waitlistItem['user']}</span>

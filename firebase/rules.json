@@ -1,6 +1,76 @@
 {
   "rules": {
-    ".read": "true",
-    ".write": "true"
+    "chat": {
+      ".read": "true",
+      "messages": {
+        "$msgs": {
+          ".validate": "newData.hasChildren(['avatar', 'user', 'msgs'])",
+          "avatar": {
+            ".validate": "newData.isString()"
+          },
+          "user": {
+            ".validate": "newData.isString()"
+          },
+          "msgs": {
+            ".validate": "newData.hasChildren()"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".write": "true"
+        }
+      }
+    },
+    "playlists": {
+      "$userid": {
+        ".read": "auth != null && auth.uid == $userid",
+        ".write": "auth != null && auth.uid == $userid"
+      }
+    },
+    "playing_media": {
+      ".read": "true",
+      "admin": {
+        ".write": "newData.parent().parent().child('users').child(auth.uid).child('level').val() > 0"
+      }
+    },
+    "presence": {
+      ".read": "true",
+      "$username": {
+        ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "waitlist": {
+      "tasks": {
+        ".read": "true",
+        "$task": {
+          ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
+        }
+      }
+    },
+    "queues": {
+      "feedback": {
+        "tasks": {
+          "$task": {
+            ".validate": "newData.hasChildren(['type', 'user'])",
+            "type": {
+              ".validate": "newData.isString()"
+            },
+            "user": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            },
+            ".write": "auth != null && auth.uid == newData.child('user').val()"
+          }
+        }
+      }
+    }
   }
 }

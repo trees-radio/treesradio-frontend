@@ -205,6 +205,7 @@ var Main = React.createClass({
               this.presencePing();
               window.setInterval(this.presencePing, 30000);
 
+
               // check for missing user items
               if (!this.state.user.inWaitlist) {
                 base.post('users/' + authData.uid + '/inWaitlist', {
@@ -370,14 +371,12 @@ var Main = React.createClass({
     chatCommands: function(command) {
       switch (command) {
         case 'skip':
-          if (this.state.user.uid === "1ec8bd39-ef00-478f-aa42-e01e8112cafa" || this.state.user.uid === "88fbeeb3-fbd3-4147-96af-8c605af6d87c") {
-            base.post('playing_media/admin/skip', {
-              data: true,
-              then() {
-                console.log('Skip sent');
-              }
-            });
-          }
+          base.post('playing_media/admin/skip', {
+            data: true,
+            then() {
+              console.log('Skip sent');
+            }
+          });
         break;
         default:
           console.log('Unrecognized chat command');
@@ -601,6 +600,12 @@ var Main = React.createClass({
         var authCheckRef = new Firebase(window.__env.firebase_origin);
         var authCheckData = authCheckRef.getAuth();
 
+        var userAvatar;
+        if (this.state.user.avatar) {
+          userAvatar = this.state.user.avatar;
+        } else {
+          userAvatar = false;
+        }
 
         var waitlistId = waitlistRef.push({
           user: this.state.user.username,
@@ -608,7 +613,8 @@ var Main = React.createClass({
           url: this.state.playlists[currentPlaylistId].entries[0].url,
           title: this.state.playlists[currentPlaylistId].entries[0].title,
           thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
-          channel: this.state.playlists[currentPlaylistId].entries[0].channel
+          channel: this.state.playlists[currentPlaylistId].entries[0].channel,
+          avatar: userAvatar
           }
         );
 
@@ -685,6 +691,7 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     setAvatar: function() {
       var uid = this.state.user.uid;
+      var username = this.state.user.username;
       sweetAlert({
         title: "Set Your Avatar",
         text: "Give us the link (URL) to your custom avatar here:",
@@ -699,9 +706,15 @@ var Main = React.createClass({
           base.post("users/" + uid + "/avatar", {
             data: cleanInput,
             then() {
-              setTimeout(function() {
-                sweetAlert("Avatar set!");
-              }, 1000);
+              base.post("presence/" + username + "/avatar", {
+                data: cleanInput,
+                then() {
+                  setTimeout(function() {
+                    sweetAlert("Avatar set!");
+                  }, 1000);
+                }
+              });
+
             }
           });
         }

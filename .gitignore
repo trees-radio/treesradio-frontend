@@ -3,6 +3,8 @@ public/app.css
 public/app.js
 public/app.js.map
 
+firebase/rules.json
+
 ## Floobits
 .flooignore
 .floo
