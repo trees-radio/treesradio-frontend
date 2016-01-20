@@ -370,14 +370,12 @@ var Main = React.createClass({
     chatCommands: function(command) {
       switch (command) {
         case 'skip':
-          if (this.state.user.uid === "1ec8bd39-ef00-478f-aa42-e01e8112cafa" || this.state.user.uid === "88fbeeb3-fbd3-4147-96af-8c605af6d87c") {
-            base.post('playing_media/admin/skip', {
-              data: true,
-              then() {
-                console.log('Skip sent');
-              }
-            });
-          }
+          base.post('playing_media/admin/skip', {
+            data: true,
+            then() {
+              console.log('Skip sent');
+            }
+          });
         break;
         default:
           console.log('Unrecognized chat command');
