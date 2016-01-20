@@ -328,10 +328,20 @@ var Main = React.createClass({
 
       let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
 
+      // var avatar = "http://api.adorable.io/avatars/50/"+ this.state.user.username +".png";
+      var userAvatar;
+      if (this.state.user.avatar) {
+        userAvatar = this.state.user.avatar;
+      } else {
+        userAvatar = false;
+      }
+      console.log(userAvatar);
+
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
         chatRef.push({
           user: newMsgData.user,
+          avatar: userAvatar,
           msgs: {
             0: newMsgData.msg
           }
@@ -349,6 +359,7 @@ var Main = React.createClass({
       } else {
         chatRef.push({
           user: newMsgData.user,
+          avatar: userAvatar,
           msgs: {
             0: newMsgData.msg
           }
@@ -672,7 +683,7 @@ var Main = React.createClass({
     // USER PROFILE
     ///////////////////////////////////////////////////////////////////////
     setAvatar: function() {
-      var username = this.state.user.username;
+      var uid = this.state.user.uid;
       sweetAlert({
         title: "Set Your Avatar",
         text: "Give us the link (URL) to your custom avatar here:",
@@ -683,7 +694,7 @@ var Main = React.createClass({
         showLoaderOnConfirm: true
       }, function(inputValue) {
         var cleanInput = inputValue.replace(/.*?:\/\//g, "");
-        base.post("presence/" + username + "/avatar", {
+        base.post("users/" + uid + "/avatar", {
           data: cleanInput,
           then() {
             setTimeout(function() {
@@ -720,7 +731,6 @@ var Main = React.createClass({
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
                               videoOnProgress={this.videoOnProgress}
-                              videoBadPause={this.videoBadPause}
                               localPlayerPos={this.state.localPlayerPos}
                               user={this.state.user}
                               />

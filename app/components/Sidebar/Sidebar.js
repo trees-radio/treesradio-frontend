@@ -18,6 +18,7 @@ var Sidebar = React.createClass({
             sendMsg={this.props.sendMsg}
             loginState={this.props.loginState}
             chatCommands={this.props.chatCommands}
+            userPresence={this.props.userPresence}
             />
         )
         break;
