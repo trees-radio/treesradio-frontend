@@ -60,8 +60,8 @@ var Playlists = React.createClass({
        currentPlaylistName = this.props.currentPlaylist.name;
        if (this.props.playlists[currentPlaylistId].entries) {
          currentSelectedMedia = this.props.playlists[currentPlaylistId].entries[0].title;
-         if (currentSelectedMedia.length > 35) {
-           let maxLength = 35;
+         if (currentSelectedMedia.length > 99) {
+           let maxLength = 99;
            currentSelectedMedia = currentSelectedMedia.substring(0,maxLength) + "...";
          }
        }
@@ -89,8 +89,8 @@ var Playlists = React.createClass({
      }
 
      var currentPlayingMedia = this.props.playingMedia.info.title;
-     if (currentPlayingMedia.length > 35) {
-       let maxLength = 35;
+     if (currentPlayingMedia.length > 99) {
+       let maxLength = 99;
        currentPlayingMedia = currentPlayingMedia.substring(0,maxLength) + "...";
      }
 
@@ -124,12 +124,12 @@ var Playlists = React.createClass({
             <i id="playlists-open-icon" className={openButtonIcon}></i>
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <a>{currentPlaylistName}</a><br/>
-            <a>{currentSelectedMedia}</a>
+            <a className="current-playlist-name">{currentPlaylistName}</a><br/>
+            <a className="current-selected-media marquee">{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <a>{currentPlayingMedia}</a><br/>
-            <a>Player: {this.props.playingMedia.playback.user}</a>
+            <a className="current-playing-media marquee">{currentPlayingMedia}</a><br/>
+            <a className="current-playing-user">Player: {this.props.playingMedia.playback.user}</a>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="grab-button" onClick={this.props.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
