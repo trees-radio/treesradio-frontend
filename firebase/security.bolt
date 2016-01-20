@@ -71,7 +71,7 @@ path /presence {
 }
 
 path /presence/$username {
-  write() = isUser(newData.child('uid').val());
+  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
 }
 
 ////////////////////////////////////////////////////////////////
@@ -87,21 +87,22 @@ path /users/$uid {
 // WAITLIST
 ////////////////////////////////////////////////////////////////
 
-type WaitlistTask {
-  channel: String,
-  thumb: String,
-  title: String,
-  uid: String,
-  url: String,
-  user: String
-}
+//type WaitlistTask {
+//  channel: String,
+//  thumb: String,
+//  title: String,
+//  uid: String,
+//  url: String,
+//  user: String,
+//  avatar: String | Null
+//}
 
 path /waitlist/tasks {
   read() = true;
 }
 
-path /waitlist/tasks/$task is WaitlistTask {
-  write() = isUser(newData.child('uid').val());
+path /waitlist/tasks/$task {
+  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
 }
 
 ////////////////////////////////////////////////////////////////

@@ -205,6 +205,7 @@ var Main = React.createClass({
               this.presencePing();
               window.setInterval(this.presencePing, 30000);
 
+
               // check for missing user items
               if (!this.state.user.inWaitlist) {
                 base.post('users/' + authData.uid + '/inWaitlist', {
@@ -599,6 +600,12 @@ var Main = React.createClass({
         var authCheckRef = new Firebase(window.__env.firebase_origin);
         var authCheckData = authCheckRef.getAuth();
 
+        var userAvatar;
+        if (this.state.user.avatar) {
+          userAvatar = this.state.user.avatar;
+        } else {
+          userAvatar = false;
+        }
 
         var waitlistId = waitlistRef.push({
           user: this.state.user.username,
@@ -606,7 +613,8 @@ var Main = React.createClass({
           url: this.state.playlists[currentPlaylistId].entries[0].url,
           title: this.state.playlists[currentPlaylistId].entries[0].title,
           thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
-          channel: this.state.playlists[currentPlaylistId].entries[0].channel
+          channel: this.state.playlists[currentPlaylistId].entries[0].channel,
+          avatar: userAvatar
           }
         );
 
@@ -683,6 +691,7 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     setAvatar: function() {
       var uid = this.state.user.uid;
+      var username = this.state.user.username;
       sweetAlert({
         title: "Set Your Avatar",
         text: "Give us the link (URL) to your custom avatar here:",
@@ -697,9 +706,15 @@ var Main = React.createClass({
           base.post("users/" + uid + "/avatar", {
             data: cleanInput,
             then() {
-              setTimeout(function() {
-                sweetAlert("Avatar set!");
-              }, 1000);
+              base.post("presence/" + username + "/avatar", {
+                data: cleanInput,
+                then() {
+                  setTimeout(function() {
+                    sweetAlert("Avatar set!");
+                  }, 1000);
+                }
+              });
+
             }
           });
         }

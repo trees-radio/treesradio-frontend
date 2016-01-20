@@ -1,7 +1,5 @@
 {
   "rules": {
-    ".read": "auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker'",
-    ".write": "auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker'",
     "chat": {
       ".read": "true",
       "messages": {
@@ -30,12 +28,15 @@
       }
     },
     "playing_media": {
-      ".read": "true"
+      ".read": "true",
+      "admin": {
+        ".write": "newData.parent().parent().child('users').child(auth.uid).child('level').val() > 0"
+      }
     },
     "presence": {
       ".read": "true",
       "$username": {
-        ".write": "newData.parent().parent().child('users').child(auth.uid).child('username') == $username"
+        ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
       }
     },
     "users": {
@@ -48,29 +49,7 @@
       "tasks": {
         ".read": "true",
         "$task": {
-          ".validate": "newData.hasChildren(['channel', 'thumb', 'title', 'uid', 'url', 'user'])",
-          "channel": {
-            ".validate": "newData.isString()"
-          },
-          "thumb": {
-            ".validate": "newData.isString()"
-          },
-          "title": {
-            ".validate": "newData.isString()"
-          },
-          "uid": {
-            ".validate": "newData.isString()"
-          },
-          "url": {
-            ".validate": "newData.isString()"
-          },
-          "user": {
-            ".validate": "newData.isString()"
-          },
-          "$other": {
-            ".validate": "false"
-          },
-          ".write": "auth != null && auth.uid == newData.child('uid').val()"
+          ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
         }
       }
     },

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
+import ReactImageFallback from 'react-image-fallback';
 
 var OnlineUsers = React.createClass({
 
@@ -18,11 +19,24 @@ var OnlineUsers = React.createClass({
           userPos = 0;
         }
         let userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
-        let userAvatar = "http://api.adorable.io/avatars/50/" + user['key'] + ".png";
+
+        var userAvatar;
+        if (user['avatar']) {
+          userAvatar = "//" + user['avatar'];
+        } else {
+          userAvatar = "http://api.adorable.io/avatars/50/" + user['key'] + ".png";
+        }
+        var avatarFallback = "http://api.adorable.io/avatars/50/" + user['key'] + ".png";
+
         return (
           <li key={index} className={userLineClasses}>
             <div className="users-avatar">
-              <img className="users-avatarimg" src={userAvatar}></img>
+              <ReactImageFallback
+                className="users-avatarimg"
+                src={userAvatar}
+                fallbackImage={avatarFallback}
+                initialImage="/img/no-avatar.gif"
+                />
             </div>
             <div className="users-info">
               <span className="users-name">{user['key']}</span>
