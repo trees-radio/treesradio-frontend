@@ -54,15 +54,17 @@ var Playlists = React.createClass({
      let currentPlaylistName = "";
      let currentPlaylistId = this.props.currentPlaylist.id;
      let currentSelectedMedia = "";
+     var currentSelectedMediaClass = classNames("current-selected-media");
      if (this.props.currentPlaylist.name === "") {
        currentPlaylistName = "No Playlist Selected";
      } else {
        currentPlaylistName = this.props.currentPlaylist.name;
        if (this.props.playlists[currentPlaylistId].entries) {
          currentSelectedMedia = this.props.playlists[currentPlaylistId].entries[0].title;
-         if (currentSelectedMedia.length > 99) {
-           let maxLength = 99;
+         var maxLength = 35;
+         if (currentSelectedMedia.length > maxLength) {
            currentSelectedMedia = currentSelectedMedia.substring(0,maxLength) + "...";
+           currentSelectedMediaClass = classNames("current-selected-media");
          }
        }
      }
@@ -89,9 +91,10 @@ var Playlists = React.createClass({
      }
 
      var currentPlayingMedia = this.props.playingMedia.info.title;
-     if (currentPlayingMedia.length > 99) {
-       let maxLength = 99;
-       currentPlayingMedia = currentPlayingMedia.substring(0,maxLength) + "...";
+     var currentPlayingMediaClass = classNames("current-playing-media");
+     if (currentPlayingMedia.length > 35) {
+       currentPlayingMedia = currentPlayingMedia + "  ---  " + currentPlayingMedia;
+       currentPlayingMediaClass = classNames("current-playing-media", "marquee");
      }
 
      var volClass;
@@ -125,10 +128,10 @@ var Playlists = React.createClass({
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <a className="current-playlist-name">{currentPlaylistName}</a><br/>
-            <a className="current-selected-media marquee">{currentSelectedMedia}</a>
+            <a className={currentSelectedMediaClass}>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <a className="current-playing-media marquee">{currentPlayingMedia}</a><br/>
+            <a className={currentPlayingMediaClass}>{currentPlayingMedia}</a><br/>
             <a className="current-playing-user">Player: {this.props.playingMedia.playback.user}</a>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
