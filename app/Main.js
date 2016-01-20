@@ -676,28 +676,24 @@ var Main = React.createClass({
     handleLikeButton: function() {
 
       if (this.state.user.uid) {
-        if (!(this.state.userFeedback.opinion === "like")) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'like', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: "like",
-            grab: this.state.userFeedback.grab
-          }});
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'like', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: "like",
+          grab: this.state.userFeedback.grab
+        }});
       }
     },
     handleDislikeButton: function() {
       if (this.state.user.uid) {
-        if (!(this.state.userFeedback.opinion === "dislike")) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'dislike', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: "dislike",
-            grab: this.state.userFeedback.grab
-          }});
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'dislike', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: "dislike",
+          grab: this.state.userFeedback.grab
+        }});
       }
     },
     ///////////////////////////////////////////////////////////////////////
