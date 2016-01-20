@@ -1,6 +1,7 @@
 ### Trees Radio Specific Ignores
 public/app.css
 public/app.js
+public/app.js.map
 
 ## Floobits
 .flooignore

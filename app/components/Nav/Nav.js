@@ -12,8 +12,7 @@ var Nav = React.createClass({
     propTypes: {
         loginstate: React.PropTypes.bool.isRequired,
         loginhandler: React.PropTypes.func.isRequired,
-        logouthandler: React.PropTypes.func.isRequired,
-        checkUserLevel: React.PropTypes.func.isRequired
+        logouthandler: React.PropTypes.func.isRequired
     },
     render: function(){
         let Title = "TreesRadio";
@@ -39,7 +38,7 @@ var Nav = React.createClass({
                                   loginhandler={this.props.loginhandler}
                                   logouthandler={this.props.logouthandler}
                                   logindata={this.props.logindata}
-                                  checkUserLevel={this.props.checkUserLevel}
+                                  setAvatar={this.props.setAvatar}
                                   />
                             </div>
                         </div>{ /* .navbar-collapse */}

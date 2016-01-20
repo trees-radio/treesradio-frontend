@@ -7,26 +7,36 @@
 
 
 import React from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
+// import linkify from 'linkify';
+import Linkify from 'react-linkify';
+import classNames from 'classnames';
+import ReactImageFallback from 'react-image-fallback';
 
 
 var ChatContent = React.createClass({
     componentDidMount: function() {
-      //forces chat to scroll to bottom after updating
-      let chatScroll = this.refs.chatScroll;
-      chatScroll.scrollTop = chatScroll.scrollHeight;
+      // var chatScroll = this.refs.chatScroll;
+      window.setTimeout(function () {
+        var chatScroll = this.refs.chatScroll;
+        chatScroll.scrollTop = chatScroll.scrollHeight;
+      }.bind(this), 1000);
+
+    },
+    componentWillUpdate: function() {
+      var chatScroll = this.refs.chatScroll;
+      this.shouldScrollBottom = chatScroll.scrollTop + chatScroll.offsetHeight === chatScroll.scrollHeight;
     },
     componentDidUpdate: function() {
-      //forces chat to scroll to bottom after updating
-      let chatScroll = this.refs.chatScroll;
-      chatScroll.scrollTop = chatScroll.scrollHeight;
+      if (this.shouldScrollBottom) {
+        var chatScroll = this.refs.chatScroll;
+        chatScroll.scrollTop = chatScroll.scrollHeight;
+      }
     },
     render: function(){
       // tracking msg color
       var chatPos = 0;
 
-      // don't render entire chat state on page
-      // let chatCompact = _.slice(this.props.chatData, Math.max(this.props.chatData.length - 50));
       let msgs = this.props.chatData.map(function(msg, index){
 
           // handling msg color alternation
@@ -38,17 +48,33 @@ var ChatContent = React.createClass({
             chatPosClass = "chat-line-0";
             chatPos = 0;
           }
-          // add any new whole-line classes in string below, keep trailing space
-          let chatLineClasses = "chat-item " + chatPosClass;
-          let chatAvatar = "http://api.adorable.io/avatars/50/"+ msg['user'] +".png";
-
-          // console.log(msg.msgs);
 
 
+          let chatLineClasses = classNames("chat-item ", chatPosClass);
+
+          var username = msg['user'];
+          var chatAvatar;
+
+          if (msg['avatar']) {
+            chatAvatar = "//" + msg['avatar'];
+          } else {
+            chatAvatar = "http://api.adorable.io/avatars/50/"+ username +".png";
+          }
+
+          var avatarFallback = "http://api.adorable.io/avatars/50/"+ username +".png";
+
+
+
+
+
+
+
+
+          var linkifyProperties = {target: '_blank'};
 
           let innerMsgs = msg.msgs.map(function(msg, index){
             return (
-              <span key={index}>{msg}<br/></span>
+              <Linkify key={index} properties={linkifyProperties}><span>{msg}<br/></span></Linkify>
             )
           });
 
@@ -56,7 +82,13 @@ var ChatContent = React.createClass({
           return (
               <li key={index} className={chatLineClasses}>
                 <div className="chat-avatar">
-                  <img id="avatarimg" src={chatAvatar} />
+                  <ReactImageFallback
+                    className="avatarimg"
+                    src={chatAvatar}
+                    fallbackImage={avatarFallback}
+                    initialImage="/img/no-avatar.gif"
+                    />
+                  {/* <img id="avatarimg" src={chatAvatar} /> */}
                 </div>
                 <div className="chat-msg">
                   <span className="chat-username">{ msg.user }</span><br />
@@ -66,7 +98,7 @@ var ChatContent = React.createClass({
               </li>
           )
 
-        });
+        }.bind(this));
 
         return (
             <div id="chatscroll" ref="chatScroll">

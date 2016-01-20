@@ -55,11 +55,19 @@ var SidebarChanger = React.createClass({
       'col-lg-3',
       { 'sidebar-selected': aboutSelected }
     );
+
+    var onlineCount = 0;
+    this.props.userPresence.forEach(function(user) {
+      if (user['online']) {
+        onlineCount += 1;
+      }
+    });
+    var waitlistCount = this.props.waitlist.length;
     return (
       <div className="row sidebar-changer">
         <div className={chatBtnClass} ref="sel-chat" onClick={this.switchChat}>Chat</div>
-        <div className={onlineBtnClass} ref="sel-online" onClick={this.switchOnline}>Online Ents</div>
-        <div className={waitlistBtnClass} ref="sel-waitlist" onClick={this.switchWaitlist}>Waitlist</div>
+        <div className={onlineBtnClass} ref="sel-online" onClick={this.switchOnline}>Online Ents <span className="online-count">{onlineCount}</span></div>
+        <div className={waitlistBtnClass} ref="sel-waitlist" onClick={this.switchWaitlist}>Waitlist <span className="waitlist-count">{waitlistCount}</span></div>
         <div className={aboutBtnClass} ref="sel-about" onClick={this.switchAbout}>About</div>
       </div>
     )

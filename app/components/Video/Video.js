@@ -2,21 +2,55 @@
 
 import React from 'react';
 import ReactPlayer from 'react-player';
+import Progress from 'react-progressbar';
+
+var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
 
 var Video = React.createClass({
-  shouldBePlaying: function(){
-    return false;
+  componentWillReceiveProps: function() {
+    var playbackSlowThreshold = this.props.playingMedia.playback.time - 10;
+    var playbackFastThreshold = this.props.playingMedia.playback.time + 10;
+    var playbackSyncCap = this.props.playingMedia.playback.duration - 10;
+    var localPlayerTime = this.props.playingMedia.playback.duration * this.props.localPlayerPos;
+    // console.log(localPlayerTime);
+    if (this.props.playingMedia.playback.time < playbackSyncCap && this.props.playingMedia.playback.playing) {
+      if (localPlayerTime > playbackFastThreshold || localPlayerTime < playbackSlowThreshold) {
+        console.log("Triggering sync.");
+        var fraction = this.props.playingMedia.playback.time / this.props.playingMedia.playback.duration;
+        this.refs.TRplayer.seekTo(fraction);
+      }
+    }
+
+  },
+  onProgress: function(progress) {
+    // console.log(progress);
+    this.props.videoOnProgress(progress);
+  },
+  onPause: function() {
+
   },
   render: function() {
     return(
       <div>
-        <ReactPlayer
-          className="reactplayer"
-          width="1280px"
-          height="720px"
-          id="reactplayerid"
-          url='https://www.youtube.com/watch?v=3CkUmuNuA1g'
-          playing={this.shouldBePlaying()}
+        <div id="player-size">
+          <ReactPlayer
+            ref="TRplayer"
+            className="reactplayer"
+            width="100%"
+            height="100%"
+            id="reactplayerid"
+            url={this.props.playingMedia.info.url}
+            playing={this.props.controls.playing}
+            volume={this.props.controls.volume}
+            onProgress={this.onProgress}
+            onPause={this.onPause}
+            youtubeConfig={rPlayerYoutubeConfig}
+            />
+        </div>
+        <Progress
+          className="progress-bar"
+          completed={this.props.localPlayerPos * 100}
+          color="#77b300"
           />
       </div>
     )
@@ -24,7 +58,7 @@ var Video = React.createClass({
 
 });
 
-module.exports = Video;
+export default Video;
 
 // fgF7O_-vQzc - 10HR youtube buffer video
 

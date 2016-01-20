@@ -2,12 +2,28 @@
 
 // http://enjoycss.com/zbuttram/item/rQW/2
 
+.fa-thumbs-o-up {
+  position: absolute;
+  padding-top: 8%;
+  right: 3.75vw;
+}
+
+.fa-thumbs-up {
+  position: absolute;
+  padding-top: 8%;
+  right: 3.75vw;
+}
+
+.feedback-likes {
+  float: right;
+  padding-right: 25%;
+}
 
 .like-button {
   height: 50%;
-  width: 100%;
+  width: 102%;
   font-size: 1.15vw;
-  line-height: 2vw;
+  line-height: 2.25vw;
   float:left;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -23,9 +39,9 @@
   text-align: center;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #3f3fff;
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #3f3fff;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), #3f3fff;
+  background-color: rgba(26,98,255,1);
+  background: "@include" filter-gradient(#1a62ff, #3373ff, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(26,98,255,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -33,8 +49,6 @@
   background-clip: border-box;
   -webkit-background-size: auto auto;
   background-size: auto auto;
-  -webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
-  box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
   -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
   -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
   -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
@@ -42,9 +56,9 @@
 }
 
 .like-button:hover {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), rgba(51,51,204,1);
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), rgba(51,51,204,1);
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), rgba(51,51,204,1);
+  background-color: rgba(73,155,234,1);
+  background: "@include" filter-gradient(#499bea, #3373ff, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(73,155,234,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -59,9 +73,22 @@
 }
 
 .like-button:active {
-  background: -webkit-linear-gradient(-90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), rgba(0,0,255,1);
-  background: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), rgba(0,0,255,1);
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 51%, rgba(0,0,0,0.2) 100%), rgba(0,0,255,1);
+  background-color: rgba(0,72,230,1);
+  background: "@include" filter-gradient(#0048e6, #3373ff, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(0,72,230,1) 0%, rgba(51,115,255,1) 100%));
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+}
+
+.like-button-pressed {
+  background-color: rgba(0,72,230,1);
+  background: "@include" filter-gradient(#0048e6, #3373ff, horizontal);
+  background: "@include" background-image(linear-gradient(left, rgba(0,72,230,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;

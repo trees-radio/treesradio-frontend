@@ -17,6 +17,8 @@ var Sidebar = React.createClass({
             chatData={this.props.chatData}
             sendMsg={this.props.sendMsg}
             loginState={this.props.loginState}
+            chatCommands={this.props.chatCommands}
+            userPresence={this.props.userPresence}
             />
         )
         break;
@@ -29,7 +31,9 @@ var Sidebar = React.createClass({
         break;
       case 2:
       currentSidebar = (
-        <Waitlist/>
+        <Waitlist
+          waitlist={this.props.waitlist}
+          />
       )
         break;
       case 3:
@@ -46,6 +50,8 @@ var Sidebar = React.createClass({
         <SidebarChanger
           changeSidebar={this.props.changeSidebar}
           currentSidebar={this.props.currentSidebar}
+          userPresence={this.props.userPresence}
+          waitlist={this.props.waitlist}
           />
         <div id="chatcontainertop" className="">
           {currentSidebar}

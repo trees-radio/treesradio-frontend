@@ -19,11 +19,13 @@ var Chat = React.createClass({
               <div id="chatcontainer">
                   <ChatContent
                     chatData={this.props.chatData}
+                    userPresence={this.props.userPresence}
                     />
                   <ChatSend
                     sendMsg={this.props.sendMsg}
                     loginData={this.props.loginData}
                     loginState={this.props.loginState}
+                    chatCommands={this.props.chatCommands}
                     />
               </div>
         )

@@ -1,33 +1,52 @@
-//  font-size: 1.15vw;
-//  line-height: 2vw;
-//
-//
+
 
 $chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
 $chat-item-border: #000; //light skin 808080
 $chat-item-color: #c0c0c0; //light skin #000
 
+@media (min-width: 0px) {
 #chattoplevel {
   background-color: $chattoplevel-bg;
-  //border-left: solid #77b300; //5px
   position: relative;
   height: 100%;
+  width: 100%;
   overflow: hidden;
   padding-right: 0;
   padding-left: 0;
+  float: left;
+}
+.navbar-nav {
+  margin:0;
+}
 }
 
-div#chatcontainertop > div {
+@media (min-width: 750px) {
+#chattoplevel {
+  background-color: $chattoplevel-bg;
+  position: relative;
+  height: 100%;
+  width: 25%;
+  overflow: hidden;
+  padding-right: 0;
+  padding-left: 0;
+  float: left;
+}
+}
+
+
+#chatcontainertop > div {
   height: 100%;
   width: 100%;
+
 }
 
 #chatcontainertop {
-  height: 92%;
+  height: 100%;
   width: 100%;
   bottom: 0;
   margin-right: 0;
   overflow: hidden;
+
 }
 
 #chatcontainer {
@@ -36,10 +55,11 @@ div#chatcontainertop > div {
   width: 100%;
   bottom: -25px;
   overflow: hidden;
+
 }
 
 #chatscroll {
-  height: 100%; //23
+  height: 92%; //23
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -53,13 +73,11 @@ div#chatcontainertop > div {
 }
 
 .chat-line-0 {
-  // border-radius: 10px;
   background-color: #121317; //light skin e9eef0
   padding: 10px;
 }
 
 .chat-line-1 {
-  // border-radius: 10px;
   background-color: #0A0A0A; //light skin cbd6dc
   padding: 10px;
 }
@@ -81,7 +99,6 @@ div#chatcontainertop > div {
   margin: 0;
   padding-bottom: 3px;
   padding-left: 5px;
-  // padding-top: 3px;
   width: 100%;
   display: flex;
 
@@ -89,11 +106,9 @@ div#chatcontainertop > div {
 
 .chat-username {
   color: #0040ff;
-  font-size: normal;
   font-weight: bolder;
-  font-size: .865vw;
-
-  //text-decoration: underline;
+  font-size: 16px;
+  cursor:pointer;
 }
 
 .chat-text {
@@ -101,31 +116,36 @@ div#chatcontainertop > div {
   height: 1vw;
   width: 100%;
   position: relative;
-  font-size: .865vw;
-  // left: 50px;
-
+  font-size: 16px;
 }
 
 .chat-avatar {
   padding-right: 5px;
   padding-bottom: 5px;
+  cursor:pointer;
 }
 
-#avatarimg {
+.avatarimg {
   border-radius: 5px;
-  height: 2.5vw;
-  width: 2.5vw;
+  height: 40px;
+  width: 40px;
 }
 
 #sendbox {
-  left: 10px;
-  right: 10px;
   position: absolute;
-  width: 96%;
-  bottom: 5px;
-  padding: 1%;
+  width: 98.5%;
+  left: .75%;
+
+  position: absolute;
+  bottom: .75vh;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+input#chatinput.form-control {
+  height: 5vh;
+  font-size: 1.65vh;
+  color: black;
 }

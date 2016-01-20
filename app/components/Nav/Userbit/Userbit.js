@@ -17,8 +17,7 @@ var Userbit = React.createClass({
     propTypes: {
         loginstate: React.PropTypes.bool.isRequired,
         loginhandler: React.PropTypes.func.isRequired,
-        logouthandler: React.PropTypes.func.isRequired,
-        checkUserLevel: React.PropTypes.func.isRequired
+        logouthandler: React.PropTypes.func.isRequired
     },
     handleSubmit: function(e){
       if (e.key === 'Enter'){
@@ -64,24 +63,22 @@ var Userbit = React.createClass({
             //
             // check user level
             var userLevel = "user-level-user";
-            if (this.props.checkUserLevel(this.props.logindata.username) === 2) {
-              userLevel = "user-level-admin";
-            } else if (this.props.checkUserLevel(this.props.logindata.username) === 1) {
-              userLevel = "user-level-mod";
-            }
+            // if (this.props.checkUserLevel(this.props.logindata.username) === 2) {
+            //   userLevel = "user-level-admin";
+            // } else if (this.props.checkUserLevel(this.props.logindata.username) === 1) {
+            //   userLevel = "user-level-mod";
+            // }
             return (
                 <div className="btn-group">
-                    <a className="btn btn-primary" id="usernametop" href="#account"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
-                    <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown" href="#">
+                    <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
+                    <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown">
                         <span className="fa fa-caret-down"></span></a>
                         <ul className="dropdown-menu">
-                          <li><a href="#"><i className="fa fa-pencil fa-fw"></i> Edit Profile</a></li>
-                          <li><a href="#"><i className="fa fa-cog fa-fw"></i> Edit Site Settings</a></li>
-                          <li className="divider"></li>
-                          <li><a href="#"><i className="fa fa-cog fa-fw"></i> Admin Settings</a></li>
+                          <li onClick={this.props.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
+                          <li><a href="#"><i className="fa fa-cog fa-fw"></i> Settings</a></li>
                         </ul>
 
-                    <button className="btn btn-primary" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
+                    <button className="btn btn-default" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
                 </div>
             )
          } else {
@@ -110,4 +107,4 @@ var Userbit = React.createClass({
     }
 });
 
-module.exports = Userbit;
+export default Userbit;

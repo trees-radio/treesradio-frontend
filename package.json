@@ -10,10 +10,10 @@
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase deploy:rules",
     "update-env": "firebase data:set /_admin/env firebase/env.json -y -f treesradio",
-    "build-dev": "npm run bolt-compile && webpack -d --progress --colors",
     "build-prod": "npm run bolt-compile && webpack -p --progress --colors",
-    "deploy-dev": "npm run build-prod && firebase deploy -f treesradio-dev",
-    "deploy-prod": "npm run build-prod && firebase deploy"
+    "ci-build-bolt": "npm run bolt-compile",
+    "ci-build-app": "webpack -p --display-error-details",
+    "ci-build-prod": "npm run bolt-compile && webpack -p --display-error-details"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,10 @@
   },
   "homepage": "https://github.com/zbuttram/treesradio-frontend#readme",
   "devDependencies": {
-    "babel-core": "5.8.30",
-    "babel-loader": "5.3.2",
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0",
+    "babel-preset-react": "^6.0.0",
     "css-loader": "^0.22.0",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.11.3",
@@ -47,11 +49,18 @@
     "font-awesome": "^4.5.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
+    "material-ui": "^0.14.0",
     "re-base": "^1.4.0",
     "react": "^0.14.3",
+    "react-addons-update": "^0.14.6",
     "react-cookie": "^0.4.3",
     "react-dom": "^0.14.3",
-    "react-player": "^0.2.1",
+    "react-image-fallback": "^2.1.1",
+    "react-linkify": "^0.1.1",
+    "react-player": "^0.3.7",
+    "react-progressbar": "^1.2.0",
+    "react-slider": "^0.6.0",
+    "react-tap-event-plugin": "^0.2.0",
     "sweetalert": "^1.1.3"
   }
 }

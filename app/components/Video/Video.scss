@@ -1,44 +1,245 @@
 
 $videotoplevel-bg: #171717;
 
+@media (min-width: 0px) {
 #videotoplevel {
-	// background-color: red;
-  // background-color: $videotoplevel-bg;
+  display: none;
+}
+}
+
+@media (min-width: 750px) {
+#videotoplevel {
   height: 100%;
   background-color: black;
-  //background-image: url('img/backgroundvideo.png');
+  padding: 0;
+  display: block;
+}
 }
 
-#youtube-player {
-//  margin-left: 8%;
-  width: 102%;  //fullscreen = 102% + small = 40%
-  height: 95%;  //fulscreen = 95% + small = 39%
+
+/////////////////////////////// OLD SHIT FOR SIZING VIDEO (please dont delete)
+// #youtube-player {
+//   width: 100%;  //fullscreen = 102% + small = 40%
+//   height: 100%;  //fulscreen = 95% + small = 39%
+//   position: absolute;
+//   top: 49%;  //fullscreen = 49% + small = 20%
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+//
+// #youtube-player-sm {
+//   width: 39%;  //fullscreen = 102% + small = 40%
+//   height: 39%;  //fulscreen = 95% + small = 39%
+//   position: absolute;
+//   top: 23%;  //fullscreen = 49% + small = 23%
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+
+
+// NEW SHIT FOR SIZING VIDEO
+
+@media (min-height: 0px) {
+#player-size {
+  height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
   position: absolute;
-  top: 50%;  //fullscreen = 50% + small = 20%
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  height: 3vh;
+  width: 100%;
+}
 }
 
-#youtube-player-small {
-  width: 39%;  //fullscreen = 102% + small = 40%
-  height: 39%;  //fulscreen = 95% + small = 39%
+@media (min-height: 100px) {
+#player-size {
+  height: 63vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
   position: absolute;
-  top: 50%;  //fullscreen = 50% + small = 23%
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  height: 3.5vh;
+  width: 100%;
+}
 }
 
-#youtube-player-small {
-  width: 39%;
-  height: 39%;
+
+@media (min-height: 200px) {
+#player-size {
+  height: 68.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
   position: absolute;
-  top: 23%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  height: 3vh;
+  width: 100%;
+}
 }
 
-#player {
+@media (min-height: 300px) {
+#player-size {
+  height: 73.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 2.5vh;
+  width: 100%;
+}
+}
 
+@media (min-height: 350px) {
+#player-size {
+  height: 75.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 2.5vh;
+  width: 100%;
+}
+}
+
+@media (min-height: 400px) {
+#player-size {
+  height: 79vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 1.5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 480px) {
+#player-size {
+  height: 80.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 1.25vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 600px) {
+#player-size {
+  height: 82vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .75vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 700px) {
+#player-size {
+  height: 83.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 800px) {
+#player-size {
+  height: 84.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 900px) {
+#player-size {
+  height: 84.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 1000px) {
+  #player-size {
+    height: 86vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+
+@media (min-height: 1200px) {
+  #player-size {
+    height: 86.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 1400px) {
+  #player-size {
+    height: 88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 1600px) {
+  #player-size {
+    height: 88.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
 }
 
 #playerdiv {
@@ -48,9 +249,10 @@ $videotoplevel-bg: #171717;
 #vidcontainer {
   height: 90%;
   max-height: 90%;
+  width: 100%;
   position: relative;
-  background-image: url('img/spacepineapples.jpg');
-  background-size:cover;
+  background-image: url('img/escheresque_ste.png');
+  // background-size:cover;
 }
 
 .reactplayer {
@@ -61,28 +263,16 @@ $videotoplevel-bg: #171717;
 
 }
 
-.bg-fill-l {
-	// position: absolute;
-	// top: 0px;
-	// left: 0px;
-	// width:300px;
-  background-image: url('img/escheresque_ste.png');
-  background-repeat: repeat;
-  height: 100%;
-}
-
-.bg-fill-r {
-	// position: absolute;
-	// top: 0px;
-	// right: 0px;
-  // width: 300px;
-  background-image: url('img/escheresque_ste.png');
-  background-repeat: repeat;
-  height: 100%;
-}
-
 .section-divider {
   background-color: $trees-primary;
   height: 5px;
   width: 100%;
+}
+
+.progressbar-container {
+
+}
+
+.progressbar-progress {
+
 }

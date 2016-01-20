@@ -1,3 +1,9 @@
+
+.users-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .user-item {
   width: 100%;
   list-style-position: inside;
@@ -5,30 +11,34 @@
   display: flex;
   padding-top: 2%;
   padding-left: 2%;
-  cursor: pointer;
 }
 
 .users-avatar {
   width: 10%;
   max-width: 10%;
-
+  cursor: pointer;
 }
 
 .users-avatarimg {
-  width: 2.5vw;
-  height: 2.5vw;
+  width: 40px;
+  height: 40px;
   border-radius: 5px;
 
 }
 
 
+.users-list {
+  padding: 0;
+}
+
 .users-info {
   width: 85%;
   max-width: 85%;
   height: 1vw;
-  padding-top: 2.5%;
+  padding-top: 1.5%;
   padding-left: 2%;
-  font-size: 1vw;
+  font-size: 22px;
+  cursor: pointer;
 }
 
 .users-name {
