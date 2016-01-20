@@ -669,6 +669,32 @@ var Main = React.createClass({
       }
     },
     ///////////////////////////////////////////////////////////////////////
+    // USER PROFILE
+    ///////////////////////////////////////////////////////////////////////
+    setAvatar: function() {
+      var username = this.state.user.username;
+      sweetAlert({
+        title: "Set Your Avatar",
+        text: "Give us the link (URL) to your custom avatar here:",
+        type: "input",
+        inputPlaceholder: "https://i.imgur.com/iTanI13.gif",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+      }, function(inputValue) {
+        var cleanInput = inputValue.replace(/.*?:\/\//g, "");
+        base.post("presence/" + username + "/avatar", {
+          data: cleanInput,
+          then() {
+            setTimeout(function() {
+              sweetAlert("Avatar set!");
+            }, 1000);
+          }
+        });
+
+      });
+    },
+    ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
     render: function(){
@@ -681,6 +707,7 @@ var Main = React.createClass({
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
                 devCheck={this.state.devCheck}
+                setAvatar={this.setAvatar}
               />
             {/* Start Container */}
               <div className="container-fluid">
