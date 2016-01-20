@@ -59,7 +59,6 @@ var Main = React.createClass({
           },
           userLevel: 0,
           chat: [],
-          registeredNames: {},
           userPresence: [],
           playlistsOpen: false,
           currentPlaylist: {
@@ -124,11 +123,6 @@ var Main = React.createClass({
           state: 'userPresence',
           asArray: true
         })
-
-        base.syncState(`registeredNames`, {
-            context: this,
-            state: 'registeredNames'
-        });
 
         base.bindToState('playing_media', {
           context: this,
@@ -276,9 +270,9 @@ var Main = React.createClass({
         animation: "slide-from-top",
         inputPlaceholder: "Username"
       }, function(inputValue){
-        let desiredUn = inputValue;
-        let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
-        registeredNamesRef.once("value", function(snapshot){
+        var desiredUn = inputValue;
+        var presenceRef = new Firebase(window.__env.firebase_origin + "/presence");
+        presenceRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
             emitUserError("Registration Error", "Desired username '" + desiredUn + "' already exists!");
@@ -308,9 +302,9 @@ var Main = React.createClass({
                     waiting: false
                   }
                 });
-                // create registeredNames entry
-                registeredNamesRef.child(desiredUn).child("uid").set(userData.uid);
-                registeredNamesRef.child(desiredUn).child("email").set(desiredEml);
+                // create presence entry
+                presenceRef.child(desiredUn).child("uid").set(userData.uid);
+                presenceRef.child(desiredUn).child("email").set(desiredEml);
                 sweetAlert({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
@@ -331,14 +325,9 @@ var Main = React.createClass({
     // CHAT
     ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
-      // debugger;
+
       let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
-      // chatRef.push({
-      //   user: newMsgData.user,
-      //   msgs: {
-      //     0: newMsgData.msg
-      //   }
-      // });
+
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
         chatRef.push({
@@ -349,19 +338,11 @@ var Main = React.createClass({
         });
         return;
       }
-      // console.log("lastmsg:", lastMsg);
-      if (lastMsg.user === this.state.user.username) {
-        // let innerMsgRef = new Firebase(window.__env.firebase_origin + "/chat/messages/" + lastMsg.key + "/msgs");
-        // console.log("newmsg", newMsgData);
-        // let lastInnerMsg = lastMsg.msgs[lastMsg.msgs.length - 1];
-        lastMsg.msgs.push(newMsgData.msg);
-        // console.log("newmsg", lastMsg);
 
-        // let newText = newMsgData.msg;
-        // console.log("newtext", newText);
-        // innerMsgRef.push({
-        //
-        // });
+      if (lastMsg.user === this.state.user.username) {
+
+        lastMsg.msgs.push(newMsgData.msg);
+
         base.post('chat/messages/' + lastMsg.key + '/msgs', {
           data: lastMsg.msgs
         });
@@ -373,15 +354,6 @@ var Main = React.createClass({
           }
         });
       }
-      // base.post('chat/messages', {
-      //   data: this.state.chat.concat([newMsgData])
-      // })
-      // this.setState({
-      //   chat: this.state.chat.concat([newMsgData])
-      // });
-    },
-    checkUserLevel: function(user){
-      return _.get(this.state.registeredNames, user + ".level");
     },
     chatCommands: function(command) {
       switch (command) {
@@ -708,7 +680,6 @@ var Main = React.createClass({
                 logouthandler={this.logoutUser}
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
-                checkUserLevel={this.checkUserLevel}
                 devCheck={this.state.devCheck}
               />
             {/* Start Container */}
