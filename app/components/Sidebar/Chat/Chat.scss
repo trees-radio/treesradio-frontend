@@ -111,6 +111,10 @@ $chat-item-color: #c0c0c0; //light skin #000
   cursor:pointer;
 }
 
+.chat-username:hover {
+  text-decoration: underline;
+}
+
 .chat-text {
   font-family: 'Open Sans', sans-serif;
   height: 1vw;
