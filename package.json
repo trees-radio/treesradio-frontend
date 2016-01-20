@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --inline --colors --content-base public/",
     "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
-    "bolt-deploy": "npm run bolt-compile && firebase deploy:rules",
+    "bolt-deploy": "npm run bolt-compile && firebase deploy:rules -f treesradio-dev",
     "update-env": "firebase data:set /_admin/env firebase/env.json -y -f treesradio",
     "build-prod": "npm run bolt-compile && webpack -p --progress --colors",
     "ci-build-bolt": "npm run bolt-compile",

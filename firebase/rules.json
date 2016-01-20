@@ -1,11 +1,10 @@
 {
   "rules": {
-    ".read": "true",
+    ".read": "auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker'",
     ".write": "auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || auth.uid == 'feedback-worker' || auth.uid == 'tr-worker'",
     "chat": {
       ".read": "true",
       "messages": {
-        ".read": "true",
         "$msgs": {
           ".validate": "newData.hasChildren(['avatar', 'user', 'msgs'])",
           "avatar": {
@@ -25,16 +24,74 @@
       }
     },
     "playlists": {
-      ".read": "true",
       "$userid": {
+        ".read": "auth != null && auth.uid == $userid",
         ".write": "auth != null && auth.uid == $userid"
       }
     },
-    "presence": {
+    "playing_media": {
       ".read": "true"
     },
+    "presence": {
+      ".read": "true",
+      "$username": {
+        ".write": "newData.parent().parent().child('users').child(auth.uid).child('username') == $username"
+      }
+    },
     "users": {
-      ".read": "true"
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "waitlist": {
+      "tasks": {
+        ".read": "true",
+        "$task": {
+          ".validate": "newData.hasChildren(['channel', 'thumb', 'title', 'uid', 'url', 'user'])",
+          "channel": {
+            ".validate": "newData.isString()"
+          },
+          "thumb": {
+            ".validate": "newData.isString()"
+          },
+          "title": {
+            ".validate": "newData.isString()"
+          },
+          "uid": {
+            ".validate": "newData.isString()"
+          },
+          "url": {
+            ".validate": "newData.isString()"
+          },
+          "user": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".write": "auth != null && auth.uid == newData.child('uid').val()"
+        }
+      }
+    },
+    "queues": {
+      "feedback": {
+        "tasks": {
+          "$task": {
+            ".validate": "newData.hasChildren(['type', 'user'])",
+            "type": {
+              ".validate": "newData.isString()"
+            },
+            "user": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            },
+            ".write": "auth != null && auth.uid == newData.child('user').val()"
+          }
+        }
+      }
     }
   }
 }

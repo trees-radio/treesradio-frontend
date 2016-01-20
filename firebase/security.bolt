@@ -17,7 +17,7 @@ isWorker() = auth.uid == 'offline-worker' || auth.uid == 'waitlist-worker' || au
 // MAIN PATH
 ////////////////////////////////////////////////////////////////
 path / {
-  read() = true;
+  read() = isWorker();
   write() = isWorker();
 }
 
@@ -34,10 +34,6 @@ path /chat {
   read() = true;
 }
 
-path /chat/messages {
-  read() = true;
-}
-
 path /chat/messages/$msgs is MsgNode {
   write() = true;
 }
@@ -51,28 +47,72 @@ type Playlist {
   name: String
 }
 
-path /playlists {
-  read() = true;
+path /playlists/$userid {
+  read() = isUser($userid);
+  write() = isUser($userid);
 }
 
-path /playlists/$userid {
-  write() = isUser($userid);
+////////////////////////////////////////////////////////////////
+// PLAYING MEDIA
+////////////////////////////////////////////////////////////////
+
+path /playing_media {
+  read() = true;
 }
 
 ////////////////////////////////////////////////////////////////
 // PRESENCE
 ////////////////////////////////////////////////////////////////
 
-isUserName($username) = root.child('users').child(auth.uid)
+isUserName(username) = root.child('users').child(auth.uid).child('username') == username;
 
 path /presence {
   read() = true;
 }
 
 path /presence/$username {
-
+  write() = isUserName($username);
 }
 
-path /users {
+////////////////////////////////////////////////////////////////
+// USERS
+////////////////////////////////////////////////////////////////
+
+path /users/$uid {
+  read() = isUser($uid);
+  write() = isUser($uid);
+}
+
+////////////////////////////////////////////////////////////////
+// WAITLIST
+////////////////////////////////////////////////////////////////
+
+type WaitlistTask {
+  channel: String,
+  thumb: String,
+  title: String,
+  uid: String,
+  url: String,
+  user: String
+}
+
+path /waitlist/tasks {
   read() = true;
+}
+
+path /waitlist/tasks/$task is WaitlistTask {
+  write() = isUser(newData.child('uid').val());
+}
+
+////////////////////////////////////////////////////////////////
+// FEEDBACK
+////////////////////////////////////////////////////////////////
+
+type FeedbackTask {
+  type: String,
+  user: String
+}
+
+path /queues/feedback/tasks/$task is FeedbackTask {
+  write() = isUser(newData.child('user').val());
 }
