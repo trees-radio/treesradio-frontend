@@ -693,16 +693,17 @@ var Main = React.createClass({
         closeOnConfirm: false,
         showLoaderOnConfirm: true
       }, function(inputValue) {
-        var cleanInput = inputValue.replace(/.*?:\/\//g, "");
-        base.post("users/" + uid + "/avatar", {
-          data: cleanInput,
-          then() {
-            setTimeout(function() {
-              sweetAlert("Avatar set!");
-            }, 1000);
-          }
-        });
-
+        if (inputValue) {
+          var cleanInput = inputValue.replace(/.*?:\/\//g, "");
+          base.post("users/" + uid + "/avatar", {
+            data: cleanInput,
+            then() {
+              setTimeout(function() {
+                sweetAlert("Avatar set!");
+              }, 1000);
+            }
+          });
+        }
       });
     },
     ///////////////////////////////////////////////////////////////////////
