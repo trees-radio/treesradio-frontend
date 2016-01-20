@@ -189,13 +189,12 @@
   white-space: nowrap;
   overflow: hidden;
   box-sizing: border-box;
+  animation: marquee 30s linear infinite;
 }
 
 .current-selected-media, .current-playing-media {
   display: inline-block;
-  animation: marquee 30s linear infinite;
   float:left;
-
 }
 
 .current-selected-media:hover, .current-playing-media:hover {
