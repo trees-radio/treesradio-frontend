@@ -59,7 +59,6 @@ var Main = React.createClass({
           },
           userLevel: 0,
           chat: [],
-          registeredNames: {},
           userPresence: [],
           playlistsOpen: false,
           currentPlaylist: {
@@ -124,11 +123,6 @@ var Main = React.createClass({
           state: 'userPresence',
           asArray: true
         })
-
-        base.syncState(`registeredNames`, {
-            context: this,
-            state: 'registeredNames'
-        });
 
         base.bindToState('playing_media', {
           context: this,
@@ -276,9 +270,9 @@ var Main = React.createClass({
         animation: "slide-from-top",
         inputPlaceholder: "Username"
       }, function(inputValue){
-        let desiredUn = inputValue;
-        let registeredNamesRef = new Firebase(window.__env.firebase_origin + "/registeredNames");
-        registeredNamesRef.once("value", function(snapshot){
+        var desiredUn = inputValue;
+        var presenceRef = new Firebase(window.__env.firebase_origin + "/presence");
+        presenceRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
             emitUserError("Registration Error", "Desired username '" + desiredUn + "' already exists!");
@@ -308,9 +302,9 @@ var Main = React.createClass({
                     waiting: false
                   }
                 });
-                // create registeredNames entry
-                registeredNamesRef.child(desiredUn).child("uid").set(userData.uid);
-                registeredNamesRef.child(desiredUn).child("email").set(desiredEml);
+                // create presence entry
+                presenceRef.child(desiredUn).child("uid").set(userData.uid);
+                presenceRef.child(desiredUn).child("email").set(desiredEml);
                 sweetAlert({
                   "title": "Registration Successful",
                   "text": "You have succesfully registered! Welcome " + desiredUn + "! You may now log in.",
@@ -331,57 +325,46 @@ var Main = React.createClass({
     // CHAT
     ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
-      // debugger;
+
       let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
-      // chatRef.push({
-      //   user: newMsgData.user,
-      //   msgs: {
-      //     0: newMsgData.msg
-      //   }
-      // });
+
+      // var avatar = "http://api.adorable.io/avatars/50/"+ this.state.user.username +".png";
+      var userAvatar;
+      if (this.state.user.avatar) {
+        userAvatar = this.state.user.avatar;
+      } else {
+        userAvatar = false;
+      }
+      console.log(userAvatar);
+
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
         chatRef.push({
           user: newMsgData.user,
+          avatar: userAvatar,
           msgs: {
             0: newMsgData.msg
           }
         });
         return;
       }
-      // console.log("lastmsg:", lastMsg);
-      if (lastMsg.user === this.state.user.username) {
-        // let innerMsgRef = new Firebase(window.__env.firebase_origin + "/chat/messages/" + lastMsg.key + "/msgs");
-        // console.log("newmsg", newMsgData);
-        // let lastInnerMsg = lastMsg.msgs[lastMsg.msgs.length - 1];
-        lastMsg.msgs.push(newMsgData.msg);
-        // console.log("newmsg", lastMsg);
 
-        // let newText = newMsgData.msg;
-        // console.log("newtext", newText);
-        // innerMsgRef.push({
-        //
-        // });
+      if (lastMsg.user === this.state.user.username) {
+
+        lastMsg.msgs.push(newMsgData.msg);
+
         base.post('chat/messages/' + lastMsg.key + '/msgs', {
           data: lastMsg.msgs
         });
       } else {
         chatRef.push({
           user: newMsgData.user,
+          avatar: userAvatar,
           msgs: {
             0: newMsgData.msg
           }
         });
       }
-      // base.post('chat/messages', {
-      //   data: this.state.chat.concat([newMsgData])
-      // })
-      // this.setState({
-      //   chat: this.state.chat.concat([newMsgData])
-      // });
-    },
-    checkUserLevel: function(user){
-      return _.get(this.state.registeredNames, user + ".level");
     },
     chatCommands: function(command) {
       switch (command) {
@@ -676,29 +659,51 @@ var Main = React.createClass({
     handleLikeButton: function() {
 
       if (this.state.user.uid) {
-        if (!(this.state.userFeedback.opinion === "like")) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'like', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: "like",
-            grab: this.state.userFeedback.grab
-          }});
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'like', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: "like",
+          grab: this.state.userFeedback.grab
+        }});
       }
     },
     handleDislikeButton: function() {
       if (this.state.user.uid) {
-        if (!(this.state.userFeedback.opinion === "dislike")) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'dislike', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: "dislike",
-            grab: this.state.userFeedback.grab
-          }});
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'dislike', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: "dislike",
+          grab: this.state.userFeedback.grab
+        }});
       }
+    },
+    ///////////////////////////////////////////////////////////////////////
+    // USER PROFILE
+    ///////////////////////////////////////////////////////////////////////
+    setAvatar: function() {
+      var uid = this.state.user.uid;
+      sweetAlert({
+        title: "Set Your Avatar",
+        text: "Give us the link (URL) to your custom avatar here:",
+        type: "input",
+        inputPlaceholder: "https://i.imgur.com/iTanI13.gif",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+      }, function(inputValue) {
+        var cleanInput = inputValue.replace(/.*?:\/\//g, "");
+        base.post("users/" + uid + "/avatar", {
+          data: cleanInput,
+          then() {
+            setTimeout(function() {
+              sweetAlert("Avatar set!");
+            }, 1000);
+          }
+        });
+
+      });
     },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
@@ -712,8 +717,8 @@ var Main = React.createClass({
                 logouthandler={this.logoutUser}
                 logindata={this.state.user}
                 handleRegister={this.handleRegister}
-                checkUserLevel={this.checkUserLevel}
                 devCheck={this.state.devCheck}
+                setAvatar={this.setAvatar}
               />
             {/* Start Container */}
               <div className="container-fluid">
@@ -726,7 +731,6 @@ var Main = React.createClass({
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
                               videoOnProgress={this.videoOnProgress}
-                              videoBadPause={this.videoBadPause}
                               localPlayerPos={this.state.localPlayerPos}
                               user={this.state.user}
                               />
