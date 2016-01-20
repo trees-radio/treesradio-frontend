@@ -86,6 +86,7 @@ var ChatContent = React.createClass({
                     className="avatarimg"
                     src={chatAvatar}
                     fallbackImage={avatarFallback}
+                    initialImage="/img/no-avatar.gif"
                     />
                   {/* <img id="avatarimg" src={chatAvatar} /> */}
                 </div>
