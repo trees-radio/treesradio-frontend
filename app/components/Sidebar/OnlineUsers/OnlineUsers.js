@@ -8,7 +8,17 @@ var OnlineUsers = React.createClass({
   render: function() {
     let users;
     let userPos = 0;
-    users = this.props.userPresence.map(function(user, index) {
+    var presenceArray = this.props.userPresence;
+    var presenceArraySorted = presenceArray.sort(function(a, b) {
+      if (a.level > b.level) {
+        return 1;
+      } else if (a.level < b.level) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    users = presenceArraySorted.map(function(user, index) {
       if (user['online']) {
         let userPosClass = "";
         if (userPos == 0) {
@@ -18,7 +28,25 @@ var OnlineUsers = React.createClass({
           userPosClass = "user-line-0";
           userPos = 0;
         }
-        let userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
+        var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
+
+        var modLevel = "username-user"; // level 0
+        if (this.props.staff[user['uid']]) {
+          var level = this.props.staff[user['uid']];
+          switch (level) {
+            case 1:
+              modLevel = "username-mod";
+            break;
+            case 2:
+              modLevel = "username-seniormod";
+            break;
+            case 3:
+              modLevel = "username-admin";
+            break;
+          }
+        }
+        var usernameClasses = classNames("users-name", modLevel);
+
 
         var userAvatar;
         if (user['avatar']) {
@@ -39,7 +67,7 @@ var OnlineUsers = React.createClass({
                 />
             </div>
             <div className="users-info">
-              <span className="users-name">{user['key']}</span>
+              <span className={usernameClasses}>{user['key']}</span>
             </div>
           </li>
         )

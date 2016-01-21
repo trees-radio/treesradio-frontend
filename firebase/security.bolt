@@ -22,18 +22,9 @@ path / {
 ////////////////////////////////////////////////////////////////
 // CHAT
 ////////////////////////////////////////////////////////////////
-type MsgNode {
-  avatar: String,
-  user: String,
-  msgs: Object
-}
 
 path /chat {
   read() = true;
-}
-
-path /chat/messages/$msgs is MsgNode {
-  write() = true;
 }
 
 path /queues/chat/tasks/$task {
@@ -64,10 +55,6 @@ path /playing_media {
   read() = true;
 }
 
-path /playing_media/admin {
-  write() = root.child('users').child(auth.uid).child('level').val() > 0;
-}
-
 ////////////////////////////////////////////////////////////////
 // PRESENCE
 ////////////////////////////////////////////////////////////////
@@ -87,6 +74,10 @@ path /presence/$username {
 path /users/$uid {
   read() = isUser($uid);
   write() = isUser($uid);
+}
+
+path /moderator {
+  read() = true;
 }
 
 ////////////////////////////////////////////////////////////////

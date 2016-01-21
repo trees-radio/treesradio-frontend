@@ -48,7 +48,7 @@ var Waitlist = React.createClass({
       )
     });
     return (
-      <div>
+      <div className="waitlist-scroll">
         <ul className="waitlist-list">
           {waitlistItems}
         </ul>

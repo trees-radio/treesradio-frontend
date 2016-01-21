@@ -39,6 +39,11 @@ var ChatContent = React.createClass({
 
       let msgs = this.props.chatData.map(function(msg, index){
 
+          var timestamp = new Date(msg['time']);
+          var tsHours = "0" + timestamp.getHours();
+          var tsMins = "0" + timestamp.getMinutes();
+          var humanTimestamp = tsHours.substr(-2) + ':' + tsMins.substr(-2);
+
           // handling msg color alternation
           var chatPosClass = "";
           if (chatPos === 0) {
@@ -49,8 +54,25 @@ var ChatContent = React.createClass({
             chatPos = 0;
           }
 
+          var modLevel = "username-user"; // level 0
+          switch (msg['level']) {
+            case 1:
+              modLevel = "username-mod";
+            break;
+            case 2:
+              modLevel = "username-seniormod";
+            break;
+            case 3:
+              modLevel = "username-admin";
+            break;
+          }
+          var usernameClasses = classNames("chat-username", modLevel);
 
-          let chatLineClasses = classNames("chat-item ", chatPosClass);
+
+          var chatLineClasses = classNames("chat-item ", chatPosClass);
+          if (msg['isBot']) {
+            chatLineClasses = classNames("chat-item", chatPosClass, "blazebot-msg");
+          }
 
           var username = msg['user'];
           var chatAvatar;
@@ -91,9 +113,11 @@ var ChatContent = React.createClass({
                   {/* <img id="avatarimg" src={chatAvatar} /> */}
                 </div>
                 <div className="chat-msg">
-                  <span className="chat-username">{ msg.user }</span><br />
+                  <span className={usernameClasses}>{ msg.user }</span>
+                  <span className="chat-timestamp">{humanTimestamp}</span><br />
                   <span className="chat-text">{ innerMsgs }</span>
                 </div>
+
 
               </li>
           )

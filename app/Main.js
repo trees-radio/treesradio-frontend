@@ -97,7 +97,8 @@ var Main = React.createClass({
             grab: false
           },
           waitlist: [],
-          localPlayerPos: 0
+          localPlayerPos: 0,
+          staff: {}
       }
     },
     componentWillMount: function(){
@@ -117,6 +118,11 @@ var Main = React.createClass({
               limitToLast: 100
             }
         });
+
+        base.bindToState('moderator', {
+          context: this,
+          state: 'staff'
+        })
 
         base.bindToState('presence', {
           context: this,
@@ -346,7 +352,7 @@ var Main = React.createClass({
       } else {
         userAvatar = false;
       }
-      console.log(userAvatar);
+      // console.log(userAvatar);
 
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
@@ -397,21 +403,6 @@ var Main = React.createClass({
             isAddition: false
           }
         });
-      }
-    },
-    chatCommands: function(command) {
-      switch (command) {
-        case 'skip':
-          base.post('playing_media/admin/skip', {
-            data: true,
-            then() {
-              console.log('Skip sent');
-            }
-          });
-        break;
-        default:
-          console.log('Unrecognized chat command');
-        break;
       }
     },
     ///////////////////////////////////////////////////////////////////////
@@ -845,7 +836,7 @@ var Main = React.createClass({
                           changeSidebar={this.changeSidebar}
                           userPresence={this.state.userPresence}
                           waitlist={this.state.waitlist}
-                          chatCommands={this.chatCommands}
+                          staff={this.state.staff}
                           />
                       </div>
             {/* End Container */}
