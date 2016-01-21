@@ -1,25 +1,7 @@
 {
   "rules": {
     "chat": {
-      ".read": "true",
-      "messages": {
-        "$msgs": {
-          ".validate": "newData.hasChildren(['avatar', 'user', 'msgs'])",
-          "avatar": {
-            ".validate": "newData.isString()"
-          },
-          "user": {
-            ".validate": "newData.isString()"
-          },
-          "msgs": {
-            ".validate": "newData.hasChildren()"
-          },
-          "$other": {
-            ".validate": "false"
-          },
-          ".write": "true"
-        }
-      }
+      ".read": "true"
     },
     "queues": {
       "chat": {
