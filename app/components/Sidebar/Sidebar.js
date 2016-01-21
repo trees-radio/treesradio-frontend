@@ -17,7 +17,6 @@ var Sidebar = React.createClass({
             chatData={this.props.chatData}
             sendMsg={this.props.sendMsg}
             loginState={this.props.loginState}
-            chatCommands={this.props.chatCommands}
             userPresence={this.props.userPresence}
             />
         )

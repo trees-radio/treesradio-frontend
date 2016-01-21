@@ -399,21 +399,6 @@ var Main = React.createClass({
         });
       }
     },
-    chatCommands: function(command) {
-      switch (command) {
-        case 'skip':
-          base.post('playing_media/admin/skip', {
-            data: true,
-            then() {
-              console.log('Skip sent');
-            }
-          });
-        break;
-        default:
-          console.log('Unrecognized chat command');
-        break;
-      }
-    },
     ///////////////////////////////////////////////////////////////////////
     // PLAYLISTS
     ///////////////////////////////////////////////////////////////////////
@@ -845,7 +830,6 @@ var Main = React.createClass({
                           changeSidebar={this.changeSidebar}
                           userPresence={this.state.userPresence}
                           waitlist={this.state.waitlist}
-                          chatCommands={this.chatCommands}
                           />
                       </div>
             {/* End Container */}
