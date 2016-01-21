@@ -114,12 +114,24 @@ $chat-item-color: #c0c0c0; //light skin #000
   color: #0099ff;
 }
 
+.username-admin:after {
+  color: #0099ff;
+  content: " (Admin)";
+  font-size: 12px;
+}
+
 .username-mod {
   color: #00b300;
 }
 
+.username-mod:after {
+  color: #00b300;
+  content: " (Mod)";
+  font-size: 12px;
+}
+
 .username-user {
-  color: #9400d3;
+  color: #a600ed;
 }
 
 
