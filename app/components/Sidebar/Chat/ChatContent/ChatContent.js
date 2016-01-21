@@ -54,6 +54,23 @@ var ChatContent = React.createClass({
             chatPos = 0;
           }
 
+          var modLevel;
+          switch (msg['level']) {
+            case 0:
+              modLevel = "username-user";
+            break;
+            case 1:
+              modLevel = "username-mod";
+            break;
+            case 2:
+              modLevel = "username-seniormod";
+            break;
+            case 3:
+              modLevel = "username-admin";
+            break;
+          }
+          var usernameClasses = classNames("chat-username", modLevel);
+
 
           var chatLineClasses = classNames("chat-item ", chatPosClass);
           if (msg['isBot']) {
@@ -99,7 +116,7 @@ var ChatContent = React.createClass({
                   {/* <img id="avatarimg" src={chatAvatar} /> */}
                 </div>
                 <div className="chat-msg">
-                  <span className="chat-username">{ msg.user }</span>
+                  <span className={usernameClasses}>{ msg.user }</span>
                   <span className="chat-timestamp">{humanTimestamp}</span><br />
                   <span className="chat-text">{ innerMsgs }</span>
                 </div>
