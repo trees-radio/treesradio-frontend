@@ -110,6 +110,10 @@ $chat-item-color: #c0c0c0; //light skin #000
   cursor:pointer;
 }
 
+.chat-username:hover {
+  text-decoration: underline;
+}
+
 .username-admin {
   color: #0099ff;
 }
@@ -130,13 +134,18 @@ $chat-item-color: #c0c0c0; //light skin #000
   font-size: 12px;
 }
 
-.username-user {
-  color: #a600ed;
+.username-seniormod {
+  color: #00b300;
 }
 
+.username-seniormod:after {
+  color: #b507ff;
+  content: " (Senior Mod)";
+  font-size: 12px;
+}
 
-.chat-username:hover {
-  text-decoration: underline;
+.username-user {
+  color: #026435;
 }
 
 .chat-text {

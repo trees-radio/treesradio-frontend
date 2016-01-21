@@ -40,8 +40,8 @@
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   background-color: rgba(26,98,255,1);
-  background: "@include" filter-gradient(#1a62ff, #3373ff, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(26,98,255,1) 0%, rgba(51,115,255,1) 100%));
+  // background: "@include" filter-gradient(#1a62ff, #3373ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(26,98,255,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -57,8 +57,8 @@
 
 .like-button:hover {
   background-color: rgba(73,155,234,1);
-  background: "@include" filter-gradient(#499bea, #3373ff, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(73,155,234,1) 0%, rgba(51,115,255,1) 100%));
+  // background: "@include" filter-gradient(#499bea, #3373ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(73,155,234,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -74,8 +74,8 @@
 
 .like-button:active {
   background-color: rgba(0,72,230,1);
-  background: "@include" filter-gradient(#0048e6, #3373ff, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(0,72,230,1) 0%, rgba(51,115,255,1) 100%));
+  // background: "@include" filter-gradient(#0048e6, #3373ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(0,72,230,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -87,8 +87,8 @@
 
 .like-button-pressed {
   background-color: rgba(0,72,230,1);
-  background: "@include" filter-gradient(#0048e6, #3373ff, horizontal);
-  background: "@include" background-image(linear-gradient(left, rgba(0,72,230,1) 0%, rgba(51,115,255,1) 100%));
+  // background: "@include" filter-gradient(#0048e6, #3373ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(0,72,230,1) 0%, rgba(51,115,255,1) 100%));
   background-position: 50% 50%;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
