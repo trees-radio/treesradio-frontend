@@ -55,7 +55,10 @@ var ChatContent = React.createClass({
           }
 
 
-          let chatLineClasses = classNames("chat-item ", chatPosClass);
+          var chatLineClasses = classNames("chat-item ", chatPosClass);
+          if (msg['isBot']) {
+            chatLineClasses = classNames("chat-item", chatPosClass, "blazebot-msg");
+          }
 
           var username = msg['user'];
           var chatAvatar;
