@@ -20,6 +20,8 @@ import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
 import cookie from 'react-cookie';
+import parseIsoDuration from 'parse-iso-duration';
+
 
 // TreesRadio utility functions
 // import TRreg from './utils/registration.js';
@@ -416,12 +418,24 @@ var Main = React.createClass({
       }
     },
     searchForVideo: function(searchQuery) {
-      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
+      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
         .then(function (response) {
-          this.setState({ currentSearch: {
-            data: response.data,
-            items: response.data.items
-          } });
+          var search = response.data.items.map(function(data) {
+            return data.id.videoId;
+          }, this);
+          var ids = "";
+          search.forEach(function(currentValue) {
+            ids += currentValue + ",";
+          });
+          axios.get('https://www.googleapis.com/youtube/v3/videos?id='+ ids +'&part=contentDetails,snippet&key='+ ytAPIkey)
+            .then(function (response) {
+              // console.log(response.data);
+              this.setState({ currentSearch: {
+                data: response.data,
+                items: response.data.items
+              } });
+            }.bind(this));
+
         }.bind(this));
       this.setState({ playlistsPanelView: "search" });
     },
@@ -513,11 +527,13 @@ var Main = React.createClass({
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
       }
       // let indexToSelect = index;
-      this.setState({ currentPlaylist: {
-        name: nameToSelect,
-        id: index,
-        key: keyToSelect
-      } });
+      this.setState({
+        currentPlaylist: {
+          name: nameToSelect,
+          id: index,
+          key: keyToSelect
+        }
+      });
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
     },
@@ -539,6 +555,7 @@ var Main = React.createClass({
       var videoTitle;
       var videoThumb;
       var videoChannel;
+      var videoDuration;
 
       if (grabBool) {
         // grab from currently playing
@@ -547,6 +564,7 @@ var Main = React.createClass({
         videoTitle = itemToAdd.title;
         videoThumb = itemToAdd.thumb;
         videoChannel = itemToAdd.channel;
+        videoDuration = this.state.playingMedia.playback.duration * 1000;
       } else {
         // grab from search item
         itemToAdd = this.state.currentSearch.items[searchIndex];
@@ -554,12 +572,14 @@ var Main = React.createClass({
         videoTitle = itemToAdd.snippet.title;
         videoThumb = itemToAdd.snippet.thumbnails.default.url;
         videoChannel = itemToAdd.snippet.channelTitle;
+        videoDuration = parseIsoDuration(itemToAdd.contentDetails.duration);
       }
       var objectToAdd = {
         url: videoUrl,
         title: videoTitle,
         thumb: videoThumb,
-        channel: videoChannel
+        channel: videoChannel,
+        duration: videoDuration
       }
 
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there

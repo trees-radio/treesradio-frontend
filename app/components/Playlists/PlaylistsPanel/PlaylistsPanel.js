@@ -1,5 +1,6 @@
 
 import React from 'react';
+import parseIsoDuration from 'parse-iso-duration';
 // import sweetAlert from 'sweetalert';
 // import cookie from 'react-cookie';
 
@@ -103,8 +104,23 @@ var PlaylistsPanel = React.createClass({
           }
           let boundClickRemove = this.handleRemove.bind(this, index);
           let boundClickTop = this.handleMoveTop.bind(this, index);
+          var humanDuration = "";
+          if (item.duration) {
+            var videoDuration = new Date(item.duration);
+            var vidMins = videoDuration.getMinutes();
+            var vidSecs = videoDuration.getSeconds();
+            humanDuration = vidMins +':'+ vidSecs;
+          }
+
           return (
-            <li className={playlistPosClass} key={index}><a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a><span className="pl-media-title">{item.title}</span><span className="pl-channel">{item.channel}</span><i onClick={boundClickRemove} className="fa fa-2x fa-trash remove-from-playlist-btn"></i><i onClick={boundClickTop} className="fa fa-2x fa-arrow-up pl-move-to-top"></i></li>
+            <li className={playlistPosClass} key={index}>
+              <a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a>
+              <span className="pl-media-title">{item.title}</span>
+              <span className="pl-channel">{item.channel}</span>
+              <span className="pl-time">{humanDuration}</span>
+              <i onClick={boundClickRemove} className="fa fa-2x fa-trash remove-from-playlist-btn"></i>
+              <i onClick={boundClickTop} className="fa fa-2x fa-arrow-up pl-move-to-top"></i>
+            </li>
           )
         }, this);
         let computePlaylistView = function(list) {
@@ -127,8 +143,18 @@ var PlaylistsPanel = React.createClass({
         }
         let videoURL = "https://www.youtube.com/watch?v=" + item.id.videoId;
         let boundClick = this.handleAdd.bind(this, index);
+        var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
+        var vidMins = videoDuration.getMinutes();
+        var vidSecs = videoDuration.getSeconds();
+        var humanDuration = vidMins +':'+ vidSecs;
         return (
-            <li className={playlistPosClass} key={index}><a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a><span className="pl-media-title">{item.snippet.title}</span><span className="pl-channel">{item.snippet.channelTitle}</span><i onClick={boundClick} className="fa fa-2x fa-plus add-to-playlist-btn"></i></li>
+            <li className={playlistPosClass} key={index}>
+              <a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a>
+              <span className="pl-media-title">{item.snippet.title}</span>
+              <span className="pl-channel">{item.snippet.channelTitle}</span>
+              <span className="pl-time">{humanDuration}</span>
+              <i onClick={boundClick} className="fa fa-2x fa-plus add-to-playlist-btn"></i>
+            </li>
         )
       }, this); // use 'this' as second arg to map to preserve scope
 
