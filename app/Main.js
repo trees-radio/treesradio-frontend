@@ -135,13 +135,16 @@ var Main = React.createClass({
           asArray: true
         });
 
-        base.listenTo('playing_media/playback/url', {
+        base.listenTo('playing_media/info/url', {
           context: this,
           then() {
-            this.setState({userFeedback: {
-              opinion: "none",
-              grab: false
-            }});
+            this.setState({
+              userFeedback: {
+                opinion: "none",
+                grab: false
+              }
+            });
+            console.log('Resetting userFeedback');
           }
         });
 
