@@ -39,10 +39,10 @@ var ChatContent = React.createClass({
 
       let msgs = this.props.chatData.map(function(msg, index){
 
-          var timestamp = new Date(msg['time']*1000); // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-          var tsHours = timestamp.getHours();
+          var timestamp = new Date(msg['time']);
+          var tsHours = "0" + timestamp.getHours();
           var tsMins = "0" + timestamp.getMinutes();
-          var humanTimestamp = tsHours + ':' + tsMins.substr(-2);
+          var humanTimestamp = tsHours.substr(-2) + ':' + tsMins.substr(-2);
 
           // handling msg color alternation
           var chatPosClass = "";
