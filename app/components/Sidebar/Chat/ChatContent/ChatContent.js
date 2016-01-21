@@ -54,11 +54,8 @@ var ChatContent = React.createClass({
             chatPos = 0;
           }
 
-          var modLevel;
+          var modLevel = "username-user"; // level 0
           switch (msg['level']) {
-            case 0:
-              modLevel = "username-user";
-            break;
             case 1:
               modLevel = "username-mod";
             break;
