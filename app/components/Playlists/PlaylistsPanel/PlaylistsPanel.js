@@ -33,8 +33,7 @@ var PlaylistsPanel = React.createClass({
     }
   },
   handleAdd: function(index) {
-    // console.log("Adding search item of index", index, "to playlist");
-    this.props.addToPlaylist(index);
+    this.props.addToPlaylist(false, index);
   },
   handleRemove: function(index) {
     this.props.removeFromPlaylist(index);
