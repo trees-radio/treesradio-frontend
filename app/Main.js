@@ -273,11 +273,16 @@ var Main = React.createClass({
         inputPlaceholder: "Username"
       }, function(inputValue){
         var desiredUn = inputValue;
+        var userNameMaxLength = 20;
+        if (desiredUn.length > userNameMaxLength) {
+          emitUserError("Registration Error", "Desired username " + desiredUn + " is too long! The maximum length is " + userNameMaxLength + " characters");
+          return false; //break function
+        }
         var presenceRef = new Firebase(window.__env.firebase_origin + "/presence");
         presenceRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
-            emitUserError("Registration Error", "Desired username '" + desiredUn + "' already exists!");
+            emitUserError("Registration Error", "Desired username " + desiredUn + " already exists!");
           } else {
             let regRef = new Firebase(window.__env.firebase_origin);
             regRef.createUser({

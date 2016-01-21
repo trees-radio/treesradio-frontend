@@ -33,8 +33,8 @@ var Userbit = React.createClass({
     registerButton: function(){
       let desiredEml = this.refs.email.value;
       let desiredPw = this.refs.password.value;
-      this.refs.email.getDOMNode().value = '';
-      this.refs.password.getDOMNode().value = '';
+      this.refs.email.value = '';
+      this.refs.password.value = '';
       if (!desiredEml) {
         sweetAlert({
           "title": "Registration Error",
