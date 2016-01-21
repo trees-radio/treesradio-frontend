@@ -527,11 +527,13 @@ var Main = React.createClass({
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
       }
       // let indexToSelect = index;
-      this.setState({ currentPlaylist: {
-        name: nameToSelect,
-        id: index,
-        key: keyToSelect
-      } });
+      this.setState({
+        currentPlaylist: {
+          name: nameToSelect,
+          id: index,
+          key: keyToSelect
+        }
+      });
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
     },
