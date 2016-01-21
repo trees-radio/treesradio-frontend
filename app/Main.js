@@ -273,11 +273,16 @@ var Main = React.createClass({
         inputPlaceholder: "Username"
       }, function(inputValue){
         var desiredUn = inputValue;
+        var userNameMaxLength = 20;
+        if (desiredUn.length > userNameMaxLength) {
+          emitUserError("Registration Error", "Desired username " + desiredUn + " is too long! The maximum length is " + userNameMaxLength + " characters");
+          return false; //break function
+        }
         var presenceRef = new Firebase(window.__env.firebase_origin + "/presence");
         presenceRef.once("value", function(snapshot){
           let unExists = snapshot.child(desiredUn).exists();
           if (unExists) {
-            emitUserError("Registration Error", "Desired username '" + desiredUn + "' already exists!");
+            emitUserError("Registration Error", "Desired username " + desiredUn + " already exists!");
           } else {
             let regRef = new Firebase(window.__env.firebase_origin);
             regRef.createUser({
@@ -499,20 +504,41 @@ var Main = React.createClass({
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
     },
-    addToPlaylist: function(index) {
-      // debugger;
+    /**
+     * addToPlaylist
+     * @param  {[number]} searchIndex    [index of current search array to grab]
+     * @param  {[type]} grabBool [boolean that tells the function to grab the currently playing song instead]
+     * @return none
+     */
+    addToPlaylist: function(grabBool, searchIndex) {
       let currentAuth = base.getAuth();
       if (!this.state.playlists[this.state.currentPlaylist.id]) {
         emitUserError("No Playlist Selected", "You don't have a playlist selected to add to!");
         return;
       }
 
-      let itemToAdd = this.state.currentSearch.items[index];
-      let videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id.videoId;
-      let videoTitle = itemToAdd.snippet.title;
-      let videoThumb = itemToAdd.snippet.thumbnails.default.url;
-      let videoChannel = itemToAdd.snippet.channelTitle;
-      let objectToAdd = {
+      var itemToAdd
+      var videoUrl;
+      var videoTitle;
+      var videoThumb;
+      var videoChannel;
+
+      if (grabBool) {
+        // grab from currently playing
+        itemToAdd = this.state.playingMedia.info;
+        videoUrl = itemToAdd.url;
+        videoTitle = itemToAdd.title;
+        videoThumb = itemToAdd.thumb;
+        videoChannel = itemToAdd.channel;
+      } else {
+        // grab from search item
+        itemToAdd = this.state.currentSearch.items[index];
+        videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id.videoId;
+        videoTitle = itemToAdd.snippet.title;
+        videoThumb = itemToAdd.snippet.thumbnails.default.url;
+        videoChannel = itemToAdd.snippet.channelTitle;
+      }
+      var objectToAdd = {
         url: videoUrl,
         title: videoTitle,
         thumb: videoThumb,
@@ -521,7 +547,11 @@ var Main = React.createClass({
 
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
         let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
-        copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
+        if (grabBool) {
+          copyofPlaylist.push(objectToAdd); // push new item onto end of array
+        } else {
+          copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
+        }
         base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push new array to Firebase
       } else {
         base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: [objectToAdd]});
@@ -652,15 +682,14 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     handleGrabButton: function() {
       if (this.state.user.uid) {
-        if (!this.state.userFeedback.grab) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'grab', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: this.state.userFeedback.opinion,
-            grab: true
-          }});
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'grab', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: this.state.userFeedback.opinion,
+          grab: true
+        }});
+        this.addToPlaylist(true);
       }
     },
     handleLikeButton: function() {
