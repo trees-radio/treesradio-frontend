@@ -346,7 +346,7 @@ var Main = React.createClass({
       } else {
         userAvatar = false;
       }
-      console.log(userAvatar);
+      // console.log(userAvatar);
 
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
