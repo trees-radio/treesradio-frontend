@@ -416,12 +416,24 @@ var Main = React.createClass({
       }
     },
     searchForVideo: function(searchQuery) {
-      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
+      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
         .then(function (response) {
-          this.setState({ currentSearch: {
-            data: response.data,
-            items: response.data.items
-          } });
+          var search = response.data.items.map(function(data) {
+            return data.id.videoId;
+          }, this);
+          var ids = "";
+          search.forEach(function(currentValue) {
+            ids += currentValue + ",";
+          });
+          axios.get('https://www.googleapis.com/youtube/v3/videos?id='+ ids +'&part=contentDetails,snippet&key='+ ytAPIkey)
+            .then(function (response) {
+              // console.log(response.data);
+              this.setState({ currentSearch: {
+                data: response.data,
+                items: response.data.items
+              } });
+            }.bind(this));
+
         }.bind(this));
       this.setState({ playlistsPanelView: "search" });
     },
