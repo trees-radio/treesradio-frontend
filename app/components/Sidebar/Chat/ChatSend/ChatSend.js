@@ -19,15 +19,7 @@ var ChatSend = React.createClass({
           if ( this.props.loginState ) {
             this.refs.sendbox.value = '';
             let userSending = this.props.loginData.username;
-            switch (newMsg) {
-              case "/skip":
-                this.props.chatCommands('skip');
-              break;
-              default:
-                this.props.sendMsg({msg: newMsg, user: userSending});
-              break;
-            }
-
+            this.props.sendMsg({msg: newMsg, user: userSending});
           } else {
             this.refs.sendbox.value = '';
             sweetAlert({

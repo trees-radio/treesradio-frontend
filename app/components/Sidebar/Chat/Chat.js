@@ -25,7 +25,6 @@ var Chat = React.createClass({
                     sendMsg={this.props.sendMsg}
                     loginData={this.props.loginData}
                     loginState={this.props.loginState}
-                    chatCommands={this.props.chatCommands}
                     />
               </div>
         )
