@@ -144,7 +144,6 @@ var Main = React.createClass({
                 grab: false
               }
             });
-            console.log('Resetting userFeedback');
           }
         });
 
@@ -685,14 +684,16 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     handleGrabButton: function() {
       if (this.state.user.uid) {
-        base.push('queues/feedback/tasks', {
-          data: {type: 'grab', user: this.state.user.uid}
-        });
-        this.setState({userFeedback: {
-          opinion: this.state.userFeedback.opinion,
-          grab: true
-        }});
-        this.addToPlaylist(true);
+        if (!this.state.userFeedback.grab) {
+          base.push('queues/feedback/tasks', {
+            data: {type: 'grab', user: this.state.user.uid}
+          });
+          this.setState({userFeedback: {
+            opinion: this.state.userFeedback.opinion,
+            grab: true
+          }});
+          this.addToPlaylist(true);
+        }
       }
     },
     handleLikeButton: function() {
