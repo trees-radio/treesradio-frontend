@@ -20,6 +20,8 @@ import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
 import cookie from 'react-cookie';
+import parseIsoDuration from 'parse-iso-duration';
+
 
 // TreesRadio utility functions
 // import TRreg from './utils/registration.js';
@@ -551,6 +553,7 @@ var Main = React.createClass({
       var videoTitle;
       var videoThumb;
       var videoChannel;
+      var videoDuration;
 
       if (grabBool) {
         // grab from currently playing
@@ -559,6 +562,7 @@ var Main = React.createClass({
         videoTitle = itemToAdd.title;
         videoThumb = itemToAdd.thumb;
         videoChannel = itemToAdd.channel;
+        videoDuration = this.state.playingMedia.playback.duration * 1000;
       } else {
         // grab from search item
         itemToAdd = this.state.currentSearch.items[searchIndex];
@@ -566,12 +570,14 @@ var Main = React.createClass({
         videoTitle = itemToAdd.snippet.title;
         videoThumb = itemToAdd.snippet.thumbnails.default.url;
         videoChannel = itemToAdd.snippet.channelTitle;
+        videoDuration = parseIsoDuration(itemToAdd.contentDetails.duration);
       }
       var objectToAdd = {
         url: videoUrl,
         title: videoTitle,
         thumb: videoThumb,
-        channel: videoChannel
+        channel: videoChannel,
+        duration: videoDuration
       }
 
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
