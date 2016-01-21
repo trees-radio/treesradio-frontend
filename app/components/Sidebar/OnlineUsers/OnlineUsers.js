@@ -8,7 +8,17 @@ var OnlineUsers = React.createClass({
   render: function() {
     let users;
     let userPos = 0;
-    users = this.props.userPresence.map(function(user, index) {
+    var presenceArray = this.props.userPresence;
+    var presenceArraySorted = presenceArray.sort(function(a, b) {
+      if (a.level > b.level) {
+        return 1;
+      } else if (a.level < b.level) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    users = presenceArraySorted.map(function(user, index) {
       if (user['online']) {
         let userPosClass = "";
         if (userPos == 0) {
