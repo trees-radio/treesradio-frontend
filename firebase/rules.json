@@ -21,6 +21,32 @@
         }
       }
     },
+    "queues": {
+      "chat": {
+        "tasks": {
+          "$task": {
+            ".write": "auth != null && auth.uid == newData.child('uid').val()"
+          }
+        }
+      },
+      "feedback": {
+        "tasks": {
+          "$task": {
+            ".validate": "newData.hasChildren(['type', 'user'])",
+            "type": {
+              ".validate": "newData.isString()"
+            },
+            "user": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            },
+            ".write": "auth != null && auth.uid == newData.child('user').val()"
+          }
+        }
+      }
+    },
     "playlists": {
       "$userid": {
         ".read": "auth != null && auth.uid == $userid",
@@ -50,25 +76,6 @@
         ".read": "true",
         "$task": {
           ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
-        }
-      }
-    },
-    "queues": {
-      "feedback": {
-        "tasks": {
-          "$task": {
-            ".validate": "newData.hasChildren(['type', 'user'])",
-            "type": {
-              ".validate": "newData.isString()"
-            },
-            "user": {
-              ".validate": "newData.isString()"
-            },
-            "$other": {
-              ".validate": "false"
-            },
-            ".write": "auth != null && auth.uid == newData.child('user').val()"
-          }
         }
       }
     }

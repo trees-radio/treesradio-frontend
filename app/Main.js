@@ -337,6 +337,8 @@ var Main = React.createClass({
 
       let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
 
+      var chatQueue = "queues/chat/tasks";
+
       // var avatar = "http://api.adorable.io/avatars/50/"+ this.state.user.username +".png";
       var userAvatar;
       if (this.state.user.avatar) {
@@ -348,29 +350,51 @@ var Main = React.createClass({
 
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
-        chatRef.push({
-          user: newMsgData.user,
-          avatar: userAvatar,
-          msgs: {
-            0: newMsgData.msg
+        // chatRef.push({
+        //   user: newMsgData.user,
+        //   avatar: userAvatar,
+        //   msgs: {
+        //     0: newMsgData.msg
+        //   }
+        // });
+        // return;
+        base.push(chatQueue, {
+          data: {
+            user: newMsgData.user,
+            uid: this.state.user.uid,
+            avatar: userAvatar,
+            msg: newMsgData.msg,
+            isAddition: false
           }
         });
-        return;
       }
 
       if (lastMsg.user === this.state.user.username) {
 
-        lastMsg.msgs.push(newMsgData.msg);
+        // lastMsg.msgs.push(newMsgData.msg);
+        //
+        // base.post('chat/messages/' + lastMsg.key + '/msgs', {
+        //   data: lastMsg.msgs
+        // });
 
-        base.post('chat/messages/' + lastMsg.key + '/msgs', {
-          data: lastMsg.msgs
+        base.push(chatQueue, {
+          data: {
+            user: newMsgData.user,
+            uid: this.state.user.uid,
+            avatar: userAvatar,
+            msg: newMsgData.msg,
+            isAddition: true,
+            addToKey: lastMsg.key
+          }
         });
       } else {
-        chatRef.push({
-          user: newMsgData.user,
-          avatar: userAvatar,
-          msgs: {
-            0: newMsgData.msg
+        base.push(chatQueue, {
+          data: {
+            user: newMsgData.user,
+            uid: this.state.user.uid,
+            avatar: userAvatar,
+            msg: newMsgData.msg,
+            isAddition: false
           }
         });
       }
@@ -534,7 +558,7 @@ var Main = React.createClass({
         videoChannel = itemToAdd.channel;
       } else {
         // grab from search item
-        itemToAdd = this.state.currentSearch.items[index];
+        itemToAdd = this.state.currentSearch.items[searchIndex];
         videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id.videoId;
         videoTitle = itemToAdd.snippet.title;
         videoThumb = itemToAdd.snippet.thumbnails.default.url;
