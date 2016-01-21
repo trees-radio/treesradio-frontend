@@ -44,7 +44,10 @@
   font-size: 22px;
 }
 
-
+.waitlist-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
 .waitlist-line-1 {
   background-color: #0A0A0A; //light skin cbd6dc
