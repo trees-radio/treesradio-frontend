@@ -25,6 +25,7 @@ var Sidebar = React.createClass({
         currentSidebar = (
           <OnlineUsers
             userPresence={this.props.userPresence}
+            staff={this.props.staff}
             />
         )
         break;

@@ -36,10 +36,7 @@
       }
     },
     "playing_media": {
-      ".read": "true",
-      "admin": {
-        ".write": "newData.parent().parent().child('users').child(auth.uid).child('level').val() > 0"
-      }
+      ".read": "true"
     },
     "presence": {
       ".read": "true",
@@ -52,6 +49,9 @@
         ".read": "auth != null && auth.uid == $uid",
         ".write": "auth != null && auth.uid == $uid"
       }
+    },
+    "moderator": {
+      ".read": "true"
     },
     "waitlist": {
       "tasks": {

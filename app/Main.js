@@ -97,7 +97,8 @@ var Main = React.createClass({
             grab: false
           },
           waitlist: [],
-          localPlayerPos: 0
+          localPlayerPos: 0,
+          staff: {}
       }
     },
     componentWillMount: function(){
@@ -117,6 +118,11 @@ var Main = React.createClass({
               limitToLast: 100
             }
         });
+
+        base.bindToState('moderator', {
+          context: this,
+          state: 'staff'
+        })
 
         base.bindToState('presence', {
           context: this,
@@ -830,6 +836,7 @@ var Main = React.createClass({
                           changeSidebar={this.changeSidebar}
                           userPresence={this.state.userPresence}
                           waitlist={this.state.waitlist}
+                          staff={this.state.staff}
                           />
                       </div>
             {/* End Container */}
