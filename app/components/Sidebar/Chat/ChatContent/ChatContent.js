@@ -39,6 +39,11 @@ var ChatContent = React.createClass({
 
       let msgs = this.props.chatData.map(function(msg, index){
 
+          var timestamp = new Date(msg['time']*1000); // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+          var tsHours = timestamp.getHours();
+          var tsMins = "0" + timestamp.getMinutes();
+          var humanTimestamp = tsHours + ':' + tsMins.substr(-2);
+
           // handling msg color alternation
           var chatPosClass = "";
           if (chatPos === 0) {
@@ -91,9 +96,11 @@ var ChatContent = React.createClass({
                   {/* <img id="avatarimg" src={chatAvatar} /> */}
                 </div>
                 <div className="chat-msg">
-                  <span className="chat-username">{ msg.user }</span><br />
+                  <span className="chat-username">{ msg.user }</span>
+                  <span className="chat-timestamp">{humanTimestamp}</span><br />
                   <span className="chat-text">{ innerMsgs }</span>
                 </div>
+
 
               </li>
           )
