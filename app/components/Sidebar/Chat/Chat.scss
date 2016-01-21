@@ -105,11 +105,23 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 .chat-username {
-  color: #0040ff;
   font-weight: bolder;
   font-size: 16px;
   cursor:pointer;
 }
+
+.username-admin {
+  color: #0099ff;
+}
+
+.username-mod {
+  color: #00b300;
+}
+
+.username-user {
+  color: #9400d3;
+}
+
 
 .chat-username:hover {
   text-decoration: underline;

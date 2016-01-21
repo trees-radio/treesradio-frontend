@@ -16,28 +16,13 @@ $videotoplevel-bg: #171717;
 }
 }
 
-
-/////////////////////////////// OLD SHIT FOR SIZING VIDEO (please dont delete)
-// #youtube-player {
-//   width: 100%;  //fullscreen = 102% + small = 40%
-//   height: 100%;  //fulscreen = 95% + small = 39%
-//   position: absolute;
-//   top: 49%;  //fullscreen = 49% + small = 20%
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// }
+/////////////////////////////// Make Video Unclickable
 //
-// #youtube-player-sm {
-//   width: 39%;  //fullscreen = 102% + small = 40%
-//   height: 39%;  //fulscreen = 95% + small = 39%
-//   position: absolute;
-//   top: 23%;  //fullscreen = 49% + small = 23%
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// }
-
-
-// NEW SHIT FOR SIZING VIDEO
+#youtube-player-0 {
+  pointer-events: none;
+}
+//
+///////////////////////////////////////////////////////
 
 @media (min-height: 0px) {
 #player-size {
