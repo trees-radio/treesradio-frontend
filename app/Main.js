@@ -489,9 +489,10 @@ var Main = React.createClass({
       let currentAuth = base.getAuth();
       // let playlistsBindRef = this.playlistsBindRef;
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
+      var playlistName = this.state.playlists[index].name;
       sweetAlert({
         title: "Are you sure?",
-        text: "You are about to remove a playlist, are you sure?",
+        text: "You are about to remove the playlist "+ playlistName +", are you sure?",
         type: "warning",
         showCancelButton: true,
         closeOnConfirm: false
