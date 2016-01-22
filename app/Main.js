@@ -275,14 +275,14 @@ var Main = React.createClass({
     handleRegister: function(desiredEml, desiredPw){
       sweetAlert({
         title: "Register",
-        text: "Choose your username!\nYou must be 18 years of age or older to register!",
+        text: "Choose your username! (No spaces!)\nYou must be 18 years of age or older to register!",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
         animation: "slide-from-top",
         inputPlaceholder: "Username"
       }, function(inputValue){
-        var desiredUn = inputValue;
+        var desiredUn = inputValue.replace(/ /g, '');
         var userNameMaxLength = 20;
         if (desiredUn.length > userNameMaxLength) {
           emitUserError("Registration Error", "Desired username " + desiredUn + " is too long! The maximum length is " + userNameMaxLength + " characters");
