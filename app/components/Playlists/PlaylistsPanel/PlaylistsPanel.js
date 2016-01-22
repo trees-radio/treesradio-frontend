@@ -108,8 +108,8 @@ var PlaylistsPanel = React.createClass({
           if (item.duration) {
             var videoDuration = new Date(item.duration);
             var vidMins = videoDuration.getMinutes();
-            var vidSecs = videoDuration.getSeconds();
-            humanDuration = vidMins +':'+ vidSecs;
+            var vidSecs = "0" + videoDuration.getSeconds();
+            humanDuration = vidMins +':'+ vidSecs.substr(-2);
           }
 
           return (
