@@ -99,7 +99,9 @@ var Main = React.createClass({
             grab: false
           },
           waitlist: [],
-          localPlayerPos: 0,
+          localPlayerPos: {
+            position: 0
+          },
           staff: {}
       }
     },
@@ -275,14 +277,14 @@ var Main = React.createClass({
     handleRegister: function(desiredEml, desiredPw){
       sweetAlert({
         title: "Register",
-        text: "Choose your username!\nYou must be 18 years of age or older to register!",
+        text: "Choose your username! (No spaces!)\nYou must be 18 years of age or older to register!",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
         animation: "slide-from-top",
         inputPlaceholder: "Username"
       }, function(inputValue){
-        var desiredUn = inputValue;
+        var desiredUn = inputValue.replace(/ /g, '');
         var userNameMaxLength = 20;
         if (desiredUn.length > userNameMaxLength) {
           emitUserError("Registration Error", "Desired username " + desiredUn + " is too long! The maximum length is " + userNameMaxLength + " characters");
@@ -711,7 +713,11 @@ var Main = React.createClass({
     // VIDEO DATA HANDLING
     ///////////////////////////////////////////////////////////////////////
     videoOnProgress: function(progress) {
-      this.setState({localPlayerPos: progress.played});
+      this.setState({
+        localPlayerPos: {
+          position: progress.played
+        }
+      });
     },
 
     ///////////////////////////////////////////////////////////////////////
@@ -814,7 +820,7 @@ var Main = React.createClass({
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
                               videoOnProgress={this.videoOnProgress}
-                              localPlayerPos={this.state.localPlayerPos}
+                              localPlayerPos={this.state.localPlayerPos.position}
                               user={this.state.user}
                               />
                           </div>
