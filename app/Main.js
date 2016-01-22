@@ -102,7 +102,8 @@ var Main = React.createClass({
           localPlayerPos: {
             position: 0
           },
-          staff: {}
+          staff: {},
+          banned: false
       }
     },
     componentWillMount: function(){
@@ -126,13 +127,13 @@ var Main = React.createClass({
         base.bindToState('moderator', {
           context: this,
           state: 'staff'
-        })
+        });
 
         base.bindToState('presence', {
           context: this,
           state: 'userPresence',
           asArray: true
-        })
+        });
 
         base.bindToState('playing_media', {
           context: this,
@@ -205,6 +206,43 @@ var Main = React.createClass({
           Raven.setUserContext({ // Raven is defined globally in index.html
             id: authData.uid
           });
+
+          base.listenTo('bans/'+authData.uid, {
+            context: this,
+            then(banData){
+              console.log(banData);
+              if (banData) {
+                if (banData.forever === true) {
+                  // console.log('you are banned!');
+                  this.setState({
+                    banned: true
+                  });
+                  emitUserError("Banned","You have been banned forever!");
+                  return;
+                } else if (banData.time > _.now()) {
+                  // console.log('you are banned!');
+                  this.setState({
+                    banned: true
+                  });
+                  var bannedUntil = new Date(banData.time);
+                  var humanBannedUntil = bannedUntil.toString();
+                  emitUserError("Banned", "You are banned until: "+ humanBannedUntil);
+                  return;
+                }
+              }
+              if (this.state.banned) {
+                this.setState({
+                  banned: false
+                });
+                sweetAlert({
+                  "title": "Unbanned",
+                  "text": "You've been unbanned, welcome back!",
+                  "type": "success"
+                });
+              }
+            }
+          });
+
           this.userBindRef = base.syncState(`users/` + authData.uid, {
             context: this,
             state: 'user',
@@ -216,6 +254,7 @@ var Main = React.createClass({
               this.presenceRef.child('online').onDisconnect().remove();
               this.presencePing();
               window.setInterval(this.presencePing, 30000);
+
 
 
               // check for missing user items
@@ -344,7 +383,10 @@ var Main = React.createClass({
     // CHAT
     ///////////////////////////////////////////////////////////////////////
     handleSendMsg: function(newMsgData) {
-
+      if (this.state.banned === true) {
+        emitUserError("Banned", "You can't do that, you're banned!");
+        return;
+      }
       let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
 
       var chatQueue = "queues/chat/tasks";
@@ -643,6 +685,10 @@ var Main = React.createClass({
     // WAITLIST CONTROLS
     ///////////////////////////////////////////////////////////////////////
     toggleWaiting: function() {
+      if (this.state.banned === true) {
+        emitUserError("Banned", "You can't do that, you're banned!");
+        return;
+      }
       if (this.state.user.inWaitlist.waiting) {
         if (this.state.user.inWaitlist.id != "") {
           var waitlistPlaceRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks/" + this.state.user.inWaitlist.id);
@@ -740,7 +786,10 @@ var Main = React.createClass({
       }
     },
     handleLikeButton: function() {
-
+      if (this.state.banned === true) {
+        emitUserError("Banned", "You can't do that, you're banned!");
+        return;
+      }
       if (this.state.user.uid) {
         base.push('queues/feedback/tasks', {
           data: {type: 'like', user: this.state.user.uid}
@@ -752,6 +801,10 @@ var Main = React.createClass({
       }
     },
     handleDislikeButton: function() {
+      if (this.state.banned === true) {
+        emitUserError("Banned", "You can't do that, you're banned!");
+        return;
+      }
       if (this.state.user.uid) {
         base.push('queues/feedback/tasks', {
           data: {type: 'dislike', user: this.state.user.uid}

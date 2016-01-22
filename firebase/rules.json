@@ -53,6 +53,9 @@
     "moderator": {
       ".read": "true"
     },
+    "bans": {
+      ".read": "true"
+    },
     "waitlist": {
       "tasks": {
         ".read": "true",
