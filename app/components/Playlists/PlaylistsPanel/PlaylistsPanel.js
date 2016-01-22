@@ -107,9 +107,14 @@ var PlaylistsPanel = React.createClass({
           var humanDuration = "";
           if (item.duration) {
             var videoDuration = new Date(item.duration);
+            var vidHours = videoDuration.getHours() - 16; // no idea why, getHours seems to return 16 too high here
+            var vidHoursDisplay = "";
+            if (vidHours > 0) {
+              vidHoursDisplay = vidHours + "h ";
+            }
             var vidMins = videoDuration.getMinutes();
             var vidSecs = "0" + videoDuration.getSeconds();
-            humanDuration = vidMins +':'+ vidSecs.substr(-2);
+            humanDuration = vidHoursDisplay + vidMins +':'+ vidSecs.substr(-2);
           }
 
           return (
@@ -144,9 +149,14 @@ var PlaylistsPanel = React.createClass({
         let videoURL = "https://www.youtube.com/watch?v=" + item.id;
         let boundClick = this.handleAdd.bind(this, index);
         var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
+        var vidHours = videoDuration.getHours() - 16; // no idea why, getHours seems to return 16 too high here
+        var vidHoursDisplay = "";
+        if (vidHours > 0) {
+          vidHoursDisplay = vidHours + "h ";
+        }
         var vidMins = videoDuration.getMinutes();
         var vidSecs = "0" + videoDuration.getSeconds();
-        var humanDuration = vidMins +':'+ vidSecs.substr(-2);
+        var humanDuration = vidHoursDisplay + vidMins +':'+ vidSecs.substr(-2);
         return (
             <li className={playlistPosClass} key={index}>
               <a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a>
