@@ -570,7 +570,8 @@ var Main = React.createClass({
       } else {
         // grab from search item
         itemToAdd = this.state.currentSearch.items[searchIndex];
-        videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id.videoId;
+        console.log(itemToAdd);
+        videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id;
         videoTitle = itemToAdd.snippet.title;
         videoThumb = itemToAdd.snippet.thumbnails.default.url;
         videoChannel = itemToAdd.snippet.channelTitle;
