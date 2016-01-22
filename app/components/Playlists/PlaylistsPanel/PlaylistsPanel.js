@@ -141,7 +141,7 @@ var PlaylistsPanel = React.createClass({
           playlistPosClass = "playlist-item-1";
           playlistPos = 0;
         }
-        let videoURL = "https://www.youtube.com/watch?v=" + item.id.videoId;
+        let videoURL = "https://www.youtube.com/watch?v=" + item.id;
         let boundClick = this.handleAdd.bind(this, index);
         var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
         var vidMins = videoDuration.getMinutes();
