@@ -145,8 +145,8 @@ var PlaylistsPanel = React.createClass({
         let boundClick = this.handleAdd.bind(this, index);
         var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
         var vidMins = videoDuration.getMinutes();
-        var vidSecs = videoDuration.getSeconds();
-        var humanDuration = vidMins +':'+ vidSecs;
+        var vidSecs = "0" + videoDuration.getSeconds();
+        var humanDuration = vidMins +':'+ vidSecs.substr(-2);
         return (
             <li className={playlistPosClass} key={index}>
               <a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a>
