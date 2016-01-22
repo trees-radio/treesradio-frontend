@@ -108,8 +108,8 @@ var PlaylistsPanel = React.createClass({
           if (item.duration) {
             var videoDuration = new Date(item.duration);
             var vidMins = videoDuration.getMinutes();
-            var vidSecs = videoDuration.getSeconds();
-            humanDuration = vidMins +':'+ vidSecs;
+            var vidSecs = "0" + videoDuration.getSeconds();
+            humanDuration = vidMins +':'+ vidSecs.substr(-2);
           }
 
           return (
@@ -141,12 +141,12 @@ var PlaylistsPanel = React.createClass({
           playlistPosClass = "playlist-item-1";
           playlistPos = 0;
         }
-        let videoURL = "https://www.youtube.com/watch?v=" + item.id.videoId;
+        let videoURL = "https://www.youtube.com/watch?v=" + item.id;
         let boundClick = this.handleAdd.bind(this, index);
         var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
         var vidMins = videoDuration.getMinutes();
-        var vidSecs = videoDuration.getSeconds();
-        var humanDuration = vidMins +':'+ vidSecs;
+        var vidSecs = "0" + videoDuration.getSeconds();
+        var humanDuration = vidMins +':'+ vidSecs.substr(-2);
         return (
             <li className={playlistPosClass} key={index}>
               <a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a>
