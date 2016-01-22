@@ -99,7 +99,9 @@ var Main = React.createClass({
             grab: false
           },
           waitlist: [],
-          localPlayerPos: 0,
+          localPlayerPos: {
+            position: 0
+          },
           staff: {}
       }
     },
@@ -711,7 +713,11 @@ var Main = React.createClass({
     // VIDEO DATA HANDLING
     ///////////////////////////////////////////////////////////////////////
     videoOnProgress: function(progress) {
-      this.setState({localPlayerPos: progress.played});
+      this.setState({
+        localPlayerPos: {
+          position: progress.played
+        }
+      });
     },
 
     ///////////////////////////////////////////////////////////////////////
@@ -814,7 +820,7 @@ var Main = React.createClass({
                               controls={this.state.controls}
                               playingMedia={this.state.playingMedia}
                               videoOnProgress={this.videoOnProgress}
-                              localPlayerPos={this.state.localPlayerPos}
+                              localPlayerPos={this.state.localPlayerPos.position}
                               user={this.state.user}
                               />
                           </div>
