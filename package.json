@@ -50,6 +50,7 @@
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
     "material-ui": "^0.14.0",
+    "parse-iso-duration": "^1.0.0",
     "re-base": "^1.4.0",
     "react": "^0.14.3",
     "react-addons-update": "^0.14.6",
