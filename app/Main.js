@@ -581,6 +581,7 @@ var Main = React.createClass({
       });
       cookie.save('lastSelectedPlaylist', index);
       this.setState({ playlistsPanelView: "playlist" });
+      this.updateMediaRequest();
     },
     /**
      * addToPlaylist
@@ -640,6 +641,7 @@ var Main = React.createClass({
         base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: [objectToAdd]});
       }
       this.setState({ playlistsPanelView: "playlist" });
+      this.updateMediaRequest();
     },
     removeFromPlaylist: function(index){
       // console.log("Removing playlist item of index", index);
@@ -647,6 +649,9 @@ var Main = React.createClass({
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
       base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { data: copyofPlaylist }); //update Firebase
+      if (index === 0) {
+        this.updateMediaRequest();
+      }
     },
     moveTopPlaylist: function(index){
       // console.log("Moving top", index);
@@ -657,7 +662,15 @@ var Main = React.createClass({
       // console.log("Moving item", movingItem);
       copyofPlaylist.unshift(movingItem[0]); // put item at front of array
       // console.log(copyofPlaylist);
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push update to Firebase
+      var updateMediaRequest = this.updateMediaRequest;
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {
+        context: this,
+        data: copyofPlaylist,
+        then(){
+          updateMediaRequest();
+        }
+      }); // push update to Firebase
+
     },
 
     ///////////////////////////////////////////////////////////////////////
@@ -714,8 +727,8 @@ var Main = React.createClass({
           return;
         }
 
-        var authCheckRef = new Firebase(window.__env.firebase_origin);
-        var authCheckData = authCheckRef.getAuth();
+        // var authCheckRef = new Firebase(window.__env.firebase_origin);
+        // var authCheckData = authCheckRef.getAuth();
 
         var userAvatar;
         if (this.state.user.avatar) {
@@ -726,7 +739,7 @@ var Main = React.createClass({
 
         var waitlistId = waitlistRef.push({
           user: this.state.user.username,
-          uid: authCheckData.uid,
+          uid: this.state.user.uid,
           url: this.state.playlists[currentPlaylistId].entries[0].url,
           title: this.state.playlists[currentPlaylistId].entries[0].title,
           thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
@@ -755,6 +768,39 @@ var Main = React.createClass({
           }
         });
       }
+    },
+    updateMediaRequest: function() {
+      if (this.state.user.inWaitlist.waiting === true) {
+        var userAvatar;
+        if (this.state.user.avatar) {
+          userAvatar = this.state.user.avatar;
+        } else {
+          userAvatar = false;
+        }
+        var currentPlaylistId;
+        if (this.state.currentPlaylist.id === -1) {
+          // emitUserError("Join Waitlist Error", "You don't have a playlist selected!");
+          return;
+        } else {
+          currentPlaylistId = this.state.currentPlaylist.id;
+        }
+        if (!this.state.playlists[currentPlaylistId].entries) {
+          // emitUserError("Join Waitlist Error", "Your playlist is empty!");
+          return;
+        }
+        base.post('waitlist/tasks/'+ this.state.user.inWaitlist.id, {
+          data: {
+            user: this.state.user.username,
+            uid: this.state.user.uid,
+            url: this.state.playlists[currentPlaylistId].entries[0].url,
+            title: this.state.playlists[currentPlaylistId].entries[0].title,
+            thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
+            channel: this.state.playlists[currentPlaylistId].entries[0].channel,
+            avatar: userAvatar
+          }
+        })
+      }
+      // console.log(this.state.user.inWaitlist.id);
     },
 
     ///////////////////////////////////////////////////////////////////////
