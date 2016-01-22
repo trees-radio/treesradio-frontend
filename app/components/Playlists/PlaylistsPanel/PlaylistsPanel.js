@@ -116,8 +116,8 @@ var PlaylistsPanel = React.createClass({
             <li className={playlistPosClass} key={index}>
               <a target="_blank" href={item.url}><img className="pl-thumbnail" src={item.thumb} /></a>
               <span className="pl-media-title">{item.title}</span>
+              <span className="pl-time"><i className="fa fa-clock-o"></i> {humanDuration}</span>
               <span className="pl-channel">{item.channel}</span>
-              <span className="pl-time">{humanDuration}</span>
               <i onClick={boundClickRemove} className="fa fa-2x fa-trash remove-from-playlist-btn"></i>
               <i onClick={boundClickTop} className="fa fa-2x fa-arrow-up pl-move-to-top"></i>
             </li>
@@ -151,8 +151,8 @@ var PlaylistsPanel = React.createClass({
             <li className={playlistPosClass} key={index}>
               <a target="_blank" href={videoURL}><img className="pl-thumbnail" src={item.snippet.thumbnails.default.url} /></a>
               <span className="pl-media-title">{item.snippet.title}</span>
+              <span className="pl-time"><i className="fa fa-clock-o"></i> {humanDuration}</span>
               <span className="pl-channel">{item.snippet.channelTitle}</span>
-              <span className="pl-time">{humanDuration}</span>
               <i onClick={boundClick} className="fa fa-2x fa-plus add-to-playlist-btn"></i>
             </li>
         )
