@@ -5,9 +5,11 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   entry: path.resolve(__dirname, './app/index.js'),
   output: {
-    path: path.resolve(__dirname, 'public'),
-    filename: "app.js"
+    path: path.resolve(__dirname, 'public/assets'),
+    filename: "app.js",
+    sourceMapFilename: "/tsmaps4000/[file].map"
   },
+  devtool: "source-map",
   module: {
     loaders: [
       {

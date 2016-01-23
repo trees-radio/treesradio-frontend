@@ -1,5 +1,8 @@
 {
   "rules": {
+    "_admin": {
+      ".read": "true"
+    },
     "chat": {
       ".read": "true"
     },
@@ -47,7 +50,7 @@
     "users": {
       "$uid": {
         ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid"
+        ".write": "true"
       }
     },
     "moderator": {
