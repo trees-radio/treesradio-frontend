@@ -6,7 +6,15 @@
     <meta name="application-name" content="TreesRadio">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" type="text/css" href="assets/app.css">
+    <!-- ERRORCEPTION LOADER (for error reporting) -->
+    <script>
+    (function(_,e,rr,s){_errs=[s];var c=_.onerror;_.onerror=function(){var a=arguments;_errs.push(a);
+    c&&c.apply(this,a)};var b=function(){var c=e.createElement(rr),b=e.getElementsByTagName(rr)[0];
+    c.src="//beacon.errorception.com/"+s+".js";c.async=!0;b.parentNode.insertBefore(c,b)};
+    _.addEventListener?_.addEventListener("load",b,!1):_.attachEvent("onload",b)})
+    (window,document,"script","56a4079d1f5a7d1c0900001f");
+    </script>
 </head>
 <body>
     <div id="app"></div>
@@ -23,13 +31,13 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raven.js/2.0.5/raven.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/raven.js/2.0.5/raven.min.js"></script> -->
     <script>
       var init = function() {
         if (!window.__env) return;
         // var ref = new Firebase(__env.firebase_origin);
         // start your application logic here!
-        $.getScript("app.js");
+        $.getScript("assets/app.js");
       }
       document.addEventListener('env', init);
       init();
