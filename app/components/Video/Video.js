@@ -15,7 +15,7 @@ var Video = React.createClass({
     // console.log(localPlayerTime);
     if (this.props.playingMedia.playback.time < playbackSyncCap && this.props.playingMedia.playback.playing) {
       if (localPlayerTime > playbackFastThreshold || localPlayerTime < playbackSlowThreshold) {
-        console.log("Triggering sync.");
+        // console.log("Triggering sync.");
         var fraction = this.props.playingMedia.playback.time / this.props.playingMedia.playback.duration;
         this.refs.TRplayer.seekTo(fraction);
       }
