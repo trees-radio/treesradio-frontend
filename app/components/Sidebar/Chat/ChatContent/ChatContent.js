@@ -135,4 +135,4 @@ var ChatContent = React.createClass({
 
 });
 
-module.exports = ChatContent;
+export default ChatContent;
