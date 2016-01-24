@@ -113,8 +113,11 @@
 .dropdown-menu>li>a {
   float:left;
   width: 100%;
-  max-width: 100%;
   overflow-x: hidden;
+}
+
+#pl-dd-menu>li>a {
+  width: 87%
 }
 
 .remove-from-playlist-btn {
