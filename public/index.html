@@ -38,7 +38,11 @@
         if (!window.__env) return;
         // var ref = new Firebase(__env.firebase_origin);
         // start your application logic here!
-        $.getScript("assets/app.js");
+        function loadApp() {
+          var appElement = document.createElement("script");
+          appElement.type = "application/javascript";
+          document.body.appendChild(appElement);
+        }
       }
       document.addEventListener('env', init);
       init();
