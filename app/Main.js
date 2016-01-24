@@ -48,6 +48,7 @@ var Main = React.createClass({
       let devCheckResult = false;
       if (window.__env.firebase_origin === "https://treesradio-dev.firebaseio.com") {
         devCheckResult = true;
+        document.title = "TreesRadio Dev";
       }
       return {
           devCheck: devCheckResult,
