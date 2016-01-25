@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public/assets'),
     filename: "app.js",
-    sourceMapFilename: "/tsmaps4000/[file].map"
+    sourceMapFilename: "/smaps/[file].map"
   },
   devtool: "source-map",
   module: {
