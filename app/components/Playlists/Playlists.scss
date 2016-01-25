@@ -353,10 +353,10 @@
 .volume-slider-icon {
   position: absolute;
   z-index: 2;
-  font-size: 1.15vw;
+  font-size: 1.15vw !important;
   text-align: right;
   padding: 0;
-  line-height: 2.25vw;
+  line-height: 2.25vw !important;
   margin-left: -40%;
   color: white;
   pointer-events: none;
