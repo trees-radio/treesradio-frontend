@@ -75,7 +75,6 @@ var Userbit = React.createClass({
                         <span className="fa fa-caret-down"></span></a>
                         <ul className="dropdown-menu">
                           <li onClick={this.props.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
-                          <li><a href="#"><i className="fa fa-cog fa-fw"></i> Settings</a></li>
                         </ul>
 
                     <button className="btn btn-default" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
