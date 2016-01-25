@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --colors --content-base public/",
+    "start": "webpack-dev-server --inline --colors --content-base public/ --output-public-path=assets/",
     "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase deploy:rules -f treesradio-dev",
