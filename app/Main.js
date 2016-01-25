@@ -5,11 +5,9 @@
 // Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873', {
 //   release: '0.1.0'
 // }).install();
-// Disabled in favor of Errorception right now
 
 // React
 import React from 'react';
-// import update from 'react-addons-update';
 
 // Firebase
 import Firebase from 'firebase';
@@ -206,7 +204,7 @@ var Main = React.createClass({
           // Raven.setUserContext({ // Raven is defined globally in index.html
           //   id: authData.uid
           // });
-          // Disabled in favor of errorception right now
+
 
           base.listenTo('bans/'+authData.uid, {
             context: this,
@@ -248,13 +246,16 @@ var Main = React.createClass({
             context: this,
             state: 'user',
             then(){
-              // let presenceRef;
+              trackJs.configure({ userId: this.state.user.username}); // attach trackjs to user
+
               this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
               this.presenceRef.child('uid').set(authData.uid);
               this.presenceRef.child('online').set(true);
               this.presenceRef.child('online').onDisconnect().remove();
               this.presencePing();
               window.setInterval(this.presencePing, 30000);
+
+
 
 
 
