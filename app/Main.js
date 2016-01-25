@@ -2,9 +2,10 @@
 
 // Sentry Error Reporting
 // Raven is defined globally in index.html
-Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873', {
-  release: '0.1.0'
-}).install();
+// Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873', {
+//   release: '0.1.0'
+// }).install();
+// Disabled in favor of Errorception right now
 
 // React
 import React from 'react';
@@ -24,8 +25,6 @@ import parseIsoDuration from 'parse-iso-duration';
 
 
 // TreesRadio utility functions
-// import TRreg from './utils/registration.js';
-// TRreg.example();
 import emitUserError from './utils/userError';
 
 // Components
@@ -49,6 +48,7 @@ var Main = React.createClass({
       let devCheckResult = false;
       if (window.__env.firebase_origin === "https://treesradio-dev.firebaseio.com") {
         devCheckResult = true;
+        document.title = "TreesRadio Dev";
       }
       return {
           devCheck: devCheckResult,
@@ -189,7 +189,7 @@ var Main = React.createClass({
             password: pw
         }, this.authHandler)
     },
-    authHandler: function(error, authData){
+    authHandler: function(error){ //hidden authData second param
         if (error) {
             // console.log("Auth", error);
             emitUserError("Login Error", error);
@@ -203,14 +203,15 @@ var Main = React.createClass({
           //
           // START UPON LOGIN
           //
-          Raven.setUserContext({ // Raven is defined globally in index.html
-            id: authData.uid
-          });
+          // Raven.setUserContext({ // Raven is defined globally in index.html
+          //   id: authData.uid
+          // });
+          // Disabled in favor of errorception right now
 
           base.listenTo('bans/'+authData.uid, {
             context: this,
             then(banData){
-              console.log(banData);
+              // console.log(banData);
               if (banData) {
                 if (banData.forever === true) {
                   // console.log('you are banned!');
@@ -387,29 +388,18 @@ var Main = React.createClass({
         emitUserError("Banned", "You can't do that, you're banned!");
         return;
       }
-      let chatRef = new Firebase(window.__env.firebase_origin + "/chat/messages");
 
       var chatQueue = "queues/chat/tasks";
 
-      // var avatar = "http://api.adorable.io/avatars/50/"+ this.state.user.username +".png";
       var userAvatar;
       if (this.state.user.avatar) {
         userAvatar = this.state.user.avatar;
       } else {
         userAvatar = false;
       }
-      // console.log(userAvatar);
 
       let lastMsg = this.state.chat[this.state.chat.length - 1];
       if (!lastMsg) {
-        // chatRef.push({
-        //   user: newMsgData.user,
-        //   avatar: userAvatar,
-        //   msgs: {
-        //     0: newMsgData.msg
-        //   }
-        // });
-        // return;
         base.push(chatQueue, {
           data: {
             user: newMsgData.user,
@@ -422,12 +412,6 @@ var Main = React.createClass({
       }
 
       if (lastMsg.user === this.state.user.username) {
-
-        // lastMsg.msgs.push(newMsgData.msg);
-        //
-        // base.post('chat/messages/' + lastMsg.key + '/msgs', {
-        //   data: lastMsg.msgs
-        // });
 
         base.push(chatQueue, {
           data: {
@@ -509,12 +493,6 @@ var Main = React.createClass({
               timer: 3000
             });
           }
-          // base.post('playlists/' + currentAuth.uid + "/" + newPlaylistName, {
-          //   data: { name: newPlaylistName },
-          //   then(){
-          //     newPlaylistCallback();
-          //   }
-          // });
           base.push('playlists/' + currentAuth.uid, {
             data: { name: newPlaylistName },
             then(){
@@ -529,7 +507,6 @@ var Main = React.createClass({
     removePlaylist: function(index) {
       // debugger;
       let currentAuth = base.getAuth();
-      // let playlistsBindRef = this.playlistsBindRef;
       let copyofPlaylists = this.state.playlists.slice(); //get copy of array
       var playlistName = this.state.playlists[index].name;
       sweetAlert({
@@ -562,16 +539,12 @@ var Main = React.createClass({
       });
     },
     selectPlaylist: function(index) {
-      // debugger;
-      // let currentAuth = base.getAuth();
-      // console.log(this.state.playlists[index].name);
       let nameToSelect = this.state.playlists[index].name;
       let keyToSelect = this.state.playlists[index].key;
       if (nameToSelect.length > 23) {
         let maxLength = 23;
         nameToSelect = nameToSelect.substring(0,maxLength) + "...";
       }
-      // let indexToSelect = index;
       this.setState({
         currentPlaylist: {
           name: nameToSelect,
@@ -614,7 +587,7 @@ var Main = React.createClass({
       } else {
         // grab from search item
         itemToAdd = this.state.currentSearch.items[searchIndex];
-        console.log(itemToAdd);
+        // console.log(itemToAdd);
         videoUrl = "https://www.youtube.com/watch?v=" + itemToAdd.id;
         videoTitle = itemToAdd.snippet.title;
         videoThumb = itemToAdd.snippet.thumbnails.default.url;
@@ -727,8 +700,6 @@ var Main = React.createClass({
           return;
         }
 
-        // var authCheckRef = new Firebase(window.__env.firebase_origin);
-        // var authCheckData = authCheckRef.getAuth();
 
         var userAvatar;
         if (this.state.user.avatar) {
@@ -748,7 +719,6 @@ var Main = React.createClass({
           }
         );
 
-        // console.log(waitlistId.toString());
 
         var waitlistIdUrl = waitlistId.toString();
 
@@ -758,8 +728,6 @@ var Main = React.createClass({
         var waitlistIdExplode = waitlistIdUrl.split("/");
 
         var waitlistIdKey = waitlistIdExplode[waitlistIdExplode.length - 1];
-
-        // console.log(waitlistIdExplode[waitlistIdExplode.length - 1]);
 
         base.post('users/' + this.state.user.uid + '/inWaitlist', {
           data: {
@@ -779,13 +747,11 @@ var Main = React.createClass({
         }
         var currentPlaylistId;
         if (this.state.currentPlaylist.id === -1) {
-          // emitUserError("Join Waitlist Error", "You don't have a playlist selected!");
           return;
         } else {
           currentPlaylistId = this.state.currentPlaylist.id;
         }
         if (!this.state.playlists[currentPlaylistId].entries) {
-          // emitUserError("Join Waitlist Error", "Your playlist is empty!");
           return;
         }
         base.post('waitlist/tasks/'+ this.state.user.inWaitlist.id, {
@@ -800,7 +766,6 @@ var Main = React.createClass({
           }
         })
       }
-      // console.log(this.state.user.inWaitlist.id);
     },
 
     ///////////////////////////////////////////////////////////////////////
@@ -915,7 +880,6 @@ var Main = React.createClass({
                   <div className="row">
             {/* Video Component */}
                       <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-float" id="videotoplevel">
-                        {/* <h2 className="placeholder-txt">Video</h2> */}
                           <div id="vidcontainer" className="">
                             <Video
                               controls={this.state.controls}

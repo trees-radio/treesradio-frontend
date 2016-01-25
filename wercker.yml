@@ -64,6 +64,18 @@ deploy:
         firebase: "treesradio-dev"
         token: $FIREBASE_DEPLOY_KEY
 
+  Prod:
+    - npm-install
+
+    - script:
+        name: full production compile
+        code: |
+          npm run ci-build-prod
+
+    - zbuttram/wercker-firebase-deploy@0.1.3:
+        firebase: "treesradio-live"
+        token: $FIREBASE_DEPLOY_KEY_LIVE
+
   after-steps:
     - wercker/slack-notifier:
         url: $SLACK_WEBHOOK_URL

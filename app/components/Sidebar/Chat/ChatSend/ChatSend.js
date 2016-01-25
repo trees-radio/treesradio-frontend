@@ -14,7 +14,7 @@ var ChatSend = React.createClass({
       if (e.key === 'Enter') {
         let newMsg = this.refs.sendbox.value.trim();
         if (newMsg === '') {
-          console.log("User attempted to send an empty chat message");
+          // console.log("User attempted to send an empty chat message");
         } else {
           if ( this.props.loginState ) {
             this.refs.sendbox.value = '';
@@ -44,4 +44,4 @@ var ChatSend = React.createClass({
 
 });
 
-module.exports = ChatSend;
+export default ChatSend;

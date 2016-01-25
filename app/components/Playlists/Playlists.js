@@ -43,7 +43,7 @@ var Playlists = React.createClass({
    updateVolume: function(value) {
      this.props.updateVolume(value);
    },
-   handleWaitlistButton: function(e) {
+   handleWaitlistButton: function() {
      this.props.toggleWaiting();
    },
    render: function() {
