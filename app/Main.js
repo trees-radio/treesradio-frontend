@@ -8,7 +8,6 @@
 
 // React
 import React from 'react';
-// import update from 'react-addons-update';
 
 // Firebase
 import Firebase from 'firebase';
