@@ -23,13 +23,13 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        //loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css!sass")
+        loader: 'style!css!sass'
+        // loader: ExtractTextPlugin.extract("style", "css!sass")
       },
       {
         test: /\.css$/,
-        //loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css")
+        loader: 'style!css!sass'
+        // loader: ExtractTextPlugin.extract("style", "css")
       },
       {
         test: /\.png$/,
@@ -44,6 +44,6 @@ module.exports = {
     ]
   },
   plugins: [
-        new ExtractTextPlugin("app.css")
+        // new ExtractTextPlugin("app.css")
     ]
 };
