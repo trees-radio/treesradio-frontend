@@ -5,10 +5,9 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   entry: path.resolve(__dirname, './app/index.js'),
   output: {
-    path: path.resolve(__dirname, 'public/assets'),
+    path: path.resolve(__dirname, './public/assets'),
     filename: "app.js",
-    sourceMapFilename: "smaps/[file].map",
-    publicPath: '/'
+    sourceMapFilename: "smaps/[file].map"
   },
   devtool: "source-map",
   module: {
@@ -25,12 +24,12 @@ module.exports = {
       {
         test: /\.scss$/,
         // loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css!sass")
+        loader: ExtractTextPlugin.extract("style", "css!sass", {publicPath: '/assets/'})
       },
       {
         test: /\.css$/,
         // loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css")
+        loader: ExtractTextPlugin.extract("style", "css", {publicPath: '/assets/'})
       },
       {
         test: /\.png$/,
