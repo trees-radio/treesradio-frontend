@@ -629,7 +629,7 @@ var Main = React.createClass({
     },
     moveTopPlaylist: function(index){
       // console.log("Moving top", index);
-      let currentAuth = base.getAuth();
+      // let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
       let movingItem = copyofPlaylist.splice(index, 1); // remove item from array
       // console.log(copyofPlaylist);
@@ -637,7 +637,7 @@ var Main = React.createClass({
       copyofPlaylist.unshift(movingItem[0]); // put item at front of array
       // console.log(copyofPlaylist);
       var updateMediaRequest = this.updateMediaRequest;
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {
+      base.post('playlists/' + this.state.user.uid + "/" + this.state.currentPlaylist.key + "/entries", {
         context: this,
         data: copyofPlaylist,
         then(){
@@ -733,7 +733,8 @@ var Main = React.createClass({
           title: this.state.playlists[currentPlaylistId].entries[0].title,
           thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
           channel: this.state.playlists[currentPlaylistId].entries[0].channel,
-          avatar: userAvatar
+          avatar: userAvatar,
+          playlist: this.state.currentPlaylist.key
           }
         );
 
@@ -786,7 +787,8 @@ var Main = React.createClass({
                   title: this.state.playlists[currentPlaylistId].entries[0].title,
                   thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
                   channel: this.state.playlists[currentPlaylistId].entries[0].channel,
-                  avatar: userAvatar
+                  avatar: userAvatar,
+                  playlist: this.state.currentPlaylist.key
                 }
               });
             }
