@@ -40,6 +40,19 @@ var Playlists = React.createClass({
      removeFromPlaylist: React.PropTypes.func.isRequired,
      moveTopPlaylist: React.PropTypes.func.isRequired
    },
+   componentDidMount: function() {
+     var volSlider = this.refs.volslider;
+     volSlider.addEventListener("mousewheel", this.wheelVol, false);
+   },
+   wheelVol: function(e) {
+     if (e.wheelDelta > 0) {
+       //scroll up
+       this.props.volumeNudge("up");
+     } else {
+       //scroll down
+       this.props.volumeNudge("down");
+     }
+   },
    updateVolume: function(value) {
      this.props.updateVolume(value);
    },
@@ -136,7 +149,7 @@ var Playlists = React.createClass({
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="grab-button" onClick={this.props.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
-            <div className="volume-slider">
+            <div className="volume-slider" ref="volslider">
               <i className={volClass}></i>
               <ReactSlider
                 max={1}
