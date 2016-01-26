@@ -887,6 +887,17 @@ var Main = React.createClass({
         }
       });
     },
+    toggleSize: function() {
+      if (!this.state.user.playerSize) {
+        base.post('users/' + this.state.user.uid + '/playerSize', {
+          data: true
+        });
+      } else {
+        base.post('users/' + this.state.user.uid + '/playerSize', {
+          data: false
+        });
+      }
+    },
     ///////////////////////////////////////////////////////////////////////
     // RENDER
     ///////////////////////////////////////////////////////////////////////
@@ -901,6 +912,7 @@ var Main = React.createClass({
                 handleRegister={this.handleRegister}
                 devCheck={this.state.devCheck}
                 setAvatar={this.setAvatar}
+                toggleSize={this.toggleSize}
               />
             {/* Start Container */}
               <div className="container-fluid">
