@@ -8,9 +8,7 @@
 
 import React from 'react';
 import sweetAlert from 'sweetalert';
-
-// import scss
-// import './Userbit.scss'
+import classNames from 'classnames';
 
 
 var Userbit = React.createClass({
@@ -63,11 +61,17 @@ var Userbit = React.createClass({
             //
             // check user level
             var userLevel = "user-level-user";
-            // if (this.props.checkUserLevel(this.props.logindata.username) === 2) {
-            //   userLevel = "user-level-admin";
-            // } else if (this.props.checkUserLevel(this.props.logindata.username) === 1) {
-            //   userLevel = "user-level-mod";
-            // }
+
+            var sizeToggleIcon;
+            var sizeToggleString;
+            if (!this.props.logindata.playerSize) {
+              sizeToggleIcon = classNames("fa", "fa-compress");
+              sizeToggleString = "Collapse Player";
+            } else {
+              sizeToggleIcon = classNames("fa", "fa-expand");
+              sizeToggleString = "Expand Player";
+            }
+
             return (
                 <div className="btn-group">
                     <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
@@ -75,6 +79,7 @@ var Userbit = React.createClass({
                         <span className="fa fa-caret-down"></span></a>
                         <ul className="dropdown-menu">
                           <li onClick={this.props.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
+                          <li onClick={this.props.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>
                         </ul>
 
                     <button className="btn btn-default" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>

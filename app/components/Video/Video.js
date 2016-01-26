@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import Progress from 'react-progressbar';
+import classNames from 'classnames';
 
 var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
 
@@ -29,10 +30,20 @@ var Video = React.createClass({
   onPause: function() {
 
   },
+  onDuration: function(duration) {
+    console.log(duration);
+  },
   render: function() {
+    var playerSizeClass;
+    if (!this.props.user.playerSize) {
+      playerSizeClass = classNames();
+    } else {
+      playerSizeClass = classNames("small-player-size");
+    }
+
     return(
       <div>
-        <div id="player-size">
+        <div id="player-size" className={playerSizeClass}>
           <ReactPlayer
             ref="TRplayer"
             className="reactplayer"
@@ -45,6 +56,7 @@ var Video = React.createClass({
             onProgress={this.onProgress}
             onPause={this.onPause}
             youtubeConfig={rPlayerYoutubeConfig}
+            onDuration={this.onDuration}
             />
         </div>
         <Progress
