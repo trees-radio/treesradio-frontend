@@ -39,6 +39,7 @@ var Nav = React.createClass({
                                   logouthandler={this.props.logouthandler}
                                   logindata={this.props.logindata}
                                   setAvatar={this.props.setAvatar}
+                                  toggleSize={this.props.toggleSize}
                                   />
                             </div>
                         </div>{ /* .navbar-collapse */}

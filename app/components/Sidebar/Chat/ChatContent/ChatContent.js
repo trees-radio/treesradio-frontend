@@ -8,7 +8,6 @@
 
 import React from 'react';
 // import _ from 'lodash';
-// import linkify from 'linkify';
 import Linkify from 'react-linkify';
 import classNames from 'classnames';
 import ReactImageFallback from 'react-image-fallback';
@@ -16,7 +15,6 @@ import ReactImageFallback from 'react-image-fallback';
 
 var ChatContent = React.createClass({
     componentDidMount: function() {
-      // var chatScroll = this.refs.chatScroll;
       window.setTimeout(function () {
         var chatScroll = this.refs.chatScroll;
         chatScroll.scrollTop = chatScroll.scrollHeight;

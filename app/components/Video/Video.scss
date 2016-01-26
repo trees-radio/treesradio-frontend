@@ -28,6 +28,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -41,6 +45,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 63vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -55,6 +63,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 68.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -68,6 +80,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 73.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -81,6 +97,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 75.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -94,6 +114,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 79vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -108,6 +132,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 80.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -122,6 +150,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 82vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -136,6 +168,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 83.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -149,6 +185,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 84.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -163,6 +203,10 @@ $videotoplevel-bg: #171717;
 #player-size {
   height: 84.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 .progressbar-container {
   position: absolute;
@@ -174,16 +218,24 @@ $videotoplevel-bg: #171717;
 
 // CLASS FOR SMALL PLAYER TO TOGGLE
 .small-player-size {
-  height:35vw;
-  width:35vw;
+  height:40vh !important;
+  width:35vw !important;
   margin-left:27.5%;
   padding-top:1%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
 }
 
 @media (min-height: 1000px) {
   #player-size {
     height: 86vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
   }
   .progressbar-container {
     position: absolute;
@@ -198,6 +250,10 @@ $videotoplevel-bg: #171717;
   #player-size {
     height: 86.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
   }
   .progressbar-container {
     position: absolute;
@@ -211,6 +267,10 @@ $videotoplevel-bg: #171717;
   #player-size {
     height: 88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
   }
   .progressbar-container {
     position: absolute;
@@ -224,6 +284,10 @@ $videotoplevel-bg: #171717;
   #player-size {
     height: 88.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
   }
   .progressbar-container {
     position: absolute;
