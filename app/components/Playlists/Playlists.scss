@@ -267,9 +267,13 @@
   font-size: 0.75vw;
   border-right: solid;
   border-color: #2d2f39;
-  background-color: #77b300;
+  background-color: rgba(102,153,0,1);
   padding: 0;
   margin: 0;
+}
+
+#playlists-open-button:hover {
+  background-color: rgba(85,128,0,1);
 }
 
 #playlists-open-icon {
