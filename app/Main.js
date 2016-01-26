@@ -755,17 +755,26 @@ var Main = React.createClass({
         if (!this.state.playlists[currentPlaylistId].entries) {
           return;
         }
-        base.post('waitlist/tasks/'+ this.state.user.inWaitlist.id, {
-          data: {
-            user: this.state.user.username,
-            uid: this.state.user.uid,
-            url: this.state.playlists[currentPlaylistId].entries[0].url,
-            title: this.state.playlists[currentPlaylistId].entries[0].title,
-            thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
-            channel: this.state.playlists[currentPlaylistId].entries[0].channel,
-            avatar: userAvatar
+        var taskEndpt = 'waitlist/tasks/' + this.state.user.inWaitlist.id;
+        base.fetch(taskEndpt, {
+          context: this,
+          then(data){
+            if (!data._state) {
+              base.post(taskEndpt, {
+                context: this,
+                data: {
+                  user: this.state.user.username,
+                  uid: this.state.user.uid,
+                  url: this.state.playlists[currentPlaylistId].entries[0].url,
+                  title: this.state.playlists[currentPlaylistId].entries[0].title,
+                  thumb: this.state.playlists[currentPlaylistId].entries[0].thumb,
+                  channel: this.state.playlists[currentPlaylistId].entries[0].channel,
+                  avatar: userAvatar
+                }
+              });
+            }
           }
-        })
+        });
       }
     },
 

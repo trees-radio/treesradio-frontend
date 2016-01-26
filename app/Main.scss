@@ -9,7 +9,7 @@
 
 // IMPORT EXTERNALS
 @import '~sweetalert/dist/sweetalert.css';
-@import '~font-awesome/css/font-awesome.css';
+// @import '~font-awesome/css/font-awesome.css';
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 //
@@ -25,6 +25,7 @@ $trees-bg: #0A0A0A;
 @import './components/Video/Video';
 @import './components/Playlists/Playlists';
 // @import './components/';
+// 
 
 html,
 body {
