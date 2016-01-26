@@ -145,7 +145,6 @@ $videotoplevel-bg: #171717;
 }
 }
 
-
 @media (min-height: 800px) {
 #player-size {
   height: 84.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
@@ -173,6 +172,13 @@ $videotoplevel-bg: #171717;
 }
 }
 
+// CLASS FOR SMALL PLAYER TO TOGGLE
+.small-player-size {
+  height:35vw;
+  width:35vw;
+  margin-left:27.5%;
+  padding-top:1%;
+}
 
 @media (min-height: 1000px) {
   #player-size {
@@ -236,8 +242,8 @@ $videotoplevel-bg: #171717;
   max-height: 90%;
   width: 100%;
   position: relative;
-  background-image: url('img/escheresque_ste.png');
-  // background-size:cover;
+  background-image: url('img/spacepineapples.jpg');
+  background-size:cover;
 }
 
 .reactplayer {
