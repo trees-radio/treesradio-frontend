@@ -58,6 +58,7 @@
     "react": "^0.14.3",
     "react-cookie": "^0.4.3",
     "react-dom": "^0.14.3",
+    "react-emoji": "^0.4.1",
     "react-image-fallback": "^2.1.1",
     "react-linkify": "^0.1.1",
     "react-player": "^0.5.2",

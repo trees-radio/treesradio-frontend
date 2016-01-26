@@ -11,6 +11,7 @@ import React from 'react';
 import Linkify from 'react-linkify';
 import classNames from 'classnames';
 import ReactImageFallback from 'react-image-fallback';
+import ReactEmoji from 'react-emoji';
 
 
 var ChatContent = React.createClass({
@@ -94,7 +95,7 @@ var ChatContent = React.createClass({
 
           let innerMsgs = msg.msgs.map(function(msg, index){
             return (
-              <Linkify key={index} properties={linkifyProperties}><span>{msg}<br/></span></Linkify>
+              <Linkify key={index} properties={linkifyProperties}><span>{ ReactEmoji.emojify(msg, {emojiType: 'emojione'}) }<br/></span></Linkify>
             )
           });
 
