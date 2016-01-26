@@ -667,6 +667,23 @@ var Main = React.createClass({
         }
       });
     },
+    volumeNudge: function(direction) {
+      if (direction === "up") {
+        this.setState({
+          controls: {
+            volume: this.state.controls.volume + 0.1,
+            playing: this.state.controls.playing
+          }
+        });
+      } else {
+        this.setState({
+          controls: {
+            volume: this.state.controls.volume - 0.1,
+            playing: this.state.controls.playing
+          }
+        });
+      }
+    },
 
     ///////////////////////////////////////////////////////////////////////
     // WAITLIST CONTROLS
@@ -923,6 +940,7 @@ var Main = React.createClass({
                               handleDislikeButton={this.handleDislikeButton}
                               handleGrabButton={this.handleGrabButton}
                               userFeedback={this.state.userFeedback}
+                              volumeNudge={this.volumeNudge}
                                />
                           </div>
                       </div>
