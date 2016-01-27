@@ -60,7 +60,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           userPresence: [],
-          playlistsOpen: false,
+          playlistsOpen: true,
           currentPlaylist: {
             name: "",
             id: -1,
