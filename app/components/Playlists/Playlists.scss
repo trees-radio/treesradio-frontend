@@ -18,6 +18,27 @@
   overflow: hidden;
 }
 
+.playlist-shuffle-btn {
+  padding-top: 1.25%;
+  padding-right:1%;
+  float:right;
+  color: #77b300;
+  cursor:pointer;
+  z-index:2
+}
+
+#pl-current-playlist {
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.25px;
+  font-size: 150%;
+  float:left;
+  margin-left: 20%;
+  text-decoration: underline;
+  top:1%;
+  z-index: 1
+}
+
+
 .playlists-panel-closed {
   height: 0px;
   overflow: hidden;
@@ -82,24 +103,17 @@
 }
 
 #playlist-search-box {
-  width: 65%;
-  max-width: 65%;
+  width: 55%;
+  max-width: 55%;
   height: 45px;
   margin-left: 1%;
   margin-top: 1%;
-  margin-right: 4%;
+  margin-right: 8%;
   float: left;
   font-size: 1.25em;
 }
 
-#pl-current-playlist {
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.25px;
-  font-size: 150%;
-  float:left;
-  margin-left: 20%;
-  text-decoration: underline;
-}
+
 
 #playlist-btn {
   width: 24%;
