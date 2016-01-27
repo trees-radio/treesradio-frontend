@@ -198,12 +198,12 @@ var PlaylistsPanel = React.createClass({
           <input type="text" id="playlist-search-box" ref="searchbox" placeholder="Search YouTube" className="form-control" onKeyPress={this.handleSubmit} />
             <div className="btn-group" id="playlist-btn">
                 <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#"><p id="pl-current-playlist">{currentPlaylistName}</p></a>
-                <span onClick={this.props.shufflePlaylist} className="playlist-shuffle-btn fa fa-random fa-3x"></span>
                     <ul className="dropdown-menu" id="pl-dd-menu">
                       <li><a href="#" onClick={this.props.addNewPlaylist}><i className="fa fa-plus"/> New Playlist</a></li>
                       {playlistsList}
                     </ul>
             </div>
+            <span onClick={this.props.shufflePlaylist} className="playlist-shuffle-btn fa fa-random fa-3x"></span>
         </div>
         <div id="playlists-panel-display">
           {playlistsCurrentView}
