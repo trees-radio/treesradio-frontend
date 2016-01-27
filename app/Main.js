@@ -201,9 +201,9 @@ var Main = React.createClass({
           //
           // START UPON LOGIN
           //
-          // Raven.setUserContext({ // Raven is defined globally in index.html
-          //   id: authData.uid
-          // });
+          Raven.setUserContext({ // Raven is defined globally in index.html
+            id: authData.uid
+          });
 
 
           base.listenTo('bans/'+authData.uid, {
