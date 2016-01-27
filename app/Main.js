@@ -263,8 +263,8 @@ var Main = React.createClass({
               connectedRef.on('value', function(snap) {
                 if (snap.val() === true) {
                   // var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + username);
-                  presenceRef.child('online').set(true);
                   presenceRef.child('online').onDisconnect().set(false);
+                  presenceRef.child('online').set(true);
                   presenceRef.child('lastseen').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
                 }
               });
