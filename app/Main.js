@@ -2,9 +2,9 @@
 
 // Sentry Error Reporting
 // Raven is defined globally in index.html
-// Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873', {
-//   release: '0.1.0'
-// }).install();
+Raven.config('https://870758af6d504cf08cda52138702ccd9@app.getsentry.com/61873', {
+  release: '0.1.0'
+}).install();
 
 // React
 import React from 'react';
@@ -201,9 +201,9 @@ var Main = React.createClass({
           //
           // START UPON LOGIN
           //
-          // Raven.setUserContext({ // Raven is defined globally in index.html
-          //   id: authData.uid
-          // });
+          Raven.setUserContext({ // Raven is defined globally in index.html
+            id: authData.uid
+          });
 
 
           base.listenTo('bans/'+authData.uid, {
@@ -246,15 +246,28 @@ var Main = React.createClass({
             context: this,
             state: 'user',
             then(){
-              trackJs.configure({ userId: this.state.user.username}); // attach trackjs to user
 
-              this.presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
-              this.presenceRef.child('uid').set(authData.uid);
-              this.presenceRef.child('online').onDisconnect().set(false);
-              this.presenceRef.child('online').set(true);
-              this.presencePing();
-              window.setInterval(this.presencePing, 30000);
-
+              var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
+              this.presenceRef = presenceRef; // for use elsewhere
+              var username = this.state.username; // for use below
+              presenceRef.child('uid').set(authData.uid);
+              presenceRef.child('online').onDisconnect().set(false);
+              presenceRef.child('online').set(true);
+              //
+              // this.presencePing();
+              // window.setInterval(this.presencePing, 30000);
+              // stopped using presence pings in favor of the below
+              // see https://www.firebase.com/docs/web/guide/offline-capabilities.html
+              //
+              var connectedRef = new Firebase(window.__env.firebase_origin + '/.info/connected');
+              connectedRef.on('value', function(snap) {
+                if (snap.val() === true) {
+                  // var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + username);
+                  presenceRef.child('online').onDisconnect().set(false);
+                  presenceRef.child('online').set(true);
+                  presenceRef.child('lastseen').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
+                }
+              });
 
 
 
