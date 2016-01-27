@@ -647,16 +647,18 @@ var Main = React.createClass({
 
     },
     shufflePlaylist: function() {
-      var copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
-      var shuffledPlaylist = _.shuffle(copyofPlaylist);
-      var updateMediaRequest = this.updateMediaRequest;
-      base.post('playlists/' + this.state.user.uid + "/" + this.state.currentPlaylist.key + "/entries", {
-        context: this,
-        data: shuffledPlaylist,
-        then(){
-          updateMediaRequest();
-        }
-      });
+      if (this.state.currentPlaylist.id != -1 && this.state.playlists[this.state.currentPlaylist.id].entries) {
+        var copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
+        var shuffledPlaylist = _.shuffle(copyofPlaylist);
+        var updateMediaRequest = this.updateMediaRequest;
+        base.post('playlists/' + this.state.user.uid + "/" + this.state.currentPlaylist.key + "/entries", {
+          context: this,
+          data: shuffledPlaylist,
+          then(){
+            updateMediaRequest();
+          }
+        });
+      }
     },
 
     ///////////////////////////////////////////////////////////////////////
