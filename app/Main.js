@@ -60,7 +60,7 @@ var Main = React.createClass({
           userLevel: 0,
           chat: [],
           userPresence: [],
-          playlistsOpen: true,
+          playlistsOpen: false,
           currentPlaylist: {
             name: "",
             id: -1,
@@ -652,7 +652,7 @@ var Main = React.createClass({
       var updateMediaRequest = this.updateMediaRequest;
       base.post('playlists/' + this.state.user.uid + "/" + this.state.currentPlaylist.key + "/entries", {
         context: this,
-        data: shufflePlaylist,
+        data: shuffledPlaylist,
         then(){
           updateMediaRequest();
         }
@@ -967,6 +967,7 @@ var Main = React.createClass({
                               handleGrabButton={this.handleGrabButton}
                               userFeedback={this.state.userFeedback}
                               volumeNudge={this.volumeNudge}
+                              shufflePlaylist={this.shufflePlaylist}
                                />
                           </div>
                       </div>
