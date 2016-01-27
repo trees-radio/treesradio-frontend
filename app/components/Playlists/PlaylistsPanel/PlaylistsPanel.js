@@ -203,7 +203,7 @@ var PlaylistsPanel = React.createClass({
                       {playlistsList}
                     </ul>
             </div>
-            <span className="playlist-shuffle-btn fa fa-random fa-3x"></span>
+            <span onClick={this.props.shufflePlaylist} className="playlist-shuffle-btn fa fa-random fa-3x"></span>
         </div>
         <div id="playlists-panel-display">
           {playlistsCurrentView}
