@@ -26,8 +26,8 @@ var ChatContent = React.createClass({
       var chatScroll = this.refs.chatScroll;
       // this.shouldScrollBottom = chatScroll.scrollTop + chatScroll.offsetHeight < chatScroll.scrollHeight;
       var scrollTestInt = chatScroll.scrollTop + chatScroll.offsetHeight;
-      var lowEnd = chatScroll.scrollHeight - 500;
-      var highEnd = chatScroll.scrollHeight + 500;
+      var lowEnd = chatScroll.scrollHeight - 300;
+      var highEnd = chatScroll.scrollHeight + 300;
       if (scrollTestInt > lowEnd && scrollTestInt < highEnd) {
         this.shouldScrollBottom = true;
       } else {
