@@ -721,6 +721,18 @@ var Main = React.createClass({
         return;
       }
       if (this.state.user.inWaitlist.waiting) {
+        if (this.state.user.inWaitlist.id === this.state.waitlist[0].key) {
+          var chatQueue = "queues/chat/tasks";
+          base.push(chatQueue, {
+            data: {
+              user: this.state.user.username,
+              uid: this.state.user.uid,
+              msg: "/uskip",
+              isAddition: false
+            }
+          });
+          return;
+        }
         if (this.state.user.inWaitlist.id != "") {
           var waitlistPlaceRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks/" + this.state.user.inWaitlist.id);
           waitlistPlaceRef.remove();
@@ -983,6 +995,8 @@ var Main = React.createClass({
                               userFeedback={this.state.userFeedback}
                               volumeNudge={this.volumeNudge}
                               shufflePlaylist={this.shufflePlaylist}
+                              waitlist={this.state.waitlist}
+                              user={this.state.user}
                                />
                           </div>
                       </div>
