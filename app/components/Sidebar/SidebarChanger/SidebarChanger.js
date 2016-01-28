@@ -62,7 +62,15 @@ var SidebarChanger = React.createClass({
         onlineCount += 1;
       }
     });
-    var waitlistCount = this.props.waitlist.length;
+    var waitlistCount = 0;
+    if (this.props.waitlist[0]) {
+      this.props.waitlist.forEach(function(waitlistItem, index) {
+        if (!waitlistItem._state) {
+          waitlistCount += 1;
+        }
+      });
+    }
+
     return (
       <div className="row sidebar-changer">
         <div className={chatBtnClass} ref="sel-chat" onClick={this.switchChat}>Chat</div>

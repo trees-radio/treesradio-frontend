@@ -721,7 +721,7 @@ var Main = React.createClass({
         return;
       }
       if (this.state.user.inWaitlist.waiting) {
-        if (this.state.user.inWaitlist.id === this.state.waitlist[0].key) {
+        if (this.state.waitlist[0] && this.state.user.inWaitlist.id === this.state.waitlist[0].key) {
           var chatQueue = "queues/chat/tasks";
           base.push(chatQueue, {
             data: {
