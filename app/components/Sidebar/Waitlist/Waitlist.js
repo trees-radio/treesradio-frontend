@@ -9,6 +9,9 @@ var Waitlist = React.createClass({
     var waitlistPos = 0;
     var waitlistPlace = 0;
     waitlistItems = this.props.waitlist.map(function(waitlistItem, index) {
+      if (waitlistItem['_state']) {
+        return "";
+      }
       var waitlistPosClass;
       if (waitlistPos === 0) {
         waitlistPosClass = "waitlist-line-1";

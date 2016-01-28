@@ -69,7 +69,7 @@ var Playlists = React.createClass({
      let waitlistButtonText = "Join Waitlist";
      var waitlistButtonClass = classNames("join-waitlist");
      if (this.props.inWaitlist) {
-       if (this.props.inWaitlist.waiting && this.props.user.inWaitlist.id === this.props.waitlist[0].key) {
+       if (this.props.inWaitlist.waiting && this.props.waitlist[0] && this.props.user.inWaitlist.id === this.props.waitlist[0].key) {
          waitlistButtonText = "Skip Song";
          waitlistButtonClass = classNames("join-waitlist", "join-waitlist-pressed");
        } else if (this.props.inWaitlist.waiting) {
