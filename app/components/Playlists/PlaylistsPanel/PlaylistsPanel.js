@@ -1,6 +1,7 @@
 
 import React from 'react';
-import parseIsoDuration from 'parse-iso-duration';
+// import parseIsoDuration from 'parse-iso-duration';
+import moment from 'moment';
 // import sweetAlert from 'sweetalert';
 // import cookie from 'react-cookie';
 
@@ -106,14 +107,15 @@ var PlaylistsPanel = React.createClass({
           let boundClickTop = this.handleMoveTop.bind(this, index);
           var humanDuration = "";
           if (item.duration) {
-            var videoDuration = new Date(item.duration);
-            var vidHours = videoDuration.getHours() - 16; // no idea why, getHours seems to return 16 too high here
+            // console.log(item.duration);
+            var videoDuration = moment.duration(item.duration);
+            var vidHours = videoDuration.hours();
             var vidHoursDisplay = "";
             if (vidHours > 0) {
               vidHoursDisplay = vidHours + "h ";
             }
-            var vidMins = videoDuration.getMinutes();
-            var vidSecs = "0" + videoDuration.getSeconds();
+            var vidMins = videoDuration.minutes();
+            var vidSecs = "0" + videoDuration.seconds();
             humanDuration = vidHoursDisplay + vidMins +':'+ vidSecs.substr(-2);
           }
 
@@ -148,14 +150,14 @@ var PlaylistsPanel = React.createClass({
         }
         let videoURL = "https://www.youtube.com/watch?v=" + item.id;
         let boundClick = this.handleAdd.bind(this, index);
-        var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
-        var vidHours = videoDuration.getHours() - 16; // no idea why, getHours seems to return 16 too high here
+        var videoDuration = moment.duration(item.contentDetails.duration);
+        var vidHours = videoDuration.hours();
         var vidHoursDisplay = "";
         if (vidHours > 0) {
           vidHoursDisplay = vidHours + "h ";
         }
-        var vidMins = videoDuration.getMinutes();
-        var vidSecs = "0" + videoDuration.getSeconds();
+        var vidMins = videoDuration.minutes();
+        var vidSecs = "0" + videoDuration.seconds();
         var humanDuration = vidHoursDisplay + vidMins +':'+ vidSecs.substr(-2);
         return (
             <li className={playlistPosClass} key={index}>

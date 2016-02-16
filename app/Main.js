@@ -19,7 +19,8 @@ import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
 import cookie from 'react-cookie';
-import parseIsoDuration from 'parse-iso-duration';
+// import parseIsoDuration from 'parse-iso-duration';
+import moment from 'moment';
 
 
 // TreesRadio utility functions
@@ -597,7 +598,7 @@ var Main = React.createClass({
         videoTitle = itemToAdd.title;
         videoThumb = itemToAdd.thumb;
         videoChannel = itemToAdd.channel;
-        videoDuration = this.state.playingMedia.playback.duration * 1000;
+        videoDuration = this.state.playingMedia.playback.duration * 1000; //seconds to miliseconds
       } else {
         // grab from search item
         itemToAdd = this.state.currentSearch.items[searchIndex];
@@ -606,7 +607,7 @@ var Main = React.createClass({
         videoTitle = itemToAdd.snippet.title;
         videoThumb = itemToAdd.snippet.thumbnails.default.url;
         videoChannel = itemToAdd.snippet.channelTitle;
-        videoDuration = parseIsoDuration(itemToAdd.contentDetails.duration);
+        videoDuration = moment.duration(itemToAdd.contentDetails.duration).valueOf();
       }
       var objectToAdd = {
         url: videoUrl,
