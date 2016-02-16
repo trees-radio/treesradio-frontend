@@ -615,7 +615,7 @@ var Main = React.createClass({
         channel: videoChannel,
         duration: videoDuration
       }
-
+      var updateMediaRequest = this.updateMediaRequest;
       if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
         let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
         if (grabBool) {
@@ -623,22 +623,37 @@ var Main = React.createClass({
         } else {
           copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
         }
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: copyofPlaylist}); // push new array to Firebase
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { // push new array to Firebase
+          data: copyofPlaylist,
+          then(){
+            updateMediaRequest();
+          }
+        });
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {data: [objectToAdd]});
+        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {
+          data: [objectToAdd],
+          then(){
+            updateMediaRequest();
+          }
+        });
       }
       this.setState({ playlistsPanelView: "playlist" });
-      this.updateMediaRequest();
     },
     removeFromPlaylist: function(index){
       // console.log("Removing playlist item of index", index);
       let currentAuth = base.getAuth();
       let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice();
       copyofPlaylist.splice(index, 1); //remove item from copy of array
-      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { data: copyofPlaylist }); //update Firebase
-      if (index === 0) {
-        this.updateMediaRequest();
-      }
+      var updateMediaRequest = this.updateMediaRequest;
+      base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { //update Firebase
+        data: copyofPlaylist,
+        then(){
+          if (index === 0) {
+            updateMediaRequest();
+          }
+        }
+      });
+
     },
     moveTopPlaylist: function(index){
       // console.log("Moving top", index);
@@ -721,6 +736,18 @@ var Main = React.createClass({
         return;
       }
       if (this.state.user.inWaitlist.waiting) {
+        if (this.state.waitlist[0] && this.state.user.inWaitlist.id === this.state.waitlist[0].key) {
+          var chatQueue = "queues/chat/tasks";
+          base.push(chatQueue, {
+            data: {
+              user: this.state.user.username,
+              uid: this.state.user.uid,
+              msg: "/uskip",
+              isAddition: false
+            }
+          });
+          return;
+        }
         if (this.state.user.inWaitlist.id != "") {
           var waitlistPlaceRef = new Firebase(window.__env.firebase_origin + "/waitlist/tasks/" + this.state.user.inWaitlist.id);
           waitlistPlaceRef.remove();
@@ -983,6 +1010,8 @@ var Main = React.createClass({
                               userFeedback={this.state.userFeedback}
                               volumeNudge={this.volumeNudge}
                               shufflePlaylist={this.shufflePlaylist}
+                              waitlist={this.state.waitlist}
+                              user={this.state.user}
                                />
                           </div>
                       </div>

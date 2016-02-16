@@ -4,12 +4,6 @@
 import React from 'react';
 import ReactSlider from 'react-slider';
 import classNames from 'classnames';
-// import $ from 'jquery';
-
-// // Material-UI imports
-// import Slider from 'material-ui/lib/slider';
-// import ThemeManager from 'material-ui/lib/styles/theme-manager';
-// import treesradioMuiTheme from '../../utils/muiTheme.js'
 
 
 
@@ -17,15 +11,6 @@ import classNames from 'classnames';
 import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
 var Playlists = React.createClass({
-  // // MUI stuff
-  // childContextTypes: {
-  //   muiTheme: React.PropTypes.object
-  // },
-  // getChildContext: function() {
-  //   return {
-  //     muiTheme: ThemeManager.getMuiTheme(treesradioMuiTheme)
-  //   };
-  // },
   propTypes: {
      playlistsOpen: React.PropTypes.bool.isRequired,
      searchForVideo: React.PropTypes.func.isRequired,
@@ -84,7 +69,10 @@ var Playlists = React.createClass({
      let waitlistButtonText = "Join Waitlist";
      var waitlistButtonClass = classNames("join-waitlist");
      if (this.props.inWaitlist) {
-       if (this.props.inWaitlist.waiting) {
+       if (this.props.inWaitlist.waiting && this.props.waitlist[0] && this.props.user.inWaitlist.id === this.props.waitlist[0].key) {
+         waitlistButtonText = "Skip Song";
+         waitlistButtonClass = classNames("join-waitlist", "join-waitlist-pressed");
+       } else if (this.props.inWaitlist.waiting) {
          waitlistButtonText = "Leave Waitlist";
          waitlistButtonClass = classNames("join-waitlist", "join-waitlist-pressed");
        }
@@ -169,9 +157,7 @@ var Playlists = React.createClass({
 
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            {/* <a className="button pblue"><div className="light"></div>Like</a><br/> */}
             <div className="like-button" onClick={this.props.handleLikeButton}><i className={likeClass}></i><span className="feedback-likes">{this.props.playingMedia.feedback.likes}</span></div>
-            {/* <a className="button pred"><div className="light"></div>Dislike</a> */}
             <div className="dislike-button" onClick={this.props.handleDislikeButton}><i className={dislikeClass}></i><span className="feedback-dislikes">{this.props.playingMedia.feedback.dislikes}</span></div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
