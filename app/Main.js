@@ -461,8 +461,16 @@ var Main = React.createClass({
       }
     },
     searchForVideo: function(searchQuery) {
-      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&type=video&videoEmbeddable=true&key=' + ytAPIkey + "&q=" + searchQuery)
-        .then(function (response) {
+      axios.get('https://www.googleapis.com/youtube/v3/search', {
+        params: {
+          part: 'snippet',
+          maxResults: '25',
+          type: 'video',
+          videoEmbeddable: 'true',
+          key: ytAPIkey,
+          q: searchQuery
+        }
+      }).then(function (response) {
           var search = response.data.items.map(function(data) {
             return data.id.videoId;
           }, this);
@@ -470,8 +478,13 @@ var Main = React.createClass({
           search.forEach(function(currentValue) {
             ids += currentValue + ",";
           });
-          axios.get('https://www.googleapis.com/youtube/v3/videos?id='+ ids +'&part=contentDetails,snippet&key='+ ytAPIkey)
-            .then(function (response) {
+          axios.get('https://www.googleapis.com/youtube/v3/videos?id='+ ids +'&part=contentDetails,snippet&key='+ ytAPIkey, {
+            params: {
+              id: ids,
+              part: 'contentDetails,snippet',
+              key: ytAPIkey
+            }
+          }).then(function (response) {
               // console.log(response.data);
               this.setState({ currentSearch: {
                 data: response.data,
