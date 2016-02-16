@@ -21,10 +21,14 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 // import parseIsoDuration from 'parse-iso-duration';
 import moment from 'moment';
+import url from 'url';
+import querystring from 'querystring';
+// import ypi from 'youtube-playlist-info';
 
 
 // TreesRadio utility functions
 import emitUserError from './utils/userError';
+import trYouTube from './utils/youTube.js';
 
 // Components
 import Nav from './components/Nav/Nav';
@@ -37,6 +41,7 @@ import './Main.scss';
 
 // YouTube API Key
 var ytAPIkey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
+trYouTube.setKey(ytAPIkey);
 
 
 var Main = React.createClass({
@@ -459,6 +464,67 @@ var Main = React.createClass({
       } else {
         this.setState({ playlistsOpen: false });
       }
+    },
+    playlistImport: function() {
+
+
+      sweetAlert({
+        title: "Import YouTube Playlist",
+        text: "Input the YouTube playlist URL:",
+        type: 'input',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "YouTube Playlist URL",
+        showLoaderOnConfirm: true
+      }, function(inputValue) {
+        if (inputValue === false) {
+          return false;
+        }
+        if (inputValue === '') {
+            emitUserError('Playlist Import Error', 'URL was empty!');
+            return false;
+        }
+
+        var youtube = url.parse(inputValue);
+        var query = querystring.parse(youtube.query);
+        if (query.list) {
+          var items = trYouTube.parsePlaylist(query.list, function(playlistItems) {
+            console.log(playlistItems);
+          });
+
+
+
+
+
+          // axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
+          //   params: {
+          //     part: 'contentDetails,snippet',
+          //     playlistId: query.list,
+          //     key: ytAPIkey,
+          //     maxResults: 50
+          //   }
+          // }).then(function(response) {
+          //   var data = response.data;
+          //   console.log(data);
+          //   var playlistItems = [];
+          //   playlistItems = playlistItems.concat(data.items);
+          //   if (data.nextPageToken) {
+          //     var nextPageToken = data.nextPageToken;
+          //
+          //   } else { //no need for looping
+          //
+          //   }
+          //
+          //
+          //
+          //
+          //
+          //
+          //
+          //   // console.log();
+          // });
+        }
+      });
     },
     searchForVideo: function(searchQuery) {
       axios.get('https://www.googleapis.com/youtube/v3/search', {
@@ -1026,6 +1092,7 @@ var Main = React.createClass({
                               shufflePlaylist={this.shufflePlaylist}
                               waitlist={this.state.waitlist}
                               user={this.state.user}
+                              playlistImport={this.playlistImport}
                                />
                           </div>
                       </div>

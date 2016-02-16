@@ -202,6 +202,7 @@ var PlaylistsPanel = React.createClass({
                 <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#"><p id="pl-current-playlist">{currentPlaylistName}</p></a>
                     <ul className="dropdown-menu" id="pl-dd-menu">
                       <li><a href="#" onClick={this.props.addNewPlaylist}><i className="fa fa-plus"/> New Playlist</a></li>
+                      <li><a href="#" onClick={this.props.playlistImport}><i className="fa fa-youtube-play"></i> Import Playlist</a></li>
                       {playlistsList}
                     </ul>
             </div>
