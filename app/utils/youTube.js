@@ -38,7 +38,6 @@ var youTube = (function(){
     }
   }
 
-
   return trModule;
 }());
 

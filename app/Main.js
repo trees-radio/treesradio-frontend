@@ -466,7 +466,7 @@ var Main = React.createClass({
       }
     },
     playlistImport: function() {
-
+      // var addNewPlaylist = this.addNewPlaylist;
 
       sweetAlert({
         title: "Import YouTube Playlist",
@@ -489,40 +489,69 @@ var Main = React.createClass({
         var query = querystring.parse(youtube.query);
         if (query.list) {
           var items = trYouTube.parsePlaylist(query.list, function(playlistItems) {
-            console.log(playlistItems);
+            // console.log(playlistItems);
+
+            axios.all(playlistItems.map(function(item, index) {
+              return axios.get('https://www.googleapis.com/youtube/v3/videos', {
+                params: {
+                  id: item.contentDetails.videoId,
+                  part: 'contentDetails,snippet',
+                  key: ytAPIkey
+                }
+              }).then(function(response) {
+                return response.data.items[0];
+              });
+            })).then(function(response) {
+              // console.log(response);
+              var cleanItems = response.map(function(item, value) {
+                if (item.snippet.title === 'Deleted video') {
+                  return;
+                }
+                return {
+                    url: "https://www.youtube.com/watch?v=" + item.contentDetails.videoId,
+                    title: item.snippet.title,
+                    thumb: item.snippet.thumbnails.default.url,
+                    channel: item.snippet.channelTitle,
+                    duration: moment.duration(item.contentDetails.duration).valueOf()
+                  }
+              });
+              // console.log(cleanItems);
+              sweetAlert({
+                title: "Import YouTube Playlist",
+                text: "Choose a name for your new playlist:",
+                type: 'input',
+                showCancelButton: true,
+                closeOnConfirm: false,
+                inputPlaceholder: "Playlist Name",
+                showLoaderOnConfirm: true
+              }, function(inputValue) {
+                if (inputValue === false) {
+                  return false;
+                }
+                if (inputValue === '') {
+                    emitUserError('Playlist Import Error', 'No name given!');
+                    return false;
+                }
+                let currentAuth = base.getAuth();
+                var newPlaylist = base.push('playlists/' + currentAuth.uid, {
+                  data: { name: inputValue }
+                });
+                // console.log(newPlaylist);
+                newPlaylist.child('entries').set(cleanItems, function() {
+                  sweetAlert("Playlist Imported!", "Your new playlist "+ inputValue +" has been created!", "success");
+                });
+              });
+            });
+
+            //   return {
+            //     url: "https://www.youtube.com/watch?v=" + item.contentDetails.videoId,
+            //     title: item.snippet.title,
+            //     thumb: item.snippet.thumbnails.default.url,
+            //     channel: item.snippet.channelTitle
+            //   }
+            // });
+            // console.log(playlistData);
           });
-
-
-
-
-
-          // axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
-          //   params: {
-          //     part: 'contentDetails,snippet',
-          //     playlistId: query.list,
-          //     key: ytAPIkey,
-          //     maxResults: 50
-          //   }
-          // }).then(function(response) {
-          //   var data = response.data;
-          //   console.log(data);
-          //   var playlistItems = [];
-          //   playlistItems = playlistItems.concat(data.items);
-          //   if (data.nextPageToken) {
-          //     var nextPageToken = data.nextPageToken;
-          //
-          //   } else { //no need for looping
-          //
-          //   }
-          //
-          //
-          //
-          //
-          //
-          //
-          //
-          //   // console.log();
-          // });
         }
       });
     },

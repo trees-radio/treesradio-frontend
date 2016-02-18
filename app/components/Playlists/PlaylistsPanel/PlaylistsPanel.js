@@ -105,7 +105,7 @@ var PlaylistsPanel = React.createClass({
           }
           let boundClickRemove = this.handleRemove.bind(this, index);
           let boundClickTop = this.handleMoveTop.bind(this, index);
-          var humanDuration = "";
+          var humanDuration = "Unknown";
           if (item.duration) {
             // console.log(item.duration);
             var videoDuration = moment.duration(item.duration);
