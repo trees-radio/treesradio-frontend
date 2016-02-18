@@ -1,6 +1,7 @@
 
 import React from 'react';
-import parseIsoDuration from 'parse-iso-duration';
+// import parseIsoDuration from 'parse-iso-duration';
+import moment from 'moment';
 // import sweetAlert from 'sweetalert';
 // import cookie from 'react-cookie';
 
@@ -104,16 +105,17 @@ var PlaylistsPanel = React.createClass({
           }
           let boundClickRemove = this.handleRemove.bind(this, index);
           let boundClickTop = this.handleMoveTop.bind(this, index);
-          var humanDuration = "";
+          var humanDuration = "Unknown";
           if (item.duration) {
-            var videoDuration = new Date(item.duration);
-            var vidHours = videoDuration.getHours() - 16; // no idea why, getHours seems to return 16 too high here
+            // console.log(item.duration);
+            var videoDuration = moment.duration(item.duration);
+            var vidHours = videoDuration.hours();
             var vidHoursDisplay = "";
             if (vidHours > 0) {
               vidHoursDisplay = vidHours + "h ";
             }
-            var vidMins = videoDuration.getMinutes();
-            var vidSecs = "0" + videoDuration.getSeconds();
+            var vidMins = videoDuration.minutes();
+            var vidSecs = "0" + videoDuration.seconds();
             humanDuration = vidHoursDisplay + vidMins +':'+ vidSecs.substr(-2);
           }
 
@@ -148,14 +150,14 @@ var PlaylistsPanel = React.createClass({
         }
         let videoURL = "https://www.youtube.com/watch?v=" + item.id;
         let boundClick = this.handleAdd.bind(this, index);
-        var videoDuration = new Date(parseIsoDuration(item.contentDetails.duration));
-        var vidHours = videoDuration.getHours() - 16; // no idea why, getHours seems to return 16 too high here
+        var videoDuration = moment.duration(item.contentDetails.duration);
+        var vidHours = videoDuration.hours();
         var vidHoursDisplay = "";
         if (vidHours > 0) {
           vidHoursDisplay = vidHours + "h ";
         }
-        var vidMins = videoDuration.getMinutes();
-        var vidSecs = "0" + videoDuration.getSeconds();
+        var vidMins = videoDuration.minutes();
+        var vidSecs = "0" + videoDuration.seconds();
         var humanDuration = vidHoursDisplay + vidMins +':'+ vidSecs.substr(-2);
         return (
             <li className={playlistPosClass} key={index}>
@@ -200,6 +202,7 @@ var PlaylistsPanel = React.createClass({
                 <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#"><p id="pl-current-playlist">{currentPlaylistName}</p></a>
                     <ul className="dropdown-menu" id="pl-dd-menu">
                       <li><a href="#" onClick={this.props.addNewPlaylist}><i className="fa fa-plus"/> New Playlist</a></li>
+                      <li><a href="#" onClick={this.props.playlistImport}><i className="fa fa-youtube-play"></i> Import Playlist</a></li>
                       {playlistsList}
                     </ul>
             </div>

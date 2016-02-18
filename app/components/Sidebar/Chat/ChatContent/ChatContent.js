@@ -33,7 +33,7 @@ var ChatContent = React.createClass({
       } else {
         this.shouldScrollBottom = false;
       }
-      console.log("shouldScroll", this.shouldScrollBottom, "scrollTestInt", scrollTestInt, "lowEnd", lowEnd, "highEnd", highEnd);
+      // console.log("shouldScroll", this.shouldScrollBottom, "scrollTestInt", scrollTestInt, "lowEnd", lowEnd, "highEnd", highEnd);
     },
     componentDidUpdate: function() {
       if (this.shouldScrollBottom) {
