@@ -481,14 +481,18 @@ var Main = React.createClass({
           return false;
         }
         if (inputValue === '') {
-            emitUserError('Playlist Import Error', 'URL was empty!');
+            sweetAlert.showInputError('URL is empty!');
             return false;
         }
 
         var youtube = url.parse(inputValue);
         var query = querystring.parse(youtube.query);
+        if (!query.list) {
+          sweetAlert.showInputError('No playlist found at that URL!');
+          return false;
+        }
         if (query.list) {
-          var items = trYouTube.parsePlaylist(query.list, function(playlistItems) {
+          trYouTube.parsePlaylist(query.list, function(playlistItems) {
             // console.log(playlistItems);
 
             axios.all(playlistItems.map(function(item, index) {
@@ -542,16 +546,9 @@ var Main = React.createClass({
                 });
               });
             });
-
-            //   return {
-            //     url: "https://www.youtube.com/watch?v=" + item.contentDetails.videoId,
-            //     title: item.snippet.title,
-            //     thumb: item.snippet.thumbnails.default.url,
-            //     channel: item.snippet.channelTitle
-            //   }
-            // });
-            // console.log(playlistData);
           });
+        } else {
+          //
         }
       });
     },
