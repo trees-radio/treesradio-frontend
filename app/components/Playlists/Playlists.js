@@ -123,6 +123,7 @@ var Playlists = React.createClass({
           removeFromPlaylist={this.props.removeFromPlaylist}
           moveTopPlaylist={this.props.moveTopPlaylist}
           shufflePlaylist={this.props.shufflePlaylist}
+          playlistImport={this.props.playlistImport}
           />
         <div id="playlists-bar" className="row">
           <div id="playlists-open-button" className="col-lg-1 col-md-1 col-sm-1 col-xs-1" onClick={this.props.playlistsOpenToggle}>
