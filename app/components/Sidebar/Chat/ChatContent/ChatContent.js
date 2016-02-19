@@ -88,10 +88,10 @@ var ChatContent = React.createClass({
           if (msg['avatar']) {
             chatAvatar = "//" + msg['avatar'];
           } else {
-            chatAvatar = "http://api.adorable.io/avatars/50/"+ username +".png";
+            chatAvatar = "//api.adorable.io/avatars/50/"+ username +".png";
           }
 
-          var avatarFallback = "http://api.adorable.io/avatars/50/"+ username +".png";
+          var avatarFallback = "//api.adorable.io/avatars/50/"+ username +".png";
 
 
 
