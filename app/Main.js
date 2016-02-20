@@ -507,7 +507,7 @@ var Main = React.createClass({
                 return response.data.items[0];
               });
             })).then(function(response) {
-              console.log(response);
+              // console.log(response);
               var cleanItems = response.map(function(item, value) {
                 if (item.snippet.title === 'Deleted video') {
                   return;
