@@ -19,11 +19,9 @@ import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
 import cookie from 'react-cookie';
-// import parseIsoDuration from 'parse-iso-duration';
 import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
-// import ypi from 'youtube-playlist-info';
 
 
 // TreesRadio utility functions
@@ -488,14 +486,17 @@ var Main = React.createClass({
         var youtube = url.parse(inputValue);
         var query = querystring.parse(youtube.query);
         if (!query.list) {
-          sweetAlert.showInputError('No playlist found at that URL!');
+          sweetAlert.showInputError('No playlist found in that URL!');
           return false;
         }
         if (query.list) {
-          trYouTube.parsePlaylist(query.list, function(playlistItems) {
+          trYouTube.parsePlaylist(query.list, function(playlist) {
             // console.log(playlistItems);
-
-            axios.all(playlistItems.map(function(item, index) {
+            if (playlist.error) {
+              sweetAlert.showInputError('YouTube API error! (Playlist not found.)');
+              return false;
+            }
+            axios.all(playlist.items.map(function(item, index) {
               return axios.get('https://www.googleapis.com/youtube/v3/videos', {
                 params: {
                   id: item.contentDetails.videoId,
@@ -506,13 +507,13 @@ var Main = React.createClass({
                 return response.data.items[0];
               });
             })).then(function(response) {
-              // console.log(response);
+              console.log(response);
               var cleanItems = response.map(function(item, value) {
                 if (item.snippet.title === 'Deleted video') {
                   return;
                 }
                 return {
-                    url: "https://www.youtube.com/watch?v=" + item.contentDetails.videoId,
+                    url: "https://www.youtube.com/watch?v=" + item.id,
                     title: item.snippet.title,
                     thumb: item.snippet.thumbnails.default.url,
                     channel: item.snippet.channelTitle,
