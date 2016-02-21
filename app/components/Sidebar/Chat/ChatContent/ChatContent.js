@@ -104,7 +104,7 @@ var ChatContent = React.createClass({
 
           let innerMsgs = msg.msgs.map(function(msg, index){
             return (
-              <Linkify key={index} properties={linkifyProperties}><span>{ ReactEmoji.emojify(msg, {emojiType: 'emojione'}) }<br/></span></Linkify>
+              <Linkify key={index} properties={linkifyProperties}><span>{ ReactEmoji.emojify(msg, {emojiType: 'twemoji'}) }<br/></span></Linkify>
             )
           });
 
