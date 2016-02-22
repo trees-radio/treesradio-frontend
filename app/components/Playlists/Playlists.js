@@ -120,7 +120,7 @@ var Playlists = React.createClass({
        var current = moment.duration(this.props.playingMedia.playback.time, 'seconds');
        var curHours = current.hours();
        var curHoursDisplay = "";
-       if (curHours > 0) {
+       if (durHours > 0) {
          curHoursDisplay = curHours + ":";
        }
        var curMins = "0" + current.minutes();
