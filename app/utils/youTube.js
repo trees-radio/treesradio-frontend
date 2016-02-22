@@ -10,7 +10,7 @@ var youTube = (function(){
     apiKey = ytApiKey;
   }
 
-  trModule.parsePlaylist = function(playlistId, callback, nextToken, playlistItems, noMorePages) {
+  trModule.parsePlaylist = function(playlistId, callback, nextToken, playlistItems, noMorePages, error) {
     console.log('Retrieving playlist items...');
     if (!playlistItems) {
       playlistItems = [];
@@ -32,9 +32,19 @@ var youTube = (function(){
         } else {
           trModule.parsePlaylist(playlistId, callback, nextToken, playlistItems, true); //ends the loop
         }
+      }).catch(function(response) {
+        // debugger;
+        console.log(response);
+        trModule.parsePlaylist(playlistId, callback, nextToken, playlistItems, true, true);
       });
     } else { //done with looping
-      return callback(playlistItems);
+      var playlist = {
+        items: playlistItems
+      }
+      if (error) {
+        playlist.error = true;
+      }
+      return callback(playlist);
     }
   }
 

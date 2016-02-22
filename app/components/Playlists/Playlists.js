@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactSlider from 'react-slider';
 import classNames from 'classnames';
-
+import moment from 'moment';
 
 
 
@@ -107,6 +107,27 @@ var Playlists = React.createClass({
        volClass = classNames("fa", "fa-volume-up", "volume-slider-icon");
      }
 
+     var timer = "";
+     if (this.props.playingMedia.playback.playing) {
+       var duration = moment.duration(this.props.playingMedia.playback.duration, 'seconds');
+       var durHours = duration.hours();
+       var durHoursDisplay = "";
+       if (durHours > 0) {
+         durHoursDisplay = durHours + ":";
+       }
+       var durMins = "0" + duration.minutes();
+       var durSecs = "0" + duration.seconds();
+       var current = moment.duration(this.props.playingMedia.playback.time, 'seconds');
+       var curHours = current.hours();
+       var curHoursDisplay = "";
+       if (durHours > 0) {
+         curHoursDisplay = curHours + ":";
+       }
+       var curMins = "0" + current.minutes();
+       var curSecs = "0" + current.seconds();
+       timer = curHoursDisplay + curMins.substr(-2) + ":" + curSecs.substr(-2) + " / " + durHoursDisplay + durMins.substr(-2) + ":" + durSecs.substr(-2);
+     }
+
      return(
       <div id="playlists-component">
         <PlaylistsPanel
@@ -134,8 +155,9 @@ var Playlists = React.createClass({
             <a className={currentSelectedMediaClass}>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <a className={currentPlayingMediaClass}>{currentPlayingMedia}</a><br/>
+            <span><a className={currentPlayingMediaClass}>{currentPlayingMedia}</a></span><br/>
             <a className="current-playing-user">Player: {this.props.playingMedia.playback.user}</a>
+            <span className="media-time">{timer}</span>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="grab-button" onClick={this.props.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
