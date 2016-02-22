@@ -155,9 +155,9 @@ var Playlists = React.createClass({
             <a className={currentSelectedMediaClass}>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <span><a className={currentPlayingMediaClass}>{currentPlayingMedia}</a></span>
-            <span className="media-time">{timer}</span><br/>
+            <span><a className={currentPlayingMediaClass}>{currentPlayingMedia}</a></span><br/>
             <a className="current-playing-user">Player: {this.props.playingMedia.playback.user}</a>
+            <span className="media-time">{timer}</span>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="grab-button" onClick={this.props.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
