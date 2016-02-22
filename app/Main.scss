@@ -25,7 +25,7 @@ $trees-bg: #0A0A0A;
 @import './components/Video/Video';
 @import './components/Playlists/Playlists';
 // @import './components/';
-// 
+//
 
 html,
 body {
@@ -68,4 +68,12 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+.sweet-alert button.cancel {
+  background-color: #686868 !important;
+}
+
+.sweet-alert button {
+  background-color: #17a8eb !important;
 }
