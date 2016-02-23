@@ -33,9 +33,7 @@ var ChatSend = React.createClass({
   getInitialState: function() {
     return {
       match: false,
-      currentMatch: {
-        string: ''
-      }
+      currentMatch: {}
     }
   },
   componentDidMount: function() {
@@ -55,6 +53,7 @@ var ChatSend = React.createClass({
       });
   },
   handleChat: function(e){
+
     if (e.key === 'Enter') {
       let newMsg = this.refs.sendbox.value.trim();
       if (newMsg === '') {
@@ -80,9 +79,11 @@ var ChatSend = React.createClass({
     }
   },
   render: function(){
+    var matchDiv = '';
     var matches = '';
-    var toMatch = this.state.currentMatch.string.substr(1);
     if (this.state.match) {
+      var toMatch = this.state.currentMatch.value.substr(1);
+      console.log(this.state.currentMatch);
       matches = this.props.userPresence.map(function(item, index) {
         if (item.online && item.key.includes(toMatch)) {
           // console.log(item, toMatch);
@@ -91,14 +92,17 @@ var ChatSend = React.createClass({
           )
         }
       });
-    }
-    return (
-      <div>
+      matchDiv = (
         <div className="mentions-container">
           {matches}
         </div>
+      )
+    }
+    return (
+      <div>
+        {matchDiv}
         <div id="sendbox">
-          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyPress={this.handleChat} />
+          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyUp={this.handleChat} />
         </div>
       </div>
         )
