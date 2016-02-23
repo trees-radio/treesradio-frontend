@@ -673,7 +673,10 @@ var Main = React.createClass({
           key: keyToSelect
         }
       });
-      cookie.save('lastSelectedPlaylist', index);
+      var playlistCookieExpire = moment().add(30, 'days').toDate();
+      cookie.save('lastSelectedPlaylist', index, {
+        expires: playlistCookieExpire
+      });
       this.setState({ playlistsPanelView: "playlist" });
       this.updateMediaRequest();
     },
