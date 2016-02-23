@@ -92,13 +92,15 @@ var ChatSend = React.createClass({
           )
         }
       });
-
-    }
-    return (
-      <div>
+      matchDiv = (
         <div className="mentions-container">
           {matches}
         </div>
+      )
+    }
+    return (
+      <div>
+        {matchDiv}
         <div id="sendbox">
           <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyUp={this.handleChat} />
         </div>
