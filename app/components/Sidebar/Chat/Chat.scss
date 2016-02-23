@@ -172,8 +172,14 @@ $chat-item-color: #c0c0c0; //light skin #000
   background-color:white;
   position:absolute;
   bottom:6.5%;
-  width:98.5%;
   left:.75%;
+  color:black;
+  padding-right:2%;
+}
+
+.mention-item {
+  padding-left:2%;
+  padding-right:2%;
 }
 
 #sendbox {
