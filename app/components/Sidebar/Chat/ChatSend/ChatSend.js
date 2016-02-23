@@ -92,7 +92,7 @@ var ChatSend = React.createClass({
         if (item.online && item.key.includes(toMatch)) {
           // console.log(item, toMatch);
           return (
-            <span key={item.key} className="mention-item" onClick={boundClick}>@{item.key}</span>
+            <span key={item.key} className="mention-item" onClick={boundClick}>@{item.key}<br/></span>
           )
         }
       }, this);
