@@ -168,6 +168,16 @@ $chat-item-color: #c0c0c0; //light skin #000
   width: 40px;
 }
 
+.mentions-container {
+  background-color:white;
+  height:30px;
+  z-index:10000;
+  position:absolute;
+  bottom:6.5%;
+  width:98.5%;
+  left:.75%;
+}
+
 #sendbox {
   position: absolute;
   width: 98.5%;

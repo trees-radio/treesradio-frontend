@@ -31,7 +31,7 @@ var Video = React.createClass({
 
   },
   onDuration: function(duration) {
-    console.log(duration);
+    // console.log(duration);
   },
   render: function() {
     var playerSizeClass;
