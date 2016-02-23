@@ -941,7 +941,7 @@ var Main = React.createClass({
         base.fetch(taskEndpt, {
           context: this,
           then(data){
-            if (!data._state) {
+            if (data && !data._state) {
               base.post(taskEndpt, {
                 context: this,
                 data: {
