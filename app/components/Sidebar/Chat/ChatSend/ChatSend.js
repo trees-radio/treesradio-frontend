@@ -52,6 +52,9 @@ var ChatSend = React.createClass({
         });
       });
   },
+  handleMention: function(name) {
+    completer.replaceMatch(completer.mostRecentMatch, '@'+name);
+  },
   handleChat: function(e){
 
     if (e.key === 'Enter') {
@@ -83,15 +86,16 @@ var ChatSend = React.createClass({
     var matches = '';
     if (this.state.match) {
       var toMatch = this.state.currentMatch.value.substr(1);
-      console.log(this.state.currentMatch);
+      // console.log(this.state.currentMatch);
       matches = this.props.userPresence.map(function(item, index) {
+        var boundClick = this.handleMention.bind(this, item.key);
         if (item.online && item.key.includes(toMatch)) {
           // console.log(item, toMatch);
           return (
-            <span key={item.key} className="mention-item">@{item.key}</span>
+            <span key={item.key} className="mention-item" onClick={boundClick}>@{item.key}<br/></span>
           )
         }
-      });
+      }, this);
       matchDiv = (
         <div className="mentions-container">
           {matches}

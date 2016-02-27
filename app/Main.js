@@ -508,10 +508,14 @@ var Main = React.createClass({
               });
             })).then(function(response) {
               // console.log(response);
-              var cleanItems = response.map(function(item, value) {
-                if (item.snippet.title === 'Deleted video') {
-                  return;
+              var cleanItems = response.filter(function(item) {
+                if (!item || item.snippet.title === 'Deleted video') {
+                  // console.log('skipping', item);
+                  return false;
+                } else {
+                  return true;
                 }
+              }).map(function(item, value) {
                 return {
                     url: "https://www.youtube.com/watch?v=" + item.id,
                     title: item.snippet.title,
@@ -541,7 +545,6 @@ var Main = React.createClass({
                 var newPlaylist = base.push('playlists/' + currentAuth.uid, {
                   data: { name: inputValue }
                 });
-                // console.log(newPlaylist);
                 newPlaylist.child('entries').set(cleanItems, function() {
                   sweetAlert("Playlist Imported!", "Your new playlist "+ inputValue +" has been created!", "success");
                 });
