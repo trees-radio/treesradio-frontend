@@ -841,8 +841,8 @@ var Main = React.createClass({
     },
     volSave: function() {
       var saveVol = this.state.controls.volume;
-      if (saveVol < 0.25) {
-        saveVol = 0.25
+      if (saveVol < 0.05) {
+        saveVol = 0.05
       }
       base.post('users/'+this.state.user.uid+'/settings/player/volume', {
         data: saveVol
