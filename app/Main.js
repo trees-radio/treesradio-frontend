@@ -295,15 +295,25 @@ var Main = React.createClass({
                 this.updateVolume(this.state.user.settings.player.volume);
               }
 
+              this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
+                context: this,
+                state: 'playlists',
+                asArray: true,
+                then(){
+                  if (this.state.user.settings && this.state.user.settings.playlists) {
+                    if (this.state.user.settings.playlists.selected || this.state.user.settings.playlists.selected === 0) {
+                      this.selectPlaylist(this.state.user.settings.playlists.selected);
+                    }
+                  }
+                }
+              });
+
+
             }
 
           });
           this.setState({ loginstate: true });
-          this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
-            context: this,
-            state: 'playlists',
-            asArray: true
-          });
+
 
 
 
@@ -685,12 +695,20 @@ var Main = React.createClass({
           key: keyToSelect
         }
       });
+
       // var playlistCookieExpire = moment().add(30, 'days').toDate();
       // cookie.save('lastSelectedPlaylist', index, {
       //   expires: playlistCookieExpire
       // });
+      clearTimeout(this.selPlaylistTimer);
+      this.selPlaylistTimer = setTimeout(this.saveSelPlaylist, 5000);
       this.setState({ playlistsPanelView: "playlist" });
       this.updateMediaRequest();
+    },
+    saveSelPlaylist: function() {
+      base.post('users/'+this.state.user.uid+'/settings/playlists/selected', {
+        data: this.state.currentPlaylist.id
+      });
     },
     /**
      * addToPlaylist
