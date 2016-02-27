@@ -18,7 +18,7 @@ var base = Rebase.createClass(window.__env.firebase_origin);
 import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
-import cookie from 'react-cookie';
+// import cookie from 'react-cookie';
 import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
@@ -290,7 +290,13 @@ var Main = React.createClass({
                   data: authData.uid
                 });
               }
+
+              if (this.state.user.settings && this.state.user.settings.player && this.state.user.settings.player.volume) {
+                this.updateVolume(this.state.user.settings.player.volume);
+              }
+
             }
+
           });
           this.setState({ loginstate: true });
           this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
@@ -298,20 +304,23 @@ var Main = React.createClass({
             state: 'playlists',
             asArray: true
           });
+
+
+
           // get last playlist from cookie and select it
-          let selectPlaylist = this.selectPlaylist;
-          let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
-          if (lastSelectedPlaylist === 0) {
-            window.setTimeout(function() {
-              selectPlaylist(lastSelectedPlaylist);
-            }, 1000);
-          } else if (lastSelectedPlaylist) {
-            window.setTimeout(function() {
-              selectPlaylist(lastSelectedPlaylist);
-            }, 1000);
-          } else {
-            // no last playlist to set
-          }
+          // let selectPlaylist = this.selectPlaylist;
+          // let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
+          // if (lastSelectedPlaylist === 0) {
+          //   window.setTimeout(function() {
+          //     selectPlaylist(lastSelectedPlaylist);
+          //   }, 1000);
+          // } else if (lastSelectedPlaylist) {
+          //   window.setTimeout(function() {
+          //     selectPlaylist(lastSelectedPlaylist);
+          //   }, 1000);
+          // } else {
+          //   // no last playlist to set
+          // }
 
           //
           // END UPON LOGIN
@@ -676,10 +685,10 @@ var Main = React.createClass({
           key: keyToSelect
         }
       });
-      var playlistCookieExpire = moment().add(30, 'days').toDate();
-      cookie.save('lastSelectedPlaylist', index, {
-        expires: playlistCookieExpire
-      });
+      // var playlistCookieExpire = moment().add(30, 'days').toDate();
+      // cookie.save('lastSelectedPlaylist', index, {
+      //   expires: playlistCookieExpire
+      // });
       this.setState({ playlistsPanelView: "playlist" });
       this.updateMediaRequest();
     },
@@ -821,23 +830,28 @@ var Main = React.createClass({
           playing: this.state.controls.playing
         }
       });
+      clearTimeout(this.volTimer);
+      this.volTimer = setTimeout(this.volSave, 5000);
+
     },
     volumeNudge: function(direction) {
+      var volInterval = 0.05;
+      var newVol = this.state.controls.volume;
       if (direction === "up") {
-        this.setState({
-          controls: {
-            volume: this.state.controls.volume + 0.1,
-            playing: this.state.controls.playing
-          }
-        });
+        newVol += volInterval;
       } else {
-        this.setState({
-          controls: {
-            volume: this.state.controls.volume - 0.1,
-            playing: this.state.controls.playing
-          }
-        });
+        newVol -= volInterval;
       }
+      this.updateVolume(newVol);
+    },
+    volSave: function() {
+      var saveVol = this.state.controls.volume;
+      if (saveVol < 0.25) {
+        saveVol = 0.25
+      }
+      base.post('users/'+this.state.user.uid+'/settings/player/volume', {
+        data: saveVol
+      });
     },
 
     ///////////////////////////////////////////////////////////////////////
