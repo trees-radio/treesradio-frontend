@@ -64,7 +64,7 @@ var Userbit = React.createClass({
 
             var sizeToggleIcon;
             var sizeToggleString;
-            if (!this.props.logindata.playerSize) {
+            if (this.props.logindata.playerSize) {
               sizeToggleIcon = classNames("fa", "fa-compress");
               sizeToggleString = "Collapse Player";
             } else {
