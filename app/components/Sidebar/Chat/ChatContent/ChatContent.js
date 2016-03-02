@@ -50,7 +50,8 @@ var ChatContent = React.createClass({
       } else {
         textGap = ' ';
       }
-      var afterInput = $('#chatinput').val(beforeInput+textGap+"@"+username);
+      var afterInput = $('#chatinput').val(beforeInput+textGap+"@"+username+" ");
+      $('#chatinput').focus();
     },
     render: function(){
       // tracking msg color
