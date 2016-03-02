@@ -85,11 +85,11 @@ var ChatSend = React.createClass({
     var matchDiv = '';
     var matches = '';
     if (this.state.match) {
-      var toMatch = this.state.currentMatch.value.substr(1);
+      var toMatch = this.state.currentMatch.value.substr(1).toUpperCase();
       // console.log(this.state.currentMatch);
       matches = this.props.userPresence.map(function(item, index) {
         var boundClick = this.handleMention.bind(this, item.key);
-        if (item.online && item.key.includes(toMatch)) {
+        if (item.online && item.key.toUpperCase().includes(toMatch)) {
           // console.log(item, toMatch);
           return (
             <span key={item.key} className="mention-item" onClick={boundClick}>@{item.key}<br/></span>
