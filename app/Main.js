@@ -27,6 +27,7 @@ import alert from 'alert';
 // TreesRadio utility functions
 import emitUserError from './utils/userError';
 import trYouTube from './utils/youTube.js';
+import { countArrayOccurences, titleAlert } from './utils/mentionUtils.js';
 
 // Components
 import Nav from './components/Nav/Nav';
@@ -323,14 +324,7 @@ var Main = React.createClass({
               //   console.log(mentions);
               // }.bind(this), 500);
 
-              function countArrayOccurences(array, check) {
-                var count = 0;
-                for(var i = 0; i < array.length; ++i){
-                  if(array[i] == check)
-                  count++;
-                }
-                return count;
-              }
+
 
               base.listenTo('chat/messages', {
                 context: this,
@@ -345,6 +339,7 @@ var Main = React.createClass({
                     var numInMsg = countArrayOccurences(msgNode[0].mentions, mentionString);
                     if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
                       // console.log('Detected new mention.');
+                      titleAlert();
                       alert('glass');
                       this.state.mention.mentioned = msgNode[0].key;
                       this.state.mention.numInMsg = numInMsg;
