@@ -104,7 +104,11 @@ var Main = React.createClass({
             position: 0
           },
           staff: {},
-          banned: false
+          banned: false,
+          mention: {
+            mentioned: '',
+            numInMsg: 0
+          }
       }
     },
     componentWillMount: function(){
@@ -116,7 +120,7 @@ var Main = React.createClass({
         this.ref.onAuth(this.authDataCallback);
 
         // grab chat messages and bind to chat array in state
-        base.syncState(`chat/messages`, {
+        base.syncState('chat/messages', {
             context: this,
             state: 'chat',
             asArray: true,
@@ -245,7 +249,7 @@ var Main = React.createClass({
             }
           });
 
-          this.userBindRef = base.syncState(`users/` + authData.uid, {
+          this.userBindRef = base.syncState('users/' + authData.uid, {
             context: this,
             state: 'user',
             then(){
@@ -294,7 +298,7 @@ var Main = React.createClass({
                 this.updateVolume(this.state.user.settings.player.volume);
               }
 
-              this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
+              this.playlistsBindRef = base.syncState('playlists/' + authData.uid, {
                 context: this,
                 state: 'playlists',
                 asArray: true,
@@ -307,8 +311,47 @@ var Main = React.createClass({
                 }
               });
 
+              // var mentionCheck = setInterval(function() {
+              //   var chat = this.state.chat;
+              //   var mentions = [];
+              //   chat.slice(chat.length - 6, chat.length - 1).forEach(function(item) {
+              //     if (item.mentions && typeof item.mentions !== 'undefined') {
+              //       mentions = mentions.concat(item.mentions);
+              //     }
+              //   });
+              //   console.log(mentions);
+              // }.bind(this), 500);
 
-            }
+              function countArrayOccurences(array, check) {
+                var count = 0;
+                for(var i = 0; i < array.length; ++i){
+                  if(array[i] == check)
+                  count++;
+                }
+                return count;
+              }
+
+              base.listenTo('chat/messages', {
+                context: this,
+                asArray: true,
+                queries: {
+                  limitToLast: 1
+                },
+                then(msgNode) {
+                  // console.log(msgNode[0]);
+                  var mentionString = '@'+this.state.user.username;
+                  if (_.includes(msgNode[0].mentions, mentionString)) {
+                    var numInMsg = countArrayOccurences(msgNode[0].mentions, mentionString);
+                    if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
+                      console.log('Detected new mention.');
+                      this.state.mention.mentioned = msgNode[0].key;
+                      this.state.mention.numInMsg = numInMsg;
+                    }
+                  }
+                }
+              });
+
+            } // end after user data loaded
 
           });
           this.setState({ loginstate: true });
