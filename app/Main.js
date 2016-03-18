@@ -22,12 +22,13 @@ import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
 import alert from 'alert';
+import Favico from 'favico.js';
 
 
 // TreesRadio utility functions
 import emitUserError from './utils/userError';
 import trYouTube from './utils/youTube.js';
-import { countArrayOccurences, titleAlert } from './utils/mentionUtils.js';
+import { countArrayOccurences, mentionTotaler } from './utils/mentionUtils.js';
 
 // Components
 import Nav from './components/Nav/Nav';
@@ -48,7 +49,7 @@ var Main = React.createClass({
     // REACT-SPECIFIC & CONSTRUCTION
     ///////////////////////////////////////////////////////////////////////
     getInitialState: function(){
-      let devCheckResult = false;
+      var devCheckResult = false;
       if (window.__env.firebase_origin === "https://treesradio-dev.firebaseio.com") {
         devCheckResult = true;
         document.title = "TreesRadio Dev";
@@ -109,12 +110,22 @@ var Main = React.createClass({
           banned: false,
           mention: {
             mentioned: '',
-            numInMsg: 0
+            numInMsg: 0,
+            notifyNum: 0
           }
       }
     },
     componentWillMount: function(){
-
+      var favicon = new Favico({
+        animation:'slide'
+      });
+      var faviconNum = 0;
+      var faviconInterval = setInterval(function() {
+        if (this.state.mention.notifyNum !== faviconNum) {
+          favicon.badge(this.state.mention.notifyNum);
+          faviconNum = this.state.mention.notifyNum;
+        }
+      }.bind(this), 500);
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -194,7 +205,7 @@ var Main = React.createClass({
         this.ref.authWithPassword({
             email: eml,
             password: pw
-        }, this.authHandler)
+        }, this.authHandler);
     },
     authHandler: function(error){ //hidden authData second param
         if (error) {
@@ -313,19 +324,9 @@ var Main = React.createClass({
                 }
               });
 
-              // var mentionCheck = setInterval(function() {
-              //   var chat = this.state.chat;
-              //   var mentions = [];
-              //   chat.slice(chat.length - 6, chat.length - 1).forEach(function(item) {
-              //     if (item.mentions && typeof item.mentions !== 'undefined') {
-              //       mentions = mentions.concat(item.mentions);
-              //     }
-              //   });
-              //   console.log(mentions);
-              // }.bind(this), 500);
 
 
-
+              // mentions handler
               base.listenTo('chat/messages', {
                 context: this,
                 asArray: true,
@@ -335,11 +336,17 @@ var Main = React.createClass({
                 then(msgNode) {
                   // console.log(msgNode[0]);
                   var mentionString = '@'+this.state.user.username;
-                  if (_.includes(msgNode[0].mentions, mentionString)) {
-                    var numInMsg = countArrayOccurences(msgNode[0].mentions, mentionString);
+                  mentionString = mentionString.toUpperCase();
+                  var mentions = msgNode[0].mentions.map(function(item) {
+                    return item.toUpperCase();
+                  });
+                  if (_.includes(mentions, mentionString)) {
+                    var numInMsg = countArrayOccurences(mentions, mentionString);
                     if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
-                      // console.log('Detected new mention.');
-                      titleAlert();
+                      this.state.mention.notifyNum += 1;
+                      mentionTotaler(function resetMentionNumCallback() {
+                        this.state.mention.notifyNum = 0;
+                      }.bind(this));
                       alert('glass');
                       this.state.mention.mentioned = msgNode[0].key;
                       this.state.mention.numInMsg = numInMsg;
