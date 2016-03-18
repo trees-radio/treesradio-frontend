@@ -337,19 +337,21 @@ var Main = React.createClass({
                   // console.log(msgNode[0]);
                   var mentionString = '@'+this.state.user.username;
                   mentionString = mentionString.toUpperCase();
-                  var mentions = msgNode[0].mentions.map(function(item) {
-                    return item.toUpperCase();
-                  });
-                  if (_.includes(mentions, mentionString)) {
-                    var numInMsg = countArrayOccurences(mentions, mentionString);
-                    if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
-                      this.state.mention.notifyNum += 1;
-                      mentionTotaler(function resetMentionNumCallback() {
-                        this.state.mention.notifyNum = 0;
-                      }.bind(this));
-                      alert('glass');
-                      this.state.mention.mentioned = msgNode[0].key;
-                      this.state.mention.numInMsg = numInMsg;
+                  if (msgNode[0].mentions) {
+                    var mentions = msgNode[0].mentions.map(function(item) {
+                      return item.toUpperCase();
+                    });
+                    if (_.includes(mentions, mentionString)) {
+                      var numInMsg = countArrayOccurences(mentions, mentionString);
+                      if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
+                        this.state.mention.notifyNum += 1;
+                        mentionTotaler(function resetMentionNumCallback() {
+                          this.state.mention.notifyNum = 0;
+                        }.bind(this));
+                        alert('glass');
+                        this.state.mention.mentioned = msgNode[0].key;
+                        this.state.mention.numInMsg = numInMsg;
+                      }
                     }
                   }
                 }
