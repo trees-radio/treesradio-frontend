@@ -21,6 +21,7 @@ import axios from 'axios';
 import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
+import alert from 'alert';
 
 
 // TreesRadio utility functions
@@ -343,7 +344,8 @@ var Main = React.createClass({
                   if (_.includes(msgNode[0].mentions, mentionString)) {
                     var numInMsg = countArrayOccurences(msgNode[0].mentions, mentionString);
                     if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
-                      console.log('Detected new mention.');
+                      // console.log('Detected new mention.');
+                      alert('glass');
                       this.state.mention.mentioned = msgNode[0].key;
                       this.state.mention.numInMsg = numInMsg;
                     }
