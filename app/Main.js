@@ -22,12 +22,13 @@ import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
 import alert from 'alert';
+import Favico from 'favico.js';
 
 
 // TreesRadio utility functions
 import emitUserError from './utils/userError';
 import trYouTube from './utils/youTube.js';
-import { countArrayOccurences, titleMentionAlert } from './utils/mentionUtils.js';
+import { countArrayOccurences, mentionTotaler } from './utils/mentionUtils.js';
 
 // Components
 import Nav from './components/Nav/Nav';
@@ -109,12 +110,22 @@ var Main = React.createClass({
           banned: false,
           mention: {
             mentioned: '',
-            numInMsg: 0
+            numInMsg: 0,
+            notifyNum: 0
           }
       }
     },
     componentWillMount: function(){
-
+      var favicon = new Favico({
+        animation:'slide'
+      });
+      var faviconNum = 0;
+      var faviconInterval = setInterval(function() {
+        if (this.state.mention.notifyNum !== faviconNum) {
+          favicon.badge(this.state.mention.notifyNum);
+          faviconNum = this.state.mention.notifyNum;
+        }
+      }.bind(this), 500);
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -313,6 +324,9 @@ var Main = React.createClass({
                 }
               });
 
+
+
+              // mentions handler
               base.listenTo('chat/messages', {
                 context: this,
                 asArray: true,
@@ -329,7 +343,10 @@ var Main = React.createClass({
                   if (_.includes(mentions, mentionString)) {
                     var numInMsg = countArrayOccurences(mentions, mentionString);
                     if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
-                      titleMentionAlert();
+                      this.state.mention.notifyNum += 1;
+                      mentionTotaler(function resetMentionNumCallback() {
+                        this.state.mention.notifyNum = 0;
+                      }.bind(this));
                       alert('glass');
                       this.state.mention.mentioned = msgNode[0].key;
                       this.state.mention.numInMsg = numInMsg;
