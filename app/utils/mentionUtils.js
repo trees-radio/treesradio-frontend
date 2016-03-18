@@ -7,9 +7,9 @@ export function countArrayOccurences(array, check) {
   return count;
 }
 
-export var titleAlert = (function () {
+export var titleMentionAlert = (function () {
     var oldTitle = document.title;
-    var msg = "New message!";
+    var msg = "New mention!";
     var timeoutId;
     var blink = function() { document.title = document.title == msg ? ' ' : msg; };
     var clear = function() {
