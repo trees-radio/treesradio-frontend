@@ -11,6 +11,9 @@ import sweetAlert from 'sweetalert';
 import classNames from 'classnames';
 import Firebase from 'firebase';
 
+import emitUserError from '../../../utils/userError.js';
+
+var ref = new Firebase(window.__env.firebase_origin);
 
 var Userbit = React.createClass({
     propTypes: {
@@ -65,11 +68,11 @@ var Userbit = React.createClass({
         inputPlaceholder: "Email address"
       }, function (inputValue) {
           if (inputValue === false) return false;
-          if (inputValue === "") {
+          if (inputValue === '') {
             sweetAlert.showInputError("You need to write something!");
             return false;
           }
-          var ref = new Firebase(window.__env.firebase_origin);
+
           ref.resetPassword({
             email: inputValue
           }, function() { // removed arg (error)
@@ -82,8 +85,81 @@ var Userbit = React.createClass({
           });
         });
     },
+    handleChangeEmail: function() {
+      sweetAlert({
+        title: "Change Email",
+        text: "First, enter your old email address below.",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "Old email address"
+      }, function(oldEmail) {
+        if (oldEmail === false) return false;
+        if (oldEmail === '') {
+          sweetAlert.showInputError("Error: Recieved blank address!");
+          return false;
+        }
+        sweetAlert({
+          title: "Change Email",
+          text: "Now, enter your new email address.",
+          type: "input",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          inputPlaceholder: "New email address"
+        }, function(newEmail) {
+          if (newEmail === false) return false;
+          if (newEmail === '') {
+            sweetAlert.showInputError("Error: Recieved blank address!");
+            return false;
+          }
+          sweetAlert({
+            title: "Change Email",
+            text: "Last, enter your password.",
+            type: 'input',
+            inputType: "password",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "Password"
+          }, function(password) {
+            if (password === false) return false;
+            if (password === '') {
+              sweetAlert.showInputError("Error: Recieved blank password!");
+              return false;
+            }
+            ref.changeEmail({
+              oldEmail: oldEmail,
+              newEmail: newEmail,
+              password: password
+            }, function(error) {
+              if (error) {
+                switch (error.code) {
+                  case "INVALID_PASSWORD":
+                  emitUserError("Change Email", "The specified user account password is incorrect.");
+                  // console.log("The specified user account password is incorrect.");
+                  break;
+                  case "INVALID_USER":
+                  emitUserError("Change Email", "The specified user account does not exist.");
+                  // console.log("The specified user account does not exist.");
+                  break;
+                  default:
+                  emitUserError("Change Email", "Unknown error.");
+                  console.error("Error creating user:", error);
+                }
+              } else {
+                sweetAlert({
+                  title: "Change Email",
+                  text: "Success! Your account's email is now: "+newEmail,
+                  type: 'success'
+                });
+              }
+            });
+          });
+        });
+      });
+    },
     render: function(){
-        if (this.props.loginstate){
+      var p = this.props;
+        if (p.loginstate){
             //
             // IF user is logged in
             //
@@ -92,7 +168,7 @@ var Userbit = React.createClass({
 
             var sizeToggleIcon;
             var sizeToggleString;
-            if (this.props.logindata.playerSize) {
+            if (p.logindata.playerSize) {
               sizeToggleIcon = classNames("fa", "fa-compress");
               sizeToggleString = "Collapse Player";
             } else {
@@ -102,15 +178,16 @@ var Userbit = React.createClass({
 
             return (
                 <div className="btn-group">
-                    <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{this.props.logindata.username}</b></span></a>
+                    <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={userLevel}><b>{p.logindata.username}</b></span></a>
                     <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown">
                         <span className="fa fa-caret-down"></span></a>
                         <ul className="dropdown-menu">
-                          <li onClick={this.props.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
-                          <li onClick={this.props.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>
+                          <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
+                          <li onClick={p.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>
+                          <li onClick={this.handleChangeEmail}><a href='#'><i className="fa fa-envelope"></i> Change Email</a></li>
                         </ul>
 
-                    <button className="btn btn-default" id="logoutbutton" onClick={this.props.logouthandler}>Logout</button>
+                    <button className="btn btn-default" id="logoutbutton" onClick={p.logouthandler}>Logout</button>
                 </div>
             )
          } else {
