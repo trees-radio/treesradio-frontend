@@ -6,7 +6,8 @@
   },
 
   "globals": {
-    "React": true
+    "React": true,
+    "Raven": true
   },
 
   "ecmaFeatures": {

@@ -120,7 +120,7 @@ var Main = React.createClass({
         animation:'slide'
       });
       var faviconNum = 0;
-      var faviconInterval = setInterval(function() {
+      this.faviconInterval = setInterval(function() {
         if (this.state.mention.notifyNum !== faviconNum) {
           favicon.badge(this.state.mention.notifyNum);
           faviconNum = this.state.mention.notifyNum;
@@ -269,7 +269,8 @@ var Main = React.createClass({
 
               var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
               this.presenceRef = presenceRef; // for use elsewhere
-              var username = this.state.username; // for use below
+              // var username = this.state.username; // for use below
+              // eslint says unused for above
               presenceRef.child('uid').set(authData.uid);
               presenceRef.child('online').onDisconnect().set(false);
               presenceRef.child('online').set(true);
@@ -545,7 +546,7 @@ var Main = React.createClass({
               sweetAlert.showInputError('YouTube API error! (Playlist not found.)');
               return false;
             }
-            axios.all(playlist.items.map(function(item, index) {
+            axios.all(playlist.items.map(function(item) {
               return axios.get('https://www.googleapis.com/youtube/v3/videos', {
                 params: {
                   id: item.contentDetails.videoId,
@@ -564,7 +565,7 @@ var Main = React.createClass({
                 } else {
                   return true;
                 }
-              }).map(function(item, value) {
+              }).map(function(item) {
                 return {
                     url: "https://www.youtube.com/watch?v=" + item.id,
                     title: item.snippet.title,
