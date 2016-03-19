@@ -35,7 +35,7 @@ var Video = React.createClass({
   },
   render: function() {
     var playerSizeClass;
-    if (!this.props.user.playerSize) {
+    if (this.props.user.playerSize) {
       playerSizeClass = classNames("large-player-size");
     } else {
       playerSizeClass = classNames("small-player-size");

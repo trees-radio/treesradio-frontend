@@ -25,7 +25,7 @@ var completer = new MentionCompleter({
     });
   },
   setSelectionRange: function (range) {
-    sendBox.setSelectionRange(range.start, range.end);
+    sendBox[0].setSelectionRange(range.start, range.end);
   }
 });
 
@@ -33,8 +33,13 @@ var ChatSend = React.createClass({
   getInitialState: function() {
     return {
       match: false,
+      numMatches: 0,
+      quickMatch: "",
       currentMatch: {}
     }
+  },
+  componentWillMount: function() {
+    sendBox = $(this.refs.sendbox);
   },
   componentDidMount: function() {
     var that = this;
@@ -48,7 +53,9 @@ var ChatSend = React.createClass({
       })
       .on('nomatch', function() {
         that.setState({
-          match: false
+          match: false,
+          numMatches: 0,
+          quickMatch: ""
         });
       });
   },
@@ -56,8 +63,19 @@ var ChatSend = React.createClass({
     completer.replaceMatch(completer.mostRecentMatch, '@'+name);
   },
   handleChat: function(e){
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (this.state.numMatches === 1 && this.state.quickMatch !== "") {
+        completer.replaceMatch(completer.mostRecentMatch, '@'+this.state.quickMatch);
+      }
+      return false;
+    }
 
     if (e.key === 'Enter') {
+      if (this.state.numMatches === 1 && this.state.quickMatch !== "") {
+        completer.replaceMatch(completer.mostRecentMatch, '@'+this.state.quickMatch);
+        return;
+      }
       let newMsg = this.refs.sendbox.value.trim();
       if (newMsg === '') {
         // console.log("User attempted to send an empty chat message");
@@ -85,12 +103,18 @@ var ChatSend = React.createClass({
     var matchDiv = '';
     var matches = '';
     if (this.state.match) {
-      var toMatch = this.state.currentMatch.value.substr(1);
-      // console.log(this.state.currentMatch);
+      var toMatch = this.state.currentMatch.value.substr(1).toUpperCase();
+      this.state.numMatches = 0; //reset number of matches before runnning map
       matches = this.props.userPresence.map(function(item, index) {
         var boundClick = this.handleMention.bind(this, item.key);
-        if (item.online && item.key.includes(toMatch)) {
-          // console.log(item, toMatch);
+        if (item.online && item.key.toUpperCase().includes(toMatch)) {
+          if (this.state.numMatches === 0) {
+            this.state.quickMatch = item.key;
+          } else {
+            this.state.quickMatch = "";
+          }
+          // bump number of matches for each valid match
+          this.state.numMatches += 1;
           return (
             <span key={item.key} className="mention-item" onClick={boundClick}>@{item.key}<br/></span>
           )
@@ -106,7 +130,7 @@ var ChatSend = React.createClass({
       <div>
         {matchDiv}
         <div id="sendbox">
-          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyUp={this.handleChat} />
+          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyDown={this.handleChat} />
         </div>
       </div>
         )

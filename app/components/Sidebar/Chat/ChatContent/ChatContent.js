@@ -12,6 +12,7 @@ import Linkify from 'react-linkify';
 import classNames from 'classnames';
 import ReactImageFallback from 'react-image-fallback';
 import ReactEmoji from 'react-emoji';
+import $ from 'jquery';
 
 
 var ChatContent = React.createClass({
@@ -40,6 +41,17 @@ var ChatContent = React.createClass({
         var chatScroll = this.refs.chatScroll;
         chatScroll.scrollTop = chatScroll.scrollHeight;
       }
+    },
+    handleNameClick: function(username) {
+      var beforeInput = $('#chatinput').val();
+      var textGap;
+      if (beforeInput.substr(beforeInput.length - 1) === ' ') {
+        textGap = '';
+      } else {
+        textGap = ' ';
+      }
+      var afterInput = $('#chatinput').val(beforeInput+textGap+"@"+username+" ");
+      $('#chatinput').focus();
     },
     render: function(){
       // tracking msg color
@@ -108,6 +120,8 @@ var ChatContent = React.createClass({
             )
           });
 
+          var boundClickName = this.handleNameClick.bind(this, msg.user);
+
           // individual
           return (
               <li key={index} className={chatLineClasses}>
@@ -118,10 +132,9 @@ var ChatContent = React.createClass({
                     fallbackImage={avatarFallback}
                     initialImage="/img/no-avatar.gif"
                     />
-                  {/* <img id="avatarimg" src={chatAvatar} /> */}
                 </div>
                 <div className="chat-msg">
-                  <span className={usernameClasses}>{ msg.user }</span>
+                  <span className={usernameClasses} onClick={boundClickName}>{ msg.user }</span>
                   <span className="chat-timestamp">{humanTimestamp}</span><br />
                   <span className="chat-text">{ innerMsgs }</span>
                 </div>

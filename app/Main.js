@@ -18,15 +18,17 @@ var base = Rebase.createClass(window.__env.firebase_origin);
 import sweetAlert from 'sweetalert';
 import _ from 'lodash';
 import axios from 'axios';
-import cookie from 'react-cookie';
 import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
+import alert from 'alert';
+import Favico from 'favico.js';
 
 
 // TreesRadio utility functions
 import emitUserError from './utils/userError';
 import trYouTube from './utils/youTube.js';
+import { countArrayOccurences, mentionTotaler } from './utils/mentionUtils.js';
 
 // Components
 import Nav from './components/Nav/Nav';
@@ -47,7 +49,7 @@ var Main = React.createClass({
     // REACT-SPECIFIC & CONSTRUCTION
     ///////////////////////////////////////////////////////////////////////
     getInitialState: function(){
-      let devCheckResult = false;
+      var devCheckResult = false;
       if (window.__env.firebase_origin === "https://treesradio-dev.firebaseio.com") {
         devCheckResult = true;
         document.title = "TreesRadio Dev";
@@ -105,11 +107,25 @@ var Main = React.createClass({
             position: 0
           },
           staff: {},
-          banned: false
+          banned: false,
+          mention: {
+            mentioned: '',
+            numInMsg: 0,
+            notifyNum: 0
+          }
       }
     },
     componentWillMount: function(){
-
+      var favicon = new Favico({
+        animation:'slide'
+      });
+      var faviconNum = 0;
+      var faviconInterval = setInterval(function() {
+        if (this.state.mention.notifyNum !== faviconNum) {
+          favicon.badge(this.state.mention.notifyNum);
+          faviconNum = this.state.mention.notifyNum;
+        }
+      }.bind(this), 500);
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -117,7 +133,7 @@ var Main = React.createClass({
         this.ref.onAuth(this.authDataCallback);
 
         // grab chat messages and bind to chat array in state
-        base.syncState(`chat/messages`, {
+        base.syncState('chat/messages', {
             context: this,
             state: 'chat',
             asArray: true,
@@ -189,7 +205,7 @@ var Main = React.createClass({
         this.ref.authWithPassword({
             email: eml,
             password: pw
-        }, this.authHandler)
+        }, this.authHandler);
     },
     authHandler: function(error){ //hidden authData second param
         if (error) {
@@ -246,7 +262,7 @@ var Main = React.createClass({
             }
           });
 
-          this.userBindRef = base.syncState(`users/` + authData.uid, {
+          this.userBindRef = base.syncState('users/' + authData.uid, {
             context: this,
             state: 'user',
             then(){
@@ -290,28 +306,61 @@ var Main = React.createClass({
                   data: authData.uid
                 });
               }
-            }
+
+              if (this.state.user.settings && this.state.user.settings.player && this.state.user.settings.player.volume) {
+                this.updateVolume(this.state.user.settings.player.volume);
+              }
+
+              this.playlistsBindRef = base.syncState('playlists/' + authData.uid, {
+                context: this,
+                state: 'playlists',
+                asArray: true,
+                then(){
+                  if (this.state.user.settings && this.state.user.settings.playlists) {
+                    if (this.state.user.settings.playlists.selected || this.state.user.settings.playlists.selected === 0) {
+                      this.selectPlaylist(this.state.user.settings.playlists.selected);
+                    }
+                  }
+                }
+              });
+
+
+
+              // mentions handler
+              base.listenTo('chat/messages', {
+                context: this,
+                asArray: true,
+                queries: {
+                  limitToLast: 1
+                },
+                then(msgNode) {
+                  // console.log(msgNode[0]);
+                  var mentionString = '@'+this.state.user.username;
+                  mentionString = mentionString.toUpperCase();
+                  if (msgNode[0].mentions) {
+                    var mentions = msgNode[0].mentions.map(function(item) {
+                      return item.toUpperCase();
+                    });
+                    if (_.includes(mentions, mentionString)) {
+                      var numInMsg = countArrayOccurences(mentions, mentionString);
+                      if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
+                        this.state.mention.notifyNum += 1;
+                        mentionTotaler(function resetMentionNumCallback() {
+                          this.state.mention.notifyNum = 0;
+                        }.bind(this));
+                        alert('glass');
+                        this.state.mention.mentioned = msgNode[0].key;
+                        this.state.mention.numInMsg = numInMsg;
+                      }
+                    }
+                  }
+                }
+              });
+
+            } // end after user data loaded
+
           });
           this.setState({ loginstate: true });
-          this.playlistsBindRef = base.syncState(`playlists/` + authData.uid, {
-            context: this,
-            state: 'playlists',
-            asArray: true
-          });
-          // get last playlist from cookie and select it
-          let selectPlaylist = this.selectPlaylist;
-          let lastSelectedPlaylist = cookie.load('lastSelectedPlaylist');
-          if (lastSelectedPlaylist === 0) {
-            window.setTimeout(function() {
-              selectPlaylist(lastSelectedPlaylist);
-            }, 1000);
-          } else if (lastSelectedPlaylist) {
-            window.setTimeout(function() {
-              selectPlaylist(lastSelectedPlaylist);
-            }, 1000);
-          } else {
-            // no last playlist to set
-          }
 
           //
           // END UPON LOGIN
@@ -676,12 +725,16 @@ var Main = React.createClass({
           key: keyToSelect
         }
       });
-      var playlistCookieExpire = moment().add(30, 'days').toDate();
-      cookie.save('lastSelectedPlaylist', index, {
-        expires: playlistCookieExpire
-      });
+
+      clearTimeout(this.selPlaylistTimer);
+      this.selPlaylistTimer = setTimeout(this.saveSelPlaylist, 5000);
       this.setState({ playlistsPanelView: "playlist" });
       this.updateMediaRequest();
+    },
+    saveSelPlaylist: function() {
+      base.post('users/'+this.state.user.uid+'/settings/playlists/selected', {
+        data: this.state.currentPlaylist.id
+      });
     },
     /**
      * addToPlaylist
@@ -821,23 +874,28 @@ var Main = React.createClass({
           playing: this.state.controls.playing
         }
       });
+      clearTimeout(this.volTimer);
+      this.volTimer = setTimeout(this.volSave, 5000);
+
     },
     volumeNudge: function(direction) {
+      var volInterval = 0.05;
+      var newVol = this.state.controls.volume;
       if (direction === "up") {
-        this.setState({
-          controls: {
-            volume: this.state.controls.volume + 0.1,
-            playing: this.state.controls.playing
-          }
-        });
+        newVol += volInterval;
       } else {
-        this.setState({
-          controls: {
-            volume: this.state.controls.volume - 0.1,
-            playing: this.state.controls.playing
-          }
-        });
+        newVol -= volInterval;
       }
+      this.updateVolume(newVol);
+    },
+    volSave: function() {
+      var saveVol = this.state.controls.volume;
+      if (saveVol < 0.05) {
+        saveVol = 0.05
+      }
+      base.post('users/'+this.state.user.uid+'/settings/player/volume', {
+        data: saveVol
+      });
     },
 
     ///////////////////////////////////////////////////////////////////////
