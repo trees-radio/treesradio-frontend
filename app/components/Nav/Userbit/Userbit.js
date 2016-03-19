@@ -9,6 +9,7 @@
 import React from 'react';
 import sweetAlert from 'sweetalert';
 import classNames from 'classnames';
+import Firebase from 'firebase';
 
 
 var Userbit = React.createClass({
@@ -53,6 +54,33 @@ var Userbit = React.createClass({
         }
       }
 
+    },
+    handleResetPassword: function() {
+      sweetAlert({
+        title: "Password Reset",
+        text: "Please enter the email address associated with your account.",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "Email address"
+      }, function (inputValue) {
+          if (inputValue === false) return false;
+          if (inputValue === "") {
+            sweetAlert.showInputError("You need to write something!");
+            return false;
+          }
+          var ref = new Firebase(window.__env.firebase_origin);
+          ref.resetPassword({
+            email: inputValue
+          }, function() { // removed arg (error)
+            // not displaying error code in any way here to discourage potentially malicious checks for accounts
+            sweetAlert({
+              title: "Password Reset",
+              text: "Your request has been recieved. If an account exists for the email ("+inputValue+"), a link to reset your password will be sent to that address",
+              type: "success"
+            });
+          });
+        });
     },
     render: function(){
         if (this.props.loginstate){
@@ -104,6 +132,7 @@ var Userbit = React.createClass({
 
                     <button className="btn btn-primary" id="loginbutton" onClick={this.loginButton}>Login</button>
                     <button className="btn btn-default" id="regbutton" onClick={this.registerButton}>Register</button>
+                    <button className="btn btn-primary" id="reset-password-btn" onClick={this.handleResetPassword}>Password Reset</button>
 
                 </div>
             )
