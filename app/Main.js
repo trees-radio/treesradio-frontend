@@ -326,8 +326,9 @@ var Main = React.createClass({
               });
 
 
-
-              // mentions handler
+              ////
+              // MENTIONS HANDLER
+              //
               base.listenTo('chat/messages', {
                 context: this,
                 asArray: true,
@@ -335,7 +336,6 @@ var Main = React.createClass({
                   limitToLast: 1
                 },
                 then(msgNode) {
-                  // console.log(msgNode[0]);
                   var mentionString = '@'+this.state.user.username;
                   mentionString = mentionString.toUpperCase();
                   if (msgNode[0].mentions) {
