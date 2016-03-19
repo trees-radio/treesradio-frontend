@@ -105,7 +105,7 @@ var ChatSend = React.createClass({
     if (this.state.match) {
       var toMatch = this.state.currentMatch.value.substr(1).toUpperCase();
       this.state.numMatches = 0; //reset number of matches before runnning map
-      matches = this.props.userPresence.map(function(item, index) {
+      matches = this.props.userPresence.map(function(item) {
         var boundClick = this.handleMention.bind(this, item.key);
         if (item.online && item.key.toUpperCase().includes(toMatch)) {
           if (this.state.numMatches === 0) {
