@@ -50,7 +50,7 @@ var ChatContent = React.createClass({
       } else {
         textGap = ' ';
       }
-      var afterInput = $('#chatinput').val(beforeInput+textGap+"@"+username+" ");
+      $('#chatinput').val(beforeInput+textGap+"@"+username+" ");
       $('#chatinput').focus();
     },
     render: function(){

@@ -64,7 +64,7 @@ var SidebarChanger = React.createClass({
     });
     var waitlistCount = 0;
     if (this.props.waitlist[0]) {
-      this.props.waitlist.forEach(function(waitlistItem, index) {
+      this.props.waitlist.forEach(function(waitlistItem) {
         if (!waitlistItem._state) {
           waitlistCount += 1;
         }

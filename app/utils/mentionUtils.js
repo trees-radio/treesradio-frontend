@@ -12,7 +12,9 @@ export var titleMentionAlert = (function () {
   var oldTitle = document.title;
   var msg = "New mention!";
   var timeoutId;
-  var blink = function() { document.title = document.title == msg ? ' ' : msg; };
+  var blink = function() {
+    document.title = document.title == msg ? ' ' : msg;
+  };
   var clear = function() {
     clearInterval(timeoutId);
     document.title = oldTitle;

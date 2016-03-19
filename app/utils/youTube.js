@@ -11,7 +11,7 @@ var youTube = (function(){
   }
 
   trModule.parsePlaylist = function(playlistId, callback, nextToken, playlistItems, noMorePages, error) {
-    console.log('Retrieving playlist items...');
+    // console.log('Retrieving playlist items...');
     if (!playlistItems) {
       playlistItems = [];
     }
@@ -32,9 +32,8 @@ var youTube = (function(){
         } else {
           trModule.parsePlaylist(playlistId, callback, nextToken, playlistItems, true); //ends the loop
         }
-      }).catch(function(response) {
-        // debugger;
-        console.log(response);
+      }).catch(function() { //removed response arg for linter
+        // console.log(response);
         trModule.parsePlaylist(playlistId, callback, nextToken, playlistItems, true, true);
       });
     } else { //done with looping
