@@ -65,6 +65,7 @@ var Userbit = React.createClass({
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
+        showLoaderOnConfirm: true,
         inputPlaceholder: "Email address"
       }, function (inputValue) {
           if (inputValue === false) return false;
@@ -119,6 +120,7 @@ var Userbit = React.createClass({
             inputType: "password",
             showCancelButton: true,
             closeOnConfirm: false,
+            showLoaderOnConfirm: true,
             inputPlaceholder: "Password"
           }, function(password) {
             if (password === false) return false;
@@ -143,12 +145,89 @@ var Userbit = React.createClass({
                   break;
                   default:
                   emitUserError("Change Email", "Unknown error.");
-                  console.error("Error creating user:", error);
+                  console.error("Error creating user:", error); //eslint-disable-line
+                  // actually want this error here
                 }
               } else {
                 sweetAlert({
                   title: "Change Email",
                   text: "Success! Your account's email is now: "+newEmail,
+                  type: 'success'
+                });
+              }
+            });
+          });
+        });
+      });
+    },
+    handleChangePassword: function() {
+      sweetAlert({
+        title: "Change Password",
+        text: "First, enter the email address associated with this account.",
+        type: 'input',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "Email address"
+      }, function(email) {
+        if (email === false) return false;
+        if (email === '') {
+          sweetAlert.showInputError("Error: Recieved blank email!");
+          return false;
+        }
+        sweetAlert({
+          title: "Change Password",
+          text: "Next, enter your current (old) password.",
+          type: 'input',
+          inputType: 'password',
+          showCancelButton: true,
+          closeOnConfirm: false,
+          inputPlaceholder: "Password"
+        }, function(oldPassword) {
+          if (oldPassword === false) return false;
+          if (oldPassword === '') {
+            sweetAlert.showInputError("Error: Recieved blank password!");
+            return false;
+          }
+          sweetAlert({
+            title: "Change Password",
+            text: "Last, enter your new password.",
+            type: 'input',
+            inputType: 'password',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+            inputPlaceholder: "New password"
+          }, function(newPassword) {
+            if (newPassword === false) return false;
+            if (newPassword === '') {
+              sweetAlert.showInputError("Error: Recieved blank password!");
+              return false;
+            }
+            ref.changePassword({
+              email: email,
+              oldPassword: oldPassword,
+              newPassword: newPassword
+            }, function(error) {
+              if (error) {
+                switch (error.code) {
+                  case "INVALID_PASSWORD":
+                    emitUserError("Change Password", "The specified user account password is incorrect.");
+                    // console.log("The specified user account password is incorrect.");
+                  break;
+                  case "INVALID_USER":
+                    emitUserError("Change Password", "The specified user account does not exist.");
+                    // console.log("The specified user account does not exist.");
+                  break;
+                  default:
+                    emitUserError("Change Password", "Error: Unknown error.");
+                    console.error("Error changing password:", error); //eslint-disable-line
+                    // actually want this to error
+                }
+              } else {
+                // console.log("User password changed successfully!");
+                sweetAlert({
+                  title: "Change Password",
+                  text: "Success! Your password has been changed.",
                   type: 'success'
                 });
               }
@@ -184,7 +263,8 @@ var Userbit = React.createClass({
                         <ul className="dropdown-menu">
                           <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
                           <li onClick={p.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>
-                          <li onClick={this.handleChangeEmail}><a href='#'><i className="fa fa-envelope"></i> Change Email</a></li>
+                          <li onClick={this.handleChangeEmail}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
+                          <li onClick={this.handleChangePassword}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
                         </ul>
 
                     <button className="btn btn-default" id="logoutbutton" onClick={p.logouthandler}>Logout</button>
