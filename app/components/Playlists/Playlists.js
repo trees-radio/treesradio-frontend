@@ -25,6 +25,11 @@ var Playlists = React.createClass({
      removeFromPlaylist: React.PropTypes.func.isRequired,
      moveTopPlaylist: React.PropTypes.func.isRequired
    },
+   getInitialState: function() {
+     return {
+       grabbing: false
+     }
+   },
    componentDidMount: function() {
      var volSlider = this.refs.volslider;
      volSlider.addEventListener("mousewheel", this.wheelVol, false);
@@ -44,7 +49,16 @@ var Playlists = React.createClass({
    handleWaitlistButton: function() {
      this.props.toggleWaiting();
    },
+   handleGrabButton: function() {
+     this.setState({grabbing: true});
+   },
+   handleGrabSelectPlaylist: function() {
+     this.setState({grabbing: false});
+    //  this.props.handleGrabButton();
+   },
    render: function() {
+     var p = this.props;
+     var s = this.state;
      let openButtonIcon = "fa fa-angle-double-up fa-4x";
      if (this.props.playlistsOpen) {
        openButtonIcon = "fa fa-angle-double-down fa-4x";
@@ -128,6 +142,19 @@ var Playlists = React.createClass({
        timer = curHoursDisplay + curMins.substr(-2) + ":" + curSecs.substr(-2) + " / " + durHoursDisplay + durMins.substr(-2) + ":" + durSecs.substr(-2);
      }
 
+     var grabPlaylistsDiv = "";
+
+     if (s.grabbing) {
+       var grabPlaylists = p.playlists.map(function(playlist) {
+        //  console.log(playlist.name);
+         return <span className="grab-playlist">{playlist.name}<br/></span>;
+       });
+
+       grabPlaylistsDiv = <div className="grab-playlists">{grabPlaylists}</div>;
+     }
+
+
+
      return(
       <div id="playlists-component">
         <PlaylistsPanel
@@ -160,7 +187,8 @@ var Playlists = React.createClass({
             <span className="media-time">{timer}</span>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div className="grab-button" onClick={this.props.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
+            {grabPlaylistsDiv}
+            <div className="grab-button" onClick={this.handleGrabButton}><i className={grabClass}></i><span className="feedback-grab">{this.props.playingMedia.feedback.grabs}</span></div>
             <div className="volume-slider" ref="volslider">
               <i className={volClass}></i>
               <ReactSlider
