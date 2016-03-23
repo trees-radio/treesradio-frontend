@@ -21,7 +21,6 @@ import axios from 'axios';
 import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
-import alert from 'alert';
 import Favico from 'favico.js';
 
 
@@ -349,7 +348,6 @@ var Main = React.createClass({
                         mentionTotaler(function resetMentionNumCallback() {
                           this.state.mention.notifyNum = 0;
                         }.bind(this));
-                        alert('glass');
                         this.state.mention.mentioned = msgNode[0].key;
                         this.state.mention.numInMsg = numInMsg;
                       }
