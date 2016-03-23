@@ -145,11 +145,10 @@ var Playlists = React.createClass({
      var grabPlaylistsDiv = "";
 
      if (s.grabbing) {
-       var grabPlaylists = p.playlists.map(function(playlist, index) {
-         console.log(index);
-         var boundClick = this.handleGrabSelectPlaylist.bind(this, index);
-         return <span key={index} className="grab-playlist" onClick={boundClick}>{playlist.name}<br/></span>;
-       }, this);
+       var grabPlaylists = p.playlists.map(function(playlist) {
+        //  console.log(playlist.name);
+         return <div className="grab-playlist">{playlist.name}</div>;
+       });
 
        grabPlaylistsDiv = <div className="grab-playlists">{grabPlaylists}</div>;
      }
