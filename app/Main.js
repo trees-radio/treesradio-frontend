@@ -1033,16 +1033,14 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     handleGrabButton: function(index) {
       if (this.state.user.uid) {
-        if (!this.state.userFeedback.grab) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'grab', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: this.state.userFeedback.opinion,
-            grab: true
-          }});
-          this.addToPlaylist(true, false, index);
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'grab', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: this.state.userFeedback.opinion,
+          grab: true
+        }});
+        this.addToPlaylist(true, false, index);
       }
     },
     handleLikeButton: function() {
