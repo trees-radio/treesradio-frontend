@@ -2,6 +2,7 @@ import React from 'react';
 import ReactSlider from 'react-slider';
 import classNames from 'classnames';
 import moment from 'moment';
+import _ from 'lodash';
 
 import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
@@ -53,7 +54,7 @@ var Playlists = React.createClass({
   },
   handleGrabSelectPlaylist: function(index) {
     if (!this.state.grabbedTo.includes(index)) {
-      this.setState({grabbedTo: this.state.grabbedTo.push(index)});
+      this.setState({grabbedTo: _.concat(this.state.grabbedTo, index)});
       this.props.handleGrabButton(index);
     }
   },
@@ -148,7 +149,14 @@ var Playlists = React.createClass({
     if (s.grabbing) {
       var grabPlaylists = p.playlists.map(function(playlist, index) {
         var boundClick = this.handleGrabSelectPlaylist.bind(this, index);
-        return <span key={index} className="grab-playlist" onClick={boundClick}>{playlist.name}<br/></span>;
+        var grabbedClass;
+        if (!this.state.grabbedTo.includes(index)) {
+          grabbedClass = 'fa-circle-o';
+        } else {
+          grabbedClass = 'fa-check-circle-o';
+        }
+        var playlistIconClass = classNames('fa', grabbedClass);
+        return <div key={index} className="grab-playlist" onClick={boundClick}>{playlist.name}<span className={playlistIconClass}></span></div>;
       }, this);
 
       grabPlaylistsDiv = <div className="grab-playlists">{grabPlaylists}</div>;
