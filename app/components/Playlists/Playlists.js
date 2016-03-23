@@ -147,7 +147,7 @@ var Playlists = React.createClass({
      if (s.grabbing) {
        var grabPlaylists = p.playlists.map(function(playlist) {
         //  console.log(playlist.name);
-         return <span className="grab-playlist">{playlist.name}<br/></span>;
+         return <div className="grab-playlist">{playlist.name}</div>;
        });
 
        grabPlaylistsDiv = <div className="grab-playlists">{grabPlaylists}</div>;
