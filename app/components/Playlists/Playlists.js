@@ -27,6 +27,11 @@ var Playlists = React.createClass({
     var volSlider = this.refs.volslider;
     volSlider.addEventListener("mousewheel", this.wheelVol, false);
   },
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.playingMedia.info.url !== this.props.playingMedia.info.url) {
+      this.setState({grabbedTo: []});
+    }
+  },
   wheelVol: function(e) {
     if (e.wheelDelta > 0) {
       //scroll up
@@ -43,15 +48,14 @@ var Playlists = React.createClass({
     this.props.toggleWaiting();
   },
   handleGrabButton: function() {
-    var bool = this.state.grabbing
-      ? false
-      : true;
+    var bool = this.state.grabbing ? false : true;
     this.setState({grabbing: bool});
   },
   handleGrabSelectPlaylist: function(index) {
-    this.setState({grabbing: false});
-
-    this.props.handleGrabButton(index);
+    if (!this.state.grabbedTo.includes(index)) {
+      this.setState({grabbedTo: this.state.grabbedTo.push(index)});
+      this.props.handleGrabButton(index);
+    }
   },
   render: function() {
     var p = this.props;
@@ -143,7 +147,6 @@ var Playlists = React.createClass({
 
     if (s.grabbing) {
       var grabPlaylists = p.playlists.map(function(playlist, index) {
-        console.log(index);
         var boundClick = this.handleGrabSelectPlaylist.bind(this, index);
         return <span key={index} className="grab-playlist" onClick={boundClick}>{playlist.name}<br/></span>;
       }, this);
