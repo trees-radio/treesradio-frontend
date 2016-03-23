@@ -52,9 +52,9 @@ var Playlists = React.createClass({
    handleGrabButton: function() {
      this.setState({grabbing: true});
    },
-   handleGrabSelectPlaylist: function() {
+   handleGrabSelectPlaylist: function(index) {
      this.setState({grabbing: false});
-    //  this.props.handleGrabButton();
+     this.props.handleGrabButton(index);
    },
    render: function() {
      var p = this.props;
@@ -145,10 +145,11 @@ var Playlists = React.createClass({
      var grabPlaylistsDiv = "";
 
      if (s.grabbing) {
-       var grabPlaylists = p.playlists.map(function(playlist) {
-        //  console.log(playlist.name);
-         return <span className="grab-playlist">{playlist.name}<br/></span>;
-       });
+       var grabPlaylists = p.playlists.map(function(playlist, index) {
+         console.log(index);
+         var boundClick = this.handleGrabSelectPlaylist.bind(this, index);
+         return <span key={index} className="grab-playlist" onClick={boundClick}>{playlist.name}<br/></span>;
+       }, this);
 
        grabPlaylistsDiv = <div className="grab-playlists">{grabPlaylists}</div>;
      }

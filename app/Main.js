@@ -735,13 +735,7 @@ var Main = React.createClass({
         data: this.state.currentPlaylist.id
       });
     },
-    /**
-     * addToPlaylist
-     * @param  {[number]} searchIndex    [index of current search array to grab]
-     * @param  {[type]} grabBool [boolean that tells the function to grab the currently playing song instead]
-     * @return none
-     */
-    addToPlaylist: function(grabBool, searchIndex) {
+    addToPlaylist: function(grabBool, searchIndex, grabPlaylistIndex) {
       let currentAuth = base.getAuth();
       if (!this.state.playlists[this.state.currentPlaylist.id]) {
         emitUserError("No Playlist Selected", "You don't have a playlist selected to add to!");
@@ -781,21 +775,23 @@ var Main = React.createClass({
         duration: videoDuration
       }
       var updateMediaRequest = this.updateMediaRequest;
-      if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
-        let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
+      var playlistIdentifier = grabBool ? grabPlaylistIndex : this.state.currentPlaylist.id;
+      var playlistEndptKey = grabBool ? this.state.playlists[grabPlaylistIndex].key : this.state.currentPlaylist.key;
+      if (this.state.playlists[playlistIdentifier].entries instanceof Array) { // check if there's already an array there
+        let copyofPlaylist = this.state.playlists[playlistIdentifier].entries.slice(); // get copy of array
         if (grabBool) {
           copyofPlaylist.push(objectToAdd); // push new item onto end of array
         } else {
           copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
         }
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { // push new array to Firebase
+        base.post('playlists/' + currentAuth.uid + "/" + playlistEndptKey + "/entries", { // push new array to Firebase
           data: copyofPlaylist,
           then(){
             updateMediaRequest();
           }
         });
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {
+        base.post('playlists/' + currentAuth.uid + "/" + playlistEndptKey + "/entries", {
           data: [objectToAdd],
           then(){
             updateMediaRequest();
@@ -1035,7 +1031,7 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     // FEEDBACK BUTTONS
     ///////////////////////////////////////////////////////////////////////
-    handleGrabButton: function() {
+    handleGrabButton: function(index) {
       if (this.state.user.uid) {
         if (!this.state.userFeedback.grab) {
           base.push('queues/feedback/tasks', {
@@ -1045,7 +1041,7 @@ var Main = React.createClass({
             opinion: this.state.userFeedback.opinion,
             grab: true
           }});
-          this.addToPlaylist(true);
+          this.addToPlaylist(true, false, index);
         }
       }
     },
