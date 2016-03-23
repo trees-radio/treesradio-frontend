@@ -50,7 +50,8 @@ var Playlists = React.createClass({
      this.props.toggleWaiting();
    },
    handleGrabButton: function() {
-     this.setState({grabbing: true});
+     var bool = this.state.grabbing ? false : true;
+     this.setState({grabbing: bool});
    },
    handleGrabSelectPlaylist: function(index) {
      this.setState({grabbing: false});
