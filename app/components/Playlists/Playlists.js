@@ -52,9 +52,9 @@ var Playlists = React.createClass({
    handleGrabButton: function() {
      this.setState({grabbing: true});
    },
-   handleGrabSelectPlaylist: function() {
+   handleGrabSelectPlaylist: function(index) {
      this.setState({grabbing: false});
-    //  this.props.handleGrabButton();
+     this.props.handleGrabButton(index);
    },
    render: function() {
      var p = this.props;
