@@ -31,7 +31,7 @@ var Playlists = React.createClass({
   },
   componentWillMount: function() {
     $(document).click(function(event) {
-      if(!$(event.target).closest('.grab-playlist').length && !$(event.target).is('.grab-playlist, .grab-button')) {
+      if(!$(event.target).closest('.grab-playlist, .grab-button').length && !$(event.target).is('.grab-playlist, .grab-button')) {
         if (this.state.grabbing) {
           this.setState({grabbing: false});
         }
