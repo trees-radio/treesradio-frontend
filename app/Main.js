@@ -648,7 +648,7 @@ var Main = React.createClass({
       }
       sweetAlert({
         title: "New Playlist",
-        text: "Choose a name for your playlist!\n Note: Playlists will be limited to 23 characters.",
+        text: "Choose a name for your playlist!\n Note: Playlists will be limited to 20 characters.",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,

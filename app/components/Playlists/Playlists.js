@@ -158,6 +158,10 @@ var Playlists = React.createClass({
 
     if (s.grabbing) {
       var grabPlaylists = p.playlists.map(function(playlist, index) {
+        var playlistName = playlist.name;
+        if (playlistName.length > 20) {
+          playlistName = playlistName.slice(0, 20) + '...';
+        }
         var boundClick = this.handleGrabSelectPlaylist.bind(this, index);
         var grabbedClass;
         if (!this.state.grabbedTo.includes(index)) {
@@ -166,7 +170,7 @@ var Playlists = React.createClass({
           grabbedClass = 'fa-check-circle-o';
         }
         var playlistIconClass = classNames('fa', grabbedClass);
-        return <div key={index} className="grab-playlist" onClick={boundClick}>{playlist.name}<span className={playlistIconClass}></span></div>;
+        return <div key={index} className="grab-playlist" onClick={boundClick}>{playlistName}<span className={playlistIconClass}></span></div>;
       }, this);
 
       grabPlaylistsDiv = <div className="grab-playlists">{grabPlaylists}</div>;
