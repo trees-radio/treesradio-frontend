@@ -3,6 +3,7 @@ import ReactSlider from 'react-slider';
 import classNames from 'classnames';
 import moment from 'moment';
 import _ from 'lodash';
+import $ from 'jquery';
 
 import PlaylistsPanel from './PlaylistsPanel/PlaylistsPanel.js'
 
@@ -22,15 +23,24 @@ var Playlists = React.createClass({
     moveTopPlaylist: React.PropTypes.func.isRequired
   },
   getInitialState: function() {
-    return {grabbing: false, grabbedTo: []}
+    return {grabbing: false, grabbedTo: []};
   },
   componentDidMount: function() {
     var volSlider = this.refs.volslider;
     volSlider.addEventListener("mousewheel", this.wheelVol, false);
   },
+  componentWillMount: function() {
+    $(document).click(function(event) {
+      if(!$(event.target).closest('.grab-playlist').length && !$(event.target).is('.grab-playlist, .grab-button')) {
+        if (this.state.grabbing) {
+          this.setState({grabbing: false});
+        }
+      }
+    }.bind(this));
+  },
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.playingMedia.info.url !== this.props.playingMedia.info.url) {
-      this.setState({grabbedTo: []});
+      this.setState({grabbing: false, grabbedTo: []});
     }
   },
   wheelVol: function(e) {
