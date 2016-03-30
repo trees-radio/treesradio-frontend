@@ -77,6 +77,11 @@ deploy:
         token: $FIREBASE_DEPLOY_KEY_LIVE
 
   after-steps:
+    - seigyo/cloudflare-purge@0.0.3:
+        api: $CLOUDFLARE_PURGE_KEY
+        email: "zach.buttram@gmail.com"
+        domain: "treesradio.com"
+
     - wercker/slack-notifier:
         url: $SLACK_WEBHOOK_URL
         username: wercker
