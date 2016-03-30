@@ -22,6 +22,7 @@ import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
 import Favico from 'favico.js';
+import buzz from 'node-buzz';
 
 
 // TreesRadio utility functions
@@ -125,6 +126,10 @@ var Main = React.createClass({
           faviconNum = this.state.mention.notifyNum;
         }
       }.bind(this), 500);
+      this.audioAlert = new buzz.sound("/audio/tr-notify", {
+        formats: ["ogg", "mp3"],
+        loop: false
+      });
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -212,6 +217,7 @@ var Main = React.createClass({
             emitUserError("Login Error", error);
         } else {
             // console.log("Auth success", authData);
+            // location.reload();
         }
 
     },
@@ -348,6 +354,7 @@ var Main = React.createClass({
                         mentionTotaler(function resetMentionNumCallback() {
                           this.state.mention.notifyNum = 0;
                         }.bind(this));
+                        this.audioAlert.play();
                         this.state.mention.mentioned = msgNode[0].key;
                         this.state.mention.numInMsg = numInMsg;
                       }
