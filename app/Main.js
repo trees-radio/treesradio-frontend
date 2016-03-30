@@ -44,6 +44,9 @@ var ytAPIkey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
 trYouTube.setKey(ytAPIkey);
 
 
+var appOpenTimestamp = moment().unix();
+
+
 var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     // REACT-SPECIFIC & CONSTRUCTION
@@ -217,7 +220,7 @@ var Main = React.createClass({
             emitUserError("Login Error", error);
         } else {
             // console.log("Auth success", authData);
-            // location.reload();
+            location.reload();
         }
 
     },
@@ -354,7 +357,9 @@ var Main = React.createClass({
                         mentionTotaler(function resetMentionNumCallback() {
                           this.state.mention.notifyNum = 0;
                         }.bind(this));
-                        this.audioAlert.play();
+                        if (moment().unix() > appOpenTimestamp + 30) {
+                          this.audioAlert.play();
+                        }
                         this.state.mention.mentioned = msgNode[0].key;
                         this.state.mention.numInMsg = numInMsg;
                       }
