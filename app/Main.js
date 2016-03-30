@@ -410,8 +410,7 @@ var Main = React.createClass({
         }
         var presenceRef = new Firebase(window.__env.firebase_origin + "/presence");
         presenceRef.once("value", function(snapshot){
-          let unExists = snapshot.child(desiredUn).exists();
-          if (unExists) {
+          if (snapshot.child(desiredUn).exists()) {
             emitUserError("Registration Error", "Desired username " + desiredUn + " already exists!");
           } else {
             let regRef = new Firebase(window.__env.firebase_origin);
@@ -431,13 +430,14 @@ var Main = React.createClass({
                     emitUserError("Registration Error", "An unknown registration error occurred: " + error);
                 }
               } else {
-                let userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
+                var userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
                 // create user entry
                 userRef.set({
                   username: desiredUn,
                   inWaitlist: {
                     waiting: false
-                  }
+                  },
+                  registered: Firebase.ServerValue.TIMESTAMP
                 });
                 // create presence entry
                 presenceRef.child(desiredUn).child("uid").set(userData.uid);
