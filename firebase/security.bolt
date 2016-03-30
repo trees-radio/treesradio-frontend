@@ -67,9 +67,9 @@ path /presence {
   read() = true;
 }
 
-  path /presence/$username {
-    write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
-  }
+path /presence/$username {
+  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
+}
 
 ////////////////////////////////////////////////////////////////
 // USERS
