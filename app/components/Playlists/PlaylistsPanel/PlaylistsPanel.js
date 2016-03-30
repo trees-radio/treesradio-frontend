@@ -41,18 +41,16 @@ var PlaylistsPanel = React.createClass({
     this.props.removeFromPlaylist(index);
   },
   handleMoveTop: function(index) {
-    // console.log("Moving top");
     this.props.moveTopPlaylist(index);
   },
   handleSelectPlaylist: function(index) {
-    // console.log("Selected playlist of index", index);
     this.props.selectPlaylist(index);
   },
   handleRemovePlaylist: function(index) {
     this.props.removePlaylist(index);
   },
   emptyPlaylistView: function() {
-    return (<ul id="playlist-ul" className="no-playlist-selected">You don't have a playlist selected.</ul>)
+    return (<ul id="playlist-ul" className="no-playlist-selected">{"You don't have a playlist selected."}</ul>)
   },
   render: function() {
     ///////////////////////////////////////////////////////////////////////

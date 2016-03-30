@@ -268,7 +268,7 @@
   text-align: center;
   padding: 0;
   margin: 0;
-  line-height: 75px;
+  line-height: 25px;
   a {
     text-decoration: none;
     height: 100%;
@@ -379,7 +379,8 @@
   text-align: right;
   padding: 0;
   line-height: 2.25vw !important;
-  margin-left: -40%;
+  right: 4vw;
+  // margin-left: -40%;
   color: white;
   pointer-events: none;
 }

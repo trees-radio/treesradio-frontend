@@ -21,8 +21,8 @@ import axios from 'axios';
 import moment from 'moment';
 import url from 'url';
 import querystring from 'querystring';
-import alert from 'alert';
 import Favico from 'favico.js';
+import buzz from 'node-buzz';
 
 
 // TreesRadio utility functions
@@ -42,6 +42,9 @@ import './Main.scss';
 // YouTube API Key
 var ytAPIkey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
 trYouTube.setKey(ytAPIkey);
+
+
+var appOpenTimestamp = moment().unix();
 
 
 var Main = React.createClass({
@@ -126,6 +129,10 @@ var Main = React.createClass({
           faviconNum = this.state.mention.notifyNum;
         }
       }.bind(this), 500);
+      this.audioAlert = new buzz.sound("/audio/tr-notify", {
+        formats: ["ogg", "mp3"],
+        loop: false
+      });
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -213,6 +220,7 @@ var Main = React.createClass({
             emitUserError("Login Error", error);
         } else {
             // console.log("Auth success", authData);
+            location.reload();
         }
 
     },
@@ -326,8 +334,9 @@ var Main = React.createClass({
               });
 
 
-
-              // mentions handler
+              ////
+              // MENTIONS HANDLER
+              //
               base.listenTo('chat/messages', {
                 context: this,
                 asArray: true,
@@ -335,7 +344,6 @@ var Main = React.createClass({
                   limitToLast: 1
                 },
                 then(msgNode) {
-                  // console.log(msgNode[0]);
                   var mentionString = '@'+this.state.user.username;
                   mentionString = mentionString.toUpperCase();
                   if (msgNode[0].mentions) {
@@ -349,7 +357,9 @@ var Main = React.createClass({
                         mentionTotaler(function resetMentionNumCallback() {
                           this.state.mention.notifyNum = 0;
                         }.bind(this));
-                        alert('glass');
+                        if (moment().unix() > appOpenTimestamp + 30) {
+                          this.audioAlert.play();
+                        }
                         this.state.mention.mentioned = msgNode[0].key;
                         this.state.mention.numInMsg = numInMsg;
                       }
@@ -400,8 +410,7 @@ var Main = React.createClass({
         }
         var presenceRef = new Firebase(window.__env.firebase_origin + "/presence");
         presenceRef.once("value", function(snapshot){
-          let unExists = snapshot.child(desiredUn).exists();
-          if (unExists) {
+          if (snapshot.child(desiredUn).exists()) {
             emitUserError("Registration Error", "Desired username " + desiredUn + " already exists!");
           } else {
             let regRef = new Firebase(window.__env.firebase_origin);
@@ -421,13 +430,14 @@ var Main = React.createClass({
                     emitUserError("Registration Error", "An unknown registration error occurred: " + error);
                 }
               } else {
-                let userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
+                var userRef = new Firebase(window.__env.firebase_origin + "/users/" + userData.uid);
                 // create user entry
                 userRef.set({
                   username: desiredUn,
                   inWaitlist: {
                     waiting: false
-                  }
+                  },
+                  registered: Firebase.ServerValue.TIMESTAMP
                 });
                 // create presence entry
                 presenceRef.child(desiredUn).child("uid").set(userData.uid);
@@ -650,7 +660,7 @@ var Main = React.createClass({
       }
       sweetAlert({
         title: "New Playlist",
-        text: "Choose a name for your playlist!\n Note: Playlists will be limited to 23 characters.",
+        text: "Choose a name for your playlist!\n Note: Playlists will be limited to 20 characters.",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -737,13 +747,7 @@ var Main = React.createClass({
         data: this.state.currentPlaylist.id
       });
     },
-    /**
-     * addToPlaylist
-     * @param  {[number]} searchIndex    [index of current search array to grab]
-     * @param  {[type]} grabBool [boolean that tells the function to grab the currently playing song instead]
-     * @return none
-     */
-    addToPlaylist: function(grabBool, searchIndex) {
+    addToPlaylist: function(grabBool, searchIndex, grabPlaylistIndex) {
       let currentAuth = base.getAuth();
       if (!this.state.playlists[this.state.currentPlaylist.id]) {
         emitUserError("No Playlist Selected", "You don't have a playlist selected to add to!");
@@ -783,21 +787,23 @@ var Main = React.createClass({
         duration: videoDuration
       }
       var updateMediaRequest = this.updateMediaRequest;
-      if (this.state.playlists[this.state.currentPlaylist.id].entries instanceof Array) { // check if there's already an array there
-        let copyofPlaylist = this.state.playlists[this.state.currentPlaylist.id].entries.slice(); // get copy of array
+      var playlistIdentifier = grabBool ? grabPlaylistIndex : this.state.currentPlaylist.id;
+      var playlistEndptKey = grabBool ? this.state.playlists[grabPlaylistIndex].key : this.state.currentPlaylist.key;
+      if (this.state.playlists[playlistIdentifier].entries instanceof Array) { // check if there's already an array there
+        let copyofPlaylist = this.state.playlists[playlistIdentifier].entries.slice(); // get copy of array
         if (grabBool) {
           copyofPlaylist.push(objectToAdd); // push new item onto end of array
         } else {
           copyofPlaylist.unshift(objectToAdd); // push new item onto front of array
         }
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", { // push new array to Firebase
+        base.post('playlists/' + currentAuth.uid + "/" + playlistEndptKey + "/entries", { // push new array to Firebase
           data: copyofPlaylist,
           then(){
             updateMediaRequest();
           }
         });
       } else {
-        base.post('playlists/' + currentAuth.uid + "/" + this.state.currentPlaylist.key + "/entries", {
+        base.post('playlists/' + currentAuth.uid + "/" + playlistEndptKey + "/entries", {
           data: [objectToAdd],
           then(){
             updateMediaRequest();
@@ -1037,18 +1043,16 @@ var Main = React.createClass({
     ///////////////////////////////////////////////////////////////////////
     // FEEDBACK BUTTONS
     ///////////////////////////////////////////////////////////////////////
-    handleGrabButton: function() {
+    handleGrabButton: function(index) {
       if (this.state.user.uid) {
-        if (!this.state.userFeedback.grab) {
-          base.push('queues/feedback/tasks', {
-            data: {type: 'grab', user: this.state.user.uid}
-          });
-          this.setState({userFeedback: {
-            opinion: this.state.userFeedback.opinion,
-            grab: true
-          }});
-          this.addToPlaylist(true);
-        }
+        base.push('queues/feedback/tasks', {
+          data: {type: 'grab', user: this.state.user.uid}
+        });
+        this.setState({userFeedback: {
+          opinion: this.state.userFeedback.opinion,
+          grab: true
+        }});
+        this.addToPlaylist(true, false, index);
       }
     },
     handleLikeButton: function() {
