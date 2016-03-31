@@ -6,6 +6,7 @@ import React from 'react';
 import sweetAlert from 'sweetalert';
 import MentionCompleter from 'mention-completer';
 import $ from 'jquery';
+import emitUserError from '../../../../utils/userError.js';
 
 var sendBox;
 var completer = new MentionCompleter({
@@ -85,18 +86,21 @@ var ChatSend = React.createClass({
           let userSending = this.props.loginData.username;
           this.props.sendMsg({msg: newMsg, user: userSending});
         } else {
-          this.refs.sendbox.value = '';
-          sweetAlert({
-            "title": "No Login Found",
-            "text": "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
-            "type": "error",
-            "timer": 3000
-          });
+          // case handled below in regReminder()
         }
 
       }
     } else {
       completer.checkForMatch();
+    }
+  },
+  regReminder: function(e) {
+    if (!this.props.loginState) {
+      sweetAlert({
+        title: "No Login Found",
+        text: "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
+        type: "error"
+      });
     }
   },
   render: function(){
@@ -130,7 +134,7 @@ var ChatSend = React.createClass({
       <div>
         {matchDiv}
         <div id="sendbox">
-          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyDown={this.handleChat} />
+          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyDown={this.regReminder} onKeyUp={this.handleChat} />
         </div>
       </div>
         )
