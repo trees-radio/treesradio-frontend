@@ -1100,6 +1100,11 @@ var Main = React.createClass({
         closeOnConfirm: false,
         showLoaderOnConfirm: true
       }, function(inputValue) {
+        if (inputValue === false) return false;
+        if (inputValue === '') {
+          emitUserError('Error: No avatar found.');
+          return false;
+        }
         if (inputValue) {
           var cleanInput = inputValue.replace(/.*?:\/\//g, "");
           base.post("users/" + uid + "/avatar", {
