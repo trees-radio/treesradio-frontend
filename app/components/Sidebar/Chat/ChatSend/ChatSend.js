@@ -6,7 +6,8 @@ import React from 'react';
 import sweetAlert from 'sweetalert';
 import MentionCompleter from 'mention-completer';
 import $ from 'jquery';
-import emitUserError from '../../../../utils/userError.js';
+// import emitUserError from '../../../../utils/userError.js';
+import moment from 'moment';
 
 var sendBox;
 var completer = new MentionCompleter({
@@ -94,12 +95,23 @@ var ChatSend = React.createClass({
       completer.checkForMatch();
     }
   },
-  regReminder: function(e) {
+  regReminder: function() {
+    var minutesRegistered = 30 * 60 * 1000;
+    var chatlockEffected = this.props.chatlock && this.props.loginData.registered && !this.props.loginData.registered < moment().valueOf() - minutesRegistered;
     if (!this.props.loginState) {
       sweetAlert({
         title: "No Login Found",
         text: "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
         type: "error"
+      });
+      return;
+    }
+    if (chatlockEffected) {
+      sweetAlert({
+        title: "Chat Locked",
+        text: "The chat is currently locked for new users due to a disturbance. You may resume chatting when the lock is lifted or your account is old enough.",
+        type: "error",
+        timer: 2000
       });
     }
   },

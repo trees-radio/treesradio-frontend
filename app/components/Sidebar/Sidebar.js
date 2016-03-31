@@ -8,7 +8,8 @@ import About from './About/About';
 
 var Sidebar = React.createClass({
   render: function() {
-    let currentSidebar;
+    var p = this.props;
+    var currentSidebar;
     switch(this.props.currentSidebar) {
       case 0:
         currentSidebar = (
@@ -18,6 +19,7 @@ var Sidebar = React.createClass({
             sendMsg={this.props.sendMsg}
             loginState={this.props.loginState}
             userPresence={this.props.userPresence}
+            chatlock={p.chatlock}
             />
         )
         break;
