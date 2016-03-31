@@ -17,9 +17,9 @@ var Nav = React.createClass({
     render: function(){
       var betaString = "\u03B2eta";
         var title = <span><span>TreesRadio</span> <span className="beta-tag">{betaString}</span></span>;
-        // if (this.props.devCheck) {
-        //   title = "TreesRadio Dev";
-        // }
+        if (this.props.devCheck) {
+          title = "TreesRadio Dev";
+        }
         return (
             <div id="tr-nav">
                 <nav className="navbar navbar-default">
