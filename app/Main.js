@@ -1102,7 +1102,7 @@ var Main = React.createClass({
       }, function(inputValue) {
         if (inputValue === false) return false;
         if (inputValue === '') {
-          emitUserError('Error: No avatar found.');
+          sweetAlert.showInputError("Error: No avatar found.");
           return false;
         }
         if (inputValue) {
