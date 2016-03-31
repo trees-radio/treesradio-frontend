@@ -9,9 +9,9 @@ var rPlayerYoutubeConfig = { playerVars: {iv_load_policy: 3} }
 
 var Video = React.createClass({
   componentWillReceiveProps: function() {
-    var playbackSlowThreshold = this.props.playingMedia.playback.time - 10;
-    var playbackFastThreshold = this.props.playingMedia.playback.time + 10;
-    var playbackSyncCap = this.props.playingMedia.playback.duration - 10;
+    var playbackSlowThreshold = this.props.playingMedia.playback.time - 20;
+    var playbackFastThreshold = this.props.playingMedia.playback.time + 20;
+    var playbackSyncCap = this.props.playingMedia.playback.duration - 15;
     var localPlayerTime = this.props.playingMedia.playback.duration * this.props.localPlayerPos;
     // console.log(localPlayerTime);
     if (this.props.playingMedia.playback.time < playbackSyncCap && this.props.playingMedia.playback.playing) {
