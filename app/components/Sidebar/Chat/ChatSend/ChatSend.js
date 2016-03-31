@@ -111,7 +111,7 @@ var ChatSend = React.createClass({
         title: "Chat Locked",
         text: "The chat is currently locked for new users due to a disturbance. You may resume chatting when the lock is lifted or your account is old enough.",
         type: "error",
-        timer: 1500
+        timer: 2000
       });
     }
   },
