@@ -94,7 +94,7 @@ var ChatSend = React.createClass({
       completer.checkForMatch();
     }
   },
-  regReminder: function(e) {
+  regReminder: function() {
     if (!this.props.loginState) {
       sweetAlert({
         title: "No Login Found",
