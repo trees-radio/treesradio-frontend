@@ -15,16 +15,17 @@ var Nav = React.createClass({
         logouthandler: React.PropTypes.func.isRequired
     },
     render: function(){
-        let Title = "TreesRadio";
-        if (this.props.devCheck) {
-          Title = "TreesRadio DEV";
-        }
+      var betaString = "\u03B2eta";
+        var title = <span><span>TreesRadio</span> <span className="beta-tag">{betaString}</span></span>;
+        // if (this.props.devCheck) {
+        //   title = "TreesRadio Dev";
+        // }
         return (
             <div id="tr-nav">
                 <nav className="navbar navbar-default">
                     <div className="container-fluid">
                         <div className="navbar-header">
-                            <a className="navbar-brand" href="#">{Title}</a>
+                            <a className="navbar-brand" href="#">{title}</a>
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
