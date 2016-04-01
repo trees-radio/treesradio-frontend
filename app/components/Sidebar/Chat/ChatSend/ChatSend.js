@@ -6,6 +6,8 @@ import React from 'react';
 import sweetAlert from 'sweetalert';
 import MentionCompleter from 'mention-completer';
 import $ from 'jquery';
+// import emitUserError from '../../../../utils/userError.js';
+import moment from 'moment';
 
 var sendBox;
 var completer = new MentionCompleter({
@@ -85,18 +87,32 @@ var ChatSend = React.createClass({
           let userSending = this.props.loginData.username;
           this.props.sendMsg({msg: newMsg, user: userSending});
         } else {
-          this.refs.sendbox.value = '';
-          sweetAlert({
-            "title": "No Login Found",
-            "text": "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
-            "type": "error",
-            "timer": 3000
-          });
+          // case handled below in regReminder()
         }
 
       }
     } else {
       completer.checkForMatch();
+    }
+  },
+  regReminder: function() {
+    var minutesRegistered = 30 * 60 * 1000;
+    var chatlockEffected = this.props.chatlock && this.props.loginData.registered && !this.props.loginData.registered < moment().valueOf() - minutesRegistered;
+    if (!this.props.loginState) {
+      sweetAlert({
+        title: "No Login Found",
+        text: "You can't chat if you're not logged in! Fill out the login form and click 'Register' to register!",
+        type: "error"
+      });
+      return;
+    }
+    if (chatlockEffected) {
+      sweetAlert({
+        title: "Chat Locked",
+        text: "The chat is currently locked for new users due to a disturbance. You may resume chatting when the lock is lifted or your account is old enough.",
+        type: "error",
+        timer: 2000
+      });
     }
   },
   render: function(){
@@ -130,7 +146,7 @@ var ChatSend = React.createClass({
       <div>
         {matchDiv}
         <div id="sendbox">
-          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyDown={this.handleChat} />
+          <input type="text" ref="sendbox" placeholder="enter to send" id="chatinput" className="form-control" onKeyDown={this.regReminder} onKeyUp={this.handleChat} />
         </div>
       </div>
         )

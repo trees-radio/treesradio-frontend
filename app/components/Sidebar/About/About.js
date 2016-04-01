@@ -42,6 +42,9 @@ var About = React.createClass({
             <a href="http://goo.gl/forms/j7hua7F8aN" target="_blank">Send us a suggestion report!</a>
           </div>
         </div>
+        <div className="about-emoji">
+            <h5><a href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji List</a></h5>
+        </div>
       </div>
     );
   }

@@ -115,7 +115,8 @@ var Main = React.createClass({
             mentioned: '',
             numInMsg: 0,
             notifyNum: 0
-          }
+          },
+          chatlock: false
       }
     },
     componentWillMount: function(){
@@ -169,6 +170,11 @@ var Main = React.createClass({
           context: this,
           state: 'waitlist',
           asArray: true
+        });
+
+        base.bindToState('backend/chatlock', {
+          context: this,
+          state: 'chatlock'
         });
 
         base.listenTo('playing_media/info/url', {
@@ -1100,6 +1106,11 @@ var Main = React.createClass({
         closeOnConfirm: false,
         showLoaderOnConfirm: true
       }, function(inputValue) {
+        if (inputValue === false) return false;
+        if (inputValue === '') {
+          sweetAlert.showInputError("Error: No avatar found.");
+          return false;
+        }
         if (inputValue) {
           var cleanInput = inputValue.replace(/.*?:\/\//g, "");
           base.post("users/" + uid + "/avatar", {
@@ -1204,6 +1215,7 @@ var Main = React.createClass({
                           userPresence={this.state.userPresence}
                           waitlist={this.state.waitlist}
                           staff={this.state.staff}
+                          chatlock={this.state.chatlock}
                           />
                       </div>
             {/* End Container */}

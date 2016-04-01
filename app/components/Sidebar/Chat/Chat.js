@@ -15,6 +15,7 @@ var Chat = React.createClass({
 
     },
     render: function(){
+      var p = this.props;
         return (
               <div id="chatcontainer">
                   <ChatContent
@@ -25,6 +26,7 @@ var Chat = React.createClass({
                     loginData={this.props.loginData}
                     loginState={this.props.loginState}
                     userPresence={this.props.userPresence}
+                    chatlock={p.chatlock}
                     />
               </div>
         )
