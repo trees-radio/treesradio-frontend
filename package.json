@@ -15,7 +15,7 @@
     "ci-build-bolt": "npm run bolt-compile",
     "ci-build-app": "webpack -p --display-error-details --config webpack.config.build.js",
     "ci-build-prod": "npm run bolt-compile && webpack -p --display-error-details --config webpack.config.build.js",
-    "deploy-surge": "webpack -p --display-error-details --config webpack.config.build.js && surge public treesradio.com"
+    "deploy-surge": "webpack -p --progress --colors --config webpack.config.build.js && surge public treesradio.com"
   },
   "repository": {
     "type": "git",
