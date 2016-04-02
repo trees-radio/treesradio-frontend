@@ -755,7 +755,10 @@ var Main = React.createClass({
     },
     saveSelPlaylist: function() {
       base.post('users/'+this.state.user.uid+'/settings/playlists/selected', {
-        data: this.state.currentPlaylist.id
+        data: this.state.currentPlaylist.id,
+        then() {
+          this.updateMediaRequest();
+        }
       });
     },
     addToPlaylist: function(grabBool, searchIndex, grabPlaylistIndex) {
