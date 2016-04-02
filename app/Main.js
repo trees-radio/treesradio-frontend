@@ -754,10 +754,11 @@ var Main = React.createClass({
       this.updateMediaRequest();
     },
     saveSelPlaylist: function() {
+      var updateMediaRequest = this.updateMediaRequest;
       base.post('users/'+this.state.user.uid+'/settings/playlists/selected', {
         data: this.state.currentPlaylist.id,
         then() {
-          this.updateMediaRequest();
+          updateMediaRequest();
         }
       });
     },
