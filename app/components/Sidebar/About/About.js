@@ -43,8 +43,9 @@ var About = React.createClass({
           </div>
         </div>
         <div className="about-emoji">
-            <h5><a href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji List</a></h5>
-            <h5><a href="https://youtu.be/84qIWSRRZM8" target="_blank">Video Tutorial/Walkthrough</a></h5>
+            <h6><a href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji List</a></h6>
+            <h6><a href="https://youtu.be/84qIWSRRZM8" target="_blank">Video Tutorial/Walkthrough</a></h6>
+            <h6><a href="https://reddit.com/r/treesradio" target="_blank">/r/treesradio</a></h6>
         </div>
       </div>
     );
