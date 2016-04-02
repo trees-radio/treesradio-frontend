@@ -9,11 +9,13 @@
     "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase deploy:rules -f treesradio-dev",
+    "bolt-deploy-live": "npm run bolt-compile && firebase deploy:rules -f treesradio-dev",
     "update-env": "firebase data:set /_admin/env firebase/env.json -y -f treesradio-live",
     "build-prod": "npm run bolt-compile && webpack -p --progress --colors --config webpack.config.build.js",
     "ci-build-bolt": "npm run bolt-compile",
     "ci-build-app": "webpack -p --display-error-details --config webpack.config.build.js",
-    "ci-build-prod": "npm run bolt-compile && webpack -p --display-error-details --config webpack.config.build.js"
+    "ci-build-prod": "npm run bolt-compile && webpack -p --display-error-details --config webpack.config.build.js",
+    "deploy-surge": "webpack -p --display-error-details --config webpack.config.build.js && surge public treesradio.com"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,11 @@
     "_admin": {
       ".read": "true"
     },
+    "backend": {
+      "chatlock": {
+        ".read": "true"
+      }
+    },
     "chat": {
       ".read": "true"
     },
