@@ -408,6 +408,11 @@ var Main = React.createClass({
         animation: "slide-from-top",
         inputPlaceholder: "Username"
       }, function(inputValue){
+        if (inputValue === false) return false;
+        if (inputValue === "") {
+          sweetAlert.showInputError("Error: Username is empty?");
+          return false;
+        }
         var desiredUn = inputValue.replace(/ /g, '');
         var userNameMaxLength = 20;
         if (desiredUn.length > userNameMaxLength) {
