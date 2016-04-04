@@ -3,7 +3,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-width: 0px) {
 #videotoplevel {
-  // display: none;
+  display: none;
 }
 }
 
@@ -26,7 +26,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 0px) {
 #player-size {
-  height: 35vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -179,18 +179,6 @@ $videotoplevel-bg: #171717;
   height: .5vh;
   width: 100%;
 }
-}
-
-@media (min-width: 0px) {
-  #player-size {
-     height: 35vh !important;
-   }
-}
-
-@media (min-width: 600px) {
-  #player-size {
-
-   }
 }
 
 @media (min-height: 800px) {
