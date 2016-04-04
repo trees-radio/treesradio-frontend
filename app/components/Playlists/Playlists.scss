@@ -22,6 +22,14 @@
   overflow: hidden;
 }
 
+#playlist-metadata::-webkit-scrollbar {
+  display: none;
+}
+
+#currentsong-metadata::-webkit-scrollbar {
+  display:none;
+}
+
 .playlist-shuffle-btn {
   padding-top: 1.25%;
   padding-right:1%;
