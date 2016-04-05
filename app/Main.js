@@ -289,7 +289,9 @@ var Main = React.createClass({
               var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
               this.presenceRef = presenceRef; // for use elsewhere
               presenceRef.child('uid').set(authData.uid);
-
+              if (this.state.user.avatar) {
+                presenceRef.child('avatar').set(this.state.user.avatar);
+              }
               // see https://www.firebase.com/docs/web/guide/offline-capabilities.html
               var connectedRef = new Firebase(window.__env.firebase_origin + '/.info/connected');
               connectedRef.on('value', function(snap) {
