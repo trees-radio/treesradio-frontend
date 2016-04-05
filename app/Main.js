@@ -364,15 +364,32 @@ var Main = React.createClass({
                       var numInMsg = countArrayOccurences(mentions, mentionString);
                       // this whole thing below needs to be cleaned up, no direct modifications of state...
                       if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
-                        this.state.mention.notifyNum += 1;
+                        this.setState({
+                          mention: {
+                            notifyNum: this.state.mention.notifyNum + 1,
+                            mentioned: this.state.mention.mentioned,
+                            numInMsg: this.state.mention.numInMsg
+                          }
+                        });
                         mentionTotaler(function resetMentionNumCallback() {
-                          this.state.mention.notifyNum = 0;
+                          this.setState({
+                            mention: {
+                              notifyNum: 0,
+                              mentioned: this.state.mention.mentioned,
+                              numInMsg: this.state.mention.numInMsg
+                            }
+                          });
                         }.bind(this));
                         if (moment().unix() > appOpenTimestamp + 30) {
                           this.audioAlert.play();
                         }
-                        this.state.mention.mentioned = msgNode[0].key;
-                        this.state.mention.numInMsg = numInMsg;
+                        this.setState({
+                          mention: {
+                            notifyNum: this.state.mention.notifyNum + 1,
+                            mentioned: msgNode[0].key,
+                            numInMsg: numInMsg
+                          }
+                        });
                       }
                     }
                   }

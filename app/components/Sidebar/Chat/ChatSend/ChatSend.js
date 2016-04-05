@@ -61,6 +61,23 @@ var ChatSend = React.createClass({
         });
       });
   },
+  componentWillUpdate: function() {
+    if (this.state.match) {
+      var toMatch = this.state.currentMatch.value.substr(1).toUpperCase();
+      var numMatches = 0;
+      this.props.userPresence.forEach(function(item) {
+        if (item.online && item.key.toUpperCase().includes(toMatch)) {
+          if (numMatches === 0) {
+            this.setState({quickMatch: item.key});
+          } else {
+            this.setState({quickMatch: ""});
+          }
+          // bump number of matches for each valid match
+          numMatches += 1;
+        }
+      }, this);
+    }
+  },
   handleMention: function(name) {
     completer.replaceMatch(completer.mostRecentMatch, '@'+name);
   },
@@ -120,17 +137,9 @@ var ChatSend = React.createClass({
     var matches = '';
     if (this.state.match) {
       var toMatch = this.state.currentMatch.value.substr(1).toUpperCase();
-      this.state.numMatches = 0; //reset number of matches before runnning map
       matches = this.props.userPresence.map(function(item) {
         var boundClick = this.handleMention.bind(this, item.key);
         if (item.online && item.key.toUpperCase().includes(toMatch)) {
-          if (this.state.numMatches === 0) {
-            this.state.quickMatch = item.key;
-          } else {
-            this.state.quickMatch = "";
-          }
-          // bump number of matches for each valid match
-          this.state.numMatches += 1;
           return (
             <span key={item.key} className="mention-item" onClick={boundClick}>@{item.key}<br/></span>
           )
