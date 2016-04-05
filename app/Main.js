@@ -134,6 +134,11 @@ var Main = React.createClass({
         formats: ["ogg", "mp3"],
         loop: false
       });
+      window.onbeforeunload = function() {
+        if (this.state.user.inWaitlist.waiting) {
+          return "It looks like you're in the waitlist, are you sure you want to leave?";
+        }
+      }
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -283,6 +288,7 @@ var Main = React.createClass({
 
               var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
               this.presenceRef = presenceRef; // for use elsewhere
+              presenceRef.child('uid').set(authData.uid);
 
               // see https://www.firebase.com/docs/web/guide/offline-capabilities.html
               var connectedRef = new Firebase(window.__env.firebase_origin + '/.info/connected');
