@@ -134,11 +134,11 @@ var Main = React.createClass({
         formats: ["ogg", "mp3"],
         loop: false
       });
-      window.onbeforeunload = function() {
+      window.addEventListener('beforeunload', function(e) {
         if (this.state.user.inWaitlist.waiting) {
-          return "It looks like you're in the waitlist, are you sure you want to leave?";
+          (e || window.event).returnValue = "It looks like you're in the waitlist, are you sure you want to leave?";
         }
-      }
+      }.bind(this));
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
