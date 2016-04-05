@@ -134,6 +134,11 @@ var Main = React.createClass({
         formats: ["ogg", "mp3"],
         loop: false
       });
+      window.onbeforeunload = function() {
+        if (this.state.user.inWaitlist.waiting) {
+          return "It looks like you're in the waitlist, are you sure you want to leave?";
+        }
+      }
     },
     componentDidMount: function(){
         // grab base ref and listen for auth
@@ -283,6 +288,7 @@ var Main = React.createClass({
 
               var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
               this.presenceRef = presenceRef; // for use elsewhere
+              presenceRef.child('uid').set(authData.uid);
 
               // see https://www.firebase.com/docs/web/guide/offline-capabilities.html
               var connectedRef = new Firebase(window.__env.firebase_origin + '/.info/connected');
@@ -354,6 +360,7 @@ var Main = React.createClass({
                     });
                     if (_.includes(mentions, mentionString)) {
                       var numInMsg = countArrayOccurences(mentions, mentionString);
+                      // this whole thing below needs to be cleaned up, no direct modifications of state...
                       if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
                         this.state.mention.notifyNum += 1;
                         mentionTotaler(function resetMentionNumCallback() {
@@ -382,13 +389,6 @@ var Main = React.createClass({
           // console.log("Logged out");
           this.setState({ loginstate: false });
       }
-    },
-    presencePing: function() {
-      // console.log("Sending presence ping...");
-      // this.presenceRef.child('online').set(true);
-      let timestamp = _.now();
-      this.presenceRef.child('lastseen').set(timestamp);
-      this.presenceRef.child('online').set(true);
     },
     logoutUser: function(){
         this.ref.unauth();
@@ -531,8 +531,6 @@ var Main = React.createClass({
       }
     },
     playlistImport: function() {
-      // var addNewPlaylist = this.addNewPlaylist;
-
       sweetAlert({
         title: "Import YouTube Playlist",
         text: "Input the YouTube playlist URL:",
@@ -605,7 +603,7 @@ var Main = React.createClass({
                   return false;
                 }
                 if (inputValue === '') {
-                    emitUserError('Playlist Import Error', 'No name given!');
+                    sweetAlert.showInputError('Playlist Import Error', 'No name given!');
                     return false;
                 }
                 let currentAuth = base.getAuth();
