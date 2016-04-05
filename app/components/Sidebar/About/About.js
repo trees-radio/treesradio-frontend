@@ -19,7 +19,7 @@ var About = React.createClass({
           <h5>Rules:</h5>
           <ul className="rules-list">
             <li id="rules-1">- Max Video length is 8 minutes without a mod exemption.</li>
-            <li id="rules-2">- Like/Dislike Skip Ratio = 1:1</li>
+            <li id="rules-2">- Like/Dislike Skip Ratio = 1:1.5 (Must have atleast 5 dislikes)</li>
             <li id="rules-3">- Do not try to buy/sell/give/trade drugs on TreesRadio.</li>
             <li id="rules-4">- Please be nice to each other, unneccesary rudeness/attacks may result in a ban.</li>
             <li id="rules-5">- TreesRadio is 18+ only, minors will be banned.</li>
