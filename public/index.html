@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>TreesRadio</title>
-    <link rel="shortcut icon" id="favicon" href="favicon.png">
-    <meta name="application-name" content="TreesRadio">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/app.css">
+  <meta charset="UTF-8">
+  <title>TreesRadio</title>
+  <link rel="shortcut icon" id="favicon" href="favicon.png">
+  <meta name="application-name" content="TreesRadio">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/app.css">
 </head>
+
 <body>
-    <div id="app"></div>
-    <script>
-      var ENV_FIREBASE_ORIGIN = 'https://treesradio-live.firebaseio.com';
-      /////////////////////////////////////
-      function __loadFirebaseEnv(data) {
-        window.__env = data || {};
-        document.dispatchEvent(new CustomEvent('env', {detail: data || {}}));
+  <div id="app"></div>
+  <script>
+    var ENV_FIREBASE_ORIGIN = 'https://treesradio-live.firebaseio.com';
+    /////////////////////////////////////
+    function __loadFirebaseEnv(data) {
+      window.__env = data || {};
+      document.dispatchEvent(new CustomEvent('env', {
+        detail: data || {}
+      }));
+    }
+    var jsonp = document.createElement('script');
+    jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g, ',') + '.json?callback=__loadFirebaseEnv';
+    document.head.appendChild(jsonp);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raven.js/2.0.5/raven.min.js"></script>
+  <script>
+    var init = function() {
+      if (!window.__env) return;
+      function loadApp() {
+        var appElement = document.createElement("script");
+        appElement.type = "application/javascript";
+        appElement.src = "assets/app.js";
+        document.body.appendChild(appElement);
       }
-      var jsonp = document.createElement('script');
-      jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g,',') + '.json?callback=__loadFirebaseEnv';
-      document.head.appendChild(jsonp);
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raven.js/2.0.5/raven.min.js"></script>
-    <script>
-      var init = function() {
-        if (!window.__env) return;
-        // var ref = new Firebase(__env.firebase_origin);
-        // start your application logic here!
-        function loadApp() {
-          var appElement = document.createElement("script");
-          appElement.type = "application/javascript";
-          appElement.src = "assets/app.js";
-          document.body.appendChild(appElement);
-        }
-        loadApp();
-      }
-      document.addEventListener('env', init);
-      init();
-    </script>
-    <!-- <script src="app.js"></script> -->
-
-<!-- Google Analytics -->
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-75932539-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-<!-- End Google analytics -->
+      loadApp();
+    }
+    document.addEventListener('env', init);
+    init();
+  </script>
+  <!-- <script src="app.js"></script> -->
+  <!-- Google Analytics -->
+  <script>
+    // CLOUDFLARE HANDLING GOOGLE ANALYTICS
+    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    //
+    // ga('create', 'UA-75932539-1', 'auto');
+    // ga('send', 'pageview');
+  </script>
+  <!-- End Google analytics -->
 
 </body>
+
 </html>

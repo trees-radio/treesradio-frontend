@@ -209,7 +209,7 @@ var Main = React.createClass({
               this.setState(setControlsOn);
             }
           }
-        })
+        });
     },
     ///////////////////////////////////////////////////////////////////////
     // LOGIN & REGISTRATION
@@ -283,23 +283,19 @@ var Main = React.createClass({
 
               var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + this.state.user.username);
               this.presenceRef = presenceRef; // for use elsewhere
-              // var username = this.state.username; // for use below
-              // eslint says unused for above
-              presenceRef.child('uid').set(authData.uid);
-              presenceRef.child('online').onDisconnect().set(false);
-              presenceRef.child('online').set(true);
-              //
-              // this.presencePing();
-              // window.setInterval(this.presencePing, 30000);
-              // stopped using presence pings in favor of the below
+
               // see https://www.firebase.com/docs/web/guide/offline-capabilities.html
-              //
               var connectedRef = new Firebase(window.__env.firebase_origin + '/.info/connected');
               connectedRef.on('value', function(snap) {
                 if (snap.val() === true) {
-                  // var presenceRef = new Firebase(window.__env.firebase_origin + '/presence/' + username);
                   presenceRef.child('online').onDisconnect().set(false);
                   presenceRef.child('online').set(true);
+                  presenceRef.child('online').on('value', function(snap) { // in case the user logs on on a new device and closes the other
+                    if (!snap.val()) {
+                      presenceRef.child('online').set(true);
+                      presenceRef.child('online').onDisconnect().set(false);
+                    }
+                  });
                   presenceRef.child('lastseen').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
                 }
               });
