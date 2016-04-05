@@ -26,9 +26,9 @@ var Waitlist = React.createClass({
       if (waitlistItem['avatar']) {
         userAvatar = "//" + waitlistItem['avatar'];
       } else {
-        userAvatar = "//api.adorable.io/avatars/50/" + waitlistItem['user'] + ".png";
+        userAvatar = "//tr-avatars.herokuapp.com/avatars/50/" + waitlistItem['user'] + ".png";
       }
-      var avatarFallback = "//api.adorable.io/avatars/50/" + waitlistItem['user'] + ".png";
+      var avatarFallback = "//tr-avatars.herokuapp.com/avatars/50/" + waitlistItem['user'] + ".png";
 
       waitlistPlace++;
       return (
