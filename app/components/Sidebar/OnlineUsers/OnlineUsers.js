@@ -52,9 +52,9 @@ var OnlineUsers = React.createClass({
         if (user['avatar']) {
           userAvatar = "//" + user['avatar'];
         } else {
-          userAvatar = "//api.adorable.io/avatars/50/" + user['key'] + ".png";
+          userAvatar = "//tr-avatars.herokuapp.com/avatars/50/" + user['key'] + ".png";
         }
-        var avatarFallback = "//api.adorable.io/avatars/50/" + user['key'] + ".png";
+        var avatarFallback = "//tr-avatars.herokuapp.com/avatars/50/" + user['key'] + ".png";
 
         return (
           <li key={index} className={userLineClasses}>
