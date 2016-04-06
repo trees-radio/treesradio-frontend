@@ -385,7 +385,7 @@ var Main = React.createClass({
                         }
                         this.setState({
                           mention: {
-                            notifyNum: this.state.mention.notifyNum + 1,
+                            notifyNum: this.state.mention.notifyNum,
                             mentioned: msgNode[0].key,
                             numInMsg: numInMsg
                           }
