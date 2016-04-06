@@ -11,16 +11,16 @@ var OnlineUsers = React.createClass({
     var presenceArray = this.props.userPresence;
     var p = this.props;
     var staff = p.staff;
-    var sortByStaff = function(a, b) {
+    var userSort = function(a, b) {
+      var staffSort = 0;
       if (staff[a.uid] > staff[b.uid]) {
-        return 1;
+        staffSort = 1;
       } else if (staff[a.uid] < staff[b.uid]) {
-        return -1;
-      } else {
-        return 0;
+        staffSort = -1;
       }
-    }
-    var sortByAlphabet = function(a, b) {
+      if (staffSort !== 0) {
+        return staffSort;
+      }
       if (a.key.toUpperCase() > b.key.toUpperCase()) {
         return 1;
       } else if (a.key.toUpperCase() < b.key.toUpperCase()) {
@@ -29,7 +29,7 @@ var OnlineUsers = React.createClass({
         return 0;
       }
     }
-    var presenceArraySorted = presenceArray.sort(sortByStaff).sort(sortByAlphabet);
+    var presenceArraySorted = presenceArray.sort(userSort);
     users = presenceArraySorted.map(function(user, index) {
       if (user['online']) {
         let userPosClass = "";
