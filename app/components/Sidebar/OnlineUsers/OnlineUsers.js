@@ -9,10 +9,20 @@ var OnlineUsers = React.createClass({
     let users;
     let userPos = 0;
     var presenceArray = this.props.userPresence;
+    var p = this.props;
+    var staff = p.staff;
     var presenceArraySorted = presenceArray.sort(function(a, b) {
-      if (a.level > b.level) {
+      if (a.key > b.key) {
         return 1;
-      } else if (a.level < b.level) {
+      } else if (a.key < b.key) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }).sort(function(a, b) {
+      if (staff[a.uid] > staff[b.uid]) {
+        return 1;
+      } else if (staff[a.uid] < staff[b.uid]) {
         return -1;
       } else {
         return 0;
