@@ -18,7 +18,7 @@
     /////////////////////////////////////
     function __loadFirebaseEnv(data) {
       window.__env = data || {};
-      var devOverride = true;
+      var devOverride = false;
       if (devOverride) {
         window.__env.firebase_origin = 'https://treesradio-live.firebaseio.com';
       }
