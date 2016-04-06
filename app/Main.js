@@ -380,7 +380,7 @@ var Main = React.createClass({
                             }
                           });
                         }.bind(this));
-                        if (moment().unix() > appOpenTimestamp + 30) {
+                        if (moment().unix() > appOpenTimestamp + 10) {
                           this.audioAlert.play();
                         }
                         this.setState({
