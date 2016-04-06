@@ -6,30 +6,8 @@ import React from 'react';
 import sweetAlert from 'sweetalert';
 import MentionCompleter from 'mention-completer';
 import $ from 'jquery';
-// import emitUserError from '../../../../utils/userError.js';
 import moment from 'moment';
 
-var sendBox;
-var completer = new MentionCompleter({
-  patterns: { handle: /(@[\w]+)\b/ },
-  getValue: function(callback) {
-    callback(null, sendBox.val());
-  },
-  setValue: function(value) {
-    sendBox.focus();
-    sendBox.val(value);
-    completer.checkForMatch();
-  },
-  getSelectionRange: function(callback) {
-    callback(null, {
-      start: sendBox[0].selectionStart,
-      end: sendBox[0].selectionEnd
-    });
-  },
-  setSelectionRange: function (range) {
-    sendBox[0].setSelectionRange(range.start, range.end);
-  }
-});
 
 var ChatSend = React.createClass({
   getInitialState: function() {
@@ -41,58 +19,80 @@ var ChatSend = React.createClass({
     }
   },
   componentWillMount: function() {
-    sendBox = $(this.refs.sendbox);
+    this.sendBox = $(this.refs.sendbox);
+    this.completer = new MentionCompleter({
+      patterns: { handle: /(@[\w]+)\b/ },
+      getValue: function(callback) {
+        callback(null, this.sendBox.val());
+      }.bind(this),
+      setValue: function(value) {
+        this.sendBox.focus();
+        this.sendBox.val(value);
+        this.completer.checkForMatch();
+      }.bind(this),
+      getSelectionRange: function(callback) {
+        // console.log(this.sendBox);
+        callback(null, {
+          start: this.sendBox[0].selectionStart,
+          end: this.sendBox[0].selectionEnd
+        });
+      }.bind(this),
+      setSelectionRange: function (range) {
+        this.sendBox[0].setSelectionRange(range.start, range.end);
+      }.bind(this)
+    });
   },
   componentDidMount: function() {
-    var that = this;
-    sendBox = $(this.refs.sendbox);
-    completer
+    this.sendBox = $(this.refs.sendbox);
+    this.completer
       .on('match', function(match) {
-        that.setState({
+        this.setState({
           match: true,
           currentMatch: match
         });
-      })
+      }.bind(this))
       .on('nomatch', function() {
-        that.setState({
+        this.setState({
           match: false,
           numMatches: 0,
           quickMatch: ""
         });
-      });
+      }.bind(this));
+  },
+  componentWillUnmount: function() {
+    // this.completer = null
   },
   componentWillUpdate: function() {
-    if (this.state.match) {
+    if (this.state.match && !this.matchTimer) {
+      // debugger;
       var toMatch = this.state.currentMatch.value.substr(1).toUpperCase();
       var numMatches = 0;
       this.props.userPresence.forEach(function(item) {
         if (item.online && item.key.toUpperCase().includes(toMatch)) {
-          if (numMatches === 0) {
+          if (numMatches === 0) { // if this is the first match, add it to quickMatch
             this.setState({quickMatch: item.key});
-          } else {
+          } else { //no longer the first match, dump anything in there
             this.setState({quickMatch: ""});
           }
+
           // bump number of matches for each valid match
           numMatches += 1;
+
         }
       }, this);
+      this.setState({numMatches: numMatches});
+      this.matchTimer = setTimeout(function() {
+        this.matchTimer = null
+      }.bind(this), 300);
     }
   },
   handleMention: function(name) {
-    completer.replaceMatch(completer.mostRecentMatch, '@'+name);
+    this.completer.replaceMatch(this.completer.mostRecentMatch, '@'+name);
   },
   handleChat: function(e){
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      if (this.state.numMatches === 1 && this.state.quickMatch !== "") {
-        completer.replaceMatch(completer.mostRecentMatch, '@'+this.state.quickMatch);
-      }
-      return false;
-    }
-
     if (e.key === 'Enter') {
       if (this.state.numMatches === 1 && this.state.quickMatch !== "") {
-        completer.replaceMatch(completer.mostRecentMatch, '@'+this.state.quickMatch);
+        this.completer.replaceMatch(this.completer.mostRecentMatch, '@'+this.state.quickMatch);
         return;
       }
       let newMsg = this.refs.sendbox.value.trim();
@@ -101,6 +101,7 @@ var ChatSend = React.createClass({
       } else {
         if ( this.props.loginState ) {
           this.refs.sendbox.value = '';
+          this.completer.checkForMatch();
           let userSending = this.props.loginData.username;
           this.props.sendMsg({msg: newMsg, user: userSending});
         } else {
@@ -109,10 +110,17 @@ var ChatSend = React.createClass({
 
       }
     } else {
-      completer.checkForMatch();
+      this.completer.checkForMatch();
     }
   },
-  regReminder: function() {
+  regReminder: function(e) {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (this.state.numMatches === 1 && this.state.quickMatch !== "") {
+        this.completer.replaceMatch(this.completer.mostRecentMatch, '@'+this.state.quickMatch);
+      }
+      return false;
+    }
     var minutesRegistered = 30 * 60 * 1000;
     var chatlockEffected = this.props.chatlock && this.props.loginData.registered && !this.props.loginData.registered < moment().valueOf() - minutesRegistered;
     if (!this.props.loginState) {
