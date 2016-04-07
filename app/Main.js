@@ -362,7 +362,6 @@ var Main = React.createClass({
                     });
                     if (_.includes(mentions, mentionString)) {
                       var numInMsg = countArrayOccurences(mentions, mentionString);
-                      // this whole thing below needs to be cleaned up, no direct modifications of state...
                       if (this.state.mention.mentioned !== msgNode[0].key || this.state.mention.numInMsg < numInMsg) {
                         this.setState({
                           mention: {
