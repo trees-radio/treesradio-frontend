@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "check-dependencies && webpack-dev-server --inline --colors --content-base public/ --output-public-path=assets/",
+    "start": "check-dependencies --install && webpack-dev-server --inline --colors --content-base public/ --output-public-path=assets/",
     "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase deploy:rules -f treesradio-dev",
@@ -63,7 +63,7 @@
     "querystring": "^0.2.0",
     "re-base": "^1.5.1",
     "react": "^15.0.0",
-    "react-dom": "^0.14.7",
+    "react-dom": "^15.0.0",
     "react-emoji": "^0.4.4",
     "react-image-fallback": "^2.1.1",
     "react-linkify": "^0.1.1",
