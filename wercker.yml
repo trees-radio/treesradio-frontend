@@ -60,7 +60,7 @@ deploy:
         code: |
           npm run ci-build-prod
 
-    - zbuttram/wercker-firebase-deploy@0.1.3:
+    - TreesRadio/wercker-firebase-deploy@0.1.3:
         firebase: "treesradio-dev"
         token: $FIREBASE_DEPLOY_KEY
 
@@ -72,7 +72,7 @@ deploy:
         code: |
           npm run ci-build-prod
 
-    - zbuttram/wercker-firebase-deploy@0.1.3:
+    - TreesRadio/wercker-firebase-deploy@0.1.3:
         firebase: "treesradio-live"
         token: $FIREBASE_DEPLOY_KEY_LIVE
 
