@@ -35,12 +35,6 @@ path /chat {
   read() = true;
 }
 
-path /queues/chat/tasks/$task {
-  write() = isUser(newData.child('uid').val());
-}
-
-
-
 ////////////////////////////////////////////////////////////////
 // PLAYLISTS
 ////////////////////////////////////////////////////////////////
@@ -50,9 +44,9 @@ type Playlist {
   name: String
 }
 
-path /playlists/$userid {
-  read() = isUser($userid);
-  write() = isUser($userid);
+path /playlists/{$uid} {
+  read() = isUser($uid);
+  write() = isUser($uid);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -71,7 +65,7 @@ path /presence {
   read() = true;
 }
 
-path /presence/$username {
+path /presence/{$username} {
   write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
 }
 
@@ -79,9 +73,12 @@ path /presence/$username {
 // USERS
 ////////////////////////////////////////////////////////////////
 
-path /users/$uid {
+path /users/{$uid} {
+  read() = true;
+}
+
+path /users/{$uid}/private {
   read() = isUser($uid);
-  write() = true;
 }
 
 path /moderator {
@@ -108,21 +105,4 @@ path /bans {
 
 path /waitlist/tasks {
   read() = true;
-}
-
-path /waitlist/tasks/$task {
-  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
-}
-
-////////////////////////////////////////////////////////////////
-// FEEDBACK
-////////////////////////////////////////////////////////////////
-
-type FeedbackTask {
-  type: String,
-  user: String
-}
-
-path /queues/feedback/tasks/$task is FeedbackTask {
-  write() = isUser(newData.child('user').val());
 }

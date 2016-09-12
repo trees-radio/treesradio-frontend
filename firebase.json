@@ -1,10 +1,13 @@
 {
-  "firebase": "treesradio",
-  "public": "public",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**"
-  ],
-  "rules": "./firebase/rules.json"
+  "database": {
+    "rules": "./firebase/rules.json"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }
