@@ -10,6 +10,8 @@ module.exports = {
     Raven: true
   },
 
+  parser: 'babel-eslint',
+
   parserOptions: {
     ecmaVersion: 6,
     ecmaFeatures: {
