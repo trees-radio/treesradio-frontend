@@ -39,9 +39,9 @@ export default @observer class UserBit extends React.Component {
             </a>
             <ul className="dropdown-menu">
               {/* <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
-                <li onClick={p.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>
-                <li onClick={this.handleChangeEmail}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
-              <li onClick={this.handleChangePassword}><a href="#"><i className="fa fa-key"></i> Change Password</a></li> */}
+              <li onClick={p.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>*/}
+              <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
+              <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li> 
             </ul>
 
             <button className="btn btn-default" id="logoutbutton" onClick={() => fbase.logout()}>Logout</button>
