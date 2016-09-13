@@ -23,7 +23,7 @@
     "presence": {
       ".read": "true",
       "$username": {
-        ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
+        ".write": "newData.parent().parent().child('users/' + auth.uid + '/username').val() == $username"
       }
     },
     "users": {
@@ -43,6 +43,16 @@
     "waitlist": {
       "tasks": {
         ".read": "true"
+      }
+    },
+    "queues": {
+      ".write": "auth != null",
+      "chat": {
+        "tasks": {
+          ".indexOn": [
+            "_state"
+          ]
+        }
       }
     }
   }

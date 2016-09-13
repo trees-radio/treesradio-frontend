@@ -6,6 +6,7 @@ import {observer} from 'mobx-react';
 import fbase from 'stores/fbase';
 
 import Nav from './Nav';
+import Sidebar from './Sidebar';
 
 import DevTools from 'mobx-react-devtools';
 var DevTool;
@@ -82,6 +83,7 @@ export default @observer class Main extends React.Component {
                 staff={this.state.staff}
                 chatlock={this.state.chatlock}
               /> */}
+              <Sidebar/>
             </div>
             {/* End Container */}
           </div>

@@ -9,7 +9,8 @@
 ////////////////////////////////////////////////////////////////
 // GLOBAL FUNCTIONS
 ////////////////////////////////////////////////////////////////
-isUser(uid) { auth != null && auth.uid == uid }
+isAuth() {auth != null}
+isUser(uid) { isAuth() && auth.uid == uid }
 
 
 ////////////////////////////////////////////////////////////////
@@ -20,11 +21,11 @@ path / {
 }
 
 path /_admin {
-  read() = true;
+  read() {true}
 }
 
 path /backend/chatlock {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -32,7 +33,7 @@ path /backend/chatlock {
 ////////////////////////////////////////////////////////////////
 
 path /chat {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -45,8 +46,8 @@ type Playlist {
 }
 
 path /playlists/{$uid} {
-  read() = isUser($uid);
-  write() = isUser($uid);
+  read() {isUser($uid)}
+  write() {isUser($uid)}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -54,7 +55,7 @@ path /playlists/{$uid} {
 ////////////////////////////////////////////////////////////////
 
 path /playing_media {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -62,11 +63,12 @@ path /playing_media {
 ////////////////////////////////////////////////////////////////
 
 path /presence {
-  read() = true;
+  read() {true}
 }
 
 path /presence/{$username} {
-  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
+  //write() {isUser(newData.child('uid').val()) || isUser(data.child('uid').val())}
+  write() { root.child('users/'+auth.uid+'/username').val() === $username }
 }
 
 ////////////////////////////////////////////////////////////////
@@ -74,19 +76,19 @@ path /presence/{$username} {
 ////////////////////////////////////////////////////////////////
 
 path /users/{$uid} {
-  read() = true;
+  read() {true}
 }
 
 path /users/{$uid}/private {
-  read() = isUser($uid);
+  read() {isUser($uid)}
 }
 
 path /moderator {
-  read() = true;
+  read() {true}
 }
 
 path /bans {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -104,5 +106,27 @@ path /bans {
 //}
 
 path /waitlist/tasks {
-  read() = true;
+  read() {true}
+}
+
+
+//\/\/\/\//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+//NEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEW
+//\/\/\/\//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+///////////////////////////////////////////////////////////////
+// QUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUES
+///////////////////////////////////////////////////////////////
+
+path /queues {
+  read() {false}
+  write() {isAuth()}
+}
+
+path /queues/chat/tasks {
+  index() {["_state"]}
+}
+
+path /ranks {
+  read() {true}
 }

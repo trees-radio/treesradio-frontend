@@ -1,21 +1,31 @@
 import {observable, action, computed, toJS} from 'mobx';
 import ax from 'utils/ax';
 import firebase from 'firebase';
+import Online from 'stores/online';
 
 export default new class FirebaseSetup {
   constructor() {
     this.getEnv(() => {
       firebase.initializeApp(this.env.fbConfig);
-      this.f = firebase;
-      this.db = firebase.database();
-      this.auth = firebase.auth();
+      this.online = new Online(firebase);
+
       firebase.auth().onAuthStateChanged((user) => {
         this.user = user;
-        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
-          this.profile = snap.val();
-          this.profileInit = true;
-        })
+        if (user !== null) {
+          firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+            var profile = snap.val();
+            this.profile = profile;
+            this.profileInit = true;
+            firebase.database().ref('.info/connected').on('value', (snap) => {
+              if (snap.val() === true) {
+                firebase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
+                firebase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+              }
+            });
+          });
+        }
       });
+      
       this.init = true;
     });
   }
@@ -26,7 +36,7 @@ export default new class FirebaseSetup {
   getEnv(callback) {
     ax.get('/env').then((resp) => {
       this.env = resp.data;
-      console.log('env', toJS(this.env));
+      // console.log('env', toJS(this.env));
       if (callback) {
         callback();
       }
@@ -39,11 +49,11 @@ export default new class FirebaseSetup {
 
   login(email, password) {
     firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
-      console.log('user', user);
+      // console.log('user', user);
     }).catch((error) => {
       // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
       console.log(error);
       // ...
     });
@@ -58,7 +68,7 @@ export default new class FirebaseSetup {
   }
 
   @computed get noName() {
-    console.log(this.profile);
+    // console.log(this.profile);
     return this.user !== null && this.profileInit === true && (this.profile === null || !this.profile.username);
   }
 
