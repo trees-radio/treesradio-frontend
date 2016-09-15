@@ -3,45 +3,39 @@ import ax from 'utils/ax';
 import firebase from 'firebase';
 import Online from 'stores/online';
 
+const FB_ENV = {
+  apiKey: process.env.FBASE_API,
+  authDomain: `${process.env.FBASE}.firebaseapp.com`,
+  databaseURL: `https://${process.env.FBASE}.firebaseio.com`,
+  storageBucket: `${process.env.FBASE}.appspot.com`,
+};
+
 export default new class FirebaseSetup {
   constructor() {
-    this.getEnv(() => {
-      firebase.initializeApp(this.env.fbConfig);
-      this.online = new Online(firebase);
+    firebase.initializeApp(FB_ENV);
+    this.online = new Online(firebase);
 
-      firebase.auth().onAuthStateChanged((user) => {
-        this.user = user;
-        if (user !== null) {
-          firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
-            var profile = snap.val();
-            this.profile = profile;
-            this.profileInit = true;
-            firebase.database().ref('.info/connected').on('value', (snap) => {
-              if (snap.val() === true) {
-                firebase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
-                firebase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
-              }
-            });
+    firebase.auth().onAuthStateChanged((user) => {
+      this.user = user;
+      if (user !== null) {
+        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+          var profile = snap.val();
+          this.profile = profile;
+          this.profileInit = true;
+          firebase.database().ref('.info/connected').on('value', (snap) => {
+            if (snap.val() === true) {
+              firebase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
+              firebase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+            }
           });
-        }
-      });
-      
-      this.init = true;
+        });
+      }
     });
+
+    this.init = true;
   }
 
   @observable init = false;
-  @observable env = {};
-
-  getEnv(callback) {
-    ax.get('/env').then((resp) => {
-      this.env = resp.data;
-      // console.log('env', toJS(this.env));
-      if (callback) {
-        callback();
-      }
-    })
-  }
 
   @observable user = null;
   @observable profile = null;
