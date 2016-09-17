@@ -1,7 +1,8 @@
 import {observable, action, computed, toJS} from 'mobx';
-import ax from 'utils/ax';
+// import ax from 'utils/ax';
 import firebase from 'firebase';
 import Online from 'stores/online';
+import toast from 'utils/toast';
 
 const FB_ENV = {
   apiKey: process.env.FBASE_API,
@@ -10,10 +11,21 @@ const FB_ENV = {
   storageBucket: `${process.env.FBASE}.appspot.com`,
 };
 
+// console.log(FB_ENV);
+
 export default new class FirebaseSetup {
   constructor() {
     firebase.initializeApp(FB_ENV);
     this.online = new Online(firebase);
+
+    firebase.database().ref('.info/connected').on('value', (snap) => {
+      if (snap.val() === true) {
+        this.init = true;
+        this.connected = true;
+      } else {
+        this.connected = false;
+      }
+    });
 
     firebase.auth().onAuthStateChanged((user) => {
       this.user = user;
@@ -23,7 +35,7 @@ export default new class FirebaseSetup {
           this.profile = profile;
           this.profileInit = true;
           firebase.database().ref('.info/connected').on('value', (snap) => {
-            if (snap.val() === true) {
+            if (snap.val() === true && this.profile && this.profile.username) {
               firebase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
               firebase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
             }
@@ -32,9 +44,10 @@ export default new class FirebaseSetup {
       }
     });
 
-    this.init = true;
+    // this.init = true;
   }
 
+  @observable connected = false;
   @observable init = false;
 
   @observable user = null;
@@ -42,13 +55,14 @@ export default new class FirebaseSetup {
   @observable profileInit = false;
 
   login(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
+    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
     }).catch((error) => {
       // Handle Errors here.
       // var errorCode = error.code;
       // var errorMessage = error.message;
-      console.log(error);
+      // console.log(error);
+      toast.error(error.message);
       // ...
     });
   }
@@ -58,6 +72,7 @@ export default new class FirebaseSetup {
       // Sign-out successful.
     }, function(error) {
       // An error happened.
+      toast.error(error.message);
     });
   }
 
@@ -78,54 +93,22 @@ export default new class FirebaseSetup {
     }
   }
 
-  @observable registrationError = '';
-
-  clearRegError() {
-    this.registrationError = '';
-  }
-
   register(email, password) {
-    this.clearRegError();
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-      console.log('registration error', error);
-      this.registrationError = error.message;
-    }).then((user) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+      // console.log('registration error', error);
+      toast.error(error.message);
+    }).then(user => {
       //something
     })
   }
 
-  @observable resettingPassword = false;
-  @observable resetPassError = '';
-  @observable resetPassSuccess = false;
-  @observable lastResetEmail = '';
-
-  startResettingPassword() {
-    this.clearPassResetError();
-    this.clearPassResetSuccess();
-    this.resettingPassword = true;
-  }
-
-  stopResettingPassword() {
-    this.resettingPassword = false;
-  }
-
-  clearPassResetError() {
-    this.resetPassError = '';
-  }
-
-  clearPassResetSuccess() {
-    this.lastResetEmail = '';
-    this.resetPassSuccess = false;
-  }
-
   sendPassReset(email) {
-    this.clearPassResetError();
     firebase.auth().sendPasswordResetEmail(email).catch((error) => {
+      toast.error(error.message);
       this.resetPassError = error.message;
       this.stopResettingPassword();
     }).then(() => {
-      this.lastResetEmail = email;
-      this.resetPassSuccess = true;
+      toast.success(`Success! An email with instructions has been sent to ${email}.`)
       this.stopResettingPassword();
     });
   }

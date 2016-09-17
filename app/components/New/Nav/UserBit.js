@@ -28,6 +28,8 @@ export default @observer class UserBit extends React.Component {
     fbase.sendPassReset(this._resetEmail.value);
   }
 
+  @observable resettingPassword = false;
+
   render() {
     if (fbase.user !== null) {
       return (
@@ -41,7 +43,7 @@ export default @observer class UserBit extends React.Component {
               {/* <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
               <li onClick={p.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>*/}
               <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
-              <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li> 
+              <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
             </ul>
 
             <button className="btn btn-default" id="logoutbutton" onClick={() => fbase.logout()}>Logout</button>
@@ -72,22 +74,12 @@ export default @observer class UserBit extends React.Component {
 
             <button className="btn btn-primary" id="loginbutton" onClick={() => this.login()}>Login</button>
             <button className="btn btn-default" id="regbutton" onClick={() => fbase.register(this._email.value, this._pass.value)}>Register</button>
-            <button className="btn btn-primary" id="reset-password-btn" onClick={() => fbase.startResettingPassword()}>Password Reset</button>
+            <button className="btn btn-primary" id="reset-password-btn" onClick={() => this.resettingPassword = true}>Password Reset</button>
 
           </div>
-          <Modal title="Password Reset" isOpen={fbase.resettingPassword} hideModal={() => fbase.stopResettingPassword()} leftButton={() => this.sendPassReset()} leftButtonText="Send!">
+          <Modal title="Password Reset" isOpen={this.resettingPassword} hideModal={() => this.resettingPassword = false} leftButton={() => this.sendPassReset()} leftButtonText="Send!">
             <p>Please enter the email of the account you would like to recover.</p>
             <input className="form-control" type="text" ref={(c) => this._resetEmail = c} onKeyPress={(e) => this.onEnterKey(e, () => this.sendPassReset())} placeholder="Email Address"/>
-          </Modal>
-
-          <Modal title="Password Reset Error" isOpen={fbase.resetPassError !== ''} hideModal={() => fbase.clearPassResetError()}>
-            {fbase.resetPassError}
-          </Modal>
-          <Modal title="Password Reset Success" isOpen={fbase.resetPassSuccess} hideModal={() => fbase.clearPassResetSuccess()}>
-            Success! An email with instructions has been sent to {fbase.lastResetEmail}.
-          </Modal>
-          <Modal title="Registration Error" isOpen={fbase.registrationError !== ''} hideModal={() => fbase.clearRegError()}>
-            {fbase.registrationError}
           </Modal>
         </div>
 
