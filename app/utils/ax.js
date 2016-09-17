@@ -6,4 +6,6 @@ const ax = axios.create({
   baseURL
 });
 
+ax.get('/'); // wakeup call
+
 export default ax;
