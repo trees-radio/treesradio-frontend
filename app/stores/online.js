@@ -7,7 +7,7 @@ export default class Online {
       if (snap.val()) {
         this.presence = snap.val();
       }
-    })
+    });
   }
 
   @observable presence = null;
