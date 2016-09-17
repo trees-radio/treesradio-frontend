@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Main from './components/Main';
 
 // (S)CSS
+import 'modules/toastr/build/toastr.css';
 import './Main.scss';
 
 require("font-awesome-webpack");
