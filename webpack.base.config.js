@@ -46,10 +46,14 @@ module.exports = new Config().merge({
       stores: path.join(__dirname, 'app/stores'),
       components: path.join(__dirname, 'app/components'),
       utils: path.join(__dirname, 'app/utils'),
-      libs: path.join(__dirname, 'app/libs')
+      libs: path.join(__dirname, 'app/libs'),
+      modules: path.join(__dirname, 'node_modules')
     }
   },
   plugins: [
-    new ExtractTextPlugin("[name].css")
+    new ExtractTextPlugin("[name].css"),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
+    })
   ]
 })
