@@ -7,6 +7,7 @@ import fbase from 'stores/fbase';
 
 import Chat from './New/Sidebar/Chat';
 import OnlineUsers from './New/Sidebar/OnlineUsers';
+import About from './New/Sidebar/About';
 
 export default @observer class Sidebar extends React.Component {
   @observable currentSidebar = 'CHAT';
@@ -27,6 +28,7 @@ export default @observer class Sidebar extends React.Component {
         break;
       case 'ABOUT':
         aboutSelected = true;
+        sidebarComponent = <About/>;
         break;
       default:
     }
