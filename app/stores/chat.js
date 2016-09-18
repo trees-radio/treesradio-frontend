@@ -1,4 +1,6 @@
 import {observable, computed, toJS} from 'mobx';
+import toast from 'utils/toast';
+import fbaseStore from 'stores/fbase';
 
 export default class Chat {
   constructor(fbase) {
@@ -11,6 +13,9 @@ export default class Chat {
         } else {
           msg.msgs = [msg.msg];
           this.messages.push(msg);
+        }
+        if (fbaseStore.profileInit && msg.mentions.map(s => s.split('@').join('').toLowerCase()).includes(fbaseStore.profile.username.toLowerCase())) {
+          toast.info(`You were mentioned by ${msg.username}.`);
         }
       }
     });
