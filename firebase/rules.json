@@ -28,10 +28,12 @@
     },
     "users": {
       "$uid": {
-        ".read": "true",
-        "private": {
-          ".read": "auth != null && auth.uid == $uid"
-        }
+        ".read": "true"
+      }
+    },
+    "private": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid"
       }
     },
     "moderator": {
@@ -46,12 +48,14 @@
       }
     },
     "queues": {
-      ".write": "auth != null",
       "chat": {
         "tasks": {
-          ".indexOn": [
-            "_state"
-          ]
+          "$task": {
+            ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()",
+            ".indexOn": [
+              "_state"
+            ]
+          }
         }
       }
     },

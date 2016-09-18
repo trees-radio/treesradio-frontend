@@ -11,6 +11,7 @@
 ////////////////////////////////////////////////////////////////
 isAuth() {auth != null}
 isUser(uid) { isAuth() && auth.uid == uid }
+isSendingUser() {isUser(newData.child('uid').val()) || isUser(data.child('uid').val())}
 
 
 ////////////////////////////////////////////////////////////////
@@ -79,7 +80,7 @@ path /users/{$uid} {
   read() {true}
 }
 
-path /users/{$uid}/private {
+path /private/{$uid} {
   read() {isUser($uid)}
 }
 
@@ -120,11 +121,14 @@ path /waitlist/tasks {
 
 path /queues {
   read() {false}
-  write() {isAuth()}
 }
 
 path /queues/chat/tasks {
   index() {["_state"]}
+}
+
+path /queues/chat/tasks/{task} {
+  write() {isSendingUser()}
 }
 
 path /ranks {
