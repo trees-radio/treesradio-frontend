@@ -2,11 +2,11 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import fbase from 'stores/fbase';
 import classNames from 'classnames';
+import Avatars from 'libs/avatars';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
     const online = fbase.online || {};
-    console.log(online);
     const users = online.onlineUsers || [];
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
@@ -16,7 +16,7 @@ export default @observer class OnlineUsers extends React.Component {
       var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
       var usernameClasses = classNames("users-name", modLevel);
 
-      var avatar = "//tr-avatars.herokuapp.com/avatars/50/" + user.user + ".png";
+      var avatar = new Avatars(user.user).avatar;
 
       return (
         <li key={i} className={userLineClasses}>

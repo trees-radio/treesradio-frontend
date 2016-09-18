@@ -1,7 +1,10 @@
 import {observable, action, computed, toJS} from 'mobx';
 // import ax from 'utils/ax';
 import firebase from 'firebase';
+
 import Online from 'stores/online';
+import Chat from 'stores/chat';
+
 import toast from 'utils/toast';
 
 const FB_ENV = {
@@ -17,6 +20,7 @@ export default new class FirebaseSetup {
   constructor() {
     firebase.initializeApp(FB_ENV);
     this.online = new Online(firebase);
+    this.chat = new Chat(firebase);
 
     firebase.database().ref('.info/connected').on('value', (snap) => {
       if (snap.val() === true) {

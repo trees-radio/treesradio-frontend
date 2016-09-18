@@ -1,23 +1,23 @@
 import ax from 'utils/ax';
 import fbase from 'stores/fbase';
-import toastr from 'toastr';
+import toast from 'utils/toast';
 
 export default {
   updateUsername(name) { //returns promise
     fbase.getToken().then((token) => {
-      console.log('here', token);
+      // console.log('here', token);
       ax.post('/user/name', {token, name}, {timeout: 1000}).then((resp) => {
-        console.log('herehere');
+        // console.log('herehere');
         if (resp.data.success === true) {
-          toastr.success("Username updated successfully!");
+          toast.success("Username updated successfully!");
         } else if (resp.data.error === 'USERNAME_TAKEN') {
-          toastr.error("That username is already taken! Please try again.");
+          toast.error("That username is already taken! Please try again.");
         } else {
-          toastr.error("")
+          toast.error("")
         }
       }).catch((error) => {
-        console.log(error);
-        toastr.error("Request failed.");
+        // console.log(error);
+        toast.error("Server request failed.");
       });
     });
   }
