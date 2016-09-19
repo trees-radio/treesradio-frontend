@@ -5,6 +5,7 @@ import profile from 'stores/profile';
 import localforage from 'localforage';
 import axios from 'axios';
 import moment from 'moment';
+import _ from 'lodash';
 
 const ytApiKey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
 
@@ -24,7 +25,7 @@ export default new class Playlists {
           this.playlists = playlists;
           console.log('playlist data', playlists);
 
-          if (!this.init) {
+          if (!this.init || this.removedPlaylist) {
             localforage.getItem('selectedPlaylist').then(selectedPlaylist => {
               var toSelect;
               playlists.forEach((playlist, i) => {
@@ -94,6 +95,16 @@ export default new class Playlists {
         this.playlist = playlist;
       });
     }
+  }
+
+  @observable removedPlaylist = false;
+
+  removePlaylist(index) {
+    var key = this.playlists[index].key;
+    if (this.selectedPlaylist === index) {
+      this.removedPlaylist = true;
+    }
+    this.ref.child(key).remove();
   }
 
   @computed get selectedPlaylistName() {
@@ -172,5 +183,26 @@ export default new class Playlists {
     newPlaylist.unshift(obj);
     this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
     toast.success(`Added ${title} to playlist ${this.selectedPlaylistName}.`);
+  }
+
+  moveTop(index) {
+    var newPlaylist = this.playlist.slice();
+    var video = newPlaylist.splice(index, 1)[0];
+    newPlaylist.unshift(video);
+    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    toast.success(`Moved ${video.title} to top of playlist.`);
+  }
+
+  removeVideo(index) {
+    var newPlaylist = this.playlist.slice();
+    var video = newPlaylist.splice(index, 1)[0];
+    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    toast.success(`Removed ${video.title} from playlist.`);
+  }
+
+  shufflePlaylist() {
+    var newPlaylist = _.shuffle(this.playlist.slice());
+    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    toast.success(`Playlist shuffled.`);
   }
 }

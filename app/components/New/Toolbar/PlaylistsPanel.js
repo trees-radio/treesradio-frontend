@@ -11,6 +11,8 @@ import moment from 'moment';
 export default @observer class PlaylistsPanel extends React.Component {
 
   @observable addingPlaylist = false;
+  @observable removingPlaylist = false;
+  @observable playlistToRemove = {};
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
@@ -38,6 +40,16 @@ export default @observer class PlaylistsPanel extends React.Component {
     var query = this._search.value;
     this._search.value = '';
     playlists.runSearch(query);
+  }
+
+  startRemovingPlaylist(name, index) {
+    this.playlistToRemove = {name, index};
+    this.removingPlaylist = true;
+  }
+
+  removePlaylist() {
+    playlists.removePlaylist(this.playlistToRemove.index);
+    this.removingPlaylist = false;
   }
 
   render() {
@@ -95,8 +107,8 @@ export default @observer class PlaylistsPanel extends React.Component {
             <span className="pl-media-title">{video.title}</span>
             <span className="pl-time"><i className="fa fa-clock-o"></i> {humanDuration}</span>
             <span className="pl-channel">{video.channel}</span>
-            <i onClick={() => {}} className="fa fa-2x fa-trash remove-from-playlist-btn"></i>
-            <i onClick={() => {}} className="fa fa-2x fa-arrow-up pl-move-to-top"></i>
+            <i onClick={() => playlists.removeVideo(i)} className="fa fa-2x fa-trash remove-from-playlist-btn"></i>
+            <i onClick={() => playlists.moveTop(i)} className="fa fa-2x fa-arrow-up pl-move-to-top"></i>
           </li>
         );
       });
@@ -106,9 +118,11 @@ export default @observer class PlaylistsPanel extends React.Component {
     var playlistsList = playlists.playlistNames.map((name, i) => (
       <li key={i}>
         <a onClick={() => this.selectPlaylist(i)} href="#">{name}</a>
-        <div onClick={() => {}} className="fa fa-trash remove-playlist"/>
+        <div onClick={() => this.startRemovingPlaylist(name, i)} className="fa fa-trash remove-playlist"/>
       </li>
     ));
+
+    var shuffle = playlists.hasPlaylist ? (<span onClick={() => playlists.shufflePlaylist()} className="playlist-shuffle-btn fa fa-random fa-3x"/>) : false;
 
     return (
       <div id="playlists-panel" ref="playlists-panel" className={mainClass}>
@@ -122,7 +136,7 @@ export default @observer class PlaylistsPanel extends React.Component {
               {playlistsList}
             </ul>
           </div>
-          <span onClick={() => {}} className="playlist-shuffle-btn fa fa-random fa-3x"></span>
+          {shuffle}
         </div>
         <div id="playlists-panel-display">
           {content}
@@ -130,6 +144,9 @@ export default @observer class PlaylistsPanel extends React.Component {
         <Modal isOpen={this.addingPlaylist} hideModal={() => this.addingPlaylist = false} title="Adding Playlist" leftButton={() => this.addPlaylist()} leftButtonText="Add Playlist">
           <p>Choose a name for your new playlist:</p>
           <input className="form-control" type="text" ref={c => this._newPlaylist = c} onKeyPress={(e) => this.onEnterKey(e, () => this.addPlaylist())} placeholder="Playlist Name"/>
+        </Modal>
+        <Modal isOpen={this.removingPlaylist} hideModal={() => this.removingPlaylist = false} title="Removing Playlist" leftButton={() => this.removePlaylist()} leftButtonText="Confirm">
+          <p>Are you sure you want to remove the playlist '{this.playlistToRemove.name}'?</p>
         </Modal>
       </div>
     );
