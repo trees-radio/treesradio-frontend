@@ -23,7 +23,7 @@ export default @observer class Toolbar extends React.Component {
   render() {
     var currentPlaylistName, currentSelectedMediaClass, currentSelectedMedia, currentPlayingMedia, currentPlayingMediaClass, timer, grabPlaylistsDiv, grabClass, volClass, likeClass, dislikeClass, waitlistButtonClass, waitlistButtonText;
 
-    var openButtonIcon = this.panelOpen ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
+    var openButtonIcon = this.panelOpen && playlists.init ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
 
     return (
       <div id="playlists-component">
@@ -33,7 +33,7 @@ export default @observer class Toolbar extends React.Component {
             <i id="playlists-open-icon" className={openButtonIcon}></i>
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <a className="current-playlist-name">{currentPlaylistName}</a><br/>
+            <a className="current-playlist-name">{playlists.selectedPlaylistName}</a><br/>
             <a className={currentSelectedMediaClass}>{currentSelectedMedia}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
