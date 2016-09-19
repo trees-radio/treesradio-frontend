@@ -32,11 +32,13 @@ export default class Online {
       return [];
     } else if (this.presence) {
       var users = Object.keys(this.presence);
-      return users.map((user) => {
+      return users.filter(user => {
         if (this.presence[user].connections) {
-          return {user, data: this.presence[user]};
+          return true;
+        } else {
+          return false;
         }
-      });
+      }).map(user => ({user, data: this.presence[user]}));
     }
   }
 }
