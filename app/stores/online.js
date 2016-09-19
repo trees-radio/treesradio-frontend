@@ -1,7 +1,8 @@
 import {observable, computed} from 'mobx';
+import fbase from 'libs/fbase';
 
-export default class Online {
-  constructor(fbase) {
+export default new class Online {
+  constructor() {
     this.fbase = fbase;
     fbase.database().ref('presence').on('value', (snap) => {
       if (snap.val()) {

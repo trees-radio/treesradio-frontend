@@ -82,6 +82,7 @@ path /users/{$uid} {
 
 path /private/{$uid} {
   read() {isUser($uid)}
+  write() {isUser($uid)}
 }
 
 path /moderator {

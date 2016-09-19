@@ -1,10 +1,12 @@
 import React from 'react';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
-import fbase from 'stores/fbase';
+// import fbase from 'stores/fbase';
+import chat from 'stores/chat';
+import profile from 'stores/profile';
 import toast from 'utils/toast';
 
-const noop = () => {};
+// const noop = () => {};
 
 export default @observer class ChatSend extends React.Component {
 
@@ -22,7 +24,7 @@ export default @observer class ChatSend extends React.Component {
   onEnterKey(e) {
     var key = e.keyCode || e.which;
     if (key == 13 && this.msg !== '') {
-      fbase.chat.sendMsg(this.msg, () => {
+      chat.sendMsg(this.msg, () => {
         this.msg = "";
       });
     }
@@ -30,7 +32,7 @@ export default @observer class ChatSend extends React.Component {
 
   onChange(e) {
     // console.log('onChange', e);
-    if (!fbase.user) {
+    if (!profile.user) {
       toast.error('You must be logged in to chat!');
     } else {
       this.msg = e.target.value;

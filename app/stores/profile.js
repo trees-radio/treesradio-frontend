@@ -1,28 +1,10 @@
-import {observable, action, computed, toJS} from 'mobx';
-// import ax from 'utils/ax';
-import firebase from 'firebase';
-
-import Online from 'stores/online';
-import Chat from 'stores/chat';
-
+import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
+import fbase from 'libs/fbase';
 
-const FB_ENV = {
-  apiKey: process.env.FBASE_API,
-  authDomain: `${process.env.FBASE}.firebaseapp.com`,
-  databaseURL: `https://${process.env.FBASE}.firebaseio.com`,
-  storageBucket: `${process.env.FBASE}.appspot.com`,
-};
-
-// console.log(FB_ENV);
-
-export default new class FirebaseSetup {
+export default new class Profile {
   constructor() {
-    firebase.initializeApp(FB_ENV);
-    this.online = new Online(firebase);
-    this.chat = new Chat(firebase);
-
-    firebase.database().ref('.info/connected').on('value', (snap) => {
+    fbase.database().ref('.info/connected').on('value', (snap) => {
       if (snap.val() === true) {
         this.init = true;
         this.connected = true;
@@ -31,24 +13,31 @@ export default new class FirebaseSetup {
       }
     });
 
-    firebase.auth().onAuthStateChanged((user) => {
+    fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
-        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
-          var profile = snap.val();
+        fbase.database().ref('users').child(user.uid).on('value', snap => {
+          var profile = snap.val() || {};
           this.profile = profile;
           this.profileInit = true;
-          firebase.database().ref('.info/connected').on('value', (snap) => {
+
+          fbase.database().ref('.info/connected').on('value', snap => {
             if (snap.val() === true && this.profile && this.profile.username) {
-              firebase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
-              firebase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+              fbase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
+              fbase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(fbase.database.ServerValue.TIMESTAMP);
             }
           });
         });
+        fbase.database().ref('private').child(user.uid).on('value', snap => {
+          var priv = snap.val() || {};
+          this.private = priv;
+          this.privateInit = true;
+          // this.playlists.init(priv.selectedPlaylist);
+        })
+      } else {
+        // this.playlists.uninit();
       }
     });
-
-    // this.init = true;
   }
 
   @observable connected = false;
@@ -58,8 +47,11 @@ export default new class FirebaseSetup {
   @observable profile = null;
   @observable profileInit = false;
 
+  @observable private = null;
+  @observable privateInit = false;
+
   login(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
+    fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
     }).catch((error) => {
       // Handle Errors here.
@@ -72,7 +64,7 @@ export default new class FirebaseSetup {
   }
 
   logout() {
-    firebase.auth().signOut().then(function() {
+    fbase.auth().signOut().then(function() {
       // Sign-out successful.
     }, function(error) {
       // An error happened.
@@ -86,7 +78,7 @@ export default new class FirebaseSetup {
   }
 
   getToken() {
-    return firebase.auth().currentUser.getToken(true); //returns promise with token
+    return fbase.auth().currentUser.getToken(true); //returns promise with token
   }
 
   @computed get safeUsername() {
@@ -98,7 +90,7 @@ export default new class FirebaseSetup {
   }
 
   register(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+    fbase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
       // console.log('registration error', error);
       toast.error(error.message);
     }).then(user => {
@@ -107,7 +99,7 @@ export default new class FirebaseSetup {
   }
 
   sendPassReset(email) {
-    firebase.auth().sendPasswordResetEmail(email).catch((error) => {
+    fbase.auth().sendPasswordResetEmail(email).catch((error) => {
       toast.error(error.message);
       this.resetPassError = error.message;
       this.stopResettingPassword();

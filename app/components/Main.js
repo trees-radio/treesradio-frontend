@@ -3,10 +3,12 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 
-import fbase from 'stores/fbase';
+// import fbase from 'stores/fbase';
+import profile from 'stores/profile';
 
 import Nav from './Nav';
 import Sidebar from './Sidebar';
+import Toolbar from './Toolbar';
 
 import DevTools from 'mobx-react-devtools';
 var DevTool;
@@ -16,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default @observer class Main extends React.Component {
   render() {
-    if (!fbase.init) {
+    if (!profile.init) {
       return (<div>Connecting to Firebase...</div>);
     }
     return (
@@ -38,35 +40,7 @@ export default @observer class Main extends React.Component {
                 /> */}
               </div>
               <div id="playlists-container">
-                {/* <Playlists
-                  playlistsOpen={this.state.playlistsOpen}
-                  playlistsOpenToggle={this.playlistsOpenToggle}
-                  searchForVideo={this.searchForVideo}
-                  playlistsPanelView={this.state.playlistsPanelView}
-                  currentSearch={this.state.currentSearch}
-                  addNewPlaylist={this.addNewPlaylist}
-                  playlists={this.state.playlists}
-                  currentPlaylist={this.state.currentPlaylist}
-                  removePlaylist={this.removePlaylist}
-                  selectPlaylist={this.selectPlaylist}
-                  addToPlaylist={this.addToPlaylist}
-                  removeFromPlaylist={this.removeFromPlaylist}
-                  moveTopPlaylist={this.moveTopPlaylist}
-                  updateVolume={this.updateVolume}
-                  controls={this.state.controls}
-                  playingMedia={this.state.playingMedia}
-                  inWaitlist={this.state.user.inWaitlist}
-                  toggleWaiting={this.toggleWaiting}
-                  handleLikeButton={this.handleLikeButton}
-                  handleDislikeButton={this.handleDislikeButton}
-                  handleGrabButton={this.handleGrabButton}
-                  userFeedback={this.state.userFeedback}
-                  volumeNudge={this.volumeNudge}
-                  shufflePlaylist={this.shufflePlaylist}
-                  waitlist={this.state.waitlist}
-                  user={this.state.user}
-                  playlistImport={this.playlistImport}
-                /> */}
+                <Toolbar/>
               </div>
             </div>
             {/* Chat Component */}

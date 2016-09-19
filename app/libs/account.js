@@ -1,10 +1,10 @@
 import ax from 'utils/ax';
-import fbase from 'stores/fbase';
+import profile from 'stores/profile';
 import toast from 'utils/toast';
 
 export default {
   updateUsername(name) { //returns promise
-    fbase.getToken().then((token) => {
+    profile.getToken().then((token) => {
       // console.log('here', token);
       ax.post('/user/name', {token, name}, {timeout: 1000}).then((resp) => {
         // console.log('herehere');

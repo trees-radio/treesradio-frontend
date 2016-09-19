@@ -1,6 +1,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import fbase from 'stores/fbase';
+// import fbase from 'stores/fbase';
+import chat from 'stores/chat';
 import classNames from 'classnames';
 import Linkify from 'react-linkify';
 import ReactEmoji from 'react-emoji';
@@ -10,7 +11,7 @@ const linkifyProperties = {target: '_blank'};
 
 export default @observer class ChatContent extends React.Component {
   render() {
-    var messages = fbase.chat.messages;
+    var messages = chat.messages;
     var content = messages.map((msg, i) => {
       var chatPosClass = Number.isInteger(i / 2) ? "chat-line-1" : "chat-line-0";
       var chatLineClasses = classNames("chat-item ", chatPosClass);

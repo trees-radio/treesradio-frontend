@@ -3,7 +3,8 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import classNames from 'classnames';
 
-import fbase from 'stores/fbase';
+// import fbase from 'stores/fbase';
+import online from 'stores/online';
 
 import Chat from './New/Sidebar/Chat';
 import OnlineUsers from './New/Sidebar/OnlineUsers';
@@ -53,8 +54,6 @@ export default @observer class Sidebar extends React.Component {
       'col-lg-3',
       { 'sidebar-selected': aboutSelected }
     );
-
-    var online = fbase.online || {};
 
     return (
       <div id="sidebar">

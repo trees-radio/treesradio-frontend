@@ -1,12 +1,11 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import fbase from 'stores/fbase';
+import online from 'stores/online';
 import classNames from 'classnames';
 import Avatars from 'libs/avatars';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
-    const online = fbase.online || {};
     const users = online.onlineUsers || [];
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";

@@ -1,9 +1,10 @@
 import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
-import fbaseStore from 'stores/fbase';
+import fbase from 'libs/fbase';
+import profile from 'stores/profile';
 
-export default class Chat {
-  constructor(fbase) {
+export default new class Chat {
+  constructor() {
     this.fbase = fbase;
     fbase.database().ref('chat').limitToLast(3).on('child_added', (snap) => {
       var msg = snap.val();
@@ -14,7 +15,7 @@ export default class Chat {
           msg.msgs = [msg.msg];
           this.messages.push(msg);
         }
-        if (fbaseStore.profileInit && msg.mentions.map(s => s.split('@').join('').toLowerCase()).includes(fbaseStore.profile.username.toLowerCase())) {
+        if (profile.profileInit && msg.mentions && msg.mentions.map(s => s.split('@').join('').toLowerCase()).includes(profile.profile.username.toLowerCase())) {
           toast.info(`You were mentioned by ${msg.username}.`);
         }
       }

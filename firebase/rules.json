@@ -33,7 +33,8 @@
     },
     "private": {
       "$uid": {
-        ".read": "auth != null && auth.uid == $uid"
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
       }
     },
     "moderator": {
@@ -50,11 +51,11 @@
     "queues": {
       "chat": {
         "tasks": {
+          ".indexOn": [
+            "_state"
+          ],
           "$task": {
-            ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()",
-            ".indexOn": [
-              "_state"
-            ]
+            ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
           }
         }
       }

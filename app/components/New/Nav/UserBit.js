@@ -2,7 +2,8 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 
-import fbase from 'stores/fbase';
+// import fbase from 'stores/fbase';
+import profile from 'stores/profile';
 import account from 'libs/account';
 
 import Modal from 'components/utility/Modal';
@@ -10,7 +11,7 @@ import Modal from 'components/utility/Modal';
 export default @observer class UserBit extends React.Component {
 
   login() {
-    fbase.login(this._email.value, this._pass.value);
+    profile.login(this._email.value, this._pass.value);
   }
 
   onEnterKey(e, cb) {
@@ -25,17 +26,17 @@ export default @observer class UserBit extends React.Component {
   }
 
   sendPassReset() {
-    fbase.sendPassReset(this._resetEmail.value);
+    profile.sendPassReset(this._resetEmail.value);
   }
 
   @observable resettingPassword = false;
 
   render() {
-    if (fbase.user !== null) {
+    if (profile.user !== null) {
       return (
         <div>
           <div className="btn-group">
-            <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={'userLevel'}><b>{fbase.safeUsername}</b></span></a>
+            <a className="btn btn-primary" id="usernametop"><i className="fa fa-user fa-fw"></i><span id="username" className={'userLevel'}><b>{profile.safeUsername}</b></span></a>
             <a className="btn btn-primary dropdown-toggle" id="usernamedropdown" data-toggle="dropdown">
               <span className="fa fa-caret-down"></span>
             </a>
@@ -46,10 +47,10 @@ export default @observer class UserBit extends React.Component {
               <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
             </ul>
 
-            <button className="btn btn-default" id="logoutbutton" onClick={() => fbase.logout()}>Logout</button>
+            <button className="btn btn-default" id="logoutbutton" onClick={() => profile.logout()}>Logout</button>
 
           </div>
-          <Modal isOpen={fbase.noName} hideModal={() => {}} title="Missing Username" noClose={true} leftButton={() => this.addUsername()} leftButtonText="Go!">
+          <Modal isOpen={profile.noName} hideModal={() => {}} title="Missing Username" noClose={true} leftButton={() => this.addUsername()} leftButtonText="Go!">
             <p>We're missing a username for you! Please choose one. This will be your permanent username, so choose wisely!</p>
             <input className="form-control" type="text" ref={(c) => this._username = c} onKeyPress={(e) => this.onEnterKey(e, () => this.addUsername())} placeholder="Username"/>
           </Modal>
@@ -73,7 +74,7 @@ export default @observer class UserBit extends React.Component {
             </div>
 
             <button className="btn btn-primary" id="loginbutton" onClick={() => this.login()}>Login</button>
-            <button className="btn btn-default" id="regbutton" onClick={() => fbase.register(this._email.value, this._pass.value)}>Register</button>
+            <button className="btn btn-default" id="regbutton" onClick={() => profile.register(this._email.value, this._pass.value)}>Register</button>
             <button className="btn btn-primary" id="reset-password-btn" onClick={() => this.resettingPassword = true}>Password Reset</button>
 
           </div>
