@@ -37,8 +37,8 @@ export default class About extends React.Component {
         </div>
         <div className="about-suggestions">
           <div>
-            <h5>Suggestions Form:</h5>
-            <a href="http://goo.gl/forms/j7hua7F8aN" target="_blank">Send us a suggestion report!</a>
+            <h5>YouTube Region Checker</h5>
+            <a href="https://polsy.org.uk/stuff/ytrestrict.cgi" target="_blank">Check if a video has any region restrictions</a>
           </div>
         </div>
         <div className="about-emoji">

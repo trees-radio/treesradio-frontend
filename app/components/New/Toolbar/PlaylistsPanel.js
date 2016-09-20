@@ -58,7 +58,7 @@ export default @observer class PlaylistsPanel extends React.Component {
     var content;
 
     if (playlists.searching) {
-      content = <i className="fa fa-spin fa-4x fa-circle-o-notch"></i>;
+      content = <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading"></i>;
     } else if (playlists.openSearch) {
       let list = playlists.search.map((video, i) => {
         var playlistPosClass = Number.isInteger(i / 2) ? "playlist-item-1" : "playlist-item-2";
