@@ -9,7 +9,9 @@
 ////////////////////////////////////////////////////////////////
 // GLOBAL FUNCTIONS
 ////////////////////////////////////////////////////////////////
-isUser(uid) { auth != null && auth.uid == uid }
+isAuth() {auth != null}
+isUser(uid) { isAuth() && auth.uid == uid }
+isSendingUser() {isUser(newData.child('uid').val()) || isUser(data.child('uid').val())}
 
 
 ////////////////////////////////////////////////////////////////
@@ -20,11 +22,11 @@ path / {
 }
 
 path /_admin {
-  read() = true;
+  read() {true}
 }
 
 path /backend/chatlock {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -32,14 +34,8 @@ path /backend/chatlock {
 ////////////////////////////////////////////////////////////////
 
 path /chat {
-  read() = true;
+  read() {true}
 }
-
-path /queues/chat/tasks/$task {
-  write() = isUser(newData.child('uid').val());
-}
-
-
 
 ////////////////////////////////////////////////////////////////
 // PLAYLISTS
@@ -50,9 +46,9 @@ type Playlist {
   name: String
 }
 
-path /playlists/$userid {
-  read() = isUser($userid);
-  write() = isUser($userid);
+path /playlists/{$uid} {
+  read() {isUser($uid)}
+  write() {isUser($uid)}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -60,7 +56,7 @@ path /playlists/$userid {
 ////////////////////////////////////////////////////////////////
 
 path /playing_media {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -68,28 +64,33 @@ path /playing_media {
 ////////////////////////////////////////////////////////////////
 
 path /presence {
-  read() = true;
+  read() {true}
 }
 
-path /presence/$username {
-  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
+path /presence/{$username} {
+  //write() {isUser(newData.child('uid').val()) || isUser(data.child('uid').val())}
+  write() { root.child('users/'+auth.uid+'/username').val() === $username }
 }
 
 ////////////////////////////////////////////////////////////////
 // USERS
 ////////////////////////////////////////////////////////////////
 
-path /users/$uid {
-  read() = isUser($uid);
-  write() = true;
+path /users/{$uid} {
+  read() {true}
+}
+
+path /private/{$uid} {
+  read() {isUser($uid)}
+  write() {isUser($uid)}
 }
 
 path /moderator {
-  read() = true;
+  read() {true}
 }
 
 path /bans {
-  read() = true;
+  read() {true}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -107,22 +108,30 @@ path /bans {
 //}
 
 path /waitlist/tasks {
-  read() = true;
+  read() {true}
 }
 
-path /waitlist/tasks/$task {
-  write() = isUser(newData.child('uid').val()) || isUser(data.child('uid').val());
+
+//\/\/\/\//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+//NEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEW
+//\/\/\/\//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+///////////////////////////////////////////////////////////////
+// QUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUES
+///////////////////////////////////////////////////////////////
+
+path /queues {
+  read() {false}
 }
 
-////////////////////////////////////////////////////////////////
-// FEEDBACK
-////////////////////////////////////////////////////////////////
-
-type FeedbackTask {
-  type: String,
-  user: String
+path /queues/chat/tasks {
+  index() {["_state"]}
 }
 
-path /queues/feedback/tasks/$task is FeedbackTask {
-  write() = isUser(newData.child('user').val());
+path /queues/chat/tasks/{task} {
+  write() {isSendingUser()}
+}
+
+path /ranks {
+  read() {true}
 }

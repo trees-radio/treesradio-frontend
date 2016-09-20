@@ -11,36 +11,10 @@
     "chat": {
       ".read": "true"
     },
-    "queues": {
-      "chat": {
-        "tasks": {
-          "$task": {
-            ".write": "auth != null && auth.uid == newData.child('uid').val()"
-          }
-        }
-      },
-      "feedback": {
-        "tasks": {
-          "$task": {
-            ".validate": "newData.hasChildren(['type', 'user'])",
-            "type": {
-              ".validate": "newData.isString()"
-            },
-            "user": {
-              ".validate": "newData.isString()"
-            },
-            "$other": {
-              ".validate": "false"
-            },
-            ".write": "auth != null && auth.uid == newData.child('user').val()"
-          }
-        }
-      }
-    },
     "playlists": {
-      "$userid": {
-        ".read": "auth != null && auth.uid == $userid",
-        ".write": "auth != null && auth.uid == $userid"
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
       }
     },
     "playing_media": {
@@ -49,13 +23,18 @@
     "presence": {
       ".read": "true",
       "$username": {
-        ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
+        ".write": "newData.parent().parent().child('users/' + auth.uid + '/username').val() == $username"
       }
     },
     "users": {
       "$uid": {
+        ".read": "true"
+      }
+    },
+    "private": {
+      "$uid": {
         ".read": "auth != null && auth.uid == $uid",
-        ".write": "true"
+        ".write": "auth != null && auth.uid == $uid"
       }
     },
     "moderator": {
@@ -66,11 +45,23 @@
     },
     "waitlist": {
       "tasks": {
-        ".read": "true",
-        "$task": {
-          ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
+        ".read": "true"
+      }
+    },
+    "queues": {
+      "chat": {
+        "tasks": {
+          ".indexOn": [
+            "_state"
+          ],
+          "$task": {
+            ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
+          }
         }
       }
+    },
+    "ranks": {
+      ".read": "true"
     }
   }
 }
