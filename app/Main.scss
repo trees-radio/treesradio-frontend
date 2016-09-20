@@ -51,6 +51,18 @@ body {
     cursor: auto;
 }
 
+.main-load {
+  background-image:url(img/backgroundloading.png);
+  background-size:cover;
+}
+
+.main-loading {
+  position: relative;
+  left:50%;
+  right:50%;
+  margin-top:20%;
+}
+
 /* Components Container */
 
 .container-fluid
