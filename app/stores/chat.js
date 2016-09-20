@@ -6,7 +6,7 @@ import profile from 'stores/profile';
 export default new class Chat {
   constructor() {
     this.fbase = fbase;
-    fbase.database().ref('chat').limitToLast(3).on('child_added', (snap) => {
+    fbase.database().ref('chat').limitToLast(50).on('child_added', (snap) => {
       var msg = snap.val();
       if (msg) {
         if (this.messages[this.messages.length-1] && msg.username === this.messages[this.messages.length-1].username) {
