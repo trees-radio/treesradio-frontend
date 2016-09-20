@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
 export default @observer class Main extends React.Component {
   render() {
     if (!profile.init) {
-      return (<div>Connecting to Firebase...</div>);
+      return (<div className="main-load"><i className="fa fa-spin fa-4x fa-circle-o-notch main-loading"></i></div>);
     }
     return (
       <div>

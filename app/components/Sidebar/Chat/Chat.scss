@@ -137,6 +137,16 @@ $chat-item-color: #c0c0c0; //light skin #000
   font-size: 12px;
 }
 
+.username-dev {
+  color: #0055aa;
+}
+
+.username-dev:after {
+  color: #0055aa;
+  content: " (Developer)";
+  font-size: 12px;
+}
+
 .username-mod {
   color: #00b300;
 }
@@ -158,7 +168,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 .username-user {
-  color: #026435;
+  color: #026455;
 }
 
 .chat-text {
