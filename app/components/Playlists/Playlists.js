@@ -112,9 +112,9 @@ var Playlists = React.createClass({
     if (this.props.userFeedback.opinion === "dislike") {
       dislikeClass = classNames("fa", "fa-thumbs-down");
     }
-    var grabClass = classNames("fa", "fa-arrow-circle-o-down");
+    var grabClass = classNames("fa", "fa-plus-square-o");
     if (this.props.userFeedback.grab) {
-      grabClass = classNames("fa", "fa-arrow-circle-down");
+      grabClass = classNames("fa", "fa-plus-square");
     }
 
     var currentPlayingMedia = this.props.playingMedia.info.title;
