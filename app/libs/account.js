@@ -6,7 +6,9 @@ export default {
   updateUsername(name) { //returns promise
     profile.getToken().then((token) => {
       // console.log('here', token);
-      ax.post('/user/name', {token, name}, {timeout: 1000}).then((resp) => {
+      ax.post('/user/name', {name}, {
+        headers: {'Authorization': `Bearer ${token}`}
+      }).then((resp) => {
         // console.log('herehere');
         if (resp.data.success === true) {
           toast.success("Username updated successfully!");
