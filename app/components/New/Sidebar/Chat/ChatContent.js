@@ -5,7 +5,7 @@ import chat from 'stores/chat';
 import classNames from 'classnames';
 import Linkify from 'react-linkify';
 import ReactEmoji from 'react-emoji';
-import Avatars from 'libs/avatars';
+import avatars from 'libs/avatars';
 
 const linkifyProperties = {target: '_blank'};
 
@@ -17,7 +17,8 @@ export default @observer class ChatContent extends React.Component {
       var chatLineClasses = classNames("chat-item ", chatPosClass);
       var usernameClasses = classNames("chat-username", undefined);
       var humanTimestamp;
-      var avatar = new Avatars(msg.username).avatar;
+      avatars.loadAvatar(msg.username);
+      var avatar = avatars.users[msg.username];
       var msgs = msg.msgs.map((innerMsg, i) => {
         return (
           <Linkify key={i} properties={linkifyProperties}>
