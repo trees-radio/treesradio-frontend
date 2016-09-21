@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = `https://${process.env.API}`;
+const baseURL = `${process.env.API_PROTOCOL || 'https'}://${process.env.API}`;
 
 const ax = axios.create({
   baseURL

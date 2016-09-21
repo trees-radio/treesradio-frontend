@@ -10,12 +10,12 @@ export default {
         // console.log('herehere');
         if (resp.data.success === true) {
           toast.success("Username updated successfully!");
-        } else if (resp.data.error === 'USERNAME_TAKEN') {
-          toast.error("That username is already taken! Please try again.");
+        } else if (resp.data.error) {
+          toast.error(resp.data.error);
         } else {
-          toast.error("")
+          toast.error("");
         }
-      }).catch((error) => {
+      }).catch(error => {
         // console.log(error);
         toast.error("Server request failed.");
       });

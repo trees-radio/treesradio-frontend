@@ -3,7 +3,8 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import ReactSlider from 'react-slider';
 import PlaylistsPanel from './New/Toolbar/PlaylistsPanel';
-// import fbase from 'stores/fbase';
+
+import waitlist from 'stores/waitlist';
 import playlists from 'stores/playlists';
 import toast from 'utils/toast';
 // import classNames from 'classnames';
@@ -76,7 +77,7 @@ export default @observer class Toolbar extends React.Component {
             </div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <div className={waitlistButtonClass} onClick={() => {}}>{waitlistButtonText}</div>
+            <div className={waitlistButtonClass} onClick={() => waitlist.join()}>{waitlistButtonText}Join Waitlist</div>
           </div>
         </div>
       </div>

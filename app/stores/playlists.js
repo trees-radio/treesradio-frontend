@@ -181,6 +181,10 @@ export default new class Playlists {
 
     var newPlaylist = this.playlist.slice();
     newPlaylist.unshift(obj);
+    if (!this.selectedPlaylistKey) {
+      toast.error('Please select a playlist!');
+      return;
+    }
     this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
     toast.success(`Added ${title} to playlist ${this.selectedPlaylistName}.`);
   }
