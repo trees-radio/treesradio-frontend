@@ -23,16 +23,12 @@ export default new class Waitlist {
       toast.error("You must be logged in to join the waitlist!");
       return;
     }
-    var userToken = profile.getToken().then(token => {
-      ax.post('/waitlist/join', {
-        userToken: token
-      }).then(resp => {
-        if (resp.data.success === true) {
-          toast.success("You have joined the waitlist.");
-        } else if (resp.data.error) {
-          toast.error(resp.data.error);
-        }
-      });
-    })
+    ax.post('/waitlist/join').then(resp => {
+      if (resp.data.success === true) {
+        toast.success("You have joined the waitlist.");
+      } else if (resp.data.error) {
+        toast.error(resp.data.error);
+      }
+    });
   }
 }
