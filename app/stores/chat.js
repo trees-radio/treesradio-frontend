@@ -2,6 +2,9 @@ import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import profile from 'stores/profile';
+import ax from 'utils/ax';
+
+const mentionPattern = /\B@[a-z0-9_-]+/gi;
 
 export default new class Chat {
   constructor() {
@@ -25,18 +28,28 @@ export default new class Chat {
   @observable messages = [];
 
   sendMsg(msg, cb) {
-    // console.log(msg);
 
-    var ref = this.fbase.database().ref('queues').child('chat').child('tasks');
+    // var ref = this.fbase.database().ref('queues').child('chat').child('tasks');
+    //
+    // var data = {
+    //   msg,
+    //   uid: this.fbase.auth().currentUser.uid
+    // };
+    //
+    // ref.push(data);
 
-    var data = {
+    var mentions = msg.match(mentionPattern) || [];
+
+    ax.post('/chat/send', {
       msg,
-      uid: this.fbase.auth().currentUser.uid
-    };
+      mentions
+    }).then(resp => {
+      if (resp.data.error) {
+        toast.error(`Error occurred while chatting: ${resp.data.error}`);
+      }
+    });
 
-    // console.log(data);
 
-    ref.push(data);
 
     if (cb) {
       cb();
