@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import online from 'stores/online';
 import classNames from 'classnames';
-import Avatars from 'libs/avatars';
+import avatars from 'libs/avatars';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
@@ -15,7 +15,8 @@ export default @observer class OnlineUsers extends React.Component {
       var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
       var usernameClasses = classNames("users-name", modLevel);
 
-      var avatar = new Avatars(user.user).avatar;
+      avatars.loadAvatar(user.user);
+      var avatar = avatars.users[user.user];
 
       return (
         <li key={i} className={userLineClasses}>
