@@ -18,13 +18,29 @@ cache:
   - node_modules/
 
 stages:
-  - install
-  - lint
-
-npm_install:
-  stage: install
-  script: npm install
+  - build
+  - deploy
 
 lint:
-  stage: lint
-  script: npm run lint
+  stage: build
+  script:
+    - npm install
+    - npm run lint
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run ci-build-app
+
+deploy_staging:
+  stage: deploy
+  only:
+   - develop
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - npm install
+    - npm run ci-build-prod
+    - dpl --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
