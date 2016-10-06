@@ -3,7 +3,18 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Config = require('webpack-config').default;
 
-console.log("WEBPACK_ENV", process.env);
+// console.log("WEBPACK_ENV", process.env);
+
+const acceptedEnv = ["FBASE", "FBASE_API", "NODE_ENV", "API", "API_PROTOCOL"];
+
+function cherrypickEnv(env) {
+  var keys = Object.keys(env);
+  keys = keys.filter(e => acceptedEnv.includes(e));
+  var webpackEnv = {};
+  keys.forEach(k => webpackEnv[k] = env[k]);
+  return JSON.stringify(webpackEnv);
+}
+
 
 module.exports = new Config().merge({
   entry: path.resolve(__dirname, 'app/index.js'),
@@ -55,7 +66,7 @@ module.exports = new Config().merge({
   plugins: [
     new ExtractTextPlugin("[name].css"),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env)
+      'process.env': cherrypickEnv(process.env)
     })
   ]
 })
