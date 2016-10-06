@@ -1,6 +1,7 @@
 import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
+import {hookAuth, unhookAuth} from 'utils/ax';
 
 export default new class Profile {
   constructor() {
@@ -21,6 +22,8 @@ export default new class Profile {
           this.profile = profile;
           this.profileInit = true;
 
+          hookAuth(this.getToken);
+
           fbase.database().ref('.info/connected').on('value', snap => {
             if (snap.val() === true && this.profile && this.profile.username) {
               fbase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
@@ -28,14 +31,17 @@ export default new class Profile {
             }
           });
         });
+
         fbase.database().ref('private').child(user.uid).on('value', snap => {
           var priv = snap.val() || {};
           this.private = priv;
           this.privateInit = true;
           // this.playlists.init(priv.selectedPlaylist);
-        })
+        });
+
       } else {
         // this.playlists.uninit();
+        unhookAuth();
       }
     });
   }

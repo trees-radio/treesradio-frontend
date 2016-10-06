@@ -135,3 +135,11 @@ path /queues/chat/tasks/{task} {
 path /ranks {
   read() {true}
 }
+
+path /avatars {
+  read() {true}
+}
+
+path /avatars/{username} {
+  write() {root.child('users/'+auth.uid+'/username').val() === username}
+}

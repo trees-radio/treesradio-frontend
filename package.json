@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "env-cmd .env-staging webpack-dev-server --inline --colors --content-base public/ --output-public-path=assets/",
+    "start": "env-cmd ./.env-staging webpack-dev-server --inline --colors --content-base public/ --output-public-path=assets/",
     "start-local": "env-cmd ./.env-local webpack-dev-server --inline --colors --content-base public/ --output-public-path=assets/",
     "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
@@ -72,7 +72,7 @@
     "node-buzz": "^1.1.4",
     "querystring": "^0.2.0",
     "re-base": "^1.5.1",
-    "react": "^15.0.0",
+    "react": "^15.3.2",
     "react-dom": "^15.0.0",
     "react-emoji": "^0.4.4",
     "react-image-fallback": "^3.2.0",
