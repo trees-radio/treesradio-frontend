@@ -11,7 +11,7 @@ function cherrypickEnv(env) {
   var keys = Object.keys(env);
   keys = keys.filter(e => acceptedEnv.includes(e));
   var webpackEnv = {};
-  keys.forEach(k => webpackEnv['process.env.'+k] = env[k]);
+  keys.forEach(k => webpackEnv['process.env.'+k] = JSON.stringify(env[k]));
   // console.log("WEBPACK_ENV", webpackEnv, keys, env);
   return webpackEnv;
 }
