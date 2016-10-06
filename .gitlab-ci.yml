@@ -35,6 +35,7 @@ build:
 
 deploy_staging:
   stage: deploy
+  environment: staging
   only:
    - develop
   script:
