@@ -3,6 +3,8 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Config = require('webpack-config').default;
 
+console.log("WEBPACK_ENV", process.env);
+
 module.exports = new Config().merge({
   entry: path.resolve(__dirname, 'app/index.js'),
   output: {
