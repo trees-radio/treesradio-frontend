@@ -8,6 +8,8 @@ const FB_ENV = {
   storageBucket: `${process.env.FBASE}.appspot.com`,
 };
 
+console.log("FBENV", FB_ENV);
+
 firebase.initializeApp(FB_ENV);
 
 export default firebase;
