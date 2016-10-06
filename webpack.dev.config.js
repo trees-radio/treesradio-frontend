@@ -4,9 +4,9 @@ var Config = require('webpack-config').default;
 
 module.exports = new Config().extend('./webpack.base.config.js').merge({
   devtool: 'cheap-source-map',
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ]
+  // plugins: [
+  //   new webpack.DefinePlugin({
+  //     'process.env.NODE_ENV': JSON.stringify('development')
+  //   })
+  // ]
 });
