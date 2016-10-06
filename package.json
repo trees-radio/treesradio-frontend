@@ -11,10 +11,10 @@
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase -P treesradio-dev deploy --only database",
     "bolt-deploy-live": "npm run bolt-compile && firebase -P dev deploy --only database",
-    "build-prod": "env-cmd ./.env-prod npm run bolt-compile && webpack -p --progress --colors --config webpack.config.build.js",
+    "build-prod": "env-cmd ./.env-prod npm run bolt-compile && webpack -p --progress --colors --config webpack.prod.config.js",
     "ci-build-bolt": "npm run bolt-compile",
-    "ci-build-app": "env-cmd ./.env-prod webpack -p --display-error-details --config webpack.config.build.js",
-    "ci-build-prod": "env-cmd ./.env-prod npm run bolt-compile && webpack -p --display-error-details --config webpack.config.build.js"
+    "ci-build-app": "env-cmd ./.env-prod webpack -p --display-error-details --config webpack.prod.config.js",
+    "ci-build-prod": "env-cmd ./.env-prod npm run bolt-compile && webpack -p --display-error-details --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
