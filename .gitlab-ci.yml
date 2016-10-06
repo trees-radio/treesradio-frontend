@@ -39,7 +39,7 @@ deploy_staging:
    - develop
   script:
     - apt-get update -qy
-    - apt-get install -y ruby-dev
+    - apt-get install -y ruby-dev gem
     - gem install dpl
     - npm install
     - npm run ci-build-prod
