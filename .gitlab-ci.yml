@@ -39,8 +39,8 @@ deploy_staging:
    - develop
   script:
     - apt-get update -qy
-    - apt-get install -y ruby-dev
+    - apt-get install -y ruby-dev rubygems
     - gem install dpl
     - npm install
     - npm run ci-build-prod
-    - dpl --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
+    - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
