@@ -9,7 +9,8 @@ const secHr = 60 * 60;
 const baseURL = `${process.env.API_PROTOCOL || 'https'}://${process.env.API}`;
 
 const ax = axios.create({
-  baseURL
+  baseURL,
+  timeout: 5000
 });
 
 var getAuthToken;
