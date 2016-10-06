@@ -12,7 +12,8 @@ function cherrypickEnv(env) {
   keys = keys.filter(e => acceptedEnv.includes(e));
   var webpackEnv = {};
   keys.forEach(k => webpackEnv[k] = env[k]);
-  return JSON.stringify(webpackEnv);
+  console.log("WEBPACK_ENV", webpackEnv);
+  return webpackEnv;
 }
 
 
@@ -65,8 +66,6 @@ module.exports = new Config().merge({
   },
   plugins: [
     new ExtractTextPlugin("[name].css"),
-    new webpack.DefinePlugin({
-      'process.env': cherrypickEnv(process.env)
-    })
+    new webpack.DefinePlugin(cherrypickEnv(process.env))
   ]
 })
