@@ -17,10 +17,14 @@ cache:
   paths:
   - node_modules/
 
-install_deps:
-  script:
-   - npm install
+stages:
+  - install
+  - lint
+
+npm_install:
+  stage: install
+  script: npm install
 
 lint:
-  script:
-   - npm run lint
+  stage: lint
+  script: npm run lint
