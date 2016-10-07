@@ -1,8 +1,6 @@
 ### Trees Radio Specific Ignores
-public/app.css
-public/app.js
-public/app.js.map
-public/assets/
+public
+
 firebase/rules.json
 
 ## Floobits
