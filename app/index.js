@@ -5,10 +5,13 @@ import ReactDOM from 'react-dom';
 import Main from './components/Main';
 
 // (S)CSS
+import './vendor/bootswatch/cyborg/bootstrap.min.css'; // load bootstrap css
 import 'modules/toastr/build/toastr.css';
-import './Main.scss';
+import './Main.scss'; // our scss entry
 
-require("font-awesome-webpack");
-require('babel-polyfill');
+import 'bootstrap'; //load bootstrap js, depends on $
+
+import 'font-awesome-webpack';
+import 'babel-polyfill'; // required for IE
 
 ReactDOM.render(<Main />, document.getElementById('app'));

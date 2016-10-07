@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Config = require('webpack-config').default;
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // console.log("WEBPACK_ENV", process.env);
 
@@ -20,8 +21,8 @@ function cherrypickEnv(env) {
 module.exports = new Config().merge({
   entry: path.resolve(__dirname, 'app/index.js'),
   output: {
-    path: path.resolve(__dirname, 'public/assets'),
-    filename: "[name].js"
+    path: path.resolve(__dirname, 'public'),
+    filename: "treesradio.js"
   },
   module: {
     loaders: [
@@ -32,26 +33,47 @@ module.exports = new Config().merge({
       },
       {
         test: /\.scss$/,
-        // loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css!sass", {publicPath: '/assets/'})
+        loader: ExtractTextPlugin.extract("style", "css!sass")
       },
       {
         test: /\.css$/,
-        // loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css", {publicPath: '/assets/'})
+        loader: ExtractTextPlugin.extract("style", "css")
       },
       {
-        test: /\.png$/,
-        loader: 'file'
+        test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less')
       },
       {
-        test: /\.jpg$/,
-        loader: 'file'
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader",
+        query: {
+          limit: '25000',
+          minetype: 'application/font-woff',
+          name: 'fonts/[hash].[ext]'
+        }
       },
       {
-        test: /\.(eot|woff|woff2|ttf|svg)(\?\S*)?$/,
-        loader: 'url?limit=100000&name=[name].[ext]'
-      }
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
+        query: {
+          name: 'fonts/[hash].[ext]'
+        }
+      },
+      {
+        test: /\.(mp3|wav|ogg)$/,
+        loader: 'file-loader',
+        query: {
+          name: 'audio/[hash].[ext]'
+        }
+      },
+      {test: /\.json$/, loader: 'json-loader'},
+      {
+        test: /\.(jpg|png|gif)$/,
+        loader: 'url-loader',
+        query: {
+          limit: '25000',
+          name: 'img/[name].[ext]'
+        }
+      },
     ]
   },
   resolve: {
@@ -65,7 +87,21 @@ module.exports = new Config().merge({
     }
   },
   plugins: [
-    new ExtractTextPlugin("[name].css"),
-    new webpack.DefinePlugin(cherrypickEnv(process.env))
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: 'jquery',
+      "window.jQuery": 'jquery'
+    }),
+    new ExtractTextPlugin("treesradio.css"),
+    new webpack.DefinePlugin(cherrypickEnv(process.env)),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: require('html-webpack-template'),
+      title: 'TreesRadio',
+      inject: false,
+      hash: true,
+      favicon: 'app/img/favicon.png',
+      appMountId: 'app'
+    })
   ]
 })

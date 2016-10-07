@@ -1,66 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>TreesRadio</title>
-  <link rel="shortcut icon" id="favicon" href="favicon.png">
-  <meta name="application-name" content="TreesRadio">
-  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/main.css">
-</head>
-
-<body>
-  <div id="app"></div>
-  <script>
-    var ENV_FIREBASE_ORIGIN = 'https://treesradio-live.firebaseio.com';
-    /////////////////////////////////////
-    function __loadFirebaseEnv(data) {
-      window.__env = data || {};
-      var devOverride = false;
-      if (devOverride) {
-        window.__env.firebase_origin = 'https://treesradio-live.firebaseio.com';
-      }
-      document.dispatchEvent(new CustomEvent('env', {
-        detail: data || {}
-      }));
-    }
-    var jsonp = document.createElement('script');
-    jsonp.src = ENV_FIREBASE_ORIGIN + '/_admin/env/' + window.location.hostname.replace(/\./g, ',') + '.json?callback=__loadFirebaseEnv';
-    document.head.appendChild(jsonp);
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/raven.js/2.0.5/raven.min.js"></script>
-  <script>
-    var init = function() {
-      if (!window.__env) return;
-      function loadApp() {
-        var appElement = document.createElement("script");
-        appElement.type = "application/javascript";
-        appElement.src = "assets/main.js";
-        document.body.appendChild(appElement);
-      }
-      loadApp();
-    }
-    document.addEventListener('env', init);
-    init();
-  </script>
-  <!-- <script src="app.js"></script> -->
-  <!-- Google Analytics -->
-  <script>
-    // CLOUDFLARE HANDLING GOOGLE ANALYTICS
-    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    //
-    // ga('create', 'UA-75932539-1', 'auto');
-    // ga('send', 'pageview');
-  </script>
-  <!-- End Google analytics -->
-
-</body>
-
-</html>
+Html Webpack Plugin:
+<pre>
+  Error: HtmlWebpackPlugin: could not load file C:\Users\Zach\git\treesradio-frontend\src\img\favicon.ico
+  
+  - index.js:303 
+    [treesradio-frontend]/[html-webpack-plugin]/index.js:303:27
+  
+  - From previous event:
+  
+  - index.js:302 HtmlWebpackPlugin.addFileToAssets
+    [treesradio-frontend]/[html-webpack-plugin]/index.js:302:9
+  
+  - index.js:94 
+    [treesradio-frontend]/[html-webpack-plugin]/index.js:94:23
+  
+  - From previous event:
+  
+  - index.js:92 Compiler.<anonymous>
+    [treesradio-frontend]/[html-webpack-plugin]/index.js:92:8
+  
+  - Tapable.js:71 Compiler.applyPluginsAsync
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:71:13
+  
+  - Compiler.js:226 Compiler.emitAssets
+    [treesradio-frontend]/[webpack]/lib/Compiler.js:226:7
+  
+  - Compiler.js:184 Compiler.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/Compiler.js:184:10
+  
+  - Compiler.js:403 
+    [treesradio-frontend]/[webpack]/lib/Compiler.js:403:12
+  
+  - Tapable.js:67 Compiler.next
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:67:11
+  
+  - CachePlugin.js:40 Compiler.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/CachePlugin.js:40:4
+  
+  - Tapable.js:71 Compiler.applyPluginsAsync
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:71:13
+  
+  - Compiler.js:400 Compiler.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/Compiler.js:400:9
+  
+  - Compilation.js:577 Compilation.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/Compilation.js:577:13
+  
+  - Tapable.js:60 Compilation.applyPluginsAsync
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:60:69
+  
+  - Compilation.js:572 Compilation.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/Compilation.js:572:10
+  
+  - Tapable.js:67 Compilation.next
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:67:11
+  
+  - UglifyJsPlugin.js:140 Compilation.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/optimize/UglifyJsPlugin.js:140:4
+  
+  - Tapable.js:71 Compilation.applyPluginsAsync
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:71:13
+  
+  - Compilation.js:567 Compilation.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/Compilation.js:567:9
+  
+  - Tapable.js:67 Compilation.next
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:67:11
+  
+  - index.js:309 ExtractTextPlugin.<anonymous>
+    [treesradio-frontend]/[extract-text-webpack-plugin]/index.js:309:4
+  
+  - Tapable.js:71 Compilation.applyPluginsAsync
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:71:13
+  
+  - Compilation.js:563 Compilation.<anonymous>
+    [treesradio-frontend]/[webpack]/lib/Compilation.js:563:8
+  
+  - Tapable.js:67 Compilation.next
+    [treesradio-frontend]/[tapable]/lib/Tapable.js:67:11
+  
+  - index.js:285 ExtractTextPlugin.<anonymous>
+    [treesradio-frontend]/[extract-text-webpack-plugin]/index.js:285:5
+  
+  - async.js:52 
+    [treesradio-frontend]/[async]/lib/async.js:52:16
+  
+  - async.js:246 done
+    [treesradio-frontend]/[async]/lib/async.js:246:17
+  
+  - async.js:44 
+    [treesradio-frontend]/[async]/lib/async.js:44:16
+  
+  - index.js:269 
+    [treesradio-frontend]/[extract-text-webpack-plugin]/index.js:269:6
+  
+  - async.js:52 
+    [treesradio-frontend]/[async]/lib/async.js:52:16
+  
+  - async.js:246 done
+    [treesradio-frontend]/[async]/lib/async.js:246:17
+  
+  - async.js:44 
+    [treesradio-frontend]/[async]/lib/async.js:44:16
+  
+  - index.js:259 
+    [treesradio-frontend]/[extract-text-webpack-plugin]/index.js:259:9
+  
+  - Compilation.js:469 
+    [treesradio-frontend]/[webpack]/lib/Compilation.js:469:4
+  
+  - Array.forEach
+  
+  - Compilation.js:468 callback
+    [treesradio-frontend]/[webpack]/lib/Compilation.js:468:14
+  
+</pre>
