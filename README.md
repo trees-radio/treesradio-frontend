@@ -1,11 +1,6 @@
 # Trees Radio Frontend
 
-[![wercker status](https://app.wercker.com/status/cc27bc23e90eea7d0c16679e8d382e5f/m "wercker status")](https://app.wercker.com/project/bykey/cc27bc23e90eea7d0c16679e8d382e5f)
-
-[![Dependency Status](https://david-dm.org/zbuttram/treesradio-frontend.svg)](https://david-dm.org/zbuttram/treesradio-frontend)
-
-This repo comprises the front-end of Trees Radio. Backend served by Firebase.
-
+This repo comprises the front-end of Trees Radio. Backend served by Firebase and treesradio/pineapple
 
 
 ## How to build:
@@ -16,9 +11,7 @@ This repo comprises the front-end of Trees Radio. Backend served by Firebase.
     + `brew install node`
 * Get the repo (duh)
 * Run `npm install` from the root of the repo
-* Use `npm start` for local dev server. Requires `webpack-dev-server` installed as global (`npm install -g <package_name>`)
 * NPM script reference:
-  - Some scripts require `firebase-tools` and `firebase-bolt` as well as `webpack` installed as globals (`npm install -g <package_name>`)
   - `npm run bolt-compile`: builds Firebase Bolt rules
   - `npm run build-dev`: builds Bolt rules and unminified app code with source maps
   - `npm run build-prod`: builds Bolt rules and minified app code
