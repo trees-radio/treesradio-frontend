@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import Main from './components/Main';
 
 // (S)CSS
-import 'modules/bootstrap/dist/css/bootstrap.css'; // load bootstrap css
+import './vendor/bootswatch/cyborg/bootstrap.min.css'; // load bootstrap css
 import 'modules/toastr/build/toastr.css';
 import './Main.scss'; // our scss entry
 

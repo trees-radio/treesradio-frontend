@@ -98,7 +98,7 @@ module.exports = new Config().merge({
       filename: 'index.html',
       template: require('html-webpack-template'),
       title: 'TreesRadio',
-      inject: 'body',
+      inject: false,
       hash: true,
       favicon: 'app/img/favicon.png',
       appMountId: 'app'
