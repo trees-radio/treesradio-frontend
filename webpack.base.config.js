@@ -99,7 +99,7 @@ module.exports = new Config().merge({
       title: 'TreesRadio',
       inject: 'body',
       hash: true,
-      favicon: 'src/img/favicon.ico'
+      favicon: 'app/img/favicon.png'
     })
   ]
 })
