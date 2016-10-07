@@ -96,10 +96,12 @@ module.exports = new Config().merge({
     new webpack.DefinePlugin(cherrypickEnv(process.env)),
     new HtmlWebpackPlugin({
       filename: 'index.html',
+      template: require('html-webpack-template'),
       title: 'TreesRadio',
       inject: 'body',
       hash: true,
-      favicon: 'app/img/favicon.png'
+      favicon: 'app/img/favicon.png',
+      appMountId: 'app'
     })
   ]
 })
