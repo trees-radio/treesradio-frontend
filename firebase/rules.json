@@ -17,7 +17,7 @@
         ".write": "auth != null && auth.uid == $uid"
       }
     },
-    "playing_media": {
+    "playing": {
       ".read": "true"
     },
     "presence": {

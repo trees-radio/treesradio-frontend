@@ -115,6 +115,14 @@ export default new class Playlists {
     }
   }
 
+  @computed get selectedSong() {
+    if (this.playlist[0]) {
+      return this.playlist[0].title;
+    } else {
+      return false;
+    }
+  }
+
   @computed get hasPlaylist() {
     if (this.playlists[this.selectedPlaylist]) {
       return true;

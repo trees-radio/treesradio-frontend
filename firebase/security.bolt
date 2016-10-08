@@ -55,7 +55,7 @@ path /playlists/{$uid} {
 // PLAYING MEDIA
 ////////////////////////////////////////////////////////////////
 
-path /playing_media {
+path /playing {
   read() {true}
 }
 
