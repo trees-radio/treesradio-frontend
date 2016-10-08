@@ -8,7 +8,7 @@ import waitlist from 'stores/waitlist';
 import playlists from 'stores/playlists';
 import playing from 'stores/playing';
 import toast from 'utils/toast';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 
 export default @observer class Toolbar extends React.Component {
 
@@ -48,8 +48,8 @@ export default @observer class Toolbar extends React.Component {
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             {grabPlaylistsDiv}
             <div className="grab-button" onClick={() => {}}>
-              <i className={grabClass}></i>
-              <span className="feedback-grab">{undefined}</span>
+              <i className={classNames('fa', playing.grabbed ? 'fa-plus-square' : 'fa-plus-square-o')}></i>
+              <span className="feedback-grab">{playing.data.feedback.grabs}</span>
             </div>
             <div className="volume-slider" ref="volslider">
               <i className={volClass}></i>
@@ -69,12 +69,12 @@ export default @observer class Toolbar extends React.Component {
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="like-button" onClick={() => {}}>
-              <i className={likeClass}></i>
-              <span className="feedback-likes">{undefined}</span>
+              <i className={classNames('fa', playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up')}></i>
+              <span className="feedback-likes">{playing.data.feedback.likes}</span>
             </div>
             <div className="dislike-button" onClick={() => {}}>
-              <i className={dislikeClass}></i>
-              <span className="feedback-dislikes">{undefined}</span>
+              <i className={classNames('fa', playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down')}></i>
+              <span className="feedback-dislikes">{playing.data.feedback.dislikes}</span>
             </div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">

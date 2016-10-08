@@ -1,9 +1,8 @@
 import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
-// import profile from 'stores/profile';
+import profile from 'stores/profile';
 import ax from 'utils/ax';
-import _ from 'lodash';
 
 
 export default new class Playing {
@@ -18,20 +17,46 @@ export default new class Playing {
   }
 
   @observable data = {
-    info: {}
+    info: {},
+    feedback: {},
+    feedback_users: {
+      likes: [],
+      dislikes: [],
+      grabs: []
+    }
   };
 
-  @computed get titleRepeat() {
-    if (this.data.info.title) {
-      var arr = [];
-      for (var i = 0; i < 3; i++) {
-        arr.push(this.data.info.title);
-      }
-      return arr.join(' --- ');
+  @computed get liked() {
+    if (!this.data.feedback_users || !this.data.feedback_users.likes) {
+      return false;
+    }
+    if (this.data.feedback_users.likes.includes(profile.user.uid)) {
+      return true;
     } else {
       return false;
     }
   }
 
+  @computed get disliked() {
+    if (!this.data.feedback_users || !this.data.feedback_users.dislikes) {
+      return false;
+    }
+    if (this.data.feedback_users.dislikes.includes(profile.user.uid)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @computed get grabbed() {
+    if (!this.data.feedback_users || !this.data.feedback_users.grabs) {
+      return false;
+    }
+    if (this.data.feedback_users.grabs.includes(profile.user.uid)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
