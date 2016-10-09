@@ -1,6 +1,5 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-// import fbase from 'stores/fbase';
 import chat from 'stores/chat';
 import classNames from 'classnames';
 import Linkify from 'react-linkify';
@@ -18,6 +17,8 @@ export default @observer class ChatContent extends React.Component {
     //   console.log("height", this._chatscroll.scrollHeight);
     //   console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
     // }, 1000);
+
+    setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 1000);
   }
 
   componentWillUpdate() {
