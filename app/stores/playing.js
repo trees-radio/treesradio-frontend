@@ -3,6 +3,8 @@ import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import profile from 'stores/profile';
 import ax from 'utils/ax';
+import moment from 'moment';
+import _ from 'lodash';
 
 
 export default new class Playing {
@@ -57,6 +59,15 @@ export default new class Playing {
     } else {
       return false;
     }
+  }
+
+  @computed get humanDuration() {
+    var mo = moment.duration(this.data.info.duration, 'milliseconds');
+    var str = `${_.padStart(mo.minutes(), 2, '0')}:${_.padStart(mo.seconds(), 2, '0')}`;
+    if (mo.hours() > 0) {
+      str = `${_.padStart(mo.hours(), 2, '0')}:`+str;
+    }
+    return str;
   }
 
 }

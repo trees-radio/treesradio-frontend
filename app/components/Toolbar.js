@@ -43,7 +43,7 @@ export default @observer class Toolbar extends React.Component {
               <a className="current-playing-media marquee">{playing.data.info.title}</a>
             </span><br/>
             <a className="current-playing-user">Player: {playing.data.info.user}</a>
-            <span className="media-time">{timer}</span>
+            <span className="media-time">{playing.humanCurrent} / {playing.humanDuration}</span>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             {grabPlaylistsDiv}
