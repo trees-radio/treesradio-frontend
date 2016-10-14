@@ -258,6 +258,8 @@
   height: 100%;
   width: 29.66%;
   border-right: solid;
+  border-top:solid;
+  border-bottom:solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
   line-height: 2vw;
@@ -272,6 +274,8 @@
 #currentsong-metadata {
   height: 100%;
   border-right: solid;
+  border-top:solid;
+  border-bottom:solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
   line-height: 2vw;
@@ -333,8 +337,6 @@
   font-size: 150%;
   text-align: center;
   padding: 0;
-  border-right: solid;
-  border-color: #2d2f39;
   a {
     text-decoration: none;
   }
