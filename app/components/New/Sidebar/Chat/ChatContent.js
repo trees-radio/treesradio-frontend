@@ -49,7 +49,7 @@ export default @observer class ChatContent extends React.Component {
       var humanTimestamp;
 
       avatars.loadAvatar(msg.username);
-      var avatar = avatars.users[msg.username];
+      var avatar = avatars.users.get(msg.username);
 
       var msgs = msg.msgs.map((innerMsg, i) => {
         return (
