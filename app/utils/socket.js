@@ -1,3 +1,4 @@
+import profile from 'stores/profile';
 
 import socket from 'socket.io-client';
 
@@ -19,8 +20,10 @@ export function login(token) {
 }
 
 sock.on('reconnect', () => {
-  if (AUTH_TOKEN) {
-    login(AUTH_TOKEN);
+  if (AUTH_TOKEN && profile.user) {
+    profile.getToken().then(token => {
+      login(token);
+    });
   }
 });
 

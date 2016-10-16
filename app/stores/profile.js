@@ -18,14 +18,12 @@ export default new class Profile {
     fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
+        hookAuth(this.getToken);
+        this.getToken().then(t => login(t));
         fbase.database().ref('users').child(user.uid).on('value', snap => {
           var profile = snap.val() || {};
           this.profile = profile;
           this.profileInit = true;
-
-          hookAuth(this.getToken);
-
-          this.getToken().then(t => login(t));
 
           // fbase.database().ref('.info/connected').on('value', snap => {
           //   if (snap.val() === true && this.profile && this.profile.username) {
@@ -34,6 +32,8 @@ export default new class Profile {
           //   }
           // });
         });
+
+
 
         fbase.database().ref('private').child(user.uid).on('value', snap => {
           var priv = snap.val() || {};
