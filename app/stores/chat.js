@@ -4,6 +4,7 @@ import fbase from 'libs/fbase';
 import profile from 'stores/profile';
 import ax from 'utils/ax';
 import socket from 'utils/socket';
+import events from 'stores/events';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 
@@ -24,6 +25,7 @@ export default new class Chat {
         }
       }
     });
+    events.register('chat_clear', () => this.messages = []);
   }
 
   @observable messages = [];

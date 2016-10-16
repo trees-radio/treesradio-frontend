@@ -25,7 +25,11 @@ path /_admin {
   read() {true}
 }
 
-path /backend/chatlock {
+path /events {
+  read() {true}
+}
+
+path /backend/public {
   read() {true}
 }
 
