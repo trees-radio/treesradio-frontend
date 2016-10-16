@@ -9,6 +9,7 @@ import profile from 'stores/profile';
 import Nav from './Nav';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
+import Player from './Player';
 
 import DevTools from 'mobx-react-devtools';
 var DevTool;
@@ -31,13 +32,7 @@ export default @observer class Main extends React.Component {
             {/* Video Component */}
             <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-float" id="videotoplevel">
               <div id="vidcontainer" className="">
-                {/* <Video
-                  controls={this.state.controls}
-                  playingMedia={this.state.playingMedia}
-                  videoOnProgress={this.videoOnProgress}
-                  localPlayerPos={this.state.localPlayerPos.position}
-                  user={this.state.user}
-                /> */}
+                <Player/>
               </div>
               <div id="playlists-container">
                 <Toolbar/>
