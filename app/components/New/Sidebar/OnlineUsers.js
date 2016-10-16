@@ -6,7 +6,7 @@ import avatars from 'libs/avatars';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
-    const users = online.onlineUsers || [];
+    const users = online.list || [];
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
 
@@ -15,8 +15,8 @@ export default @observer class OnlineUsers extends React.Component {
       var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
       var usernameClasses = classNames("users-name", modLevel);
 
-      avatars.loadAvatar(user.user);
-      var avatar = avatars.users[user.user];
+      setTimeout(() => avatars.loadAvatar(user.username));
+      var avatar = avatars.users.get(user.username);
 
       return (
         <li key={i} className={userLineClasses}>
@@ -30,7 +30,7 @@ export default @observer class OnlineUsers extends React.Component {
             <img src={avatar} className="users-avatarimg"/>
           </div>
           <div className="users-info">
-            <span className={usernameClasses}>{user.user}</span>
+            <span className={usernameClasses}>{user.username}</span>
           </div>
         </li>
       );
