@@ -48,7 +48,7 @@ export default @observer class ChatContent extends React.Component {
       var usernameClasses = classNames("chat-username", undefined);
       var humanTimestamp;
 
-      avatars.loadAvatar(msg.username);
+      setTimeout(() => avatars.loadAvatar(msg.username)); //mobx dislikes synchronous stuff during a render
       var avatar = avatars.users.get(msg.username);
 
       var msgs = msg.msgs.map((innerMsg, i) => {
