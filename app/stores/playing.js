@@ -29,7 +29,7 @@ export default new class Playing {
   };
 
   @computed get liked() {
-    if (!this.data.feedback_users || !this.data.feedback_users.likes) {
+    if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
       return false;
     }
     if (this.data.feedback_users.likes.includes(profile.user.uid)) {
@@ -40,7 +40,7 @@ export default new class Playing {
   }
 
   @computed get disliked() {
-    if (!this.data.feedback_users || !this.data.feedback_users.dislikes) {
+    if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
       return false;
     }
     if (this.data.feedback_users.dislikes.includes(profile.user.uid)) {
@@ -51,7 +51,7 @@ export default new class Playing {
   }
 
   @computed get grabbed() {
-    if (!this.data.feedback_users || !this.data.feedback_users.grabs) {
+    if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
       return false;
     }
     if (this.data.feedback_users.grabs.includes(profile.user.uid)) {
