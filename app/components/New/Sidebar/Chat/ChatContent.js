@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Linkify from 'react-linkify';
 import ReactEmoji from 'react-emoji';
 import avatars from 'libs/avatars';
+import moment from 'moment';
 
 const linkifyProperties = {target: '_blank'};
 const SCROLL_SENSITIVITY = 100;
@@ -46,7 +47,7 @@ export default @observer class ChatContent extends React.Component {
       var chatPosClass = Number.isInteger(i / 2) ? "chat-line-1" : "chat-line-0";
       var chatLineClasses = classNames("chat-item ", chatPosClass);
       var usernameClasses = classNames("chat-username", undefined);
-      var humanTimestamp;
+      var humanTimestamp = moment.unix(msg.timestamp).format('LT');
 
       setTimeout(() => avatars.loadAvatar(msg.username)); //mobx dislikes synchronous stuff during a render
       var avatar = avatars.users.get(msg.username);

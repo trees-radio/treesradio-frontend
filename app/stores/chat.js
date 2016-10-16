@@ -15,7 +15,8 @@ export default new class Chat {
       var msg = snap.val();
       if (msg) {
         if (this.messages[this.messages.length-1] && msg.username === this.messages[this.messages.length-1].username) {
-          this.messages[this.messages.length-1].msgs.push(snap.val().msg);
+          this.messages[this.messages.length-1].msgs.push(msg.msg);
+          this.messages[this.messages.length-1].timestamp = msg.timestamp;
         } else {
           msg.msgs = [msg.msg];
           this.messages.push(msg);
