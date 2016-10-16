@@ -59,7 +59,7 @@
     "webpack-dev-server": "^1.15.2"
   },
   "dependencies": {
-    "axios": "^0.14.0",
+    "axios": "^0.15.1",
     "babel-polyfill": "^6.7.4",
     "bootstrap": "^3.3.6",
     "classnames": "^2.2.1",
@@ -83,7 +83,7 @@
     "react-image-fallback": "^3.2.0",
     "react-linkify": "^0.1.1",
     "react-modal-bootstrap": "^1.1.0",
-    "react-player": "^0.9.0",
+    "react-player": "^0.12.0",
     "react-progressbar": "^1.2.0",
     "react-slider": "^0.7.0",
     "socket.io-client": "^1.5.0",
