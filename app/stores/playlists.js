@@ -23,7 +23,7 @@ export default new class Playlists {
             playlists.push(data);
           });
           this.playlists = playlists;
-          console.log('playlist data', playlists);
+          // console.log('playlist data', playlists);
 
           if (!this.init || this.removedPlaylist) {
             localforage.getItem('selectedPlaylist').then(selectedPlaylist => {
