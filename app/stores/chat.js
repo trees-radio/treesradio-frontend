@@ -3,6 +3,7 @@ import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import profile from 'stores/profile';
 import ax from 'utils/ax';
+import socket from 'utils/socket';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 
@@ -29,6 +30,19 @@ export default new class Chat {
 
   sendMsg(msg, cb) {
 
+    var mentions = msg.match(mentionPattern) || [];
+
+    socket.emit('chat', {mentions, msg});
+
+    // ax.post('/chat/send', {
+    //   msg,
+    //   mentions
+    // }).then(resp => {
+    //   if (resp.data.error) {
+    //     toast.error(`Error occurred while chatting: ${resp.data.error}`);
+    //   }
+    // });
+
     // var ref = this.fbase.database().ref('queues').child('chat').child('tasks');
     //
     // var data = {
@@ -37,19 +51,6 @@ export default new class Chat {
     // };
     //
     // ref.push(data);
-
-    var mentions = msg.match(mentionPattern) || [];
-
-    ax.post('/chat/send', {
-      msg,
-      mentions
-    }).then(resp => {
-      if (resp.data.error) {
-        toast.error(`Error occurred while chatting: ${resp.data.error}`);
-      }
-    });
-
-
 
     if (cb) {
       cb();

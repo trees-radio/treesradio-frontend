@@ -2,6 +2,7 @@ import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import {hookAuth, unhookAuth} from 'utils/ax';
+import socket, {login, logout} from 'utils/socket';
 
 export default new class Profile {
   constructor() {
@@ -24,12 +25,14 @@ export default new class Profile {
 
           hookAuth(this.getToken);
 
-          fbase.database().ref('.info/connected').on('value', snap => {
-            if (snap.val() === true && this.profile && this.profile.username) {
-              fbase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
-              fbase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(fbase.database.ServerValue.TIMESTAMP);
-            }
-          });
+          this.getToken().then(t => login(t));
+
+          // fbase.database().ref('.info/connected').on('value', snap => {
+          //   if (snap.val() === true && this.profile && this.profile.username) {
+          //     fbase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
+          //     fbase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(fbase.database.ServerValue.TIMESTAMP);
+          //   }
+          // });
         });
 
         fbase.database().ref('private').child(user.uid).on('value', snap => {
@@ -41,6 +44,7 @@ export default new class Profile {
 
       } else {
         // this.playlists.uninit();
+        logout();
         unhookAuth();
       }
     });

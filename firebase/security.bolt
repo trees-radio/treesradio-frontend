@@ -67,11 +67,6 @@ path /presence {
   read() {true}
 }
 
-path /presence/{$username} {
-  //write() {isUser(newData.child('uid').val()) || isUser(data.child('uid').val())}
-  write() { root.child('users/'+auth.uid+'/username').val() === $username }
-}
-
 ////////////////////////////////////////////////////////////////
 // USERS
 ////////////////////////////////////////////////////////////////
