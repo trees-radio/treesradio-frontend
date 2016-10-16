@@ -108,7 +108,8 @@ export default new class Playlists {
   }
 
   @computed get selectedPlaylistName() {
-    if (this.playlists[this.selectedPlaylist]) {
+    // check length before checking index, mobx does not like out of bounds checks
+    if (this.playlists.length > 0 && this.playlists[this.selectedPlaylist]) {
       return this.playlists[this.selectedPlaylist].name;
     } else {
       return "Create or Select a Playlist";
@@ -116,7 +117,8 @@ export default new class Playlists {
   }
 
   @computed get selectedSong() {
-    if (this.playlist[0]) {
+    // check length before checking index, mobx does not like out of bounds checks
+    if (this.playlist.length > 0 && this.playlist[0]) {
       return this.playlist[0].title;
     } else {
       return false;
@@ -124,7 +126,8 @@ export default new class Playlists {
   }
 
   @computed get hasPlaylist() {
-    if (this.playlists[this.selectedPlaylist]) {
+    // check length before checking index, mobx does not like out of bounds checks
+    if (this.playlists.length > 0 && this.playlists[this.selectedPlaylist]) {
       return true;
     } else {
       return false;
