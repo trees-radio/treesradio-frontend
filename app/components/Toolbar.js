@@ -23,7 +23,16 @@ export default @observer class Toolbar extends React.Component {
   }
 
   render() {
-    var currentPlaylistName, currentSelectedMediaClass, currentSelectedMedia, currentPlayingMedia, currentPlayingMediaClass, timer, grabPlaylistsDiv, grabClass, volClass, likeClass, dislikeClass, waitlistButtonClass, waitlistButtonText;
+    var currentPlaylistName, currentSelectedMediaClass, currentSelectedMedia, currentPlayingMedia, currentPlayingMediaClass, timer, grabPlaylistsDiv, grabClass, volClass, likeClass, dislikeClass, waitlistButtonClass;
+
+    var waitlistButtonText = 'Join Waitlist';
+    if (waitlist.bigButtonLoading) {
+      waitlistButtonText = <i className='fa fa-spin fa-circle-o-notch'></i>
+    } else if (waitlist.isPlaying) {
+      waitlistButtonText = 'Skip Song';
+    } else if (waitlist.inWaitlist) {
+      waitlistButtonText = 'Leave Waitlist';
+    }
 
     var openButtonIcon = this.panelOpen && playlists.init ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
 
@@ -78,7 +87,7 @@ export default @observer class Toolbar extends React.Component {
             </div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <div className={waitlistButtonClass} onClick={() => waitlist.join()}>{waitlistButtonText}Join Waitlist</div>
+            <div className={classNames("join-waitlist", waitlist.inWaitlist ? "join-waitlist-pressed" : false)} onClick={() => waitlist.bigButton()}>{waitlistButtonText}</div>
           </div>
         </div>
       </div>

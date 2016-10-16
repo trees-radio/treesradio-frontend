@@ -106,7 +106,7 @@ path /bans {
 //  avatar: String | Null
 //}
 
-path /waitlist/tasks {
+path /waitlist {
   read() {true}
 }
 
