@@ -44,9 +44,7 @@
       ".read": "true"
     },
     "waitlist": {
-      "tasks": {
-        ".read": "true"
-      }
+      ".read": "true"
     },
     "queues": {
       "chat": {
