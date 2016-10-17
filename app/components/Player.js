@@ -38,7 +38,7 @@ export default @observer class Player extends React.Component {
             id="reactplayerid"
             url={playing.data.info.url}
             playing={playing.data.playing}
-            volume={undefined}
+            volume={playing.volume}
             onProgress={(p) => this.onProgress(p)}
             onPause={undefined}
             youtubeConfig={rPlayerYoutubeConfig}

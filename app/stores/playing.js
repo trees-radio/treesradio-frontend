@@ -5,6 +5,7 @@ import profile from 'stores/profile';
 import ax from 'utils/ax';
 import moment from 'moment';
 import _ from 'lodash';
+import localforage from 'localforage';
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
@@ -18,6 +19,7 @@ export default new class Playing {
         this.data = data;
       }
     });
+    localforage.getItem('volume').then(v => v ? this.volume = v : false);
   }
 
   @observable data = {
@@ -116,9 +118,24 @@ export default new class Playing {
     var slow = serverSeconds - 30;
     var fast = serverSeconds + 30;
     var player = this.playerSeconds;
-    console.log('player', this.playerSeconds, 'server', serverSeconds);
+    // console.log('player', this.playerSeconds, 'server', serverSeconds);
     if (player < slow || player > fast) {
       return true;
+    }
+  }
+
+  @observable volume = 0.15;
+
+  setVolume(v) {
+    this.volume = v;
+    localforage.setItem('volume', v);
+  }
+
+  nudgeVolume(dir) {
+    if (dir === 'UP') {
+      this.setVolume(this.volume + 0.01);
+    } else if (dir === 'DOWN') {
+      this.setVolume(this.volume - 0.01);
     }
   }
 }
