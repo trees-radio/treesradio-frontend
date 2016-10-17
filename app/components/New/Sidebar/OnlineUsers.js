@@ -10,10 +10,23 @@ export default @observer class OnlineUsers extends React.Component {
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
 
-      var modLevel;
+      var userClass;
+      // TODO
+      // var modLevel = "username-user"; // level 0
+      // switch (msg['level']) {
+      //   case 1:
+      //     modLevel = "username-mod";
+      //   break;
+      //   case 2:
+      //     modLevel = "username-seniormod";
+      //   break;
+      //   case 3:
+      //     modLevel = "username-admin";
+      //   break;
+      // }
 
       var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
-      var usernameClasses = classNames("users-name", modLevel);
+      var usernameClasses = classNames("users-name", userClass);
 
       setTimeout(() => avatars.loadAvatar(user.username));
       var avatar = avatars.users.get(user.username);

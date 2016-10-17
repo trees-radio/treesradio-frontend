@@ -49,6 +49,11 @@ export default @observer class ChatContent extends React.Component {
       var usernameClasses = classNames("chat-username", undefined);
       var humanTimestamp = moment.unix(msg.timestamp).format('LT');
 
+      // TODO
+      // if (msg['isBot']) {
+      //   chatLineClasses = classNames("chat-item", chatPosClass, "blazebot-msg");
+      // }
+
       setTimeout(() => avatars.loadAvatar(msg.username)); //mobx dislikes synchronous stuff during a render
       var avatar = avatars.users.get(msg.username);
 
