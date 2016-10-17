@@ -10,7 +10,18 @@ export default @observer class OnlineUsers extends React.Component {
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
 
-      var userClass;
+      var userClass = 'username-user';
+      switch (user.title) {
+        case 'Admin':
+        userClass = 'username-admin';
+        break;
+        case 'Senior Mod':
+        userClass = 'username-seniormod';
+        break;
+        case 'Mod':
+        userClass = 'username-mod';
+        break;
+      }
       // TODO
       // var modLevel = "username-user"; // level 0
       // switch (msg['level']) {

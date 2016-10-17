@@ -46,7 +46,21 @@ export default @observer class ChatContent extends React.Component {
     var content = messages.map((msg, i, arr) => {
       var chatPosClass = Number.isInteger(i / 2) ? "chat-line-1" : "chat-line-0";
       var chatLineClasses = classNames("chat-item", chatPosClass, {"blazebot-msg": msg.username == 'BlazeBot'});
-      var usernameClasses = classNames("chat-username", undefined);
+
+      var userClass = 'username-user';
+      switch (msg.title) {
+        case 'Admin':
+        userClass = 'username-admin';
+        break;
+        case 'Senior Mod':
+        userClass = 'username-seniormod';
+        break;
+        case 'Mod':
+        userClass = 'username-mod';
+        break;
+      }
+
+      var usernameClasses = classNames("chat-username", userClass);
       var humanTimestamp = moment.unix(msg.timestamp).format('LT');
 
       setTimeout(() => avatars.loadAvatar(msg.username)); //mobx dislikes synchronous stuff during a render
