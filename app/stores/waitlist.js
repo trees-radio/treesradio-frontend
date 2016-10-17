@@ -81,4 +81,8 @@ export default new class Waitlist {
       return true;
     }
   }
+
+  @computed get count() {
+    return this.list.length;
+  }
 }
