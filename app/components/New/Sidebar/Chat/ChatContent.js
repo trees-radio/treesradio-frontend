@@ -45,12 +45,12 @@ export default @observer class ChatContent extends React.Component {
 
     var content = messages.map((msg, i, arr) => {
       var chatPosClass = Number.isInteger(i / 2) ? "chat-line-1" : "chat-line-0";
-      var chatLineClasses = classNames("chat-item ", chatPosClass);
+      var chatLineClasses = classNames("chat-item", chatPosClass, {"blazebot-msg": msg.username == 'BlazeBot'});
       var usernameClasses = classNames("chat-username", undefined);
       var humanTimestamp = moment.unix(msg.timestamp).format('LT');
 
       // TODO
-      // if (msg['isBot']) {
+      // if (msg.username == 'BlazeBot') {
       //   chatLineClasses = classNames("chat-item", chatPosClass, "blazebot-msg");
       // }
 
