@@ -21,12 +21,6 @@ export default @observer class OnlineUsers extends React.Component {
       return (
         <li key={i} className={userLineClasses}>
           <div className="users-avatar">
-            {/* <ReactImageFallback
-              className="users-avatarimg"
-              src={userAvatar}
-              fallbackImage={avatarFallback}
-              initialImage="/img/no-avatar.gif"
-            /> */}
             <img src={avatar} className="users-avatarimg"/>
           </div>
           <div className="users-info">
