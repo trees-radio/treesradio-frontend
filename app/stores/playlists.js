@@ -1,7 +1,7 @@
 import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
-import profile from 'stores/profile';
+// import profile from 'stores/profile';
 import localforage from 'localforage';
 import axios from 'axios';
 import moment from 'moment';
