@@ -19,4 +19,10 @@ export default new class Online {
   @computed get onlineCount() {
     return this.list.length;
   }
+
+  @computed get sorted() {
+    return this.list.sort((a, b) => {
+      return a.rank - b.rank;
+    });
+  }
 }

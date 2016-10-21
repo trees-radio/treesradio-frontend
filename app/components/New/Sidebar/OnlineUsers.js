@@ -6,7 +6,7 @@ import avatars from 'libs/avatars';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
-    const users = online.list || [];
+    const users = online.sorted || [];
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
 
