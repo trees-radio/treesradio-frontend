@@ -5,6 +5,8 @@ import profile from 'stores/profile';
 import ax from 'utils/ax';
 import moment from 'moment';
 import _ from 'lodash';
+import localforage from 'localforage';
+import events from 'stores/events';
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
@@ -18,6 +20,8 @@ export default new class Playing {
         this.data = data;
       }
     });
+    localforage.getItem('volume').then(v => v ? this.volume = v : false);
+    events.register('new_song', () => this.feedback = []);
   }
 
   @observable data = {
@@ -29,39 +33,6 @@ export default new class Playing {
       grabs: []
     }
   };
-
-  @computed get liked() {
-    if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
-      return false;
-    }
-    if (this.data.feedback_users.likes.includes(profile.user.uid)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @computed get disliked() {
-    if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
-      return false;
-    }
-    if (this.data.feedback_users.dislikes.includes(profile.user.uid)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @computed get grabbed() {
-    if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
-      return false;
-    }
-    if (this.data.feedback_users.grabs.includes(profile.user.uid)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   @computed get humanDuration() {
     var mo = moment.duration(this.data.info.duration, 'milliseconds');
@@ -113,12 +84,90 @@ export default new class Playing {
     if (serverSeconds > cap) {
       return false;
     }
-    var slow = serverSeconds - 30;
-    var fast = serverSeconds + 30;
+    var slow = serverSeconds - PLAYER_SYNC_SENSITIVITY;
+    var fast = serverSeconds + PLAYER_SYNC_SENSITIVITY;
     var player = this.playerSeconds;
-    console.log('player', this.playerSeconds, 'server', serverSeconds);
+    // console.log('player', this.playerSeconds, 'server', serverSeconds);
     if (player < slow || player > fast) {
       return true;
     }
+  }
+
+  @observable volume = 0.15;
+
+  setVolume(v) {
+    this.volume = v;
+    localforage.setItem('volume', v);
+  }
+
+  nudgeVolume(dir) {
+    if (dir === 'UP') {
+      this.setVolume(this.volume + 0.01);
+    } else if (dir === 'DOWN') {
+      this.setVolume(this.volume - 0.01);
+    }
+  }
+
+  @observable feedback = []
+
+  sendFeedback(type) {
+    if (this.feedback.includes(type)) {
+      return false;
+    }
+    ax.post('/feedback/send', {type}).then(resp => {
+      if (resp.data && resp.data.error) {
+        toast.error(resp.data.error);
+      }
+      this.feedback.push(type);
+    });
+  }
+
+  like() {
+    this.sendFeedback('like');
+  }
+
+  dislike() {
+    this.sendFeedback('dislike');
+  }
+
+  grab() {
+    // send grab to playlist
+    this.sendFeedback('grab');
+  }
+
+  @computed get liked() {
+    return this.feedback.includes('like');
+    // if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
+    //   return false;
+    // }
+    // if (this.data.feedback_users.likes.includes(profile.user.uid)) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
+
+  @computed get disliked() {
+    return this.feedback.includes('dislike');
+    // if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
+    //   return false;
+    // }
+    // if (this.data.feedback_users.dislikes.includes(profile.user.uid)) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
+
+  @computed get grabbed() {
+    return this.feedback.includes('grab');
+    // if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
+    //   return false;
+    // }
+    // if (this.data.feedback_users.grabs.includes(profile.user.uid)) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 }

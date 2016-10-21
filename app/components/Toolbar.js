@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {observable} from 'mobx';
+import {observable, toJS} from 'mobx';
 import ReactSlider from 'react-slider';
 import PlaylistsPanel from './New/Toolbar/PlaylistsPanel';
 
@@ -22,8 +22,18 @@ export default @observer class Toolbar extends React.Component {
     }
   }
 
+  volumeWheel(e) {
+    if (e.deltaY < 0) {
+      //scroll up
+      playing.nudgeVolume('UP');
+    } else {
+      //scroll down
+      playing.nudgeVolume('DOWN');
+    }
+  }
+
   render() {
-    var currentPlaylistName, currentSelectedMediaClass, currentSelectedMedia, currentPlayingMedia, currentPlayingMediaClass, timer, grabPlaylistsDiv, grabClass, volClass, likeClass, dislikeClass, waitlistButtonClass;
+    var grabPlaylistsDiv, grabClass, likeClass, dislikeClass;
 
     var waitlistButtonText = 'Join Waitlist';
     if (waitlist.bigButtonLoading) {
@@ -32,6 +42,15 @@ export default @observer class Toolbar extends React.Component {
       waitlistButtonText = 'Skip Song';
     } else if (waitlist.inWaitlist) {
       waitlistButtonText = 'Leave Waitlist';
+    }
+
+    var volClass;
+    if (playing.volume < 0.1) {
+      volClass = classNames("fa", "fa-volume-off", "volume-slider-icon");
+    } else if (playing.volume < 0.6) {
+      volClass = classNames("fa", "fa-volume-down", "volume-slider-icon");
+    } else {
+      volClass = classNames("fa", "fa-volume-up", "volume-slider-icon");
     }
 
     var openButtonIcon = this.panelOpen && playlists.init ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
@@ -60,28 +79,28 @@ export default @observer class Toolbar extends React.Component {
               <i className={classNames('fa', playing.grabbed ? 'fa-plus-square' : 'fa-plus-square-o')}></i>
               <span className="feedback-grab">{playing.data.feedback.grabs}</span>
             </div>
-            <div className="volume-slider" ref="volslider">
+            <div className="volume-slider" onWheel={(e) => this.volumeWheel(e)}>
               <i className={volClass}></i>
               <ReactSlider
                 max={1}
                 step={0.01}
-                defaultValue={0}
-                value={undefined}
+                defaultValue={0.15}
+                value={playing.volume}
                 className="volume-slider-node"
                 handleClassName="volume-slider-handle"
                 handleActiveClassName="volume-slider-handle-active"
                 barClassName="volume-slider-bar"
-                onChange={() => {}}
+                onChange={e => playing.setVolume(e)}
                 withBars={true}
               />
             </div>
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div className="like-button" onClick={() => {}}>
+            <div className="like-button" onClick={() => playing.like()}>
               <i className={classNames('fa', playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up')}></i>
               <span className="feedback-likes">{playing.data.feedback.likes}</span>
             </div>
-            <div className="dislike-button" onClick={() => {}}>
+            <div className="dislike-button" onClick={() => playing.dislike()}>
               <i className={classNames('fa', playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down')}></i>
               <span className="feedback-dislikes">{playing.data.feedback.dislikes}</span>
             </div>
