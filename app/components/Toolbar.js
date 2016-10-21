@@ -96,11 +96,11 @@ export default @observer class Toolbar extends React.Component {
             </div>
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div className="like-button" onClick={() => {}}>
+            <div className="like-button" onClick={() => playing.like()}>
               <i className={classNames('fa', playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up')}></i>
               <span className="feedback-likes">{playing.data.feedback.likes}</span>
             </div>
-            <div className="dislike-button" onClick={() => {}}>
+            <div className="dislike-button" onClick={() => playing.dislike()}>
               <i className={classNames('fa', playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down')}></i>
               <span className="feedback-dislikes">{playing.data.feedback.dislikes}</span>
             </div>
