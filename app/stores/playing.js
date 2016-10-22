@@ -21,6 +21,7 @@ export default new class Playing {
       }
     });
     localforage.getItem('volume').then(v => v ? this.volume = v : false);
+    localforage.getItem('playerSize').then(s => s ? this.playerSize = s : false);
     events.register('new_song', () => this.feedback = []);
   }
 
@@ -174,5 +175,16 @@ export default new class Playing {
     } else {
       return false;
     }
+  }
+
+  @observable playerSize = 'BIG';
+
+  togglePlayerSize() {
+    if (this.playerSize === 'BIG') {
+      this.playerSize = 'SMALL';
+    } else if (this.playerSize === 'SMALL') {
+      this.playerSize = 'BIG';
+    }
+    localforage.setItem('playerSize', this.playerSize);
   }
 }

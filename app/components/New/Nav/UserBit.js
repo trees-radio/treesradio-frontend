@@ -1,10 +1,11 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
+import classNames from 'classnames';
 
-// import fbase from 'stores/fbase';
 import profile from 'stores/profile';
 import account from 'libs/account';
+import playing from 'stores/playing';
 
 import Modal from 'components/utility/Modal';
 
@@ -41,8 +42,12 @@ export default @observer class UserBit extends React.Component {
               <span className="fa fa-caret-down"></span>
             </a>
             <ul className="dropdown-menu">
-              {/* <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
-              <li onClick={p.toggleSize}><a href="#"><i className={sizeToggleIcon}></i> {sizeToggleString}</a></li>*/}
+              {/* <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li> */}
+              <li onClick={() => playing.togglePlayerSize()}>
+                <a href="#">
+                  <i className={classNames('fa', playing.playerSize === 'BIG' ? 'fa-compress' : 'fa-expand')}></i> {playing.playerSize === 'BIG' ? 'Collapse Player' : 'Expand Player'}
+                </a>
+              </li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
             </ul>
