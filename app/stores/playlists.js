@@ -6,6 +6,7 @@ import localforage from 'localforage';
 import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
+import events from 'stores/events';
 
 const ytApiKey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
 
@@ -41,10 +42,23 @@ export default new class Playlists {
             });
           }
 
+          if (!this.disposeEvent) {
+            this.disposeEvent = events.register('new_song', (e) => {
+              if (e.data === this.uid) {
+                this.moveBottom(0);
+              }
+            });
+          }
+
+
           this.init = true;
         });
       } else {
         this.init = false;
+        if (this.disposeEvent) {
+          this.disposeEvent();
+          this.disposeEvent = null;
+        }
         if (this.stopSync) {
           this.stopSync();
         }
@@ -206,6 +220,14 @@ export default new class Playlists {
     newPlaylist.unshift(video);
     this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
     toast.success(`Moved ${video.title} to top of playlist.`);
+  }
+
+  moveBottom(index) {
+    var newPlaylist = this.playlist.slice();
+    var video = newPlaylist.splice(index, 1)[0];
+    newPlaylist.push(video);
+    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    // toast.success(`Moved ${video.title} to bottom of playlist.`);
   }
 
   removeVideo(index) {
