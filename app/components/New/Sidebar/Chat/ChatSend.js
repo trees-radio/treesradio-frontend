@@ -23,10 +23,8 @@ export default @observer class ChatSend extends React.Component {
 
   onEnterKey(e) {
     var key = e.keyCode || e.which;
-    if (key == 13 && this.msg !== '') {
-      chat.sendMsg(this.msg, () => {
-        this.msg = "";
-      });
+    if (key == 13) {
+      chat.pushMsg();
     }
   }
 

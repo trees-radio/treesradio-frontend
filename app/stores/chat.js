@@ -41,11 +41,17 @@ export default new class Chat {
     this.msg += ' '+msg;
   }
 
-  sendMsg(cb) {
+  getMsg() {
     var msg = this.msg;
-
     this.msg = '';
+    return msg;
+  }
 
+  pushMsg() {
+    this.sendMsg(this.getMsg());
+  }
+
+  sendMsg(msg, cb) {
     var mentions = msg.match(mentionPattern) || [];
 
     socket.emit('chat', {mentions, msg});
