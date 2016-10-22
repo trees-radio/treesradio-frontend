@@ -108,66 +108,71 @@ export default new class Playing {
     }
   }
 
-  @observable feedback = []
+  @observable feedbackSending = false;
 
   sendFeedback(type) {
-    if (this.feedback.includes(type)) {
-      return false;
-    }
+    this.feedbackSending = true;
     ax.post('/feedback/send', {type}).then(resp => {
       if (resp.data && resp.data.error) {
         toast.error(resp.data.error);
       }
-      this.feedback.push(type);
+      this.feedbackSending = false;
     });
   }
 
   like() {
+    if (this.liked) {
+      toast.error("You've already liked this song!")
+      return false;
+    }
     this.sendFeedback('like');
   }
 
   dislike() {
+    if (this.disliked) {
+      toast.error("You've already disliked this song!");
+    }
     this.sendFeedback('dislike');
   }
 
   grab() {
-    // send grab to playlist
+    if (this.grabbed) {
+      toast.error("You've already grabbed this song!");
+    }
+    // TODO send grab to playlist
     this.sendFeedback('grab');
   }
 
   @computed get liked() {
-    return this.feedback.includes('like');
-    // if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
-    //   return false;
-    // }
-    // if (this.data.feedback_users.likes.includes(profile.user.uid)) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
+      return false;
+    }
+    if (this.data.feedback_users.likes.includes(profile.user.uid)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @computed get disliked() {
-    return this.feedback.includes('dislike');
-    // if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
-    //   return false;
-    // }
-    // if (this.data.feedback_users.dislikes.includes(profile.user.uid)) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
+      return false;
+    }
+    if (this.data.feedback_users.dislikes.includes(profile.user.uid)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @computed get grabbed() {
-    return this.feedback.includes('grab');
-    // if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
-    //   return false;
-    // }
-    // if (this.data.feedback_users.grabs.includes(profile.user.uid)) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
+      return false;
+    }
+    if (this.data.feedback_users.grabs.includes(profile.user.uid)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

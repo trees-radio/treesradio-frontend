@@ -1,4 +1,4 @@
-import {observable, computed, toJS} from 'mobx';
+// import {observable, computed, toJS} from 'mobx';
 import fbase from 'libs/fbase';
 import moment from 'moment';
 
@@ -26,6 +26,9 @@ export default new class Events {
     if (!this.handlers[type]) {
       this.handlers[type] = [];
     }
-    this.handlers[type].push(handler);
+    var index = this.handlers[type].push(handler) - 1;
+    return () => {
+      this.handlers[type].splice(index, 1)
+    };
   }
 }
