@@ -10,7 +10,7 @@ import toast from 'utils/toast';
 
 export default @observer class ChatSend extends React.Component {
 
-  @observable msg = '';
+  // @observable msg = '';
 
   onKeyDown(e) {
     console.log('keyDown', e);
@@ -35,7 +35,7 @@ export default @observer class ChatSend extends React.Component {
     if (!profile.user) {
       toast.error('You must be logged in to chat!');
     } else {
-      this.msg = e.target.value;
+      chat.updateMsg(e.target.value);
     }
   }
 
@@ -48,7 +48,7 @@ export default @observer class ChatSend extends React.Component {
             placeholder="enter to send"
             id="chatinput"
             className="form-control"
-            value={this.msg}
+            value={chat.msg}
             onKeyPress={e => this.onEnterKey(e)}
             onChange={e => this.onChange(e)}
           />

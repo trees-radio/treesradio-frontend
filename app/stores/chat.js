@@ -31,7 +31,20 @@ export default new class Chat {
 
   @observable messages = [];
 
-  sendMsg(msg, cb) {
+  @observable msg = '';
+
+  updateMsg(msg) {
+    this.msg = msg;
+  }
+
+  appendMsg(msg) {
+    this.msg += ' '+msg;
+  }
+
+  sendMsg(cb) {
+    var msg = this.msg;
+
+    this.msg = '';
 
     var mentions = msg.match(mentionPattern) || [];
 

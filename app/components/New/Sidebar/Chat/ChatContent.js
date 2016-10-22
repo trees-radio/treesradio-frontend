@@ -80,7 +80,7 @@ export default @observer class ChatContent extends React.Component {
             <img src={avatar} className="avatarimg"/>
           </div>
           <div className="chat-msg">
-            <span className={usernameClasses} onClick={() => {}}>{ msg.username }</span>
+            <span className={usernameClasses} onClick={() => chat.appendMsg('@'+msg.username)}>{ msg.username }</span>
             <span className="chat-timestamp">{humanTimestamp}</span><br />
             <span className="chat-text">{ msgs }</span>
           </div>
