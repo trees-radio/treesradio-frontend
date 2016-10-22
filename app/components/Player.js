@@ -20,16 +20,10 @@ export default @observer class Player extends React.Component {
   }
 
   render() {
-    var playerSizeClass;
-    // if (this.props.user.playerSize) {
-    //   playerSizeClass = classNames("small-player-size");
-    // } else {
-    //   playerSizeClass = classNames("large-player-size");
-    // }
 
     return (
       <div>
-        <div id="player-size" className="small-player-size">
+        <div id="player-size" className={playing.playerSize === 'BIG' ? 'large-player-size' : 'small-player-size'}>
           <ReactPlayer
             ref={c => this._player = c}
             className="reactplayer"
