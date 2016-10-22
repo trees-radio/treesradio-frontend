@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "env-cmd ./.env-staging webpack-dev-server --inline --colors --content-base public/",
+    "start": "env-cmd ./.env-staging-local webpack-dev-server --inline --colors --content-base public/",
     "start-local": "env-cmd ./.env-local webpack-dev-server --inline --colors --content-base public/",
     "lint": "eslint app/**",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
