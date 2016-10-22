@@ -46,15 +46,15 @@ deploy_staging:
     - npm run ci-build-staging
     - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
 
-deploy_staging:
-  stage: deploy
-  environment: live
-  only:
-    - master
-  script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev rubygems
-    - gem install dpl
-    - npm install
-    - npm run ci-build-staging
-    - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_LIVE --project=treesradio-live
+    deploy_staging:
+      stage: deploy
+      environment: live
+      only:
+       - master
+      script:
+        - apt-get update -qy
+        - apt-get install -y ruby-dev rubygems
+        - gem install dpl
+        - npm install
+        - npm run ci-build-staging
+        - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_LIVE --project=treesradio-live
