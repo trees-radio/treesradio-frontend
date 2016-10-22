@@ -58,12 +58,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 }
 
-#chatscroll {
-  height: 92%; //23
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin-bottom:1px;
-}
+
 
 #chatscroll::-webkit-scrollbar {
     width: 1em;
@@ -215,8 +210,17 @@ $chat-item-color: #c0c0c0; //light skin #000
   cursor:pointer;
 }
 
+#chatscroll {
+  height: 92%; //23
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-bottom:1px;
+}
+
 #sendbox {
   position: absolute;
+  height: 5vh;
+  max-height: 30px;
   width: 98.5%;
   left: .75%;
   margin-top:1px;
@@ -227,8 +231,10 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 input#chatinput.form-control {
   height: 5vh;
+  max-height: 30px;
   font-size: 1.65vh;
   color: black;
+  margin-top:1px;
 }
 
 .blazebot-msg {
