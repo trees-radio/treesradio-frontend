@@ -55,6 +55,15 @@ export default @observer class Toolbar extends React.Component {
 
     var openButtonIcon = this.panelOpen && playlists.init ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
 
+    var grabIcon, likeIcon, dislikeIcon;
+    if (playing.feedbackSending) {
+      grabIcon = likeIcon = dislikeIcon = classNames('fa-spin', 'fa-circle-o-notch');
+    } else {
+      grabIcon = playing.grabbed ? 'fa-plus-square' : 'fa-plus-square-o';
+      likeIcon = playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up';
+      dislikeIcon = playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down';
+    }
+
     return (
       <div id="playlists-component">
         {playlists.init ? <PlaylistsPanel open={this.panelOpen}/> : false}
@@ -76,7 +85,7 @@ export default @observer class Toolbar extends React.Component {
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             {grabPlaylistsDiv}
             <div className="grab-button" onClick={() => {}}>
-              <i className={classNames('fa', playing.grabbed ? 'fa-plus-square' : 'fa-plus-square-o')}></i>
+              <i className={classNames('fa', grabIcon)}></i>
               <span className="feedback-grab">{playing.data.feedback.grabs}</span>
             </div>
             <div className="volume-slider" onWheel={(e) => this.volumeWheel(e)}>
@@ -97,11 +106,11 @@ export default @observer class Toolbar extends React.Component {
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="like-button" onClick={() => playing.like()}>
-              <i className={classNames('fa', playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up')}></i>
+              <i className={classNames('fa', likeIcon)}></i>
               <span className="feedback-likes">{playing.data.feedback.likes}</span>
             </div>
             <div className="dislike-button" onClick={() => playing.dislike()}>
-              <i className={classNames('fa', playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down')}></i>
+              <i className={classNames('fa', dislikeIcon)}></i>
               <span className="feedback-dislikes">{playing.data.feedback.dislikes}</span>
             </div>
           </div>
