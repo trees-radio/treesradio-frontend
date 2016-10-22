@@ -219,8 +219,8 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 #sendbox {
   position: absolute;
-  height: 5vh;
-  max-height: 30px;
+  height: 5%;
+  max-height: 45px;
   width: 98.5%;
   left: .75%;
   margin-top:1px;
@@ -230,8 +230,8 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 input#chatinput.form-control {
-  height: 5vh;
-  max-height: 30px;
+  height: 100%;
+  max-height: 45px;
   font-size: 1.65vh;
   color: black;
   margin-top:1px;
