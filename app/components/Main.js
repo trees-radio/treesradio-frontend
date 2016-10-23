@@ -14,7 +14,7 @@ import Player from './Player';
 import DevTools from 'mobx-react-devtools';
 var DevTool;
 if (process.env.NODE_ENV !== 'production') {
-  DevTool = DevTools;
+  DevTool = <DevTools position={{top: 10, left: 200}}/>;
 }
 
 export default @observer class Main extends React.Component {
@@ -24,7 +24,7 @@ export default @observer class Main extends React.Component {
     }
     return (
       <div>
-        <DevTool position={{top: 10, left: 200}}/>
+        {DevTool}
         <Nav/>
         {/* Start Container */}
         <div className="container-fluid">
