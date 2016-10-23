@@ -5,6 +5,7 @@ import profile from 'stores/profile';
 import ax from 'utils/ax';
 import socket from 'utils/socket';
 import events from 'stores/events';
+import online from 'stores/online';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 
@@ -77,5 +78,25 @@ export default new class Chat {
     if (cb) {
       cb();
     }
+  }
+
+  @computed get mentionMatches() {
+    var words = this.msg.split(' ');
+    if (words[words.length - 1][0] === '@') {
+      var mention = words[words.length - 1];
+      var name = mention.split('@').join('');
+      if (name === '') {
+        return [];
+      }
+      return online.usernames.filter(n => n.toUpperCase().includes(name.toUpperCase()));
+    } else {
+      return [];
+    }
+  }
+
+  replaceMention(index) {
+    var words = this.msg.split(' ');
+    words[words.length - 1] = '@'+this.mentionMatches[index]+' ';
+    this.msg = words.join(' ');
   }
 }

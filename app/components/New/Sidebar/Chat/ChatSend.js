@@ -21,10 +21,14 @@ export default @observer class ChatSend extends React.Component {
     console.log('keyUp', e);
   }
 
-  onEnterKey(e) {
+  onKeyPress(e) {
     var key = e.keyCode || e.which;
     if (key == 13) {
-      chat.pushMsg();
+      if (chat.mentionMatches.length > 0) {
+        chat.replaceMention(0);
+      } else {
+        chat.pushMsg();
+      }
     }
   }
 
@@ -38,8 +42,22 @@ export default @observer class ChatSend extends React.Component {
   }
 
   render() {
+    var matchContainer;
+
+    if (chat.mentionMatches.length > 0) {
+      var matches = chat.mentionMatches.map((m, i) => {
+        return <span key={i} className="mention-item" onClick={() => chat.replaceMention(i)}>@{m}<br/></span>;
+      })
+      matchContainer = (
+        <div className="mentions-container">
+          {matches}
+        </div>
+      );
+    }
+
     return (
       <div>
+        {matchContainer}
         <div id="sendbox">
           <input
             type="text"
@@ -47,7 +65,7 @@ export default @observer class ChatSend extends React.Component {
             id="chatinput"
             className="form-control"
             value={chat.msg}
-            onKeyPress={e => this.onEnterKey(e)}
+            onKeyPress={e => this.onKeyPress(e)}
             onChange={e => this.onChange(e)}
           />
         </div>

@@ -25,4 +25,8 @@ export default new class Online {
       return a.rank - b.rank;
     });
   }
+
+  @computed get usernames() {
+    return this.list.map(u => u.username);
+  }
 }
