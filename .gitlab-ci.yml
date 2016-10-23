@@ -24,13 +24,15 @@ stages:
 lint:
   stage: build
   script:
-    - npm install
+    - npm i -g yarn
+    - yarn
     - npm run lint
 
 build:
   stage: build
   script:
-    - npm install
+    - npm i -g yarn
+    - yarn
     - npm run ci-build-app
 
 deploy_staging:
@@ -42,6 +44,7 @@ deploy_staging:
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
-    - npm install
+    - npm i -g yarn
+    - yarn
     - npm run ci-build-staging
     - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
