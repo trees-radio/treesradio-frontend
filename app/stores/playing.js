@@ -7,6 +7,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import localforage from 'localforage';
 import events from 'stores/events';
+import playlists from 'stores/playlists';
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
@@ -136,12 +137,11 @@ export default new class Playing {
     this.sendFeedback('dislike');
   }
 
-  grab() {
-    if (this.grabbed) {
-      toast.error("You've already grabbed this song!");
+  grab(playlistKey) {
+    playlists.addSong(this.data.info, playlistKey);
+    if (!this.grabbed) {
+      this.sendFeedback('grab');
     }
-    // TODO send grab to playlist
-    this.sendFeedback('grab');
   }
 
   @computed get liked() {

@@ -6,9 +6,39 @@ import PlaylistsPanel from './New/Toolbar/PlaylistsPanel';
 
 import waitlist from 'stores/waitlist';
 import playlists from 'stores/playlists';
+import profile from 'stores/profile';
 import playing from 'stores/playing';
 import toast from 'utils/toast';
 import classNames from 'classnames';
+import onClickOutside from 'react-onclickoutside';
+
+const GrabPlaylists = onClickOutside(observer(React.createClass({
+  handleClickOutside() {
+    this.props.toggleGrab(false);
+  },
+
+  render() {
+    if (this.props.grabbing) {
+      var grabPlaylists = playlists.playlists.map((p, i) => {
+        var onClick = () => {};
+        var songInPlaylist = playlists.checkPlaylistForSong(p.key, playing.data.info.url);
+        if (!songInPlaylist) {
+          onClick = () => {
+            playing.grab(p.key);
+            this.toggleGrab();
+          };
+        }
+        var classes = classNames('fa', songInPlaylist ? 'fa-check-circle-o' : 'fa-circle-o');
+        return (
+          <div key={i} className="grab-playlist" onClick={onClick}>{p.name}<span className={classes}></span></div>
+        );
+      })
+      return <div className="grab-playlists">{grabPlaylists}</div>;
+    } else {
+      return <div/>;
+    }
+  }
+})));
 
 export default @observer class Toolbar extends React.Component {
 
@@ -32,9 +62,18 @@ export default @observer class Toolbar extends React.Component {
     }
   }
 
-  render() {
-    var grabPlaylistsDiv, grabClass, likeClass, dislikeClass;
+  @observable grabbing = false;
 
+  toggleGrab(setting) {
+    if (!profile.user) {
+      toast.error('You must be logged in to grab songs!');
+      return;
+    }
+    var set = typeof setting === 'boolean' ? setting : !this.grabbing;
+    this.grabbing = set;
+  }
+
+  render() {
     var waitlistButtonText = 'Join Waitlist';
     if (waitlist.bigButtonLoading) {
       waitlistButtonText = <i className='fa fa-spin fa-circle-o-notch'></i>
@@ -83,8 +122,8 @@ export default @observer class Toolbar extends React.Component {
             <span className="media-time">{playing.humanCurrent} / {playing.humanDuration}</span>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            {grabPlaylistsDiv}
-            <div className="grab-button" onClick={() => {}}>
+            <GrabPlaylists grabbing={this.grabbing} toggleGrab={(setting) => this.toggleGrab(setting)}/>
+            <div className="grab-button" onClick={() => this.toggleGrab()}>
               <i className={classNames('fa', grabIcon)}></i>
               <span className="feedback-grab">{playing.data.feedback.grabs}</span>
             </div>

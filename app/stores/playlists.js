@@ -47,6 +47,7 @@ export default new class Playlists {
               if (e.data === this.uid) {
                 this.moveBottom(0);
               }
+              this.addedTo = [];
             });
           }
 
@@ -196,7 +197,7 @@ export default new class Playlists {
     var channel = video.snippet.channelTitle;
     var duration = moment.duration(video.contentDetails.duration).valueOf();
 
-    var obj = {
+    var song = {
       url,
       title,
       thumb,
@@ -204,14 +205,48 @@ export default new class Playlists {
       duration
     }
 
-    var newPlaylist = this.playlist.slice();
-    newPlaylist.unshift(obj);
     if (!this.selectedPlaylistKey) {
-      toast.error('Please select a playlist!');
+      toast.error('Please select a playlist to add a song!');
       return;
     }
-    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
-    toast.success(`Added ${title} to playlist ${this.selectedPlaylistName}.`);
+
+    this.addSong(song, this.selectedPlaylistKey);
+  }
+
+  checkPlaylistForSong(playlistKey, songUrl) {
+    var playlist = this.getPlaylistByKey(playlistKey);
+    if (playlist.entries && playlist.entries.some(s => s.url === songUrl)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getPlaylistByKey(key) {
+    var playlist;
+    this.playlists.some(p => {
+      if (p.key === key) {
+        playlist = p;
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return playlist;
+  }
+
+  // @observable addedTo = [];
+
+  addSong(song, playlistKey) {
+    var playlist = this.getPlaylistByKey(playlistKey);
+    var newPlaylist = [];
+    if (playlist.entries) {
+      newPlaylist = playlist.entries.slice();
+    }
+    newPlaylist.unshift(song);
+    this.ref.child(playlistKey).child('entries').set(newPlaylist);
+    toast.success(`Added ${song.title} to playlist ${playlist.name}.`);
+    // this.addedTo.push(playlistKey);
   }
 
   moveTop(index) {
