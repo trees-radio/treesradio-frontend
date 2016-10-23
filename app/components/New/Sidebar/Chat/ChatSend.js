@@ -12,14 +12,13 @@ export default @observer class ChatSend extends React.Component {
 
   // @observable msg = '';
 
-  onKeyDown(e) {
-    console.log('keyDown', e);
-
-  }
-
-  onKeyUp(e) {
-    console.log('keyUp', e);
-  }
+  // onKeyDown(e) {
+  //   console.log('keyDown', e);
+  // }
+  //
+  // onKeyUp(e) {
+  //   console.log('keyUp', e);
+  // }
 
   onKeyPress(e) {
     var key = e.keyCode || e.which;
