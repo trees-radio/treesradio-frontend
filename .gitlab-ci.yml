@@ -59,10 +59,10 @@ deploy_staging:
     - mkdir -p yarn-cache
     - ln -s $PWD/npm-cache /root/.npm
     - ln -s $PWD/yarn-cache /root/.yarn-cache
-    - apt-get update -qy
-    - apt-get install -y ruby-dev rubygems
-    - gem install dpl
     - npm i -g yarn --cache-min 999999999
     - yarn
     - npm run ci-build-staging
+    - apt-get update -qy
+    - apt-get install -y ruby-dev rubygems
+    - gem install dpl
     - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
