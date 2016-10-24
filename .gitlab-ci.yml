@@ -16,6 +16,8 @@ image: node:latest
 cache:
   paths:
   - node_modules/
+  - $HOME/.npm
+  - $HOME/.yarn-cache
 
 stages:
   - build
@@ -24,14 +26,14 @@ stages:
 lint:
   stage: build
   script:
-    - npm i -g yarn
+    - npm i -g yarn --cache-min 999999999
     - yarn
     - npm run lint
 
 build:
   stage: build
   script:
-    - npm i -g yarn
+    - npm i -g yarn --cache-min 999999999
     - yarn
     - npm run ci-build-app
 
@@ -44,7 +46,7 @@ deploy_staging:
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
-    - npm i -g yarn
+    - npm i -g yarn --cache-min 999999999
     - yarn
     - npm run ci-build-staging
     - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
