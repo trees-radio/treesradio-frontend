@@ -50,7 +50,7 @@
     "less": "^2.6.1",
     "less-loader": "^2.2.2",
     "mobx-react-devtools": "^4.2.6",
-
+    "node-sass": "^3.4.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
