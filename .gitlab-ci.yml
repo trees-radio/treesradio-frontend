@@ -16,8 +16,8 @@ image: node:latest
 cache:
   paths:
   - node_modules/
-  - $HOME/.npm
-  - $HOME/.yarn-cache
+  - $HOME/.npm/
+  - $HOME/.yarn-cache/
 
 stages:
   - build
