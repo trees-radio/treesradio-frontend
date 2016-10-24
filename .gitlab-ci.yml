@@ -26,10 +26,11 @@ stages:
 lint:
   stage: build
   script:
-    - mkdir npm-cache
-    - mkdir yarn-cache
-    - ln $PWD/npm-cache /root/.npm
-    - ln $PWD/yarn-cache /root/.yarn-cache
+    - mkdir -p /root/
+    - mkdir -p npm-cache
+    - mkdir -p yarn-cache
+    - ln -s $PWD/npm-cache /root/.npm
+    - ln -s $PWD/yarn-cache /root/.yarn-cache
     - npm i -g yarn --cache-min 999999999
     - yarn
     - npm run lint
@@ -37,10 +38,11 @@ lint:
 build:
   stage: build
   script:
-    - mkdir npm-cache
-    - mkdir yarn-cache
-    - ln $PWD/npm-cache /root/.npm
-    - ln $PWD/yarn-cache /root/.yarn-cache
+    - mkdir -p /root/
+    - mkdir -p npm-cache
+    - mkdir -p yarn-cache
+    - ln -s $PWD/npm-cache /root/.npm
+    - ln -s $PWD/yarn-cache /root/.yarn-cache
     - npm i -g yarn --cache-min 999999999
     - yarn
     - yarn cache dir
@@ -52,10 +54,11 @@ deploy_staging:
   only:
    - develop
   script:
-    - mkdir npm-cache
-    - mkdir yarn-cache
-    - ln $PWD/npm-cache /root/.npm
-    - ln $PWD/yarn-cache /root/.yarn-cache
+    - mkdir -p /root/
+    - mkdir -p npm-cache
+    - mkdir -p yarn-cache
+    - ln -s $PWD/npm-cache /root/.npm
+    - ln -s $PWD/yarn-cache /root/.yarn-cache
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
