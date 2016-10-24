@@ -35,6 +35,7 @@ build:
   script:
     - npm i -g yarn --cache-min 999999999
     - yarn
+    - yarn cache dir
     - npm run ci-build-app
 
 deploy_staging:
