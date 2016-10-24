@@ -4,7 +4,8 @@ import React from 'react';
 import {observer} from 'mobx-react';
 
 // import fbase from 'stores/fbase';
-import profile from 'stores/profile';
+// import profile from 'stores/profile';
+import app from 'stores/app';
 
 import Nav from './Nav';
 import Sidebar from './Sidebar';
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default @observer class Main extends React.Component {
   render() {
-    if (!profile.init) {
+    if (!app.init) {
       return (<div className="main-load"><i className="fa fa-spin fa-4x fa-circle-o-notch main-loading"></i></div>);
     }
     return (
