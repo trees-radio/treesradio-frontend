@@ -24,29 +24,24 @@ stages:
   - build
   - deploy
 
+before_script:
+      - mkdir -p /root/
+      - mkdir -p npm-cache
+      - mkdir -p yarn-cache
+      - ln -s $PWD/npm-cache /root/.npm
+      - ln -s $PWD/yarn-cache /root/.yarn-cache
+      - npm i -g yarn --cache-min 999999999
+      - yarn
+
 lint:
   stage: build
   script:
-    - mkdir -p /root/
-    - mkdir -p npm-cache
-    - mkdir -p yarn-cache
-    - ln -s $PWD/npm-cache /root/.npm
-    - ln -s $PWD/yarn-cache /root/.yarn-cache
-    - npm i -g yarn --cache-min 999999999
-    - yarn
     - npm run lint
 
 build:
   stage: build
   script:
-    - mkdir -p /root/
-    - mkdir -p npm-cache
-    - mkdir -p yarn-cache
-    - ln -s $PWD/npm-cache /root/.npm
-    - ln -s $PWD/yarn-cache /root/.yarn-cache
-    - npm i -g yarn --cache-min 999999999
-    - yarn
-    - npm run ci-build-app
+    - time npm run ci-build-app
 
 deploy_staging:
   stage: deploy
@@ -54,13 +49,6 @@ deploy_staging:
   only:
    - develop
   script:
-    - mkdir -p /root/
-    - mkdir -p npm-cache
-    - mkdir -p yarn-cache
-    - ln -s $PWD/npm-cache /root/.npm
-    - ln -s $PWD/yarn-cache /root/.yarn-cache
-    - npm i -g yarn --cache-min 999999999
-    - yarn
     - npm run ci-build-staging
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
