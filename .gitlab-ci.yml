@@ -40,16 +40,24 @@ lint:
 
 build:
   stage: build
+  artifacts:
+    paths:
+      - public/
   script:
     - time npm run ci-build-app
 
 deploy_staging:
   stage: deploy
   environment: staging
+  before_script:
+    # this overrides the global one
+    - echo 420
+  dependencies:
+    - build
   only:
    - develop
   script:
-    - npm run ci-build-staging
+    # - npm run ci-build-staging
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
