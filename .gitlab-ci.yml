@@ -16,8 +16,8 @@ image: node:latest
 cache:
   paths:
   - node_modules/
-  - $HOME/.npm/
-  - $HOME/.yarn-cache/
+  - npm-cache/
+  - yarn-cache/
 
 stages:
   - build
@@ -26,6 +26,10 @@ stages:
 lint:
   stage: build
   script:
+    - mkdir npm-cache
+    - mkdir yarn-cache
+    - ln $PWD/npm-cache /root/.npm
+    - ln $PWD/yarn-cache /root/.yarn-cache
     - npm i -g yarn --cache-min 999999999
     - yarn
     - npm run lint
@@ -33,6 +37,10 @@ lint:
 build:
   stage: build
   script:
+    - mkdir npm-cache
+    - mkdir yarn-cache
+    - ln $PWD/npm-cache /root/.npm
+    - ln $PWD/yarn-cache /root/.yarn-cache
     - npm i -g yarn --cache-min 999999999
     - yarn
     - yarn cache dir
@@ -44,6 +52,10 @@ deploy_staging:
   only:
    - develop
   script:
+    - mkdir npm-cache
+    - mkdir yarn-cache
+    - ln $PWD/npm-cache /root/.npm
+    - ln $PWD/yarn-cache /root/.yarn-cache
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
