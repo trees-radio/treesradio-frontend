@@ -7,7 +7,7 @@ import Main from './components/Main';
 // (S)CSS
 import './vendor/bootswatch/cyborg/bootstrap.min.css'; // load bootstrap css
 import 'modules/toastr/build/toastr.css';
-import './Main.scss'; // our scss entry
+import './scss/index.scss'; // our scss entry
 
 import 'bootstrap'; //load bootstrap js, depends on $
 

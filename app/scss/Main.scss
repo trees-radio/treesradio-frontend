@@ -1,0 +1,68 @@
+
+html,
+body {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.placeholder-txt {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#app {
+  height: 100%;
+}
+
+#app > div {
+  height: 100%;
+  width: 100%;
+}
+
+#app:-webkit-any-link {
+    cursor: auto;
+}
+
+.main-load {
+  background-image:url('../img/backgroundloading.png');
+  background-size:cover;
+}
+
+.main-loading {
+  position: relative;
+  left:50%;
+  right:50%;
+  margin-top:20%;
+}
+
+/* Components Container */
+
+.container-fluid
+{
+    height: 100%;
+    width: 100%;
+    margin-top: -50px;
+    padding: 50px 0 0 0; /*set left/right padding according to needs*/
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.row
+{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.sweet-alert button.cancel {
+  background-color: #686868 !important;
+}
+
+.sweet-alert button {
+  background-color: #17a8eb !important;
+}
+
+.sweet-alert input {
+  background-color: #c1c1c1;
+  color: black;
+}

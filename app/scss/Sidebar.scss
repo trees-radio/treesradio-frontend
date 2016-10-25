@@ -1,0 +1,97 @@
+
+#sidebar {
+  height: 100%;
+}
+
+.sidebar-changer {
+  height: 5% !important; //do not unimportant this is seriously fucking important
+  color:white;
+  text-align: center;
+  line-height: 2vw;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sidebar-selected {
+  height: 100% !important; //do not unimportant this is seriously fucking important
+  color:white;
+  text-align: center;
+  background-color:#17171c;
+  line-height: 2.25vw;
+}
+
+@media (min-width: 0px) {
+.show-chat-btn {
+  padding: 0;
+  padding-top:5%;
+}
+.show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+  display:none;
+}
+}
+
+@media (min-width: 750px) {
+.show-chat-btn {
+  padding: 0;
+}
+.show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+  padding: 0;
+  display: block;
+}
+}
+
+@media (min-width: 0px) {
+.online-count {
+display: none;
+}
+}
+
+@media (min-width: 1500px) {
+.online-count {
+  color: black;
+  background-color: white;
+  padding-left: 5.5%;
+  padding-right: 5.5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-radius: 100px;
+  display: inline;
+}
+}
+
+@media (min-width: 0px) {
+.waitlist-count {
+  display: none;
+}
+}
+
+@media (min-width: 1500px) {
+.waitlist-count {
+  color: black;
+  background-color: white;
+  padding-left: 5.5%;
+  padding-right: 5.5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-radius: 100px;
+  display: inline;
+}
+}
+
+
+.sel-chat {
+
+}
+
+.sel-online {
+  margin-left: 1%;
+
+}
+
+.sel-waitlist {
+  margin-left: 1%;
+}
+
+.sel-about {
+
+}

@@ -1,0 +1,73 @@
+.waitlist-item {
+  width: 100%;
+  list-style-position: inside;
+  list-style-type: none;
+  display: flex;
+  padding-top: 2%;
+  padding-left: 2%;
+}
+
+.waitlist-avatar {
+  cursor: pointer;
+  padding-right:.5vw;
+}
+
+.waitlist-avatarimg {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.waitlist-name-top {
+  width: 80%;
+  max-width: 80%;
+  padding-top: 2.5%;
+  padding-left: 2.5%;
+  font-size: 22px;
+  line-height: 1vw;
+  cursor: pointer;
+}
+
+.waitlist-name-top:hover {
+  text-decoration: underline;
+}
+
+.waitlist-list {
+  padding: 0;
+  margin-bottom:50px;
+}
+
+.waitlist-position {
+  width: 10%;
+  max-width: 10%;
+  margin-top: .25vw;
+  font-size: 22px;
+}
+
+.waitlist-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.waitlist-scroll::-webkit-scrollbar {
+    width: 1em;
+}
+
+.waitlist-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.waitlist-scroll::-webkit-scrollbar-thumb {
+  background-color: #343642;
+  outline: 1px solid slategrey;
+}
+
+.waitlist-line-1 {
+  background-color: #0A0A0A; //light skin cbd6dc
+  padding: 10px;
+}
+
+.waitlist-line-0 {
+  background-color: #121317; //light skin e9eef0
+  padding: 10px;
+}

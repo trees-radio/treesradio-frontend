@@ -1,0 +1,135 @@
+
+// http://enjoycss.com/zbuttram/item/rQV/3
+
+
+.fa-plus-square-o {
+  position: absolute;
+  padding-top: 1vh;
+  right: 3.75vw;
+}
+
+.fa-plus-square {
+  position: absolute;
+  padding-top: 1vh;
+  right: 3.75vw;
+}
+
+.feedback-grab {
+  float: right;
+  padding-right: 22.5%;
+  padding-top: 3%;
+}
+
+.grab-button {
+  font-size: 1.25vw;
+  line-height: 1.75vw;
+  width: 100%;
+  height: 50%;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  // width: 160px;
+  // padding: 20px;
+  overflow: hidden;
+  border: none;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+  // font: normal 16px/1 "open-sans", Helvetica, sans-serif;
+  color: rgba(255,255,255,1);
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  background-color: rgba(183,26,255,1);
+  // background: "@include" filter-gradient(#b71aff, #bf34ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(183,26,255,1) 0%, rgba(191,52,255,1) 100%));
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
+  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+
+}
+
+.grab-button:hover {
+  background-color: rgba(199,78,255,1);
+  // background: "@include" filter-gradient(#c74eff, #bf34ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(199,78,255,1) 0%, rgba(191,52,255,1) 100%));
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+.grab-button:active {
+  background-color: rgba(175,0,255,1);
+  // background: "@include" filter-gradient(#af00ff, #bf34ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(175,0,255,1) 0%, rgba(191,52,255,1) 100%));
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+}
+
+.grab-button-active {
+  background-color: rgba(175,0,255,1);
+  // background: "@include" filter-gradient(#af00ff, #bf34ff, horizontal);
+  // background: "@include" background-image(linear-gradient(left, rgba(175,0,255,1) 0%, rgba(191,52,255,1) 100%));
+  background-position: 50% 50%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: auto auto;
+  background-size: auto auto;
+}
+
+.grab-playlists {
+  width:375%;
+  background-color:#222222;
+  position:absolute;
+  bottom:110%;
+  left:2.8%;
+  color:black;
+  border-radius:2%;
+  text-align:left;
+  overflow:hidden;
+}
+
+.grab-playlist {
+  width:100%;
+  line-height: 12px;
+  color:white;
+  font-size:16px;
+  padding-right:2%;
+  padding-left:2%;
+  padding-top:2%;
+  padding-bottom:2%;
+  span {
+    width:92%;
+  }
+  .fa {
+    width:8%;
+    float:right;
+  }
+}
+
+.grab-playlist:hover {
+  background-color:#77b300;
+}

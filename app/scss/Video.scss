@@ -1,0 +1,333 @@
+
+$videotoplevel-bg: #171717;
+
+@media (min-width: 0px) {
+#videotoplevel {
+  display: none;
+}
+}
+
+@media (min-width: 750px) {
+#videotoplevel {
+  height: 100%;
+  background-color: black;
+  padding: 0;
+  display: block;
+}
+}
+
+/////////////////////////////// Make Video Unclickable
+//
+// #youtube-player-0 {
+//   pointer-events: none;
+// }
+//
+///////////////////////////////////////////////////////
+
+@media (min-height: 0px) {
+#player-size {
+  height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 3vh;
+  width: 100%;
+}
+}
+
+@media (min-height: 100px) {
+#player-size {
+  height: 63vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 3.5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 200px) {
+#player-size {
+  height: 68.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 3vh;
+  width: 100%;
+}
+}
+
+@media (min-height: 300px) {
+#player-size {
+  height: 73.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 2.5vh;
+  width: 100%;
+}
+}
+
+@media (min-height: 350px) {
+#player-size {
+  height: 75.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 2.5vh;
+  width: 100%;
+}
+}
+
+@media (min-height: 400px) {
+#player-size {
+  height: 79vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 1.5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 480px) {
+#player-size {
+  height: 80.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: 1.25vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 600px) {
+#player-size {
+  height: 82vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .75vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 700px) {
+#player-size {
+  height: 83.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .5vh;
+  width: 100%;
+}
+}
+
+@media (min-height: 800px) {
+#player-size {
+  height: 84.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .5vh;
+  width: 100%;
+}
+}
+
+
+@media (min-height: 900px) {
+#player-size {
+  height: 84.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  width: 100%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+.progressbar-container {
+  position: absolute;
+  bottom: 0;
+  height: .5vh;
+  width: 100%;
+}
+}
+
+// CLASS FOR SMALL PLAYER TO TOGGLE
+.small-player-size {
+  height:40vh !important;
+  width:35vw !important;
+  margin-left:27.5%;
+  padding-top:1%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+
+@media (min-height: 1000px) {
+  #player-size {
+    height: 86vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+
+@media (min-height: 1200px) {
+  #player-size {
+    height: 86.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 1400px) {
+  #player-size {
+    height: 88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 1600px) {
+  #player-size {
+    height: 88.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: .5vh;
+    width: 100%;
+  }
+}
+
+#playerdiv {
+
+}
+
+#vidcontainer {
+  height: 90%;
+  max-height: 90%;
+  width: 100%;
+  position: relative;
+  background-image: url('../img/spacepineapples.jpg');
+  background-size:cover;
+}
+
+.reactplayer {
+
+}
+
+#reactplayerid {
+
+}
+
+.section-divider {
+  background-color: $trees-primary;
+  height: 5px;
+  width: 100%;
+}
+
+.progressbar-container {
+
+}
+
+.progressbar-progress {
+
+}
