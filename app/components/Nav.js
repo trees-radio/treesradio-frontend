@@ -1,7 +1,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 
-import UserBit from './New/Nav/UserBit';
+import UserBit from './Nav/UserBit';
 
 export default @observer class Nav extends React.Component {
   render() {

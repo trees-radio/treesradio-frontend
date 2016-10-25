@@ -6,10 +6,10 @@ import classNames from 'classnames';
 import online from 'stores/online';
 import waitlist from 'stores/waitlist';
 
-import Chat from './New/Sidebar/Chat';
-import OnlineUsers from './New/Sidebar/OnlineUsers';
-import About from './New/Sidebar/About';
-import Waitlist from './New/Sidebar/Waitlist';
+import Chat from './Sidebar/Chat';
+import OnlineUsers from './Sidebar/OnlineUsers';
+import About from './Sidebar/About';
+import Waitlist from './Sidebar/Waitlist';
 
 export default @observer class Sidebar extends React.Component {
   @observable currentSidebar = 'CHAT';
