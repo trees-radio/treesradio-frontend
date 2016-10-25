@@ -50,15 +50,12 @@ deploy_staging:
   stage: deploy
   environment: staging
   before_script:
-    # this overrides the global one
-    - echo 420
+    - apt-get update -qy
+    - apt-get install -y ruby-dev rubygems
+    - gem install dpl
   dependencies:
     - build
   only:
    - develop
   script:
-    # - npm run ci-build-staging
-    - apt-get update -qy
-    - apt-get install -y ruby-dev rubygems
-    - gem install dpl
     - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
