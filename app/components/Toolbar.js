@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import {observable, toJS} from 'mobx';
 import ReactSlider from 'react-slider';
-import PlaylistsPanel from './New/Toolbar/PlaylistsPanel';
+import PlaylistsPanel from './Toolbar/PlaylistsPanel';
 
 import waitlist from 'stores/waitlist';
 import playlists from 'stores/playlists';
