@@ -14,7 +14,9 @@ import onClickOutside from 'react-onclickoutside';
 
 const GrabPlaylists = onClickOutside(observer(React.createClass({
   handleClickOutside() {
-    this.props.toggleGrab(false);
+    if (this.props.grabbing) {
+      this.props.toggleGrab(false);
+    }
   },
 
   render() {
