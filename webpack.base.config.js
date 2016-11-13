@@ -85,7 +85,8 @@ module.exports = new Config().merge({
       utils: path.join(__dirname, 'app/utils'),
       libs: path.join(__dirname, 'app/libs'),
       modules: path.join(__dirname, 'node_modules'),
-      img: path.join(__dirname, 'app/img')
+      img: path.join(__dirname, 'app/img'),
+      audio: path.join(__dirname, 'app/audio')
     }
   },
   plugins: [

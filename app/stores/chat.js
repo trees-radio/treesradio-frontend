@@ -6,6 +6,7 @@ import ax from 'utils/ax';
 import socket from 'utils/socket';
 import events from 'stores/events';
 import online from 'stores/online';
+import mention from 'libs/mention';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 
@@ -22,8 +23,17 @@ export default new class Chat {
           msg.msgs = [msg.msg];
           this.messages.push(msg);
         }
-        if (profile.profileInit && msg.mentions && msg.mentions.map(s => s.split('@').join('').toLowerCase()).includes(profile.profile.username.toLowerCase())) {
-          toast.info(`You were mentioned by ${msg.username}.`);
+
+        if (profile.profileInit && msg.mentions) { //mention check
+          const mentions = msg.mentions.map(s => s.split('@').join('').toLowerCase());
+          const everyone = msg.bot && mentions.includes('everyone');
+          let mentioned = everyone;
+          if (!mentioned) {
+            mentioned = mentions.includes(profile.profile.username.toLowerCase());
+          }
+          if (mentioned) {
+            mention(everyone, msg.username);
+          }
         }
       }
     });
