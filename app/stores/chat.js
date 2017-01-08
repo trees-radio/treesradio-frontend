@@ -2,11 +2,10 @@ import {observable, computed, toJS} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import profile from 'stores/profile';
-import ax from 'utils/ax';
-import socket from 'utils/socket';
 import events from 'stores/events';
 import online from 'stores/online';
 import mention from 'libs/mention';
+import {send} from 'libs/events';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 
@@ -65,7 +64,7 @@ export default new class Chat {
   sendMsg(msg, cb) {
     var mentions = msg.match(mentionPattern) || [];
 
-    socket.emit('chat', {mentions, msg});
+    send('chat', {mentions, msg});
 
     // ax.post('/chat/send', {
     //   msg,

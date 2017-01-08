@@ -48,16 +48,8 @@ export default @observer class ChatContent extends React.Component {
       var chatLineClasses = classNames("chat-item", chatPosClass, {"blazebot-msg": msg.username == 'BlazeBot'});
 
       var userClass = 'username-user';
-      switch (msg.title) {
-        case 'Admin':
-        userClass = 'username-admin';
-        break;
-        case 'Senior Mod':
-        userClass = 'username-seniormod';
-        break;
-        case 'Mod':
-        userClass = 'username-mod';
-        break;
+      if (msg.title) {
+        userClass = `username-${msg.title.split(' ').join('').toLowerCase()}`;
       }
 
       var usernameClasses = classNames("chat-username", userClass);

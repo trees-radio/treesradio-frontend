@@ -1,8 +1,7 @@
-import {observable, computed, toJS} from 'mobx';
+import {observable, computed} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
-import {hookAuth, unhookAuth} from 'utils/ax';
-import socket, {login, logout} from 'utils/socket';
+import epoch from 'utils/epoch';
 
 export default new class Profile {
   constructor() {
@@ -18,19 +17,21 @@ export default new class Profile {
     fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
-        hookAuth(this.getToken);
-        this.getToken().then(t => login(t));
         fbase.database().ref('users').child(user.uid).on('value', snap => {
           var profile = snap.val() || {};
           this.profile = profile;
           this.profileInit = true;
 
-          // fbase.database().ref('.info/connected').on('value', snap => {
-          //   if (snap.val() === true && this.profile && this.profile.username) {
-          //     fbase.database().ref(`presence/${profile.username}/connections`).push(true).onDisconnect().remove();
-          //     fbase.database().ref(`presence/${profile.username}/lastOnline`).onDisconnect().set(fbase.database.ServerValue.TIMESTAMP);
-          //   }
-          // });
+          // TODO: refactor to use uids
+          fbase.database().ref('.info/connected').on('value', snap => {
+            if (snap.val() === true) {
+              let presenceRef = fbase.database().ref(`presence/${user.uid}`);
+              let timestamp = epoch();
+              let updateRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid});
+              updateRef.onDisconnect().remove();
+              this.presenceInterval = setInterval(() => updateRef.child('timestamp').set(epoch()), 60*1000);
+            }
+          });
         });
 
 
@@ -43,9 +44,8 @@ export default new class Profile {
         });
 
       } else {
+        clearInterval(this.presenceInterval);
         // this.playlists.uninit();
-        logout();
-        unhookAuth();
       }
     });
   }
@@ -83,8 +83,20 @@ export default new class Profile {
   }
 
   @computed get noName() {
-    // console.log(this.profile);
-    return this.user !== null && this.profileInit === true && (this.profile === null || !this.profile.username);
+    if (this.user !== null && this.profileInit === true) {
+      const noLegacyUsername =  this.profile === null || !this.profile.username;
+      const noUsername = !this.user.displayName;
+
+      if (noLegacyUsername && noUsername) {
+        return true;
+      } else if (!noLegacyUsername && noUsername) {
+        const legacyUsername = this.profile.username;
+        this.updateUsername(legacyUsername);
+      }
+
+      return false;
+    }
+    return !this.user.displayName;
   }
 
   getToken() {
@@ -92,10 +104,18 @@ export default new class Profile {
   }
 
   @computed get safeUsername() {
-    if (this.profile === null) {
+    if (this.user === null) {
       return undefined;
     } else {
-      return this.profile.username;
+      return this.user.displayName;
+    }
+  }
+
+  @computed get eventsPath() {
+    if (this.profile === null) {
+      return false;
+    } else {
+      return `user_events/${this.user.uid}`;
     }
   }
 
@@ -114,8 +134,25 @@ export default new class Profile {
       this.resetPassError = error.message;
       this.stopResettingPassword();
     }).then(() => {
-      toast.success(`Success! An email with instructions has been sent to ${email}.`)
+      toast.success(`Success! An email with instructions has been sent to ${email}.`);
       this.stopResettingPassword();
+    });
+  }
+
+  updateUsername(displayName) {
+    if (this.user === null) {
+      return false;
+    } else {
+      this.user.updateProfile({displayName});
+      
+    }
+  }
+
+  reloadUser() {
+    return this.user.reload().then(() => {
+      const user = fbase.auth().currentUser;
+      this.user = user;
+      return user;
     });
   }
 }

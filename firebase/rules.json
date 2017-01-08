@@ -24,7 +24,10 @@
       ".read": "true"
     },
     "presence": {
-      ".read": "true"
+      ".read": "true",
+      "$uid": {
+        ".write": "auth != null && auth.uid == $uid"
+      }
     },
     "users": {
       "$uid": {
@@ -37,6 +40,11 @@
         ".write": "auth != null && auth.uid == $uid"
       }
     },
+    "user_events": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid"
+      }
+    },
     "moderator": {
       ".read": "true"
     },
@@ -46,25 +54,18 @@
     "waitlist": {
       ".read": "true"
     },
-    "queues": {
-      "chat": {
-        "tasks": {
-          ".indexOn": [
-            "_state"
-          ],
-          "$task": {
-            ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
-          }
-        }
-      }
-    },
     "ranks": {
       ".read": "true"
     },
     "avatars": {
       ".read": "true",
-      "$username": {
-        ".write": "newData.parent().parent().child('users/' + auth.uid + '/username').val() == $username"
+      "$uid": {
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "event_bus": {
+      "$event": {
+        ".write": "auth != null && auth.uid == newData.child('uid').val() || auth != null && auth.uid == data.child('uid').val()"
       }
     }
   }

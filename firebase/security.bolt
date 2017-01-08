@@ -84,6 +84,10 @@ path /private/{$uid} {
   write() {isUser($uid)}
 }
 
+path /user_events/{$uid} {
+  read() {isUser($uid)}
+}
+
 path /moderator {
   read() {true}
 }
@@ -111,25 +115,21 @@ path /waitlist {
 }
 
 
-//\/\/\/\//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-//NEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEW
-//\/\/\/\//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-
 ///////////////////////////////////////////////////////////////
 // QUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUESQUEUES
 ///////////////////////////////////////////////////////////////
 
-path /queues {
-  read() {false}
-}
+// path /queues {
+//   read() {false}
+// }
 
-path /queues/chat/tasks {
-  index() {["_state"]}
-}
+// path /queues/chat/tasks {
+//   index() {["_state"]}
+// }
 
-path /queues/chat/tasks/{task} {
-  write() {isSendingUser()}
-}
+// path /queues/chat/tasks/{task} {
+//   write() {isSendingUser()}
+// }
 
 path /ranks {
   read() {true}
@@ -139,6 +139,23 @@ path /avatars {
   read() {true}
 }
 
-path /avatars/{username} {
-  write() {root.child('users/'+auth.uid+'/username').val() === username}
+path /avatars/{$uid} {
+  write() {isUser($uid)}
+}
+
+
+// Event Handlers //
+
+path /event_bus/{event} {
+  write() {isSendingUser()}
+}
+
+// Presence //
+
+path /presence {
+  read() {true}
+}
+
+path /presence/{$uid} {
+  write() {isUser($uid)}
 }

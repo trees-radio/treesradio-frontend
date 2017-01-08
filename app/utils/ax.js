@@ -33,7 +33,7 @@ ax.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 
-ax.get('/'); // wakeup call
+// ax.get('/'); // wakeup call
 
 export function hookAuth(authTokenFunc) {
   getAuthToken = authTokenFunc;
