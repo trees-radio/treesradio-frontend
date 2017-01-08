@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "env-cmd ./.env-staging-local webpack-dev-server --inline --colors --content-base public/",
     "local": "env-cmd ./.env-local webpack-dev-server --inline --colors --content-base public/",
-    "lint": "eslint app/**",
+    "lint": "eslint app/**/*.js",
     "bolt-compile": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "bolt-deploy": "npm run bolt-compile && firebase -P treesradio-dev deploy --only database",
     "bolt-deploy-live": "npm run bolt-compile && firebase -P dev deploy --only database",
