@@ -15,7 +15,7 @@ export default new class App {
   @observable socket = false;
 
   @computed get init() {
-    if (profile.connected && this.socket) {
+    if (profile.connected) {
       return true;
     } else {
       return false;
