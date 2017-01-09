@@ -1,7 +1,9 @@
-import {observable, computed} from 'mobx';
+import {observable, computed, autorun} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import epoch from 'utils/epoch';
+import username from 'libs/username';
+import {send} from 'libs/events';
 
 export default new class Profile {
   constructor() {
@@ -22,7 +24,8 @@ export default new class Profile {
           this.profile = profile;
           this.profileInit = true;
 
-          // TODO: refactor to use uids
+          send('hello', {});
+
           fbase.database().ref('.info/connected').on('value', snap => {
             if (snap.val() === true) {
               let presenceRef = fbase.database().ref(`presence/${user.uid}`);
@@ -48,12 +51,23 @@ export default new class Profile {
         // this.playlists.uninit();
       }
     });
+
+
+    // self username handling
+    autorun(() => {
+      if (this.user) {
+        username(this.user.uid).then(username => this.username = username);
+      } else {
+        this.username = undefined;
+      }
+    });
   }
 
   @observable connected = false;
   @observable init = false;
 
   @observable user = null;
+  @observable username = undefined;
   @observable profile = null;
   @observable profileInit = false;
 
@@ -85,7 +99,7 @@ export default new class Profile {
   @computed get noName() {
     if (this.user !== null && this.profileInit === true) {
       const noLegacyUsername =  this.profile === null || !this.profile.username;
-      const noUsername = !this.user.displayName;
+      const noUsername = !this.username;
 
       if (noLegacyUsername && noUsername) {
         return true;
@@ -107,7 +121,7 @@ export default new class Profile {
     if (this.user === null) {
       return undefined;
     } else {
-      return this.user.displayName;
+      return this.username;
     }
   }
 
@@ -139,12 +153,11 @@ export default new class Profile {
     });
   }
 
-  updateUsername(displayName) {
+  updateUsername(username) {
     if (this.user === null) {
       return false;
     } else {
-      this.user.updateProfile({displayName});
-      
+      send('username_set', {username});
     }
   }
 

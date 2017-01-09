@@ -2,7 +2,8 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import online from 'stores/online';
 import classNames from 'classnames';
-import avatars from 'libs/avatars';
+import UserName from 'components/utility/User/UserName';
+import UserAvatar from 'components/utility/User/UserAvatar';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
@@ -10,24 +11,13 @@ export default @observer class OnlineUsers extends React.Component {
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
 
-      var userClass = 'username-user';
-      if (user.title) {
-        userClass = `username-${user.title.split(' ').join('').toLowerCase()}`;
-      }
-
       var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
-      var usernameClasses = classNames("users-name", userClass);
-
-      setTimeout(() => avatars.loadAvatar(user.username));
-      var avatar = avatars.users.get(user.username);
 
       return (
         <li key={i} className={userLineClasses}>
-          <div className="users-avatar">
-            <img src={avatar} className="users-avatarimg"/>
-          </div>
+          <UserAvatar uid={user.uid}/>
           <div className="users-info">
-            <span className={usernameClasses}>{user.username}</span>
+            <UserName className="users-username" uid={user.uid} username={user.username}/>
           </div>
         </li>
       );

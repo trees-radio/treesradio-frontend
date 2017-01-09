@@ -6,6 +6,8 @@ import Linkify from 'react-linkify';
 import ReactEmoji from 'react-emoji';
 import avatars from 'libs/avatars';
 import moment from 'moment';
+import UserName from 'components/utility/User/UserName';
+import UserAvatar from 'components/utility/User/UserAvatar';
 
 const linkifyProperties = {target: '_blank'};
 const SCROLL_SENSITIVITY = 100;
@@ -47,16 +49,7 @@ export default @observer class ChatContent extends React.Component {
       var chatPosClass = Number.isInteger(i / 2) ? "chat-line-1" : "chat-line-0";
       var chatLineClasses = classNames("chat-item", chatPosClass, {"blazebot-msg": msg.username == 'BlazeBot'});
 
-      var userClass = 'username-user';
-      if (msg.title) {
-        userClass = `username-${msg.title.split(' ').join('').toLowerCase()}`;
-      }
-
-      var usernameClasses = classNames("chat-username", userClass);
       var humanTimestamp = moment.unix(msg.timestamp).format('LT');
-
-      setTimeout(() => avatars.loadAvatar(msg.username)); //mobx dislikes synchronous stuff during a render
-      var avatar = avatars.users.get(msg.username);
 
       var msgs = msg.msgs.map((innerMsg, i) => {
         return (
@@ -69,10 +62,10 @@ export default @observer class ChatContent extends React.Component {
       return (
         <li key={i} className={chatLineClasses}>
           <div className="chat-avatar">
-            <img src={avatar} className="avatarimg"/>
+            <UserAvatar uid={msg.uid}/>
           </div>
           <div className="chat-msg">
-            <span className={usernameClasses} onClick={() => chat.appendMsg('@'+msg.username)}>{ msg.username }</span>
+            <UserName uid={msg.uid} className="chat-username" onClick={() => chat.appendMsg('@'+msg.username)}/>
             <span className="chat-timestamp">{humanTimestamp}</span><br />
             <span className="chat-text">{ msgs }</span>
           </div>

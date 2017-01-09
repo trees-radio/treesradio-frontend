@@ -19,7 +19,7 @@ function cherrypickEnv(env) {
 
 
 module.exports = new Config().merge({
-  entry: path.resolve(__dirname, 'app/index.js'),
+  entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: "treesradio.js"

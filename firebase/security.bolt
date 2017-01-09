@@ -159,3 +159,8 @@ path /presence {
 path /presence/{$uid} {
   write() {isUser($uid)}
 }
+
+// Usernames //
+path /usernames {
+  read() {true}
+}

@@ -1,4 +1,4 @@
-import {observable, computed, toJS} from 'mobx';
+import {observable, computed} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import profile from 'stores/profile';
@@ -66,24 +66,6 @@ export default new class Chat {
 
     send('chat', {mentions, msg});
 
-    // ax.post('/chat/send', {
-    //   msg,
-    //   mentions
-    // }).then(resp => {
-    //   if (resp.data.error) {
-    //     toast.error(`Error occurred while chatting: ${resp.data.error}`);
-    //   }
-    // });
-
-    // var ref = this.fbase.database().ref('queues').child('chat').child('tasks');
-    //
-    // var data = {
-    //   msg,
-    //   uid: this.fbase.auth().currentUser.uid
-    // };
-    //
-    // ref.push(data);
-
     if (cb) {
       cb();
     }
@@ -97,7 +79,7 @@ export default new class Chat {
       if (name === '') {
         return [];
       }
-      return online.usernames.filter(n => n.toUpperCase().includes(name.toUpperCase()));
+      return online.usernames.filter(n => n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase());
     } else {
       return [];
     }
