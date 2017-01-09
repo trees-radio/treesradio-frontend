@@ -24,7 +24,7 @@ export default new class Profile {
           this.profile = profile;
           this.profileInit = true;
 
-          send('hello', {});
+          send('hello');
 
           fbase.database().ref('.info/connected').on('value', snap => {
             if (snap.val() === true) {

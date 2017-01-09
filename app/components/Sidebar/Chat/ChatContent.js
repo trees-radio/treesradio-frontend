@@ -4,7 +4,6 @@ import chat from 'stores/chat';
 import classNames from 'classnames';
 import Linkify from 'react-linkify';
 import ReactEmoji from 'react-emoji';
-import avatars from 'libs/avatars';
 import moment from 'moment';
 import UserName from 'components/utility/User/UserName';
 import UserAvatar from 'components/utility/User/UserAvatar';

@@ -164,3 +164,9 @@ path /presence/{$uid} {
 path /usernames {
   read() {true}
 }
+
+// Registration // 
+
+path /registered/{$uid} {
+  read() {isUser($uid)}
+}

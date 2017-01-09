@@ -1,10 +1,11 @@
-import {observable, computed} from 'mobx';
+import {observable, computed, autorun} from 'mobx';
 import fbase from 'libs/fbase';
-import ax from 'utils/ax';
+// import ax from 'utils/ax';
 import profile from 'stores/profile';
 import toast from 'utils/toast';
 import playing from 'stores/playing';
 import chat from 'stores/chat';
+import {send} from 'libs/events';
 
 export default new class Waitlist {
   constructor() {
@@ -17,6 +18,11 @@ export default new class Waitlist {
       this.list = list;
       // console.log('waitlist', list);
     });
+
+    autorun(() => {
+      this.localJoinState = this.inWaitlist;
+      this.localPlayingState = this.isPlaying;
+    });
   }
 
   @observable list = [];
@@ -26,43 +32,65 @@ export default new class Waitlist {
       toast.error("You must be logged in to join the waitlist!");
       return;
     }
-    ax.post('/waitlist/join').then(resp => {
-      if (resp.data.success === true) {
-        toast.success("You have joined the waitlist.");
-      } else if (resp.data.error) {
-        toast.error(resp.data.error);
-      }
-    });
+    send('join_waitlist');
+
+    // ax.post('/waitlist/join').then(resp => {
+    //   if (resp.data.success === true) {
+    //     toast.success("You have joined the waitlist.");
+    //   } else if (resp.data.error) {
+    //     toast.error(resp.data.error);
+    //   }
+    // });
   }
 
-  @observable bigButtonLoading = false;
+  @observable localJoinState = false;
+  @observable localPlayingState = false;
+
+  @computed get bigButtonLoading() {
+    if (this.localJoinState !== this.inWaitlist || this.localPlayingState !== this.isPlaying) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   bigButton() {
-    this.bigButtonLoading = true;
     if (!profile.user) {
       toast.error("You must be logged in to push the big button!");
       return;
     }
-    if (this.isPlaying) {
-      chat.sendMsg('/skip', () => this.bigButtonLoading = false);
+
+    if (this.bigButtonLoading) {
+      // reset our state if the user clicks again while loading
+      this.localJoinState = this.inWaitlist;
+      this.localPlayingState = this.isPlaying;
+    } else if (this.isPlaying) {
+      chat.sendMsg('/skip');
+      this.localPlayingState = false;
     } else if (this.inWaitlist) {
-      ax.post('/waitlist/leave').then(resp => {
-        if (resp.data.success === true) {
-          toast.success("You have joined the waitlist.");
-        } else if (resp.data.error) {
-          toast.error(resp.data.error);
-        }
-        this.bigButtonLoading = false;
-      });
+      send('leave_waitlist');
+      this.localJoinState = false;
+
+      // ax.post('/waitlist/leave').then(resp => {
+      //   if (resp.data.success === true) {
+      //     toast.success("You have joined the waitlist.");
+      //   } else if (resp.data.error) {
+      //     toast.error(resp.data.error);
+      //   }
+      //   this.bigButtonLoading = false;
+      // });
     } else {
-      ax.post('/waitlist/join').then(resp => {
-        if (resp.data.success === true) {
-          toast.success("You have joined the waitlist.");
-        } else if (resp.data.error) {
-          toast.error(resp.data.error);
-        }
-        this.bigButtonLoading = false;
-      });
+      send('join_waitlist');
+      this.localJoinState = true;
+
+      // ax.post('/waitlist/join').then(resp => {
+      //   if (resp.data.success === true) {
+      //     toast.success("You have joined the waitlist.");
+      //   } else if (resp.data.error) {
+      //     toast.error(resp.data.error);
+      //   }
+      //   this.bigButtonLoading = false;
+      // });
     }
   }
 
@@ -77,7 +105,7 @@ export default new class Waitlist {
   }
 
   @computed get isPlaying() {
-    if (playing.data.playing && playing.data.info.user === profile.safeUsername) {
+    if (playing.data.playing && playing.data.info.uid === profile.user.uid) {
       return true;
     }
   }

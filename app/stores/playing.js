@@ -54,18 +54,23 @@ export default new class Playing {
     return str;
   }
 
-  @computed get elapsed() {
+  @computed get time() { //SECONDS
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
       return 0;
+    } else {
+      return this.data.time;
     }
-    return this.data.info.duration - this.data.time;
+  }
+
+  @computed get elapsed() {
+    return this.time;
   }
 
   @computed get fraction() {
     if (!this.data.time || !this.data.info.duration) {
       return 0;
     }
-    return this.elapsed / this.data.info.duration;
+    return this.data.time / (this.data.info.duration / 1000);
   }
 
   @observable playerProgress = 0; //fraction (0.12, 0.57, etc.)
@@ -80,7 +85,7 @@ export default new class Playing {
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
       return false;
     }
-    var serverSeconds = this.elapsed / 1000;
+    var serverSeconds = this.time;
     var durationSeconds = this.data.info.duration / 1000;
     var cap = durationSeconds - PLAYER_SYNC_CAP;
     if (serverSeconds > cap) {
