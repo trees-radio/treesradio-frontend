@@ -44,4 +44,4 @@ export function unhookAuth() {
   getAuthToken = undefined;
 }
 
-export default ax;
+// export default ax;
