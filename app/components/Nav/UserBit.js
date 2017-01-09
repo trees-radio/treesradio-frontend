@@ -34,6 +34,13 @@ export default @observer class UserBit extends React.Component {
 
   render() {
     if (profile.user !== null) {
+      let emailVerificationResendIcon;
+      if (profile.resendVerificationLoading) {
+        emailVerificationResendIcon = <span> <i className="fa fa-spin fa-circle-o-notch"></i></span>;
+      } else if (profile.resendVerificationResult) {
+        emailVerificationResendIcon = <span> <i className="fa fa-check"></i></span>;
+      }
+
       return (
         <div>
           <div className="btn-group">
@@ -58,6 +65,11 @@ export default @observer class UserBit extends React.Component {
           <Modal isOpen={profile.noName} hideModal={() => {}} title="Missing Username" noClose={true} leftButton={() => this.addUsername()} leftButtonText="Go!">
             <p>We're missing a username for you! Please choose one. This will be your permanent username, so choose wisely!</p>
             <input className="form-control" type="text" ref={(c) => this._username = c} onKeyPress={(e) => this.onEnterKey(e, () => this.addUsername())} placeholder="Username"/>
+          </Modal>
+          <Modal isOpen={profile.unverified} hideModal={() => {}} title="Please Verify Your Email" noClose={true}>
+            <p>Your email hasn't been verified yet! Please click the link in the activation email that was sent to your address or use one of the buttons below to help you.</p>
+            <button className="btn btn-primary" onClick={() => profile.reloadUser()}>Re-check Verification</button>
+            &nbsp;<button className="btn btn-info" onClick={() => profile.resendVerification()}>Re-send Verification Email{emailVerificationResendIcon}</button>
           </Modal>
         </div>
       );

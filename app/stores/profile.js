@@ -98,6 +98,14 @@ export default new class Profile {
     });
   }
 
+  @computed get unverified() {
+    if (this.user && this.user.emailVerified) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @computed get noName() {
     if (this.user !== null && this.profileInit === true) {
       const noLegacyUsername =  this.profile === null || !this.profile.username;
@@ -106,6 +114,8 @@ export default new class Profile {
       if (noLegacyUsername && noUsername) {
         if (epoch() > startup + 3) {
           return true;
+        } else {
+          return this.noName;
         }
       } else if (!noLegacyUsername && noUsername) {
         const legacyUsername = this.profile.username;
@@ -143,7 +153,7 @@ export default new class Profile {
       toast.error(error.message);
     }).then(user => {
       //something
-    })
+    });
   }
 
   sendPassReset(email) {
@@ -171,5 +181,18 @@ export default new class Profile {
       this.user = user;
       return user;
     });
+  }
+
+  @observable resendVerificationResult = null;
+  @observable resendVerificationLoading = false;
+
+  resendVerification() {
+    if (this.user) {
+      this.resendVerificationLoading = true;
+      this.user.sendEmailVerification().then(() => {
+        this.resendVerificationResult = true;
+        this.resendVerificationLoading = false;
+      });
+    }
   }
 }
