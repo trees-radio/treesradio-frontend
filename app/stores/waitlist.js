@@ -1,6 +1,5 @@
 import {observable, computed, autorun} from 'mobx';
 import fbase from 'libs/fbase';
-// import ax from 'utils/ax';
 import profile from 'stores/profile';
 import toast from 'utils/toast';
 import playing from 'stores/playing';

@@ -1,5 +1,6 @@
-import {observable, computed} from 'mobx';
+import {observable, computed, autorun} from 'mobx';
 import fbase from 'libs/fbase';
+import getUsername from 'libs/username';
 
 export default new class Online {
   constructor() {
@@ -21,9 +22,16 @@ export default new class Online {
       this.list = list;
 
     });
+
+    autorun(() => {
+      this.list.forEach(async (user) => {
+        this.usernames.push(await getUsername(user.uid));
+      });
+    });
   }
 
   @observable list = [];
+  @observable usernames = [];
 
   @computed get onlineCount() {
     return this.list.length;
@@ -33,9 +41,5 @@ export default new class Online {
     return this.list.sort((a, b) => {
       return a.rank - b.rank;
     });
-  }
-
-  @computed get usernames() {
-    return this.list.map(u => u.username);
   }
 }
