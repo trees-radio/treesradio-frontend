@@ -1,5 +1,5 @@
 import React from 'react';
-import {observable} from 'mobx';
+// import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 // import fbase from 'stores/fbase';
 import chat from 'stores/chat';

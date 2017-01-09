@@ -5,6 +5,8 @@ import epoch from 'utils/epoch';
 import username from 'libs/username';
 import {send} from 'libs/events';
 
+const startup = epoch();
+
 export default new class Profile {
   constructor() {
     fbase.database().ref('.info/connected').on('value', (snap) => {
@@ -102,7 +104,9 @@ export default new class Profile {
       const noUsername = !this.username;
 
       if (noLegacyUsername && noUsername) {
-        return true;
+        if (epoch() > startup + 3) {
+          return true;
+        }
       } else if (!noLegacyUsername && noUsername) {
         const legacyUsername = this.profile.username;
         this.updateUsername(legacyUsername);
