@@ -32,14 +32,6 @@ export default new class Waitlist {
       return;
     }
     send('join_waitlist');
-
-    // ax.post('/waitlist/join').then(resp => {
-    //   if (resp.data.success === true) {
-    //     toast.success("You have joined the waitlist.");
-    //   } else if (resp.data.error) {
-    //     toast.error(resp.data.error);
-    //   }
-    // });
   }
 
   @observable localJoinState = false;
@@ -71,7 +63,7 @@ export default new class Waitlist {
     } else if (this.inWaitlist) {
       send('leave_waitlist');
       this.localJoinState = false;
-      
+
     } else {
       send('join_waitlist');
       this.localJoinState = true;

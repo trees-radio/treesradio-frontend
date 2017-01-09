@@ -10,24 +10,27 @@ import toast from 'utils/toast';
 
 export default @observer class ChatSend extends React.Component {
 
-  // @observable msg = '';
-
-  // onKeyDown(e) {
-  //   console.log('keyDown', e);
-  // }
-  //
-  // onKeyUp(e) {
-  //   console.log('keyUp', e);
-  // }
-
   onKeyPress(e) {
     var key = e.keyCode || e.which;
-    if (key == 13) {
+    // console.log(key);
+    if (key === 13) {
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
       } else {
         chat.pushMsg();
       }
+    }
+  }
+
+  onKeyDown(e) {
+    var key = e.keyCode || e.which;
+    // console.log(key);
+    if (key ===  9) {
+      if (chat.mentionMatches.length > 0) {
+        chat.replaceMention(0);
+      }
+      e.preventDefault();
+      return false;
     }
   }
 
@@ -65,6 +68,7 @@ export default @observer class ChatSend extends React.Component {
             className="form-control"
             value={chat.msg}
             onKeyPress={e => this.onKeyPress(e)}
+            onKeyDown={e => this.onKeyDown(e)}
             onChange={e => this.onChange(e)}
           />
         </div>

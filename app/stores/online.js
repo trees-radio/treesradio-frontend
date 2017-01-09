@@ -28,7 +28,7 @@ export default new class Online {
       this.list.forEach(async (user) => {
         this.usernames.push(await getUsername(user.uid));
       });
-    }, 1000);
+    }, 5000);
   }
 
   @observable list = [];
