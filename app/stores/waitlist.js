@@ -63,33 +63,18 @@ export default new class Waitlist {
       // reset our state if the user clicks again while loading
       this.localJoinState = this.inWaitlist;
       this.localPlayingState = this.isPlaying;
+
     } else if (this.isPlaying) {
       chat.sendMsg('/skip');
       this.localPlayingState = false;
+
     } else if (this.inWaitlist) {
       send('leave_waitlist');
       this.localJoinState = false;
-
-      // ax.post('/waitlist/leave').then(resp => {
-      //   if (resp.data.success === true) {
-      //     toast.success("You have joined the waitlist.");
-      //   } else if (resp.data.error) {
-      //     toast.error(resp.data.error);
-      //   }
-      //   this.bigButtonLoading = false;
-      // });
+      
     } else {
       send('join_waitlist');
       this.localJoinState = true;
-
-      // ax.post('/waitlist/join').then(resp => {
-      //   if (resp.data.success === true) {
-      //     toast.success("You have joined the waitlist.");
-      //   } else if (resp.data.error) {
-      //     toast.error(resp.data.error);
-      //   }
-      //   this.bigButtonLoading = false;
-      // });
     }
   }
 

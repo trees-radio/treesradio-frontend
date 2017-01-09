@@ -1,4 +1,4 @@
-import {observable, computed, autorun} from 'mobx';
+import {observable, computed, autorunAsync} from 'mobx';
 import fbase from 'libs/fbase';
 import getUsername from 'libs/username';
 
@@ -23,12 +23,12 @@ export default new class Online {
 
     });
 
-    autorun(() => {
+    autorunAsync(() => {
       this.usernames = [];
       this.list.forEach(async (user) => {
         this.usernames.push(await getUsername(user.uid));
       });
-    });
+    }, 1000);
   }
 
   @observable list = [];
