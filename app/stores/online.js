@@ -24,6 +24,7 @@ export default new class Online {
     });
 
     autorun(() => {
+      this.usernames = [];
       this.list.forEach(async (user) => {
         this.usernames.push(await getUsername(user.uid));
       });
