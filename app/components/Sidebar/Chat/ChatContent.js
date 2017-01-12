@@ -2,13 +2,11 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import chat from 'stores/chat';
 import classNames from 'classnames';
-import Linkify from 'react-linkify';
-import ReactEmoji from 'react-emoji';
 import moment from 'moment';
 import UserName from 'components/utility/User/UserName';
 import UserAvatar from 'components/utility/User/UserAvatar';
+import Message from './Message';
 
-const linkifyProperties = {target: '_blank'};
 const SCROLL_SENSITIVITY = 100;
 
 export default @observer class ChatContent extends React.Component {
@@ -51,11 +49,7 @@ export default @observer class ChatContent extends React.Component {
       var humanTimestamp = moment.unix(msg.timestamp).format('LT');
 
       var msgs = msg.msgs.map((innerMsg, i) => {
-        return (
-          <Linkify key={i} properties={linkifyProperties}>
-            <span>{ ReactEmoji.emojify(innerMsg, {emojiType: 'twemoji'}) }<br/></span>
-          </Linkify>
-        );
+        return <Message key={i} text={innerMsg}/>;
       });
 
       return (
@@ -65,7 +59,7 @@ export default @observer class ChatContent extends React.Component {
           </div>
           <div className="chat-msg">
             <UserName uid={msg.uid} className="chat-username" onClick={() => chat.appendMsg('@'+msg.username)}/>
-            <span className="chat-timestamp">{humanTimestamp}</span><br />
+            <span className="chat-timestamp">{humanTimestamp}</span><br/>
             <span className="chat-text">{ msgs }</span>
           </div>
         </li>
