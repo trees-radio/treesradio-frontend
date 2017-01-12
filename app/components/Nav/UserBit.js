@@ -49,7 +49,7 @@ export default @observer class UserBit extends React.Component {
               <span className="fa fa-caret-down"></span>
             </a>
             <ul className="dropdown-menu">
-              {/* <li onClick={p.setAvatar}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li> */}
+              <li onClick={() => profile.setAvatar()}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
               <li onClick={() => playing.togglePlayerSize()}>
                 <a href="#">
                   <i className={classNames('fa', playing.playerSize === 'BIG' ? 'fa-compress' : 'fa-expand')}></i> {playing.playerSize === 'BIG' ? 'Collapse Player' : 'Expand Player'}

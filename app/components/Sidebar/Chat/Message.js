@@ -5,6 +5,10 @@ import {emojify} from 'react-emojione';
 const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 const regex = new RegExp(expression);
 
+// regex for detecting an inline image.
+const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/gi;
+const imgregex = new RegExp(imgexpr);
+
 const emojifyOptions = {
   styles: {
     backgroundImage: 'url(https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.png)'
@@ -17,7 +21,10 @@ const Message = props => {
   let tokens = text.split(' ');
 
   let result = tokens.map((tkn, i) => {
-    if (tkn.match(regex)) {
+    // Is this an image link?
+    if ( tkn.match(imgregex) ) {
+      return <span key={i}> <img src={tkn} className='inline-image'/> </span>;
+    } else if (tkn.match(regex)) {
       let link = tkn;
       if (!link.slice(0, 4) === 'http') {
         link = `http://${link}`;
