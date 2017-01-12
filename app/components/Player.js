@@ -41,7 +41,7 @@ export default @observer class Player extends React.Component {
         </div>
         <Progress
           className="progress-bar"
-          completed={playing.fraction * 100}
+          completed={Math.round(playing.fraction * 100)}
           color="#77b300"
         />
       </div>
