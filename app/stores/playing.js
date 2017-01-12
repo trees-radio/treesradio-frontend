@@ -119,12 +119,12 @@ export default new class Playing {
 
   sendFeedback(type) {
     this.feedbackSending = true;
-    ax.post('/feedback/send', {type}).then(resp => {
-      if (resp.data && resp.data.error) {
-        toast.error(resp.data.error);
-      }
-      this.feedbackSending = false;
-    });
+    // ax.post('/feedback/send', {type}).then(resp => {
+    //   if (resp.data && resp.data.error) {
+    //     toast.error(resp.data.error);
+    //   }
+    //   this.feedbackSending = false;
+    // });
   }
 
   like() {

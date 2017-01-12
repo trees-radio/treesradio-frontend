@@ -4,19 +4,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Config = require('webpack-config').default;
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// console.log("WEBPACK_ENV", process.env);
-
-const acceptedEnv = ["FBASE", "FBASE_API", "NODE_ENV", "API", "API_PROTOCOL"];
-
-function cherrypickEnv(env) {
-  var keys = Object.keys(env);
-  keys = keys.filter(e => acceptedEnv.includes(e));
-  var webpackEnv = {};
-  keys.forEach(k => webpackEnv['process.env.'+k] = JSON.stringify(env[k]));
-  // console.log("WEBPACK_ENV", webpackEnv, keys, env);
-  return webpackEnv;
-}
-
 
 module.exports = new Config().merge({
   entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
@@ -96,7 +83,6 @@ module.exports = new Config().merge({
       "window.jQuery": 'jquery'
     }),
     new ExtractTextPlugin("treesradio.css"),
-    new webpack.DefinePlugin(cherrypickEnv(process.env)),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: require('html-webpack-template'),

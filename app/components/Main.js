@@ -14,9 +14,9 @@ import Player from './Player';
 
 import DevTools from 'mobx-react-devtools';
 var DevTool;
-if (process.env.NODE_ENV !== 'production') {
-  DevTool = <DevTools position={{top: 10, left: 200}}/>;
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   DevTool = <DevTools position={{top: 10, left: 200}}/>;
+// }
 
 export default @observer class Main extends React.Component {
   render() {

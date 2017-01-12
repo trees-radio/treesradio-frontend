@@ -1,4 +1,3 @@
-
 import firebase from 'firebase';
 
 const FB_ENV = {
