@@ -1,7 +1,7 @@
 ### Trees Radio Specific Ignores
 public
-
 firebase/rules.json
+.fbaseapi
 
 ## Floobits
 .flooignore
