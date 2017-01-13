@@ -112,11 +112,7 @@ export default new class Profile {
       const noUsername = !this.username;
 
       if (noLegacyUsername && noUsername) {
-        if (epoch() > startup + 3) {
-          return true;
-        } else {
-          return this.noName;
-        }
+        return true;
       } else if (!noLegacyUsername && noUsername) {
         const legacyUsername = this.profile.username;
         this.updateUsername(legacyUsername);
@@ -124,7 +120,8 @@ export default new class Profile {
 
       return false;
     }
-    return !this.user.displayName;
+    // profile isn't initialized yet. Fixes #644
+    return false;
   }
 
   getToken() {
