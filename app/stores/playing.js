@@ -206,6 +206,27 @@ export default new class Playing {
     }
   }
 
+  @computed get likes() {
+    if (!this.data.feedback || !this.data.feedback.likes) {
+      return 0;
+    }
+    return this.data.feedback.likes;
+  }
+
+  @computed get dislikes() {
+    if (!this.data.feedback || !this.data.feedback.dislikes) {
+      return 0;
+    }
+    return this.data.feedback.dislikes;
+  }
+
+  @computed get grabs() {
+    if (!this.data.feedback || !this.data.feedback.grabs) {
+      return 0;
+    }
+    return this.data.feedback.grabs;
+  }
+
   @observable playerSize = 'BIG';
 
   togglePlayerSize() {
