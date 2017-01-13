@@ -140,7 +140,7 @@ export default @observer class Toolbar extends React.Component {
             <GrabPlaylists grabbing={this.grabbing} toggleGrab={(setting) => this.toggleGrab(setting)}/>
             <div className="grab-button" onClick={() => this.toggleGrab()}>
               <i className={classNames('fa', grabIcon)}></i>
-              <span className="feedback-grab">{0}</span>
+              <span className="feedback-grab">{playing.grabs}</span>
             </div>
             <div className="volume-slider" onWheel={(e) => this.volumeWheel(e)}>
               <i className={volClass}></i>
@@ -161,11 +161,11 @@ export default @observer class Toolbar extends React.Component {
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="like-button" onClick={() => playing.like()}>
               <i className={classNames('fa', likeIcon)}></i>
-              <span className="feedback-likes">{0}</span>
+              <span className="feedback-likes">{playing.likes}</span>
             </div>
             <div className="dislike-button" onClick={() => playing.dislike()}>
               <i className={classNames('fa', dislikeIcon)}></i>
-              <span className="feedback-dislikes">{0}</span>
+              <span className="feedback-dislikes">{playing.dislikes}</span>
             </div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
