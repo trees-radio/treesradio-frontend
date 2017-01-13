@@ -10,6 +10,8 @@ import localforage from 'localforage';
 import playlists from 'stores/playlists';
 import {send} from 'libs/events';
 
+import spacePineapples from 'img/spacepineapples.jpg';
+
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
 
@@ -237,4 +239,6 @@ export default new class Playing {
     }
     localforage.setItem('playerSize', this.playerSize);
   }
+
+  @observable backgroundImage = spacePineapples;
 }
