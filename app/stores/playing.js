@@ -1,13 +1,16 @@
-import {observable, computed, toJS} from 'mobx';
+import {observable, computed, autorun} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 import profile from 'stores/profile';
-import ax from 'utils/ax';
+// import ax from 'utils/ax';
 import moment from 'moment';
 import _ from 'lodash';
 import localforage from 'localforage';
-import events from 'stores/events';
+// import events from 'stores/events';
 import playlists from 'stores/playlists';
+import {send} from 'libs/events';
+
+import spacePineapples from 'img/spacepineapples.jpg';
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
@@ -23,7 +26,12 @@ export default new class Playing {
     });
     localforage.getItem('volume').then(v => v ? this.volume = v : false);
     localforage.getItem('playerSize').then(s => s ? this.playerSize = s : false);
-    events.register('new_song', () => this.feedback = []);
+
+    autorun(() => {
+      this.localLikeState = this.liked;
+      this.localDislikeState = this.disliked;
+      this.localGrabState = this.grabbed;
+    });
   }
 
   @observable data = {
@@ -115,37 +123,55 @@ export default new class Playing {
     }
   }
 
-  @observable feedbackSending = false;
-
-  sendFeedback(type) {
-    this.feedbackSending = true;
-    // ax.post('/feedback/send', {type}).then(resp => {
-    //   if (resp.data && resp.data.error) {
-    //     toast.error(resp.data.error);
-    //   }
-    //   this.feedbackSending = false;
-    // });
+  @observable localLikeState = false;
+  @computed get likeLoading() {
+    return this.localLikeState !== this.liked;
   }
 
   like() {
+    // reset our state if the user clicks again while loading
+    if (this.likeLoading) {
+      this.localLikeState = this.liked;
+      return;
+    }
+
     if (this.liked) {
       toast.error("You've already liked this song!")
       return false;
     }
-    this.sendFeedback('like');
+    send('like');
+    this.localLikeState = true;
+  }
+
+  @observable localDislikeState = false;
+  @computed get dislikeLoading() {
+    return this.localDislikeState !== this.disliked;
   }
 
   dislike() {
+    // reset our state if the user clicks again while loading
+    if (this.dislikeLoading) {
+      this.localDislikeState = this.disliked;
+      return;
+    }
+
     if (this.disliked) {
       toast.error("You've already disliked this song!");
     }
-    this.sendFeedback('dislike');
+    send('dislike');
+    this.localDislikeState = true;
+  }
+
+  @observable localGrabState = false;
+  @computed get grabLoading() {
+    return this.localGrabState !== this.grabbed;
   }
 
   grab(playlistKey) {
     playlists.addSong(this.data.info, playlistKey);
     if (!this.grabbed) {
-      this.sendFeedback('grab');
+      send('grab');
+      // this.localGrabState = true;
     }
   }
 
@@ -182,6 +208,27 @@ export default new class Playing {
     }
   }
 
+  @computed get likes() {
+    if (!this.data.feedback || !this.data.feedback.likes) {
+      return 0;
+    }
+    return this.data.feedback.likes;
+  }
+
+  @computed get dislikes() {
+    if (!this.data.feedback || !this.data.feedback.dislikes) {
+      return 0;
+    }
+    return this.data.feedback.dislikes;
+  }
+
+  @computed get grabs() {
+    if (!this.data.feedback || !this.data.feedback.grabs) {
+      return 0;
+    }
+    return this.data.feedback.grabs;
+  }
+
   @observable playerSize = 'BIG';
 
   togglePlayerSize() {
@@ -192,4 +239,6 @@ export default new class Playing {
     }
     localforage.setItem('playerSize', this.playerSize);
   }
+
+  @observable backgroundImage = spacePineapples;
 }
