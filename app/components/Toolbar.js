@@ -12,6 +12,8 @@ import toast from 'utils/toast';
 import classNames from 'classnames';
 import onClickOutside from 'react-onclickoutside';
 
+const loadingIconClass = 'fa-spin fa-circle-o-notch';
+
 const GrabPlaylists = onClickOutside(observer(React.createClass({
   handleClickOutside() {
     if (this.props.grabbing) {
@@ -76,16 +78,16 @@ export default @observer class Toolbar extends React.Component {
   }
 
   render() {
-    var waitlistButtonText = 'Join Waitlist';
+    let waitlistButtonText = 'Join Waitlist';
     if (waitlist.bigButtonLoading) {
-      waitlistButtonText = <i className='fa fa-spin fa-circle-o-notch'></i>
+      waitlistButtonText = <i className={`fa ${loadingIconClass}`}></i>
     } else if (waitlist.isPlaying) {
       waitlistButtonText = 'Skip Song';
     } else if (waitlist.inWaitlist) {
       waitlistButtonText = 'Leave Waitlist';
     }
 
-    var volClass;
+    let volClass;
     if (playing.volume < 0.1) {
       volClass = classNames("fa", "fa-volume-off", "volume-slider-icon");
     } else if (playing.volume < 0.6) {
@@ -94,17 +96,28 @@ export default @observer class Toolbar extends React.Component {
       volClass = classNames("fa", "fa-volume-up", "volume-slider-icon");
     }
 
-    var openButtonIcon = this.panelOpen && playlists.init ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
+    let openButtonIcon = this.panelOpen && playlists.init ? "fa fa-angle-double-down fa-4x" : "fa fa-angle-double-up fa-4x";
 
-    var grabIcon, likeIcon, dislikeIcon;
-    if (playing.feedbackSending) {
-      grabIcon = likeIcon = dislikeIcon = classNames('fa-spin', 'fa-circle-o-notch');
+    let grabIcon, likeIcon, dislikeIcon;
+
+    if (playing.grabLoading) {
+      grabIcon = loadingIconClass;
     } else {
       grabIcon = playing.grabbed ? 'fa-plus-square' : 'fa-plus-square-o';
-      likeIcon = playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up';
-      dislikeIcon = playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down';
     }
 
+    if (playing.likeLoading) {
+      likeIcon = loadingIconClass;
+    } else {
+      likeIcon = playing.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up';
+    }
+
+    if (playing.dislikeLoading) {
+      dislikeIcon = loadingIconClass;
+    } else {
+      dislikeIcon = playing.disliked ? 'fa-thumbs-down' : 'fa-thumbs-o-down';
+    }
+    
     return (
       <div id="playlists-component">
         {playlists.init ? <PlaylistsPanel open={this.panelOpen}/> : false}

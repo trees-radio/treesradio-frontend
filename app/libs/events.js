@@ -9,6 +9,8 @@ export function send(type, data={}) {
   }
 }
 
+
+// was too high when I wrote this, the type isn't even used in the constructor
 const listeners = {};
 
 class EventListener {
