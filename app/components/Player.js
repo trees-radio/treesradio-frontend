@@ -6,7 +6,6 @@ import Progress from 'react-progressbar';
 
 import playing from 'stores/playing';
 
-
 const rPlayerYoutubeConfig = {playerVars: {iv_load_policy: 3}};
 
 export default @observer class Player extends React.Component {
@@ -20,9 +19,12 @@ export default @observer class Player extends React.Component {
   }
 
   render() {
+    const containerStyle = {
+      backgroundImage: `url(${playing.backgroundImage})`
+    };
 
     return (
-      <div>
+      <div id="vidcontainer" style={containerStyle}>
         <div id="player-size" className={playing.playerSize === 'BIG' ? 'large-player-size' : 'small-player-size'}>
           <ReactPlayer
             ref={c => this._player = c}
