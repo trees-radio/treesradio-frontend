@@ -8,6 +8,7 @@ import mention from 'libs/mention';
 import {send} from 'libs/events';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
+const CHAT_DEBOUNCE_MSEC = 3000;
 
 export default new class Chat {
   constructor() {
@@ -58,7 +59,12 @@ export default new class Chat {
   }
 
   pushMsg() {
-    this.sendMsg(this.getMsg());
+    if (!this.chatDebounce || this.chatDebounce < Date.now() - 5000) {
+      this.sendMsg(this.getMsg());
+      this.chatDebounce = Date.now();
+    } else if (this.msg !== '') {
+      toast.warning(`Please wait ${CHAT_DEBOUNCE_MSEC / 1000} seconds between messages.`);
+    }
   }
 
   sendMsg(msg, cb) {
