@@ -57,6 +57,9 @@
     "ranks": {
       ".read": "true"
     },
+    "ranks_settings_READ_ONLY": {
+      ".read": "true"
+    },
     "avatars": {
       ".read": "true",
       "$uid": {

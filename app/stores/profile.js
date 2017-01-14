@@ -4,8 +4,9 @@ import fbase from 'libs/fbase';
 import epoch from 'utils/epoch';
 import username from 'libs/username';
 import {send} from 'libs/events';
+import rank, {getSettingsForRank} from 'libs/rank';
 
-const startup = epoch();
+// const startup = epoch();
 
 export default new class Profile {
   constructor() {
@@ -63,6 +64,20 @@ export default new class Profile {
         this.username = undefined;
       }
     });
+
+    // permissions handling
+    autorun(async () => {
+      
+      if (this.user) {
+        this.rank = await rank(this.user.uid);
+        
+        this.rankPermissions = await getSettingsForRank(this.rank);
+        console.log('hi', this.rankPermissions, this.rank);
+      } else {
+        this.rank = null;
+        this.rankPermissions = {};
+      }
+    });
   }
 
   @observable connected = false;
@@ -76,6 +91,11 @@ export default new class Profile {
   @observable private = null;
   @observable privateInit = false;
 
+  @observable rank = null;
+  @observable rankPermissions = {};
+
+
+  // TODO can probably move these four functions to the account lib
   login(email, password) {
     fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
@@ -95,6 +115,26 @@ export default new class Profile {
     }, function(error) {
       // An error happened.
       toast.error(error.message);
+    });
+  }
+
+  register(email, password) {
+    fbase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+      // console.log('registration error', error);
+      toast.error(error.message);
+    }).then(user => {
+      //something
+    });
+  }
+  
+  sendPassReset(email) {
+    fbase.auth().sendPasswordResetEmail(email).catch((error) => {
+      toast.error(error.message);
+      this.resetPassError = error.message;
+      this.stopResettingPassword();
+    }).then(() => {
+      toast.success(`Success! An email with instructions has been sent to ${email}.`);
+      this.stopResettingPassword();
     });
   }
 
@@ -144,26 +184,6 @@ export default new class Profile {
     }
   }
 
-  register(email, password) {
-    fbase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
-      // console.log('registration error', error);
-      toast.error(error.message);
-    }).then(user => {
-      //something
-    });
-  }
-
-  sendPassReset(email) {
-    fbase.auth().sendPasswordResetEmail(email).catch((error) => {
-      toast.error(error.message);
-      this.resetPassError = error.message;
-      this.stopResettingPassword();
-    }).then(() => {
-      toast.success(`Success! An email with instructions has been sent to ${email}.`);
-      this.stopResettingPassword();
-    });
-  }
-
   updateUsername(username) {
     if (this.user === null) {
       return false;
@@ -191,5 +211,9 @@ export default new class Profile {
         this.resendVerificationLoading = false;
       });
     }
+  }
+
+  @computed get isAdmin() {
+    return this.rankPermissions.admin === true;
   }
 }
