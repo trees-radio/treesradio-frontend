@@ -4,6 +4,7 @@ import online from 'stores/online';
 import classNames from 'classnames';
 import UserName from 'components/utility/User/UserName';
 import UserAvatar from 'components/utility/User/UserAvatar';
+import profile from 'stores/profile';
 
 export default @observer class OnlineUsers extends React.Component {
   render() {
@@ -13,11 +14,21 @@ export default @observer class OnlineUsers extends React.Component {
 
       var userLineClasses = classNames('user-item', userPosClass); // class names for users <li> in list
 
+      let icon;
+
+      if (user.liked) {
+        icon = <i className="fa fa-arrow-circle-up"></i>;
+      }
+
+      if (user.disliked && (profile.isAdmin || profile.rankPermissions.canSeeDownvotes === true)) {
+        icon = <i className="fa fa-arrow-circle-down"></i>;
+      }
+
       return (
         <li key={i} className={userLineClasses}>
           <UserAvatar uid={user.uid}/>
           <div className="users-info">
-            <UserName className="users-username" uid={user.uid} username={user.username}/>
+            <UserName className="users-username" uid={user.uid} username={user.username}/> {icon}
           </div>
         </li>
       );

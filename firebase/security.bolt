@@ -135,6 +135,10 @@ path /ranks {
   read() {true}
 }
 
+path /ranks_settings_READ_ONLY {
+  read() {true}
+}
+
 path /avatars {
   read() {true}
 }
