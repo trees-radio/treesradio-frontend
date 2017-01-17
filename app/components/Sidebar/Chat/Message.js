@@ -50,8 +50,8 @@ export default class Message extends React.Component {
 
     return (
       <div>
-        <VisibilitySensor onChange={this.onVisibility}/>
         {result}
+        <VisibilitySensor onChange={this.onVisibility}/>
       </div>
     );
   }
