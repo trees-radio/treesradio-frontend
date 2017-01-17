@@ -1,11 +1,13 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {observable} from 'mobx';
+import {observable, computed} from 'mobx';
 import classNames from 'classnames';
 
 import profile from 'stores/profile';
 import account from 'libs/account';
 import playing from 'stores/playing';
+import imageWhitelist, {allowedDomains} from 'libs/imageWhitelist';
+import UserAvatar from 'components/utility/User/UserAvatar';
 
 import Modal from 'components/utility/Modal';
 
@@ -31,6 +33,12 @@ export default @observer class UserBit extends React.Component {
   }
 
   @observable resettingPassword = false;
+  @observable settingAvatar = false;
+  @observable avatarField = '';
+
+  @computed get avatarFieldValid() {
+    return this.avatarField && imageWhitelist(this.avatarField);
+  }
 
   render() {
     if (profile.user !== null) {
@@ -49,7 +57,7 @@ export default @observer class UserBit extends React.Component {
               <span className="fa fa-caret-down"></span>
             </a>
             <ul className="dropdown-menu">
-              <li onClick={() => profile.setAvatar()}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
+              <li onClick={() => this.settingAvatar = true}><a href="#"><i className="fa fa-pencil fa-fw"></i> Set Avatar</a></li>
               <li onClick={() => playing.togglePlayerSize()}>
                 <a href="#">
                   <i className={classNames('fa', playing.playerSize === 'BIG' ? 'fa-compress' : 'fa-expand')}></i> {playing.playerSize === 'BIG' ? 'Collapse Player' : 'Expand Player'}
@@ -68,8 +76,39 @@ export default @observer class UserBit extends React.Component {
           </Modal>
           <Modal isOpen={profile.unverified} hideModal={() => {}} title="Please Verify Your Email" noClose={true}>
             <p>Your email hasn't been verified yet! Please click the link in the activation email that was sent to your address or use one of the buttons below to help you.</p>
-            <button className="btn btn-primary" onClick={() => profile.reloadUser()}>Re-check Verification</button>
+            <button className="btn btn-primary" onClick={() => window.location.reload()}>Re-check Verification Status</button>
             &nbsp;<button className="btn btn-info" onClick={() => profile.resendVerification()}>Re-send Verification Email{emailVerificationResendIcon}</button>
+          </Modal>
+          <Modal isOpen={this.settingAvatar} hideModal={() => this.settingAvatar = false} title="Set Your Avatar">
+            <p>Avatars must be hosted at one of the following sites:</p>
+            <ul>
+              {allowedDomains.map(d => <li>{d}</li>)}
+            </ul>
+            <hr/>
+            <div className="row">
+              <div className="col-md-8">
+                <div className="form-group">
+                  <label>Avatar URL</label>
+                  <div className="input-group">
+                    <input
+                      className="form-control"
+                      placeholder="http://i.imgur.com/1y3IemI.gif"
+                      onChange={e => this.avatarField = e.target.value}
+                    />
+                    <div className="input-group-addon">
+                      <i className={this.avatarFieldValid ? 'fa fa-check' : 'fa fa-times'}></i>
+                    </div>
+                  </div>
+                  &nbsp;<br/>
+                  <button className="btn" onClick={() => profile.setAvatar(this.avatarField)}>
+                    Set Avatar
+                  </button>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <UserAvatar uid={profile.uid}/>
+              </div>
+            </div>
           </Modal>
         </div>
       );

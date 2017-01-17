@@ -1,10 +1,13 @@
 import React from 'react';
 import {listenAvatar, defaultAvatar} from 'libs/avatar';
+import imageWhitelist from 'libs/imageWhitelist';
+import VisibilitySensor from 'react-visibility-sensor';
+import EMPTY_IMG from 'img/nothing.png';
 
 export default class UserAvatar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {visible: false};
     this.getAvatar();
   }
 
@@ -18,7 +21,21 @@ export default class UserAvatar extends React.Component {
     });
   }
 
+  onVisibility = isVisible => this.setState({visible: isVisible});
+
   render() {
-    return <img src={this.state.avatar} className="avatarimg"/>;
+    let avatar;
+    if (imageWhitelist(this.state.avatar) && this.state.visible) {
+      avatar = this.state.avatar;
+    } else {
+      avatar = EMPTY_IMG;
+    }
+
+    return (
+      <span>
+        <img src={avatar} className="avatarimg"/>
+        <VisibilitySensor onChange={this.onVisibility}/>
+      </span>
+    );
   }
 }

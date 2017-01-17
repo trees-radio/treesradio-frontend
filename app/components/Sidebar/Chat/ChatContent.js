@@ -18,7 +18,7 @@ export default @observer class ChatContent extends React.Component {
         console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
       }, 1000);
       */
-    setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 1000);
+    setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 3000);
   }
 
   componentWillUpdate() {
