@@ -7,6 +7,11 @@ const allowedDomains = [
 ];
 
 export default function imgUrlWhitelisted(url) {
-  const parsed = new URL(url);
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch (e) {
+    return false; //probably not a link.
+  }
   return allowedDomains.includes(parsed.hostname);
 }
