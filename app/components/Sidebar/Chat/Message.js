@@ -22,7 +22,7 @@ const emojifyOptions = {
 export default class Message extends React.Component {
   constructor() {
     super();
-    this.state = {visible: true};
+    this.state = {visible: false};
   }
 
   onVisibility = isVisible => this.setState({visible: isVisible});

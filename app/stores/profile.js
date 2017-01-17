@@ -94,7 +94,6 @@ export default new class Profile {
   @observable rank = null;
   @observable rankPermissions = {};
 
-
   // TODO can probably move these four functions to the account lib
   login(email, password) {
     fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
@@ -136,6 +135,14 @@ export default new class Profile {
       toast.success(`Success! An email with instructions has been sent to ${email}.`);
       this.stopResettingPassword();
     });
+  }
+
+  @computed get uid() {
+    if (!this.user) {
+      return false;
+    } else {
+      return this.user.uid;
+    }
   }
 
   @computed get unverified() {
@@ -192,14 +199,6 @@ export default new class Profile {
     }
   }
 
-  reloadUser() {
-    return this.user.reload().then(() => {
-      const user = fbase.auth().currentUser;
-      this.user = user;
-      return user;
-    });
-  }
-
   @observable resendVerificationResult = null;
   @observable resendVerificationLoading = false;
 
@@ -215,5 +214,9 @@ export default new class Profile {
 
   @computed get isAdmin() {
     return this.rankPermissions.admin === true;
+  }
+
+  setAvatar(url) {
+    return fbase.database().ref('avatars').child(this.user.uid).set(url);
   }
 }

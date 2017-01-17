@@ -1,9 +1,11 @@
 import URL from 'url-parse';
 
-const allowedDomains = [
+export const allowedDomains = [
   'i.imgur.com',
   'imgur.com',
-  'i.reddituploads.com'
+  'i.reddituploads.com',
+  'media.giphy.com',
+  'tr-avatars.herokuapp.com'
 ];
 
 export default function imgUrlWhitelisted(url) {
