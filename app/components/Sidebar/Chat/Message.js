@@ -1,6 +1,8 @@
 import React from 'react';
 import {emojify} from 'react-emojione';
 import imageWhitelist from 'libs/imageWhitelist';
+import VisibilitySensor from 'react-visibility-sensor';
+import EMPTY_IMG from 'img/nothing.png';
 
 // regex for links (protocol not required): http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
@@ -17,29 +19,41 @@ const emojifyOptions = {
   }
 };
 
-const Message = props => {
-  const text = props.text;
+export default class Message extends React.Component {
+  constructor() {
+    super();
+    this.state = {visible: true};
+  }
 
-  let tokens = text.split(' ');
+  onVisibility = isVisible => this.setState({visible: isVisible});
 
-  let result = tokens.map((tkn, i) => {
-    // Is this an image link?
-    if ( tkn.match(imgregex) && imageWhitelist(tkn) ) {
-      return <span key={i}> <img src={tkn} className='inline-image'/> </span>;
-      // OR is this a plain URL?
-    } else if (tkn.match(regex)) { 
-      let link = tkn;
-      if (!link.slice(0, 4) === 'http') {
-        link = `http://${link}`;
+  render() {
+    const text = this.props.text;
+
+    let tokens = text.split(' ');
+
+    let result = tokens.map((tkn, i) => {
+      // Is this an image link?
+      if (tkn.match(imgregex) && imageWhitelist(tkn)) {
+        return <span key={i}><img src={this.state.visible ? tkn : EMPTY_IMG} className='inline-image'/></span>;
+        // OR is this a plain URL?
+      } else if (tkn.match(regex)) { 
+        let link = tkn;
+        if (!link.slice(0, 4) === 'http') {
+          link = `http://${link}`;
+        }
+        return <span key={i}><a href={link} target='_blank'>{tkn}</a></span>;
       }
-      return <span key={i}> <a href={link} target='_blank'>{tkn}</a> </span>;
-    }
-    
-    return <span key={i}> {emojify(tkn, emojifyOptions)} </span>;
+      
+      return <span key={i}> {emojify(tkn, emojifyOptions)} </span>;
+    });
 
-  });
-
-  return <div>{result}</div>;
-};
-
-export default Message;
+    return (
+      <div>
+        <VisibilitySensor onChange={this.onVisibility}/>
+        {result}
+      </div>
+    );
+  }
+}
+  
