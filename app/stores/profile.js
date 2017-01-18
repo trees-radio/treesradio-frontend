@@ -222,4 +222,8 @@ export default new class Profile {
     }
     return fbase.database().ref('avatars').child(this.user.uid).set(url);
   }
+
+  clearAvatar() {
+    return fbase.database().ref('avatars').child(this.uid).remove();
+  }
 }

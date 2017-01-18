@@ -131,9 +131,13 @@ export default class UserBit extends React.Component {
                     </div>
                   </div>
                   <br />
-                  <button className="btn" onClick={() => profile.setAvatar(this.avatarField)}>
-                    Set Avatar
-                  </button>
+                  <div className="btn-group">
+                    <button className="btn btn-primary" onClick={() => profile.setAvatar(this.avatarField)}>
+                      Set Avatar
+                    </button>
+                    <button className="btn" onClick={() => profile.clearAvatar()}>Clear Avatar</button>
+                  </div>
+                  
                 </div>
               </div>
               <div className="col-md-4">
