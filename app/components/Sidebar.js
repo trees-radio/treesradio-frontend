@@ -1,10 +1,11 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {observable} from "mobx";
+import {observable, autorun} from "mobx";
 import classNames from "classnames";
 
 import online from "stores/online";
 import waitlist from "stores/waitlist";
+import profile from "stores/profile";
 
 import Chat from "./Sidebar/Chat";
 import OnlineUsers from "./Sidebar/OnlineUsers";
@@ -13,8 +14,20 @@ import Waitlist from "./Sidebar/Waitlist";
 
 @observer
 export default class Sidebar extends React.Component {
+  constructor() {
+    super();
+
+    const loggedInAtRender = profile.loggedIn;
+    autorun(() => {
+      const loggedInAfterRender = !loggedInAtRender && profile.loggedIn;
+      if (this.currentSidebar === 'ABOUT' && loggedInAfterRender) {
+        this.currentSidebar = 'CHAT';
+      }
+    });
+  }
+
   @observable
-  currentSidebar = "CHAT";
+  currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
 
   render() {
     var chatSelected, onlineSelected, waitlistSelected, aboutSelected, sidebarComponent;

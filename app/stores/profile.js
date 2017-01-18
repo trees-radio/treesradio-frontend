@@ -72,7 +72,7 @@ export default new class Profile {
         this.rank = await rank(this.user.uid);
         
         this.rankPermissions = await getSettingsForRank(this.rank);
-        console.log('hi', this.rankPermissions, this.rank);
+        // console.log('hi', this.rankPermissions, this.rank);
       } else {
         this.rank = null;
         this.rankPermissions = {};
@@ -135,6 +135,10 @@ export default new class Profile {
       toast.success(`Success! An email with instructions has been sent to ${email}.`);
       this.stopResettingPassword();
     });
+  }
+
+  @computed get loggedIn() {
+    return !!this.user;
   }
 
   @computed get uid() {
