@@ -107,13 +107,13 @@ export default class UserBit extends React.Component {
               Re-check Verification Status
             </button>
             <button className="btn btn-info" onClick={() => profile.resendVerification()}>
-              Re-send Verification Email{emailVerificationResendIcon}
+              Re-send Verification Email {emailVerificationResendIcon}
             </button>
           </Modal>
           <Modal isOpen={this.settingAvatar} hideModal={() => this.settingAvatar = false} title="Set Your Avatar">
             <p>Avatars must be hosted at one of the following sites:</p>
             <ul>
-              {allowedDomains.map(d => <li>{d}</li>)}
+              {allowedDomains.map((d, i) => <li key={i}>{d}</li>)}
             </ul>
             <hr />
             <div className="row">
