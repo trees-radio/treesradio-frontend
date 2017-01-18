@@ -2,7 +2,6 @@ import React from 'react';
 import {emojify} from 'react-emojione';
 import imageWhitelist from 'libs/imageWhitelist';
 import VisibilitySensor from 'react-visibility-sensor';
-import EMPTY_IMG from 'img/nothing.png';
 
 // regex for links (protocol not required): http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
