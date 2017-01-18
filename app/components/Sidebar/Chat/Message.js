@@ -35,7 +35,12 @@ export default class Message extends React.Component {
     let result = tokens.map((tkn, i) => {
       // Is this an image link?
       if (tkn.match(imgregex) && imageWhitelist(tkn)) {
-        return <span key={i}><img src={this.state.visible ? tkn : EMPTY_IMG} className='inline-image'/></span>;
+        let style = {};
+        if (!this.state.visible) {
+          style.visibility = 'hidden';
+        }
+        
+        return <span key={i}><img src={tkn} style={style} className='inline-image'/></span>;
         // OR is this a plain URL?
       } else if (tkn.match(regex)) { 
         let link = tkn;

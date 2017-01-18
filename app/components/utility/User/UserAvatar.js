@@ -25,15 +25,20 @@ export default class UserAvatar extends React.Component {
 
   render() {
     let avatar;
-    if (imageWhitelist(this.state.avatar) && this.state.visible) {
+    if (imageWhitelist(this.state.avatar)) {
       avatar = this.state.avatar;
     } else {
       avatar = EMPTY_IMG;
     }
 
+    let style = {};
+    if (!this.state.visible) {
+      style.visibility = 'hidden';
+    }
+
     return (
       <span>
-        <img src={avatar} className="avatarimg"/>
+        <img src={avatar} className="avatarimg" style={style}/>
         <VisibilitySensor onChange={this.onVisibility}/>
       </span>
     );
