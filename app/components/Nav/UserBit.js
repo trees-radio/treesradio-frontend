@@ -55,6 +55,13 @@ export default class UserBit extends React.Component {
 
       return (
         <div>
+        <div className="btn-group">
+        <button className="btn btn-primary" id="ytregcheck" 
+              onClick={() => window.open("https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=" + playing.data.info.url )}>
+                <i className="fa fa-youtube"></i>&nbsp;<i className="fa fa-globe"></i>&nbsp;<i className="fa fa-check"></i>
+            </button>
+            </div>
+            &nbsp;
           <div className="btn-group">
             <a className="btn btn-primary" id="usernametop">
               <i className="fa fa-user fa-fw"></i><span id="username" className={"userLevel"}>
@@ -77,8 +84,8 @@ export default class UserBit extends React.Component {
               </li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
+              <li onClick={() => profile.logout()}><a href="#"><i className="fa fa-door"></i> Logout</a></li>
             </ul>
-            <button className="btn btn-default" id="logoutbutton" onClick={() => profile.logout()}>Logout</button>
           </div>
           <Modal
             isOpen={profile.noName}
