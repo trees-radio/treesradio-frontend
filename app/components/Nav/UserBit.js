@@ -34,14 +34,24 @@ export default class UserBit extends React.Component {
 
   @observable
   resettingPassword = false;
+  
   @observable
   settingAvatar = false;
   @observable
   avatarField = "";
 
+  @observable
+  changingPassword = false;
+
   @computed
   get avatarFieldValid() {
     return this.avatarField && imageWhitelist(this.avatarField);
+  }
+
+  changePassword() {
+    const password = this._newPassword.value;
+    this._newPassword.value = '';
+    profile.changePassword(password).then(res => !!res && (this.changingPassword = false));
   }
 
   render() {
@@ -76,11 +86,15 @@ export default class UserBit extends React.Component {
                 </a>
               </li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
-              <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
+              <li onClick={() => this.changingPassword = true}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
               <li ><a href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target='blank'><i className="fa fa-youtube"></i> Region Check</a></li>
               <li onClick={() => profile.logout()}><a href="#"><i className="fa fa-sign-out"></i> Logout</a></li>
             </ul>
           </div>
+          {/*  */}
+          {/* LOGGED-IN MODALS */}
+          {/*  */}
+          {/* Missing Username Modal */}
           <Modal
             isOpen={profile.noName}
             hideModal={() => {}}
@@ -100,6 +114,9 @@ export default class UserBit extends React.Component {
               placeholder="Username"
             />
           </Modal>
+          {/*  */}
+          {/* Email Not Verified Modal */}
+          {/*  */}
           <Modal isOpen={profile.unverified} hideModal={() => {}} title="Please Verify Your Email" noClose={true}>
             <p>
               Your email hasn't been verified yet! Please click the link in the activation email that was sent to your address or use one of the buttons below to help you.
@@ -111,6 +128,9 @@ export default class UserBit extends React.Component {
               Re-send Verification Email {emailVerificationResendIcon}
             </button>
           </Modal>
+          {/*  */}
+          {/* Avatar Setting Modal */}
+          {/*  */}
           <Modal isOpen={this.settingAvatar} hideModal={() => this.settingAvatar = false} title="Set Your Avatar">
             <p>Avatars must be hosted at one of the following sites:</p>
             <ul>
@@ -124,7 +144,7 @@ export default class UserBit extends React.Component {
                   <div className="input-group">
                     <input
                       className="form-control"
-                      placeholder="http://i.imgur.com/1y3IemI.gif"
+                      placeholder="e.g. http://i.imgur.com/1y3IemI.gif"
                       onChange={e => this.avatarField = e.target.value}
                     />
                     <div className="input-group-addon">
@@ -138,13 +158,23 @@ export default class UserBit extends React.Component {
                     </button>
                     <button className="btn" onClick={() => profile.clearAvatar()}>Clear Avatar</button>
                   </div>
-                  
                 </div>
               </div>
               <div className="col-md-4">
                 <UserAvatar uid={profile.uid} />
               </div>
             </div>
+          </Modal>
+          {/*  */}
+          {/* Changing Password Modal */}
+          {/*  */}
+          <Modal isOpen={this.changingPassword} hideModal={() => this.changingPassword = false} title="Change Your Password">
+            <div className="form-group">
+              <label>New Password</label>
+              <input className="form-control" ref={c => this._newPassword = c}/>
+            </div>
+            <br/>
+            <div><button className="btn btn-primary" onClick={() => this.changePassword()}>Change Password</button></div>
           </Modal>
         </div>
       );
@@ -180,6 +210,7 @@ export default class UserBit extends React.Component {
               Password Reset
             </button>
           </div>
+          {/* Password Reset Modal */}
           <Modal
             title="Password Reset"
             isOpen={this.resettingPassword}
