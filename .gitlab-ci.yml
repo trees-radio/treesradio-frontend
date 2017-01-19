@@ -28,7 +28,7 @@ before_script:
       - mkdir -p yarn-cache
       - ln -s $PWD/yarn-cache /root/.yarn-cache
       - curl -o- -L https://yarnpkg.com/install.sh | bash
-      - exec bash
+      - source ~/.bashrc
       - yarn
 
 lint:
