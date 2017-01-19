@@ -9,6 +9,7 @@ import {send} from 'libs/events';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const CHAT_DEBOUNCE_MSEC = 3000;
+const MSG_CHAR_LIMIT = 500;
 
 export default new class Chat {
   constructor() {
@@ -37,7 +38,10 @@ export default new class Chat {
         }
       }
     });
+    
     events.register('chat_clear', () => this.messages = []);
+
+    this.limit = MSG_CHAR_LIMIT;
   }
 
   @observable messages = [];
@@ -45,7 +49,13 @@ export default new class Chat {
   @observable msg = '';
 
   updateMsg(msg) {
-    this.msg = msg;
+    if (msg.length <= MSG_CHAR_LIMIT) {
+      this.msg = msg;
+    }
+  }
+
+  @computed get chars() {
+    return this.msg.length;
   }
 
   appendMsg(msg) {
