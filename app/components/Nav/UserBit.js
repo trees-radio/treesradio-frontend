@@ -70,7 +70,7 @@ export default class UserBit extends React.Component {
               </li>
               <li onClick={() => playing.togglePlayerSize()}>
                 <a href="#">
-                  <i className={classNames("fa", playing.playerSize === "BIG" ? "fa-compress" : "fa-expand")}></i>{
+                  <i className={classNames("fa", playing.playerSize === "BIG" ? "fa-compress" : "fa-expand")}></i> {
                     playing.playerSize === "BIG" ? "Collapse Player" : "Expand Player"
                   }
                 </a>
