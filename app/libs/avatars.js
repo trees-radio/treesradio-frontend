@@ -2,9 +2,11 @@ import {observable, computed, asMap} from 'mobx';
 import fbase from 'libs/fbase';
 import moment from 'moment';
 
+// DEPRECATED, DO NOT USE. REMOVE IF NO LONGER USED.
+
 export default new class Avatars {
   constructor() {
-
+    console.warn('libs/avatars.js is deprecated, use libs/avatar.js and the UserAvatar component');
   }
 
   defaultAvatar(username) {

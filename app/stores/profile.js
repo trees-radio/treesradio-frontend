@@ -4,8 +4,9 @@ import fbase from 'libs/fbase';
 import epoch from 'utils/epoch';
 import username from 'libs/username';
 import {send} from 'libs/events';
+import rank, {getSettingsForRank} from 'libs/rank';
 
-const startup = epoch();
+// const startup = epoch();
 
 export default new class Profile {
   constructor() {
@@ -63,6 +64,20 @@ export default new class Profile {
         this.username = undefined;
       }
     });
+
+    // permissions handling
+    autorun(async () => {
+      
+      if (this.user) {
+        this.rank = await rank(this.user.uid);
+        
+        this.rankPermissions = await getSettingsForRank(this.rank);
+        // console.log('hi', this.rankPermissions, this.rank);
+      } else {
+        this.rank = null;
+        this.rankPermissions = {};
+      }
+    });
   }
 
   @observable connected = false;
@@ -76,6 +91,10 @@ export default new class Profile {
   @observable private = null;
   @observable privateInit = false;
 
+  @observable rank = null;
+  @observable rankPermissions = {};
+
+  // TODO can probably move these four functions to the account lib
   login(email, password) {
     fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
@@ -98,6 +117,38 @@ export default new class Profile {
     });
   }
 
+  register(email, password) {
+    fbase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+      // console.log('registration error', error);
+      toast.error(error.message);
+    }).then(user => {
+      //something
+    });
+  }
+  
+  sendPassReset(email) {
+    fbase.auth().sendPasswordResetEmail(email).catch((error) => {
+      toast.error(error.message);
+      this.resetPassError = error.message;
+      this.stopResettingPassword();
+    }).then(() => {
+      toast.success(`Success! An email with instructions has been sent to ${email}.`);
+      this.stopResettingPassword();
+    });
+  }
+
+  @computed get loggedIn() {
+    return !!this.user;
+  }
+
+  @computed get uid() {
+    if (!this.user) {
+      return false;
+    } else {
+      return this.user.uid;
+    }
+  }
+
   @computed get unverified() {
     if (this.user && this.user.emailVerified) {
       return false;
@@ -112,11 +163,7 @@ export default new class Profile {
       const noUsername = !this.username;
 
       if (noLegacyUsername && noUsername) {
-        if (epoch() > startup + 3) {
-          return true;
-        } else {
-          return this.noName;
-        }
+        return true;
       } else if (!noLegacyUsername && noUsername) {
         const legacyUsername = this.profile.username;
         this.updateUsername(legacyUsername);
@@ -124,7 +171,8 @@ export default new class Profile {
 
       return false;
     }
-    return !this.user.displayName;
+    // profile isn't initialized yet. Fixes #644
+    return false;
   }
 
   getToken() {
@@ -147,40 +195,12 @@ export default new class Profile {
     }
   }
 
-  register(email, password) {
-    fbase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
-      // console.log('registration error', error);
-      toast.error(error.message);
-    }).then(user => {
-      //something
-    });
-  }
-
-  sendPassReset(email) {
-    fbase.auth().sendPasswordResetEmail(email).catch((error) => {
-      toast.error(error.message);
-      this.resetPassError = error.message;
-      this.stopResettingPassword();
-    }).then(() => {
-      toast.success(`Success! An email with instructions has been sent to ${email}.`);
-      this.stopResettingPassword();
-    });
-  }
-
   updateUsername(username) {
     if (this.user === null) {
       return false;
     } else {
       send('username_set', {username});
     }
-  }
-
-  reloadUser() {
-    return this.user.reload().then(() => {
-      const user = fbase.auth().currentUser;
-      this.user = user;
-      return user;
-    });
   }
 
   @observable resendVerificationResult = null;
@@ -194,5 +214,20 @@ export default new class Profile {
         this.resendVerificationLoading = false;
       });
     }
+  }
+
+  @computed get isAdmin() {
+    return this.rankPermissions.admin === true;
+  }
+
+  setAvatar(url) {
+    if (!url) {
+      return false;
+    }
+    return fbase.database().ref('avatars').child(this.user.uid).set(url);
+  }
+
+  clearAvatar() {
+    return fbase.database().ref('avatars').child(this.uid).remove();
   }
 }

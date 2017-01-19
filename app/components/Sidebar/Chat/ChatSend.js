@@ -49,7 +49,7 @@ export default @observer class ChatSend extends React.Component {
     if (chat.mentionMatches.length > 0) {
       var matches = chat.mentionMatches.map((m, i) => {
         return <span key={i} className="mention-item" onClick={() => chat.replaceMention(i)}>@{m}<br/></span>;
-      })
+      });
       matchContainer = (
         <div className="mentions-container">
           {matches}
@@ -71,6 +71,9 @@ export default @observer class ChatSend extends React.Component {
             onKeyDown={e => this.onKeyDown(e)}
             onChange={e => this.onChange(e)}
           />
+        </div>
+        <div id="chat-counter">
+          {chat.chars} / {chat.limit}
         </div>
       </div>
     );

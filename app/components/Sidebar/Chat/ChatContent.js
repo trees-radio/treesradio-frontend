@@ -12,13 +12,13 @@ const SCROLL_SENSITIVITY = 100;
 export default @observer class ChatContent extends React.Component {
   componentDidMount() {
     // scroll diagnostics, don't enable in production
-    // setInterval(() => {
-    //   console.log("top", this._chatscroll.scrollTop);
-    //   console.log("height", this._chatscroll.scrollHeight);
-    //   console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
-    // }, 1000);
-
-    setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 1000);
+      /*setInterval(() => {
+        console.log("top", this._chatscroll.scrollTop);
+        console.log("height", this._chatscroll.scrollHeight);
+        console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
+      }, 1000);
+      */
+    setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 3000);
   }
 
   componentWillUpdate() {
@@ -43,7 +43,7 @@ export default @observer class ChatContent extends React.Component {
     var messages = chat.messages;
 
     var content = messages.map((msg, i, arr) => {
-      var chatPosClass = Number.isInteger(i / 2) ? "chat-line-1" : "chat-line-0";
+      var chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
       var chatLineClasses = classNames("chat-item", chatPosClass, {"blazebot-msg": msg.username == 'BlazeBot'});
 
       var humanTimestamp = moment.unix(msg.timestamp).format('LT');
