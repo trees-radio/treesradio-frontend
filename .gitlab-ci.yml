@@ -14,7 +14,7 @@ image: node:7
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
-  key: "$CI_BUILD_STAGE/$CI_BUILD_REF_NAME/02"
+  key: "$CI_BUILD_STAGE/$CI_BUILD_REF_NAME/03"
   paths:
   - node_modules/
   - yarn-cache/
@@ -28,7 +28,7 @@ before_script:
       - mkdir -p yarn-cache
       - curl -o- -L https://yarnpkg.com/install.sh | bash
       - source ~/.bashrc
-      - ln -s $PWD/yarn-cache /root/.yarn-cache
+      - ln -s $PWD/yarn-cache /root/.cache/yarn
       - yarn
 
 lint:
