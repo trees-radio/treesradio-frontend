@@ -81,7 +81,7 @@ export default new class Waitlist {
   }
 
   @computed get isPlaying() {
-    if (playing.data.playing && playing.data.info.uid === profile.user.uid) {
+    if (playing.data.playing && profile.user && playing.data.info.uid === profile.user.uid) {
       return true;
     }
   }
