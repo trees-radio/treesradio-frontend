@@ -77,8 +77,9 @@ export default class UserBit extends React.Component {
               </li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
               <li onClick={() => {}}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
+              <li ><a href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target='blank'><i className="fa fa-youtube"></i> Region Check</a></li>
+              <li onClick={() => profile.logout()}><a href="#"><i className="fa fa-sign-out"></i> Logout</a></li>
             </ul>
-            <button className="btn btn-default" id="logoutbutton" onClick={() => profile.logout()}>Logout</button>
           </div>
           <Modal
             isOpen={profile.noName}
