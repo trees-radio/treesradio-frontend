@@ -43,6 +43,9 @@ export default class UserBit extends React.Component {
   @observable
   changingPassword = false;
 
+  @observable
+  changingEmail = false;
+
   @computed
   get avatarFieldValid() {
     return this.avatarField && imageWhitelist(this.avatarField);
@@ -52,6 +55,12 @@ export default class UserBit extends React.Component {
     const password = this._newPassword.value;
     this._newPassword.value = '';
     profile.changePassword(password).then(res => !!res && (this.changingPassword = false));
+  }
+
+  changeEmail() {
+    const email = this._newEmail.value;
+    this._newEmail.value = '';
+    profile.changeEmail(email).then(res => !!res && (this.changingEmail = false));
   }
 
   render() {
@@ -85,9 +94,9 @@ export default class UserBit extends React.Component {
                   }
                 </a>
               </li>
-              <li onClick={() => {}}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
+              <li onClick={() => this.changingEmail = true}><a href="#"><i className="fa fa-envelope"></i> Change Email</a></li>
               <li onClick={() => this.changingPassword = true}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
-              <li ><a href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target='blank'><i className="fa fa-youtube"></i> Region Check</a></li>
+              <li ><a href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target='blank'><i className="fa fa-youtube-play"></i> Region Check</a></li>
               <li onClick={() => profile.logout()}><a href="#"><i className="fa fa-sign-out"></i> Logout</a></li>
             </ul>
           </div>
@@ -175,6 +184,17 @@ export default class UserBit extends React.Component {
             </div>
             <br/>
             <div><button className="btn btn-primary" onClick={() => this.changePassword()}>Change Password</button></div>
+          </Modal>
+          {/*  */}
+          {/* Changing Email Modal */}
+          {/*  */}
+          <Modal isOpen={this.changingEmail} hideModal={() => this.changingEmail = false} title="Change Your Email">
+            <div className="form-group">
+              <label>New Email</label>
+              <input className="form-control" ref={c => this._newEmail = c}/>
+            </div>
+            <br/>
+            <div><button className="btn btn-primary" onClick={() => this.changeEmail()}>Change Email</button></div>
           </Modal>
         </div>
       );
