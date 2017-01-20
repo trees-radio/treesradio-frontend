@@ -52,6 +52,13 @@ export default @observer class PlaylistsPanel extends React.Component {
     this.removingPlaylist = false;
   }
 
+  @observable
+  importingPlaylist = false;
+
+  importPlaylist() {
+
+  }
+
   render() {
     var mainClass = this.props.open ? "playlists-panel-open" : "playlists-panel-closed";
 
@@ -132,7 +139,7 @@ export default @observer class PlaylistsPanel extends React.Component {
             <a className="btn btn-primary dropdown-toggle" id="playlist-dropdown" data-toggle="dropdown" href="#"><p id="pl-current-playlist">{playlists.selectedPlaylistName}</p></a>
             <ul className="dropdown-menu" id="pl-dd-menu">
               <li><a href="#" onClick={() => this.addingPlaylist = true}><i className="fa fa-plus"/> New Playlist</a></li>
-              <li><a href="#" onClick={() => {}}><i className="fa fa-youtube-play"></i> Import Playlist</a></li>
+              <li><a href="#" onClick={() => this.importingPlaylist = true}><i className="fa fa-youtube-play"></i> Import Playlist</a></li>
               {playlistsList}
             </ul>
           </div>
@@ -147,6 +154,9 @@ export default @observer class PlaylistsPanel extends React.Component {
         </Modal>
         <Modal isOpen={this.removingPlaylist} hideModal={() => this.removingPlaylist = false} title="Removing Playlist" leftButton={() => this.removePlaylist()} leftButtonText="Confirm">
           <p>Are you sure you want to remove the playlist '{this.playlistToRemove.name}'?</p>
+        </Modal>
+        <Modal isOpen={() => this.importingPlaylist = true} hideModal={() => this.importingPlaylist = false} title="Importing Playlist" leftButton={() => this.importPlaylist()}>
+        
         </Modal>
       </div>
     );

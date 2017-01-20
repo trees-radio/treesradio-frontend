@@ -1,4 +1,4 @@
-import {observable, computed, toJS} from 'mobx';
+import {observable, computed} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 // import profile from 'stores/profile';
@@ -7,8 +7,7 @@ import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
 import events from 'stores/events';
-
-const ytApiKey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
+import {searchYouTube} from 'libs/youTube';
 
 export default new class Playlists {
   constructor() {
@@ -157,32 +156,11 @@ export default new class Playlists {
     }
   }
 
-  runSearch(query) {
+  async runSearch(query) {
     this.search = [];
     this.searching = true;
-    axios.get('https://www.googleapis.com/youtube/v3/search', {
-      params: {
-        part: 'snippet',
-        maxResults: '25',
-        type: 'video',
-        videoEmbeddable: 'true',
-        key: ytApiKey,
-        q: query
-      }
-    }).then(resp => {
-      var search = resp.data.items.map(data => data.id.videoId);
-      var ids = search.reduce((p, c) => p + ',' + c, '');
-      axios.get('https://www.googleapis.com/youtube/v3/videos', {
-        params: {
-          id: ids,
-          part: 'contentDetails,snippet',
-          key: ytApiKey
-        }
-      }).then(resp => {
-        this.search = resp.data.items;
-        this.searching = false;
-      });
-    });
+    this.search = await searchYouTube(query);
+    this.searching = false;
   }
 
   addFromSearch(index) {
@@ -276,5 +254,9 @@ export default new class Playlists {
     var newPlaylist = _.shuffle(this.playlist.slice());
     this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
     toast.success(`Playlist shuffled.`);
+  }
+
+  importYouTubePlaylist(url) {
+    
   }
 }
