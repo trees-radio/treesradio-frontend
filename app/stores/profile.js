@@ -240,4 +240,14 @@ export default new class Profile {
       return false;
     });
   }
+
+  changeEmail(email) {
+    return this.user.updateEmail(email).then(() => {
+      toast.success("Email changed successfully!");
+      return true;
+    }).catch(e => {
+      toast.error(`Error changing email! Tell the devs you got ${e.code}`);
+      return false;
+    })
+  }
 }
