@@ -2,6 +2,7 @@
 public
 firebase/rules.json
 .fbaseapi
+app/version.json
 
 ## Floobits
 .flooignore
