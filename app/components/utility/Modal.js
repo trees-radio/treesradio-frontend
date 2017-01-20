@@ -35,7 +35,7 @@ const UtilityModal = React.createClass({
     isOpen: PropTypes.bool.isRequired, // boolean to tell Modal whether to be open or not
     hideModal: PropTypes.func.isRequired, // function to hide the modal (for close button)
     leftButton: PropTypes.func, // function for bottom left button (will not display button if missing)
-    leftButtonText: PropTypes.string, // text for bottom left button (will not display button if missing)
+    leftButtonText: PropTypes.node, // text for bottom left button (will not display button if missing)
     closeText: PropTypes.string // alternate close button text
   },
   render() {

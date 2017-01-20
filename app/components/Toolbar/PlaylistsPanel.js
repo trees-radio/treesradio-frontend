@@ -55,8 +55,21 @@ export default @observer class PlaylistsPanel extends React.Component {
   @observable
   importingPlaylist = false;
 
-  importPlaylist() {
+  async importPlaylist() {
+    const name = this._importName.value;
+    const url = this._importUrl.value;
+    this._importName.value = '';
+    this._importUrl.value = '';
 
+    let result;
+    try {
+      result = await playlists.importYouTubePlaylist(name, url);
+      if (result) {
+        this.importingPlaylist = false;
+      }
+    } catch(e) {
+      toast.error(`Error importing playlist!`);
+    }
   }
 
   render() {
@@ -155,8 +168,21 @@ export default @observer class PlaylistsPanel extends React.Component {
         <Modal isOpen={this.removingPlaylist} hideModal={() => this.removingPlaylist = false} title="Removing Playlist" leftButton={() => this.removePlaylist()} leftButtonText="Confirm">
           <p>Are you sure you want to remove the playlist '{this.playlistToRemove.name}'?</p>
         </Modal>
-        <Modal isOpen={() => this.importingPlaylist = true} hideModal={() => this.importingPlaylist = false} title="Importing Playlist" leftButton={() => this.importPlaylist()}>
-        
+        <Modal
+          isOpen={this.importingPlaylist}
+          hideModal={() => this.importingPlaylist = false}
+          title="Importing Playlist"
+          leftButton={() => this.importPlaylist()}
+          leftButtonText={<span>Import {playlists.importing && <i className="fa fa-spin fa-circle-o-notch"></i>}</span>}
+        >
+          <div className="form-group">
+            <label>Playlist Name</label>
+            <input className="form-control" ref={c => this._importName = c}/>
+          </div>
+          <div className="form-group">
+            <label>Playlist URL</label>
+            <input className="form-control" ref={c => this._importUrl = c}/>
+          </div>
         </Modal>
       </div>
     );
