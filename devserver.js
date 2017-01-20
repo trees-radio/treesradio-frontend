@@ -12,6 +12,6 @@ var config = new Config().extend('./webpack.base.config.js').merge({
 config.entry.unshift("webpack-dev-server/client?http://localhost:8080/"); //required for dev server
 
 var compiler = webpack(config);
-var server = new WebpackDevServer(compiler, {contentBase: "public"});
+var server = new WebpackDevServer(compiler, {contentBase: "public", stats: { colors: true }});
 
 server.listen(8080,'127.0.0.1');
