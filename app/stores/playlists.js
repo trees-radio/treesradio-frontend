@@ -1,14 +1,13 @@
-import {observable, computed, toJS} from 'mobx';
+import {observable, computed} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 // import profile from 'stores/profile';
 import localforage from 'localforage';
-import axios from 'axios';
+// import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
 import events from 'stores/events';
-
-const ytApiKey = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
+import {searchYouTube, getYtPlaylist} from 'libs/youTube';
 
 export default new class Playlists {
   constructor() {
@@ -80,8 +79,7 @@ export default new class Playlists {
   @observable search = [];
 
   addPlaylist(name) {
-    this.ref.push({name, entries: []});
-    toast.success(`Added playlist ${name}!`);
+    return this.ref.push({name, entries: []}, err => !err && toast.success(`Added playlist ${name}!`));
   }
 
   @computed get playlistNames() {
@@ -157,32 +155,11 @@ export default new class Playlists {
     }
   }
 
-  runSearch(query) {
+  async runSearch(query) {
     this.search = [];
     this.searching = true;
-    axios.get('https://www.googleapis.com/youtube/v3/search', {
-      params: {
-        part: 'snippet',
-        maxResults: '25',
-        type: 'video',
-        videoEmbeddable: 'true',
-        key: ytApiKey,
-        q: query
-      }
-    }).then(resp => {
-      var search = resp.data.items.map(data => data.id.videoId);
-      var ids = search.reduce((p, c) => p + ',' + c, '');
-      axios.get('https://www.googleapis.com/youtube/v3/videos', {
-        params: {
-          id: ids,
-          part: 'contentDetails,snippet',
-          key: ytApiKey
-        }
-      }).then(resp => {
-        this.search = resp.data.items;
-        this.searching = false;
-      });
-    });
+    this.search = await searchYouTube(query);
+    this.searching = false;
   }
 
   addFromSearch(index) {
@@ -276,5 +253,30 @@ export default new class Playlists {
     var newPlaylist = _.shuffle(this.playlist.slice());
     this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
     toast.success(`Playlist shuffled.`);
+  }
+
+  @observable
+  importing = false;
+
+  async importYouTubePlaylist(name, url) {
+    this.importing = true;
+    const playlist = await getYtPlaylist(url);
+
+    const playlistTransform = playlist.map(i => ({
+      url: `https://www.youtube.com/watch?v=${i.id}`,
+      title: i.snippet.title,
+      thumb: i.snippet.thumbnails.default.url,
+      channel: i.snippet.channelTitle,
+      duration: moment.duration(i.contentDetails.duration).valueOf()
+    }));
+
+    // console.log(playlistTransform);
+    const playlistRef = this.addPlaylist(name);
+
+    return playlistRef.child('entries').set(playlistTransform).then(() => {
+      toast.success(`Imported songs from playlist URL.`);
+      this.importing = false;
+      return true;
+    });
   }
 }
