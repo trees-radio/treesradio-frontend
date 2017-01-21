@@ -37,8 +37,8 @@ export default class UserAvatar extends React.Component {
     }
 
     return (
-      <span>
-        <img src={avatar} className="avatarimg" style={style}/>
+      <span className={this.props.className}>
+        <img src={avatar} className={this.props.imgClass || "avatarimg"} style={style}/>
         <VisibilitySensor onChange={this.onVisibility}/>
       </span>
     );
