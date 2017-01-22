@@ -172,7 +172,7 @@ export default class UserBit extends React.Component {
                 </div>
               </div>
               <div className="col-md-4">
-                <UserAvatar uid={profile.uid} />
+                <UserAvatar uid={profile.uid} className="user-avatar-preview" imgClass="user-avatar-preview-img"/>
               </div>
             </div>
           </Modal>
