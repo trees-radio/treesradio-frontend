@@ -18,14 +18,14 @@ export default class OnlineUsers extends React.Component {
       let icon;
 
       if (user.liked) {
-        icon = <i className="fa fa-arrow-circle-up"></i>;
+        icon = <i className="fa fa-arrow-up users-upvote"></i>;
       }
 
       const userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
       const userCanSeeDislikes = profile.isAdmin || userRankCanSeeDislikes;
 
       if (user.disliked && userCanSeeDislikes) {
-        icon = <i className="fa fa-arrow-circle-down"></i>;
+        icon = <i className="fa fa-arrow-down users-downvote"></i>;
       }
 
       return (
