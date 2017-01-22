@@ -6,6 +6,7 @@
 
 
 import React from 'react';
+import file from 'src/version.json';
 
 export default class About extends React.Component {
   render() {
@@ -28,13 +29,13 @@ export default class About extends React.Component {
             <li id="rules-9">- Staff reserve the right to skip any video.</li>
           </ul>
         </div>
-        <div className="about-bugs">
+        {/*<div className="about-bugs">
           <div>
             <h5>Bug Report:</h5>
             <p>Found a bug on TreesRadio? Help us fix it by reporting it, just click the link <a href="https://github.com/TreesRadio/treesradio-issues/blob/master/README.md" target="_blank">HERE</a> to find out how!</p>
             <p id="bug-github">(Requires registering with GitHub)</p>
           </div>
-        </div>
+        </div>*/}
         <div className="about-suggestions">
           <div>
             <h5>YouTube Region Checker</h5>
@@ -46,6 +47,7 @@ export default class About extends React.Component {
             <h6><a href="https://youtu.be/84qIWSRRZM8" target="_blank">Video Tutorial/Walkthrough</a></h6>
             <h6><a href="https://reddit.com/r/treesradio" target="_blank">/r/treesradio</a></h6>
         </div>
+        <div className="version-tag">v{file.version.version}-{file.version.short}</div>
       </div>
     );
   }

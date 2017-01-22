@@ -1,9 +1,10 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var Config = require('webpack-config').default;
+var Config = require('webpack-config').default; // must be imported with .default in ES5 code: https://github.com/mdreizin/webpack-config/issues/29#issuecomment-236699084
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
+var VersionFile = require('webpack-version-file-plugin');
+var short = require('git-rev-sync').short();
 
 module.exports = new Config().merge({
   entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
@@ -67,6 +68,7 @@ module.exports = new Config().merge({
   resolve: {
     alias: {
       app: path.join(__dirname, 'app'),
+      src: path.join(__dirname, 'app'),
       stores: path.join(__dirname, 'app/stores'),
       components: path.join(__dirname, 'app/components'),
       utils: path.join(__dirname, 'app/utils'),
@@ -91,6 +93,11 @@ module.exports = new Config().merge({
       hash: true,
       favicon: 'app/img/favicon.png',
       appMountId: 'app'
+    }),
+    new VersionFile({
+      packageFile: path.join(__dirname, 'package.json'),
+      outputFile: path.join(__dirname, 'app/version.json'),
+      templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "<%= currentTime %>", "version": "<%= package.version %>", "short": "${short}"}}`
     })
   ]
 })

@@ -94,7 +94,7 @@ export default new class Profile {
   @observable rank = null;
   @observable rankPermissions = {};
 
-  // TODO can probably move these four functions to the account lib
+  // TODO can probably move these top functions to the account lib
   login(email, password) {
     fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
@@ -229,5 +229,25 @@ export default new class Profile {
 
   clearAvatar() {
     return fbase.database().ref('avatars').child(this.uid).remove();
+  }
+
+  changePassword(password) {
+    return this.user.updatePassword(password).then(() => {
+      toast.success("Password updated successfully!");
+      return true;
+    }).catch(e => {
+      toast.error(`Error changing password! Tell the devs you got ${e.code}`);
+      return false;
+    });
+  }
+
+  changeEmail(email) {
+    return this.user.updateEmail(email).then(() => {
+      toast.success("Email changed successfully!");
+      return true;
+    }).catch(e => {
+      toast.error(`Error changing email! Tell the devs you got ${e.code}`);
+      return false;
+    })
   }
 }
