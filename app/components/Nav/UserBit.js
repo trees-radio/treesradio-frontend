@@ -34,7 +34,7 @@ export default class UserBit extends React.Component {
 
   @observable
   resettingPassword = false;
-  
+
   @observable
   settingAvatar = false;
   @observable
@@ -76,7 +76,9 @@ export default class UserBit extends React.Component {
         <div>
           <div className="btn-group">
             <a className="btn btn-primary" id="usernametop">
-              <i className="fa fa-user fa-fw"></i><span id="username" className={"userLevel"}>
+              <div className="userbit-avatar" >
+                <UserAvatar uid={profile.uid}/>
+              </div><span id="username" className={"userLevel"}>
               <b>{profile.safeUsername}</b>
             </span>
             </a>
