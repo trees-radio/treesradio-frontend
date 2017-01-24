@@ -2,7 +2,6 @@ import {observable, computed, autorunAsync} from 'mobx';
 import fbase from 'libs/fbase';
 import getUsername from 'libs/username';
 import playing from 'stores/playing';
-import offlineUser from 'libs/offlineUser';
 
 export default new class Online {
   constructor() {
