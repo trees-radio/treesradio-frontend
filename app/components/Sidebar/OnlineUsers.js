@@ -15,10 +15,14 @@ export default class OnlineUsers extends React.Component {
 
       var userLineClasses = classNames("user-item", userPosClass);
       // class names for users <li> in list
-      let icon;
+      let icon, grabIcon;
 
       if (user.liked) {
         icon = <i className="fa fa-arrow-up users-upvote"></i>;
+      }
+
+      if (user.grabbed) {
+        grabIcon = <i className="fa fa-bookmark users-grab"></i>;
       }
 
       const userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
@@ -32,7 +36,7 @@ export default class OnlineUsers extends React.Component {
         <li key={i} className={userLineClasses}>
           <UserAvatar uid={user.uid} />
           <div className="users-info">
-            <UserName className="users-username" uid={user.uid} username={user.username} />{icon}
+            <UserName className="users-username" uid={user.uid} username={user.username} /> {icon} {grabIcon}
           </div>
         </li>
       );

@@ -47,6 +47,9 @@ export default new class Online {
         if (feedbackUsers.dislikes && feedbackUsers.dislikes.includes(user.uid)) {
           user.disliked = true;
         }
+        if (feedbackUsers.grabs && feedbackUsers.grabs.includes(user.uid)) {
+          user.grabbed = true;
+        }
       }
       return user;
     });
