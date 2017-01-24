@@ -221,7 +221,7 @@ export default new class Playlists {
     if (playlist.entries) {
       newPlaylist = playlist.entries.slice();
     }
-    newPlaylist.push(song);
+    newPlaylist.unshift(song);
     this.ref.child(playlistKey).child('entries').set(newPlaylist);
     toast.success(`Added ${song.title} to playlist ${playlist.name}.`);
     // this.addedTo.push(playlistKey);
