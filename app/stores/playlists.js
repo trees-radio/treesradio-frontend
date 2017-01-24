@@ -158,7 +158,8 @@ export default new class Playlists {
   async runSearch(query) {
     this.search = [];
     this.searching = true;
-    this.search = await searchYouTube(query);
+    let {items} = await searchYouTube(query);
+    this.search = items;
     this.searching = false;
   }
 

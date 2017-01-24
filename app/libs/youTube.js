@@ -26,7 +26,7 @@ export async function searchYouTube(query) {
       part: 'contentDetails,snippet',
       key: YT_API_KEY
     }
-  });
+  }).then(resp => resp.data);
 
   return detailsResult;
 }
