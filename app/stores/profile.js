@@ -94,7 +94,7 @@ export default new class Profile {
   @observable rank = null;
   @observable rankPermissions = {};
 
-  // TODO can probably move these top functions to the account lib
+  // TODO can probably move these top functions to a lib
   login(email, password) {
     fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
@@ -122,7 +122,7 @@ export default new class Profile {
       // console.log('registration error', error);
       toast.error(error.message);
     }).then(user => {
-      //something
+      user.sendEmailVerification();
     });
   }
   
