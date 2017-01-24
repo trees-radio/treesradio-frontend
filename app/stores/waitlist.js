@@ -5,6 +5,7 @@ import toast from 'utils/toast';
 import playing from 'stores/playing';
 import chat from 'stores/chat';
 import {send} from 'libs/events';
+import online from 'stores/online';
 
 export default new class Waitlist {
   constructor() {
@@ -25,6 +26,10 @@ export default new class Waitlist {
   }
 
   @observable list = [];
+
+  @computed get onlineOnly() {
+    return this.list.filter(usr => online.uids.includes(usr));
+  }
 
   join() {
     if (!profile.user) {
