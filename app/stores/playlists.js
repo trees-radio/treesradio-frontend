@@ -215,13 +215,19 @@ export default new class Playlists {
 
   // @observable addedTo = [];
 
-  addSong(song, playlistKey) {
+  addSong(song, playlistKey, isGrab) {
     var playlist = this.getPlaylistByKey(playlistKey);
     var newPlaylist = [];
     if (playlist.entries) {
       newPlaylist = playlist.entries.slice();
     }
-    newPlaylist.push(song);
+
+    if (isGrab) {
+      newPlaylist.push(song);
+    } else {
+      newPlaylist.unshift(song);
+    }
+    
     this.ref.child(playlistKey).child('entries').set(newPlaylist);
     toast.success(`Added ${song.title} to playlist ${playlist.name}.`);
     // this.addedTo.push(playlistKey);
