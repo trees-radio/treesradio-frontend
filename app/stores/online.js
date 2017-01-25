@@ -8,7 +8,8 @@ export default new class Online {
     this.fbase = fbase;
     fbase.database().ref('presence').on('value', (snap) => {
       var list = [];
-      snap.forEach(user => {
+
+      snap.forEach(async user => { // loop over each user presence node to build list
         let {connections} = user.val();
         const uid = user.key;
         let keys = Object.keys(connections || {});
@@ -20,11 +21,11 @@ export default new class Online {
           });
         }
       });
-      this.list = list;
 
+      this.list = list;
     });
 
-    autorunAsync(() => {
+    autorunAsync(() => { // async list updates
       this.usernames = [];
       this.list.forEach(async (user) => {
         this.usernames.push(await getUsername(user.uid));
@@ -46,6 +47,9 @@ export default new class Online {
         if (feedbackUsers.dislikes && feedbackUsers.dislikes.includes(user.uid)) {
           user.disliked = true;
         }
+        if (feedbackUsers.grabs && feedbackUsers.grabs.includes(user.uid)) {
+          user.grabbed = true;
+        }
       }
       return user;
     });
@@ -53,6 +57,10 @@ export default new class Online {
 
   @computed get onlineCount() {
     return this.list.length;
+  }
+
+  @computed get uids() {
+    return this.list.map(u => u.uid);
   }
 
   @computed get sorted() {

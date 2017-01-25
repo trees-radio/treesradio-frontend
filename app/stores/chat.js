@@ -8,7 +8,7 @@ import mention from 'libs/mention';
 import {send} from 'libs/events';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
-const CHAT_DEBOUNCE_MSEC = 3000;
+const CHAT_DEBOUNCE_MSEC = 2000;
 const MSG_CHAR_LIMIT = 500;
 
 export default new class Chat {

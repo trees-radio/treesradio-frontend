@@ -7,7 +7,7 @@ import UserAvatar from 'components/utility/User/UserAvatar';
 
 export default @observer class Waitlist extends React.Component {
   render() {
-    var list = waitlist.list.map((u, i) => {
+    var list = waitlist.onlineOnly.map((u, i) => {
       return (
         <li key={i} className={classNames("waitlist-item", Number.isInteger(i / 2) ? "waitlist-line-1" : "waitlist-line-0")}>
           <div className="waitlist-position">
