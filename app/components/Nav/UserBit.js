@@ -28,8 +28,9 @@ export default class UserBit extends React.Component {
     account.updateUsername(this._username.value);
   }
 
-  sendPassReset() {
-    profile.sendPassReset(this._resetEmail.value);
+  async sendPassReset() {
+    const result = await profile.sendPassReset(this._resetEmail.value);
+    if (result) this.resettingPassword = false;
   }
 
   @observable
