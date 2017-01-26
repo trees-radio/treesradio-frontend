@@ -6,35 +6,36 @@ import username from 'libs/username';
 import {send} from 'libs/events';
 import rank, {getSettingsForRank} from 'libs/rank';
 // const startup = epoch();
+import app from 'stores/app';
 
 export default new class Profile {
   constructor() {
-    fbase.database().ref('.info/connected').on('value', (snap) => {
-      if (snap.val() === true) {
-        this.init = true;
-        this.connected = true;
-      } else {
-        this.connected = false;
-      }
-    });
-
     fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
         fbase.database().ref('users').child(user.uid).on('value', snap => {
           var profile = snap.val() || {};
           this.profile = profile;
-          this.profileInit = true;
+          this.init = true;
 
           send('hello');
 
           fbase.database().ref('.info/connected').on('value', snap => {
             if (snap.val() === true) {
+              clearInterval(this.presenceInterval); //stop any previous intervals
+              this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
+
               let presenceRef = fbase.database().ref(`presence/${user.uid}`);
               let timestamp = epoch();
-              let updateRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid});
-              updateRef.onDisconnect().remove();
-              this.presenceInterval = setInterval(() => updateRef.child('timestamp').set(epoch()), 60*1000);
+              this.presenceRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid});
+
+              this.presenceRef.onDisconnect().remove();
+              this.presenceInterval = setInterval(() => this.presenceRef.child('timestamp').set(epoch()), 60*1000);
+
+              this.ipRef && this.ipRef.remove();
+              this.ipRef = fbase.database().ref('private').child(user.uid).child('ip').child(this.presenceRef.key);
+              this.ipRef.set(app.ipAddress);
+              this.ipRef.onDisconnect().remove();
             }
           });
         });
@@ -79,13 +80,14 @@ export default new class Profile {
     });
   }
 
-  @observable connected = false;
-  @observable init = false;
+  @computed get connected() {
+    return app.connected;
+  }
 
   @observable user = null;
   @observable username = undefined;
   @observable profile = null;
-  @observable profileInit = false;
+  @observable init = false;
 
   @observable private = null;
   @observable privateInit = false;
@@ -184,7 +186,7 @@ export default new class Profile {
   }
 
   @computed get noName() {
-    if (this.user !== null && this.profileInit === true) {
+    if (this.user !== null && this.init === true) {
       const noLegacyUsername =  this.profile === null || !this.profile.username;
       const noUsername = !this.username;
 
