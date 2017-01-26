@@ -7,7 +7,7 @@ import PlaylistsPanel from './Toolbar/PlaylistsPanel';
 import waitlist from 'stores/waitlist';
 import playlists from 'stores/playlists';
 import profile from 'stores/profile';
-import playing from 'stores/playing';
+import playing, {VOLUME_NUDGE_FRACTION} from 'stores/playing';
 import toast from 'utils/toast';
 import classNames from 'classnames';
 import onClickOutside from 'react-onclickoutside';
@@ -146,7 +146,7 @@ export default @observer class Toolbar extends React.Component {
               <i className={volClass}></i>
               <ReactSlider
                 max={1}
-                step={0.01}
+                step={VOLUME_NUDGE_FRACTION}
                 defaultValue={0.15}
                 value={playing.volume}
                 className="volume-slider-node"
