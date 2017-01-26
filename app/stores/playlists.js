@@ -5,7 +5,7 @@ import fbase from 'libs/fbase';
 // import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
-import events from 'stores/events';
+// import events from 'stores/events';
 import {searchYouTube, getYtPlaylist} from 'libs/youTube';
 
 export default new class Playlists {
@@ -40,14 +40,16 @@ export default new class Playlists {
             });
           }
 
-          if (!this.disposeEvent) {
-            this.disposeEvent = events.register('new_song', (e) => {
-              if (e.data === this.uid) {
-                this.moveBottom(0);
-              }
-              this.addedTo = [];
-            });
-          }
+
+          // pretty sure this is being done server side now
+          // if (!this.disposeEvent) {
+          //   this.disposeEvent = events.register('new_song', (e) => {
+          //     if (e.data === this.uid) {
+          //       this.moveBottom(0);
+          //     }
+          //     this.addedTo = [];
+          //   });
+          // }
 
 
           this.init = true;
