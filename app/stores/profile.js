@@ -6,18 +6,10 @@ import username from 'libs/username';
 import {send} from 'libs/events';
 import rank, {getSettingsForRank} from 'libs/rank';
 // const startup = epoch();
+import app from 'stores/app';
 
 export default new class Profile {
   constructor() {
-    fbase.database().ref('.info/connected').on('value', (snap) => {
-      if (snap.val() === true) {
-        this.init = true;
-        this.connected = true;
-      } else {
-        this.connected = false;
-      }
-    });
-
     fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
@@ -32,7 +24,7 @@ export default new class Profile {
             if (snap.val() === true) {
               let presenceRef = fbase.database().ref(`presence/${user.uid}`);
               let timestamp = epoch();
-              let updateRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid});
+              let updateRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid, ip: app.ipAddress});
               updateRef.onDisconnect().remove();
               this.presenceInterval = setInterval(() => updateRef.child('timestamp').set(epoch()), 60*1000);
             }
@@ -79,8 +71,9 @@ export default new class Profile {
     });
   }
 
-  @observable connected = false;
-  @observable init = false;
+  @computed get connected() {
+    return app.connected;
+  }
 
   @observable user = null;
   @observable username = undefined;
