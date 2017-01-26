@@ -225,7 +225,7 @@ export default new class Profile {
     if (this.user === null) {
       return false;
     } else {
-      send('username_set', {username});
+      send('username_set', {username}).then(() => location.reload());
     }
   }
 
