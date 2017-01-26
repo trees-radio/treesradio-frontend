@@ -6,8 +6,8 @@ module.exports = {
   },
 
   globals: {
-    React: true,
-    Raven: true
+    Raven: true,
+    localforage: true
   },
 
   parser: 'babel-eslint',

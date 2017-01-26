@@ -5,7 +5,6 @@ import profile from 'stores/profile';
 // import ax from 'utils/ax';
 import moment from 'moment';
 import _ from 'lodash';
-import localforage from 'localforage';
 // import events from 'stores/events';
 import playlists from 'stores/playlists';
 import {send} from 'libs/events';
