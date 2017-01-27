@@ -78,6 +78,7 @@ export default new class Playlists {
   @observable playlist = [];
   @observable searching = false;
   @observable search = [];
+  @observable openSearch = false;
 
   addPlaylist(name) {
     return this.ref.push({name, entries: []}, err => !err && toast.success(`Added playlist ${name}!`));
@@ -87,8 +88,13 @@ export default new class Playlists {
     return this.playlists.map(playlist => playlist.name);
   }
 
+  clearSearch() {
+    this.openSearch = false;
+    this.search = [];
+  }
+
   selectPlaylist(index) {
-    this.search = []; //clear any searches
+    this.clearSearch();
     if (this.stopPlaylistSync) {
       this.stopPlaylistSync();
     }
@@ -126,7 +132,7 @@ export default new class Playlists {
     if (this.playlists.length > 0 && this.playlists[this.selectedPlaylist]) {
       return this.playlists[this.selectedPlaylist].name;
     } else {
-      return "Create or Select a Playlist";
+      return false;
     }
   }
 
@@ -148,20 +154,13 @@ export default new class Playlists {
     }
   }
 
-  @computed get openSearch() {
-    if (this.search.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   async runSearch(query) {
     this.search = [];
     this.searching = true;
     let {items} = await searchYouTube(query);
     this.search = items;
     this.searching = false;
+    this.openSearch = true;
   }
 
   addFromSearch(index) {
