@@ -13,7 +13,7 @@ export default new class Profile {
     fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
-        fbase.database().ref('users').child(user.uid).on('value', snap => {
+        this.stopProfileSync = fbase.database().ref('users').child(user.uid).on('value', snap => {
           var profile = snap.val() || {};
           this.profile = profile;
           this.init = true;
@@ -42,16 +42,21 @@ export default new class Profile {
 
 
 
-        fbase.database().ref('private').child(user.uid).on('value', snap => {
+        this.stopPrivateSync = fbase.database().ref('private').child(user.uid).on('value', snap => {
           var priv = snap.val() || {};
           this.private = priv;
           this.privateInit = true;
-          // this.playlists.init(priv.selectedPlaylist);
+        });
+
+        this.stopRegistrationSync = fbase.database().ref('registered').child(user.uid).on('value', snap => {
+          this.registeredEpoch = snap.val() || epoch();
         });
 
       } else {
+        this.stopProfileSync && this.stopProfileSync();
+        this.stopPrivateSync && this.stopPrivateSync();
+        this.stopRegistrationSync && this.stopRegistrationSync();
         clearInterval(this.presenceInterval);
-        // this.playlists.uninit();
       }
     });
 
@@ -67,7 +72,6 @@ export default new class Profile {
 
     // permissions handling
     autorun(async () => {
-      
       if (this.user) {
         this.rank = await rank(this.user.uid);
         
@@ -94,6 +98,8 @@ export default new class Profile {
 
   @observable rank = null;
   @observable rankPermissions = {};
+
+  @observable registeredEpoch = null;
 
   // TODO can probably move these top functions to a lib
   login(email, password) {
