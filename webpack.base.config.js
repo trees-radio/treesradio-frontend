@@ -62,8 +62,7 @@ module.exports = new Config().merge({
           name: 'img/[name].[ext]'
         }
       },
-    ],
-    noParse: [new RegExp('node_modules/localforage/dist/localforage.js')] //silences warning, see https://github.com/localForage/localForage/issues/599
+    ]
   },
   resolve: {
     alias: {

@@ -5,37 +5,37 @@ import epoch from 'utils/epoch';
 import username from 'libs/username';
 import {send} from 'libs/events';
 import rank, {getSettingsForRank} from 'libs/rank';
-
 // const startup = epoch();
+import app from 'stores/app';
 
 export default new class Profile {
   constructor() {
-    fbase.database().ref('.info/connected').on('value', (snap) => {
-      if (snap.val() === true) {
-        this.init = true;
-        this.connected = true;
-      } else {
-        this.connected = false;
-      }
-    });
-
     fbase.auth().onAuthStateChanged((user) => {
       this.user = user;
       if (user !== null) {
         fbase.database().ref('users').child(user.uid).on('value', snap => {
           var profile = snap.val() || {};
           this.profile = profile;
-          this.profileInit = true;
+          this.init = true;
 
           send('hello');
 
           fbase.database().ref('.info/connected').on('value', snap => {
             if (snap.val() === true) {
+              clearInterval(this.presenceInterval); //stop any previous intervals
+              this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
+
               let presenceRef = fbase.database().ref(`presence/${user.uid}`);
               let timestamp = epoch();
-              let updateRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid});
-              updateRef.onDisconnect().remove();
-              this.presenceInterval = setInterval(() => updateRef.child('timestamp').set(epoch()), 60*1000);
+              this.presenceRef = presenceRef.child('connections').push({timestamp, username: user.displayName, uid: user.uid});
+
+              this.presenceRef.onDisconnect().remove();
+              this.presenceInterval = setInterval(() => this.presenceRef.child('timestamp').set(epoch()), 60*1000);
+
+              this.ipRef && this.ipRef.remove();
+              this.ipRef = fbase.database().ref('private').child(user.uid).child('ip').child(this.presenceRef.key);
+              this.ipRef.set(app.ipAddress);
+              this.ipRef.onDisconnect().remove();
             }
           });
         });
@@ -80,13 +80,14 @@ export default new class Profile {
     });
   }
 
-  @observable connected = false;
-  @observable init = false;
+  @computed get connected() {
+    return app.connected;
+  }
 
   @observable user = null;
   @observable username = undefined;
   @observable profile = null;
-  @observable profileInit = false;
+  @observable init = false;
 
   @observable private = null;
   @observable privateInit = false;
@@ -98,42 +99,69 @@ export default new class Profile {
   login(email, password) {
     fbase.auth().signInWithEmailAndPassword(email, password).then(user => {
       // console.log('user', user);
-    }).catch((error) => {
-      // Handle Errors here.
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
-      // console.log(error);
-      toast.error(error.message);
-      // ...
+    }).catch(error => {
+      let msg = `Unknown error: ${error.code}`;
+      switch(error.code) {
+        case 'auth/email-already-in-use':
+          msg = `An account already exists with the email address ${email}`;
+          break;
+        case 'auth/invalid-email':
+          msg = `${email} is not a valid email address.`;
+          break;
+        case 'auth/operation-not-allowed':
+          msg = `Registration is currently disabled.`;
+          break;
+        case 'auth/weak-password':
+          msg = `Your chosen password is too weak. Please use a stronger password`;
+          break;
+      }
+      toast.error(msg);
     });
   }
 
   logout() {
-    fbase.auth().signOut().then(function() {
-      // Sign-out successful.
-    }, function(error) {
-      // An error happened.
-      toast.error(error.message);
-    });
+    return fbase.auth().signOut();
   }
 
   register(email, password) {
     fbase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
-      // console.log('registration error', error);
-      toast.error(error.message);
+      let msg = `Unknown error: ${error.code}`;
+      switch (error.code) {
+        case 'auth/invalid-email':
+          msg = `${email} is not a valid email address.`;
+          break;
+        case 'auth/user-disabled':
+          msg = `That user account is disabled.`;
+          break;
+        case 'auth/user-not-found':
+          msg = `No user account found for ${email}`;
+          break;
+        case 'auth/wrong-password':
+          msg = `That's the wrong password for that account!`;
+          break;
+      }
+      toast.error(msg);
     }).then(user => {
       user.sendEmailVerification();
     });
   }
   
   sendPassReset(email) {
-    fbase.auth().sendPasswordResetEmail(email).catch((error) => {
-      toast.error(error.message);
-      this.resetPassError = error.message;
-      this.stopResettingPassword();
+    return fbase.auth().sendPasswordResetEmail(email).catch(error => {
+      let msg = `Unknown error: ${error.code}`;
+      switch (error.message) {
+        case 'auth/invalid-email':
+          msg = `${email} is not a valid email address.`;
+          break;
+        case 'auth/user-not-found':
+          msg = `No user account found for ${email}`;
+          break;
+      }
+      toast.error(msg);
+      return false;
     }).then(() => {
       toast.success(`Success! An email with instructions has been sent to ${email}.`);
-      this.stopResettingPassword();
+      return true;
     });
   }
 
@@ -158,7 +186,7 @@ export default new class Profile {
   }
 
   @computed get noName() {
-    if (this.user !== null && this.profileInit === true) {
+    if (this.user !== null && this.init === true) {
       const noLegacyUsername =  this.profile === null || !this.profile.username;
       const noUsername = !this.username;
 
@@ -199,7 +227,7 @@ export default new class Profile {
     if (this.user === null) {
       return false;
     } else {
-      send('username_set', {username});
+      send('username_set', {username}).then(() => location.reload());
     }
   }
 
@@ -236,7 +264,16 @@ export default new class Profile {
       toast.success("Password updated successfully!");
       return true;
     }).catch(e => {
-      toast.error(`Error changing password! Tell the devs you got ${e.code}`);
+      let msg = `Unknown error: ${e.code}`;
+      switch (e.code) {
+        case 'weak-password':
+          msg = `That password is too weak!`;
+          break;
+        case 'auth/requires-recent-login':
+          msg = `Changing your password requires a recent login, log out and log back in before trying again.`;
+          break;
+      }
+      toast.error(msg);
       return false;
     });
   }
@@ -246,7 +283,19 @@ export default new class Profile {
       toast.success("Email changed successfully!");
       return true;
     }).catch(e => {
-      toast.error(`Error changing email! Tell the devs you got ${e.code}`);
+      let msg = `Unknown error: ${e.code}`;
+      switch (e.code) {
+        case 'auth/invalid-email':
+          msg = `${email} is not a valid email address.`;
+          break;
+        case 'auth/email-already-in-use':
+          msg = `${email} is already in use by another account.`;
+          break;
+        case 'auth/requires-recent-login':
+          msg = `Changing your email requires a recent login, log out and log back in before trying again.`;
+          break;
+      }
+      toast.error(msg);
       return false;
     })
   }

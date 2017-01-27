@@ -2,11 +2,10 @@ import {observable, computed} from 'mobx';
 import toast from 'utils/toast';
 import fbase from 'libs/fbase';
 // import profile from 'stores/profile';
-import localforage from 'localforage';
 // import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
-import events from 'stores/events';
+// import events from 'stores/events';
 import {searchYouTube, getYtPlaylist} from 'libs/youTube';
 
 export default new class Playlists {
@@ -41,14 +40,16 @@ export default new class Playlists {
             });
           }
 
-          if (!this.disposeEvent) {
-            this.disposeEvent = events.register('new_song', (e) => {
-              if (e.data === this.uid) {
-                this.moveBottom(0);
-              }
-              this.addedTo = [];
-            });
-          }
+
+          // pretty sure this is being done server side now
+          // if (!this.disposeEvent) {
+          //   this.disposeEvent = events.register('new_song', (e) => {
+          //     if (e.data === this.uid) {
+          //       this.moveBottom(0);
+          //     }
+          //     this.addedTo = [];
+          //   });
+          // }
 
 
           this.init = true;
@@ -77,6 +78,7 @@ export default new class Playlists {
   @observable playlist = [];
   @observable searching = false;
   @observable search = [];
+  @observable openSearch = false;
 
   addPlaylist(name) {
     return this.ref.push({name, entries: []}, err => !err && toast.success(`Added playlist ${name}!`));
@@ -86,8 +88,13 @@ export default new class Playlists {
     return this.playlists.map(playlist => playlist.name);
   }
 
+  clearSearch() {
+    this.openSearch = false;
+    this.search = [];
+  }
+
   selectPlaylist(index) {
-    this.search = []; //clear any searches
+    this.clearSearch();
     if (this.stopPlaylistSync) {
       this.stopPlaylistSync();
     }
@@ -125,7 +132,7 @@ export default new class Playlists {
     if (this.playlists.length > 0 && this.playlists[this.selectedPlaylist]) {
       return this.playlists[this.selectedPlaylist].name;
     } else {
-      return "Create or Select a Playlist";
+      return false;
     }
   }
 
@@ -147,20 +154,13 @@ export default new class Playlists {
     }
   }
 
-  @computed get openSearch() {
-    if (this.search.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   async runSearch(query) {
     this.search = [];
     this.searching = true;
     let {items} = await searchYouTube(query);
     this.search = items;
     this.searching = false;
+    this.openSearch = true;
   }
 
   addFromSearch(index) {

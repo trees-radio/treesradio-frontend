@@ -5,7 +5,6 @@ import profile from 'stores/profile';
 // import ax from 'utils/ax';
 import moment from 'moment';
 import _ from 'lodash';
-import localforage from 'localforage';
 // import events from 'stores/events';
 import playlists from 'stores/playlists';
 import {send} from 'libs/events';
@@ -14,6 +13,7 @@ import spacePineapples from 'img/spacepineapples.jpg';
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
+export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 export default new class Playing {
   constructor() {
@@ -117,9 +117,9 @@ export default new class Playing {
 
   nudgeVolume(dir) {
     if (dir === 'UP') {
-      this.setVolume(this.volume + 0.01);
+      this.setVolume(this.volume + VOLUME_NUDGE_FRACTION);
     } else if (dir === 'DOWN') {
-      this.setVolume(this.volume - 0.01);
+      this.setVolume(this.volume - VOLUME_NUDGE_FRACTION);
     }
   }
 

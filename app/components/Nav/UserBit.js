@@ -4,7 +4,6 @@ import {observable,computed} from "mobx";
 import classNames from "classnames";
 
 import profile from "stores/profile";
-import account from "libs/account";
 import playing from "stores/playing";
 import imageWhitelist, {allowedDomains} from "libs/imageWhitelist";
 import UserAvatar from "components/utility/User/UserAvatar";
@@ -25,11 +24,12 @@ export default class UserBit extends React.Component {
   }
 
   addUsername() {
-    account.updateUsername(this._username.value);
+    profile.updateUsername(this._username.value);
   }
 
-  sendPassReset() {
-    profile.sendPassReset(this._resetEmail.value);
+  async sendPassReset() {
+    const result = await profile.sendPassReset(this._resetEmail.value);
+    if (result) this.resettingPassword = false;
   }
 
   @observable
