@@ -24,7 +24,7 @@ export default class UserBit extends React.Component {
   }
 
   addUsername() {
-    account.updateUsername(this._username.value);
+    profile.updateUsername(this._username.value);
   }
 
   async sendPassReset() {
