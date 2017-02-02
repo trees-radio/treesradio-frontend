@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 // import {observable} from 'mobx';
-import {observer} from 'mobx-react';
+import { observer } from "mobx-react";
 // import fbase from 'stores/fbase';
-import chat from 'stores/chat';
-import profile from 'stores/profile';
-import toast from 'utils/toast';
+import chat from "stores/chat";
+import profile from "stores/profile";
+import toast from "utils/toast";
 
 // const noop = () => {};
-
-export default @observer class ChatSend extends React.Component {
-
+@observer
+export default (class ChatSend extends React.Component {
   onKeyPress(e) {
     var key = e.keyCode || e.which;
     // console.log(key);
@@ -25,7 +24,7 @@ export default @observer class ChatSend extends React.Component {
   onKeyDown(e) {
     var key = e.keyCode || e.which;
     // console.log(key);
-    if (key ===  9) {
+    if (key === 9) {
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
       }
@@ -37,7 +36,7 @@ export default @observer class ChatSend extends React.Component {
   onChange(e) {
     // console.log('onChange', e);
     if (!profile.user) {
-      toast.error('You must be logged in to chat!');
+      toast.error("You must be logged in to chat!");
     } else {
       chat.updateMsg(e.target.value);
     }
@@ -48,7 +47,15 @@ export default @observer class ChatSend extends React.Component {
 
     if (chat.mentionMatches.length > 0) {
       var matches = chat.mentionMatches.map((m, i) => {
-        return <span key={i} className="mention-item" onClick={() => chat.replaceMention(i)}>@{m}<br/></span>;
+        return (
+          <span
+            key={i}
+            className="mention-item"
+            onClick={() => chat.replaceMention(i)}
+          >
+            @{m}<br />
+          </span>
+        );
       });
       matchContainer = (
         <div className="mentions-container">
@@ -60,7 +67,7 @@ export default @observer class ChatSend extends React.Component {
     return (
       <div>
         {matchContainer}
-        <div id="sendbox">
+        <div id="sendbox" className="sendbox">
           <input
             type="text"
             placeholder="enter to send"
@@ -78,4 +85,4 @@ export default @observer class ChatSend extends React.Component {
       </div>
     );
   }
-}
+});

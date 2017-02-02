@@ -1,24 +1,26 @@
-import React from 'react';
+import React from "react";
 
-import ChatContent from './Chat/ChatContent';
-import ChatSend from './Chat/ChatSend';
+import chat from "stores/chat";
+import profile from "stores/profile";
+
+import ChatContent from "./Chat/ChatContent";
+import ChatSend from "./Chat/ChatSend";
+import ChatLocked from "./Chat/ChatLocked";
 
 export default class Chat extends React.Component {
   render() {
     return (
       <div id="chatcontainer">
-        <ChatContent/>
-        <ChatSend/>
-        {/* <ChatContent
-          chatData={this.props.chatData}
-          />
-          <ChatSend
-          sendMsg={this.props.sendMsg}
-          loginData={this.props.loginData}
-          loginState={this.props.loginState}
-          userPresence={this.props.userPresence}
-          chatlock={p.chatlock}
-        /> */}
+        <ChatContent />
+        {
+          chat.canChat
+            ? <ChatSend />
+            : <ChatLocked
+              locked={chat.chatLocked}
+              loggedIn={profile.loggedIn}
+              secondsUntilUnlock={chat.secondsUntilUnlock}
+            />
+        }
       </div>
     );
   }

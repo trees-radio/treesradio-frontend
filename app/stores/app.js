@@ -1,6 +1,7 @@
 import {observable, computed} from 'mobx';
 import axios from 'axios';
 import fbase from 'libs/fbase';
+import epoch from 'utils/epoch';
 
 export default new class App {
   constructor() {
@@ -12,10 +13,13 @@ export default new class App {
         this.connected = false;
       }
     });
+
+    setInterval(() => this.APP_EPOCH = epoch(), 1000); //keep time
   }
 
   @observable connected = false;
   @observable ipAddress = null;
+  @observable APP_EPOCH = epoch();
 
   @computed get init() {
     if (this.connected && this.ipAddress !== null) {

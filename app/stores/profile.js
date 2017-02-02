@@ -229,6 +229,10 @@ export default new class Profile {
     }
   }
 
+  @computed get secondsRegistered() {
+    return app.APP_EPOCH - this.registeredEpoch;
+  }
+
   updateUsername(username) {
     if (this.user === null) {
       return false;
