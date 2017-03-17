@@ -258,3 +258,32 @@ input#chatinput.form-control {
   margin-left:21.9vw;
   margin-top:2vh;
 }
+
+.sendbox-locked {
+  height:6%;
+  width:100%;
+}
+
+.sendbox-loggedout-msg {
+  position:relative;
+  top:1vh;
+  left:4vw;
+  font-size:2.5vh;
+}
+
+.sendbox-locked-msg {
+  position:relative;
+  left:5vw;
+  font-size:2vh;
+}
+
+.sendbox-locked-msg2 {
+  position:relative;
+  float:left;
+  left:5.85vw;
+  font-size:2vh;
+}
+
+.sendbox-locked-timer{
+  color:#77b300;
+}
