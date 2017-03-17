@@ -10,11 +10,12 @@ import {send} from 'libs/events';
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const CHAT_DEBOUNCE_MSEC = 2000;
 const MSG_CHAR_LIMIT = 500;
+const CHAT_LOCK_REGISTRATION_SEC = 1800;
 
 export default new class Chat {
   constructor() {
     this.fbase = fbase;
-    fbase.database().ref('chat').limitToLast(50).on('child_added', (snap) => {
+    fbase.database().ref('chat').limitToLast(50).on('child_added', snap => {
       var msg = snap.val();
       if (msg) {
         if (this.messages[this.messages.length-1] && msg.username === this.messages[this.messages.length-1].username) {
@@ -42,11 +43,15 @@ export default new class Chat {
     events.register('chat_clear', () => this.messages = []);
 
     this.limit = MSG_CHAR_LIMIT;
+
+    fbase.database().ref('backend').child('chatlock').on('value', snap => this.chatLocked = !!snap.val()); // listen to backend chatlock value
   }
 
   @observable messages = [];
 
   @observable msg = '';
+
+  @observable chatLocked = false;
 
   updateMsg(msg) {
     if (msg.length <= MSG_CHAR_LIMIT) {
@@ -105,5 +110,15 @@ export default new class Chat {
     var words = this.msg.split(' ');
     words[words.length - 1] = '@'+this.mentionMatches[index]+' ';
     this.msg = words.join(' ');
+  }
+
+  @computed get canChat() {
+    if (!profile.loggedIn) return false;
+    if (this.chatLocked && profile.secondsRegistered < CHAT_LOCK_REGISTRATION_SEC) return false;
+    return true;
+  }
+
+  @computed get secondsUntilUnlock() {
+    return CHAT_LOCK_REGISTRATION_SEC - profile.secondsRegistered;
   }
 }

@@ -29,7 +29,7 @@ path /events {
   read() {true}
 }
 
-path /backend/public {
+path /backend {
   read() {true}
 }
 
