@@ -42,6 +42,7 @@ build:
     paths:
       - public/
   script:
+    - time npm run bolt-compile
     - time npm run ci-build-app
 
 deploy_staging:
