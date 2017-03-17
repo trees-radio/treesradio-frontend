@@ -41,6 +41,7 @@ build:
   artifacts:
     paths:
       - public/
+      - firebase/
   script:
     - time npm run build-rules
     - time npm run build-app
