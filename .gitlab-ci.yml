@@ -42,7 +42,8 @@ build:
     paths:
       - public/
   script:
-    - time npm run ci-build-app
+    - time npm run build-rules
+    - time npm run build-app
 
 deploy_staging:
   stage: deploy
