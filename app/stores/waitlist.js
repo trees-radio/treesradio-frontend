@@ -11,10 +11,10 @@ export default new class Waitlist {
   constructor() {
     fbase.database().ref('waitlist').orderByKey().on('value', (snap) => {
       var list = [];
-      snap.forEach(user => {
-        var data = user.val();
-        list.push(data);
-      });
+      var wl = snap.val();
+      for ( var key in wl ) {
+        list.push(wl[key]);
+      }
       this.list = list;
       // console.log('waitlist', list);
     });
@@ -28,7 +28,13 @@ export default new class Waitlist {
   @observable list = [];
 
   @computed get onlineOnly() {
-    return this.list.filter(usr => online.uids.includes(usr));
+    
+    return this.list.filter( function (user) {
+      if ( online.uids.includes(user.uid) ) {
+        return { uid: user.uid };
+      }
+    });
+    //return this.list.filter(usr => online.uids.includes(usr));
   }
 
   join() {

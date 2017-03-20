@@ -12,7 +12,6 @@ export default new class Online {
       var user = snap.val();
 
       for ( var key in user ) {
-        console.log(key);
 
           list.push({
               username: user.username,
