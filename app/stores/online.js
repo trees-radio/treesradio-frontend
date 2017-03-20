@@ -6,24 +6,24 @@ import playing from 'stores/playing';
 export default new class Online {
   constructor() {
     this.fbase = fbase;
+    
     fbase.database().ref('presence').on('value', (snap) => {
       var list = [];
+      var user = snap.val();
 
-      snap.forEach(async user => { // loop over each user presence node to build list
-        let {connections} = user.val();
-        const uid = user.key;
-        let keys = Object.keys(connections || {});
-        if (keys.length > 0) {
-          let newest = connections[keys.slice(-1)];
+      for ( var key in user ) {
+        console.log(key);
+
           list.push({
-            username: newest.username,
-            uid
+              username: user.username,
+              uid: key
           });
-        }
-      });
+      }
 
       this.list = list;
-    });
+
+      });
+
 
     autorunAsync(() => { // async list updates
       this.usernames = [];
