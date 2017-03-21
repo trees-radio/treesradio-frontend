@@ -1,21 +1,34 @@
-import React from 'react';
-import {observer} from 'mobx-react';
+import React from "react";
+import {observer} from "mobx-react";
+import {observable} from "mobx";
+import _ from "lodash";
 
-import UserBit from './Nav/UserBit';
+import UserBit from "./Nav/UserBit";
 
-export default @observer class Nav extends React.Component {
+import file from "src/version.json";
+
+@observer
+export default (class Nav extends React.Component {
+  @observable hoveredTitle = false;
+
+  onHover = _.debounce(() => this.hoveredTitle = true, 500, {leading: true});
+  offHover = _.debounce(() => this.hoveredTitle = false, 500);
+
   render() {
-    var betaString = "\u03B2eta";
-    var title = <span><span>TreesRadio</span> <span className="beta-tag">{betaString}</span></span>;
-    // if (this.props.devCheck) {
-    //   title = "TreesRadio Dev";
-    // }
+    const title = <span><span>TreesRadio</span> <Version show={this.hoveredTitle} /></span>;
     return (
       <div id="tr-nav">
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
-              <a className="navbar-brand" href="#">{title}</a>
+              <a
+                className="navbar-brand"
+                href="#"
+                onMouseOver={() => this.onHover()}
+                onMouseOut={() => this.offHover()}
+              >
+                {title}
+              </a>
             </div>
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -23,13 +36,18 @@ export default @observer class Nav extends React.Component {
                 <li><a>About</a></li>
               </ul> */}
               <div className="nav navbar-nav navbar-right">
-                <UserBit/>
+                <UserBit />
               </div>
-            </div>{ /* .navbar-collapse */}
-          </div> { /* .container-fluid */}
+            </div>{/* .navbar-collapse */}
+          </div> {/* .container-fluid */}
         </nav>
-        <div id="nav-divider"></div>
+        <div id="nav-divider" />
       </div>
     );
   }
+});
+
+function Version({show}) {
+  if (show === false) return null;
+  return <span className="version-tag">v{file.version.version}-{file.version.short}</span>;
 }
