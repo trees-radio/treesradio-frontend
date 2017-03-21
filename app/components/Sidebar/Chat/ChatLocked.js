@@ -5,12 +5,9 @@ export default function ChatLocked({locked, loggedIn, secondsUntilUnlock}) {
     return (
       <div className="sendbox-locked">
         <span className="sendbox-locked-msg">
-          The chat is locked for new users. You may chat in
-          {" "}
-          <span className="sendbox-locked-timer">{secondsUntilUnlock}</span>
-          {" "}
-          seconds.
-        </span>
+          The chat is locked for new users.</span>
+        <span className="sendbox-locked-msg2">
+          You may chat in: <span className="sendbox-locked-timer">{secondsUntilUnlock}</span> seconds.</span>
       </div>
     );
   } else {
@@ -21,3 +18,4 @@ export default function ChatLocked({locked, loggedIn, secondsUntilUnlock}) {
     );
   }
 }
+ 
