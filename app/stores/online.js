@@ -1,35 +1,33 @@
-import {observable, computed, autorunAsync} from 'mobx';
-import fbase from 'libs/fbase';
-import getUsername from 'libs/username';
-import playing from 'stores/playing';
+import {observable, computed, autorunAsync} from "mobx";
+import fbase from "libs/fbase";
+import getUsername from "libs/username";
+import playing from "stores/playing";
 
 export default new class Online {
   constructor() {
     this.fbase = fbase;
-    
-    fbase.database().ref('presence').on('value', (snap) => {
-      var list = [];
-      var user = snap.val();
 
-      for ( var key in user ) {
+    fbase.database().ref("presence").on("value", snap => {
+      let list = [];
+      const user = snap.val();
 
-          list.push({
-              username: user.username,
-              uid: key
-          });
+      for (let uid in user) {
+        list.push({uid});
       }
 
       this.list = list;
+    });
 
-      });
-
-
-    autorunAsync(() => { // async list updates
-      this.usernames = [];
-      this.list.forEach(async (user) => {
-        this.usernames.push(await getUsername(user.uid));
-      });
-    }, 5000);
+    autorunAsync(
+      () => {
+        // async list updates
+        this.usernames = [];
+        this.list.forEach(async user => {
+          this.usernames.push(await getUsername(user.uid));
+        });
+      },
+      5000
+    );
   }
 
   @observable list = [];
@@ -67,4 +65,4 @@ export default new class Online {
       return a.rank - b.rank;
     });
   }
-}
+}();
