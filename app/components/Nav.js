@@ -1,6 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
+import _ from "lodash";
 
 import UserBit from "./Nav/UserBit";
 
@@ -9,6 +10,9 @@ import file from "src/version.json";
 @observer
 export default (class Nav extends React.Component {
   @observable hoveredTitle = false;
+
+  onHover = _.debounce(() => this.hoveredTitle = true, 500, {leading: true});
+  offHover = _.debounce(() => this.hoveredTitle = false, 500);
 
   render() {
     const title = <span><span>TreesRadio</span> <Version show={this.hoveredTitle} /></span>;
@@ -20,8 +24,8 @@ export default (class Nav extends React.Component {
               <a
                 className="navbar-brand"
                 href="#"
-                onMouseOver={() => this.hoveredTitle = true}
-                onMouseOut={() => this.hoveredTitle = false}
+                onMouseOver={() => this.onHover()}
+                onMouseOut={() => this.offHover()}
               >
                 {title}
               </a>
