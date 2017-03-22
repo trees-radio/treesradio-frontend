@@ -1,24 +1,40 @@
-import React from 'react';
-import {observer} from 'mobx-react';
-import chat from 'stores/chat';
-import classNames from 'classnames';
-import moment from 'moment';
-import UserName from 'components/utility/User/UserName';
-import UserAvatar from 'components/utility/User/UserAvatar';
-import Message from './Message';
+import React from "react";
+import {observer} from "mobx-react";
+import chat from "stores/chat";
+import classNames from "classnames";
+import moment from "moment";
+import UserName from "components/utility/User/UserName";
+import UserAvatar from "components/utility/User/UserAvatar";
+import Message from "./Message";
 
 const SCROLL_SENSITIVITY = 100;
 
-export default @observer class ChatContent extends React.Component {
+@observer
+export default (class ChatContent extends React.Component {
   componentDidMount() {
     // scroll diagnostics, don't enable in production
-      /*setInterval(() => {
+    /*setInterval(() => {
         console.log("top", this._chatscroll.scrollTop);
         console.log("height", this._chatscroll.scrollHeight);
         console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
       }, 1000);
       */
-    setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 3000);
+    this.scroll(3000, true);
+  }
+
+  scroll(timeout = 500, force = false) {
+    if (!this.shouldScroll && !force) return;
+    if (!this.scrollIntervals) this.scrollIntervals = [];
+
+    const newLength = this.scrollIntervals.push(
+      setInterval(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 100)
+    );
+
+    setTimeout(() => clearInterval(this.scrollIntervals[newLength - 1]), timeout);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.scrollInterval);
   }
 
   componentWillUpdate() {
@@ -34,9 +50,10 @@ export default @observer class ChatContent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.shouldScroll) {
-      this._chatscroll.scrollTop = this._chatscroll.scrollHeight;
-    }
+    // if (this.shouldScroll) {
+    //   this._chatscroll.scrollTop = this._chatscroll.scrollHeight;
+    // }
+    this.scroll();
   }
 
   render() {
@@ -44,27 +61,33 @@ export default @observer class ChatContent extends React.Component {
 
     var content = messages.map((msg, i, arr) => {
       var chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
-      var chatLineClasses = classNames("chat-item", chatPosClass, {"blazebot-msg": msg.username == 'BlazeBot'});
+      var chatLineClasses = classNames("chat-item", chatPosClass, {
+        "blazebot-msg": msg.username == "BlazeBot"
+      });
 
-      var humanTimestamp = moment.unix(msg.timestamp).format('LT');
+      var humanTimestamp = moment.unix(msg.timestamp).format("LT");
 
       var msgs = msg.msgs.map((innerMsg, i) => {
-        return <Message key={i} text={innerMsg}/>;
+        return <Message key={i} text={innerMsg} />;
       });
 
       return (
         <li key={i} className={chatLineClasses}>
           <div className="chat-avatar">
-            <UserAvatar uid={msg.uid}/>
+            <UserAvatar uid={msg.uid} />
           </div>
           <div className="chat-msg">
-            <UserName uid={msg.uid} className="chat-username" onClick={() => chat.appendMsg('@'+msg.username)}/>
-            <span className="chat-timestamp">{humanTimestamp}</span><br/>
-            <span className="chat-text">{ msgs }</span>
+            <UserName
+              uid={msg.uid}
+              className="chat-username"
+              onClick={() => chat.appendMsg("@" + msg.username)}
+            />
+            <span className="chat-timestamp">{humanTimestamp}</span><br />
+            <span className="chat-text">{msgs}</span>
           </div>
         </li>
       );
-    })
+    });
     return (
       <div id="chatscroll" ref={c => this._chatscroll = c}>
         <ul id="chatbox">
@@ -73,4 +96,4 @@ export default @observer class ChatContent extends React.Component {
       </div>
     );
   }
-}
+});
