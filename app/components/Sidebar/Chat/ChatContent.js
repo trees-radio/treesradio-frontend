@@ -1,5 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
+import _ from "lodash";
 import chat from "stores/chat";
 import classNames from "classnames";
 import moment from "moment";
@@ -7,7 +8,7 @@ import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import Message from "./Message";
 
-const SCROLL_SENSITIVITY = 100;
+const SCROLL_SENSITIVITY = 200;
 
 @observer
 export default (class ChatContent extends React.Component {
@@ -19,23 +20,23 @@ export default (class ChatContent extends React.Component {
         console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
       }, 1000);
       */
-    this.scroll(3000, true);
+    this.scroll();
+    // setTimeout(() => this.scroll(), 5000);
+    this.startup = Date.now();
   }
 
-  scroll(timeout = 500, force = false) {
-    if (!this.shouldScroll && !force) return;
-    if (!this.scrollIntervals) this.scrollIntervals = [];
+  scroll = () => setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 300);
 
-    const newLength = this.scrollIntervals.push(
-      setInterval(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 100)
-    );
+  autoScroll = () => {
+    if (Date.now() - this.startup < 3000) {
+      this.debouncedScroll();
+    }
+    if (this.shouldScroll) {
+      this.scroll();
+    }
+  };
 
-    setTimeout(() => clearInterval(this.scrollIntervals[newLength - 1]), timeout);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.scrollInterval);
-  }
+  debouncedScroll = _.debounce(this.scroll, 5000);
 
   componentWillUpdate() {
     var test = this._chatscroll.scrollHeight - this._chatscroll.scrollTop;
@@ -50,10 +51,7 @@ export default (class ChatContent extends React.Component {
   }
 
   componentDidUpdate() {
-    // if (this.shouldScroll) {
-    //   this._chatscroll.scrollTop = this._chatscroll.scrollHeight;
-    // }
-    this.scroll();
+    this.autoScroll();
   }
 
   render() {
@@ -68,7 +66,9 @@ export default (class ChatContent extends React.Component {
       var humanTimestamp = moment.unix(msg.timestamp).format("LT");
 
       var msgs = msg.msgs.map((innerMsg, i) => {
-        return <Message key={i} text={innerMsg} />;
+        return (
+          <Message key={i} text={innerMsg} onLoad={() => setTimeout(this.autoScroll(true), 100)} />
+        );
       });
 
       return (
