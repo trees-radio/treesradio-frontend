@@ -18,31 +18,35 @@ export default class OnlineUsers extends React.Component {
       let icon, grabIcon;
 
       if (user.liked) {
-        icon = <i className="fa fa-arrow-up users-upvote"></i>;
+        icon = <i className="fa fa-arrow-up users-upvote" />;
       }
 
       if (user.grabbed) {
-        grabIcon = <i className="fa fa-bookmark users-grab"></i>;
+        grabIcon = <i className="fa fa-bookmark users-grab" />;
       }
 
       const userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
       const userCanSeeDislikes = profile.isAdmin || userRankCanSeeDislikes;
 
       if (user.disliked && userCanSeeDislikes) {
-        icon = <i className="fa fa-arrow-down users-downvote"></i>;
+        icon = <i className="fa fa-arrow-down users-downvote" />;
       }
 
       return (
         <li key={i} className={userLineClasses}>
           <UserAvatar uid={user.uid} />
           <div className="users-info">
-            <UserName className="users-username" uid={user.uid} username={user.username} /> {icon} {grabIcon}
+            <UserName className="users-username" uid={user.uid} username={user.username} />
+            {" "}
+            {icon}
+            {" "}
+            {grabIcon}
           </div>
         </li>
       );
     });
     return (
-      <div className="users-scroll">
+      <div className="users-scroll" style={this.props.show ? {} : {display: "none"}}>
         <ul className="users-list">
           {usersList}
         </ul>

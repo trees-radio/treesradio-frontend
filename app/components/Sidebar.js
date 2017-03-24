@@ -20,56 +20,58 @@ export default class Sidebar extends React.Component {
     const loggedInAtRender = profile.loggedIn;
     autorun(() => {
       const loggedInAfterRender = !loggedInAtRender && profile.loggedIn;
-      if (this.currentSidebar === 'ABOUT' && loggedInAfterRender) {
-        this.currentSidebar = 'CHAT';
+      if (this.currentSidebar === "ABOUT" && loggedInAfterRender) {
+        this.currentSidebar = "CHAT";
       }
     });
   }
 
-  @observable
-  currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
+  update(tab) {
+    if (tab === this.currentSidebar) return;
+    this.currentSidebar = tab;
+  }
+
+  @observable currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
 
   render() {
-    var chatSelected, onlineSelected, waitlistSelected, aboutSelected, sidebarComponent;
-    switch (this.currentSidebar) {
-      case "CHAT":
-        chatSelected = true;
-        sidebarComponent = <Chat />;
-        break;
-      case "ONLINE":
-        onlineSelected = true;
-        sidebarComponent = <OnlineUsers />;
-        break;
-      case "WAITLIST":
-        waitlistSelected = true;
-        sidebarComponent = <Waitlist />;
-        break;
-      case "ABOUT":
-        aboutSelected = true;
-        sidebarComponent = <About />;
-        break;
-      default:
-    }
-
-    let chatBtnClass = classNames("show-chat-btn", "col-lg-3", {"sidebar-selected": chatSelected});
-    let onlineBtnClass = classNames("show-ousers-btn", "col-lg-3", {"sidebar-selected": onlineSelected});
-    let waitlistBtnClass = classNames("show-waitlist-btn", "col-lg-3", {"sidebar-selected": waitlistSelected});
-    let aboutBtnClass = classNames("show-about-btn", "col-lg-3", {"sidebar-selected": aboutSelected});
+    const chatBtnClass = classNames("show-chat-btn", "col-lg-3", {
+      "sidebar-selected": this.currentSidebar === "CHAT"
+    });
+    const onlineBtnClass = classNames("show-ousers-btn", "col-lg-3", {
+      "sidebar-selected": this.currentSidebar === "ONLINE"
+    });
+    const waitlistBtnClass = classNames("show-waitlist-btn", "col-lg-3", {
+      "sidebar-selected": this.currentSidebar === "WAITLIST"
+    });
+    const aboutBtnClass = classNames("show-about-btn", "col-lg-3", {
+      "sidebar-selected": this.currentSidebar === "ABOUT"
+    });
 
     return (
       <div id="sidebar">
         <div className="row sidebar-changer">
-          <div className={chatBtnClass} ref="sel-chat" onClick={() => this.currentSidebar = "CHAT"}>Chat</div>
-          <div className={onlineBtnClass} ref="sel-online" onClick={() => this.currentSidebar = "ONLINE"}>
+          <div className={chatBtnClass} ref="sel-chat" onClick={() => this.update("CHAT")}>
+            Chat
+          </div>
+          <div className={onlineBtnClass} ref="sel-online" onClick={() => this.update("ONLINE")}>
             Online Ents <span className="online-count">{online.onlineCount}</span>
           </div>
-          <div className={waitlistBtnClass} ref="sel-waitlist" onClick={() => this.currentSidebar = "WAITLIST"}>
+          <div
+            className={waitlistBtnClass}
+            ref="sel-waitlist"
+            onClick={() => this.update("WAITLIST")}
+          >
             Waitlist <span className="waitlist-count">{waitlist.count}</span>
           </div>
-          <div className={aboutBtnClass} ref="sel-about" onClick={() => this.currentSidebar = "ABOUT"}>About</div>
+          <div className={aboutBtnClass} ref="sel-about" onClick={() => this.update("ABOUT")}>
+            About
+          </div>
         </div>
         <div id="chatcontainertop" className="">
-          {sidebarComponent}
+          <Chat show={this.currentSidebar === "CHAT"} />
+          <OnlineUsers show={this.currentSidebar === "ONLINE"} />
+          <Waitlist show={this.currentSidebar === "WAITLIST"} />
+          <About show={this.currentSidebar === "ABOUT"} />
         </div>
       </div>
     );

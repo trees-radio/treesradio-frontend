@@ -1,7 +1,7 @@
-import React from 'react';
-import {emojify} from 'react-emojione';
-import imageWhitelist from 'libs/imageWhitelist';
-import VisibilitySensor from 'react-visibility-sensor';
+import React from "react";
+import {emojify} from "react-emojione";
+import imageWhitelist from "libs/imageWhitelist";
+import VisibilitySensor from "react-visibility-sensor";
 
 // regex for links (protocol not required): http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
@@ -11,17 +11,24 @@ const regex = new RegExp(expression);
 const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
-
 const emojifyOptions = {
   styles: {
-    backgroundImage: 'url(https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.png)'
+    backgroundImage: "url(https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.png)"
   }
 };
+
+const imageCheck = tkn => tkn.match(imgregex) && imageWhitelist(tkn);
 
 export default class Message extends React.Component {
   constructor() {
     super();
-    this.state = {visible: false};
+    this.state = {visible: true};
+  }
+
+  componentDidMount() {
+    const text = this.props.text;
+    let tokens = text.split(" ");
+    if (!tokens.some(imageCheck)) this.props.onLoad();
   }
 
   onVisibility = isVisible => this.setState({visible: isVisible});
@@ -29,35 +36,48 @@ export default class Message extends React.Component {
   render() {
     const text = this.props.text;
 
-    let tokens = text.split(' ');
+    let tokens = text.split(" ");
 
-    let result = tokens.map((tkn, i) => {
-      // Is this an image link?
-      if (tkn.match(imgregex) && imageWhitelist(tkn)) {
-        let style = {};
-        if (!this.state.visible) {
-          style.visibility = 'hidden';
-        }
-        
-        return <span key={i}><img src={tkn} style={style} className='inline-image'/></span>;
-        // OR is this a plain URL?
-      } else if (tkn.match(regex)) { 
-        let link = tkn;
-        if (!link.slice(0, 4) === 'http') {
-          link = `http://${link}`;
-        }
-        return <span key={i}><a href={link} target='_blank'>{tkn}</a></span>;
-      }
-      
-      return <span key={i}> {emojify(tkn, emojifyOptions)} </span>;
-    });
+    const result = tokens.map((tkn, i) => (
+      <MessageItem key={i} token={tkn} show={this.state.visible} onLoad={this.props.onLoad} />
+    ));
 
     return (
       <div>
         {result}
-        <VisibilitySensor onChange={this.onVisibility}/>
+        <VisibilitySensor onChange={this.onVisibility} />
       </div>
     );
   }
 }
-  
+
+class MessageItem extends React.Component {
+  componentDidMount() {
+    if (!imageCheck(this.props.token)) this.props.onLoad();
+  }
+
+  render() {
+    const {token, show, onLoad} = this.props;
+    if (imageCheck(token)) {
+      let style = {};
+      if (!show) {
+        style.visibility = "hidden";
+      }
+
+      return (
+        <span>
+          <img src={token} onLoad={onLoad} style={style} className="inline-image" />
+        </span>
+      );
+      // OR is this a plain URL?
+    } else if (token.match(regex)) {
+      let link = token;
+      if (!link.slice(0, 4) === "http") {
+        link = `http://${link}`;
+      }
+      return <span><a href={link} target="_blank">{token}</a></span>;
+    }
+
+    return <span> {emojify(token, emojifyOptions)} </span>;
+  }
+}
