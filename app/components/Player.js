@@ -1,21 +1,39 @@
-import React from 'react';
-import {observer} from 'mobx-react';
+import React from "react";
+import {observer} from "mobx-react";
+import {observable} from "mobx";
 
-import ReactPlayer from 'react-player';
-import Progress from 'react-progressbar';
+import ReactPlayer from "react-player";
+import Progress from "react-progressbar";
 
-import playing from 'stores/playing';
+import playing from "stores/playing";
 
 const rPlayerYoutubeConfig = {playerVars: {iv_load_policy: 3}};
 
-export default @observer class Player extends React.Component {
-
+@observer
+export default (class Player extends React.Component {
   onProgress(p) {
     // console.log('player prog', p);
     playing.playerProgress = p.played;
     if (playing.shouldSync) {
       this._player.seekTo(playing.fraction);
     }
+  }
+
+  @observable showVideo = true;
+
+  componentDidMount() {
+    this.onkeydownListener = e => {
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 86) {
+        e.preventDefault();
+        this.showVideo = !this.showVideo;
+      }
+    };
+
+    window.addEventListener("keydown", this.onkeydownListener);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown".this.onkeydownListener);
   }
 
   render() {
@@ -25,21 +43,25 @@ export default @observer class Player extends React.Component {
 
     return (
       <div id="vidcontainer" style={containerStyle}>
-        <div id="player-size" className={playing.playerSize === 'BIG' ? 'large-player-size' : 'small-player-size'}>
-          <ReactPlayer
-            ref={c => this._player = c}
-            className="reactplayer"
-            width="100%"
-            height="100%"
-            id="reactplayerid"
-            url={playing.data.info.url}
-            playing={playing.data.playing}
-            volume={playing.volume}
-            onProgress={(p) => this.onProgress(p)}
-            onPause={undefined}
-            youtubeConfig={rPlayerYoutubeConfig}
-            onDuration={d => playing.playerDuration = d}
-          />
+        <div
+          id="player-size"
+          className={playing.playerSize === "BIG" ? "large-player-size" : "small-player-size"}
+        >
+          {this.showVideo &&
+            <ReactPlayer
+              ref={c => this._player = c}
+              className="reactplayer"
+              width="100%"
+              height="100%"
+              id="reactplayerid"
+              url={playing.data.info.url}
+              playing={playing.data.playing}
+              volume={playing.volume}
+              onProgress={p => this.onProgress(p)}
+              onPause={undefined}
+              youtubeConfig={rPlayerYoutubeConfig}
+              onDuration={d => playing.playerDuration = d}
+            />}
         </div>
         <Progress
           className="progress-bar"
@@ -49,4 +71,4 @@ export default @observer class Player extends React.Component {
       </div>
     );
   }
-}
+});
