@@ -1,15 +1,15 @@
-import React from 'react';
-import {observer} from 'mobx-react';
+import React from "react";
+import {observer} from "mobx-react";
 
-import ReactPlayer from 'react-player';
-import Progress from 'react-progressbar';
+import ReactPlayer from "react-player";
+import Progress from "react-progressbar";
 
-import playing from 'stores/playing';
+import playing from "stores/playing";
 
 const rPlayerYoutubeConfig = {playerVars: {iv_load_policy: 3}};
 
-export default @observer class Player extends React.Component {
-
+@observer
+export default (class Player extends React.Component {
   onProgress(p) {
     // console.log('player prog', p);
     playing.playerProgress = p.played;
@@ -25,7 +25,10 @@ export default @observer class Player extends React.Component {
 
     return (
       <div id="vidcontainer" style={containerStyle}>
-        <div id="player-size" className={playing.playerSize === 'BIG' ? 'large-player-size' : 'small-player-size'}>
+        <div
+          id="player-size"
+          className={playing.playerSize === "BIG" ? "large-player-size" : "small-player-size"}
+        >
           <ReactPlayer
             ref={c => this._player = c}
             className="reactplayer"
@@ -35,7 +38,7 @@ export default @observer class Player extends React.Component {
             url={playing.data.info.url}
             playing={playing.data.playing}
             volume={playing.volume}
-            onProgress={(p) => this.onProgress(p)}
+            onProgress={p => this.onProgress(p)}
             onPause={undefined}
             youtubeConfig={rPlayerYoutubeConfig}
             onDuration={d => playing.playerDuration = d}
@@ -49,4 +52,4 @@ export default @observer class Player extends React.Component {
       </div>
     );
   }
-}
+});
