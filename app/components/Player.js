@@ -1,5 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
+import {observable} from "mobx";
 
 import ReactPlayer from "react-player";
 import Progress from "react-progressbar";
@@ -18,6 +19,23 @@ export default (class Player extends React.Component {
     }
   }
 
+  @observable showVideo = true;
+
+  componentDidMount() {
+    this.onkeydownListener = e => {
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 86) {
+        e.preventDefault();
+        this.showVideo = !this.showVideo;
+      }
+    };
+
+    window.addEventListener("keydown", this.onkeydownListener);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown".this.onkeydownListener);
+  }
+
   render() {
     const containerStyle = {
       backgroundImage: `url(${playing.backgroundImage})`
@@ -29,20 +47,21 @@ export default (class Player extends React.Component {
           id="player-size"
           className={playing.playerSize === "BIG" ? "large-player-size" : "small-player-size"}
         >
-          <ReactPlayer
-            ref={c => this._player = c}
-            className="reactplayer"
-            width="100%"
-            height="100%"
-            id="reactplayerid"
-            url={playing.data.info.url}
-            playing={playing.data.playing}
-            volume={playing.volume}
-            onProgress={p => this.onProgress(p)}
-            onPause={undefined}
-            youtubeConfig={rPlayerYoutubeConfig}
-            onDuration={d => playing.playerDuration = d}
-          />
+          {this.showVideo &&
+            <ReactPlayer
+              ref={c => this._player = c}
+              className="reactplayer"
+              width="100%"
+              height="100%"
+              id="reactplayerid"
+              url={playing.data.info.url}
+              playing={playing.data.playing}
+              volume={playing.volume}
+              onProgress={p => this.onProgress(p)}
+              onPause={undefined}
+              youtubeConfig={rPlayerYoutubeConfig}
+              onDuration={d => playing.playerDuration = d}
+            />}
         </div>
         <Progress
           className="progress-bar"
