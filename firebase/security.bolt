@@ -92,8 +92,8 @@ path /moderator {
   read() {true}
 }
 
-path /bans {
-  read() {true}
+path /bans/{$uid} {
+  read() {isUser($uid)}
 }
 
 ////////////////////////////////////////////////////////////////
