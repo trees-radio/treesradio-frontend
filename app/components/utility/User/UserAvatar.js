@@ -31,6 +31,8 @@ export default class UserAvatar extends React.Component {
       avatar = EMPTY_IMG;
     }
 
+    avatar = avatar.replace(/http:/, 'https:');
+
     let style = {};
     if (!this.state.visible) {
       style.visibility = 'hidden';
