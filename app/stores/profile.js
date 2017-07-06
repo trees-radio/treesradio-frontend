@@ -61,10 +61,17 @@ export default new class Profile {
           .on("value", snap => {
             this.registeredEpoch = snap.val() || epoch();
           });
+
+        this.stopBanSync = fbase
+          .database()
+          .ref("bans")
+          .child(user.uid)
+          .on("value", snap => (this.banData = snap.val()));
       } else {
         this.stopProfileSync && this.stopProfileSync();
         this.stopPrivateSync && this.stopPrivateSync();
         this.stopRegistrationSync && this.stopRegistrationSync();
+        this.stopBanSync && this.stopBanSync();
         clearInterval(this.presenceInterval);
       }
     });
@@ -72,7 +79,7 @@ export default new class Profile {
     // self username handling
     autorun(() => {
       if (this.user) {
-        username(this.user.uid).then(username => this.username = username);
+        username(this.user.uid).then(username => (this.username = username));
       } else {
         this.username = undefined;
       }
@@ -108,6 +115,7 @@ export default new class Profile {
   @observable rankPermissions = {};
 
   @observable registeredEpoch = null;
+  @observable banData = null;
 
   // TODO can probably move these top functions to a lib
   login(email, password) {
@@ -226,6 +234,14 @@ export default new class Profile {
       return false;
     }
     // profile isn't initialized yet. Fixes #644
+    return false;
+  }
+
+  @computed get banned() {
+    if (!this.banData) return false;
+    if (this.banData.forever === true) return true;
+    const now = Date.now() / 1000;
+    if (this.banData.time > now) return true;
     return false;
   }
 
