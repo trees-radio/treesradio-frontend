@@ -8,7 +8,8 @@ import mention from "libs/mention";
 import {send} from "libs/events";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
-const CHAT_DEBOUNCE_MSEC = 100;
+const CHAT_DEBOUNCE_MSEC = 300;
+const CHAT_PENALTY_MSEC = 500;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 
@@ -18,6 +19,7 @@ export default new class Chat {
     fbase.database().ref("chat").limitToLast(50).on("child_added", snap => {
       var msg = snap.val();
       if (msg) {
+        // Makes chat messages appear to the silenced user.
         if ( msg.uid !== profile.uid && ( msg.silenced !== undefined && msg.silenced === true ) ) {
           return;
         }
@@ -64,6 +66,8 @@ export default new class Chat {
 
   @observable chatLocked = false;
 
+  @observable chatcounter = [];
+
   updateMsg(msg) {
     if (msg.length <= MSG_CHAR_LIMIT) {
       this.msg = msg;
@@ -85,9 +89,27 @@ export default new class Chat {
   }
 
   pushMsg() {
-    if (!this.chatDebounce || this.chatDebounce < Date.now() - 5000) {
+
+    // Clear out expired timers.
+    for ( var i = 0; i < this.chatcounter.length; i++ ) {
+      console.log(this.chatcounter[i].time + " in queue " + i);
+      console.log(Date.now() - this.chatcounter[i].time );
+      if ( Date.now() - this.chatcounter[i].time > 5000 ) {
+        i--;
+        this.chatcounter.shift();
+        continue;
+      }
+    }
+
+    this.chatDebounce = (this.chatcounter.length * CHAT_DEBOUNCE_MSEC) + 
+                        ( this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0 );
+
+    console.log("Chat Timer:" + this.chatDebounce + " Timer Queue: " + this.chatcounter.length);
+    if ( this.chatcounter.length > 0 ) console.log(Date.now() - this.chatcounter[this.chatcounter.length - 1].time);
+    if ( ( this.chatcounter.length == 0 ) || 
+           Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce) {
       this.sendMsg(this.getMsg());
-      this.chatDebounce = Date.now();
+      this.chatcounter.push({ time: Date.now() });
     } else if (this.msg !== "") {
       toast.warning(`Please wait ${CHAT_DEBOUNCE_MSEC / 1000} second(s) between messages.`);
     }
