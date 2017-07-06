@@ -92,8 +92,6 @@ export default new class Chat {
 
     // Clear out expired timers.
     for ( var i = 0; i < this.chatcounter.length; i++ ) {
-      console.log(this.chatcounter[i].time + " in queue " + i);
-      console.log(Date.now() - this.chatcounter[i].time );
       if ( Date.now() - this.chatcounter[i].time > 5000 ) {
         i--;
         this.chatcounter.shift();
@@ -104,14 +102,13 @@ export default new class Chat {
     this.chatDebounce = (this.chatcounter.length * CHAT_DEBOUNCE_MSEC) + 
                         ( this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0 );
 
-    console.log("Chat Timer:" + this.chatDebounce + " Timer Queue: " + this.chatcounter.length);
     if ( this.chatcounter.length > 0 ) console.log(Date.now() - this.chatcounter[this.chatcounter.length - 1].time);
     if ( ( this.chatcounter.length == 0 ) || 
            Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce) {
       this.sendMsg(this.getMsg());
       this.chatcounter.push({ time: Date.now() });
     } else if (this.msg !== "") {
-      toast.warning(`Please wait ${CHAT_DEBOUNCE_MSEC / 1000} second(s) between messages.`);
+      toast.warning(`Please wait ${this.chatDebounce / 1000} second(s) between messages.`);
     }
   }
 
