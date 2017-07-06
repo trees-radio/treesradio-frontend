@@ -2,6 +2,7 @@ import {observable, computed, autorunAsync} from "mobx";
 import fbase from "libs/fbase";
 import getUsername from "libs/username";
 import playing from "stores/playing";
+import getRank from "libs/rank";
 
 export default new class Online {
   constructor() {
@@ -62,7 +63,17 @@ export default new class Online {
 
   @computed get sorted() {
     return this.listWithFeedback.sort((a, b) => {
-      return a.rank - b.rank;
+      a.rank = pullRank(a.uid);
+      b.rank = pullRank(b.uid);
+
+      if ( a.rank === null ) a.rank = 'User';
+      if ( b.rank === null ) a.rank = 'User';
+
+      return ( a.rank == b.rank ? 0 : ( a.rank < b.rank ? -1 : 1 ) );
     });
   }
 }();
+
+async function pullRank(uid) {
+  return await getRank(uid);
+}
