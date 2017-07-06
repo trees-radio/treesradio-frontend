@@ -8,7 +8,7 @@ import mention from "libs/mention";
 import {send} from "libs/events";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
-const CHAT_DEBOUNCE_MSEC = 1000;
+const CHAT_DEBOUNCE_MSEC = 100;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 
@@ -18,6 +18,9 @@ export default new class Chat {
     fbase.database().ref("chat").limitToLast(50).on("child_added", snap => {
       var msg = snap.val();
       if (msg) {
+        if ( msg.uid !== profile.uid && ( msg.silenced !== undefined && msg.silenced === true ) ) {
+          return;
+        }
         if (
           this.messages[this.messages.length - 1] &&
           msg.username === this.messages[this.messages.length - 1].username
