@@ -67,11 +67,20 @@ export default new class Profile {
           .ref("bans")
           .child(user.uid)
           .on("value", snap => (this.banData = snap.val()));
+        
+        this.stopSilenceSync = fbase
+          .database()
+          .ref("bans")
+          .child(user.uid)
+          .on("value", snap => ( this.silenceData = snap.val()));
+
       } else {
         this.stopProfileSync && this.stopProfileSync();
         this.stopPrivateSync && this.stopPrivateSync();
         this.stopRegistrationSync && this.stopRegistrationSync();
         this.stopBanSync && this.stopBanSync();
+        this.stopSilenceSync && this.stopSilenceSync();
+
         clearInterval(this.presenceInterval);
       }
     });
@@ -116,6 +125,7 @@ export default new class Profile {
 
   @observable registeredEpoch = null;
   @observable banData = null;
+  @observable silenceData = null;
 
   // TODO can probably move these top functions to a lib
   login(email, password) {
@@ -242,6 +252,14 @@ export default new class Profile {
     if (this.banData.forever === true) return true;
     const now = Date.now() / 1000;
     if (this.banData.time > now) return true;
+    return false;
+  }
+
+  @computed get silenced() {
+    if ( !this.silenceData ) return false;
+    if ( this.silenceData.forever === true ) return true;
+    const now = Date.now() / 1000;
+    if ( this.silenceData.time > now ) return true;
     return false;
   }
 
