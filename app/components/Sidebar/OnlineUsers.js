@@ -9,7 +9,7 @@ import profile from "stores/profile";
 @observer
 export default class OnlineUsers extends React.Component {
   render() {
-    const users = online.sorted || [];
+    const users = online.listWithFeedback || [];
     var usersList = users.map((user, i) => {
       var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
 
