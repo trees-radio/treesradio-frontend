@@ -23,9 +23,9 @@ export default new class Chat {
         if ( msg.uid !== profile.uid && ( msg.silenced !== undefined && msg.silenced === true ) ) {
           return;
         }
-
+        
         if ( (msg.adminOnly !== undefined && msg.adminOnly == true) &&
-             ( profile.rank === undefined || profile.rank == 'User' ) ) {
+             ( profile.rank === null || profile.rank == 'User' ) ) {
                // This is an admin only message.
               return;
         }
