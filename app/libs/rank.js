@@ -16,3 +16,7 @@ export async function getSettingsForRank(rank) {
   const settings = await ranksSettings();
   return await settings.ranks[rank] || {};
 }
+
+export async function getAllRanks(cbFunc) {
+  fbase.database().ref('ranks').once('value', snap => cbFunc(snap.val()) );  
+}

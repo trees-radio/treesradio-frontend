@@ -2,7 +2,8 @@ import {observable, computed, autorunAsync} from "mobx";
 import fbase from "libs/fbase";
 import getUsername from "libs/username";
 import playing from "stores/playing";
-import getRank from "libs/rank";
+import {getRank,getAllRanks} from "libs/rank";
+import _ from 'underscore';
 
 export default new class Online {
   constructor() {
@@ -36,21 +37,37 @@ export default new class Online {
 
   @computed get listWithFeedback() {
     const feedbackUsers = playing.data.feedback_users;
-    return this.list.map(u => {
-      let user = {...u};
-      if (feedbackUsers) {
-        if (feedbackUsers.likes && feedbackUsers.likes.includes(user.uid)) {
-          user.liked = true;
-        }
-        if (feedbackUsers.dislikes && feedbackUsers.dislikes.includes(user.uid)) {
-          user.disliked = true;
-        }
-        if (feedbackUsers.grabs && feedbackUsers.grabs.includes(user.uid)) {
-          user.grabbed = true;
-        }
-      }
-      return user;
+    let userlist = [];
+
+    getAllRanks((allRanks) => {
+        return this.list.forEach(u => {
+          let user = {...u};
+          if (feedbackUsers) {
+            if (feedbackUsers.likes && feedbackUsers.likes.includes(user.uid)) {
+              user.liked = true;
+            }
+            if (feedbackUsers.dislikes && feedbackUsers.dislikes.includes(user.uid)) {
+              user.disliked = true;
+            }
+            if (feedbackUsers.grabs && feedbackUsers.grabs.includes(user.uid)) {
+              user.grabbed = true;
+            }
+          }
+          user.rank = allRanks[user.uid] || 'User';
+          userlist.push(user);
+        });
     });
+
+    // This is not always consistently working. And I don't know why.
+    userlist.sort(
+        function (a,b) {
+          if ( a.rank > b.rank ) return -1;
+          if ( b.rank > a.rank ) return 1;
+          return 0;
+        }
+    );
+
+    return userlist;
   }
 
   @computed get onlineCount() {
@@ -61,19 +78,4 @@ export default new class Online {
     return this.list.map(u => u.uid);
   }
 
-  @computed get sorted() {
-    return this.listWithFeedback.sort((a, b) => {
-      a.rank = pullRank(a.uid);
-      b.rank = pullRank(b.uid);
-
-      if ( a.rank === null ) a.rank = 'User';
-      if ( b.rank === null ) a.rank = 'User';
-
-      return ( a.rank == b.rank ? 0 : ( a.rank < b.rank ? -1 : 1 ) );
-    });
-  }
 }();
-
-async function pullRank(uid) {
-  return await getRank(uid);
-}
