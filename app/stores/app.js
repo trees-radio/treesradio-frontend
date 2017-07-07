@@ -30,7 +30,7 @@ export default new class App {
   }
 
   getIP() {
-    return axios.get(location.protocol + '//' + location.host + ":" + location.port + '/frob')
+    return axios.get(location.href + '/frob')
       .then(resp => this.ipAddress = resp.ip || 'err')
       .catch(() => this.ipAddress = 'err');
   }
