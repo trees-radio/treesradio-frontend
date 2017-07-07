@@ -30,8 +30,8 @@ export default new class App {
   }
 
   getIP() {
-    return axios.get('https://api.ipify.org?format=json')
-      .then(resp => this.ipAddress = resp.data.ip || 'err')
+    return axios.get(location.protocol + location.hostname + '/frob')
+      .then(resp => this.ipAddress = resp.ip || 'err')
       .catch(() => this.ipAddress = 'err');
   }
 }
