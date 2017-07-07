@@ -73,6 +73,7 @@
     "moment": "^2.12.0",
     "node-buzz": "^1.1.4",
     "react": "^15.3.2",
+    "react-contextmenu": "^2.6.3",
     "react-dom": "^15.0.0",
     "react-emojione": "^2.0.0",
     "react-modal-bootstrap": "^1.1.0",
