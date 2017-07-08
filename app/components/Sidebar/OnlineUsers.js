@@ -10,8 +10,15 @@ import profile from "stores/profile";
 export default class OnlineUsers extends React.Component {
   render() {
     const users = online.listWithFeedback || [];
+    
+    users.sort(
+        (a,b) => {
+          return ( a.rank == b.rank ? 0 : ( a.rank > b.rank ? 1 : -1 ));
+        }
+    );
+
     var usersList = users.map((user, i) => {
-      var userPosClass = Number.isInteger(i / 2) ? "user-line-1" : "user-line-0";
+      var userPosClass = i%2 == 0 ? "user-line-1" : "user-line-0";
 
       var userLineClasses = classNames("user-item", userPosClass);
       // class names for users <li> in list
@@ -31,7 +38,7 @@ export default class OnlineUsers extends React.Component {
       if (user.disliked && userCanSeeDislikes) {
         icon = <i className="fa fa-arrow-down users-downvote" />;
       }
-
+      
       return (
         <li key={i} className={userLineClasses}>
           <UserAvatar uid={user.uid} />

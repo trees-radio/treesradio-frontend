@@ -56,13 +56,6 @@ export default new class Online {
       });
     });
 
-    // This is not always consistently working. And I don't know why.
-    userlist.sort(function(a, b) {
-      if (a.rank > b.rank) return -1;
-      if (b.rank > a.rank) return 1;
-      return 0;
-    });
-
     return userlist;
   }
 
