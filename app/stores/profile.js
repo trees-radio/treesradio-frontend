@@ -67,13 +67,12 @@ export default new class Profile {
           .ref("bans")
           .child(user.uid)
           .on("value", snap => (this.banData = snap.val()));
-        
+
         this.stopSilenceSync = fbase
           .database()
           .ref("bans")
           .child(user.uid)
-          .on("value", snap => ( this.silenceData = snap.val()));
-
+          .on("value", snap => (this.silenceData = snap.val()));
       } else {
         this.stopProfileSync && this.stopProfileSync();
         this.stopPrivateSync && this.stopPrivateSync();
@@ -108,7 +107,8 @@ export default new class Profile {
     });
   }
 
-  @computed get connected() {
+  @computed
+  get connected() {
     return app.connected;
   }
 
@@ -209,11 +209,13 @@ export default new class Profile {
       });
   }
 
-  @computed get loggedIn() {
+  @computed
+  get loggedIn() {
     return !!this.user;
   }
 
-  @computed get uid() {
+  @computed
+  get uid() {
     if (!this.user) {
       return false;
     } else {
@@ -221,7 +223,8 @@ export default new class Profile {
     }
   }
 
-  @computed get unverified() {
+  @computed
+  get unverified() {
     if (this.user && this.user.emailVerified) {
       return false;
     } else {
@@ -229,7 +232,8 @@ export default new class Profile {
     }
   }
 
-  @computed get noName() {
+  @computed
+  get noName() {
     if (this.user !== null && this.init === true) {
       const noLegacyUsername = this.profile === null || !this.profile.username;
       const noUsername = !this.username;
@@ -247,7 +251,8 @@ export default new class Profile {
     return false;
   }
 
-  @computed get banned() {
+  @computed
+  get banned() {
     if (!this.banData) return false;
     if (this.banData.forever === true) return true;
     const now = Date.now() / 1000;
@@ -255,11 +260,12 @@ export default new class Profile {
     return false;
   }
 
-  @computed get silenced() {
-    if ( !this.silenceData ) return false;
-    if ( this.silenceData.forever === true ) return true;
+  @computed
+  get silenced() {
+    if (!this.silenceData) return false;
+    if (this.silenceData.forever === true) return true;
     const now = Date.now() / 1000;
-    if ( this.silenceData.time > now ) return true;
+    if (this.silenceData.time > now) return true;
     return false;
   }
 
@@ -267,7 +273,8 @@ export default new class Profile {
     return fbase.auth().currentUser.getToken(true); //returns promise with token
   }
 
-  @computed get safeUsername() {
+  @computed
+  get safeUsername() {
     if (this.user === null) {
       return undefined;
     } else {
@@ -275,7 +282,8 @@ export default new class Profile {
     }
   }
 
-  @computed get eventsPath() {
+  @computed
+  get eventsPath() {
     if (this.profile === null) {
       return false;
     } else {
@@ -283,7 +291,8 @@ export default new class Profile {
     }
   }
 
-  @computed get secondsRegistered() {
+  @computed
+  get secondsRegistered() {
     return app.APP_EPOCH - this.registeredEpoch;
   }
 
@@ -308,7 +317,8 @@ export default new class Profile {
     }
   }
 
-  @computed get isAdmin() {
+  @computed
+  get isAdmin() {
     return this.rankPermissions.admin === true;
   }
 

@@ -1,20 +1,20 @@
-import {observable, computed} from 'mobx';
-import toast from 'utils/toast';
-import fbase from 'libs/fbase';
+import {observable, computed} from "mobx";
+import toast from "utils/toast";
+import fbase from "libs/fbase";
 // import profile from 'stores/profile';
 // import axios from 'axios';
-import moment from 'moment';
-import _ from 'lodash';
+import moment from "moment";
+import _ from "lodash";
 // import events from 'stores/events';
-import {searchYouTube, getYtPlaylist} from 'libs/youTube';
+import {searchYouTube, getYtPlaylist} from "libs/youTube";
 
 export default new class Playlists {
   constructor() {
     fbase.auth().onAuthStateChanged(user => {
       if (user !== null) {
         this.uid = user.uid;
-        this.ref = fbase.database().ref('playlists').child(this.uid);
-        this.stopSync = this.ref.orderByKey().on('value', snap => {
+        this.ref = fbase.database().ref("playlists").child(this.uid);
+        this.stopSync = this.ref.orderByKey().on("value", snap => {
           var playlists = [];
           snap.forEach(playlist => {
             var data = playlist.val();
@@ -25,7 +25,7 @@ export default new class Playlists {
           // console.log('playlist data', playlists);
 
           if (!this.init || this.removedPlaylist) {
-            localforage.getItem('selectedPlaylist').then(selectedPlaylist => {
+            localforage.getItem("selectedPlaylist").then(selectedPlaylist => {
               var toSelect;
               playlists.forEach((playlist, i) => {
                 if (selectedPlaylist && playlist.key === selectedPlaylist) {
@@ -40,7 +40,6 @@ export default new class Playlists {
             });
           }
 
-
           // pretty sure this is being done server side now
           // if (!this.disposeEvent) {
           //   this.disposeEvent = events.register('new_song', (e) => {
@@ -50,7 +49,6 @@ export default new class Playlists {
           //     this.addedTo = [];
           //   });
           // }
-
 
           this.init = true;
         });
@@ -74,17 +72,21 @@ export default new class Playlists {
   @observable init = false;
   @observable playlists = [];
   @observable selectedPlaylist = 0;
-  @observable selectedPlaylistKey = '';
+  @observable selectedPlaylistKey = "";
   @observable playlist = [];
   @observable searching = false;
   @observable search = [];
   @observable openSearch = false;
 
   addPlaylist(name) {
-    return this.ref.push({name, entries: []}, err => !err && toast.success(`Added playlist ${name}!`));
+    return this.ref.push(
+      {name, entries: []},
+      err => !err && toast.success(`Added playlist ${name}!`)
+    );
   }
 
-  @computed get playlistNames() {
+  @computed
+  get playlistNames() {
     return this.playlists.map(playlist => playlist.name);
   }
 
@@ -102,18 +104,22 @@ export default new class Playlists {
     if (this.playlists[index]) {
       var key = this.playlists[index].key;
       this.selectedPlaylistKey = key;
-      fbase.database().ref('private').child(this.uid).child('selectedPlaylist').set(key);
-      localforage.setItem('selectedPlaylist', key);
-      this.stopPlaylistSync = this.ref.child(key).child('entries').orderByKey().on('value', (snap) => {
-        var playlist = [];
-        // console.log(snap.forEach);
-        if (snap) {
-          snap.forEach(entry => {
-            playlist.push(entry.val());
-          });
-        }
-        this.playlist = playlist;
-      });
+      fbase.database().ref("private").child(this.uid).child("selectedPlaylist").set(key);
+      localforage.setItem("selectedPlaylist", key);
+      this.stopPlaylistSync = this.ref
+        .child(key)
+        .child("entries")
+        .orderByKey()
+        .on("value", snap => {
+          var playlist = [];
+          // console.log(snap.forEach);
+          if (snap) {
+            snap.forEach(entry => {
+              playlist.push(entry.val());
+            });
+          }
+          this.playlist = playlist;
+        });
     }
   }
 
@@ -127,7 +133,8 @@ export default new class Playlists {
     this.ref.child(key).remove();
   }
 
-  @computed get selectedPlaylistName() {
+  @computed
+  get selectedPlaylistName() {
     // check length before checking index, mobx does not like out of bounds checks
     if (this.playlists.length > 0 && this.playlists[this.selectedPlaylist]) {
       return this.playlists[this.selectedPlaylist].name;
@@ -136,7 +143,8 @@ export default new class Playlists {
     }
   }
 
-  @computed get selectedSong() {
+  @computed
+  get selectedSong() {
     // check length before checking index, mobx does not like out of bounds checks
     if (this.playlist.length > 0 && this.playlist[0]) {
       return this.playlist[0].title;
@@ -145,7 +153,8 @@ export default new class Playlists {
     }
   }
 
-  @computed get hasPlaylist() {
+  @computed
+  get hasPlaylist() {
     // check length before checking index, mobx does not like out of bounds checks
     if (this.playlists.length > 0 && this.playlists[this.selectedPlaylist]) {
       return true;
@@ -181,10 +190,10 @@ export default new class Playlists {
       thumb,
       channel,
       duration
-    }
+    };
 
     if (!this.selectedPlaylistKey) {
-      toast.error('Please select a playlist to add a song!');
+      toast.error("Please select a playlist to add a song!");
       return;
     }
 
@@ -227,8 +236,8 @@ export default new class Playlists {
     } else {
       newPlaylist.unshift(song);
     }
-    
-    this.ref.child(playlistKey).child('entries').set(newPlaylist);
+
+    this.ref.child(playlistKey).child("entries").set(newPlaylist);
     toast.success(`Added ${song.title} to playlist ${playlist.name}.`);
     // this.addedTo.push(playlistKey);
   }
@@ -237,7 +246,7 @@ export default new class Playlists {
     var newPlaylist = this.playlist.slice();
     var video = newPlaylist.splice(index, 1)[0];
     newPlaylist.unshift(video);
-    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    this.ref.child(this.selectedPlaylistKey).child("entries").set(newPlaylist);
     toast.success(`Moved ${video.title} to top of playlist.`);
   }
 
@@ -245,25 +254,24 @@ export default new class Playlists {
     var newPlaylist = this.playlist.slice();
     var video = newPlaylist.splice(index, 1)[0];
     newPlaylist.push(video);
-    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    this.ref.child(this.selectedPlaylistKey).child("entries").set(newPlaylist);
     // toast.success(`Moved ${video.title} to bottom of playlist.`);
   }
 
   removeVideo(index) {
     var newPlaylist = this.playlist.slice();
     var video = newPlaylist.splice(index, 1)[0];
-    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    this.ref.child(this.selectedPlaylistKey).child("entries").set(newPlaylist);
     toast.success(`Removed ${video.title} from playlist.`);
   }
 
   shufflePlaylist() {
     var newPlaylist = _.shuffle(this.playlist.slice());
-    this.ref.child(this.selectedPlaylistKey).child('entries').set(newPlaylist);
+    this.ref.child(this.selectedPlaylistKey).child("entries").set(newPlaylist);
     toast.success(`Playlist shuffled.`);
   }
 
-  @observable
-  importing = false;
+  @observable importing = false;
 
   async importYouTubePlaylist(name, url) {
     this.importing = true;
@@ -280,10 +288,10 @@ export default new class Playlists {
     // console.log(playlistTransform);
     const playlistRef = this.addPlaylist(name);
 
-    return playlistRef.child('entries').set(playlistTransform).then(() => {
+    return playlistRef.child("entries").set(playlistTransform).then(() => {
       toast.success(`Imported songs from playlist URL.`);
       this.importing = false;
       return true;
     });
   }
-}
+}();

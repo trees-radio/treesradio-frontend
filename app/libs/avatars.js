@@ -1,12 +1,12 @@
-import {observable, computed, asMap} from 'mobx';
-import fbase from 'libs/fbase';
-import moment from 'moment';
+import {observable, computed, asMap} from "mobx";
+import fbase from "libs/fbase";
+import moment from "moment";
 
 // DEPRECATED, DO NOT USE. REMOVE IF NO LONGER USED.
 
 export default new class Avatars {
   constructor() {
-    console.warn('libs/avatars.js is deprecated, use libs/avatar.js and the UserAvatar component');
+    console.warn("libs/avatars.js is deprecated, use libs/avatar.js and the UserAvatar component");
   }
 
   defaultAvatar(username) {
@@ -25,12 +25,12 @@ export default new class Avatars {
 
     var delay = hasDefault ? 15 : 30;
 
-    var threshold = moment.unix().subtract(delay, 'seconds');
+    var threshold = moment.unix().subtract(delay, "seconds");
     var hasNoAttempt = !this.attemptedUsers[username];
     var attemptBeforeThreshold = moment.unix(this.attemptedUsers[username]).isBefore(threshold);
 
     if (hasNoAttempt || attemptBeforeThreshold) {
-      fbase.database().ref('avatars').child(username).once('value', (snap) => {
+      fbase.database().ref("avatars").child(username).once("value", snap => {
         var avatar = snap.val();
         // console.log('avatar', avatar);
         if (avatar) {
@@ -38,18 +38,15 @@ export default new class Avatars {
           image.onload = () => {
             // console.log('avatar chosen');
             this.users.set(username, avatar);
-          }
-          image.onerror = (e) => {
+          };
+          image.onerror = e => {
             // console.log('avatar error', e);
             this.error = true;
-          }
+          };
           image.src = avatar;
         }
       });
       this.attemptedUsers[username] = moment.unix();
     }
   }
-
-
-
-}
+}();

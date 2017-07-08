@@ -1,11 +1,11 @@
-import Colors from 'material-ui/lib/styles/colors';
-import ColorManipulator from 'material-ui/lib/utils/color-manipulator';
-import Spacing from 'material-ui/lib/styles/spacing';
+import Colors from "material-ui/lib/styles/colors";
+import ColorManipulator from "material-ui/lib/utils/color-manipulator";
+import Spacing from "material-ui/lib/styles/spacing";
 // import zIndex from 'material-ui/lib/styles/zIndex';
 
 export default {
   spacing: Spacing,
-  fontFamily: 'Open Sans, sans-serif',
+  fontFamily: "Open Sans, sans-serif",
   palette: {
     primary1Color: "#77b300",
     primary2Color: Colors.cyan700,
@@ -21,4 +21,4 @@ export default {
     pickerHeaderColor: Colors.cyan500,
     clockCircleColor: ColorManipulator.fade(Colors.darkBlack, 0.07)
   }
-}
+};
