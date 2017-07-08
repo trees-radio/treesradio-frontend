@@ -1,7 +1,7 @@
-import {Howl} from 'howler';
+import {Howl} from "howler";
 
-import mp3 from 'audio/tr-notify.mp3';
-import ogg from 'audio/tr-notify.ogg';
+import mp3 from "audio/tr-notify.mp3";
+import ogg from "audio/tr-notify.ogg";
 
 export class AudioNotify {
   constructor(src) {
@@ -10,7 +10,7 @@ export class AudioNotify {
       src,
       preload: false
     });
-    this.howl.on('load', () => this.loaded = true);
+    this.howl.on("load", () => (this.loaded = true));
   }
 
   loaded = false;
@@ -21,7 +21,7 @@ export class AudioNotify {
     }
     this.howl.load();
     if (cb) {
-        this.howl.once('load', cb);
+      this.howl.once("load", cb);
     }
   }
 
@@ -31,7 +31,6 @@ export class AudioNotify {
     }
     this.howl.play();
   }
-
 }
 
 export default new AudioNotify([mp3, ogg]);

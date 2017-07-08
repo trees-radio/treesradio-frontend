@@ -20,14 +20,17 @@ export default new class Chat {
       var msg = snap.val();
       if (msg) {
         // Makes chat messages appear to the silenced user.
-        if ( msg.uid !== profile.uid && ( msg.silenced !== undefined && msg.silenced === true ) ) {
+        if (msg.uid !== profile.uid && (msg.silenced !== undefined && msg.silenced === true)) {
           return;
         }
-        
-        if ( (msg.adminOnly !== undefined && msg.adminOnly == true) &&
-             ( profile.rank === null || profile.rank == 'User' ) ) {
-               // This is an admin only message.
-              return;
+
+        if (
+          msg.adminOnly !== undefined &&
+          msg.adminOnly == true &&
+          (profile.rank === null || profile.rank == "User")
+        ) {
+          // This is an admin only message.
+          return;
         }
         if (
           this.messages[this.messages.length - 1] &&
@@ -55,7 +58,7 @@ export default new class Chat {
       }
     });
 
-    events.register("chat_clear", () => this.messages = []);
+    events.register("chat_clear", () => (this.messages = []));
 
     this.limit = MSG_CHAR_LIMIT;
 
@@ -63,7 +66,7 @@ export default new class Chat {
       .database()
       .ref("backend")
       .child("chatlock")
-      .on("value", snap => this.chatLocked = !!snap.val()); // listen to backend chatlock value
+      .on("value", snap => (this.chatLocked = !!snap.val())); // listen to backend chatlock value
   }
 
   @observable messages = [];
@@ -80,7 +83,8 @@ export default new class Chat {
     }
   }
 
-  @computed get chars() {
+  @computed
+  get chars() {
     return this.msg.length;
   }
 
@@ -95,24 +99,27 @@ export default new class Chat {
   }
 
   pushMsg() {
-
     // Clear out expired timers.
-    for ( var i = 0; i < this.chatcounter.length; i++ ) {
-      if ( Date.now() - this.chatcounter[i].time > 5000 ) {
+    for (var i = 0; i < this.chatcounter.length; i++) {
+      if (Date.now() - this.chatcounter[i].time > 5000) {
         i--;
         this.chatcounter.shift();
         continue;
       }
     }
 
-    this.chatDebounce = (this.chatcounter.length * CHAT_DEBOUNCE_MSEC) + 
-                        ( this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0 );
+    this.chatDebounce =
+      this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
+      (this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
 
-    if ( this.chatcounter.length > 0 ) console.log(Date.now() - this.chatcounter[this.chatcounter.length - 1].time);
-    if ( ( this.chatcounter.length == 0 ) || 
-           Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce) {
+    if (this.chatcounter.length > 0)
+      console.log(Date.now() - this.chatcounter[this.chatcounter.length - 1].time);
+    if (
+      this.chatcounter.length == 0 ||
+      Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce
+    ) {
       this.sendMsg(this.getMsg());
-      this.chatcounter.push({ time: Date.now() });
+      this.chatcounter.push({time: Date.now()});
     } else if (this.msg !== "") {
       toast.warning(`Please wait ${this.chatDebounce / 1000} second(s) between messages.`);
     }
@@ -128,7 +135,8 @@ export default new class Chat {
     }
   }
 
-  @computed get mentionMatches() {
+  @computed
+  get mentionMatches() {
     var words = this.msg.split(" ");
     if (words[words.length - 1][0] === "@") {
       var mention = words[words.length - 1];
@@ -150,13 +158,15 @@ export default new class Chat {
     this.msg = words.join(" ");
   }
 
-  @computed get canChat() {
+  @computed
+  get canChat() {
     if (!profile.loggedIn) return false;
     if (this.chatLocked && profile.secondsRegistered < CHAT_LOCK_REGISTRATION_SEC) return false;
     return true;
   }
 
-  @computed get secondsUntilUnlock() {
+  @computed
+  get secondsUntilUnlock() {
     return CHAT_LOCK_REGISTRATION_SEC - profile.secondsRegistered;
   }
 }();

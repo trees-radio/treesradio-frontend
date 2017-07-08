@@ -49,7 +49,7 @@ export default (class Player extends React.Component {
         >
           {this.showVideo &&
             <ReactPlayer
-              ref={c => this._player = c}
+              ref={c => (this._player = c)}
               className="reactplayer"
               width="100%"
               height="100%"
@@ -60,7 +60,7 @@ export default (class Player extends React.Component {
               onProgress={p => this.onProgress(p)}
               onPause={undefined}
               youtubeConfig={rPlayerYoutubeConfig}
-              onDuration={d => playing.playerDuration = d}
+              onDuration={d => (playing.playerDuration = d)}
             />}
         </div>
         <Progress

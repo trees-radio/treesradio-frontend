@@ -1,15 +1,15 @@
-import {observable, computed, autorun} from 'mobx';
-import toast from 'utils/toast';
-import fbase from 'libs/fbase';
-import profile from 'stores/profile';
+import {observable, computed, autorun} from "mobx";
+import toast from "utils/toast";
+import fbase from "libs/fbase";
+import profile from "stores/profile";
 // import ax from 'utils/ax';
-import moment from 'moment';
-import _ from 'lodash';
+import moment from "moment";
+import _ from "lodash";
 // import events from 'stores/events';
-import playlists from 'stores/playlists';
-import {send} from 'libs/events';
+import playlists from "stores/playlists";
+import {send} from "libs/events";
 
-import spacePineapples from 'img/spacepineapples.jpg';
+import spacePineapples from "img/spacepineapples.jpg";
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
@@ -18,14 +18,14 @@ export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 export default new class Playing {
   constructor() {
     this.fbase = fbase;
-    fbase.database().ref('playing').on('value', (snap) => {
+    fbase.database().ref("playing").on("value", snap => {
       var data = snap.val();
       if (data) {
         this.data = data;
       }
     });
-    localforage.getItem('volume').then(v => v ? this.volume = v : false);
-    localforage.getItem('playerSize').then(s => s ? this.playerSize = s : false);
+    localforage.getItem("volume").then(v => (v ? (this.volume = v) : false));
+    localforage.getItem("playerSize").then(s => (s ? (this.playerSize = s) : false));
 
     autorun(() => {
       this.localLikeState = this.liked;
@@ -34,7 +34,8 @@ export default new class Playing {
     });
   }
 
-  @observable data = {
+  @observable
+  data = {
     info: {},
     feedback: {},
     feedback_users: {
@@ -44,25 +45,29 @@ export default new class Playing {
     }
   };
 
-  @computed get humanDuration() {
-    var mo = moment.duration(this.data.info.duration, 'milliseconds');
-    var str = `${_.padStart(mo.minutes(), 2, '0')}:${_.padStart(mo.seconds(), 2, '0')}`;
+  @computed
+  get humanDuration() {
+    var mo = moment.duration(this.data.info.duration, "milliseconds");
+    var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
-      str = `${_.padStart(mo.hours(), 2, '0')}:`+str;
+      str = `${_.padStart(mo.hours(), 2, "0")}:` + str;
     }
     return str;
   }
 
-  @computed get humanCurrent() {
-    var mo = moment.duration(this.playerSeconds, 'seconds');
-    var str = `${_.padStart(mo.minutes(), 2, '0')}:${_.padStart(mo.seconds(), 2, '0')}`;
+  @computed
+  get humanCurrent() {
+    var mo = moment.duration(this.playerSeconds, "seconds");
+    var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
-      str = `${_.padStart(mo.hours(), 2, '0')}:`+str;
+      str = `${_.padStart(mo.hours(), 2, "0")}:` + str;
     }
     return str;
   }
 
-  @computed get time() { //SECONDS
+  @computed
+  get time() {
+    //SECONDS
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
       return 0;
     } else {
@@ -70,11 +75,13 @@ export default new class Playing {
     }
   }
 
-  @computed get elapsed() {
+  @computed
+  get elapsed() {
     return this.time;
   }
 
-  @computed get fraction() {
+  @computed
+  get fraction() {
     if (!this.data.time || !this.data.info.duration) {
       return 0;
     }
@@ -85,11 +92,13 @@ export default new class Playing {
 
   @observable playerDuration = 0; //seconds
 
-  @computed get playerSeconds() {
+  @computed
+  get playerSeconds() {
     return this.playerDuration * this.playerProgress;
   }
 
-  @computed get shouldSync() {
+  @computed
+  get shouldSync() {
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
       return false;
     }
@@ -112,19 +121,20 @@ export default new class Playing {
 
   setVolume(v) {
     this.volume = v;
-    localforage.setItem('volume', v);
+    localforage.setItem("volume", v);
   }
 
   nudgeVolume(dir) {
-    if (dir === 'UP') {
+    if (dir === "UP") {
       this.setVolume(this.volume + VOLUME_NUDGE_FRACTION);
-    } else if (dir === 'DOWN') {
+    } else if (dir === "DOWN") {
       this.setVolume(this.volume - VOLUME_NUDGE_FRACTION);
     }
   }
 
   @observable localLikeState = false;
-  @computed get likeLoading() {
+  @computed
+  get likeLoading() {
     return this.localLikeState !== this.liked;
   }
 
@@ -136,15 +146,16 @@ export default new class Playing {
     }
 
     if (this.liked) {
-      toast.error("You've already liked this song!")
+      toast.error("You've already liked this song!");
       return false;
     }
-    send('like');
+    send("like");
     this.localLikeState = true;
   }
 
   @observable localDislikeState = false;
-  @computed get dislikeLoading() {
+  @computed
+  get dislikeLoading() {
     return this.localDislikeState !== this.disliked;
   }
 
@@ -158,24 +169,26 @@ export default new class Playing {
     if (this.disliked) {
       toast.error("You've already disliked this song!");
     }
-    send('dislike');
+    send("dislike");
     this.localDislikeState = true;
   }
 
   @observable localGrabState = false;
-  @computed get grabLoading() {
+  @computed
+  get grabLoading() {
     return this.localGrabState !== this.grabbed;
   }
 
   grab(playlistKey) {
     playlists.addSong(this.data.info, playlistKey, true);
     if (!this.grabbed) {
-      send('grab');
+      send("grab");
       // this.localGrabState = true;
     }
   }
 
-  @computed get liked() {
+  @computed
+  get liked() {
     if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
       return false;
     }
@@ -186,7 +199,8 @@ export default new class Playing {
     }
   }
 
-  @computed get disliked() {
+  @computed
+  get disliked() {
     if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
       return false;
     }
@@ -197,7 +211,8 @@ export default new class Playing {
     }
   }
 
-  @computed get grabbed() {
+  @computed
+  get grabbed() {
     if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
       return false;
     }
@@ -208,37 +223,40 @@ export default new class Playing {
     }
   }
 
-  @computed get likes() {
+  @computed
+  get likes() {
     if (!this.data.feedback || !this.data.feedback.likes) {
       return 0;
     }
     return this.data.feedback.likes;
   }
 
-  @computed get dislikes() {
+  @computed
+  get dislikes() {
     if (!this.data.feedback || !this.data.feedback.dislikes) {
       return 0;
     }
     return this.data.feedback.dislikes;
   }
 
-  @computed get grabs() {
+  @computed
+  get grabs() {
     if (!this.data.feedback || !this.data.feedback.grabs) {
       return 0;
     }
     return this.data.feedback.grabs;
   }
 
-  @observable playerSize = 'BIG';
+  @observable playerSize = "BIG";
 
   togglePlayerSize() {
-    if (this.playerSize === 'BIG') {
-      this.playerSize = 'SMALL';
-    } else if (this.playerSize === 'SMALL') {
-      this.playerSize = 'BIG';
+    if (this.playerSize === "BIG") {
+      this.playerSize = "SMALL";
+    } else if (this.playerSize === "SMALL") {
+      this.playerSize = "BIG";
     }
-    localforage.setItem('playerSize', this.playerSize);
+    localforage.setItem("playerSize", this.playerSize);
   }
 
   @observable backgroundImage = spacePineapples;
-}
+}();

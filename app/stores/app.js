@@ -1,12 +1,12 @@
-import {observable, computed} from 'mobx';
-import axios from 'axios';
-import fbase from 'libs/fbase';
-import epoch from 'utils/epoch';
+import {observable, computed} from "mobx";
+import axios from "axios";
+import fbase from "libs/fbase";
+import epoch from "utils/epoch";
 
 export default new class App {
   constructor() {
     this.getIP();
-    fbase.database().ref('.info/connected').on('value', (snap) => {
+    fbase.database().ref(".info/connected").on("value", snap => {
       if (snap.val() === true) {
         this.connected = true;
       } else {
@@ -14,14 +14,15 @@ export default new class App {
       }
     });
 
-    setInterval(() => this.APP_EPOCH = epoch(), 1000); //keep time
+    setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
   }
 
   @observable connected = false;
   @observable ipAddress = null;
   @observable APP_EPOCH = epoch();
 
-  @computed get init() {
+  @computed
+  get init() {
     if (this.connected && this.ipAddress !== null) {
       return true;
     } else {
@@ -30,8 +31,9 @@ export default new class App {
   }
 
   getIP() {
-    return axios.get(location.href + '/frob')
-      .then(resp => this.ipAddress = resp.ip || 'err')
-      .catch(() => this.ipAddress = 'err');
+    return axios
+      .get(location.href + "/frob")
+      .then(resp => (this.ipAddress = resp.ip || "err"))
+      .catch(() => (this.ipAddress = "err"));
   }
-}
+}();

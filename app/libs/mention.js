@@ -1,5 +1,5 @@
-import toast from 'utils/toast';
-import audioNotify from 'libs/audioNotify';
+import toast from "utils/toast";
+import audioNotify from "libs/audioNotify";
 
 const BOUNCE = Date.now() + 3000; // milliseconds
 

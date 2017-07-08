@@ -11,11 +11,15 @@ import file from "src/version.json";
 export default (class Nav extends React.Component {
   @observable hoveredTitle = false;
 
-  onHover = _.debounce(() => this.hoveredTitle = true, 500, {leading: true});
-  offHover = _.debounce(() => this.hoveredTitle = false, 500);
+  onHover = _.debounce(() => (this.hoveredTitle = true), 500, {leading: true});
+  offHover = _.debounce(() => (this.hoveredTitle = false), 500);
 
   render() {
-    const title = <span><span>TreesRadio</span> <Version show={this.hoveredTitle} /></span>;
+    const title = (
+      <span>
+        <span>TreesRadio</span> <Version show={this.hoveredTitle} />
+      </span>
+    );
     return (
       <div id="tr-nav">
         <nav className="navbar navbar-default">
@@ -38,8 +42,10 @@ export default (class Nav extends React.Component {
               <div className="nav navbar-nav navbar-right">
                 <UserBit />
               </div>
-            </div>{/* .navbar-collapse */}
-          </div> {/* .container-fluid */}
+            </div>
+            {/* .navbar-collapse */}
+          </div>{" "}
+          {/* .container-fluid */}
         </nav>
         <div id="nav-divider" />
       </div>
@@ -49,5 +55,9 @@ export default (class Nav extends React.Component {
 
 function Version({show}) {
   if (show === false) return null;
-  return <span className="version-tag">v{file.version.version}-{file.version.short}</span>;
+  return (
+    <span className="version-tag">
+      v{file.version.version}-{file.version.short}
+    </span>
+  );
 }

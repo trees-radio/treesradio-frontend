@@ -1,32 +1,33 @@
+import axios from "axios";
+import URL from "url-parse";
 
-import axios from 'axios';
-import URL from 'url-parse';
-
-export const YT_API_KEY = 'AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA';
-const VALID_YT_HOSTNAMES = ['youtube.com', 'www.youtube.com'];
+export const YT_API_KEY = "AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA";
+const VALID_YT_HOSTNAMES = ["youtube.com", "www.youtube.com"];
 
 export async function searchYouTube(query) {
-  const idsResult = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+  const idsResult = await axios.get("https://www.googleapis.com/youtube/v3/search", {
     params: {
-      part: 'snippet',
-      maxResults: '25', // think this is the max allowed?
-      type: 'video',
-      videoEmbeddable: 'true',
+      part: "snippet",
+      maxResults: "25", // think this is the max allowed?
+      type: "video",
+      videoEmbeddable: "true",
       key: YT_API_KEY,
       q: query
     }
   });
 
   const idArray = idsResult.data.items.map(data => data.id.videoId);
-  const ids = idArray.reduce((p, c) => p + ',' + c, '');
+  const ids = idArray.reduce((p, c) => p + "," + c, "");
 
-  const detailsResult = axios.get('https://www.googleapis.com/youtube/v3/videos', {
-    params: {
-      id: ids,
-      part: 'contentDetails,snippet',
-      key: YT_API_KEY
-    }
-  }).then(resp => resp.data);
+  const detailsResult = axios
+    .get("https://www.googleapis.com/youtube/v3/videos", {
+      params: {
+        id: ids,
+        part: "contentDetails,snippet",
+        key: YT_API_KEY
+      }
+    })
+    .then(resp => resp.data);
 
   return detailsResult;
 }
@@ -47,15 +48,17 @@ function parseYtPlaylistId(url) {
 }
 
 function getPlaylistPage(playlistId, pageToken) {
-  return axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
-    params: {
-      part: 'contentDetails,snippet',
-      playlistId: playlistId,
-      key: YT_API_KEY,
-      maxResults: 50,
-      pageToken
-    }
-  }).then(({data}) => data);
+  return axios
+    .get("https://www.googleapis.com/youtube/v3/playlistItems", {
+      params: {
+        part: "contentDetails,snippet",
+        playlistId: playlistId,
+        key: YT_API_KEY,
+        maxResults: 50,
+        pageToken
+      }
+    })
+    .then(({data}) => data);
 }
 
 export async function getYtPlaylist(url) {
@@ -74,17 +77,23 @@ export async function getYtPlaylist(url) {
 
   const videoIds = playlistItems.map(i => i.contentDetails.videoId);
 
-  const detailRequests = videoIds.map(id => axios.get('https://www.googleapis.com/youtube/v3/videos', {
-    params: {
-      id: id,
-      part: 'contentDetails,snippet',
-      key: YT_API_KEY
-    }
-  }).then(r => r.data.items[0]));
+  const detailRequests = videoIds.map(id =>
+    axios
+      .get("https://www.googleapis.com/youtube/v3/videos", {
+        params: {
+          id: id,
+          part: "contentDetails,snippet",
+          key: YT_API_KEY
+        }
+      })
+      .then(r => r.data.items[0])
+  );
 
   const playlistVideos = await Promise.all(detailRequests);
 
-  const cleanList = playlistVideos.filter(item => item && item.snippet.title.toUpperCase() !== 'DELETED VIDEO');
+  const cleanList = playlistVideos.filter(
+    item => item && item.snippet.title.toUpperCase() !== "DELETED VIDEO"
+  );
 
   return cleanList;
 }
