@@ -42,7 +42,7 @@ export default new class Profile {
                 .child(user.uid)
                 .child("ip")
                 .child(this.presenceRef.key);
-              console.log(app.ipAddress);
+              
               this.ipRef.set(app.ipAddress);
               this.ipRef.onDisconnect().remove();
             }
