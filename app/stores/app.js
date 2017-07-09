@@ -32,8 +32,8 @@ export default new class App {
 
   getIP() {
     return axios
-      .get(location.href + "/frob")
-      .then(resp => (this.ipAddress = resp.ip || "err"))
+      .get("https://pineapple-test.treesradio.com/frob")
+      .then(resp => (this.ipAddress = resp.data.ip || "err"))
       .catch(() => (this.ipAddress = "err"));
   }
 }();
