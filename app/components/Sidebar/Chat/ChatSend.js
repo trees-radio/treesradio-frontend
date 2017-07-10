@@ -11,7 +11,6 @@ import toast from "utils/toast";
 export default (class ChatSend extends React.Component {
   onKeyPress(e) {
     var key = e.keyCode || e.which;
-    // console.log(key);
     if (key === 13) {
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
@@ -23,7 +22,6 @@ export default (class ChatSend extends React.Component {
 
   onKeyDown(e) {
     var key = e.keyCode || e.which;
-    // console.log(key);
     if (key === 9) {
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
@@ -34,7 +32,6 @@ export default (class ChatSend extends React.Component {
   }
 
   onChange(e) {
-    // console.log('onChange', e);
     if (!profile.user) {
       toast.error("You must be logged in to chat!");
     } else {

@@ -16,7 +16,6 @@ export default new class Waitlist {
         list.push(wl[key]);
       }
       this.list = list;
-      // console.log('waitlist', list);
     });
 
     autorun(() => {
