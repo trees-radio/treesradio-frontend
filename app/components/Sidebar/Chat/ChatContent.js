@@ -13,15 +13,7 @@ const SCROLL_SENSITIVITY = 200;
 @observer
 export default (class ChatContent extends React.Component {
   componentDidMount() {
-    // scroll diagnostics, don't enable in production
-    /*setInterval(() => {
-        console.log("top", this._chatscroll.scrollTop);
-        console.log("height", this._chatscroll.scrollHeight);
-        console.log("test", this._chatscroll.scrollHeight - this._chatscroll.scrollTop === this._chatscroll.clientHeight);
-      }, 1000);
-      */
     this.scroll();
-    // setTimeout(() => this.scroll(), 5000);
     this.startup = Date.now();
   }
 

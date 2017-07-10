@@ -22,8 +22,7 @@ export default new class Playlists {
             playlists.push(data);
           });
           this.playlists = playlists;
-          // console.log('playlist data', playlists);
-
+        
           if (!this.init || this.removedPlaylist) {
             localforage.getItem("selectedPlaylist").then(selectedPlaylist => {
               var toSelect;
@@ -39,16 +38,6 @@ export default new class Playlists {
               }
             });
           }
-
-          // pretty sure this is being done server side now
-          // if (!this.disposeEvent) {
-          //   this.disposeEvent = events.register('new_song', (e) => {
-          //     if (e.data === this.uid) {
-          //       this.moveBottom(0);
-          //     }
-          //     this.addedTo = [];
-          //   });
-          // }
 
           this.init = true;
         });
@@ -112,7 +101,6 @@ export default new class Playlists {
         .orderByKey()
         .on("value", snap => {
           var playlist = [];
-          // console.log(snap.forEach);
           if (snap) {
             snap.forEach(entry => {
               playlist.push(entry.val());
@@ -285,7 +273,6 @@ export default new class Playlists {
       duration: moment.duration(i.contentDetails.duration).valueOf()
     }));
 
-    // console.log(playlistTransform);
     const playlistRef = this.addPlaylist(name);
 
     return playlistRef.child("entries").set(playlistTransform).then(() => {

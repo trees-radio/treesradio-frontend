@@ -42,7 +42,7 @@ export default new class Profile {
                 .child(user.uid)
                 .child("ip")
                 .child(this.presenceRef.key);
-              console.log(app.ipAddress);
+              
               this.ipRef.set(app.ipAddress);
               this.ipRef.onDisconnect().remove();
             }
@@ -100,7 +100,6 @@ export default new class Profile {
         this.rank = await rank(this.user.uid);
 
         this.rankPermissions = await getSettingsForRank(this.rank);
-        // console.log('hi', this.rankPermissions, this.rank);
       } else {
         this.rank = null;
         this.rankPermissions = {};
@@ -134,7 +133,7 @@ export default new class Profile {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        // console.log('user', user);
+        
       })
       .catch(error => {
         let msg = `Unknown error: ${error.code}`;

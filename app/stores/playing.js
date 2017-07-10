@@ -111,7 +111,6 @@ export default new class Playing {
     var slow = serverSeconds - PLAYER_SYNC_SENSITIVITY;
     var fast = serverSeconds + PLAYER_SYNC_SENSITIVITY;
     var player = this.playerSeconds;
-    // console.log('player', this.playerSeconds, 'server', serverSeconds);
     if (player < slow || player > fast) {
       return true;
     }

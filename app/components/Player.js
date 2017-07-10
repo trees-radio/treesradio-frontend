@@ -12,7 +12,6 @@ const rPlayerYoutubeConfig = {playerVars: {iv_load_policy: 3}};
 @observer
 export default (class Player extends React.Component {
   onProgress(p) {
-    // console.log('player prog', p);
     playing.playerProgress = p.played;
     if (playing.shouldSync) {
       this._player.seekTo(playing.fraction);

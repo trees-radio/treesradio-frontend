@@ -112,8 +112,6 @@ export default new class Chat {
       this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
       (this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
 
-    if (this.chatcounter.length > 0)
-      console.log(Date.now() - this.chatcounter[this.chatcounter.length - 1].time);
     if (
       this.chatcounter.length == 0 ||
       Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce

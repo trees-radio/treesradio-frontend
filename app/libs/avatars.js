@@ -32,15 +32,12 @@ export default new class Avatars {
     if (hasNoAttempt || attemptBeforeThreshold) {
       fbase.database().ref("avatars").child(username).once("value", snap => {
         var avatar = snap.val();
-        // console.log('avatar', avatar);
         if (avatar) {
           var image = new Image();
           image.onload = () => {
-            // console.log('avatar chosen');
             this.users.set(username, avatar);
           };
           image.onerror = e => {
-            // console.log('avatar error', e);
             this.error = true;
           };
           image.src = avatar;
