@@ -11,7 +11,8 @@ let usersList, lastUpdate;
 @observer
 export default class OnlineUsers extends React.Component {
   render() {
-    let users = online.listWithFeedback || [];
+
+    let users = online.listWithFeedback;
     
     users.sort(
         (a,b) => {
@@ -19,46 +20,42 @@ export default class OnlineUsers extends React.Component {
         }
     );
 
-    if (!lastUpdate) {
-      lastUpdate = Date.now() / 1000;
-    } else if ( Date.now() / 1000 - lastUpdate > 10 ) {
+    usersList = users.map((user, i) => {
+      var userPosClass = i%2 == 0 ? "user-line-1" : "user-line-0";
 
-      usersList = users.map((user, i) => {
-        var userPosClass = i%2 == 0 ? "user-line-1" : "user-line-0";
+      var userLineClasses = classNames("user-item", userPosClass);
+      // class names for users <li> in list
+      let icon, grabIcon;
 
-        var userLineClasses = classNames("user-item", userPosClass);
-        // class names for users <li> in list
-        let icon, grabIcon;
+      if (user.liked) {
+        icon = <i className="fa fa-arrow-up users-upvote" />;
+      }
 
-        if (user.liked) {
-          icon = <i className="fa fa-arrow-up users-upvote" />;
-        }
+      if (user.grabbed) {
+        grabIcon = <i className="fa fa-bookmark users-grab" />;
+      }
 
-        if (user.grabbed) {
-          grabIcon = <i className="fa fa-bookmark users-grab" />;
-        }
+      const userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
+      const userCanSeeDislikes = profile.isAdmin || userRankCanSeeDislikes;
 
-        const userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
-        const userCanSeeDislikes = profile.isAdmin || userRankCanSeeDislikes;
+      if (user.disliked && userCanSeeDislikes) {
+        icon = <i className="fa fa-arrow-down users-downvote" />;
+      }
+      
+      return (
+        <li key={i} className={userLineClasses}>
+          <UserAvatar uid={user.uid} />
+          <div className="users-info">
+            <UserName className="users-username" uid={user.uid} username={user.username} />
+            {" "}
+            {icon}
+            {" "}
+            {grabIcon}
+          </div>
+        </li>
+      );
+    });
 
-        if (user.disliked && userCanSeeDislikes) {
-          icon = <i className="fa fa-arrow-down users-downvote" />;
-        }
-        
-        return (
-          <li key={i} className={userLineClasses}>
-            <UserAvatar uid={user.uid} />
-            <div className="users-info">
-              <UserName className="users-username" uid={user.uid} username={user.username} />
-              {" "}
-              {icon}
-              {" "}
-              {grabIcon}
-            </div>
-          </li>
-        );
-      });
-    }
     return (
       <div className="users-scroll" style={this.props.show ? {} : {display: "none"}}>
         <ul className="users-list">
