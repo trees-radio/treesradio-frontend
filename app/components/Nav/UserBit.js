@@ -24,7 +24,7 @@ export default class UserBit extends React.Component {
   }
 
   addUsername() {
-    profile.updateUsername(this._username.value);
+    profile.updateUsername(this._username.value.substr(0,24));
   }
 
   async sendPassReset() {
@@ -120,6 +120,7 @@ export default class UserBit extends React.Component {
             <input
               className="form-control"
               type="text"
+              maxLength={24}
               ref={c => this._username = c}
               onKeyPress={e => this.onEnterKey(e, () => this.addUsername())}
               placeholder="Username"
