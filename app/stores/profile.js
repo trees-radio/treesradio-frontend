@@ -142,7 +142,7 @@ export default new class Profile {
             msg = `An account already exists with the email address ${email}`;
             break;
           case "auth/invalid-email":
-            msg = `${email} is not a valid email address.`;
+            msg = `You entered an invalid email address.`;
             break;
           case "auth/operation-not-allowed":
             msg = `Registration is currently disabled.`;
@@ -167,13 +167,13 @@ export default new class Profile {
         let msg = `Unknown error: ${error.code}`;
         switch (error.code) {
           case "auth/invalid-email":
-            msg = `${email} is not a valid email address.`;
+            msg = `You entered an invalid email address.`;
             break;
           case "auth/user-disabled":
             msg = `That user account is disabled.`;
             break;
           case "auth/user-not-found":
-            msg = `No user account found for ${email}`;
+            msg = `No user account found for this login`;
             break;
           case "auth/wrong-password":
             msg = `That's the wrong password for that account!`;
@@ -194,10 +194,10 @@ export default new class Profile {
         let msg = `Unknown error: ${error.code}`;
         switch (error.message) {
           case "auth/invalid-email":
-            msg = `${email} is not a valid email address.`;
+            msg = `You entered an invalid email address.`;
             break;
           case "auth/user-not-found":
-            msg = `No user account found for ${email}`;
+            msg = `No user account found for this login.`;
             break;
         }
         toast.error(msg);
@@ -366,7 +366,7 @@ export default new class Profile {
         let msg = `Unknown error: ${e.code}`;
         switch (e.code) {
           case "auth/invalid-email":
-            msg = `${email} is not a valid email address.`;
+            msg = `You entered an invalid email address.`;
             break;
           case "auth/email-already-in-use":
             msg = `${email} is already in use by another account.`;

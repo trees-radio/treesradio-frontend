@@ -182,7 +182,7 @@ export default class UserBit extends React.Component {
           <Modal isOpen={this.changingPassword} hideModal={() => this.changingPassword = false} title="Change Your Password">
             <div className="form-group">
               <label>New Password</label>
-              <input className="form-control" ref={c => this._newPassword = c}/>
+              <input className="form-control" type="password" ref={c => this._newPassword = c}/>
             </div>
             <br/>
             <div><button className="btn btn-primary" onClick={() => this.changePassword()}>Change Password</button></div>
@@ -193,7 +193,7 @@ export default class UserBit extends React.Component {
           <Modal isOpen={this.changingEmail} hideModal={() => this.changingEmail = false} title="Change Your Email">
             <div className="form-group">
               <label>New Email</label>
-              <input className="form-control" ref={c => this._newEmail = c}/>
+              <input className="form-control" type="email" ref={c => this._newEmail = c}/>
             </div>
             <br/>
             <div><button className="btn btn-primary" onClick={() => this.changeEmail()}>Change Email</button></div>
@@ -207,7 +207,8 @@ export default class UserBit extends React.Component {
             <div className="form-group" id="emailpassfields">
               <div className="input-group margin-bottom-sm" id="emailbox">
                 <span className="input-group-addon"><i className="fa fa-envelope-o fa-fw"></i></span>
-                <input className="form-control" type="email" id="emailInput" ref={c => this._email = c} />
+                <input className="form-control" type="email" id="emailInput" ref={c => this._email = c} 
+                      onKeyPress={e => this.onEnterKey(e, () => $('#passInput').focus()) } />
               </div>
               <div className="input-group">
                 <span className="input-group-addon"><i className="fa fa-key fa-fw"></i></span>
