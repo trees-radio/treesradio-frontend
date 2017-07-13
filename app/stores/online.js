@@ -3,7 +3,6 @@ import fbase from "libs/fbase";
 import getUsername from "libs/username";
 import playing from "stores/playing";
 import {getRank, getAllRanks} from "libs/rank";
-import _ from "underscore";
 
 export default new class Online {
   constructor() {
@@ -34,7 +33,14 @@ export default new class Online {
 
   @computed
   get listWithFeedback() {
-    const feedbackUsers = playing.data.feedback_users;
+    let feedbackUsers =
+      fbase
+        .database()
+        .ref('playing')
+        .child('feedback_users')
+        .on('value', snap => snap.val() );
+    
+        //playing.data.feedback_users;
     let userlist = [];
 
     getAllRanks(allRanks => {
