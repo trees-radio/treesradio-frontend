@@ -1,8 +1,7 @@
 import {observable, computed, autorunAsync} from "mobx";
 import fbase from "libs/fbase";
 import getUsername from "libs/username";
-import playing from "stores/playing";
-import {getRank, getAllRanks} from "libs/rank";
+import {getAllRanks} from "libs/rank";
 
 export default new class Online {
   constructor() {
@@ -33,27 +32,16 @@ export default new class Online {
 
   @computed
   get listWithFeedback() {
-    // let feedbackUsers =
-    //   fbase
-    //     .database()
-    //     .ref('playing')
-    //     .child('feedback_users')
-    //     .on('value', (snap) => { snap.val(); } );
-    
-    // //console.log(playing.data.feedback_users);
     let userlist = [];
-    // console.log(feedbackUsers);
+    
     getAllRanks(allRanks => {
       return this.list.forEach(u => {
         let user = {...u};
-        user.liked = playing.theselikes.includes(user.uid);
-        user.disliked = playing.thesedislikes.includes(user.uid);
-        user.grabbed = playing.thesegrabs.includes(user.uid);
         user.rank = allRanks[user.uid] || "User";
         userlist.push(user);
       });
     });
-    console.log(userlist);
+    
     return userlist;
   }
 
