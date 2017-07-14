@@ -33,35 +33,27 @@ export default new class Online {
 
   @computed
   get listWithFeedback() {
-    let feedbackUsers =
-      fbase
-        .database()
-        .ref('playing')
-        .child('feedback_users')
-        .on('value', snap => snap.val() );
+    // let feedbackUsers =
+    //   fbase
+    //     .database()
+    //     .ref('playing')
+    //     .child('feedback_users')
+    //     .on('value', (snap) => { snap.val(); } );
     
-        //playing.data.feedback_users;
+    // //console.log(playing.data.feedback_users);
     let userlist = [];
-
+    // console.log(feedbackUsers);
     getAllRanks(allRanks => {
       return this.list.forEach(u => {
         let user = {...u};
-        if (feedbackUsers) {
-          if (feedbackUsers.likes && feedbackUsers.likes.includes(user.uid)) {
-            user.liked = true;
-          }
-          if (feedbackUsers.dislikes && feedbackUsers.dislikes.includes(user.uid)) {
-            user.disliked = true;
-          }
-          if (feedbackUsers.grabs && feedbackUsers.grabs.includes(user.uid)) {
-            user.grabbed = true;
-          }
-        }
+        user.liked = playing.theselikes.includes(user.uid);
+        user.disliked = playing.thesedislikes.includes(user.uid);
+        user.grabbed = playing.thesegrabs.includes(user.uid);
         user.rank = allRanks[user.uid] || "User";
         userlist.push(user);
       });
     });
-
+    console.log(userlist);
     return userlist;
   }
 
