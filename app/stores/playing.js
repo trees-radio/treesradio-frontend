@@ -198,21 +198,6 @@ export default new class Playing {
     }
   }
 
-  @computed 
-  get theselikes() {
-    return this.data.feedback_users ? ( this.data.feedback_users.likes ? this.data.feedback_users.likes : [] ) : [];
-  }
-
-  @computed
-  get thesedislikes() {
-    return this.data.feedback_users ? ( this.data.feedback_users.dislikes ? this.data.feedback_users.dislikes : [] ) :[];
-  }
-
-  @computed
-  get thesegrabs() {
-    return this.data.feedback_users ? ( this.data.feedback_users.grabs ? this.data.feedback_users.grabs : [] ) : [];
-  }
-
   @computed
   get disliked() {
     if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
