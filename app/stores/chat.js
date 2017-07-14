@@ -43,13 +43,13 @@ export default new class Chat {
           this.messages.push(msg);
         }
 
-        if (profile.profileInit && msg.mentions) {
+        if (msg.mentions && profile.username ) {
           //mention check
-          const mentions = msg.mentions.map(s => s.split("@").join("").toLowerCase());
+          const mentions = msg.mentions.map(s => { return s ? s.substr(1).toLowerCase() : "" });
           const everyone = msg.bot && mentions.includes("everyone");
           let mentioned = everyone;
           if (!mentioned) {
-            mentioned = mentions.includes(profile.profile.username.toLowerCase());
+            mentioned = mentions.includes(profile.safeUsername.toLowerCase());
           }
           if (mentioned) {
             mention(everyone, msg.username);
