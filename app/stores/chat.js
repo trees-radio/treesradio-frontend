@@ -45,8 +45,8 @@ export default new class Chat {
 
         if (msg.mentions && profile.username ) {
           //mention check
-          const mentions = msg.mentions.map(s => { return s ? s.substr(1).toLowerCase() : "" });
-          const everyone = msg.bot && mentions.includes("everyone");
+          let mentions = msg.mentions.map(s => { return s ? s.substr(1).toLowerCase() : "" });
+          let everyone = ( msg.bot || ( msg.title && msg.title != 'User' ) ) && mentions.includes("everyone");
           let mentioned = everyone;
           if (!mentioned) {
             mentioned = mentions.includes(profile.safeUsername.toLowerCase());
