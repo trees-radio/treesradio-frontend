@@ -5,13 +5,82 @@ import classNames from "classnames";
 import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import profile from "stores/profile";
+import fbase from "../../libs/fbase";
 
 let usersList, lastUpdate;
 
 @observer
 export default class OnlineUsers extends React.Component {
+
+  state = {
+    liked: [],
+    disliked: [],
+    grabbed: []
+  };
+
+  componentDidMount() {
+    fbase
+      .database()
+      .ref('playing')
+      .child('feedback_users')
+      .child('likes')
+      .on('child_added', (snap) => {
+        this.state.liked.push(snap.val());
+        this.setState(this.state);
+      });
+    fbase
+      .database()
+      .ref('playing')
+      .child('feedback_users')
+      .child('likes')
+      .on('child_removed', (snap) => {
+        let index = this.state.liked.indexOf(snap.val());
+        this.state.liked.splice(index, 1);
+        this.setState(this.state);
+      });
+    fbase
+      .database()
+      .ref('playing')
+      .child('feedback_users')
+      .child('dislikes')
+      .on('child_added', (snap) => {
+        this.state.disliked.push(snap.val());
+        this.setState(this.state);
+      });
+    fbase
+      .database()
+      .ref('playing')
+      .child('feedback_users')
+      .child('dislikes')
+      .on('child_removed', (snap) => {
+        let index = this.state.disliked.indexOf(snap.val());
+        this.state.disliked.splice(index, 1);
+        this.setState(this.state);
+      });
+    fbase
+      .database()
+      .ref('playing')
+      .child('feedback_users')
+      .child('grabs')
+      .on('child_added', (snap) => {
+        this.state.grabbed.push(snap.val());
+        this.setState(this.state);
+      });
+    fbase
+      .database()
+      .ref('playing')
+      .child('feedback_users')
+      .child('grabs')
+      .on('child_removed', (snap) => {
+        let index = this.state.grabbed.indexOf(snap.val());
+        this.state.grabbed.splice(index, 1);
+        this.setState(this.state);
+      });
+    
+  }
   render() {
-    let users = online.listWithFeedback || [];
+    
+    let users = online.listWithFeedback;
     
     users.sort(
         (a,b) => {
@@ -19,46 +88,28 @@ export default class OnlineUsers extends React.Component {
         }
     );
 
-    if (!lastUpdate) {
-      lastUpdate = Date.now() / 1000;
-    } else if ( Date.now() / 1000 - lastUpdate > 10 ) {
-
-      usersList = users.map((user, i) => {
-        var userPosClass = i%2 == 0 ? "user-line-1" : "user-line-0";
-
-        var userLineClasses = classNames("user-item", userPosClass);
-        // class names for users <li> in list
-        let icon, grabIcon;
-
-        if (user.liked) {
-          icon = <i className="fa fa-arrow-up users-upvote" />;
-        }
-
-        if (user.grabbed) {
-          grabIcon = <i className="fa fa-bookmark users-grab" />;
-        }
-
-        const userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
-        const userCanSeeDislikes = profile.isAdmin || userRankCanSeeDislikes;
-
-        if (user.disliked && userCanSeeDislikes) {
-          icon = <i className="fa fa-arrow-down users-downvote" />;
-        }
-        
-        return (
-          <li key={i} className={userLineClasses}>
-            <UserAvatar uid={user.uid} />
-            <div className="users-info">
-              <UserName className="users-username" uid={user.uid} username={user.username} />
-              {" "}
-              {icon}
-              {" "}
-              {grabIcon}
-            </div>
-          </li>
-        );
-      });
-    }
+    usersList = users.map((user, i) => {
+     
+      let userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
+      let userCanSeeDislikes = profile.isAdmin || userRankCanSeeDislikes;
+      
+      return (
+        <li key={i} className={ i%2 == 0 ? "user-line-1 user-item" : "user-line-0 user-item" }>
+          <UserAvatar uid={user.uid} />
+          <div className="users-info">
+            <UserName className="users-username" uid={user.uid} username={user.username} />
+            {" "}
+            <i className={ this.state.liked.includes(user.uid) 
+                            ? "fa fa-arrow-up users-upvote" 
+                            : this.state.disliked.includes(user.uid) && userCanSeeDislikes 
+                              ? "fa fa-arrow-down users-downvote" : "" } />
+            {" "}
+            <i className={ this.state.grabbed.includes(user.uid) 
+                            ? "fa fa-bookmark users-grab" : "" } />
+          </div>
+        </li>
+      );
+    });
     return (
       <div className="users-scroll" style={this.props.show ? {} : {display: "none"}}>
         <ul className="users-list">

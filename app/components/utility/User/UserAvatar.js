@@ -13,12 +13,12 @@ export default class UserAvatar extends React.Component {
 
   getAvatar = async () => {
     const fallback = await defaultAvatar(this.props.uid);
-
-    this.setState({avatar: fallback}, () => {
-      listenAvatar(this.props.uid, snap => {
-        this.setState({avatar: snap.val() || fallback});
+    
+      this.setState({avatar: fallback}, () => {
+        listenAvatar(this.props.uid, snap => {
+          this.setState({avatar: snap.val() || fallback});
+        });
       });
-    });
   }
 
   onVisibility = isVisible => this.setState({visible: isVisible});

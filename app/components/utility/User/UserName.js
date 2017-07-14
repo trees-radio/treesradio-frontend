@@ -33,4 +33,6 @@ export default class UserName extends React.Component {
 
     return <span onClick={this.props.onClick || noop} className={usernameClasses}>{this.state.username}</span>;
   }
+
+  
 }

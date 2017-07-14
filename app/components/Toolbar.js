@@ -154,7 +154,7 @@ export default (class Toolbar extends React.Component {
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <span className="current-song-title">
-              <a className="current-playing-media marquee">
+              <a className={ playing.data.info.title && playing.data.info.title.length > 35 ? "current-playing-media marquee" : "current-playing-media" }>
                 {playing.data.info.title}
               </a>
             </span>
