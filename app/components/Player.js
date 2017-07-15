@@ -32,7 +32,7 @@ export default (class Player extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown".this.onkeydownListener);
+    window.removeEventListener("keydown", this.onkeydownListener);
   }
 
   render() {
