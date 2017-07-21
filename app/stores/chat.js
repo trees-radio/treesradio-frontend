@@ -20,13 +20,13 @@ export default new class Chat {
       var msg = snap.val();
       if (msg) {
         // Makes chat messages appear to the silenced user.
-        if (msg.uid !== profile.uid && (msg.silenced !== undefined && msg.silenced === true)) {
+        if ( msg.uid !== profile.uid && (msg.silenced !== undefined && msg.silenced === true)) {
           return;
         }
 
         if (
           msg.adminOnly !== undefined &&
-          msg.adminOnly == true &&
+          msg.adminOnly === true &&
           (profile.rank === null || profile.rank == "User")
         ) {
           // This is an admin only message.
