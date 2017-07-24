@@ -61,7 +61,7 @@ export default class Sidebar extends React.Component {
             ref="sel-waitlist"
             onClick={() => this.update("WAITLIST")}
           >
-            Waitlist <span className="waitlist-count">{waitlist.count}</span>
+            Waitlist <span className="waitlist-count">{waitlist.inWaitlist ? waitlist.waitlistPosition + '/' : ''}{waitlist.count}</span>
           </div>
           <div className={aboutBtnClass} ref="sel-about" onClick={() => this.update("ABOUT")}>
             About
