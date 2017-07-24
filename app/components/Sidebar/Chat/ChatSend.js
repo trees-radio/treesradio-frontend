@@ -62,24 +62,26 @@ export default (class ChatSend extends React.Component {
     }
 
     return (
-      <div>
-        {matchContainer}
-        <div id="sendbox" className="sendbox">
-          <input
-            type="text"
-            placeholder="enter to send"
-            id="chatinput"
-            className="form-control"
-            value={chat.msg}
-            onKeyPress={e => this.onKeyPress(e)}
-            onKeyDown={e => this.onKeyDown(e)}
-            onChange={e => this.onChange(e)}
-          />
+      <form className="form-inline">
+        <div className="form-group tr-form-group">
+          {matchContainer}
+          <div id="sendbox_test" className="input-group tr-form-group">
+            <input
+              type="text"
+              placeholder="enter to send"
+              id="chatinput"
+              className="form-control"
+              value={chat.msg}
+              onKeyPress={e => this.onKeyPress(e)}
+              onKeyDown={e => this.onKeyDown(e)}
+              onChange={e => this.onChange(e)}
+            />
+            <div id="chat-counter_test" className="input-group-addon">
+              {chat.chars} / {chat.limit}
+            </div>
+          </div>
         </div>
-        <div id="chat-counter">
-          {chat.chars} / {chat.limit}
-        </div>
-      </div>
+      </form>
     );
   }
 });

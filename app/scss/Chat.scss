@@ -221,12 +221,16 @@ $chat-item-color: #c0c0c0; //light skin #000
   position: absolute;
   height: 5%;
   max-height: 45px;
-  width: 98.5%;
+  //width: 98.5%;
   left: .75%;
   margin-top:1px;
   padding-top:1px;
   position: absolute;
   bottom: .75vh;
+}
+
+.tr-form-group {
+  width: 100% !important;
 }
 
 input#chatinput.form-control {
@@ -235,7 +239,7 @@ input#chatinput.form-control {
   font-size: 1.65vh;
   color: black;
   margin-top:1px;
-  padding-right:3vw;
+  padding-right:1vw;
 }
 
 .blazebot-msg {
