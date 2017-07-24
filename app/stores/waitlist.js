@@ -96,6 +96,16 @@ export default new class Waitlist {
     }
   }
 
+  @computed 
+  get waitlistPosition() {
+    for ( let i = 0; i < this.list.length; i++ ) {
+      if ( this.list[i].uid === profile.user.uid ) {
+        return i + 1;
+      }
+    }
+    return false;
+  }
+
   @computed
   get count() {
     return this.list.length;
