@@ -127,6 +127,8 @@ export default new class Profile {
   @observable banData = null;
   @observable silenceData = null;
 
+  @observable notifications = true;
+
   // TODO can probably move these top functions to a lib
   login(email, password) {
     fbase
