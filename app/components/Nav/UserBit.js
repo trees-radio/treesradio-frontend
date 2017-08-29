@@ -104,7 +104,7 @@ export default class UserBit extends React.Component {
               <li onClick={() => this.changingPassword = true}><a href="#"><i className="fa fa-key"></i> Change Password</a></li>
               <li ><a href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target='blank'><i className="fa fa-youtube-play"></i> Region Check</a></li>
               <li onClick={() => this.toggleNotifications() }>
-                <a href="#"><i className={classNames('fa', profile.notifications === true ? "fa-check-square-o" : "fa-square-o")}></i> Notifications Enabled</a>
+                <a href="#"><i className={classNames('fa', profile.notifications === true ? "fa-check-square-o" : "fa-square-o")}></i> Mention Audio?</a>
               </li>
               <li onClick={() => profile.logout()}><a href="#"><i className="fa fa-sign-out"></i> Logout</a></li>
             </ul>
