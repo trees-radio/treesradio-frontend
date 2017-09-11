@@ -21,7 +21,7 @@ export default class Karan extends React.Component {
     }
     render() {
         return (
-            <Modal isOpen={this.state.modalIsOpen} hideModal={() => this.toggleModal} title="In Memorium">
+            <Modal isOpen={this.state.modalIsOpen} hideModal={() => this.toggleModal} title="In Memoriam">
                 <div className="row">
                     <div className="col-md-2">
                         <img src="//i.imgur.com/NgqxUDF.jpg" width="100%"/>
