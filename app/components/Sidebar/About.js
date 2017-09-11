@@ -49,9 +49,9 @@ export default class About extends React.Component {
             <li id="rules-9">- Staff reserve the right to skip any video.</li>
           </ul>
         </div>
-        <div className="about-help">
+        <div className="about-karan">
           <div>
-            <button type="button" className="btn btn-default btn-xs" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
+            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
               <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
               </button>
           </div>

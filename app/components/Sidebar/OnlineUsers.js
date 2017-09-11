@@ -159,7 +159,7 @@ export default class OnlineUsers extends React.Component {
           }
           
           me.items.filter( (user) => {
-            return user.uid !== key[0];
+            return user.uid !== keys[0];
           });
           me.setState({ users: me.items });
         });
