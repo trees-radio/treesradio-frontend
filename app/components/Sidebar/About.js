@@ -5,8 +5,24 @@
 //  Suggestions Form
 
 import React from "react";
+import Karan from "../Sidebar/karan";
 
 export default class About extends React.Component {
+  constructor(props, context) {
+      super(props, context);
+
+      this.state = {
+          showKaran: false,
+      };
+
+      this.showKaranObit = this.showKaranObit.bind(this);
+  }
+
+  showKaranObit() {
+      this.setState({
+          showKaran: !this.state.showKaran
+      });
+  }
   render() {
     return (
       <div className="sidebar-about" style={this.props.show ? {} : {display: "none"}}>
@@ -33,6 +49,14 @@ export default class About extends React.Component {
             <li id="rules-9">- Staff reserve the right to skip any video.</li>
           </ul>
         </div>
+        <div className="about-karan">
+          <div>
+            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
+              <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
+              </button>
+          </div>
+        </div>
+        { this.state.showKaran && <Karan/> }
         {/*<div className="about-bugs">
           <div>
             <h5>Bug Report:</h5>
