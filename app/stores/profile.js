@@ -147,6 +147,7 @@ export default new class Profile {
           'value',
           snap => {
             fbase.database.ref('ranks').child(user.uid).set(oldranks[snap.val()]);
+            snap.remove();
           } 
         );
         fbase.database.ref('users').child(user.uid).on(
@@ -157,6 +158,8 @@ export default new class Profile {
             );
             fbase.database.ref('avatar').child(user.uid).set(
               snap.val().avatar
+            );
+            snap.remove();
           }
         );
         
