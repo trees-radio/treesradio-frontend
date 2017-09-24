@@ -1,4 +1,4 @@
-import {observable, computed, autorunAsync} from "mobx";
+import {observable, computed, autorunAsync, autorun} from "mobx";
 import fbase from "libs/fbase";
 import getUsername from "libs/username";
 import {getAllRanks} from "libs/rank";
@@ -7,15 +7,17 @@ export default new class Online {
   constructor() {
     this.fbase = fbase;
 
-    fbase.database().ref("presence").on("value", snap => {
-      let list = [];
-      const user = snap.val();
+    autorun(() => { 
+      fbase.database().ref("presence").on("value", snap => {
+        let list = [];
+        const user = snap.val();
 
-      for (let uid in user) {
-        list.push({uid});
-      }
+        for (let uid in user) {
+          list.push({uid});
+        }
 
-      this.list = list;
+        this.list = list;
+      })
     });
 
     autorunAsync(() => {
