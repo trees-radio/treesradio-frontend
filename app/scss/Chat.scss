@@ -295,9 +295,16 @@ img[alt=previewimg] {
   width: 50%;
 }
 img[alt=previewimgsm] {
-  width: 25%;
+  width: 40%;
+  float: right;
 }
 a[title=previewlink] {
   color: white;
   font-weight: bold;
+}
+div > blockquote {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
