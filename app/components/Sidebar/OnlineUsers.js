@@ -141,8 +141,14 @@ export default class OnlineUsers extends React.Component {
                       me.setState({users: me.items });
 
                       me.items = me.state.users; // write back clean list
-                    })
-                })
+                      me.setState({
+                        users: me.state.users,
+                        liked: me.state.liked,
+                        disliked: me.state.disliked,
+                        grabbed: me.state.grabbed
+                      });
+                    });
+                }); 
             }
           );
 
@@ -223,7 +229,6 @@ export default class OnlineUsers extends React.Component {
                         me.state.users.push(me.items[i]);
                       }
                       me.items = me.state.users; // write back clean list
-                      
                     })
                 })
             }
