@@ -12,6 +12,7 @@ export default (class ChatSend extends React.Component {
   onKeyPress(e) {
     var key = e.keyCode || e.which;
     if (key === 13) {
+      e.preventDefault();
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
       } else {
@@ -35,6 +36,7 @@ export default (class ChatSend extends React.Component {
     if (!profile.user) {
       toast.error("You must be logged in to chat!");
     } else {
+      e.preventDefault();
       chat.updateMsg(e.target.value);
     }
   }
