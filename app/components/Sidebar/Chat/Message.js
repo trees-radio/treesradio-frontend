@@ -2,7 +2,7 @@ import React from "react";
 import {emojify} from "react-emojione";
 import imageWhitelist from "libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
-import markdown from 'markdown';
+import ReactMarkdown from 'react-markdown';
 
 // regex for links (protocol not required): http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
@@ -37,6 +37,9 @@ export default class Message extends React.Component {
   render() {
     const text = this.props.text;
 
+    if ( text.substring(0,12) === '==markdown==' )
+      return <ReactMarkdown source={text.substring(12)}/>;
+
     let tokens = text.split(" ");
 
     const result = tokens.map((tkn, i) => (
@@ -59,9 +62,7 @@ class MessageItem extends React.Component {
 
   render() {
     const {token, show, onLoad} = this.props;
-    if ( token.match(/^==markdown==/i) ) {
-      return <span> {markdown.toHTML(token.substring(12))} </span>;
-    } else if (imageCheck(token)) {
+    if (imageCheck(token)) {
       let style = {};
       if (!show) {
         style.visibility = "hidden";

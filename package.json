@@ -78,6 +78,7 @@
     "react-contextmenu": "^2.6.3",
     "react-dom": "^15.0.0",
     "react-emojione": "^2.0.0",
+    "react-markdown": "^2.5.0",
     "react-modal-bootstrap": "^1.1.0",
     "react-onclickoutside": "^5.7.1",
     "react-player": "^0.12.0",
