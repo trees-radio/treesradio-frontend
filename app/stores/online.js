@@ -22,7 +22,11 @@ export default new class Online {
       // async list updates
       this.usernames = [];
       this.list.forEach(async user => {
-        this.usernames.push(await getUsername(user.uid));
+        getUsername(user.uid)
+          .then(username => { 
+            this.usernames.push(username)
+          });
+        //this.usernames.push(await getUsername(user.uid));
       });
     }, 5000);
   }
