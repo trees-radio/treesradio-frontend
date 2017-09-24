@@ -135,6 +135,33 @@ export default new class Profile {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
+        // Convert old profile into new datastore.
+        let oldranks = [
+            'User',
+            'Mod',
+            'Senior Mod',
+            'Dev',
+            'Admin'
+        ];
+        fbase.database.ref('moderator').child(user.uid).on(
+          'value',
+          snap => {
+            fbase.database.ref('ranks').child(user.uid).set(oldranks[snap.val()]);
+            snap.remove();
+          } 
+        );
+        fbase.database.ref('users').child(user.uid).on(
+          "value",
+          snap => {
+            fbase.database.ref('usernames').child(user.uid).set(
+              snap.val().username
+            );
+            fbase.database.ref('avatar').child(user.uid).set(
+              snap.val().avatar
+            );
+            snap.remove();
+          }
+        );
         
       })
       .catch(error => {
