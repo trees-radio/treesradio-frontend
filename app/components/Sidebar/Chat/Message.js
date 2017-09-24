@@ -74,10 +74,10 @@ class MessageItem extends React.Component {
         </span>
       );
       // OR is this a plain URL?
-    } else if (token.match(regex)) {
+    } else if (token.match(regex) && !token.match(/href/i)) {
       let link = token;
       if (!link.slice(0, 4) === "http") {
-        link = `http://${link}`;
+        link = `//${link}`;
       }
       return <span><a href={link} target="_blank">{token}</a></span>;
     }
