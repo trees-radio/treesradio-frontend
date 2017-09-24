@@ -293,9 +293,10 @@ input#chatinput.form-control {
 }
 img[alt=previewimg] {
   width: 50%;
+  float:right;
 }
 img[alt=previewimgsm] {
-  width: 40%;
+  width: 50%;
   float: right;
 }
 a[title=previewlink] {
