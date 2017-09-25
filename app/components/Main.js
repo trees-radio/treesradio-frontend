@@ -22,9 +22,24 @@ if (process.env.NODE_ENV !== "production") {
 export default (class Main extends React.Component {
   render() {
     if (!app.init) {
+      let randmsg = [
+        'Grab a Bong and Sing A Long!',
+        'Wands at the Ready - MobBarley',
+        'Pimp Squad, Holdin it Down',
+        "Livin' Young 'n Wild 'n Freeee",
+        'Blue Dream by the Bouquet Smokin\' Blunts on a Tuesday',
+        'Loading... Or am I?',
+        'Griding Vigorously',
+        'Poking Badgers with Spoons'
+      ];
       return (
         <div className="main-load">
-          <i className="fa fa-spin fa-4x fa-circle-o-notch main-loading" />
+          <div className="container main-loadingcard">
+            <div className="main-vcenter">
+                <div className="main-center">{randmsg[Math.round(Math.random() * randmsg.length)]}</div>
+                <div className="main-center"><i className="fa fa-spin fa-2x fa-circle-o-notch" /></div>
+            </div>
+          </div>
         </div>
       );
     }
