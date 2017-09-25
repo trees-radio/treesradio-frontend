@@ -33,6 +33,8 @@ before_script:
 
 lint:
   stage: build
+  exclude: 
+    - master
   script:
     - npm run lint
 
