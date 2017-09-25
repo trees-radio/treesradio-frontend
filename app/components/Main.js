@@ -3,8 +3,6 @@
 import React from "react";
 import {observer} from "mobx-react";
 
-// import fbase from 'stores/fbase';
-// import profile from 'stores/profile';
 import app from "stores/app";
 
 import Nav from "./Nav";
