@@ -15,7 +15,7 @@ export default new class App {
     });
 
     setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
-    setTimeout(() => { this.proceed = true }, 2000)
+    setTimeout(() => { this.proceed = true }, 2500)
   }
 
   @observable connected = false;
