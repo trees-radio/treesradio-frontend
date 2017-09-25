@@ -29,7 +29,7 @@ export default (class Main extends React.Component {
         "Livin' Young 'n Wild 'n Freeee",
         'Blue Dream by the Bouquet Smokin\' Blunts on a Tuesday',
         'Loading... Or am I?',
-        'Griding Vigorously',
+        'Grinding Vigorously',
         'Poking Badgers with Spoons'
       ];
       return (
