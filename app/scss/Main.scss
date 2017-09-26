@@ -61,14 +61,17 @@ body {
   text-align: center;
   display: table-cell;
   vertical-align: middle;
+  width: 100%;
 }
 .main-vcenter {
   display: table-cell;
   vertical-align: middle;
   align-content: center;
+  text-align: center;
   background-color: rgba(16, 13, 27, 0.85);
   padding: 0px;
   margin: 0px;
+  width: 100%;
 }
 .main-loading {
   position: relative;
