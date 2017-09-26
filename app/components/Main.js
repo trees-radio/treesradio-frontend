@@ -37,9 +37,11 @@ export default (class Main extends React.Component {
         <div className="main-load">
           <div className="container main-loadingcard">
             <div className="main-vcenter">
-                <div className="main-center">{randmsg[Math.floor(Math.random() * randmsg.length)]}
+                <div className="main-center">
+                  <center>{randmsg[Math.floor(Math.random() * randmsg.length)]}
                   <br/>
-                  <i className="fa fa-spin fa-2x fa-circle-o-notch" /></div>
+                  <i className="fa fa-spin fa-2x fa-circle-o-notch" />
+                  </center></div>
             </div>
           </div>
         </div>
