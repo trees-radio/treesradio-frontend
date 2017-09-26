@@ -15,15 +15,17 @@ export default new class App {
     });
 
     setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
+    setTimeout(() => { this.proceed = true }, 2500)
   }
 
   @observable connected = false;
+  @observable proceed   = false;
   @observable ipAddress = null;
   @observable APP_EPOCH = epoch();
 
   @computed
   get init() {
-    if (this.connected && this.ipAddress !== null) {
+    if (this.connected && this.ipAddress !== null && this.proceed === true) {
       return true;
     } else {
       return false;

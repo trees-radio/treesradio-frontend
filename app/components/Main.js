@@ -3,8 +3,6 @@
 import React from "react";
 import {observer} from "mobx-react";
 
-// import fbase from 'stores/fbase';
-// import profile from 'stores/profile';
 import app from "stores/app";
 
 import Nav from "./Nav";
@@ -22,9 +20,28 @@ if (process.env.NODE_ENV !== "production") {
 export default (class Main extends React.Component {
   render() {
     if (!app.init) {
+      let randmsg = [
+        'Grab a Bong and Sing A Long!',
+        'Wands at the Ready - MobBarley',
+        'Pimp Squad, Holdin it Down',
+        "Livin' Young 'n Wild 'n Freeee",
+        'Blue Dream by the Bouquet Smokin\' Blunts on a Tuesday',
+        'Loading... Or am I?',
+        'Grinding Vigorously',
+        'Poking Badgers with Spoons',
+        'Eek! Exciting!',
+        'Where\'s my Lighter?',
+        'Earth, wind, fire, water..together these elements combined make me high!'
+      ];
       return (
         <div className="main-load">
-          <i className="fa fa-spin fa-4x fa-circle-o-notch main-loading" />
+          <div className="container main-loadingcard">
+            <div className="main-vcenter">
+                <div className="main-center">{randmsg[Math.floor(Math.random() * randmsg.length)]}
+                  <br/>
+                  <i className="fa fa-spin fa-2x fa-circle-o-notch" /></div>
+            </div>
+          </div>
         </div>
       );
     }
