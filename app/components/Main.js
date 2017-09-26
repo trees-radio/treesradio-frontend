@@ -31,7 +31,9 @@ export default (class Main extends React.Component {
         'Poking Badgers with Spoons',
         'Eek! Exciting!',
         'Where\'s my Lighter?',
-        'Earth, wind, fire, water..together these elements combined make me high!'
+        'Earth, wind, fire, water..together these elements combined make me high!',
+        'No officer, it\'s "Hi, how are you?"',
+        'Home of the original musical inspiration'
       ];
       return (
         <div className="main-load">
