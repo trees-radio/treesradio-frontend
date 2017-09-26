@@ -28,7 +28,10 @@ export default (class Main extends React.Component {
         'Blue Dream by the Bouquet Smokin\' Blunts on a Tuesday',
         'Loading... Or am I?',
         'Grinding Vigorously',
-        'Poking Badgers with Spoons'
+        'Poking Badgers with Spoons',
+        'Eek! Exciting!',
+        'Where\'s my Lighter?',
+        'Earth, wind, fire, water..together these elements combined make me high!'
       ];
       return (
         <div className="main-load">
