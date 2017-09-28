@@ -302,6 +302,7 @@ img[alt=previewimgsm] {
 img[alt=previewimgxs] {
   height: 65px;
   float: right;
+  margin-top: -21px;
 }
 a[title=previewlink] {
   color: white !important;
@@ -312,7 +313,4 @@ div > blockquote {
   margin-bottom: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-}
-span.chat-text div p {
-  min-height: 65px;
 }
