@@ -242,8 +242,8 @@ export default class OnlineUsers extends React.Component {
       <div className="users-scroll" style={this.props.show ? {} : {display: "none"}}>
         <ul className="users-list">
           {
-            this.state.users.map((user, i) => {
-             console.log(`user: ${user} at index: ${i}`);
+            this.state.users.forEach((user, i) => {
+             console.log(`user: ${JSON.stringify(user)} at index: ${i}`);
              return ( <li key={i} className={ i%2 == 0 ? "user-line-1 user-item" : "user-line-0 user-item" }>
                   <UserAvatar uid={user.uid} />
                   <div className="users-info">
