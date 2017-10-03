@@ -176,7 +176,7 @@ export default class OnlineUsers extends React.Component {
     fbase
       .database()
       .ref('presence')
-      .on('value',
+      .once('value',
         (snap) => {
 
           let users = snap.val();
@@ -187,52 +187,52 @@ export default class OnlineUsers extends React.Component {
           }
 
           if ( users ) 
-          keys.forEach(
-            function (thiskey) {
-              let user = {};
-              user.uid = thiskey;
-              fbase
-                .database()
-                .ref('ranks')
-                .child(user.uid)
-                .on('value', (rank) => {
-                  let thisrank = rank.val();
+            keys.forEach(
+              function (thiskey) {
+                let user = {};
+                user.uid = thiskey;
+                fbase
+                  .database()
+                  .ref('ranks')
+                  .child(user.uid)
+                  .on('value', (rank) => {
+                    let thisrank = rank.val();
 
-                  if ( !thisrank ) {
-                    user.rank = 'User';
-                  } else {
-                    user.rank = thisrank;
-                  }
-                  fbase
-                    .database()
-                    .ref('usernames')
-                    .child(user.uid)
-                    .on('value', (username) => {
-                      let name = username.val();
+                    if ( !thisrank ) {
+                      user.rank = 'User';
+                    } else {
+                      user.rank = thisrank;
+                    }
+                    fbase
+                      .database()
+                      .ref('usernames')
+                      .child(user.uid)
+                      .on('value', (username) => {
+                        let name = username.val();
 
-                      if ( name ) {
-                        user.username = name;
-                      }
-                      
-                      me.items.push(user);
-                  
-                      // Yeah yeah, this might get expensive, we'll see.
-                      me.items.sort( (a, b) => {
-                        return ( a.rank > b.rank ? 1 : a.rank < b.rank ? -1 : 0 );
-                      });
-                      let flags = [];
-                      me.state.users = [];
-                      
-                      for ( let i = 0; i < me.items.length; i++ ) {
-                        if ( flags[me.items[i].uid] ) continue;
-                        flags[me.items[i].uid] = true;
-                        me.state.users.push(me.items[i]);
-                      }
-                      me.items = me.state.users; // write back clean list
-                    })
-                })
-            }
-          )
+                        if ( name ) {
+                          user.username = name;
+                        }
+                        
+                        me.items.push(user);
+                    
+                        // Yeah yeah, this might get expensive, we'll see.
+                        me.items.sort( (a, b) => {
+                          return ( a.rank > b.rank ? 1 : a.rank < b.rank ? -1 : 0 );
+                        });
+                        let flags = [];
+                        me.state.users = [];
+                        
+                        for ( let i = 0; i < me.items.length; i++ ) {
+                          if ( flags[me.items[i].uid] ) continue;
+                          flags[me.items[i].uid] = true;
+                          me.state.users.push(me.items[i]);
+                        }
+                        me.items = me.state.users; // write back clean list
+                      })
+                  })
+              }
+            )
         });
     
     let userRankCanSeeDislikes = profile.rankPermissions.canSeeDownvotes === true;
@@ -243,7 +243,7 @@ export default class OnlineUsers extends React.Component {
         <ul className="users-list">
           {
             this.state.users.map((user, i) => {
-             
+             console.log(`user: ${user} at index: ${i}`);
              return ( <li key={i} className={ i%2 == 0 ? "user-line-1 user-item" : "user-line-0 user-item" }>
                   <UserAvatar uid={user.uid} />
                   <div className="users-info">
