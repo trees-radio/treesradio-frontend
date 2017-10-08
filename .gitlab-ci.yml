@@ -46,6 +46,20 @@ deploy_staging:
   dependencies:
     - build
   only:
-   - develop
+    - develop
   script:
     - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
+
+deploy_production:
+  stage: deploy
+  environment: production
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev rubygems
+    - gem install dpl
+  dependencies:
+    - build
+  only:
+    - master
+  script:
+    - dpl --skip_cleanup --provider=firebase --token=$FIREBASE_DEPLOY_PROD --project=treesradio-live
