@@ -21,17 +21,16 @@ export default (class Main extends React.Component {
   render() {
     if (!app.init) {
       let randmsg = [
+// No messages over 40 characters
         'Grab a Bong and Sing A Long!',
         'Wands at the Ready - MobBarley',
         'Pimp Squad, Holdin it Down',
         "Livin' Young 'n Wild 'n Freeee",
-        'Blue Dream by the Bouquet Smokin\' Blunts on a Tuesday',
         'Loading... Or am I?',
         'Grinding Vigorously',
         'Poking Badgers with Spoons',
         'Eek! Exciting!',
         'Where\'s my Lighter?',
-        'Earth, wind, fire, water..together these elements combined make me high!',
         'No officer, it\'s "Hi, how are you?"',
         'Home of the original musical inspiration'
       ];
