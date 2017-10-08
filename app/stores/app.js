@@ -25,7 +25,6 @@ export default new class App {
 
   @computed
   get init() {
-      return false;
     if (this.connected && this.ipAddress !== null && this.proceed === true) {
       return true;
     } else {
