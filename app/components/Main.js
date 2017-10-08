@@ -42,7 +42,7 @@ export default (class Main extends React.Component {
                 <div className="main-center">
                   <center>{randmsg[Math.floor(Math.random() * randmsg.length)]}
                   <br/>
-                  <i className="fa fa-spin fa-2x fa-circle-o-notch" />
+                  <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
                   </center></div>
             </div>
           </div>
