@@ -304,6 +304,15 @@ img[alt=previewimgxs] {
   float: right;
   margin-top: -21px;
 }
+img[alt=previewvideo] {
+  height: 100px;
+  float: right;
+}
+img[alt=previewavatar] {
+  height: 40px;
+  float: right;
+  margin-top: -1vh;
+}
 a[title=previewlink] {
   color: white !important;
   font-weight: bold;
@@ -313,4 +322,15 @@ div > blockquote {
   margin-bottom: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.joinalert {
+  font-size:1.65vh;
+  font-color:black;
+  font-style:bold;
+}
+.sidebar-song-title {
+  font-size:1.65vh;
+  font-color:#0066dd;
+  font-style:bold;
 }
