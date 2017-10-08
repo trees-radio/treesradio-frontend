@@ -59,7 +59,7 @@ body {
 
 .main-center {
   text-align: center;
-  display: table-cell;
+  position:relative;
   vertical-align: middle;
   width: 100%;
 }
@@ -78,6 +78,10 @@ body {
   left:50%;
   right:50%;
   margin-top:20%;
+}
+
+.loadingscreenwheel {
+  margin-top:1vh;
 }
 
 /* Components Container */
