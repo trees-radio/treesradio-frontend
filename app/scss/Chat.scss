@@ -307,29 +307,29 @@ height:100%;
 .sendbox-locked-timer{
   color:#77b300;
 }
-img[alt=previewimg] {
+img[alt="previewimg"] {
   width: 130px;
   float:right;
 }
-img[alt=previewimgsm] {
+img[alt="previewimgsm"] {
   height: 130px;
   float: right;
 }
-img[alt=previewimgxs] {
+img[alt="previewimgxs"] {
   height: 65px;
   float: right;
   margin-top: -21px;
 }
-img[alt=previewvideo] {
+img[alt="previewvideo"] {
   height: 100px;
   float: right;
 }
-img[alt=previewavatar] {
+img[alt="previewavatar"] {
   height: 40px;
   float: right;
   margin-top: -1vh;
 }
-a[title=previewlink] {
+a[title="previewlink"] {
   color: white !important;
   font-weight: bold;
 }
@@ -342,12 +342,12 @@ div > blockquote {
 
 .joinalert {
   font-size:1.65vh;
-  font-color:black;
+  color:black;
   font-style:bold;
 }
 .sidebar-song-title {
   font-size:1.65vh;
-  font-color:#0066dd;
+  color:#0066dd;
   font-style:bold;
 }
 
