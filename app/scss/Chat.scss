@@ -258,8 +258,14 @@ $chat-item-color: #c0c0c0; //light skin #000
 width:auto;
 height:100%;
 }
-.blazebot-msg {
+
+.blazebot-msg:nth-child(odd) {
   background-color: #77b300;
+  color:black;
+}
+
+.blazebot-msg:nth-child(even) {
+  background-color: #67a300;
   color:black;
 }
 
