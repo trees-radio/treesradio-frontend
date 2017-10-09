@@ -233,15 +233,31 @@ $chat-item-color: #c0c0c0; //light skin #000
   width: 100% !important;
 }
 
-input#chatinput.form-control {
-  height: 100%;
-  max-height: 45px;
+.chatbar {
+  height:8%;
+}
+.chatboxform {
+  height:100%;
+}
+
+#sendbox_test {
+  height: 98%;
+  max-height: 55px;
   font-size: 1.65vh;
   color: black;
   margin-top:1px;
-  padding-right:1vw;
+  padding-right:0px;
 }
 
+#chatinput {
+  height:98%;
+  width:100%;
+}
+
+#chat-counter_test {
+width:auto;
+height:100%;
+}
 .blazebot-msg {
   background-color: #77b300;
   color:black;
@@ -334,3 +350,4 @@ div > blockquote {
   font-color:#0066dd;
   font-style:bold;
 }
+

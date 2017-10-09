@@ -64,8 +64,8 @@ export default (class ChatSend extends React.Component {
     }
 
     return (
-      <form className="form-inline">
-        <div className="form-group tr-form-group">
+      <form className="form-inline chatbar">
+        <div className="form-group tr-form-group chatboxform">
           {matchContainer}
           <div id="sendbox_test" className="input-group tr-form-group">
             <input
