@@ -233,13 +233,24 @@ $chat-item-color: #c0c0c0; //light skin #000
   width: 100% !important;
 }
 
-input#chatinput.form-control {
+.chatbar {
+  height:8%;
+}
+.chatboxform {
+  height:100%;
+}
+
+#sendbox_test {
   height: 100%;
-  max-height: 45px;
+  // max-height: 45px;
   font-size: 1.65vh;
   color: black;
   margin-top:1px;
   padding-right:1vw;
+}
+
+#chatinput {
+  height:100%;
 }
 
 .blazebot-msg {
@@ -334,3 +345,4 @@ div > blockquote {
   font-color:#0066dd;
   font-style:bold;
 }
+
