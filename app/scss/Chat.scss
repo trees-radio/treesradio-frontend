@@ -1,5 +1,4 @@
 
-
 $chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
 $chat-item-border: #000; //light skin 808080
 $chat-item-color: #c0c0c0; //light skin #000
@@ -328,6 +327,7 @@ img[alt="previewimgxs"] {
 }
 img[alt="previewvideo"] {
   height: 100px;
+  width: 130px;
   float: right;
 }
 img[alt="previewavatar"] {
@@ -359,6 +359,23 @@ div > blockquote {
   font-style:bold;
 }
 
-.blockquote {
-  font-size:16px;
+.songstats-likes {
+  padding-left: 20px;
+  font-size: 1.65vh;
+  border-left: 5px solid #282828;
+  margin-bottom:0;
+}
+
+.songstats-dislikes {
+  padding-left: 20px;
+  font-size: 1.65vh;
+  border-left: 5px solid #282828;
+  margin-bottom:0;
+}
+
+.songstats-grabs {
+  padding-left: 20px;
+  font-size: 1.65vh;
+  border-left: 5px solid #282828;
+  margin-bottom:0;
 }
