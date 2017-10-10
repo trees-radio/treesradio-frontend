@@ -24,7 +24,7 @@ export default class Karan extends React.Component {
             <Modal isOpen={this.state.modalIsOpen} hideModal={() => this.toggleModal} title="In Memoriam">
                 <div className="row">
                     <div className="col-md-3">
-                        <img src="//i.imgur.com/NgqxUDF.jpg" width="100%"/>
+                        <img src="//i.imgur.com/f9cyJz3.jpg" width="100%"/>
                     </div>
                     <div className="col-md-9">
                         <h4>In July of 2017, TreesRadio lost a moderator and a great contributor to our community.</h4>
