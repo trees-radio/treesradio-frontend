@@ -332,8 +332,10 @@ img[alt="previewvideo"] {
 }
 img[alt="previewavatar"] {
   height: 40px;
+  width:40px;
   float: right;
   margin-top: -1vh;
+  border-radius: 5px;
 }
 a[title="previewlink"] {
   color: white !important;
@@ -357,3 +359,6 @@ div > blockquote {
   font-style:bold;
 }
 
+.blockquote {
+  font-size:16px;
+}
