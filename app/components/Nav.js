@@ -10,14 +10,15 @@ import file from "src/version.json";
 @observer
 export default (class Nav extends React.Component {
   @observable hoveredTitle = false;
+  @observable title = "[tr]";
 
-  onHover = _.debounce(() => (this.hoveredTitle = true), 500, {leading: true});
-  offHover = _.debounce(() => (this.hoveredTitle = false), 500);
+  onHover = _.debounce(() => { this.hoveredTitle = true; this.title = "[treesradio]" }, 500, {leading: true});
+  offHover = _.debounce(() => { this.hoveredTitle = false; this.title = "[tr]"}, 500);
 
   render() {
     const title = (
       <span>
-        <span>TreesRadio</span> <Version show={this.hoveredTitle} />
+        <span className="nav-title">{this.title}</span> <Version show={this.hoveredTitle} />
       </span>
     );
     return (
