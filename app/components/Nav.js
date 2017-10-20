@@ -17,8 +17,8 @@ export default (class Nav extends React.Component {
 
   render() {
     const title = (
-      <span>
-        <span className="nav-title">{this.title}</span> <Version show={this.hoveredTitle} />
+      <span className="nav-title">
+        <span>{this.title}</span> <Version show={this.hoveredTitle} />
       </span>
     );
     return (
