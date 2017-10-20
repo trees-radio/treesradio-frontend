@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .navbar {
   margin-bottom: 1px;
@@ -129,5 +130,16 @@
 }
 
 .version-tag {
-  font-size: 60%;
+  font-size: 50%;
+  color: #77b300;
+}
+
+.nav-title {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  transition: 250ms;
+}
+
+.nav-title:hover {
+  color: #77b300;
 }
