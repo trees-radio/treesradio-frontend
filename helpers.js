@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var STAGING_API = "AIzaSyB_w_sx6mMUQil5nWhn0sd5CjgOtDFGICw";
-var STAGING_DATABASE = 'treesradio-live';
+var STAGING_DATABASE = 'treesradio-staging';
 var API_KEY_FILE = '.fbaseapi';
 
 module.exports = {

@@ -1,10 +1,10 @@
 import firebase from "firebase";
 
 const FB_ENV = {
-  apiKey: "AIzaSyBqtjxpWp17r6wfOTxF4WvzV6_MgRN-zwk",
-  authDomain: "treesradio-live.firebaseapp.com",
-  databaseURL: "https://treesradio-live.firebaseio.com",
-  storageBucket: "treesradio-live.appspot.com"
+  apiKey: process.env.FBASE_API,
+  authDomain: `${process.env.FBASE}.firebaseapp.com`,
+  databaseURL: `https://${process.env.FBASE}.firebaseio.com`,
+  storageBucket: `${process.env.FBASE}.appspot.com`
 };
 
 firebase.initializeApp(FB_ENV);
