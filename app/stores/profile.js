@@ -32,7 +32,7 @@ export default new class Profile {
               this.presenceRef.onDisconnect().remove();
               this.presenceInterval = setInterval(
                 () => this.presenceRef.child("timestamp").set(epoch()),
-                60 * 1000
+                10000
               );
 
               this.ipRef && this.ipRef.remove();
@@ -128,6 +128,7 @@ export default new class Profile {
   @observable silenceData = null;
 
   @observable notifications = true;
+  @observable showmuted = false;
 
   // TODO can probably move these top functions to a lib
   login(email, password) {

@@ -63,7 +63,7 @@ export default (class Player extends React.Component {
             />}
         </div>
         <Progress
-          className="progress-bar"
+          className="progressbar-container"
           completed={Math.round(playing.fraction * 100)}
           color="#77b300"
         />

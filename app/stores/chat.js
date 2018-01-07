@@ -20,8 +20,11 @@ export default new class Chat {
       var msg = snap.val();
       if (msg) {
         // Makes chat messages appear to the silenced user.
-        if ( msg.uid !== profile.uid && (msg.silenced !== undefined && msg.silenced === true)) {
-          return;
+	
+        if ( msg.uid !== profile.uid &&
+		(msg.silenced !== undefined && msg.silenced === true) ) {
+	  if ( (profile.rank && !profile.showmuted) || !profile.rank ) 
+          	return;
         }
 
         if (
@@ -143,7 +146,7 @@ export default new class Chat {
         return [];
       }
       return online.usernames.filter(
-        n => n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase()
+        n => !n ? false : n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase()
       );
     } else {
       return [];

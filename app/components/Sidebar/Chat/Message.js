@@ -35,8 +35,9 @@ export default class Message extends React.Component {
   onVisibility = isVisible => this.setState({visible: isVisible});
 
   render() {
-    const text = this.props.text;
-
+    let text = this.props.text;
+    if ( !text ) 
+	    text = '';
     if ( text.substring(0,12) === '==markdown==' )
       return <ReactMarkdown source={text.substring(12)}/>;
 

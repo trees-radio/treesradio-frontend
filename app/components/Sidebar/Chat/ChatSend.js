@@ -72,6 +72,7 @@ export default (class ChatSend extends React.Component {
               type="text"
               placeholder="enter to send"
               id="chatinput"
+	      autoComplete="off"
               className="form-control"
               value={chat.msg}
               onKeyPress={e => this.onKeyPress(e)}

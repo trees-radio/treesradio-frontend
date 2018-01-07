@@ -14,4 +14,4 @@ config.entry.unshift("webpack-dev-server/client?http://localhost:8080/"); //requ
 var compiler = webpack(config);
 var server = new WebpackDevServer(compiler, {contentBase: "public", stats: { colors: true }});
 
-server.listen(8080,'127.0.0.1');
+server.listen(8081,'127.0.0.1');

@@ -66,6 +66,10 @@ export default class UserBit extends React.Component {
   toggleNotifications() {
     profile.notifications ? profile.notifications = false : profile.notifications = true;
   }
+  
+  toggleShowMute() {
+	  profile.showmuted ? profile.showmuted = false : profile.showmuted = true;
+  }
 
   render() {
     if (profile.user !== null) {
@@ -75,7 +79,10 @@ export default class UserBit extends React.Component {
       } else if (profile.resendVerificationResult) {
         emailVerificationResendIcon = <span><i className="fa fa-check"></i></span>;
       }
-
+      let showmute;
+      if ( profile.rank && profile.rank.match(/Admin|Mod|Dev/) ) 
+	      showmute = <li onClick={() => this.toggleShowMute() }><a href="#"><i className="fa fa-key"></i> Show Muted Users</a></li>
+	      
       return (
         <div>
           <div className="btn-group">
@@ -106,6 +113,7 @@ export default class UserBit extends React.Component {
               <li onClick={() => this.toggleNotifications() }>
                 <a href="#"><i className={classNames('fa', profile.notifications === true ? "fa-check-square-o" : "fa-square-o")}></i> Mention Audio?</a>
               </li>
+	      { showmute }
               <li onClick={() => profile.logout()}><a href="#"><i className="fa fa-sign-out"></i> Logout</a></li>
             </ul>
           </div>

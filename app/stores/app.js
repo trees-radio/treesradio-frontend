@@ -34,7 +34,7 @@ export default new class App {
 
   getIP() {
     return axios
-      .get("https://pineapple-test.treesradio.com/frob")
+      .get("https://pineapple.treesradio.com/frob")
       .then(resp => (this.ipAddress = resp.data.ip || "err"))
       .catch(() => (this.ipAddress = "err"));
   }

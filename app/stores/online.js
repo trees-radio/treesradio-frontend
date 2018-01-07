@@ -1,63 +1,151 @@
 import {observable, computed, autorunAsync, autorun} from "mobx";
 import fbase from "libs/fbase";
 import getUsername from "libs/username";
-import {getAllRanks} from "libs/rank";
+import {getAllRanks, getUserRank} from "libs/rank";
+import {getUserLike, getUserDislike, getUserGrab} from "libs/feedback";
 
 export default new class Online {
-  constructor() {
-    this.fbase = fbase;
+    constructor() {
 
-    autorun(() => { 
-      fbase.database().ref("presence").on("value", snap => {
-        let list = [];
-        const user = snap.val();
+        fbase
+            .database()
+            .ref('playing')
+            .child('feedback_users')
+            .child('likes')
+            .on('child_added', (snap) => {
+                console.log("Likes Add:" + JSON.stringify(snap.val()));
+                let user = this.online[snap.val()];
+                if (user) {
+                    user.liked = true;
+                    this.online[snap.val()] = user;
+                }
+            });
+        fbase
+            .database()
+            .ref('playing')
+            .child('feedback_users')
+            .child('likes')
+            .on('child_removed', (snap) => {
+                console.log("Likes Del:" + JSON.stringify(snap.val()));
+                let user = this.online[snap.val()];
+                if (user) {
+                    user.liked = false;
+                    this.online[snap.val()] = user;
+                }
+            });
+        fbase
+            .database()
+            .ref('playing')
+            .child('feedback_users')
+            .child('dislikes')
+            .on('child_added', (snap) => {
+                console.log("DisLikes Add:" + JSON.stringify(snap.val()));
+                let user = this.online[snap.val()];
+                if (user) {
+                    user.disliked = true;
+                    this.online[snap.val()] = user;
+                }
+            });
+        fbase
+            .database()
+            .ref('playing')
+            .child('feedback_users')
+            .child('dislikes')
+            .on('child_removed', (snap) => {
+                console.log("DisLikes Del:" + JSON.stringify(snap.val()));
+                let user = this.online[snap.val()];
+                if (user) {
+                    user.disliked = false;
+                    this.online[snap.val()] = user;
+                }
+            });
+        fbase
+            .database()
+            .ref('playing')
+            .child('feedback_users')
+            .child('grabs')
+            .on('child_added', (snap) => {
+                console.log("Grabs Add:" + JSON.stringify(snap.val()));
+                let user = this.online[snap.val()];
+                if (user) {
+                    user.grabbed = false;
+                    this.online[snap.val()] = user;
+                }
+            });
+        fbase
+            .database()
+            .ref('playing')
+            .child('feedback_users')
+            .child('grabs')
+            .on('child_removed', (snap) => {
+                console.log("Grabs Del:" + JSON.stringify(snap.val()));
+                let user = this.online[snap.val()];
+                if (user) {
+                    user.grabbed = false;
+                    this.online[snap.val()] = user;
+                }
+            });
 
-        for (let uid in user) {
-          list.push({uid});
-        }
+        fbase
+            .database()
+            .ref('presence')
+            .on('child_removed', (snap) => {
+                let keys = Object.keys(snap.val()['connections']);
+                let thisuid = snap.val()['connections'][keys[0]]['uid'];
+                console.log("Presence Remove: " + thisuid );
+                if (this.online[thisuid]) {
+                    for (var i = this.usernames.length - 1; i >= 0; i--) {
+                        if (this.usernames[i] === this.online[thisuid]['username']) {
+                            this
+                                .usernames
+                                .splice(i, 1);
+                        }
+                    }
+                    delete this.online[thisuid];
+                }
+            });
+        fbase
+            .database()
+            .ref('presence')
+            .on('child_added', (snap) => {
+                let keys = Object.keys(snap.val()['connections']);
 
-        this.list = list;
-      })
-    });
+                let thisuid = snap.val()['connections'][keys[0]]['uid'];
+                if (this.online[thisuid]) 
+                    return;
+                
+                let user = {};
+                if (this.online[thisuid]) 
+                    return;
+                console.log("Presence Add: " + thisuid );
+                user.liked = getUserLike(thisuid).then(val => val);
+                user.disliked = getUserDislike(thisuid).then(val => val);
+                user.grabbed = getUserGrab(thisuid).then(val => val);
+                user.rank = getUserRank(thisuid).then(val => val);
+                user.username = getUsername(thisuid).then(val => val);
+                this
+                    .usernames
+                    .push(user.username);
+                user.uid = thisuid;
+                this.online[thisuid] = user;
 
-    autorunAsync(() => {
-      // async list updates
-      this.usernames = [];
-      this.list.forEach(async user => {
-        getUsername(user.uid)
-          .then(username => { 
-            this.usernames.push(username)
-          });
-        //this.usernames.push(await getUsername(user.uid));
-      });
-    }, 5000);
-  }
+            });
+    }
 
-  @observable list = [];
-  @observable usernames = [];
+    @observable online = {};
+    @observable usernames = [];
 
-  @computed
-  get listWithFeedback() {
-    let userlist = [];
-    
-    getAllRanks(allRanks => {
-      return this.list.forEach(u => {
-        let user = {...u};
-        user.rank = allRanks[user.uid] || "User";
-        userlist.push(user);
-      });
-    });
-    
-    return userlist;
-  }
+    @computed
+    get onlineCount() {
+        return Object
+            .keys(this.online)
+            .length;
+    }
 
-  @computed
-  get onlineCount() {
-    return this.list.length;
-  }
-
-  @computed
-  get uids() {
-    return this.list.map(u => u.uid);
-  }
+    @computed
+    get uids() {
+        if (this.sorted) 
+            return this.sorted.map(u => u[0]);
+        return [];
+    }
 }();
