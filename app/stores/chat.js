@@ -145,8 +145,8 @@ export default new class Chat {
       if (name === "") {
         return [];
       }
-      return online.usernames.filter(
-        n => !n ? false : n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase()
+      return online.userlist.filter(
+        n => n && n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase()
       );
     } else {
       return [];

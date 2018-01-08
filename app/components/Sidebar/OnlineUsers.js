@@ -45,27 +45,27 @@ export default class OnlineUsers extends React.Component {
                     }
                 } >
                 <ul className = "users-list" > {
-                    this.state.sorted.map((user, i) => {
-                            if (online.online[user[0]])
+                    online.sorted.map((user, i) => {
+                            if (online.online[user['uid']])
                                 return ( <li key = { i } className = { i % 2 == 0 ? "user-line-1 user-item" : "user-line-0 user-item" } >
                                     <UserAvatar uid = {
-                                        online.online[user[0]].uid
+                                        online.online[user['uid']].uid
                                     } />
                                     <div className = "users-info" >
                                     <UserName className = "users-username"
                                     uid = {
-                                        online.online[user[0]].uid
+                                        online.online[user['uid']].uid
                                     }
                                     username = {
-                                        online.online[user[0]].username
+                                        online.online[user['uid']].username
                                     }
                                     /> { " " } <i className = {
-                                    online.online[user[0]].liked === true ?
-                                    "fa fa-arrow-up users-upvote" : online.online[user[0]].disliked === true && userCanSeeDislikes ?
+                                    online.online[user['uid']].liked === true ?
+                                    "fa fa-arrow-up users-upvote" : online.online[user['uid']].disliked === true && userCanSeeDislikes ?
                                     "fa fa-arrow-down users-downvote" : ""
                                 }
                             /> { " " } <i className = {
-                            online.online[user[0]].grabbed === true ?
+                            online.online[user['uid']].grabbed === true ?
                                 "fa fa-bookmark users-grab" : ""
                         }
                         />   

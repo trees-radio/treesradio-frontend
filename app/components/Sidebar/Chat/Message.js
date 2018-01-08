@@ -1,5 +1,5 @@
 import React from "react";
-import {emojify} from "react-emojione";
+import { emojify } from "react-emojione";
 import imageWhitelist from "libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
 import ReactMarkdown from 'react-markdown';
@@ -13,76 +13,81 @@ const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
 const emojifyOptions = {
-  styles: {
-    backgroundImage: "url(https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.png)"
-  }
+    styles: {
+    }
 };
 
+        //backgroundImage: "url(https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.png)"
 const imageCheck = tkn => tkn.match(imgregex) && imageWhitelist(tkn);
 
 export default class Message extends React.Component {
-  constructor() {
-    super();
-    this.state = {visible: true};
-  }
+    constructor() {
+        super();
+        this.state = { visible: true };
+    }
 
-  componentDidMount() {
-    const text = this.props.text;
-    let tokens = text.split(" ");
-    if (!tokens.some(imageCheck)) this.props.onLoad();
-  }
+    componentDidMount() {
+        const text = this.props.text;
+        let tokens = text.split(" ");
+        if (!tokens.some(imageCheck)) this.props.onLoad();
+    }
 
-  onVisibility = isVisible => this.setState({visible: isVisible});
+    onVisibility = isVisible => this.setState({ visible: isVisible });
 
-  render() {
-    let text = this.props.text;
-    if ( !text ) 
-	    text = '';
-    if ( text.substring(0,12) === '==markdown==' )
-      return <ReactMarkdown source={text.substring(12)}/>;
+    render() {
+        let text = this.props.text;
+        if (!text)
+            text = '';
+        if (text.substring(0, 12) === '==markdown==')
+            return <ReactMarkdown source = { text.substring(12) }
+        />;
 
-    let tokens = text.split(" ");
+        let tokens = text.split(" ");
+        const result = tokens.map((tkn, i) => ( < MessageItem key = { i }
+            token = { tkn }
+            show = { this.state.visible }
+            onLoad = { this.props.onLoad }
+            />
+        ));
 
-    const result = tokens.map((tkn, i) => (
-      <MessageItem key={i} token={tkn} show={this.state.visible} onLoad={this.props.onLoad} />
-    ));
-
-    return (
-      <div>
-        {result}
-        <VisibilitySensor onChange={this.onVisibility} />
-      </div>
-    );
-  }
+        return ( < div > { result } < VisibilitySensor onChange = { this.onVisibility }
+            /></div >
+        );
+    }
 }
 
 class MessageItem extends React.Component {
-  componentDidMount() {
-    if (!imageCheck(this.props.token)) this.props.onLoad();
-  }
-
-  render() {
-    const {token, show, onLoad} = this.props;
-    if (imageCheck(token)) {
-      let style = {};
-      if (!show) {
-        style.visibility = "hidden";
-      }
-
-      return (
-        <span>
-          <img src={token} onLoad={onLoad} style={style} className="inline-image" />
-        </span>
-      );
-      // OR is this a plain URL?
-    } else if (token.match(regex) && !token.match(/href/i)) {
-      let link = token;
-      if (!link.slice(0, 4) === "http") {
-        link = `//${link}`;
-      }
-      return <span><a href={link} target="_blank">{token}</a></span>;
+    componentDidMount() {
+        if (!imageCheck(this.props.token)) this.props.onLoad();
     }
 
-    return <span> {emojify(token, emojifyOptions)} </span>;
-  }
+    render() {
+        const { token, show, onLoad } = this.props;
+        if (imageCheck(token)) {
+            let style = {};
+            if (!show) {
+                style.visibility = "hidden";
+            }
+
+            return ( < span >
+                <
+                img src = { token }
+                onLoad = { onLoad }
+                style = { style }
+                className = "inline-image" / >
+                <
+                /span>
+            );
+            // OR is this a plain URL?
+        } else if (token.match(regex) && !token.match(/href/i)) {
+            let link = token;
+            if (!link.slice(0, 4) === "http") {
+                link = `//${link}`;
+            }
+            return <span > < a href = { link }
+            target = "_blank" > { token } < /a> </span > ;
+        }
+
+        return <span className={ this.bold ? 'chat-bold' : this.italic ? 'chat-italic' : '' } > { emojify(token, emojifyOptions) } < /span>;
+    }
 }

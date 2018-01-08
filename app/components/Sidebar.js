@@ -54,7 +54,7 @@ export default class Sidebar extends React.Component {
             Chat
           </div>
           <div className={onlineBtnClass} ref="sel-online" onClick={() => this.update("ONLINE")}>
-            Online Ents <span className="online-count">{online.onlineCount}</span>
+            Online Ents <span className="online-count">{online.userlist.length}</span>
           </div>
           <div
             className={waitlistBtnClass}
