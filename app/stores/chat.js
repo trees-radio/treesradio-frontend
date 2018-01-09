@@ -119,8 +119,11 @@ export default new class Chat {
       this.chatcounter.length == 0 ||
       Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce
     ) {
-      this.sendMsg(this.getMsg());
-      this.chatcounter.push({time: Date.now()});
+	    if ( this.msg.length !== 0 ) {
+		    this.msg = this.msg.replace("<3", ":heart:");
+                    this.sendMsg(this.getMsg());
+                    this.chatcounter.push({time: Date.now()});
+	    }
     } else if (this.msg !== "") {
       toast.warning(`Please wait ${this.chatDebounce / 1000} second(s) between messages.`);
     }

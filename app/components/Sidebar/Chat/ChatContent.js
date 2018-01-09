@@ -56,10 +56,9 @@ export default (class ChatContent extends React.Component {
       });
 
       var humanTimestamp = moment.unix(msg.timestamp).format("LT");
-
       var msgs = msg.msgs.map((innerMsg, i) => {
         return (
-          <Message key={i} text={innerMsg} onLoad={() => setTimeout(this.autoScroll(true), 100)} />
+          <Message key={i} isEmote={msg.isemote} text={innerMsg} onLoad={() => setTimeout(this.autoScroll(true), 100)} />
         );
       });
 
@@ -72,7 +71,7 @@ export default (class ChatContent extends React.Component {
             <UserName
               uid={msg.uid}
               className="chat-username"
-              onClick={() => chat.appendMsg("@" + msg.username)}
+              onClick={() => chat.appendMsg("@" + msg.username + " ")  && $('#chatinput').click() }
             />
             <span className="chat-timestamp">{humanTimestamp}</span><br />
             <span className="chat-text">{msgs}</span>

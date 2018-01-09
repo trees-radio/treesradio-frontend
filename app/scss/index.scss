@@ -35,8 +35,3 @@ $trees-bg: #0A0A0A;
 @import './buttons/like-button';
 @import './buttons/dislike-button';
 
-
-//EMOJI Replaces ugly :P with not ugly :P
-[title~=":stuck_out_tongue:"] {
-background-position: 88.5714% 62.9% !important;
-}

@@ -13,7 +13,10 @@ const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
 const emojifyOptions = {
-    styles: {
+    style: {
+	    backgroundImage:"url('https://raw.githubusercontent.com/pladaria/react-emojione/master/assets/sprites/emojione-3.1.2-64x64.png')",
+	    height: 24,
+	    margin: 1
     }
 };
 
@@ -45,6 +48,7 @@ export default class Message extends React.Component {
         let tokens = text.split(" ");
         const result = tokens.map((tkn, i) => ( < MessageItem key = { i }
             token = { tkn }
+	    isEmote={ this.props.isEmote }
             show = { this.state.visible }
             onLoad = { this.props.onLoad }
             />
@@ -63,6 +67,7 @@ class MessageItem extends React.Component {
 
     render() {
         const { token, show, onLoad } = this.props;
+	let isWeed = false;
         if (imageCheck(token)) {
             let style = {};
             if (!show) {
@@ -86,8 +91,9 @@ class MessageItem extends React.Component {
             }
             return <span > < a href = { link }
             target = "_blank" > { token } < /a> </span > ;
-        }
-
-        return <span className={ this.bold ? 'chat-bold' : this.italic ? 'chat-italic' : '' } > { emojify(token, emojifyOptions) } < /span>;
+        } else if ( token == ':weed:' || token == ':cannabis:' || token == ":marijuana:" ) {
+		isWeed = true;
+	}
+        return <span className={ this.props.isEmote ? 'chat-italic' : isWeed ? 'emoji-weed' : '' } > { emojify(token, emojifyOptions) } < /span>;
     }
 }

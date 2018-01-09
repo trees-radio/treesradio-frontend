@@ -67,13 +67,14 @@ export default class About extends React.Component {
         <div className="about-suggestions">
           <div>
             <h5>YouTube Region Checker</h5>
+	    See above in the drop down for an instant check.<br/>
             <a href="https://polsy.org.uk/stuff/ytrestrict.cgi" target="_blank">
               Check if a video has any region restrictions
             </a>
           </div>
         </div>
         <div className="about-emoji">
-          <h6><a href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji List</a></h6>
+          <h6><a href="https://www.emojione.com/emoji/v3" target="_blank">Emoji List</a></h6>
           <h6>
             <a href="https://youtu.be/84qIWSRRZM8" target="_blank">Video Tutorial/Walkthrough</a>
           </h6>
