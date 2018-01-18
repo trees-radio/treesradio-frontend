@@ -16,50 +16,59 @@ const CHAT_LOCK_REGISTRATION_SEC = 1800;
 export default new class Chat {
   constructor() {
     this.fbase = fbase;
-    fbase.database().ref("chat").limitToLast(50).on("child_added", snap => {
-      var msg = snap.val();
-      if (msg) {
-        // Makes chat messages appear to the silenced user.
-	
-        if ( msg.uid !== profile.uid &&
-		(msg.silenced !== undefined && msg.silenced === true) ) {
-	  if ( (profile.rank && !profile.showmuted) || !profile.rank ) 
-          	return;
-        }
+    fbase
+      .database()
+      .ref("chat")
+      .limitToLast(50)
+      .on("child_added", snap => {
+        var msg = snap.val();
+        if (msg) {
+          // Makes chat messages appear to the silenced user.
 
-        if (
-          msg.adminOnly !== undefined &&
-          msg.adminOnly === true &&
-          (profile.rank === null || profile.rank == "User")
-        ) {
-          // This is an admin only message.
-          return;
-        }
-        if (
-          this.messages[this.messages.length - 1] &&
-          msg.username === this.messages[this.messages.length - 1].username
-        ) {
-          this.messages[this.messages.length - 1].msgs.push(msg.msg);
-          this.messages[this.messages.length - 1].timestamp = msg.timestamp;
-        } else {
-          msg.msgs = [msg.msg];
-          this.messages.push(msg);
-        }
+          if (msg.uid !== profile.uid && (msg.silenced !== undefined && msg.silenced === true)) {
+            if ((profile.rank && !profile.showmuted) || !profile.rank) 
+              return;
+            }
+          
+          if (msg.adminOnly !== undefined && msg.adminOnly === true && (profile.rank === null || profile.rank == "User")) {
+            // This is an admin only message.
+            return;
+          }
+          if (this.messages[this.messages.length - 1] && msg.username === this.messages[this.messages.length - 1].username) {
+            this
+              .messages[this.messages.length - 1]
+              .msgs
+              .push(msg.msg);
+            this.messages[this.messages.length - 1].timestamp = msg.timestamp;
+          } else {
+            msg.msgs = [msg.msg];
+            this
+              .messages
+              .push(msg);
+          }
 
-        if (msg.mentions && profile.username ) {
-          //mention check
-          let mentions = msg.mentions.map(s => { return s ? s.substr(1).toLowerCase() : "" });
-          let everyone = ( msg.bot || ( msg.title && msg.title != 'User' ) ) && mentions.includes("everyone");
-          let mentioned = everyone;
-          if (!mentioned) {
-            mentioned = mentions.includes(profile.safeUsername.toLowerCase());
-          }
-          if (mentioned) {
-            mention(everyone, msg.username);
+          if (msg.mentions && profile.username) {
+            //mention check
+            let mentions = msg
+              .mentions
+              .map(s => {
+                return s
+                  ? s
+                    .substr(1)
+                    .toLowerCase()
+                  : ""
+              });
+            let everyone = (msg.bot || (msg.title && msg.title != 'User')) && mentions.includes("everyone");
+            let mentioned = everyone;
+            if (!mentioned) {
+              mentioned = mentions.includes(profile.safeUsername.toLowerCase());
+            }
+            if (mentioned) {
+              mention(everyone, msg.username);
+            }
           }
         }
-      }
-    });
+      });
 
     events.register("chat_clear", () => (this.messages = []));
 
@@ -106,24 +115,29 @@ export default new class Chat {
     for (var i = 0; i < this.chatcounter.length; i++) {
       if (Date.now() - this.chatcounter[i].time > 5000) {
         i--;
-        this.chatcounter.shift();
+        this
+          .chatcounter
+          .shift();
         continue;
       }
     }
 
-    this.chatDebounce =
-      this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
-      (this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
+    this.chatDebounce = this.chatcounter.length * CHAT_DEBOUNCE_MSEC + (this.chatcounter.length > 5
+      ? this.chatcounter.length * CHAT_PENALTY_MSEC
+      : 0);
 
-    if (
-      this.chatcounter.length == 0 ||
-      Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce
-    ) {
-	    if ( this.msg.length !== 0 ) {
-		    this.msg = this.msg.replace("<3", ":heart:");
-                    this.sendMsg(this.getMsg());
-                    this.chatcounter.push({time: Date.now()});
-	    }
+    if (this.chatcounter.length == 0 || Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce) {
+      if (this.msg.length !== 0) {
+        this.msg = this
+          .msg
+          .replace("<3", ":heart:");
+        this.sendMsg(this.getMsg());
+        this
+          .chatcounter
+          .push({
+            time: Date.now()
+          });
+      }
     } else if (this.msg !== "") {
       toast.warning(`Please wait ${this.chatDebounce / 1000} second(s) between messages.`);
     }
@@ -141,31 +155,40 @@ export default new class Chat {
 
   @computed
   get mentionMatches() {
-    var words = this.msg.split(" ");
+    var words = this
+      .msg
+      .split(" ");
     if (words[words.length - 1][0] === "@") {
       var mention = words[words.length - 1];
-      var name = mention.split("@").join("");
+      var name = mention
+        .split("@")
+        .join("");
       if (name === "") {
         return [];
       }
-      return online.userlist.filter(
-        n => n && n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase()
-      );
+
+      return online
+        .userlist
+        .filter(n => n && n.toUpperCase().includes(name.toUpperCase()) && n.toUpperCase() !== name.toUpperCase());
     } else {
       return [];
     }
   }
 
   replaceMention(index) {
-    var words = this.msg.split(" ");
+    var words = this
+      .msg
+      .split(" ");
     words[words.length - 1] = "@" + this.mentionMatches[index] + " ";
     this.msg = words.join(" ");
   }
 
   @computed
   get canChat() {
-    if (!profile.loggedIn) return false;
-    if (this.chatLocked && profile.secondsRegistered < CHAT_LOCK_REGISTRATION_SEC) return false;
+    if (!profile.loggedIn) 
+      return false;
+    if (this.chatLocked && profile.secondsRegistered < CHAT_LOCK_REGISTRATION_SEC) 
+      return false;
     return true;
   }
 

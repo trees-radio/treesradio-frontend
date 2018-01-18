@@ -13,12 +13,12 @@ export default class UserName extends React.Component {
     this.getUsername();
   }
 
-  getRank = async () => {
+  getRank = async() => {
     const title = await rank(this.props.uid);
     this.setState({title});
   }
 
-  getUsername = async () => {
+  getUsername = async() => {
     const username = await getUsername(this.props.uid);
     this.setState({username});
   }
@@ -26,7 +26,12 @@ export default class UserName extends React.Component {
   render() {
     let userClass = 'username-user';
     if (this.state.title) {
-      userClass = `username-${this.state.title.split(' ').join('').toLowerCase()}`;
+      userClass = `username-${this
+        .state
+        .title
+        .split(' ')
+        .join('')
+        .toLowerCase()}`;
     }
 
     const usernameClasses = classNames(this.props.className, userClass);
@@ -34,5 +39,4 @@ export default class UserName extends React.Component {
     return <span onClick={this.props.onClick || noop} className={usernameClasses}>{this.state.username}</span>;
   }
 
-  
 }

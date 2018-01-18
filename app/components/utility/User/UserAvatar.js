@@ -3,22 +3,29 @@ import {listenAvatar, defaultAvatar} from 'libs/avatar';
 import imageWhitelist from 'libs/imageWhitelist';
 import VisibilitySensor from 'react-visibility-sensor';
 import EMPTY_IMG from 'img/nothing.png';
+import {autorun} from 'mobx';
 
 export default class UserAvatar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {visible: false};
+    this.state = {
+      visible: false
+    };
     this.getAvatar();
   }
 
-  getAvatar = async () => {
+  getAvatar = async() => {
     const fallback = await defaultAvatar(this.props.uid);
-    
-      this.setState({avatar: fallback}, () => {
-        listenAvatar(this.props.uid, snap => {
-          this.setState({avatar: snap.val() || fallback});
+
+    this.setState({
+      avatar: fallback
+    }, () => {
+      listenAvatar(this.props.uid, snap => {
+        this.setState({
+          avatar: snap.val() || fallback
         });
       });
+    });
   }
 
   onVisibility = isVisible => this.setState({visible: isVisible});

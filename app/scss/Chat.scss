@@ -270,6 +270,22 @@ $chat-item-color: #c0c0c0; //light skin #000
     color: black;
 }
 
+.blazebot-msg a:link {
+    color: white;
+}
+
+.blazebot-msg a:visited {
+    color: white;
+}
+
+.blazebot-msg a:hover {
+    color: white;
+}
+
+.blazebot-msg a:active {
+    color: white;
+}
+
 .chat-timestamp {
     float: right;
 }
@@ -345,6 +361,10 @@ img[alt="previewavatar"] {
     border-radius: 5px;
 }
 
+img[alt="giphy"] {
+    width: 90%;
+}
+
 a[title="previewlink"] {
     color: white !important;
     font-weight: bold;
@@ -397,17 +417,33 @@ div>blockquote {
 .chat-italic {
     font-style: italic;
 }
+
 .emoji-weed {
-	background-image: url("/img/marijuana.png");
-	height: 24px;
-	width: 24px;
-	font-size: inherit;
-	background-size: 24px;
-	top: -3px;
-	position: relative;
-	display: inline-block;
-	line-height: normal;
-	vertical-align: middle;
-	background-repeat: no-repeat;
-	text-indent: -9999em;
+    background-image: url("/img/marijuana.png");
+    height: 24px;
+    width: 24px;
+    font-size: inherit;
+    background-size: 24px;
+    top: -3px;
+    position: relative;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    text-indent: -9999em;
+}
+
+.emoji-toke {
+    background-image: url("/img/193.png");
+    height: 24px;
+    width: 24px;
+    font-size: inherit;
+    background-size: 24px;
+    top: -3px;
+    position: relative;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    text-indent: -9999em;
 }

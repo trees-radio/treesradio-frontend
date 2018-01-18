@@ -1,18 +1,20 @@
-import { observable, computed, autorun } from "mobx";
+import {observable, computed, autorun} from "mobx";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import toast from "utils/toast";
 import playing from "stores/playing";
 import chat from "stores/chat";
-import { send } from "libs/events";
+import {send} from "libs/events";
 import online from "stores/online";
 
 export default new class Waitlist {
     constructor() {
         this.reloadList();
 
-        fbase.database().ref("waitlist").on('value',
-            snap => {
+        fbase
+            .database()
+            .ref("waitlist")
+            .on('value', snap => {
                 this.reloadList();
             });
 
@@ -23,24 +25,29 @@ export default new class Waitlist {
     }
 
     reloadList() {
-        fbase.database().ref("waitlist").once("value", snap => {
-            var list = [];
-	    this.list = [];
-            var wl = snap.val();
-            for (var key in wl) {
-                list.push(wl[key]);
-            }
-            this.list = list;
-        });
+        fbase
+            .database()
+            .ref("waitlist")
+            .once("value", snap => {
+                var list = [];
+                this.list = [];
+                var wl = snap.val();
+                for (var key in wl) {
+                    list.push(wl[key]);
+                }
+                this.list = list;
+            });
     }
 
     @observable list = [];
 
     @computed
     get onlineOnly() {
-        return this.list.filter(function(user) {
-                return { uid: user.uid };
-        });
+        return this
+            .list
+            .filter(function (user) {
+                return {uid: user.uid};
+            });
         //return this.list.filter(usr => online.uids.includes(usr));
     }
 
@@ -94,7 +101,9 @@ export default new class Waitlist {
         if (this.isPlaying) {
             return true;
         }
-        return this.list.some(w => w.uid == profile.user.uid);
+        return this
+            .list
+            .some(w => w.uid == profile.user.uid);
     }
 
     @computed

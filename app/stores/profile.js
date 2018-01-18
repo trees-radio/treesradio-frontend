@@ -180,6 +180,8 @@ export default new class Profile {
           case "auth/weak-password":
             msg = `Your chosen password is too weak. Please use a stronger password`;
             break;
+          case undefined:
+            return;
         }
         toast.error(msg);
       });
@@ -208,6 +210,8 @@ export default new class Profile {
           case "auth/wrong-password":
             msg = `That's the wrong password for that account!`;
             break;
+          case undefined:
+          return;
         }
         toast.error(msg);
       })
@@ -229,6 +233,8 @@ export default new class Profile {
           case "auth/user-not-found":
             msg = `No user account found for this login.`;
             break;
+          case undefined:
+            return;
         }
         toast.error(msg);
         return false;
@@ -404,6 +410,8 @@ export default new class Profile {
           case "auth/requires-recent-login":
             msg = `Changing your email requires a recent login, log out and log back in before trying again.`;
             break;
+          case undefined:
+            return;
         }
         toast.error(msg);
         return false;

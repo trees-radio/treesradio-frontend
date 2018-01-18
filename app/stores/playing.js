@@ -18,16 +18,17 @@ export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 export default new class Playing {
   constructor() {
     this.fbase = fbase;
-    fbase.database().ref("playing").on("value", snap => {
-      var data = snap.val();
-      if (data) {
-        this.data = data;
-      }
-    });
+    
     localforage.getItem("volume").then(v => (v ? (this.volume = v) : false));
     localforage.getItem("playerSize").then(s => (s ? (this.playerSize = s) : false));
 
     autorun(() => {
+      fbase.database().ref("playing").on("value", snap => {
+        var data = snap.val();
+        if (data) {
+          this.data = data;
+        }
+      });
       this.localLikeState = this.liked;
       this.localDislikeState = this.disliked;
       this.localGrabState = this.grabbed;

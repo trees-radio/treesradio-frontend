@@ -68,16 +68,19 @@
 
 .users-upvote {
   color:#1a62ff;
-  padding-left:10px;
+  padding-left:5px;
+  float:right;
 }
 
 .users-downvote {
   color:#ff1928;
-  padding-left:10px;
+  padding-left:5px;
+  float:right;
 }
 
 .users-grab {
     color:#b71aff;
-    padding-left:10px;
-    float:left;
+    padding-left:5px;
+    float:right;
+    padding-top: 1px !important;
 }
