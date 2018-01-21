@@ -1,6 +1,6 @@
 {
   "name": "treesradio-frontend",
-  "version": "0.98.0",
+  "version": "1.0.0-rc1",
   "description": "TreesRadio Frontend",
   "main": "index.js",
   "scripts": {
