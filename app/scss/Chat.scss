@@ -163,6 +163,16 @@ $chat-item-color: #c0c0c0; //light skin #000
     font-size: 12px;
 }
 
+.username-frient {
+    color: #ddc978;
+}
+
+.username-frient:after {
+    color: #66ccf6;
+    content: " (Frient)";
+    font-size: 12px;
+}
+
 .username-user {
     color: #026455;
 }

@@ -24,6 +24,19 @@ export default new class Waitlist {
             this.localJoinState = this.inWaitlist;
             this.localPlayingState = this.isPlaying;
         });
+        
+        let checkAutojoin = 
+            setInterval(() => {
+                if ( profile.loggedIn && profile.canAutoplay ) {
+                    let autoplay = localStorage.getItem('autoplay');
+                    
+                    if ( autoplay ) {
+                        this.setAutojoin();
+                    }
+
+                    clearInterval(checkAutojoin);
+                } 
+            }, 1000);
     }
 
     reloadList() {
@@ -68,6 +81,9 @@ export default new class Waitlist {
     setAutojoin() {
         if ( profile.canAutoplay && !profile.autoplay ) {
             profile.autoplay = true;
+            
+            localStorage.setItem('autoplay', true);
+
              this.autojoinTimer = setInterval(() => {
                 if ( !this.inWaitlist && !this.localJoinState && epoch() - profile.lastchat < 3600 ) {// Hopefully prevent cycling of the button.
                     this.bigButton();
@@ -75,6 +91,7 @@ export default new class Waitlist {
                 if ( epoch() - profile.lastchat >= 3600 ) {
                     toast.error("You were removed from autoplay because it's been one hour since your last chat.");
                     profile.autoplay = false;
+                    localStorage.setItem('autoplay', false);
                 }
 
             }, 1000);
