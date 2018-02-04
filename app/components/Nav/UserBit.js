@@ -101,8 +101,7 @@ export default class UserBit extends React.Component {
             <i
               className={classNames('fa', profile.showmuted
               ? "fa-check-square-o"
-              : "fa-square-o")}></i>
-            Show Muted Users</a>
+              : "fa-square-o")}></i> Show Muted Users</a>
         </li>
       
       let showautoplay = '';
@@ -136,8 +135,7 @@ export default class UserBit extends React.Component {
             <ul className="dropdown-menu">
               <li onClick={() => this.settingAvatar = true}>
                 <a href="#">
-                  <i className="fa fa-pencil fa-fw"></i>
-                  Set Avatar</a>
+                  <i className="fa fa-pencil fa-fw"></i> Set Avatar</a>
               </li>
               <li onClick={() => playing.togglePlayerSize()}>
                 <a href="#">
@@ -153,35 +151,30 @@ export default class UserBit extends React.Component {
               </li>
               <li onClick={() => this.changingEmail = true}>
                 <a href="#">
-                  <i className="fa fa-envelope"></i>
-                  Change Email</a>
+                  <i className="fa fa-envelope"></i> Change Email</a>
               </li>
               <li onClick={() => this.changingPassword = true}>
                 <a href="#">
-                  <i className="fa fa-key"></i>
-                  Change Password</a>
+                  <i className="fa fa-key"></i> Change Password</a>
               </li>
               <li >
                 <a
                   href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
                   target='blank'>
-                  <i className="fa fa-youtube-play"></i>
-                  Region Check</a>
+                  <i className="fa fa-youtube-play"></i> Region Check</a>
               </li>
               <li onClick={() => this.toggleNotifications()}>
                 <a href="#">
                   <i
                     className={classNames('fa', profile.notifications === true
                     ? "fa-check-square-o"
-                    : "fa-square-o")}></i>
-                  Mention Audio?</a>
+                    : "fa-square-o")}></i> Mention Audio?</a>
               </li>
               {showmute}
               {showautoplay}
               <li onClick={() => profile.logout()}>
                 <a href="#">
-                  <i className="fa fa-sign-out"></i>
-                  Logout</a>
+                  <i className="fa fa-sign-out"></i> Logout</a>
               </li>
             </ul>
           </div>
