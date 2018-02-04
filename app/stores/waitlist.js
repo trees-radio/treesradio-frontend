@@ -69,8 +69,9 @@ export default new class Waitlist {
         if ( profile.canAutoplay ) {
             profile.autoplay = true;
              this.autojoinTimer = setInterval(() => {
-                if ( !this.inWaitlist && !this.localJoinState && epoch() - profile.lastchat < 3600 ) // Hopefully prevent cycling of the button.
+                if ( !this.inWaitlist && !this.localJoinState && epoch() - profile.lastchat < 3600 ) {// Hopefully prevent cycling of the button.
                     this.bigButton();
+                } 
                 if ( epoch() - profile.lastchat >= 3600 ) {
                     toast.error("You were removed from autoplay because it's been one hour since your last chat.");
                     profile.autoplay = false;
@@ -111,6 +112,8 @@ export default new class Waitlist {
             this.localPlayingState = false;
         } else if (this.inWaitlist) {
             send("leave_waitlist");
+            clearInterval(this.autojoinTimer);
+            this.autojoinTimer = false;
             this.localJoinState = false;
         } else {
             send("join_waitlist");
