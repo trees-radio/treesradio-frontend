@@ -6,6 +6,8 @@ import playing from "stores/playing";
 import chat from "stores/chat";
 import {send} from "libs/events";
 import online from "stores/online";
+import { setInterval, clearInterval } from "timers";
+import epoch from '../utils/epoch';
 
 export default new class Waitlist {
     constructor() {
@@ -61,6 +63,29 @@ export default new class Waitlist {
 
     @observable localJoinState = false;
     @observable localPlayingState = false;
+    @observable autojoinTimer = false;
+
+    setAutojoin() {
+        if ( profile.canAutoplay ) {
+            profile.autoplay = true;
+             this.autojoinTimer = setInterval(() => {
+                if ( !this.inWaitlist && !this.localJoinState && epoch() - profile.lastchat < 3600 ) // Hopefully prevent cycling of the button.
+                    this.bigButton();
+                if ( epoch() - profile.lastchat >= 3600 ) {
+                    toast.error("You were removed from autoplay because it's been one hour since your last chat.");
+                    profile.autoplay = false;
+                }
+
+            }, 1000);
+        }
+    }
+
+    cancelAutojoin() {
+        if ( profile.canAutoplay && this.autojoinTimer != false ) {
+            clearInterval(this.autojoinTimer);
+            this.autojoinTimer = false;
+        }
+    }
 
     @computed
     get bigButtonLoading() {

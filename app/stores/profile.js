@@ -130,6 +130,15 @@ export default new class Profile {
   @observable notifications = true;
   @observable showmuted = false;
 
+  @observable autoplay = false;
+
+  @observable lastchat = epoch();
+
+  @computed
+    get canAutoplay() {
+      return this.rank && this.rank != 'User';
+    }
+
   // TODO can probably move these top functions to a lib
   login(email, password) {
     fbase

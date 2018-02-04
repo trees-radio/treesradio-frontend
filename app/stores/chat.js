@@ -6,6 +6,7 @@ import events from "stores/events";
 import online from "stores/online";
 import mention from "libs/mention";
 import {send} from "libs/events";
+import epoch from "../utils/epoch";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const CHAT_DEBOUNCE_MSEC = 300;
@@ -132,6 +133,8 @@ export default new class Chat {
           .msg
           .replace("<3", ":heart:");
         this.sendMsg(this.getMsg());
+
+        profile.lastchat = epoch();
         this
           .chatcounter
           .push({
