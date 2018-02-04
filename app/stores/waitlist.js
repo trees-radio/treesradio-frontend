@@ -66,7 +66,7 @@ export default new class Waitlist {
     @observable autojoinTimer = false;
 
     setAutojoin() {
-        if ( profile.canAutoplay ) {
+        if ( profile.canAutoplay && !profile.autoplay ) {
             profile.autoplay = true;
              this.autojoinTimer = setInterval(() => {
                 if ( !this.inWaitlist && !this.localJoinState && epoch() - profile.lastchat < 3600 ) {// Hopefully prevent cycling of the button.
@@ -78,11 +78,14 @@ export default new class Waitlist {
                 }
 
             }, 1000);
+        } else {
+            this.cancelAutojoin();
         }
     }
 
     cancelAutojoin() {
         if ( profile.canAutoplay && this.autojoinTimer != false ) {
+            profile.autoplay = false;
             clearInterval(this.autojoinTimer);
             this.autojoinTimer = false;
         }

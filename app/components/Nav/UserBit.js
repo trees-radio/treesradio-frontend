@@ -144,9 +144,9 @@ export default class UserBit extends React.Component {
                     ? "fa-compress"
                     : "fa-expand")}></i>
                   {playing.playerSize === "BIG"
-                    ? "Collapse Player"
-                    : "Expand Player"
-}
+                    ? " Collapse Player"
+                    : " Expand Player"
+                  }
                 </a>
               </li>
               <li onClick={() => this.changingEmail = true}>
