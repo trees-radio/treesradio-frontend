@@ -89,8 +89,9 @@ export default new class Waitlist {
                     this.bigButton();
                 } 
                 if ( epoch() - profile.lastchat >= 3600 ) {
-                    toast.error("You were removed from autoplay because it's been one hour since your last chat.");
+                    toast.error("You were removed from the waitlist because it's been one hour since your last chat.");
                     profile.autoplay = false;
+                    this.cancelAutojoin();
                     localStorage.setItem('autoplay', false);
                 }
 
