@@ -31,7 +31,7 @@ export default new class Chat {
               return;
             }
           
-          if (msg.adminOnly !== undefined && msg.adminOnly === true && (profile.rank === null || profile.rank == "User")) {
+          if (msg.adminOnly !== undefined && msg.adminOnly === true && (profile.rank === null || profile.rank.match(/User|Frient|VIP/i) )) {
             // This is an admin only message.
             return;
           }
