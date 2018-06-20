@@ -113,6 +113,15 @@ $chat-item-color: #c0c0c0; //light skin #000
     text-decoration: underline;
 }
 
+.username-bot {
+    color: rgb(199,102,76);
+}
+.username-bot:after {
+	color: rgb(29,131,211);
+	content: " (Bot)";
+	font-size: 12px;
+}
+
 .username-admin {
     color: #0099ff;
 }
@@ -270,14 +279,10 @@ $chat-item-color: #c0c0c0; //light skin #000
     height: 100%;
 }
 
-.blazebot-msg:nth-child(odd) {
-    background-color: #77b300;
-    color: black;
-}
-
-.blazebot-msg:nth-child(even) {
-    background-color: #67a300;
-    color: black;
+.blazebot-msg {
+    background-color: #1A001A;
+    color: #bbb;
+    font-size: 10px;
 }
 
 .blazebot-msg a:link {
@@ -294,6 +299,10 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 .blazebot-msg a:active {
     color: white;
+}
+
+.blazebot-hide {
+    display:none;
 }
 
 .chat-timestamp {

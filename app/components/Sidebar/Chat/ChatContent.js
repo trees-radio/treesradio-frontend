@@ -7,6 +7,7 @@ import moment from "moment";
 import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import Message from "./Message";
+import profile from "stores/profile";
 
 const SCROLL_SENSITIVITY = 200;
 
@@ -53,7 +54,7 @@ export default (class ChatContent extends React.Component {
       var chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
       var chatLineClasses = classNames("chat-item", chatPosClass, {
         "blazebot-msg": msg.username == "BlazeBot"
-      });
+      }, ( profile.hideBlazeBot ? 'blazebot-hide' : ''));
 
       var humanTimestamp = moment.unix(msg.timestamp).format("LT");
       var msgs = msg.msgs.map((innerMsg, i) => {

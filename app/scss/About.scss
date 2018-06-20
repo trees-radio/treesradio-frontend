@@ -29,6 +29,12 @@
   padding-left: 5%;
 }
 
+.about-promotion {
+  width: 100%;
+  font-size: .75vw;
+  padding-left: 5%;
+}
+
 .rules-list {
   list-style-position: inside;
   list-style-type:none;
@@ -63,11 +69,8 @@
 }
 
 .about-karan {
-  padding-left: 5%;
-  width: 95%;
-  height: 10%;
-  max-height: 10%;
-  padding-top: 5%;
+  float:right;
+  padding-right:25px;
 }
 
 #rules-1 {

@@ -82,6 +82,12 @@ export default class UserBit extends React.Component {
       : profile.showmuted = true;
   }
 
+  hideBlazebot() {
+    profile.hideBlazebot
+      ? profile.hideBlazebot = false
+      : profile.hideBlazebot = true;
+  }
+
   render() {
     if (profile.user !== null) {
       let emailVerificationResendIcon;
@@ -163,6 +169,12 @@ export default class UserBit extends React.Component {
                   target='blank'>
                   <i className="fa fa-youtube-play"></i> Region Check</a>
               </li>
+              <li onClick={() => this.hideBlazebot() }>
+                <a href="#">
+                  <i className={classNames('fa', profile.hideBlazebot === true 
+                    ? "fa-check-square-o"
+                    : "fa-square-o")}></i> Hide BlazeBot?</a>
+                  </li>
               <li onClick={() => this.toggleNotifications()}>
                 <a href="#">
                   <i

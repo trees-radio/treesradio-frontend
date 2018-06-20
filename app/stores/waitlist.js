@@ -28,7 +28,7 @@ export default new class Waitlist {
         let checkAutojoin = 
             setInterval(() => {
                 if ( profile.loggedIn && profile.canAutoplay ) {
-                    let autoplay = localStorage.getItem('autoplay');
+                    let autoplay = false;
                     
                     if ( autoplay ) {
                         this.setAutojoin();
@@ -36,7 +36,7 @@ export default new class Waitlist {
 
                     clearInterval(checkAutojoin);
                 } 
-            }, 1000);
+            }, 60000);
     }
 
     reloadList() {
@@ -82,8 +82,6 @@ export default new class Waitlist {
         if ( profile.canAutoplay && !profile.autoplay ) {
             profile.autoplay = true;
             
-            localStorage.setItem('autoplay', true);
-
              this.autojoinTimer = setInterval(() => {
                 if ( !this.inWaitlist && !this.localJoinState && epoch() - profile.lastchat < 3600 ) {// Hopefully prevent cycling of the button.
                     this.bigButton();
@@ -92,10 +90,9 @@ export default new class Waitlist {
                     toast.error("You were removed from the waitlist because it's been one hour since your last chat.");
                     profile.autoplay = false;
                     this.cancelAutojoin();
-                    localStorage.setItem('autoplay', false);
                 }
 
-            }, 1000);
+            }, 10000);
         } else {
             this.cancelAutojoin();
         }

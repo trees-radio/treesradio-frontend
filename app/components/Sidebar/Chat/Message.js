@@ -87,10 +87,10 @@ export default class Message extends React.Component {
                             if (!link.slice(0, 4) === "http") {
                                 link = `//${link}`;
                             }
-                            return <span><a href={ link } target="_blank">{ token }</a></span>;
+                            return <span><a href={ link } target="_blank">{ token } </a></span>;
                         } else if (specialemoji[token]) {
                             thisClass = specialemoji[token];
                         }
-                        return <span className={ this.props.isEmote ? 'chat-italic' : thisClass }>{ emojify(token, emojifyOptions) }</span>;
+                        return <span className={ this.props.isEmote ? 'chat-italic' : thisClass }>{ emojify(token, emojifyOptions) } </span>;
                     }
                 }

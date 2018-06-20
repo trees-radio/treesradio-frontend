@@ -47,6 +47,17 @@ export default class About extends React.Component {
             </li>
             <li id="rules-8">- Songs that have been recently played (2 hours) may be skipped.</li>
             <li id="rules-9">- Staff reserve the right to skip any video.</li>
+            <li id="rules-10">- This is a multi-genre site that appreciates varrying music types. Mood is everything. Excessive criticism of another's music will not be tollerated</li> 
+          </ul>
+        </div>
+        <div className="about-promotion">
+          <h5>Definition of a Frient:</h5>
+          <ul className="rules-list">
+            <li>- Participates regularly</li>
+            <li>- Has an attitude of acceptance</li>
+            <li>- Treats others with respect</li>
+            <li>- Is respected by the other ents</li>
+            <li>- Never asks for the promotion</li>
           </ul>
         </div>
         <div className="about-karan">
@@ -67,7 +78,7 @@ export default class About extends React.Component {
         <div className="about-suggestions">
           <div>
             <h5>YouTube Region Checker</h5>
-	    See above in the drop down for an instant check.<br/>
+            See above in the drop down for an instant check.<br/>
             <a href="https://polsy.org.uk/stuff/ytrestrict.cgi" target="_blank">
               Check if a video has any region restrictions
             </a>

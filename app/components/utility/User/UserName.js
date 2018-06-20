@@ -25,6 +25,8 @@ export default class UserName extends React.Component {
 
   render() {
     let userClass = 'username-user';
+    if ( this.state.username == 'BlazeBot' ) userClass = 'username-bot';
+
     if (this.state.title) {
       userClass = `username-${this
         .state
