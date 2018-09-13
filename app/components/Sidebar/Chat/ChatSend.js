@@ -7,6 +7,7 @@ import profile from "stores/profile";
 import toast from "utils/toast";
 
 // const noop = () => {};
+
 @observer
 export default (class ChatSend extends React.Component {
     onKeyPress(e) {

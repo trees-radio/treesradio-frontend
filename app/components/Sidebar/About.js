@@ -26,6 +26,14 @@ export default class About extends React.Component {
   render() {
     return (
       <div className="sidebar-about" style={this.props.show ? {} : {display: "none"}}>
+        <div className="about-karan">
+          <div>
+            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
+              <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
+              </button>
+          </div>
+        </div>
+        { this.state.showKaran && <Karan/> }
         <div className="about-summary">
           <p>
             TreesRadio is a online social music site for the reddit /r/trees community. Sign up to queue up some tunes or kick back and listen to the musical tastes of Ents around the world!
@@ -51,23 +59,9 @@ export default class About extends React.Component {
           </ul>
         </div>
         <div className="about-promotion">
-          <h5>Definition of a Frient:</h5>
-          <ul className="rules-list">
-            <li>- Participates regularly</li>
-            <li>- Has an attitude of acceptance</li>
-            <li>- Treats others with respect</li>
-            <li>- Is respected by the other ents</li>
-            <li>- Never asks for the promotion</li>
-          </ul>
+	<blockquote class="reddit-card" data-card-created="1536865809" data-card-preview="1"><a href="https://www.reddit.com/r/trees/comments/9fkj74/treesradio_is_looking_for_developers/?ref=share&ref_source=embed">TreesRadio is looking for developers.</a></blockquote>
+	<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
         </div>
-        <div className="about-karan">
-          <div>
-            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
-              <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
-              </button>
-          </div>
-        </div>
-        { this.state.showKaran && <Karan/> }
         {/*<div className="about-bugs">
           <div>
             <h5>Bug Report:</h5>
