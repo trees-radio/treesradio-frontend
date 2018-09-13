@@ -4,7 +4,7 @@
 image: node:7
 
 cache:
-  key: "$CI_BUILD_STAGE/$CI_BUILD_REF_NAME/02"
+  key: "$CI_BUILD_STAGE_$CI_BUILD_REF_NAME_02"
   paths:
   - node_modules/
   - yarn-cache/
