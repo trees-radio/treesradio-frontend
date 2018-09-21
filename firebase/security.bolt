@@ -11,7 +11,10 @@
 ////////////////////////////////////////////////////////////////
 isAuth() {auth != null}
 isUser(uid) { isAuth() && auth.uid == uid }
-isSendingUser() {isUser(newData.child('uid').val()) || isUser(data.child('uid').val())}
+
+chatHasUsername(type, uid) { ( type == 'chat' && root.child('usernames/'+uid).val() != null ) || ( type != 'chat' ) }
+
+isSendingUser() { ( isUser(newData.child('uid').val()) || isUser(data.child('uid').val()) ) && ( chatHasUsername(newData.child('type').val(), newData.child('uid').val()) || chatHasUsername(data.child('type').val(), data.child('uid').val())) }
 
 
 ////////////////////////////////////////////////////////////////
