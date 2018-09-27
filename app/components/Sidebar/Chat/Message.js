@@ -76,9 +76,6 @@ export default class Message extends React.Component {
                         let thisClass;
                         if (imageCheck(token)) {
                             let style = {};
-                            if (!show) {
-                                style.visibility = "hidden";
-                            }
 
                             return ( <span><img src={ token } onLoad={ onLoad } style={ style } className="inline-image"/></span>);
                             // OR is this a plain URL?

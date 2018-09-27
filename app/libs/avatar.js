@@ -25,5 +25,9 @@ export default async function getAvatar(uid) {
 }
 
 export async function listenAvatar(uid, callback) {
-  return fbase.database().ref("avatars").child(uid).on("value", callback);
+  return fbase
+    .database()
+    .ref("avatars")
+    .child(uid)
+    .on("value", callback);
 }

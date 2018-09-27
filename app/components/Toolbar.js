@@ -42,11 +42,7 @@ const GrabPlaylists = onClickOutside(
               </div>
             );
           });
-          return (
-            <div className="grab-playlists">
-              {grabPlaylists}
-            </div>
-          );
+          return <div className="grab-playlists">{grabPlaylists}</div>;
         } else {
           return <div />;
         }
@@ -144,24 +140,24 @@ export default (class Toolbar extends React.Component {
             <i id="playlists-open-icon" className={openButtonIcon} />
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <a className="current-playlist-name">
-              {playlists.selectedPlaylistName}
-            </a>
+            <a className="current-playlist-name">{playlists.selectedPlaylistName}</a>
             <br />
-            <a className="current-selected-media">
-              {playlists.selectedSong}
-            </a>
+            <a className="current-selected-media">{playlists.selectedSong}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <span className="current-song-title">
-              <a className={ playing.data.info.title && playing.data.info.title.length > 35 ? "current-playing-media marquee" : "current-playing-media" }>
+              <a
+                className={
+                  playing.data.info.title && playing.data.info.title.length > 35
+                    ? "current-playing-media marquee"
+                    : "current-playing-media"
+                }
+              >
                 {playing.data.info.title}
               </a>
             </span>
             <br />
-            <a className="current-playing-user">
-              Player: {playing.data.info.user}
-            </a>
+            <a className="current-playing-user">Player: {playing.data.info.user}</a>
             <span className="media-time">
               {playing.humanCurrent} / {playing.humanDuration}
             </span>
@@ -173,9 +169,7 @@ export default (class Toolbar extends React.Component {
             />
             <div className="grab-button" onClick={() => this.toggleGrab()}>
               <i className={classNames("fa", grabIcon)} />
-              <span className="feedback-grab">
-                {playing.grabs}
-              </span>
+              <span className="feedback-grab">{playing.grabs}</span>
             </div>
             <div className="volume-slider" onWheel={e => this.volumeWheel(e)}>
               <i className={volClass} />
@@ -196,15 +190,11 @@ export default (class Toolbar extends React.Component {
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div className="like-button" onClick={() => playing.like()}>
               <i className={classNames("fa", likeIcon)} />
-              <span className="feedback-likes">
-                {playing.likes}
-              </span>
+              <span className="feedback-likes">{playing.likes}</span>
             </div>
             <div className="dislike-button" onClick={() => playing.dislike()}>
               <i className={classNames("fa", dislikeIcon)} />
-              <span className="feedback-dislikes">
-                {playing.dislikes}
-              </span>
+              <span className="feedback-dislikes">{playing.dislikes}</span>
             </div>
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">

@@ -5,6 +5,7 @@ import epoch from "utils/epoch";
 import username from "libs/username";
 import {send} from "libs/events";
 import rank, {getSettingsForRank} from "libs/rank";
+import disposable from "disposable-email";
 // const startup = epoch();
 import app from "stores/app";
 
@@ -13,47 +14,60 @@ export default new class Profile {
     fbase.auth().onAuthStateChanged(user => {
       this.user = user;
       if (user !== null) {
-        this.stopProfileSync = fbase.database().ref("users").child(user.uid).on("value", snap => {
-          var profile = snap.val() || {};
-          this.profile = profile;
-          this.init = true;
+        this.stopProfileSync = fbase
+          .database()
+          .ref("users")
+          .child(user.uid)
+          .on("value", snap => {
+            var profile = snap.val() || {};
+            this.profile = profile;
+            this.init = true;
 
-          send("hello");
+            send("hello");
 
-          fbase.database().ref(".info/connected").on("value", snap => {
-            if (snap.val() === true) {
-              clearInterval(this.presenceInterval); //stop any previous intervals
-              this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
+            fbase
+              .database()
+              .ref(".info/connected")
+              .on("value", snap => {
+                if (snap.val() === true) {
+                  clearInterval(this.presenceInterval); //stop any previous intervals
+                  this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
 
-              let presenceRef = fbase.database().ref(`presence/${user.uid}`);
-              let timestamp = epoch();
-              this.presenceRef = presenceRef.child("connections").push({timestamp, uid: user.uid});
+                  let presenceRef = fbase.database().ref(`presence/${user.uid}`);
+                  let timestamp = epoch();
+                  this.presenceRef = presenceRef
+                    .child("connections")
+                    .push({timestamp, uid: user.uid});
 
-              this.presenceRef.onDisconnect().remove();
-              this.presenceInterval = setInterval(
-                () => this.presenceRef.child("timestamp").set(epoch()),
-                10000
-              );
+                  this.presenceRef.onDisconnect().remove();
+                  this.presenceInterval = setInterval(
+                    () => this.presenceRef.child("timestamp").set(epoch()),
+                    10000
+                  );
 
-              this.ipRef && this.ipRef.remove();
-              this.ipRef = fbase
-                .database()
-                .ref("private")
-                .child(user.uid)
-                .child("ip")
-                .child(this.presenceRef.key);
-              
-              this.ipRef.set(app.ipAddress);
-              this.ipRef.onDisconnect().remove();
-            }
+                  this.ipRef && this.ipRef.remove();
+                  this.ipRef = fbase
+                    .database()
+                    .ref("private")
+                    .child(user.uid)
+                    .child("ip")
+                    .child(this.presenceRef.key);
+
+                  this.ipRef.set(app.ipAddress);
+                  this.ipRef.onDisconnect().remove();
+                }
+              });
           });
-        });
 
-        this.stopPrivateSync = fbase.database().ref("private").child(user.uid).on("value", snap => {
-          var priv = snap.val() || {};
-          this.private = priv;
-          this.privateInit = true;
-        });
+        this.stopPrivateSync = fbase
+          .database()
+          .ref("private")
+          .child(user.uid)
+          .on("value", snap => {
+            var priv = snap.val() || {};
+            this.private = priv;
+            this.privateInit = true;
+          });
 
         this.stopRegistrationSync = fbase
           .database()
@@ -107,8 +121,7 @@ export default new class Profile {
     });
   }
 
-  @computed
-  get connected() {
+  @computed get connected() {
     return app.connected;
   }
 
@@ -120,7 +133,7 @@ export default new class Profile {
   @observable private = null;
   @observable privateInit = false;
   @observable hideBlazeBot = false;
-  
+
   @observable rank = null;
   @observable rankPermissions = {};
 
@@ -135,10 +148,9 @@ export default new class Profile {
 
   @observable lastchat = epoch();
 
-  @computed
-    get canAutoplay() {
-      return this.rank && this.rank != 'User';
-    }
+  @computed get canAutoplay() {
+    return this.rank && this.rank != "User";
+  }
 
   // TODO can probably move these top functions to a lib
   login(email, password) {
@@ -147,33 +159,31 @@ export default new class Profile {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         // Convert old profile into new datastore.
-        let oldranks = [
-            'User',
-            'Mod',
-            'Senior Mod',
-            'Dev',
-            'Admin'
-        ];
-        fbase.database.ref('moderator').child(user.uid).on(
-          'value',
-          snap => {
-            fbase.database.ref('ranks').child(user.uid).set(oldranks[snap.val()]);
+        let oldranks = ["User", "Mod", "Senior Mod", "Dev", "Admin"];
+        fbase.database
+          .ref("moderator")
+          .child(user.uid)
+          .on("value", snap => {
+            fbase.database
+              .ref("ranks")
+              .child(user.uid)
+              .set(oldranks[snap.val()]);
             snap.remove();
-          } 
-        );
-        fbase.database.ref('users').child(user.uid).on(
-          "value",
-          snap => {
-            fbase.database.ref('usernames').child(user.uid).set(
-              snap.val().username
-            );
-            fbase.database.ref('avatar').child(user.uid).set(
-              snap.val().avatar
-            );
+          });
+        fbase.database
+          .ref("users")
+          .child(user.uid)
+          .on("value", snap => {
+            fbase.database
+              .ref("usernames")
+              .child(user.uid)
+              .set(snap.val().username);
+            fbase.database
+              .ref("avatar")
+              .child(user.uid)
+              .set(snap.val().avatar);
             snap.remove();
-          }
-        );
-        
+          });
       })
       .catch(error => {
         let msg = `Unknown error: ${error.code}`;
@@ -201,33 +211,35 @@ export default new class Profile {
     return fbase.auth().signOut();
   }
 
-  register(email, password) {
-    fbase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch(error => {
-        let msg = `Unknown error: ${error.code}`;
-        switch (error.code) {
-          case "auth/invalid-email":
-            msg = `You entered an invalid email address.`;
-            break;
-          case "auth/user-disabled":
-            msg = `That user account is disabled.`;
-            break;
-          case "auth/user-not-found":
-            msg = `No user account found for this login`;
-            break;
-          case "auth/wrong-password":
-            msg = `That's the wrong password for that account!`;
-            break;
-          case undefined:
-          return;
-        }
-        toast.error(msg);
-      })
-      .then(user => {
-        user.sendEmailVerification();
-      });
+  async register(email, password) {
+    if (disposable.validate(email)) {
+        fbase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .catch(error => {
+            let msg = `Unknown error: ${error.code}`;
+            switch (error.code) {
+              case "auth/invalid-email":
+                msg = `You entered an invalid email address.`;
+                break;
+              case "auth/user-disabled":
+                msg = `That user account is disabled.`;
+                break;
+              case "auth/user-not-found":
+                msg = `No user account found for this login`;
+                break;
+              case "auth/wrong-password":
+                msg = `That's the wrong password for that account!`;
+                break;
+              case undefined:
+                return;
+            }
+            toast.error(msg);
+          })
+          .then(user => {
+            user.sendEmailVerification();
+          });
+    }
   }
 
   sendPassReset(email) {
@@ -255,13 +267,11 @@ export default new class Profile {
       });
   }
 
-  @computed
-  get loggedIn() {
+  @computed get loggedIn() {
     return !!this.user;
   }
 
-  @computed
-  get uid() {
+  @computed get uid() {
     if (!this.user) {
       return false;
     } else {
@@ -269,8 +279,7 @@ export default new class Profile {
     }
   }
 
-  @computed
-  get unverified() {
+  @computed get unverified() {
     if (this.user && this.user.emailVerified) {
       return false;
     } else {
@@ -278,8 +287,7 @@ export default new class Profile {
     }
   }
 
-  @computed
-  get noName() {
+  @computed get noName() {
     if (this.user !== null && this.init === true) {
       const noLegacyUsername = this.profile === null || !this.profile.username;
       const noUsername = !this.username;
@@ -297,8 +305,7 @@ export default new class Profile {
     return false;
   }
 
-  @computed
-  get banned() {
+  @computed get banned() {
     if (!this.banData) return false;
     if (this.banData.forever === true) return true;
     const now = Date.now() / 1000;
@@ -306,8 +313,7 @@ export default new class Profile {
     return false;
   }
 
-  @computed
-  get silenced() {
+  @computed get silenced() {
     if (!this.silenceData) return false;
     if (this.silenceData.forever === true) return true;
     const now = Date.now() / 1000;
@@ -319,8 +325,7 @@ export default new class Profile {
     return fbase.auth().currentUser.getToken(true); //returns promise with token
   }
 
-  @computed
-  get safeUsername() {
+  @computed get safeUsername() {
     if (this.user === null) {
       return undefined;
     } else {
@@ -328,8 +333,7 @@ export default new class Profile {
     }
   }
 
-  @computed
-  get eventsPath() {
+  @computed get eventsPath() {
     if (this.profile === null) {
       return false;
     } else {
@@ -337,8 +341,7 @@ export default new class Profile {
     }
   }
 
-  @computed
-  get secondsRegistered() {
+  @computed get secondsRegistered() {
     return app.APP_EPOCH - this.registeredEpoch;
   }
 
@@ -363,8 +366,7 @@ export default new class Profile {
     }
   }
 
-  @computed
-  get isAdmin() {
+  @computed get isAdmin() {
     return this.rankPermissions.admin === true;
   }
 
@@ -372,11 +374,19 @@ export default new class Profile {
     if (!url) {
       return false;
     }
-    return fbase.database().ref("avatars").child(this.user.uid).set(url);
+    return fbase
+      .database()
+      .ref("avatars")
+      .child(this.user.uid)
+      .set(url);
   }
 
   clearAvatar() {
-    return fbase.database().ref("avatars").child(this.uid).remove();
+    return fbase
+      .database()
+      .ref("avatars")
+      .child(this.uid)
+      .remove();
   }
 
   changePassword(password) {

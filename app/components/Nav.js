@@ -12,8 +12,18 @@ export default (class Nav extends React.Component {
   @observable hoveredTitle = false;
   @observable title = "[tr]";
 
-  onHover = _.debounce(() => { this.hoveredTitle = true; this.title = "[treesradio]" }, 500, {leading: true});
-  offHover = _.debounce(() => { this.hoveredTitle = false; this.title = "[tr]"}, 500);
+  onHover = _.debounce(
+    () => {
+      this.hoveredTitle = true;
+      this.title = "[treesradio]";
+    },
+    500,
+    {leading: true}
+  );
+  offHover = _.debounce(() => {
+    this.hoveredTitle = false;
+    this.title = "[tr]";
+  }, 500);
 
   render() {
     const title = (

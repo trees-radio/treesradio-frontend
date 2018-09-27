@@ -30,19 +30,23 @@ export default new class Avatars {
     var attemptBeforeThreshold = moment.unix(this.attemptedUsers[username]).isBefore(threshold);
 
     if (hasNoAttempt || attemptBeforeThreshold) {
-      fbase.database().ref("avatars").child(username).once("value", snap => {
-        var avatar = snap.val();
-        if (avatar) {
-          var image = new Image();
-          image.onload = () => {
-            this.users.set(username, avatar);
-          };
-          image.onerror = e => {
-            this.error = true;
-          };
-          image.src = avatar;
-        }
-      });
+      fbase
+        .database()
+        .ref("avatars")
+        .child(username)
+        .once("value", snap => {
+          var avatar = snap.val();
+          if (avatar) {
+            var image = new Image();
+            image.onload = () => {
+              this.users.set(username, avatar);
+            };
+            image.onerror = e => {
+              this.error = true;
+            };
+            image.src = avatar;
+          }
+        });
       this.attemptedUsers[username] = moment.unix();
     }
   }

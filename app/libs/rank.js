@@ -1,21 +1,39 @@
 import fbase from "libs/fbase";
 
 export default function getRank(uid) {
-  return fbase.database().ref("ranks").child(uid).once("value").then(snap => snap.val());
+  return fbase
+    .database()
+    .ref("ranks")
+    .child(uid)
+    .once("value")
+    .then(snap => snap.val());
 }
 
 export async function getUserRank(uid) {
-  let rank = await fbase.database().ref("ranks").child(uid).once("value").then(snap => snap.val());
-  if ( !rank ) rank = 'User';
+  let rank = await fbase
+    .database()
+    .ref("ranks")
+    .child(uid)
+    .once("value")
+    .then(snap => snap.val());
+  if (!rank) rank = "User";
   return rank;
 }
 
 export function listenRank(uid) {
-  return fbase.database().ref("ranks").child(uid).on("value");
+  return fbase
+    .database()
+    .ref("ranks")
+    .child(uid)
+    .on("value");
 }
 
 function ranksSettings() {
-  return fbase.database().ref("ranks_settings_READ_ONLY").once("value").then(snap => snap.val());
+  return fbase
+    .database()
+    .ref("ranks_settings_READ_ONLY")
+    .once("value")
+    .then(snap => snap.val());
 }
 
 export async function getSettingsForRank(rank) {
@@ -24,5 +42,8 @@ export async function getSettingsForRank(rank) {
 }
 
 export async function getAllRanks(cbFunc) {
-  fbase.database().ref("ranks").once("value", snap => cbFunc(snap.val()));
+  fbase
+    .database()
+    .ref("ranks")
+    .once("value", snap => cbFunc(snap.val()));
 }

@@ -21,28 +21,30 @@ export default (class Main extends React.Component {
   render() {
     if (!app.init) {
       let randmsg = [
-// No messages over 40 characters
-        'Grab a Bong and Sing A Long!',
-        'Wands at the Ready - MobBarley',
-        'Pimp Squad, Holdin it Down',
+        // No messages over 40 characters
+        "Grab a Bong and Sing A Long!",
+        "Wands at the Ready - MobBarley",
+        "Pimp Squad, Holdin it Down",
         "Livin' Young 'n Wild 'n Freeee",
-        'Loading... Or am I?',
-        'Grinding Vigorously',
-        'Poking Badgers with Spoons',
-        'Eek! Exciting!',
-        'Where\'s my Lighter?',
+        "Loading... Or am I?",
+        "Grinding Vigorously",
+        "Poking Badgers with Spoons",
+        "Eek! Exciting!",
+        "Where's my Lighter?",
         'No officer, it\'s "Hi, how are you?"',
-        'Home of the original musical inspiration'
+        "Home of the original musical inspiration"
       ];
       return (
         <div className="main-load">
           <div className="container main-loadingcard">
             <div className="main-vcenter">
-                <div className="main-center">
-                  <center>{randmsg[Math.floor(Math.random() * randmsg.length)]}
-                  <br/>
+              <div className="main-center">
+                <center>
+                  {randmsg[Math.floor(Math.random() * randmsg.length)]}
+                  <br />
                   <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
-                  </center></div>
+                </center>
+              </div>
             </div>
           </div>
         </div>

@@ -18,25 +18,27 @@ export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 export default new class Playing {
   constructor() {
     this.fbase = fbase;
-    
+
     localforage.getItem("volume").then(v => (v ? (this.volume = v) : false));
     localforage.getItem("playerSize").then(s => (s ? (this.playerSize = s) : false));
 
     autorun(() => {
-      fbase.database().ref("playing").on("value", snap => {
-        var data = snap.val();
-        if (data) {
-          this.data = data;
-        }
-      });
+      fbase
+        .database()
+        .ref("playing")
+        .on("value", snap => {
+          var data = snap.val();
+          if (data) {
+            this.data = data;
+          }
+        });
       this.localLikeState = this.liked;
       this.localDislikeState = this.disliked;
       this.localGrabState = this.grabbed;
     });
   }
 
-  @observable
-  data = {
+  @observable data = {
     info: {},
     feedback: {},
     feedback_users: {
@@ -46,9 +48,7 @@ export default new class Playing {
     }
   };
 
-  @computed
-  get humanDuration() {
-    var mo = moment.duration(this.data.info.duration, "milliseconds");
+  @computed get humanDuration() { var mo = moment.duration(this.data.info.duration, "milliseconds");
     var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
       str = `${_.padStart(mo.hours(), 2, "0")}:` + str;
@@ -56,8 +56,7 @@ export default new class Playing {
     return str;
   }
 
-  @computed
-  get humanCurrent() {
+  @computed get humanCurrent() {
     var mo = moment.duration(this.playerSeconds, "seconds");
     var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
@@ -66,8 +65,7 @@ export default new class Playing {
     return str;
   }
 
-  @computed
-  get time() {
+  @computed get time() {
     //SECONDS
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
       return 0;
@@ -76,13 +74,11 @@ export default new class Playing {
     }
   }
 
-  @computed
-  get elapsed() {
+  @computed get elapsed() {
     return this.time;
   }
 
-  @computed
-  get fraction() {
+  @computed get fraction() {
     if (!this.data.time || !this.data.info.duration) {
       return 0;
     }
@@ -93,13 +89,11 @@ export default new class Playing {
 
   @observable playerDuration = 0; //seconds
 
-  @computed
-  get playerSeconds() {
+  @computed get playerSeconds() {
     return this.playerDuration * this.playerProgress;
   }
 
-  @computed
-  get shouldSync() {
+  @computed get shouldSync() {
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
       return false;
     }
@@ -133,8 +127,7 @@ export default new class Playing {
   }
 
   @observable localLikeState = false;
-  @computed
-  get likeLoading() {
+  @computed get likeLoading() {
     return this.localLikeState !== this.liked;
   }
 
@@ -154,8 +147,7 @@ export default new class Playing {
   }
 
   @observable localDislikeState = false;
-  @computed
-  get dislikeLoading() {
+  @computed get dislikeLoading() {
     return this.localDislikeState !== this.disliked;
   }
 
@@ -174,8 +166,7 @@ export default new class Playing {
   }
 
   @observable localGrabState = false;
-  @computed
-  get grabLoading() {
+  @computed get grabLoading() {
     return this.localGrabState !== this.grabbed;
   }
 
@@ -187,8 +178,7 @@ export default new class Playing {
     }
   }
 
-  @computed
-  get liked() {
+  @computed get liked() {
     if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
       return false;
     }
@@ -199,8 +189,7 @@ export default new class Playing {
     }
   }
 
-  @computed
-  get disliked() {
+  @computed get disliked() {
     if (!this.data.feedback_users || !this.data.feedback_users.dislikes || !profile.user) {
       return false;
     }
@@ -211,8 +200,7 @@ export default new class Playing {
     }
   }
 
-  @computed
-  get grabbed() {
+  @computed get grabbed() {
     if (!this.data.feedback_users || !this.data.feedback_users.grabs || !profile.user) {
       return false;
     }
@@ -223,24 +211,21 @@ export default new class Playing {
     }
   }
 
-  @computed
-  get likes() {
+  @computed get likes() {
     if (!this.data.feedback || !this.data.feedback.likes) {
       return 0;
     }
     return this.data.feedback.likes;
   }
 
-  @computed
-  get dislikes() {
+  @computed get dislikes() {
     if (!this.data.feedback || !this.data.feedback.dislikes) {
       return 0;
     }
     return this.data.feedback.dislikes;
   }
 
-  @computed
-  get grabs() {
+  @computed get grabs() {
     if (!this.data.feedback || !this.data.feedback.grabs) {
       return 0;
     }

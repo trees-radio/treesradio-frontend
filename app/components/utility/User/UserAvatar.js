@@ -9,7 +9,7 @@ export default class UserAvatar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: true
     };
     this.getAvatar();
   }
@@ -41,9 +41,6 @@ export default class UserAvatar extends React.Component {
     avatar = avatar.replace(/http:/, 'https:');
 
     let style = {};
-    if (!this.state.visible) {
-      style.visibility = 'hidden';
-    }
 
     return (
       <span className={this.props.className}>

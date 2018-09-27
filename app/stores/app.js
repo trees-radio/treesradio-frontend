@@ -6,25 +6,29 @@ import epoch from "utils/epoch";
 export default new class App {
   constructor() {
     this.getIP();
-    fbase.database().ref(".info/connected").on("value", snap => {
-      if (snap.val() === true) {
-        this.connected = true;
-      } else {
-        this.connected = false;
-      }
-    });
+    fbase
+      .database()
+      .ref(".info/connected")
+      .on("value", snap => {
+        if (snap.val() === true) {
+          this.connected = true;
+        } else {
+          this.connected = false;
+        }
+      });
 
     setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
-    setTimeout(() => { this.proceed = true }, 2500)
+    setTimeout(() => {
+      this.proceed = true;
+    }, 2500);
   }
 
   @observable connected = false;
-  @observable proceed   = false;
+  @observable proceed = false;
   @observable ipAddress = null;
   @observable APP_EPOCH = epoch();
 
-  @computed
-  get init() {
+  @computed get init() {
     if (this.connected && this.ipAddress !== null && this.proceed === true) {
       return true;
     } else {

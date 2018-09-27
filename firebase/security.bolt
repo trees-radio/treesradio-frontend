@@ -12,10 +12,37 @@
 isAuth() {auth != null}
 isUser(uid) { isAuth() && auth.uid == uid }
 
-chatHasUsername(type, uid) { ( type == 'chat' && root.child('usernames/'+uid).val() != null ) || ( type != 'chat' ) }
+chatHasUsername(type, uid) { 
+	( 
+	  ( 
+	    type == 'chat' && 
+	    root.child('usernames/'+uid).val() != null 
+	  ) 
+	) || 
+	( 
+	  ( type != 'chat' ) 
+	) }
 
-isSendingUser() { ( isUser(newData.child('uid').val()) || isUser(data.child('uid').val()) ) && ( chatHasUsername(newData.child('type').val(), newData.child('uid').val()) || chatHasUsername(data.child('type').val(), data.child('uid').val())) }
+isSendingUser(uid) { 
+	( 
+	  ( 
+	    isUser(newData.child(uid).child('uid').val()) || 
+	    isUser(data.child(uid).child('uid').val()) 
+	  ) && 
+	  ( 
+	    newData.child(uid).child('uid').val() == uid ||
+	    data.child(uid).child('uid').val() == uid
+	  )
+	) 
+	}
 
+hasValidatedEmail() {
+  auth.token.email_verified == true
+}
+
+hasUsername(uid) {
+	root.child('usernames/'+newData.child($uid).child('uid')).val() != null 
+}
 
 ////////////////////////////////////////////////////////////////
 // MAIN PATH
@@ -30,6 +57,10 @@ path /_admin {
 
 path /events {
   read() {true}
+}
+
+path /onlineents {
+	read() {true} 
 }
 
 path /backend {
@@ -55,7 +86,7 @@ type Playlist {
 
 path /playlists/{$uid} {
   read() {isUser($uid)}
-  write() {isUser($uid)}
+  write() {isUser($uid) && hasValidatedEmail()}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -84,7 +115,7 @@ path /users/{$uid} {
 
 path /private/{$uid} {
   read() {isUser($uid)}
-  write() {isUser($uid)}
+  write() {isUser($uid) && hasValidatedEmail() }
 }
 
 path /user_events/{$uid} {
@@ -147,14 +178,14 @@ path /avatars {
 }
 
 path /avatars/{$uid} {
-  write() {isUser($uid)}
+  write() {isUser($uid) && hasValidatedEmail()}
 }
 
 
 // Event Handlers //
 
-path /event_bus/{event} {
-  write() {isSendingUser()}
+path /event_bus/{$uid} {
+  write() {isUser($uid) && isSendingUser($uid)}
 }
 
 // Presence //
@@ -164,7 +195,7 @@ path /presence {
 }
 
 path /presence/{$uid} {
-  write() {isUser($uid)}
+  write() {isUser($uid) && auth.token.email_verified == true}
 }
 
 // Usernames //
