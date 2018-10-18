@@ -46,7 +46,7 @@
     "less": "^2.6.1",
     "less-loader": "^2.2.2",
     "mobx-react-devtools": "^4.2.6",
-    "node-sass": "^3.13.1",
+    "node-sass": "^4.9.4",
     "prettier": "^1.9.2",
     "sass-loader": "^4.0.2",
     "script-loader": "^0.7.0",

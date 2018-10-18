@@ -27,10 +27,16 @@ export default new class Playlists {
           this.playlists = playlists;
 
           if (!this.init || this.removedPlaylist) {
-            localforage.getItem("selectedPlaylist").then(selectedPlaylist => {
+            fbase
+	      .database()
+	      .ref("private")
+	      .child(this.uid)
+	      .child("selectedPlaylist")
+	      .once('value')
+	      .then(selectedPlaylist => {
               var toSelect;
               playlists.forEach((playlist, i) => {
-                if (selectedPlaylist && playlist.key === selectedPlaylist) {
+                if (selectedPlaylist.val() && playlist.key === selectedPlaylist.val()) {
                   toSelect = i;
                 }
               });
