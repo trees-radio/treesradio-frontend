@@ -5,7 +5,10 @@ export const allowedDomains = [
   "imgur.com",
   "i.reddituploads.com",
   "media.giphy.com",
-  "tr-avatars.herokuapp.com"
+  "tr-avatars.herokuapp.com",
+  "thumbs.gfycat.com",
+  "gfycat.com",
+  "giant.gfycat.com"
 ];
 
 export default function imgUrlWhitelisted(url) {
