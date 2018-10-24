@@ -1,6 +1,7 @@
 $chattoplevel-bg: #0A0A0A; //dark skin #0A0A0A light skin e9eef0
 $chat-item-border: #000; //light skin 808080
 $chat-item-color: #c0c0c0; //light skin #000
+
 @media (min-width: 0px) {
     #chattoplevel {
         background-color: $chattoplevel-bg;
@@ -57,6 +58,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 #chatscroll::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
 #chatscroll::-webkit-scrollbar-thumb {
@@ -73,19 +75,19 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 .chat-line-0 {
-    background-color: #121317; //light skin e9eef0
+    background-color: #112316; //light skin e9eef0
     padding: 10px;
 }
 
 .chat-line-1 {
-    background-color: #0A0A0A; //light skin cbd6dc
+    background-color: #14261A; //light skin cbd6dc
     padding: 10px;
 }
 
 .chat-msg {
     vertical-align: bottom;
-    width: 85%;
-    max-width: 85%;
+    width: 90%;
+    max-width: 90%;
     word-wrap: break-word;
 }
 
@@ -96,11 +98,13 @@ $chat-item-color: #c0c0c0; //light skin #000
     color: $chat-item-color;
     list-style-position: inside;
     list-style-type: none;
-    margin: 0;
+    margin: 8px;
+    box-shadow: 2px 3px 2px 0px #202521;
     padding-bottom: 3px;
     padding-left: 5px;
-    width: 100%;
+    width: 95%;
     display: flex;
+    border-radius: 8px;
 }
 
 .chat-username {
@@ -193,6 +197,9 @@ $chat-item-color: #c0c0c0; //light skin #000
     position: relative;
     font-size: 16px;
 }
+.chat-text div {
+	padding-bottom: 5px;
+}
 
 .chat-avatar {
     padding-right: 5px;
@@ -202,8 +209,9 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 .avatarimg {
     border-radius: 5px;
-    height: 40px;
-    width: 40px;
+    height: 45px;
+    width: 45px;
+    background-color: #000;
 }
 
 .mentions-container {
@@ -280,25 +288,24 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 .blazebot-msg {
-    background-color: #1A001A;
+    background-color: #06180B;
     color: #bbb;
-    font-size: 10px;
 }
 
 .blazebot-msg a:link {
-    color: white;
+    color: #3F7FBF;
 }
 
 .blazebot-msg a:visited {
-    color: white;
+    color: #2F6FAF;
 }
 
 .blazebot-msg a:hover {
-    color: white;
+    color: #4F8FCF;
 }
 
 .blazebot-msg a:active {
-    color: white;
+    color: #3F7FBF;
 }
 
 .blazebot-hide {
@@ -380,7 +387,7 @@ img[alt="previewavatar"] {
     border-radius: 5px;
 }
 
-img[alt="giphy"] {
+img[alt="gfycat"] {
     width: 90%;
 }
 
