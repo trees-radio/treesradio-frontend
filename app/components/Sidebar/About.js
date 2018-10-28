@@ -55,7 +55,7 @@ export default class About extends React.Component {
             </li>
             <li id="rules-8">- Songs that have been recently played (2 hours) may be skipped.</li>
             <li id="rules-9">- Staff reserve the right to skip any video.</li>
-            <li id="rules-10">- This is a multi-genre site that appreciates varrying music types. Mood is everything. Excessive criticism of another's music will not be tollerated</li> 
+            <li id="rules-10">- This is a multi-genre site that appreciates varying music types. Mood is everything. Excessive criticism of another's music will not be tolerated</li> 
           </ul>
         </div>
         <div className="about-promotion">

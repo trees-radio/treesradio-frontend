@@ -124,7 +124,8 @@ $mqIterations: 19;
          .grab-button { font-size:0.06em * $i; }
 	 .volume-slider { font-size:0.06em * $i; }
          .like-button { font-size:0.06em * $i; }
-         .dislike-button { font-size:0.06em * $i; } }
+         .dislike-button { font-size:0.06em * $i; } 
+	 .waitlist { font-size:0.1em * $i; } }
       $i: $i + 1;
    }
 }
