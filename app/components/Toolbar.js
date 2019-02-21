@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {observable, toJS} from "mobx";
+import {observable} from "mobx";
 import ReactSlider from "react-slider";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
@@ -53,7 +53,7 @@ const GrabPlaylists = onClickOutside(
 );
 
 @observer
-export default (class Toolbar extends React.Component {
+class Toolbar extends React.Component {
   @observable panelOpen = false;
 
   togglePlaylistsPanel() {
@@ -213,4 +213,6 @@ export default (class Toolbar extends React.Component {
       </div>
     );
   }
-});
+}
+
+export default Toolbar;

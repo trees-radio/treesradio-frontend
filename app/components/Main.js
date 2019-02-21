@@ -10,14 +10,8 @@ import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
 
-import DevTools from "mobx-react-devtools";
-var DevTool;
-if (process.env.NODE_ENV !== "production") {
-  DevTool = <DevTools position={{top: 10, left: 300}} />;
-}
-
 @observer
-export default (class Main extends React.Component {
+class Main extends React.Component {
   render() {
     if (!app.init) {
       let randmsg = [
@@ -86,4 +80,6 @@ export default (class Main extends React.Component {
       </div>
     );
   }
-});
+}
+
+export default Main;

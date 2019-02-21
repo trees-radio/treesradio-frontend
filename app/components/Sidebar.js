@@ -13,11 +13,16 @@ import About from "./Sidebar/About";
 import Waitlist from "./Sidebar/Waitlist";
 
 @observer
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
   constructor() {
     super();
 
     const loggedInAtRender = profile.loggedIn;
+    this.selChatRef= React.createRef();
+    this.selOnlineRef = React.createRef();
+    this.selWaitlistRef = React.createRef();
+    this.selAboutRef = React.createRef();
+
     autorun(() => {
       const loggedInAfterRender = !loggedInAtRender && profile.loggedIn;
       if (this.currentSidebar === "ABOUT" && loggedInAfterRender) {
@@ -50,20 +55,20 @@ export default class Sidebar extends React.Component {
     return (
       <div id="sidebar">
         <div className="row sidebar-changer">
-          <div className={chatBtnClass} ref="sel-chat" onClick={() => this.update("CHAT")}>
+          <div className={chatBtnClass} ref={this.selChatRef} onClick={() => this.update("CHAT")}>
             Chat
           </div>
-          <div className={onlineBtnClass} ref="sel-online" onClick={() => this.update("ONLINE")}>
+          <div className={onlineBtnClass} ref={this.selOnlineRef} onClick={() => this.update("ONLINE")}>
             Online Ents <span className="online-count">{online.online.length}</span>
           </div>
           <div
             className={waitlistBtnClass}
-            ref="sel-waitlist"
+            ref={this.selWaitlistRef}
             onClick={() => this.update("WAITLIST")}
           >
             Waitlist <span className="waitlist-count">{waitlist.inWaitlist && waitlist.waitlistPosition !== false ? waitlist.waitlistPosition + '/' : ''}{waitlist.count}</span>
           </div>
-          <div className={aboutBtnClass} ref="sel-about" onClick={() => this.update("ABOUT")}>
+          <div className={aboutBtnClass} ref={this.selAboutRef} onClick={() => this.update("ABOUT")}>
             About
           </div>
         </div>
@@ -77,3 +82,5 @@ export default class Sidebar extends React.Component {
     );
   }
 }
+
+export default Sidebar;

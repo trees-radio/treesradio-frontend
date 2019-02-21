@@ -48,7 +48,8 @@ export default new class Playing {
     }
   };
 
-  @computed get humanDuration() { var mo = moment.duration(this.data.info.duration, "milliseconds");
+  @computed get humanDuration() {
+ var mo = moment.duration(this.data.info.duration, "milliseconds");
     var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
       str = `${_.padStart(mo.hours(), 2, "0")}:` + str;
@@ -109,6 +110,7 @@ export default new class Playing {
     if (player < slow || player > fast) {
       return true;
     }
+    return true;
   }
 
   @observable volume = 0.15;

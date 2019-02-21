@@ -1,6 +1,6 @@
 import fbase from "libs/fbase";
 
-export default function getLikes(uid) {
+export default function getLikes() {
   return fbase
     .database()
     .ref("playing")

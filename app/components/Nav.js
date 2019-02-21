@@ -8,7 +8,7 @@ import UserBit from "./Nav/UserBit";
 import file from "src/version.json";
 
 @observer
-export default (class Nav extends React.Component {
+class Nav extends React.Component {
   @observable hoveredTitle = false;
   @observable title = "[tr]";
 
@@ -62,7 +62,9 @@ export default (class Nav extends React.Component {
       </div>
     );
   }
-});
+}
+
+export default Nav;
 
 function Version({show}) {
   if (show === false) return null;

@@ -1,6 +1,5 @@
-import {observable, computed, autorun} from "mobx";
+import {observable, computed} from "mobx";
 import fbase from "libs/fbase";
-import getUsername from "libs/username";
 
 export default new class Online {
   constructor() {
@@ -9,7 +8,7 @@ export default new class Online {
     fbase
       .database()
       .ref("onlineents")
-      .on("value", snap => {
+      .on("value", () => {
         this.loadOnlineEnts();
       });
   }

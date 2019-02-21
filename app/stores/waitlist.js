@@ -5,7 +5,6 @@ import toast from "utils/toast";
 import playing from "stores/playing";
 import chat from "stores/chat";
 import {send} from "libs/events";
-import online from "stores/online";
 import {setInterval, clearInterval} from "timers";
 import epoch from "../utils/epoch";
 
@@ -16,7 +15,7 @@ export default new class Waitlist {
     fbase
       .database()
       .ref("waitlist")
-      .on("value", snap => {
+      .on("value", () => {
         this.reloadList();
       });
 
@@ -150,6 +149,7 @@ export default new class Waitlist {
     if (playing.data.playing && profile.user && playing.data.info.uid === profile.user.uid) {
       return true;
     }
+    return false;
   }
 
   @computed get waitlistPosition() {
