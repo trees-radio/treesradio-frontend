@@ -107,6 +107,14 @@ module.exports = new Config().merge({
       packageFile: path.join(__dirname, 'package.json'),
       outputFile: path.join(__dirname, 'app/version.json'),
       templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "<%= currentTime %>", "version": "<%= package.version %>", "short": "${short}"}}`
-    })
+    }),
+    new webpack.DefinePlugin({
+	      PRODUCTION: JSON.stringify(true),
+	        VERSION: JSON.stringify('5fa3b9'),
+		  BROWSER_SUPPORTS_HTML5: true,
+		    TWO: '1+1',
+		      'typeof window': JSON.stringify('object'),
+		        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    });
   ]
 })
