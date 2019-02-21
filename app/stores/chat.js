@@ -55,9 +55,7 @@ export default new class Chat {
             let mentions = msg.mentions.map(s => {
               return s ? s.substr(1).toLowerCase() : "";
             });
-            let everyone =
-              (msg.bot || (msg.title && msg.title.match(/User|Frient|VIP/i))) &&
-              mentions.includes("everyone");
+            let everyone = mentions.includes("everyone");
             let mentioned = everyone;
             if (!mentioned) {
               mentioned = mentions.includes(profile.safeUsername.toLowerCase());

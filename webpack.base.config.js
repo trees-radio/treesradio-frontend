@@ -8,7 +8,7 @@ var short = require('git-rev-sync').short();
 
 module.exports = new Config().merge({
   entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
-  mode: "development",
+  mode: "production",
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: "treesradio.js"
