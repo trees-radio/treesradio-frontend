@@ -37,7 +37,6 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^3.0.1",
     "firebase-bolt": "^0.8.2",
-    "firebase-tools": "^6.3.1",
     "font-awesome-webpack": "git+https://github.com/jarecsni/font-awesome-webpack.git#440af2a2efe7ba1779d039556f04538e57bad4bb",
     "git-rev-sync": "^1.8.0",
     "graceful-fs": "^4.1.9",
@@ -61,6 +60,8 @@
     "webpack-version-file-plugin": "^0.3.3"
   },
   "dependencies": {
+    "@firebase/app-types": "^0.3.4",
+    "@firebase/util": "^0.2.7",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.7.4",
     "bootstrap": "^4.3.1",
@@ -83,6 +84,7 @@
     "moment": "^2.20.1",
     "node-buzz": "^1.1.4",
     "popper.js": "^1.14.7",
+    "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-bootstrap": "^0.32.4",
     "react-contextmenu": "^2.9.2",
