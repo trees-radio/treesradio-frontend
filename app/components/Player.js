@@ -58,7 +58,9 @@ export default (class Player extends React.Component {
               volume={playing.volume}
               onProgress={p => this.onProgress(p)}
               onPause={undefined}
-              youtubeConfig={rPlayerYoutubeConfig}
+	      config={{
+		      youtube: { rPlayerYoutubeConfig }
+	      }}
               onDuration={d => (playing.playerDuration = d)}
             />}
         </div>

@@ -58,17 +58,6 @@ export default class About extends React.Component {
             <li id="rules-10">- This is a multi-genre site that appreciates varying music types. Mood is everything. Excessive criticism of another's music will not be tolerated</li> 
           </ul>
         </div>
-        <div className="about-promotion">
-	<blockquote class="reddit-card" data-card-created="1536865809" data-card-preview="1"><a href="https://www.reddit.com/r/trees/comments/9fkj74/treesradio_is_looking_for_developers/?ref=share&ref_source=embed">TreesRadio is looking for developers.</a></blockquote>
-	<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
-        </div>
-        {/*<div className="about-bugs">
-          <div>
-            <h5>Bug Report:</h5>
-            <p>Found a bug on TreesRadio? Help us fix it by reporting it, just click the link <a href="https://github.com/TreesRadio/treesradio-issues/blob/master/README.md" target="_blank">HERE</a> to find out how!</p>
-            <p id="bug-github">(Requires registering with GitHub)</p>
-          </div>
-        </div>*/}
         <div className="about-suggestions">
           <div>
             <h5>YouTube Region Checker</h5>
@@ -77,6 +66,14 @@ export default class About extends React.Component {
               Check if a video has any region restrictions
             </a>
           </div>
+	  <div>
+	    <h5>Shoutouts!</h5>
+	    <ul>
+	    <li>@minicing for @BlazeBot's awesome animated avatar.</li>
+	    <li>@pandersson97 for sponsoring @yellerjeep's ongoing development.</li>
+	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
+	    </ul>
+	    </div>
         </div>
         <div className="about-emoji">
           <h6><a href="https://www.emojione.com/emoji/v3" target="_blank">Emoji List</a></h6>

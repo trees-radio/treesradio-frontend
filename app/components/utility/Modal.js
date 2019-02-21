@@ -1,78 +1,58 @@
-/*
-  A wrapper around react-modal-bootstrap for ease of use
-  Usage:
-    import Modal from '...';
-    React.createClass({
-      render() {
-        return (
-          <Modal isOpen={this.someState} hideModal={this.someFunction} title="My Title">
-           <p>Content goes inside it.</p>
-          </Modal>
-        );
-      }
-    });
-  See propTypes for additional possible props
-*/
+import React from 'react';
+import { Modal,Button } from 'react-bootstrap';
 
+class UtilityModal extends React.Component {
+	componentWillUnmount(){
+		this.setState = (state,callback)=>{
+			return;
+		};
+	}
+	constructor(props, context) {
+		super(props, context);
+		this.handleShow = this.handleShow.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+		this.state = { show: false };
+	}
+	handleClose(){
+		console.log("Firing close");
+		console.log(this.props);
+		this.props.hideModal();
+	}
+	handleShow(){
+		this.setState({show: true});
+	}
+  	render() {
+    		var leftButton;
+    		if (this.props.leftButton && this.props.leftButtonText) {
+      			leftButton = (
+        			<Button onClick={this.props.leftButton} variant="primary">
+          				{this.props.leftButtonText}
+        			</Button>
+      			);
+    		}
 
-import React, { PropTypes } from 'react';
-import {
-  Modal,
-  ModalHeader,
-  ModalTitle,
-  ModalClose,
-  ModalBody,
-  ModalFooter
-} from 'react-modal-bootstrap';
-
-const UtilityModal = React.createClass({
-  propTypes: {
-    size: PropTypes.string,
-    keyboard: PropTypes.bool,
-    backdrop: PropTypes.bool,
-    title: PropTypes.node.isRequired, // title at top of modal
-    children: PropTypes.node,
-    isOpen: PropTypes.bool.isRequired, // boolean to tell Modal whether to be open or not
-    hideModal: PropTypes.func.isRequired, // function to hide the modal (for close button)
-    leftButton: PropTypes.func, // function for bottom left button (will not display button if missing)
-    leftButtonText: PropTypes.node, // text for bottom left button (will not display button if missing)
-    closeText: PropTypes.string // alternate close button text
-  },
-  render() {
-    var leftButton;
-    if (this.props.leftButton && this.props.leftButtonText) {
-      leftButton = (
-        <button onClick={this.props.leftButton} className='btn btn-primary pull-left'>
-          {this.props.leftButtonText}
-        </button>
-      );
-    }
-
-    var size = this.props.size || '';
-    var keyboard = this.props.keyboard || true;
-    var backdrop = this.props.backdrop || true;
-
-    return (
-      <Modal isOpen={this.props.isOpen} size={size} keyboard={keyboard} backdrop={backdrop} onRequestHide={this.props.hideModal}>
-        <ModalHeader>
-          <ModalClose onClick={this.props.hideModal}/>
-          <ModalTitle>{this.props.title}</ModalTitle>
-        </ModalHeader>
-        <ModalBody>
-          {this.props.children}
-        </ModalBody>
-        <ModalFooter>
-          {
-            this.props.noClose ? false :
-            <button className='btn btn-default pull-right' onClick={this.props.hideModal}>
-              {this.props.closeText || 'Close'}
-            </button>
-          }
-          {leftButton}
-        </ModalFooter>
-      </Modal>
-    );
-  }
-});
+    		var size = this.props.size || '';
+    		var keyboard = this.props.keyboard || true;
+    		var backdrop = this.props.backdrop || true;
+    		return (
+			<>
+      			<Modal show={this.props.show} onHide={this.handleClose} size={size} keyboard={keyboard} backdrop={backdrop}> 
+        			<Modal.Header closeButton>
+          				<Modal.Title>{this.props.title}</Modal.Title>
+        			</Modal.Header>
+        			<Modal.Body>
+          				{this.props.children}
+        			</Modal.Body>
+        			<Modal.Footer>
+          				{ this.props.noClose ? false :
+	    					<button type="button" className="btn btn-primary" onClick={this.handleClose}>{this.props.closeText || 'Close'}</button>
+          				}
+          				{leftButton}
+        			</Modal.Footer>
+      			</Modal>
+			</>
+    		);
+  	}
+};
 
 export default UtilityModal;

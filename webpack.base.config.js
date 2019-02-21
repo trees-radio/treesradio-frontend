@@ -8,27 +8,38 @@ var short = require('git-rev-sync').short();
 
 module.exports = new Config().merge({
   entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
+  mode: "development",
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: "treesradio.js"
   },
+  optimization: {
+	  splitChunks: {
+		  chunks: 'all'
+	  }
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel'
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("style", "css!sass")
+        use:[
+	   "style-loader",
+	   "css-loader",
+	   "sass-loader"
+	   ]
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style", "css")
+        loader: "css-loader"
       },
       {
-        test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less')
+        test: /\.less$/, 
+	loader: "less-loader"
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -53,7 +64,6 @@ module.exports = new Config().merge({
           name: 'audio/[hash].[ext]'
         }
       },
-      {test: /\.json$/, loader: 'json-loader'},
       {
         test: /\.(jpg|png|gif)$/,
         loader: 'url-loader',

@@ -52,7 +52,6 @@ export default (class Main extends React.Component {
     }
     return (
       <div>
-        {DevTool}
         <Nav />
         {/* Start Container */}
         <div className="container-fluid">
@@ -83,6 +82,7 @@ export default (class Main extends React.Component {
             {/* End Container */}
           </div>
         </div>
+      <div id="modal"></div>
       </div>
     );
   }

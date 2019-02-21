@@ -6,6 +6,11 @@ import EMPTY_IMG from 'img/nothing.png';
 import {autorun} from 'mobx';
 
 export default class UserAvatar extends React.Component {
+  componentWillUnmount() {
+	  this.setState = (state,callback)=>{
+		            return;
+			          };
+  }
   constructor(props) {
     super(props);
     this.state = {

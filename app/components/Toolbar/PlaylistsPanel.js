@@ -229,7 +229,7 @@ export default (class PlaylistsPanel extends React.Component {
           {content}
         </div>
         <Modal
-          isOpen={this.addingPlaylist}
+          show={this.addingPlaylist}
           hideModal={() => this.addingPlaylist = false}
           title="Adding Playlist"
           leftButton={() => this.addPlaylist()}
@@ -245,7 +245,7 @@ export default (class PlaylistsPanel extends React.Component {
           />
         </Modal>
         <Modal
-          isOpen={this.removingPlaylist}
+          show={this.removingPlaylist}
           hideModal={() => this.removingPlaylist = false}
           title="Removing Playlist"
           leftButton={() => this.removePlaylist()}
@@ -258,7 +258,7 @@ export default (class PlaylistsPanel extends React.Component {
           </p>
         </Modal>
         <Modal
-          isOpen={this.importingPlaylist}
+          show={this.importingPlaylist}
           hideModal={() => this.importingPlaylist = false}
           title="Importing Playlist"
           leftButton={() => this.importPlaylist()}

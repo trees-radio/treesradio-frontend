@@ -9,7 +9,12 @@
 .media-time {
   float:right;
 }
-
+.current-playlist-name {
+	color: #77b300 !important;
+}
+.current-selected-media {
+	color: #77b300 !important;
+}
 #playlists-panel {
   position:absolute;
   width: 100%;
@@ -231,14 +236,15 @@
 #playlists-bar {
   position: absolute;
   width: 100%;
-  height: 85px;
+  height: 95px;
   min-height: 50px;
+  color: #77b300;
   background-color:#0c0c0e;
   // border-top-style: solid;
   // border-style:solid;
   // border-color: #17171c;
   float: left;
-  bottom: 3px;
+  bottom: 5px;
 }
 
 .marquee {
@@ -253,6 +259,7 @@
 .current-selected-media, .current-playing-media {
   display: inline-block;
   float:left;
+  color: #77b300;
 }
 
 .current-selected-media:hover, .current-playing-media:hover {
@@ -268,6 +275,7 @@
   height: 100%;
   width: 29.66%;
   border-right: solid;
+  color: #77b300 !important;
   border-top:solid;
   border-bottom:solid;
   border-color: #2d2f39;
@@ -468,4 +476,5 @@
 
 .current-playing-user {
   float:left;
+  color: #77b300;
 }

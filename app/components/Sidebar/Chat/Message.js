@@ -51,7 +51,7 @@ export default class Message extends React.Component {
                 if (!text)
                     text = '';
                 if (text.substring(0, 12) === '==markdown==')
-                    return <ReactMarkdown source={ text.substring(12) }
+                    return <ReactMarkdown source={ text.substring(12) } escapeHtml={false}
                 renderers={
                     {
                         Link: props => <a href={ props.href } target="_blank">{ props.children }</a>}} /> ;

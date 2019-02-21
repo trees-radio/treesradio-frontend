@@ -9,7 +9,7 @@ var config = new Config().extend('./webpack.base.config.js').merge({
   ]
 });
 
-config.entry.unshift("webpack-dev-server/client?http://localhost:8080/"); //required for dev server
+config.entry.unshift("webpack-dev-server/client?http://localhost:8081/"); //required for dev server
 
 var compiler = webpack(config);
 var server = new WebpackDevServer(compiler, {contentBase: "public", stats: { colors: true }});

@@ -117,7 +117,7 @@ export default class UserBit extends React.Component {
           <a href="#">
             <i className={classNames('fa', profile.autoplay
               ? "fa-check-square-o"
-              : "fa-square-o")}></i> Auto Join Playlist
+              : "fa-square-o")}></i> Auto Join Waitlist
             </a>
           </li>
 
@@ -195,7 +195,7 @@ export default class UserBit extends React.Component {
           {/*  */}
           {/* Missing Username Modal */}
           <Modal
-            isOpen={profile.noName}
+            show={profile.noName}
             hideModal={() => {}}
             title="Missing Username"
             noClose={true}
@@ -217,7 +217,7 @@ export default class UserBit extends React.Component {
           {/* Email Not Verified Modal */}
           {/*  */}
           <Modal
-            isOpen={profile.unverified}
+            show={profile.unverified}
             hideModal={() => {}}
             title="Please Verify Your Email"
             noClose={true}>
@@ -236,8 +236,8 @@ export default class UserBit extends React.Component {
           {/* Avatar Setting Modal */}
           {/*  */}
           <Modal
-            isOpen={this.settingAvatar}
-            hideModal={() => this.settingAvatar = false}
+            show={this.settingAvatar}
+            hideModal={() => { console.log('hiding'); this.settingAvatar = false;}}
             title="Set Your Avatar">
             <p>Avatars must be hosted at one of the following sites:</p>
             <ul>
@@ -283,7 +283,7 @@ export default class UserBit extends React.Component {
           {/* Changing Password Modal */}
           {/*  */}
           <Modal
-            isOpen={this.changingPassword}
+            show={this.changingPassword}
             hideModal={() => this.changingPassword = false}
             title="Change Your Password">
             <div className="form-group">
@@ -302,7 +302,7 @@ export default class UserBit extends React.Component {
           {/* Changing Email Modal */}
           {/*  */}
           <Modal
-            isOpen={this.changingEmail}
+            show={this.changingEmail}
             hideModal={() => this.changingEmail = false}
             title="Change Your Email">
             <div className="form-group">
@@ -364,7 +364,7 @@ export default class UserBit extends React.Component {
           {/* Password Reset Modal */}
           <Modal
             title="Password Reset"
-            isOpen={this.resettingPassword}
+            show={this.resettingPassword}
             hideModal={() => this.resettingPassword = false}
             leftButton={() => this.sendPassReset()}
             leftButtonText="Send!">
