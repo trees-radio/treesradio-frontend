@@ -86,7 +86,7 @@
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
-    "react-bootstrap": "^0.32.4",
+    "react-bootstrap": "^1.0.0-beta.5",
     "react-contextmenu": "^2.9.2",
     "react-dom": "^16.8.2",
     "react-emojione": "^5.0.1",
