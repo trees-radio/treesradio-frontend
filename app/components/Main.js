@@ -18,7 +18,6 @@ class Main extends React.Component {
         const curtime = new Date(),
             curday = curtime.getDate(),
             curmonth = curtime.getMonth() + 1;
-	    console.log(curmonth+":"+curday);
         if (curmonth == 4 && curday == 1) {
             return "april-fools";
         }
