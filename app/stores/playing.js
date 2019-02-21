@@ -110,7 +110,7 @@ export default new class Playing {
     if (player < slow || player > fast) {
       return true;
     }
-    return true;
+    return false;
   }
 
   @observable volume = 0.15;
