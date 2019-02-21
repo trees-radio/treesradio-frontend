@@ -71,7 +71,7 @@ export default class Message extends React.Component {
                     }
 
                     render() {
-                        const { token, show, onLoad } = this.props;
+                        var { token, show, onLoad } = this.props;
                         let emclass = false;
                         let thisClass;
                         if (imageCheck(token)) {
@@ -87,6 +87,9 @@ export default class Message extends React.Component {
                             return <span><a href={ link } target="_blank">{ token } </a></span>;
                         } else if (specialemoji[token]) {
                             thisClass = specialemoji[token];
+                        } else if ( token.match(/^\*\*\w+\*\*$/) ) {
+                            thisClass = "chat-bold";
+			    token = token.substr(2, -2);
                         }
                         return <span className={ this.props.isEmote ? 'chat-italic' : thisClass }>{ emojify(token, emojifyOptions) } </span>;
                     }

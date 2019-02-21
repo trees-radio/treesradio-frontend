@@ -15,13 +15,14 @@ import Player from "./Player";
 @observer
 class Main extends React.Component {
     checkAprilFools() {
-        const curtime = Date.new(),
+        const curtime = new Date(),
             curday = curtime.getDate(),
             curmonth = curtime.getMonth() + 1;
+	    console.log(curmonth+":"+curday);
         if (curmonth == 4 && curday == 1) {
             return "april-fools";
         }
-        return "";
+        return "noop";
     }
     render() {
         if (!app.init) {
@@ -48,7 +49,7 @@ class Main extends React.Component {
                 </center></div></div></div></div>
             );
         }
-        return ( <div className={ this.checkAprilFools }>
+        return ( <div className={ this.checkAprilFools() }>
             <Nav/> { /* Start Container */ } 
             <div className="container-fluid">
             <div className="row"> { /* Video Component */ }
