@@ -1,10 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Config = require('webpack-config').default; // must be imported with .default in ES5 code: https://github.com/mdreizin/webpack-config/issues/29#issuecomment-236699084
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var VersionFile = require('webpack-version-file-plugin');
 var short = require('git-rev-sync').short();
+var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = new Config().merge({
   entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
@@ -14,6 +15,14 @@ module.exports = new Config().merge({
     filename: "treesradio.js"
   },
   optimization: {
+	  minimizer: [
+	    new UglifyJsPlugin({
+		    cache: true,
+		    parallel: true,
+		    sourceMap: true
+	    }),
+	    new OptimizeCSSAssetsPlugin({})
+	  ],
 	  splitChunks: {
 		  chunks: 'all'
 	  }
@@ -93,7 +102,6 @@ module.exports = new Config().merge({
       jQuery: 'jquery',
       "window.jQuery": 'jquery'
     }),
-    new ExtractTextPlugin("treesradio.css"),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: require('html-webpack-template'),

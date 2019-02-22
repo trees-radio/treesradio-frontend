@@ -7,7 +7,15 @@ body {
   background-color: #000000;
   font-family: "Open Sans", sans-serif !important;
 }
-
+.modal-backdrop.fade {
+	opacity: .5;
+}
+.modal-dialog {
+	margin-top: 155px;
+}
+.fade {
+	opacity: .99;
+}
 .april-fools {
   font-family: "Comic Sans MS", cursive, sans-serif !important;
 }
