@@ -1,12 +1,15 @@
 var webpack = require('webpack');
 
+// must be imported with .default in ES5 code: https://github.com/mdreizin/webpack-config/issues/29#issuecomment-236699084
 var Config = require('webpack-config').default;
 
 module.exports = new Config().extend('./webpack.base.config.js').merge({
-  devtool: 'cheap-source-map',
+  devtool: 'source-map',
   plugins: [
-     new webpack.DefinePlugin({
+    new webpack.DefinePlugin({
        'process.env.NODE_ENV': JSON.stringify('production')
-     })
-   ]
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin()
+  ]
 });

@@ -5,7 +5,7 @@ var helpers = require('./helpers');
 
 var config = new Config().extend('./webpack.base.config.js').merge({
   plugins: [
-    new webpack.DefinePlugin(helpers.getWebpackDefine('development'))
+    new webpack.DefinePlugin(helpers.getWebpackDefine('production'))
   ]
 });
 

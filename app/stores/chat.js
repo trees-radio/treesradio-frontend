@@ -78,7 +78,7 @@ export default new class Chat {
       .on("value", snap => (this.chatLocked = !!snap.val())); // listen to backend chatlock value
   }
 
-  @observable messages = []; 
+  @observable messages = [];
   @observable msg = "";
 
   @observable lastgif = epoch();

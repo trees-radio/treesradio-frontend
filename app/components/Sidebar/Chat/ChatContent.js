@@ -59,7 +59,7 @@ export default (class ChatContent extends React.Component {
       var humanTimestamp = moment.unix(msg.timestamp).format("LT");
       var msgs = msg.msgs.map((innerMsg, i) => {
         return (
-          <Message key={i} isEmote={msg.isemote} text={innerMsg} onLoad={() => setTimeout(this.autoScroll(true), 100)} />
+          <Message key={i} userName={msg.username} isEmote={msg.isemote} text={innerMsg} onLoad={() => setTimeout(this.autoScroll(true), 100)} />
         );
       });
 

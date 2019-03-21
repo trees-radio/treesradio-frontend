@@ -52,8 +52,8 @@ export default new class Waitlist {
       });
   }
 
-  @observable list = []; 
-  
+  @observable list = [];
+
   @computed get onlineOnly() {
     return this.list.filter(function(user) {
       return {uid: user.uid};

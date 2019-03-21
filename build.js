@@ -5,8 +5,11 @@ var Config = require('webpack-config').default;
 var helpers = require('./helpers');
 
 var config = new Config().extend('./webpack.base.config.js').merge({
+  mode: 'production',
   plugins: [
-    new webpack.DefinePlugin(helpers.getWebpackDefine('production'))
+  	new webpack.DefinePlugin({
+  	    'process.env.NODE_ENV': JSON.stringify('production')
+	})
   ]
 });
 

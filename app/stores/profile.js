@@ -213,32 +213,32 @@ export default new class Profile {
 
   async register(email, password) {
     if (disposable.validate(email)) {
-        fbase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .catch(error => {
-            let msg = `Unknown error: ${error.code}`;
-            switch (error.code) {
-              case "auth/invalid-email":
-                msg = `You entered an invalid email address.`;
-                break;
-              case "auth/user-disabled":
-                msg = `That user account is disabled.`;
-                break;
-              case "auth/user-not-found":
-                msg = `No user account found for this login`;
-                break;
-              case "auth/wrong-password":
-                msg = `That's the wrong password for that account!`;
-                break;
-              case undefined:
-                return;
-            }
-            toast.error(msg);
-          })
-          .then(user => {
-            user.sendEmailVerification();
-          });
+      fbase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .catch(error => {
+          let msg = `Unknown error: ${error.code}`;
+          switch (error.code) {
+            case "auth/invalid-email":
+              msg = `You entered an invalid email address.`;
+              break;
+            case "auth/user-disabled":
+              msg = `That user account is disabled.`;
+              break;
+            case "auth/user-not-found":
+              msg = `No user account found for this login`;
+              break;
+            case "auth/wrong-password":
+              msg = `That's the wrong password for that account!`;
+              break;
+            case undefined:
+              return;
+          }
+          toast.error(msg);
+        })
+        .then(user => {
+          user.sendEmailVerification();
+        });
     }
   }
 

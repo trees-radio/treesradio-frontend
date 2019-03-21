@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
     super();
 
     const loggedInAtRender = profile.loggedIn;
-    this.selChatRef= React.createRef();
+    this.selChatRef = React.createRef();
     this.selOnlineRef = React.createRef();
     this.selWaitlistRef = React.createRef();
     this.selAboutRef = React.createRef();
@@ -58,7 +58,11 @@ class Sidebar extends React.Component {
           <div className={chatBtnClass} ref={this.selChatRef} onClick={() => this.update("CHAT")}>
             Chat
           </div>
-          <div className={onlineBtnClass} ref={this.selOnlineRef} onClick={() => this.update("ONLINE")}>
+          <div
+            className={onlineBtnClass}
+            ref={this.selOnlineRef}
+            onClick={() => this.update("ONLINE")}
+          >
             Online Ents <span className="online-count">{online.online.length}</span>
           </div>
           <div
@@ -66,9 +70,19 @@ class Sidebar extends React.Component {
             ref={this.selWaitlistRef}
             onClick={() => this.update("WAITLIST")}
           >
-            Waitlist <span className="waitlist-count">{waitlist.inWaitlist && waitlist.waitlistPosition !== false ? waitlist.waitlistPosition + '/' : ''}{waitlist.count}</span>
+            Waitlist{" "}
+            <span className="waitlist-count">
+              {waitlist.inWaitlist && waitlist.waitlistPosition !== false
+                ? waitlist.waitlistPosition + "/"
+                : ""}
+              {waitlist.count}
+            </span>
           </div>
-          <div className={aboutBtnClass} ref={this.selAboutRef} onClick={() => this.update("ABOUT")}>
+          <div
+            className={aboutBtnClass}
+            ref={this.selAboutRef}
+            onClick={() => this.update("ABOUT")}
+          >
             About
           </div>
         </div>

@@ -14,8 +14,6 @@ class UtilityModal extends React.Component {
 		this.state = { show: false };
 	}
 	handleClose(){
-		console.log("Firing close");
-		console.log(this.props);
 		this.props.hideModal();
 	}
 	handleShow(){

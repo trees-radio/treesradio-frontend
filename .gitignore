@@ -3,6 +3,8 @@ public
 firebase/rules.json
 .fbaseapi
 app/version.json
+yarn.lock
+public.old
 
 ## Floobits
 .flooignore

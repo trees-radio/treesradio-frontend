@@ -26,14 +26,6 @@ export default class About extends React.Component {
   render() {
     return (
       <div className="sidebar-about" style={this.props.show ? {} : {display: "none"}}>
-        <div className="about-karan">
-          <div>
-            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
-              <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
-              </button>
-          </div>
-        </div>
-        { this.state.showKaran && <Karan/> }
         <div className="about-summary">
           <p>
             TreesRadio is a online social music site for the reddit /r/trees community. Sign up to queue up some tunes or kick back and listen to the musical tastes of Ents around the world!
@@ -70,8 +62,9 @@ export default class About extends React.Component {
 	    <h5>Shoutouts!</h5>
 	    <ul>
 	    <li>@minicing for @BlazeBot's awesome animated avatar.</li>
-	    <li>@pandersson97 for sponsoring @yellerjeep's ongoing development.</li>
+	    <li>@pandersson97, @Owlsy for sponsoring @yellerjeep's ongoing development.</li>
 	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
+	    <li>@Pixelmac for expanding our bump library</li>
 	    </ul>
 	    </div>
         </div>
@@ -82,6 +75,12 @@ export default class About extends React.Component {
           </h6>
           <h6><a href="https://reddit.com/r/treesradio" target="_blank">/r/treesradio</a></h6>
         </div>
+        <div className="about-karan">
+            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
+              <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
+              </button>
+        </div>
+        { this.state.showKaran && <Karan/> }
       </div>
     );
   }

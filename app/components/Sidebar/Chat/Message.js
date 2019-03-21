@@ -13,12 +13,12 @@ const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
 const specialemoji = {
-    ':weed:': 'emoji-weed',
-    ':marijuana:': 'emoji-weed',
-    ':canabis:': 'emoji-weed',
-    ':toke:': 'emoji-toke',
-    ':smoke:': 'emoji-toke',
-    ':hit:': 'emoji-toke'
+    ':weed:': 'emoji emoji-weed',
+    ':marijuana:': 'emoji emoji-weed',
+    ':canabis:': 'emoji emoji-weed',
+    ':toke:': 'emoji emoji-toke',
+    ':smoke:': 'emoji emoji-toke',
+    ':hit:': 'emoji emoji-toke'
 };
 
 const emojifyOptions = {
@@ -50,11 +50,10 @@ export default class Message extends React.Component {
                 let text = this.props.text;
                 if (!text)
                     text = '';
-                if (text.substring(0, 12) === '==markdown==')
-                    return <ReactMarkdown source={ text.substring(12) } escapeHtml={false}
-                renderers={
-                    {
-                        Link: props => <a href={ props.href } target="_blank">{ props.children }</a>}} /> ;
+                if (text.substring(0, 12) === '==markdown==' || this.props.userName == 'BlazeBot' ) {
+			if ( text.substring(0, 12) === '==markdown==' ) text = text.substring(12);
+                    return <ReactMarkdown source={ emojifyWrap(text, emojifyOptions) } escapeHtml={false} linkTarget="_blank"/>;
+		}
 
                         let tokens = text.split(" ");
                         const result = tokens.map((tkn, i) => ( <MessageItem key={ i } token={ tkn } isEmote={ this.props.isEmote } show={ this.state.visible } onLoad={ this.props.onLoad }/>
@@ -76,6 +75,7 @@ export default class Message extends React.Component {
                         let thisClass;
                         if (imageCheck(token)) {
                             let style = {};
+			    token.replace('http:', 'https:');
 
                             return ( <span><img src={ token } onLoad={ onLoad } style={ style } className="inline-image"/></span>);
                             // OR is this a plain URL?
@@ -94,3 +94,15 @@ export default class Message extends React.Component {
                         return <span className={ this.props.isEmote ? 'chat-italic' : thisClass }>{ emojify(token, emojifyOptions) } </span>;
                     }
                 }
+
+
+		function emojifyWrap(text, emojOpts) {
+			var newtext = text.replace(/:(\w+):/g, function (match, p1, offset, string) {
+				if ( specialemoji[match] ) {
+					return `<span class="emoji emoji-${p1}"></span>`;
+				} else {
+					return `<span class="emoji e1a-${p1}"></span>`;
+				}
+			});
+			return newtext;
+		}

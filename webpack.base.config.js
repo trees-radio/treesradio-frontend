@@ -4,7 +4,6 @@ var Config = require('webpack-config').default; // must be imported with .defaul
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var VersionFile = require('webpack-version-file-plugin');
 var short = require('git-rev-sync').short();
-var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = new Config().merge({
@@ -16,16 +15,8 @@ module.exports = new Config().merge({
   },
   optimization: {
 	  minimizer: [
-	    new UglifyJsPlugin({
-		    cache: true,
-		    parallel: true,
-		    sourceMap: true
-	    }),
 	    new OptimizeCSSAssetsPlugin({})
-	  ],
-	  splitChunks: {
-		  chunks: 'all'
-	  }
+	  ]
   },
   module: {
     rules: [
@@ -117,12 +108,12 @@ module.exports = new Config().merge({
       templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "<%= currentTime %>", "version": "<%= package.version %>", "short": "${short}"}}`
     }),
     new webpack.DefinePlugin({
-	      PRODUCTION: JSON.stringify(true),
-	        VERSION: JSON.stringify('5fa3b9'),
-		  BROWSER_SUPPORTS_HTML5: true,
-		    TWO: '1+1',
-		      'typeof window': JSON.stringify('object'),
-		        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+	    'process.env.NODE_ENV': JSON.stringify('production'),
+	    PRODUCTION: JSON.stringify(true),
+	    VERSION: JSON.stringify(short),
+	    BROWSER_SUPPORTS_HTML5: JSON.stringify(true),
+	    TWO: '1+1',
+	    'typeof window': JSON.stringify('object')
     })
   ]
-})
+});

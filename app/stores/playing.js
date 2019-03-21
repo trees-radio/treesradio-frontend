@@ -49,7 +49,7 @@ export default new class Playing {
   };
 
   @computed get humanDuration() {
- var mo = moment.duration(this.data.info.duration, "milliseconds");
+    var mo = moment.duration(this.data.info.duration, "milliseconds");
     var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
       str = `${_.padStart(mo.hours(), 2, "0")}:` + str;

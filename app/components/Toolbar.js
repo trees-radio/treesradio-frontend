@@ -11,7 +11,7 @@ import playing, {VOLUME_NUDGE_FRACTION} from "stores/playing";
 import toast from "utils/toast";
 import classNames from "classnames";
 import onClickOutside from "react-onclickoutside";
-import createClass from 'create-react-class';
+import createClass from "create-react-class";
 
 const loadingIconClass = "fa-spin fa-circle-o-notch";
 

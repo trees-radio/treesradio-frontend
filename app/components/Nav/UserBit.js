@@ -237,7 +237,7 @@ export default class UserBit extends React.Component {
           {/*  */}
           <Modal
             show={this.settingAvatar}
-            hideModal={() => { console.log('hiding'); this.settingAvatar = false;}}
+            hideModal={() => { this.settingAvatar = false;}}
             title="Set Your Avatar">
             <p>Avatars must be hosted at one of the following sites:</p>
             <ul>
