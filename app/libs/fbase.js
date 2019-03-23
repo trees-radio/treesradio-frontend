@@ -3,9 +3,9 @@ import "firebase/auth";
 import "firebase/database";
 
 const FB_ENV = {
-  apiKey: "AIzaSyBqtjxpWp17r6wfOTxF4WvzV6_MgRN-zwk",
-  authDomain: "treesradio-live.firebaseapp.com",
-  databaseURL: "https://treesradio-live.firebaseio.com",
+  apiKey: "AIzaSyB_w_sx6mMUQil5nWhn0sd5CjgOtDFGICw",
+  authDomain: "treesradio-staging.firebaseapp.com",
+  databaseURL: "https://treesradio-staging.firebaseio.com",
   storageBucket: "treesradio-live.appspot.com"
 };
 

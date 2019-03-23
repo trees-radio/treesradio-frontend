@@ -8,7 +8,6 @@ var OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = new Config().merge({
   entry: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')],
-  mode: "production",
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: "treesradio.js"
@@ -43,34 +42,33 @@ module.exports = new Config().merge({
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader",
-        query: {
-          limit: '25000',
-          minetype: 'application/font-woff',
+        loader: "file-loader",
+        options: {
+	  limit: '250000',
+          mimetype: 'application/font-woff',
           name: 'fonts/[hash].[ext]'
         }
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'fonts/[hash].[ext]'
         }
       },
       {
         test: /\.(mp3|wav|ogg)$/,
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'audio/[hash].[ext]'
         }
       },
       {
         test: /\.(jpg|png|gif)$/,
-        loader: 'url-loader',
-        query: {
-          limit: '25000',
-          name: 'img/[name].[ext]'
-        }
+        loader: 'file-loader',
+	options: {
+		name: 'img/[name].[ext]'
+	}
       },
     ]
   },
@@ -106,14 +104,6 @@ module.exports = new Config().merge({
       packageFile: path.join(__dirname, 'package.json'),
       outputFile: path.join(__dirname, 'app/version.json'),
       templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "<%= currentTime %>", "version": "<%= package.version %>", "short": "${short}"}}`
-    }),
-    new webpack.DefinePlugin({
-	    'process.env.NODE_ENV': JSON.stringify('production'),
-	    PRODUCTION: JSON.stringify(true),
-	    VERSION: JSON.stringify(short),
-	    BROWSER_SUPPORTS_HTML5: JSON.stringify(true),
-	    TWO: '1+1',
-	    'typeof window': JSON.stringify('object')
     })
   ]
 });

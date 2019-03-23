@@ -7,9 +7,7 @@ module.exports = new Config().extend('./webpack.base.config.js').merge({
   devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
-       'process.env.NODE_ENV': JSON.stringify('production')
+       'process.env.NODE_ENV': JSON.stringify('development')
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
   ]
 });
