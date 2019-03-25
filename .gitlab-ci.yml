@@ -48,6 +48,8 @@ build-prod:
   script:
     - time npm run build-rules
     - time npm run build-prod
+  only:
+    - master
 
 deploy_staging:
   stage: deploy
