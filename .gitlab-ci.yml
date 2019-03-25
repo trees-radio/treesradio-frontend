@@ -39,7 +39,7 @@ build-dev:
     - time npm run build-rules
     - time npm run build-dev
   only:
-    - development
+    - develop
 
 build-prod:
   stage: build-prod
