@@ -4,7 +4,7 @@ import fbase from "libs/fbase";
 // import profile from 'stores/profile';
 // import axios from 'axios';
 import moment from "moment";
-import _ from "lodash";
+import {shuffle} from "lodash";
 // import events from 'stores/events';
 import {searchYouTube, getYtPlaylist} from "libs/youTube";
 
@@ -279,7 +279,7 @@ export default new class Playlists {
   }
 
   shufflePlaylist() {
-    var newPlaylist = _.shuffle(this.playlist.slice());
+    var newPlaylist = shuffle(this.playlist.slice());
     this.ref
       .child(this.selectedPlaylistKey)
       .child("entries")

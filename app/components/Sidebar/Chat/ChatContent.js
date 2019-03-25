@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import _ from "lodash";
+import {debounce} from "lodash";
 import chat from "stores/chat";
 import classNames from "classnames";
 import moment from "moment";
@@ -29,7 +29,7 @@ export default (class ChatContent extends React.Component {
     }
   };
 
-  debouncedScroll = _.debounce(this.scroll, 5000);
+  debouncedScroll = debounce(this.scroll, 5000);
 
   componentWillUpdate() {
     var test = this._chatscroll.scrollHeight - this._chatscroll.scrollTop;

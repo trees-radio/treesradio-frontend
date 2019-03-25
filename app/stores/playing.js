@@ -4,7 +4,7 @@ import fbase from "libs/fbase";
 import profile from "stores/profile";
 // import ax from 'utils/ax';
 import moment from "moment";
-import _ from "lodash";
+import {padStart} from "lodash";
 // import events from 'stores/events';
 import playlists from "stores/playlists";
 import {send} from "libs/events";
@@ -50,18 +50,18 @@ export default new class Playing {
 
   @computed get humanDuration() {
     var mo = moment.duration(this.data.info.duration, "milliseconds");
-    var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
+    var str = `${padStart(mo.minutes(), 2, "0")}:${padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
-      str = `${_.padStart(mo.hours(), 2, "0")}:` + str;
+      str = `${padStart(mo.hours(), 2, "0")}:` + str;
     }
     return str;
   }
 
   @computed get humanCurrent() {
     var mo = moment.duration(this.playerSeconds, "seconds");
-    var str = `${_.padStart(mo.minutes(), 2, "0")}:${_.padStart(mo.seconds(), 2, "0")}`;
+    var str = `${padStart(mo.minutes(), 2, "0")}:${padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
-      str = `${_.padStart(mo.hours(), 2, "0")}:` + str;
+      str = `${padStart(mo.hours(), 2, "0")}:` + str;
     }
     return str;
   }

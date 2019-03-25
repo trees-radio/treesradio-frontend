@@ -1,7 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
-import _ from "lodash";
+import {debounce} from "lodash";
 
 import UserBit from "./Nav/UserBit";
 
@@ -12,7 +12,7 @@ class Nav extends React.Component {
   @observable hoveredTitle = false;
   @observable title = "[tr]";
 
-  onHover = _.debounce(
+  onHover = debounce(
     () => {
       this.hoveredTitle = true;
       this.title = "[treesradio]";
@@ -20,7 +20,7 @@ class Nav extends React.Component {
     500,
     {leading: true}
   );
-  offHover = _.debounce(() => {
+  offHover = debounce(() => {
     this.hoveredTitle = false;
     this.title = "[tr]";
   }, 500);

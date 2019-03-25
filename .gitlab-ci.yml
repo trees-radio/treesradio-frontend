@@ -34,7 +34,17 @@ build:
       - firebase/
   script:
     - time npm run build-rules
-    - time npm run build-app
+    - time npm run build-dev
+
+build-prod:
+  stage: build
+  artifacts:
+    paths:
+      - public/
+      - firebase/
+  script:
+    - time npm run build-rules
+    - time npm run build-prod
 
 deploy_staging:
   stage: deploy
@@ -44,7 +54,7 @@ deploy_staging:
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
   dependencies:
-    - build
+    - build-dev
   only:
     - develop
   script:
@@ -58,7 +68,7 @@ deploy_production:
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
   dependencies:
-    - build
+    - build-prod
   only:
     - master
   script:

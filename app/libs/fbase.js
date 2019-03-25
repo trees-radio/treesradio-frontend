@@ -3,10 +3,10 @@ import "firebase/auth";
 import "firebase/database";
 
 const FB_ENV = {
-  apiKey: "AIzaSyB_w_sx6mMUQil5nWhn0sd5CjgOtDFGICw",
-  authDomain: "treesradio-staging.firebaseapp.com",
-  databaseURL: "https://treesradio-staging.firebaseio.com",
-  storageBucket: "treesradio-live.appspot.com"
+  apiKey: FIREBASE_KEY,
+  authDomain: FIREBASE_AUTH,
+  databaseURL: FIREBASE_URL,
+  storageBucket: FIREBASE_BUCKET
 };
 
 firebase.initializeApp(FB_ENV);
