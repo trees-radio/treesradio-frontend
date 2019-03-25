@@ -10,7 +10,8 @@ cache:
   - yarn-cache/
 
 stages:
-  - build
+  - build-dev
+  - build-prod
   - deploy
 
 before_script:
