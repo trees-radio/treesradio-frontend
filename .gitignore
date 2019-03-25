@@ -330,4 +330,4 @@ public/app.css
 public/app.js
 ._.DS_Store
 package-lock.json
-
+.DS_Store
