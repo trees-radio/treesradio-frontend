@@ -29,7 +29,7 @@ lint:
   script:
     - npm run lint
 
-build:
+build-dev:
   stage: build-dev
   artifacts:
     paths:
