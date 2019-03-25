@@ -25,12 +25,12 @@ before_script:
   - yarn
 
 lint:
-  stage: build
+  stage: build-dev
   script:
     - npm run lint
 
 build:
-  stage: build
+  stage: build-dev
   artifacts:
     paths:
       - public/
@@ -40,7 +40,7 @@ build:
     - time npm run build-dev
 
 build-prod:
-  stage: build
+  stage: build-prod
   artifacts:
     paths:
       - public/
