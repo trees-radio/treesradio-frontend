@@ -1,6 +1,6 @@
 import React from "react";
-import { observer } from "mobx-react";
-import { observable } from "mobx";
+import {observer} from "mobx-react";
+import {observable} from "mobx";
 import ReactSlider from "react-slider";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
@@ -91,7 +91,6 @@ class Toolbar extends React.Component {
       waitlistButtonText = <i className={`fa ${loadingIconClass}`} />;
     } else if (waitlist.isPlaying) {
       waitlistButtonText = "Skip Song";
-
     } else if (waitlist.inWaitlist) {
       waitlistButtonText = "Leave Waitlist";
     }
@@ -159,7 +158,14 @@ class Toolbar extends React.Component {
               </a>
             </span>
             <br />
-            <a className="current-playing-user" onClick={() => { $('#chatinput').val($('#chatinput').val()+' @'+playing.data.info.user+' ');}}>Player: {playing.data.info.user}</a>
+            <a
+              className="current-playing-user"
+              onClick={() => {
+                $("#chatinput").val($("#chatinput").val() + " @" + playing.data.info.user + " ");
+              }}
+            >
+              Player: {playing.data.info.user}
+            </a>
             <span className="media-time">
               {playing.humanCurrent} / {playing.humanDuration}
             </span>
@@ -201,11 +207,21 @@ class Toolbar extends React.Component {
             </div>
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div className="like-button" onClick={() => { if ( !waitlist.playing ) playing.like()}}>
+            <div
+              className="like-button"
+              onClick={() => {
+                if (!waitlist.playing) playing.like();
+              }}
+            >
               <i className={classNames("fa", likeIcon)} />
               <span className="feedback-likes">{playing.likes}</span>
             </div>
-            <div className="dislike-button" onClick={() => { if ( !waitlist.playing ) playing.dislike()}}>
+            <div
+              className="dislike-button"
+              onClick={() => {
+                if (!waitlist.playing) playing.dislike();
+              }}
+            >
               <i className={classNames("fa", dislikeIcon)} />
               <span className="feedback-dislikes">{playing.dislikes}</span>
             </div>

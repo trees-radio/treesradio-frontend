@@ -90,19 +90,23 @@ export default new class Playlists {
     return this.playlists.map(playlist => playlist.name);
   }
 
-  exportPlaylist(){
-	  console.log(this.playlist);
-	  fbase.database().ref("playlists")
-	  .child(this.uid)
-	  .child(this.selectedPlaylistKey)
-	  .once('value')
-	  .then((snap) => {
-		  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(snap.val(),false,3));
-		  var anchorElem = document.getElementById('exportPlaylistDownload');
-		  anchorElem.setAttribute("href", dataStr);
-		  anchorElem.setAttribute("download", this.selectedPlaylistName + ".json");
-		  anchorElem.click();
-	  });
+  exportPlaylist() {
+    console.log(this.playlist);
+    fbase
+      .database()
+      .ref("playlists")
+      .child(this.uid)
+      .child(this.selectedPlaylistKey)
+      .once("value")
+      .then(snap => {
+        const dataStr =
+          "data:text/json;charset=utf-8," +
+          encodeURIComponent(JSON.stringify(snap.val(), false, 3));
+        var anchorElem = document.getElementById("exportPlaylistDownload");
+        anchorElem.setAttribute("href", dataStr);
+        anchorElem.setAttribute("download", this.selectedPlaylistName + ".json");
+        anchorElem.click();
+      });
   }
 
   clearSearch() {

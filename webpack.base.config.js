@@ -4,15 +4,14 @@ var Config = require("webpack-config").default; // must be imported with .defaul
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var VersionFile = require("webpack-version-file-plugin");
 var short = require("git-rev-sync").short();
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-
+var CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = new Config().merge({
   entry: ["babel-polyfill", path.resolve(__dirname, "app/index.js")],
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "[name].bundle.js",
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: "[name].bundle.js"
   },
   module: {
     rules: [
@@ -20,9 +19,9 @@ module.exports = new Config().merge({
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
-	query: {
-		plugins: ['lodash']
-	}
+        query: {
+          plugins: ["lodash"]
+        }
       },
       {
         test: /\.scss$/,
