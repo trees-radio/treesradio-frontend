@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 
 // (S)CSS
-import 'modules/toastr/build/toastr.css';
+import '../node_modules/toastr/build/toastr.css';
 import './scss/index.scss'; // our scss entry
 
 import 'bootstrap'; //load bootstrap js, depends on $

@@ -1,6 +1,6 @@
 import React from "react";
-import {observer} from "mobx-react";
-import {observable} from "mobx";
+import { observer } from "mobx-react";
+import { observable } from "mobx";
 import ReactSlider from "react-slider";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
@@ -29,7 +29,7 @@ const GrabPlaylists = onClickOutside(
           var grabPlaylists = playlists.playlists.map((p, i) => {
             var onClick = () => {};
             var songInPlaylist = playlists.checkPlaylistForSong(p.key, playing.data.info.url);
-            if (!songInPlaylist) {
+            if (!songInPlaylist && !waitlist.isPlaying) {
               onClick = () => {
                 playing.grab(p.key);
                 this.toggleGrab();
@@ -91,6 +91,7 @@ class Toolbar extends React.Component {
       waitlistButtonText = <i className={`fa ${loadingIconClass}`} />;
     } else if (waitlist.isPlaying) {
       waitlistButtonText = "Skip Song";
+
     } else if (waitlist.inWaitlist) {
       waitlistButtonText = "Leave Waitlist";
     }
@@ -158,10 +159,21 @@ class Toolbar extends React.Component {
               </a>
             </span>
             <br />
-            <a className="current-playing-user">Player: {playing.data.info.user}</a>
+            <a className="current-playing-user" onClick={() => { $('#chatinput').val($('#chatinput').val()+' @'+playing.data.info.user+' ');}}>Player: {playing.data.info.user}</a>
             <span className="media-time">
               {playing.humanCurrent} / {playing.humanDuration}
             </span>
+          </div>
+          <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div
+              className={classNames(
+                "join-waitlist",
+                waitlist.inWaitlist ? "join-waitlist-pressed" : false
+              )}
+              onClick={() => waitlist.bigButton()}
+            >
+              {waitlistButtonText}
+            </div>
           </div>
           <div id="grabtrack" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <GrabPlaylists
@@ -189,24 +201,13 @@ class Toolbar extends React.Component {
             </div>
           </div>
           <div id="vote" className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div className="like-button" onClick={() => playing.like()}>
+            <div className="like-button" onClick={() => { if ( !waitlist.playing ) playing.like()}}>
               <i className={classNames("fa", likeIcon)} />
               <span className="feedback-likes">{playing.likes}</span>
             </div>
-            <div className="dislike-button" onClick={() => playing.dislike()}>
+            <div className="dislike-button" onClick={() => { if ( !waitlist.playing ) playing.dislike()}}>
               <i className={classNames("fa", dislikeIcon)} />
               <span className="feedback-dislikes">{playing.dislikes}</span>
-            </div>
-          </div>
-          <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <div
-              className={classNames(
-                "join-waitlist",
-                waitlist.inWaitlist ? "join-waitlist-pressed" : false
-              )}
-              onClick={() => waitlist.bigButton()}
-            >
-              {waitlistButtonText}
             </div>
           </div>
         </div>

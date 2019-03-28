@@ -1,7 +1,7 @@
 import {Howl} from "howler";
 
-import mp3 from "audio/tr-notify.mp3";
-import ogg from "audio/tr-notify.ogg";
+import mp3 from "../audio/tr-notify.mp3";
+import ogg from "../audio/tr-notify.ogg";
 
 export class AudioNotify {
   constructor(src) {

@@ -1,8 +1,8 @@
 import React from 'react';
-import {listenAvatar, defaultAvatar} from 'libs/avatar';
-import imageWhitelist from 'libs/imageWhitelist';
+import {listenAvatar, defaultAvatar} from '../../../libs/avatar';
+import imageWhitelist from '../../../libs/imageWhitelist';
 import VisibilitySensor from 'react-visibility-sensor';
-import EMPTY_IMG from 'img/nothing.png';
+import EMPTY_IMG from '../../../img/nothing.png';
 import {autorun} from 'mobx';
 
 export default class UserAvatar extends React.Component {

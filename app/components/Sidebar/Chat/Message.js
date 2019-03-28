@@ -18,7 +18,8 @@ const specialemoji = {
     ':canabis:': 'emoji emoji-weed',
     ':toke:': 'emoji emoji-toke',
     ':smoke:': 'emoji emoji-toke',
-    ':hit:': 'emoji emoji-toke'
+    ':hit:': 'emoji emoji-toke',
+    ':plug:': 'emoji emoji-plug'
 };
 
 const emojifyOptions = {

@@ -6,11 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node devserver.js",
-    "lint": "eslint app/**/*.js",
+    "lint": "./node_modules/.bin/eslint app/**/*.js",
     "build-rules": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
     "build-prod": "NODE_ENV=production webpack -p --config webpack.config.js",
     "build-dev": "NODE_ENV=development webpack -d --config webpack.config.js",
-    "build": "npm run build-rules && npm run build-app",
     "format": "prettier --print-width 100 --bracket-spacing=false --write app/**/*.js webpack*js"
   },
   "repository": {

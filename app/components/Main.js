@@ -86,6 +86,7 @@ class Main extends React.Component {
             {/* End Container */}
           </div>
         </div>
+	<a id="exportPlaylistDownload"/>
       </div>
     );
   }

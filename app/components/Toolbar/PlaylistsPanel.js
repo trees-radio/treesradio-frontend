@@ -224,6 +224,7 @@ export default (class PlaylistsPanel extends React.Component {
             </ul>
           </div>
           {shuffle}
+	  <span onClick={() => playlists.exportPlaylist()} className="playlist-shuffle-btn fa fa-download fa-3x"/>
         </div>
         <div id="playlists-panel-display">
           {content}
