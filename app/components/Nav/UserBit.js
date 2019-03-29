@@ -34,7 +34,10 @@ export default class UserBit extends React.Component {
     if (result) 
       this.resettingPassword = false;
     }
-  
+
+  @observable 
+  gifsHidden = false;
+
   @observable
   resettingPassword = false;
 
@@ -86,6 +89,16 @@ export default class UserBit extends React.Component {
     profile.hideBlazebot
       ? profile.hideBlazebot = false
       : profile.hideBlazebot = true;
+  }
+
+  hideGifs() {
+	  if ( this.gifsHidden === false ) {
+		  var div = $("<div id='hidegifs' />").html('&shy;<style>span.chat-text p img[src$=".gif"] { display: none; } span.chat-text p img[src$=".gifv"] {display: none;}</style>').appendTo("body");
+		  this.gifsHidden = true;
+	  } else {
+		  $('#hidegifs').remove();
+		  this.gifsHidden = false;
+	  }
   }
 
   render() {
@@ -169,6 +182,12 @@ export default class UserBit extends React.Component {
                   target='blank'>
                   <i className="fa fa-youtube-play"></i> Region Check</a>
               </li>
+	      <li onClick={() => this.hideGifs() }>
+	        <a href="#">
+	        <i className={classNames('fa', this.gifsHidden === true 
+			? "fa-check-square-o"
+			: "fa-square-o")}></i> Hide Gifs?</a>
+		</li>
               <li onClick={() => this.hideBlazebot() }>
                 <a href="#">
                   <i className={classNames('fa', profile.hideBlazebot === true 

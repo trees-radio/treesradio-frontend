@@ -9,7 +9,7 @@
   text-align: center;
   line-height: 2vw;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .sidebar-selected {
@@ -31,7 +31,7 @@
 }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 720px) {
 .show-chat-btn {
   padding: 0;
 }
@@ -47,7 +47,7 @@ display: none;
 }
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 720px) {
 .online-count {
   color: black;
   background-color: white;
@@ -66,7 +66,7 @@ display: none;
 }
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 720px) {
 .waitlist-count {
   color: black;
   background-color: white;

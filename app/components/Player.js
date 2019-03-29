@@ -3,7 +3,7 @@ import {observer} from "mobx-react";
 import {observable} from "mobx";
 
 import ReactPlayer from "react-player";
-import Progress from "react-progressbar";
+import {Line} from "rc-progress";
 
 import playing from "stores/playing";
 
@@ -71,12 +71,14 @@ class Player extends React.Component {
             />
           )}{" "}
         </div>{" "}
-        <Progress
+        <Line
           className="progressbar-container"
-          completed={
-            Math.floor(playing.fraction * 100) > 100 ? 100 : Math.floor(playing.fraction * 100)
+	  strokeWidth="4"
+	  strikeLinecap="butt"
+          percent={
+           playing.fraction * 100 > 100 ? 100 : playing.fraction * 100
           }
-          color="#77b300"
+          strokeColor="#77b300"
         />
       </div>
     );

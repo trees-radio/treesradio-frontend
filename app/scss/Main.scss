@@ -5,7 +5,7 @@ body {
   overflow-y: hidden;
   color: #77b300 !important;
   background-color: #000000;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Open Sans", sans-serif;
 }
 h4 {
 	font-size: 16px;
@@ -74,16 +74,23 @@ h4 {
   transition: ease-in-out !important;
   transition-timing-function: ease-in-out !important;
   transition-property: all;
+  height: 100%;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .container-fluid {
   transition: ease-in-out !important;
   transition-timing-function: ease-in-out !important;
   transition-property: all;
+  padding-bottom: -23px;
 }
 
 .main-loadingcard {
   width: 400px;
+  display: inline-block;
 	height: 200px;
   background-color: #333;
   background-image: url('../img/favicon.png');
@@ -103,11 +110,13 @@ h4 {
 }
 
 .main-center {
+	display: inline-block;
   text-align: center;
   position:relative;
   vertical-align: middle;
   width: 100%;
 }
+
 .main-vcenter {
   display: table-cell;
   vertical-align: middle;

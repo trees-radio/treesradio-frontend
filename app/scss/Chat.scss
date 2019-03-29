@@ -110,7 +110,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 .chat-username {
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
 }
 
@@ -124,7 +124,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-bot:after {
 	color: rgb(29,131,211);
 	content: " (Bot)";
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .username-admin {
@@ -134,7 +134,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-admin:after {
     color: #0099ff;
     content: " (Admin)";
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .username-dev {
@@ -144,7 +144,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-dev:after {
     color: #0055aa;
     content: " (Developer)";
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .username-mod {
@@ -154,7 +154,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-mod:after {
     color: #00b300;
     content: " (Mod)";
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .username-seniormod {
@@ -164,7 +164,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-seniormod:after {
     color: #b507ff;
     content: " (Senior Mod)";
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .username-vip {
@@ -174,7 +174,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-vip:after {
     color: #faeaf4;
     content: " (VIP)";
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .username-frient {
@@ -184,18 +184,17 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-frient:after {
     color: #34b7aa;
     content: " (Frient)";
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .username-user {
     color: #026455;
 }
-
 .chat-text {
     height: 1vw;
     width: 100%;
     position: relative;
-    font-size: 16px;
+    font-size: 1.6vh;
 }
 .chat-text div {
 	padding-bottom: 5px;
@@ -269,7 +268,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 #sendbox_test {
-    height: 98%;
+    height: 75%;
     max-height: 55px;
     font-size: 1.65vh;
     color: black;
@@ -278,7 +277,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 #chatinput {
-    height: 98%;
+    height: 100%;
     width: 100%;
 }
 
@@ -314,6 +313,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 .chat-timestamp {
     float: right;
+    font-size: 10px;
 }
 
 .inline-image {

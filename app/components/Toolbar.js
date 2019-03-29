@@ -29,7 +29,7 @@ const GrabPlaylists = onClickOutside(
           var grabPlaylists = playlists.playlists.map((p, i) => {
             var onClick = () => {};
             var songInPlaylist = playlists.checkPlaylistForSong(p.key, playing.data.info.url);
-            if (!songInPlaylist && !waitlist.isPlaying) {
+            if (!songInPlaylist) {
               onClick = () => {
                 playing.grab(p.key);
                 this.toggleGrab();
