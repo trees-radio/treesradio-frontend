@@ -32,27 +32,17 @@
   box-sizing: content-box;
   overflow: hidden;
   border: none;
-  border-radius: 9px;
+  border-radius: 6px;
   color: rgba(255,255,255,1);
   text-align: center;
   text-overflow: ellipsis;
-  background: linear-gradient(135deg, rgba(183,26,255,1) 35%, rgba(215,42,255,1) 100%);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
-  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-
+  background: linear-gradient(135deg, rgba(183,26,255,1) 35%, rgba(255,112,255,1) 100%);
+  transition: background 500ms ease;
+  background-size: 125%;
 }
 
 .grab-button:hover {
-  background-color: rgba(199,78,255,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-  transition: none;
+  background-position: -1vw;
 }
 
 .grab-button:active {

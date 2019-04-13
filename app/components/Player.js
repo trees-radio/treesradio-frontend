@@ -73,11 +73,9 @@ class Player extends React.Component {
         </div>{" "}
         <Line
           className="progressbar-container"
-	  strokeWidth="4"
-	  strikeLinecap="butt"
-          percent={
-           playing.fraction * 100 > 100 ? 100 : playing.fraction * 100
-          }
+          strokeWidth="4"
+          strikeLinecap="butt"
+          percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
           strokeColor="#77b300"
         />
       </div>

@@ -30,26 +30,18 @@
   box-sizing: content-box;
   overflow: hidden;
   border: none;
-  border-radius: 9px;
+  border-radius: 6px;
   color: rgba(255,255,255,1);
   text-align: center;
   text-overflow: ellipsis;
-  background: linear-gradient(135deg, rgba(10,82,255,1) 35%, rgba(26,98,255,1) 100%);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  background: linear-gradient(135deg, rgba(10,82,255,1) 35%, rgba(96,168,255,1) 100%);
+  background-size: 125%;
+  transition: background 500ms ease;
   margin-left: 3px;
 }
 
 .like-button:hover {
-  background-color: rgba(73,155,234,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-  transition: none;
+  background-position: -1vw;
 }
 
 .like-button:active {

@@ -17,9 +17,26 @@ class Main extends React.Component {
       curday = curtime.getDate(),
       curmonth = curtime.getMonth() + 1;
     if (curmonth == 4 && curday == 1) {
+      this.aprilFoolsShenanigans();
       return "april-fools";
     }
     return "noop";
+  }
+  aprilFoolsShenanigans() {
+    const me = this;
+    setTimeout(function() {
+      console.log("tee hee");
+      if ($(".april-fools")) {
+        $(".april-fools")
+          .removeClass("april-fools")
+          .addClass("noop");
+      } else {
+        $(".noop")
+          .removeClass("noop")
+          .addClass("april-fools");
+      }
+      me.aprilFoolsShenanigans();
+    }, Math.floor(Math.random() * 5000) + 300000);
   }
   render() {
     if (!app.init) {

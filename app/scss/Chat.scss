@@ -110,7 +110,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 .chat-username {
     font-weight: bolder;
-    font-size: 14px;
+    font-size: 1.5vh;
     cursor: pointer;
 }
 
@@ -124,7 +124,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-bot:after {
 	color: rgb(29,131,211);
 	content: " (Bot)";
-	font-size: 14px;
+	font-size: 1.1vh;
 }
 
 .username-admin {
@@ -134,7 +134,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-admin:after {
     color: #0099ff;
     content: " (Admin)";
-    font-size: 14px;
+    font-size: 1.1vh;
 }
 
 .username-dev {
@@ -144,7 +144,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-dev:after {
     color: #0055aa;
     content: " (Developer)";
-    font-size: 14px;
+    font-size: 1.1vh;
 }
 
 .username-mod {
@@ -154,7 +154,17 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-mod:after {
     color: #00b300;
     content: " (Mod)";
-    font-size: 14px;
+    font-size: 1.1vh;
+}
+
+.username-floridaman {
+    color: #00b300;
+}
+
+.username-floridaman:after {
+    color: #b507ff;
+    content: " (Florida Man)";
+    font-size: 1.1vh;
 }
 
 .username-seniormod {
@@ -164,7 +174,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-seniormod:after {
     color: #b507ff;
     content: " (Senior Mod)";
-    font-size: 14px;
+    font-size: 1.1vh;
 }
 
 .username-vip {
@@ -174,7 +184,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-vip:after {
     color: #faeaf4;
     content: " (VIP)";
-    font-size: 14px;
+    font-size: 1.1vh;
 }
 
 .username-frient {
@@ -184,7 +194,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 .username-frient:after {
     color: #34b7aa;
     content: " (Frient)";
-    font-size: 14px;
+    font-size: 1.1vh;
 }
 
 .username-user {

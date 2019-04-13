@@ -9,47 +9,27 @@
   cursor: pointer;
   color: white;
   text-overflow: clip;
-  background: linear-gradient(135deg, rgba(119,179,0,1) 35%, rgba(151,211,32,1) 100%);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-  transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
-  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(119,179,0,1) 35%, rgba(155,255,76,1) 100%);
+  transition: background 500ms ease;
+  border-radius: 6px;
+  background-size: 125%;
 }
 
 .join-waitlist:hover {
-  background-color: rgba(85,128,0,1);
-  // background: @include filter-gradient(#558000, #88cd00, horizontal);
-  // background: @include background-image(linear-gradient(left, rgba(85,128,0,1) 0%, rgba(136,205,0,1) 100%));
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
+  background-position: -1vw;
 }
 
 .join-waitlist:active {
   background-color: rgba(102,154,0,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
 }
 
 
 .join-waitlist-pressed {
-	background: linear-gradient(135deg, rgba(126,17,204,1) 35%, rgba(159,40,133,1) 100%);
-  background-color: rgba(255,69,0,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
+  background: linear-gradient(135deg, rgba(156,47,234,1) 35%, rgba(219,100,193,1) 100%);
+  transition: background 500ms ease;
+  background-size: 125%;
 }
 
 .join-waitlist-pressed:hover {
-  background-color: rgba(255,106,51,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
+  background-position: -1vw;
 }

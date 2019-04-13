@@ -6,6 +6,7 @@
 
 import React from "react";
 import Karan from "../Sidebar/karan";
+import giphy from "../../img/poweredbygiphy.gif";
 
 export default class About extends React.Component {
   constructor(props, context) {
@@ -51,13 +52,6 @@ export default class About extends React.Component {
           </ul>
         </div>
         <div className="about-suggestions">
-          <div>
-            <h5>YouTube Region Checker</h5>
-            See above in the drop down for an instant check.<br/>
-            <a href="https://polsy.org.uk/stuff/ytrestrict.cgi" target="_blank">
-              Check if a video has any region restrictions
-            </a>
-          </div>
 	  <div>
 	    <h5>Shoutouts!</h5>
 	    <ul>
@@ -66,7 +60,11 @@ export default class About extends React.Component {
 	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
 	    <li>@Pixelmac for expanding our bump library</li>
 	    </ul>
-	    </div>
+	  </div>
+	  <div>
+	    <h5>Thanks Giphy!</h5>
+	    <img src="/img/poweredbygiphy.gif"/>
+	  </div>
         </div>
         <div className="about-emoji">
           <h6><a href="https://www.emojione.com/emoji/v3" target="_blank">Emoji List</a></h6>

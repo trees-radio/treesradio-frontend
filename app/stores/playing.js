@@ -30,6 +30,8 @@ export default new class Playing {
           var data = snap.val();
           if (data) {
             this.data = data;
+	    var newtitle = "TreesRadio [  " + data.info.title + ' ] ';
+	    document.title = newtitle;
           }
         });
       this.localLikeState = this.liked;
@@ -37,6 +39,8 @@ export default new class Playing {
       this.localGrabState = this.grabbed;
     });
   }
+
+  @observable fakeScroll = 0;
 
   @observable data = {
     info: {},
@@ -50,7 +54,7 @@ export default new class Playing {
 
   @computed get humanDuration() {
     var mo = moment.duration(this.data.info.duration, "milliseconds");
-    var str = `${padStart(mo.minutes(), 2, "0")}:${padStart(mo.seconds(), 2, "0")}`;
+    var str = `${padStart(mo.minutes(), 1, "0")}:${padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
       str = `${padStart(mo.hours(), 2, "0")}:` + str;
     }
@@ -59,9 +63,9 @@ export default new class Playing {
 
   @computed get humanCurrent() {
     var mo = moment.duration(this.playerSeconds, "seconds");
-    var str = `${padStart(mo.minutes(), 2, "0")}:${padStart(mo.seconds(), 2, "0")}`;
+    var str = `${padStart(mo.minutes(), 1, "0")}:${padStart(mo.seconds(), 2, "0")}`;
     if (mo.hours() > 0) {
-      str = `${padStart(mo.hours(), 2, "0")}:` + str;
+      str = `${padStart(mo.hours(), 1, "0")}:` + str;
     }
     return str;
   }
