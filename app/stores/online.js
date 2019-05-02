@@ -1,7 +1,7 @@
 import {observable, computed} from "mobx";
 import fbase from "libs/fbase";
 
-export default new class Online {
+export default new (class Online {
   constructor() {
     this.loadOnlineEnts();
 
@@ -59,4 +59,4 @@ export default new class Online {
     }
     return uids;
   }
-}();
+})();

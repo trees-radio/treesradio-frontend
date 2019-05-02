@@ -29,34 +29,34 @@ export default class About extends React.Component {
       <div className="sidebar-about" style={this.props.show ? {} : {display: "none"}}>
         <div className="about-summary">
           <p>
-            TreesRadio is a online social music site for the reddit /r/trees community. Sign up to queue up some tunes or kick back and listen to the musical tastes of Ents around the world!
+            TreesRadio is a online social music site.
           </p>
         </div>
         <div className="about-rules">
           <h5>Rules:</h5>
           <ul className="rules-list">
-            <li id="rules-1">- Max Video length is 8 minutes without a mod exemption.</li>
-            <li id="rules-2">- Like/Dislike Skip Ratio = 1:1.5 (Must have atleast 5 dislikes)</li>
-            <li id="rules-3">- Do not try to buy/sell/give/trade drugs on TreesRadio.</li>
+            <li id="rules-1">Max Video length is 8 minutes without a mod exemption.</li>
+            <li id="rules-2">Like/Dislike Skip Ratio = 1:1.5 (Must have atleast 5 dislikes)</li>
+            <li id="rules-3">Do not try to buy/sell/give/trade drugs on TreesRadio.</li>
             <li id="rules-4">
-              - Please be nice to each other, unneccesary rudeness/attacks may result in a ban.
+              Please be nice to each other, unneccesary rudeness/attacks may result in a ban.
             </li>
-            <li id="rules-5">- TreesRadio is 18+ only, minors will be banned.</li>
-            <li id="rules-6">- Do not queue NSFW videos</li>
+            <li id="rules-5">TreesRadio is 18+ only, minors will be banned.</li>
+            <li id="rules-6">Do not queue NSFW videos</li>
             <li id="rules-7">
-              - Be mindful of controversial media/chat (group targeted hate/religion/politics/sex)
+              Be mindful of controversial media/chat (group targeted hate/religion/politics/sex)
             </li>
-            <li id="rules-8">- Songs that have been recently played (2 hours) may be skipped.</li>
-            <li id="rules-9">- Staff reserve the right to skip any video.</li>
-            <li id="rules-10">- This is a multi-genre site that appreciates varying music types. Mood is everything. Excessive criticism of another's music will not be tolerated</li> 
+            <li id="rules-8">Songs that have been recently played (2 hours) may be skipped.</li>
+            <li id="rules-9">Staff reserve the right to skip any video.</li>
+            <li id="rules-10">This is a multi-genre site that appreciates varying music types. Excessive criticism of another&apos;s music will not be tolerated</li> 
           </ul>
         </div>
         <div className="about-suggestions">
 	  <div>
 	    <h5>Shoutouts!</h5>
-	    <ul>
-	    <li>@minicing for @BlazeBot's awesome animated avatar.</li>
-	    <li>@pandersson97, @Owlsy for sponsoring @yellerjeep's ongoing development.</li>
+	    <ul className="about-rules">
+	    <li>@minicing for @BlazeBot&apos;s awesome animated avatar.</li>
+	    <li>@FredRodgers, @entlife, @JohnPyro for sponsoring @yellerjeep&apos;s ongoing development.</li>
 	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
 	    <li>@Pixelmac for expanding our bump library</li>
 	    </ul>

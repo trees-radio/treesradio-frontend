@@ -8,7 +8,7 @@ import {send} from "libs/events";
 import {setInterval, clearInterval} from "timers";
 import epoch from "../utils/epoch";
 
-export default new class Waitlist {
+export default new (class Waitlist {
   constructor() {
     this.reloadList();
 
@@ -164,4 +164,4 @@ export default new class Waitlist {
   @computed get count() {
     return this.list.length;
   }
-}();
+})();

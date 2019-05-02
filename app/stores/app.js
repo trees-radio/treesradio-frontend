@@ -3,7 +3,7 @@ import axios from "axios";
 import fbase from "libs/fbase";
 import epoch from "utils/epoch";
 
-export default new class App {
+export default new (class App {
   constructor() {
     this.getIP();
     fbase
@@ -42,4 +42,4 @@ export default new class App {
       .then(resp => (this.ipAddress = resp.data.ip || "err"))
       .catch(() => (this.ipAddress = "err"));
   }
-}();
+})();

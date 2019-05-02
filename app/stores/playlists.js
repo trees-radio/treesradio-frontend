@@ -7,8 +7,9 @@ import moment from "moment";
 import {shuffle} from "lodash";
 // import events from 'stores/events';
 import {searchYouTube, getYtPlaylist} from "libs/youTube";
+import {searchSoundcloud} from "libs/soundcloud";
 
-export default new class Playlists {
+export default new (class Playlists {
   constructor() {
     fbase.auth().onAuthStateChanged(user => {
       if (user !== null) {
@@ -74,6 +75,7 @@ export default new class Playlists {
   @observable playlist = [];
   @observable searching = false;
   @observable search = [];
+  @observable searchSource = "youtube";
   @observable openSearch = false;
 
   addPlaylist(name) {
@@ -123,6 +125,7 @@ export default new class Playlists {
     if (this.playlists[index]) {
       var key = this.playlists[index].key;
       this.selectedPlaylistKey = key;
+      console.log(key);
       fbase
         .database()
         .ref("private")
@@ -186,8 +189,16 @@ export default new class Playlists {
   async runSearch(query) {
     this.search = [];
     this.searching = true;
-    let {items} = await searchYouTube(query);
-    this.search = items;
+    console.log(this.searchSource);
+    let searchResults = [];
+    if (this.searchSource == "youtube") {
+      let {items} = await searchYouTube(query);
+      searchResults = items;
+    } else {
+      let {data} = await searchSoundcloud(query);
+      searchResults = data;
+    }
+    this.search = searchResults;
     this.searching = false;
     this.openSearch = true;
   }
@@ -198,11 +209,25 @@ export default new class Playlists {
       return;
     }
     var video = this.search[index];
-    var url = `https://www.youtube.com/watch?v=${video.id}`;
-    var title = video.snippet.title;
-    var thumb = video.snippet.thumbnails.default.url;
-    var channel = video.snippet.channelTitle;
-    var duration = moment.duration(video.contentDetails.duration).valueOf();
+    var url;
+    var title;
+    var thumb;
+    var channel;
+    var duration;
+
+    if (this.searchSource == "youtube") {
+      url = `https://www.youtube.com/watch?v=${video.id}`;
+      title = video.snippet.title;
+      thumb = video.snippet.thumbnails.default.url;
+      channel = video.snippet.channelTitle;
+      duration = moment.duration(video.contentDetails.duration).valueOf();
+    } else if (this.searchSource == "soundcloud") {
+      url = video.permalink_url;
+      thumb = video.artwork_url;
+      channel = video.user.username;
+      duration = moment.duration(video.duration).valueOf();
+      title = video.title;
+    }
 
     var song = {
       url,
@@ -331,4 +356,4 @@ export default new class Playlists {
         return true;
       });
   }
-}();
+})();

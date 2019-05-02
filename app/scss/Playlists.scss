@@ -38,18 +38,6 @@
   z-index:2
 }
 
-#pl-current-playlist {
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  letter-spacing: 1.25px;
-  font-size: 150%;
-  float:left;
-  margin-left: 20%;
-  text-decoration: underline;
-  top:1%;
-  z-index: 1
-}
-
-
 .playlists-panel-closed {
   height: 0px;
   overflow: hidden;
@@ -127,20 +115,15 @@
 }
 
 #playlist-search-box {
-  width: 55%;
-  max-width: 55%;
+  width: 30vw;
   height: 45px;
-  margin-left: 1%;
-  margin-top: 1%;
-  margin-right: 8%;
+  margin-right: .5vw;
   float: left;
   font-size: 1.25em;
 }
 
-
-
 #playlist-btn {
-  width: 24%;
+   width: 15vw;
 }
 
 .dropdown-menu {
@@ -169,14 +152,11 @@
 }
 
 #playlist-dropdown {
-  background-color: $trees-bg;
-  border-color: $trees-bg;
-  float: right;
-  padding-bottom: 0;
-  margin-top: 3%;
-  margin-right: 25%;
+  background-color: #579300;
+  border-color: #609606;
+  padding: 2px;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-  font-size: 120%;
+  font-size: 1.5vw;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
@@ -187,7 +167,6 @@
 }
 
 #pl-dd-menu {
-  margin-left: 30%;
   font-size: 110%;
   padding-top: 0;
   border-top-width: 0;

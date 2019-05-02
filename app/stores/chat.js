@@ -15,7 +15,7 @@ const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 const GIF_THROTTLE = 60;
 
-export default new class Chat {
+export default new (class Chat {
   constructor() {
     this.fbase = fbase;
     fbase
@@ -195,4 +195,4 @@ export default new class Chat {
   @computed get secondsUntilUnlock() {
     return CHAT_LOCK_REGISTRATION_SEC - profile.secondsRegistered;
   }
-}();
+})();

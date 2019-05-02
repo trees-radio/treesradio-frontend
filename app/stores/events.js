@@ -5,7 +5,7 @@ import mitt from "mitt";
 
 const emitter = mitt();
 
-export default new class Events {
+export default new (class Events {
   constructor() {
     this.startup = moment().unix();
     fbase
@@ -27,4 +27,4 @@ export default new class Events {
     emitter.on(type, handler);
     return () => emitter.off(handler);
   }
-}();
+})();

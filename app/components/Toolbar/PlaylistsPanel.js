@@ -92,29 +92,53 @@ export default (class PlaylistsPanel extends React.Component {
           var playlistPosClass = Number.isInteger(i / 2)
             ? "playlist-item-1"
             : "playlist-item-2";
-          var url = `https://www.youtube.com/watch?v=${video.id}`;
-          var duration = moment.duration(video.contentDetails.duration);
-          var hours = duration.hours();
-          var hoursDisplay = "";
-          if (hours > 0) {
-            hoursDisplay = hours + "h ";
-          }
-          var mins = duration.minutes();
-          var secs = "0" + duration.seconds();
-          var humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
+	    var url;
+	    var humanDuration;
+	    var title;
+	    var channelTitle;
+	    var thumbnail;
+
+	    if ( playlists.searchSource == 'youtube' ) {
+                url = `https://www.youtube.com/watch?v=${video.id}`;
+                var duration = moment.duration(video.contentDetails.duration);
+                var hours = duration.hours();
+                var hoursDisplay = "";
+                if (hours > 0) {
+                  hoursDisplay = hours + "h ";
+                }
+                var mins = duration.minutes();
+                var secs = "0" + duration.seconds();
+                humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
+		thumbnail = video.snippet.thumbnails.default.url;
+		title = video.snippet.title;
+	    } else if ( playlists.searchSource == 'soundcloud' ) {
+		    url = video.permalink_url;
+		    var duration = moment.duration(video.duration);
+		    var hours = duration.hours();
+		    var hoursDisplay = "";
+		    if ( hours > 0 ) {
+			    hoursDisplay = hours + "h ";
+		    }
+		    var mins = duration.minutes();
+		    var secs = "0" + duration.seconds();
+		    humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
+		    thumbnail = video.artwork_url;
+		    title = video.title;
+		    channelTitle = video.user.username;
+	    }
           return (
             <li className={playlistPosClass} key={i}>
               <a target="_blank" href={url}>
                 <img
                   className="pl-thumbnail"
-                  src={video.snippet.thumbnails.default.url}
+                  src={thumbnail}
                 />
               </a>
-              <span className="pl-media-title">{video.snippet.title}</span>
+              <span className="pl-media-title">{title}</span>
               <span className="pl-time">
                 <i className="fa fa-clock-o" /> {humanDuration}
               </span>
-              <span className="pl-channel">{video.snippet.channelTitle}</span>
+              <span className="pl-channel">{channelTitle}</span>
               <i
                 onClick={() => playlists.addFromSearch(i)}
                 className="fa fa-2x fa-plus add-to-playlist-btn"
@@ -192,14 +216,32 @@ export default (class PlaylistsPanel extends React.Component {
     return (
       <div id="playlists-panel" ref="playlists-panel" className={mainClass}>
         <div id="playlists-panel-head">
+	<div class="row">
+	  <div class="col-md-7">
           <input
             type="text"
             id="playlist-search-box"
             ref={c => this._search = c}
-            placeholder="Search YouTube"
+            placeholder="Search"
             className="form-control"
             onKeyPress={e => this.onEnterKey(e, () => this.search())}
-          />
+          /> &nbsp;
+	  <input 
+	  	type="radio" 
+		checked={ playlists.searchSource == "youtube" ? 'checked' : '' }
+		id="search-youtube"
+		name="search-source"
+		onClick={ c => playlists.searchSource = "youtube" }
+		/> YouTube <br/>&nbsp;
+	  <input
+	        type="radio"
+		checked={ playlists.searchSource == "soundcloud" ? 'checked' : '' }
+		id="search-soundcloud"
+		name="search-source"
+		onClick={ c => playlists.searchSource = "soundcloud" }
+		/> Soundcloud
+	  </div>
+	  <div class="col-md-5">
           <div className="btn-group" id="playlist-btn">
             <a
               className="btn btn-primary dropdown-toggle"
@@ -207,7 +249,7 @@ export default (class PlaylistsPanel extends React.Component {
               data-toggle="dropdown"
               href="#"
             >
-              <p id="pl-current-playlist">{playlists.selectedPlaylistName || "Create or Select a Playlist"}</p>
+              {playlists.selectedPlaylistName || "Create or Select a Playlist"} <span class="fa fa-chevron-down"></span>
             </a>
             <ul className="dropdown-menu" id="pl-dd-menu">
               <li>
@@ -226,6 +268,8 @@ export default (class PlaylistsPanel extends React.Component {
           {shuffle}
 	  <span onClick={() => playlists.exportPlaylist()} className="playlist-shuffle-btn fa fa-download fa-3x"/>
         </div>
+	</div>
+	</div>
         <div id="playlists-panel-display">
           {content}
         </div>

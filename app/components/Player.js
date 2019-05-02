@@ -9,8 +9,24 @@ import playing from "stores/playing";
 
 const rPlayerYoutubeConfig = {
   playerVars: {
-    iv_load_policy: 3
-  }
+    iv_load_policy: 3,
+    autoplay: 1
+  },
+  preload: true
+};
+
+const rPlayerSoundcloudConfig = {
+  options: {
+    auto_play: true,
+    buying: false,
+    sharing: false,
+    download: false,
+    show_playcount: false,
+    single_active: false,
+    color: "#77b300",
+    show_user: false
+  },
+  preload: true
 };
 
 @observer
@@ -65,6 +81,9 @@ class Player extends React.Component {
               config={{
                 youtube: {
                   rPlayerYoutubeConfig
+                },
+                soundcloud: {
+                  rPlayerSoundcloudConfig
                 }
               }}
               onDuration={d => (playing.playerDuration = d)}

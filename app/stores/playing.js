@@ -15,7 +15,7 @@ const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
-export default new class Playing {
+export default new (class Playing {
   constructor() {
     this.fbase = fbase;
 
@@ -30,8 +30,8 @@ export default new class Playing {
           var data = snap.val();
           if (data) {
             this.data = data;
-	    var newtitle = "TreesRadio [  " + data.info.title + ' ] ';
-	    document.title = newtitle;
+            var newtitle = "TreesRadio [  " + data.info.title + " ] ";
+            document.title = newtitle;
           }
         });
       this.localLikeState = this.liked;
@@ -250,4 +250,4 @@ export default new class Playing {
   }
 
   @observable backgroundImage = spacePineapples;
-}();
+})();

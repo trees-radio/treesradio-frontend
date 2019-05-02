@@ -4,7 +4,7 @@ import moment from "moment";
 
 // DEPRECATED, DO NOT USE. REMOVE IF NO LONGER USED.
 
-export default new class Avatars {
+export default new (class Avatars {
   constructor() {}
 
   defaultAvatar(username) {
@@ -49,4 +49,4 @@ export default new class Avatars {
       this.attemptedUsers[username] = moment.unix();
     }
   }
-}();
+})();

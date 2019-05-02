@@ -9,7 +9,7 @@ import disposable from "disposable-email";
 // const startup = epoch();
 import app from "stores/app";
 
-export default new class Profile {
+export default new (class Profile {
   constructor() {
     fbase.auth().onAuthStateChanged(user => {
       this.user = user;
@@ -437,4 +437,4 @@ export default new class Profile {
         return false;
       });
   }
-}();
+})();
