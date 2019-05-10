@@ -93,7 +93,6 @@ export default new (class Playlists {
   }
 
   exportPlaylist() {
-    console.log(this.playlist);
     fbase
       .database()
       .ref("playlists")
@@ -125,7 +124,6 @@ export default new (class Playlists {
     if (this.playlists[index]) {
       var key = this.playlists[index].key;
       this.selectedPlaylistKey = key;
-      console.log(key);
       fbase
         .database()
         .ref("private")
@@ -189,7 +187,6 @@ export default new (class Playlists {
   async runSearch(query) {
     this.search = [];
     this.searching = true;
-    console.log(this.searchSource);
     let searchResults = [];
     if (this.searchSource == "youtube") {
       let {items} = await searchYouTube(query);
@@ -214,7 +211,7 @@ export default new (class Playlists {
     var thumb;
     var channel;
     var duration;
-
+    this.openSearch = false;
     if (this.searchSource == "youtube") {
       url = `https://www.youtube.com/watch?v=${video.id}`;
       title = video.snippet.title;
@@ -223,7 +220,7 @@ export default new (class Playlists {
       duration = moment.duration(video.contentDetails.duration).valueOf();
     } else if (this.searchSource == "soundcloud") {
       url = video.permalink_url;
-      thumb = video.artwork_url;
+      thumb = video.artwork_url || video.user.avatar_url || '/img/favicon.png';
       channel = video.user.username;
       duration = moment.duration(video.duration).valueOf();
       title = video.title;

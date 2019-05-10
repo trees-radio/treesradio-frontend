@@ -1,21 +1,11 @@
-import toastr from "toastr";
+import React, { Component } from 'react';
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-toastr.options = {
-  closeButton: true,
-  debug: false,
-  newestOnTop: false,
-  progressBar: false,
-  positionClass: "toast-top-center",
-  preventDuplicates: false,
-  onclick: null,
-  showDuration: 300,
-  hideDuration: 1000,
-  timeOut: 10000,
-  extendedTimeOut: 25000,
-  showEasing: "swing",
-  hideEasing: "linear",
-  showMethod: "fadeIn",
-  hideMethod: "fadeOut"
-};
+toast.configure( {
+  position: toast.POSITION.TOP_CENTER,
+  draggable: false,
+  autoClose: 8000
+});
 
-export default toastr;
+export default toast;

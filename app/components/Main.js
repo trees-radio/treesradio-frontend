@@ -9,6 +9,14 @@ import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure(
+   { autoClose: 8000,
+     position: toast.POSITION.TOP_CENTER
+   }
+);
 
 @observer
 class Main extends React.Component {
@@ -25,7 +33,6 @@ class Main extends React.Component {
   aprilFoolsShenanigans() {
     const me = this;
     setTimeout(function() {
-      console.log("tee hee");
       if ($(".april-fools")) {
         $(".april-fools")
           .removeClass("april-fools")
@@ -72,6 +79,7 @@ class Main extends React.Component {
     }
     return (
       <div className={this.checkAprilFools()}>
+        <ToastContainer />
         <Nav /> {/* Start Container */}
         <div className="container-fluid">
           <div className="row">

@@ -55,14 +55,14 @@ export default class About extends React.Component {
 	  <div>
 	    <h5>Shoutouts!</h5>
 	    <ul className="about-rules">
-	    <li>@minicing for @BlazeBot&apos;s awesome animated avatar.</li>
+	    <li>@Rapty for @BlazeBot&apos;s awesome animated avatar.</li>
 	    <li>@FredRodgers, @entlife, @JohnPyro for sponsoring @yellerjeep&apos;s ongoing development.</li>
 	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
 	    <li>@Pixelmac for expanding our bump library</li>
 	    </ul>
 	  </div>
 	  <div>
-	    <h5>Thanks Giphy!</h5>
+	    <h5>BlazeBot&apos;s GIFs:</h5>
 	    <img src="/img/poweredbygiphy.gif"/>
 	  </div>
         </div>

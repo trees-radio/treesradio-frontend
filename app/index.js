@@ -2,9 +2,9 @@ import React from 'react'; //eslint-disable-line
 //React is required here for ReactDOM to work properly, has already been tested
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
+import toast from 'utils/toast';
 
 // (S)CSS
-import '../node_modules/toastr/build/toastr.css';
 import './scss/index.scss'; // our scss entry
 
 import 'bootstrap'; //load bootstrap js, depends on $

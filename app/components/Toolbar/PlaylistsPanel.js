@@ -122,7 +122,7 @@ export default (class PlaylistsPanel extends React.Component {
 		    var mins = duration.minutes();
 		    var secs = "0" + duration.seconds();
 		    humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
-		    thumbnail = video.artwork_url;
+		    thumbnail = video.artwork_url || video.user.avatar_url || '/img/favicon.png';
 		    title = video.title;
 		    channelTitle = video.user.username;
 	    }
@@ -231,14 +231,14 @@ export default (class PlaylistsPanel extends React.Component {
 		checked={ playlists.searchSource == "youtube" ? 'checked' : '' }
 		id="search-youtube"
 		name="search-source"
-		onClick={ c => playlists.searchSource = "youtube" }
+		onClick={ c => { playlists.search = [];  playlists.searchSource = "youtube" } }
 		/> YouTube <br/>&nbsp;
 	  <input
 	        type="radio"
 		checked={ playlists.searchSource == "soundcloud" ? 'checked' : '' }
 		id="search-soundcloud"
 		name="search-source"
-		onClick={ c => playlists.searchSource = "soundcloud" }
+		onClick={ c => { playlists.search = []; playlists.searchSource = "soundcloud" } }
 		/> Soundcloud
 	  </div>
 	  <div class="col-md-5">
