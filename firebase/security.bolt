@@ -209,6 +209,7 @@ path /presence/{$uid} {
 // Usernames //
 path /usernames {
   read() {true}
+  index() { ".value" }
 }
 
 // Registration // 

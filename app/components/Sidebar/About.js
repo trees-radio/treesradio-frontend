@@ -59,6 +59,7 @@ export default class About extends React.Component {
 	    <li>@FredRodgers, @entlife, @JohnPyro for sponsoring @yellerjeep&apos;s ongoing development.</li>
 	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
 	    <li>@Pixelmac for expanding our bump library</li>
+	    <li>@Anarki for great ideas and assisting with debugging.</li>
 	    </ul>
 	  </div>
 	  <div>

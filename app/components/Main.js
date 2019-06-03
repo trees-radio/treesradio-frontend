@@ -9,14 +9,10 @@ import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-toast.configure(
-   { autoClose: 8000,
-     position: toast.POSITION.TOP_CENTER
-   }
-);
+toast.configure({autoClose: 8000, position: toast.POSITION.TOP_CENTER});
 
 @observer
 class Main extends React.Component {

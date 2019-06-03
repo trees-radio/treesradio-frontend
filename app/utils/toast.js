@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
 import {toast} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
-toast.configure( {
+toast.configure({
   position: toast.POSITION.TOP_CENTER,
   draggable: false,
   autoClose: 8000

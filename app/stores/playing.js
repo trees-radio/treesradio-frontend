@@ -2,6 +2,7 @@ import {observable, computed, autorun} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
+import epoch from "../utils/epoch";
 // import ax from 'utils/ax';
 import moment from "moment";
 import {padStart} from "lodash";
@@ -38,6 +39,10 @@ export default new (class Playing {
       this.localDislikeState = this.disliked;
       this.localGrabState = this.grabbed;
     });
+  }
+
+  userReportsError(e) {
+    if (epoch() - profile.lastchat < 1800) send("playerError", {e});
   }
 
   @observable fakeScroll = 0;

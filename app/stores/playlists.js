@@ -220,7 +220,7 @@ export default new (class Playlists {
       duration = moment.duration(video.contentDetails.duration).valueOf();
     } else if (this.searchSource == "soundcloud") {
       url = video.permalink_url;
-      thumb = video.artwork_url || video.user.avatar_url || '/img/favicon.png';
+      thumb = video.artwork_url || video.user.avatar_url || "/img/favicon.png";
       channel = video.user.username;
       duration = moment.duration(video.duration).valueOf();
       title = video.title;

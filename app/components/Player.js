@@ -37,6 +37,10 @@ class Player extends React.Component {
       this._player.seekTo(playing.fraction);
     }
   }
+  playerError(e) {
+    console.log(e);
+    playing.userReportsError(e);
+  }
 
   @observable showVideo = true;
 
@@ -77,6 +81,7 @@ class Player extends React.Component {
               playing={playing.data.playing}
               volume={playing.volume}
               onProgress={p => this.onProgress(p)}
+              onError={e => this.playerError(e)}
               onPause={undefined}
               config={{
                 youtube: {
