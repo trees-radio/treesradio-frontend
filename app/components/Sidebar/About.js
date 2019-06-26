@@ -10,27 +10,25 @@ import giphy from "../../img/poweredbygiphy.gif";
 
 export default class About extends React.Component {
   constructor(props, context) {
-      super(props, context);
+    super(props, context);
 
-      this.state = {
-          showKaran: false,
-      };
+    this.state = {
+      showKaran: false
+    };
 
-      this.showKaranObit = this.showKaranObit.bind(this);
+    this.showKaranObit = this.showKaranObit.bind(this);
   }
 
   showKaranObit() {
-      this.setState({
-          showKaran: !this.state.showKaran
-      });
+    this.setState({
+      showKaran: !this.state.showKaran
+    });
   }
   render() {
     return (
       <div className="sidebar-about" style={this.props.show ? {} : {display: "none"}}>
         <div className="about-summary">
-          <p>
-            TreesRadio is a online social music site.
-          </p>
+          <p>TreesRadio is a online social music site.</p>
         </div>
         <div className="about-rules">
           <h5>Rules:</h5>
@@ -48,38 +46,58 @@ export default class About extends React.Component {
             </li>
             <li id="rules-8">Songs that have been recently played (2 hours) may be skipped.</li>
             <li id="rules-9">Staff reserve the right to skip any video.</li>
-            <li id="rules-10">This is a multi-genre site that appreciates varying music types. Excessive criticism of another&apos;s music will not be tolerated</li> 
+            <li id="rules-10">
+              This is a multi-genre site that appreciates varying music types. Excessive criticism
+              of another&apos;s music will not be tolerated
+            </li>
           </ul>
         </div>
         <div className="about-suggestions">
-	  <div>
-	    <h5>Shoutouts!</h5>
-	    <ul className="about-rules">
-	    <li>@Rapty for @BlazeBot&apos;s awesome animated avatar.</li>
-	    <li>@FredRodgers, @entlife, @JohnPyro for sponsoring @yellerjeep&apos;s ongoing development.</li>
-	    <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
-	    <li>@Pixelmac for expanding our bump library</li>
-	    <li>@Anarki for great ideas and assisting with debugging.</li>
-	    </ul>
-	  </div>
-	  <div>
-	    <h5>BlazeBot&apos;s GIFs:</h5>
-	    <img src="/img/poweredbygiphy.gif"/>
-	  </div>
+          <div>
+            <h5>Shoutouts!</h5>
+            <ul className="about-rules">
+              <li>@Rapty for @BlazeBot&apos;s awesome animated avatar.</li>
+              <li>
+                @FredRodgers, @entlife, @JohnPyro for sponsoring @yellerjeep&apos;s ongoing
+                development.
+              </li>
+              <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
+              <li>@Pixelmac for expanding our bump library</li>
+              <li>@Anarki for great ideas and assisting with debugging.</li>
+            </ul>
+          </div>
+          <div>
+            <h5>BlazeBot&apos;s GIFs:</h5>
+            <img src="/img/poweredbygiphy.gif" />
+          </div>
         </div>
         <div className="about-emoji">
-          <h6><a href="https://www.emojione.com/emoji/v3" target="_blank">Emoji List</a></h6>
           <h6>
-            <a href="https://youtu.be/84qIWSRRZM8" target="_blank">Video Tutorial/Walkthrough</a>
+            <a href="https://www.emojione.com/emoji/v3" target="_blank">
+              Emoji List
+            </a>
           </h6>
-          <h6><a href="https://reddit.com/r/treesradio" target="_blank">/r/treesradio</a></h6>
+          <h6>
+            <a href="https://youtu.be/84qIWSRRZM8" target="_blank">
+              Video Tutorial/Walkthrough
+            </a>
+          </h6>
+          <h6>
+            <a href="https://reddit.com/r/treesradio" target="_blank">
+              /r/treesradio
+            </a>
+          </h6>
         </div>
         <div className="about-karan">
-            <button type="button" className="btn btn-xs btn-default" onClick={() => this.setState({ showKaran: !this.state.showKaran }) }>
-              <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft"/>
-              </button>
+          <button
+            type="button"
+            className="btn btn-xs btn-default"
+            onClick={() => this.setState({showKaran: !this.state.showKaran})}
+          >
+            <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft" />
+          </button>
         </div>
-        { this.state.showKaran && <Karan/> }
+        {this.state.showKaran && <Karan />}
       </div>
     );
   }

@@ -4,6 +4,7 @@ import {observable} from "mobx";
 import {debounce} from "lodash";
 
 import UserBit from "./Nav/UserBit";
+import TokeTimer from "./Nav/TokeTimer";
 
 import file from "src/version.json";
 
@@ -50,6 +51,7 @@ class Nav extends React.Component {
               {/* <ul className="nav navbar-nav" id="nav-about">
                 <li><a>About</a></li>
               </ul> */}
+              <TokeTimer />
               <div className="nav navbar-nav navbar-right">
                 <UserBit />
               </div>

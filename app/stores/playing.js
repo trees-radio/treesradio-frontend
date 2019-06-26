@@ -183,6 +183,7 @@ export default new (class Playing {
 
   grab(playlistKey) {
     playlists.addSong(this.data.info, playlistKey, true);
+    playlists.selectPlaylist(playlists.selectedPlaylist);
     if (!this.grabbed) {
       send("grab");
       // this.localGrabState = true;

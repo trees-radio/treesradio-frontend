@@ -32,9 +32,7 @@ export default (class Waitlist extends React.Component {
 
     return (
       <div className="waitlist-scroll" style={this.props.show ? {} : {display: "none"}}>
-        <ul className="waitlist-list">
-          {list}
-        </ul>
+        <ul className="waitlist-list">{list}</ul>
       </div>
     );
   }

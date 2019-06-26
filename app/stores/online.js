@@ -19,9 +19,11 @@ export default new (class Online {
       .ref("onlineents")
       .once("value", snap => {
         const thislist = snap.val();
+        if (thislist == null) return;
         let list = [];
         this.online = [];
         this.userlist = [];
+
         for (var i = 0; i < thislist.length; i++) {
           list.push(thislist[i]);
         }

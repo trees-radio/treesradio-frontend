@@ -205,6 +205,7 @@ export default new (class Playlists {
       toast.error("You don't have a selected playlist!");
       return;
     }
+    console.log(index);
     var video = this.search[index];
     var url;
     var title;

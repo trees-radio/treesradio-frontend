@@ -1,6 +1,6 @@
 import React from "react";
-import { observable, toJS } from "mobx";
-import { observer } from "mobx-react";
+import {observable, toJS} from "mobx";
+import {observer} from "mobx-react";
 // import classNames from 'classnames';
 // import fbase from 'stores/fbase';
 import playlists from "stores/playlists";
@@ -46,7 +46,7 @@ export default (class PlaylistsPanel extends React.Component {
   }
 
   startRemovingPlaylist(name, index) {
-    this.playlistToRemove = { name, index };
+    this.playlistToRemove = {name, index};
     this.removingPlaylist = true;
   }
 
@@ -76,63 +76,57 @@ export default (class PlaylistsPanel extends React.Component {
   }
 
   render() {
-    var mainClass = this.props.open
-      ? "playlists-panel-open"
-      : "playlists-panel-closed";
+    var mainClass = this.props.open ? "playlists-panel-open" : "playlists-panel-closed";
 
     var content;
 
     if (playlists.searching) {
-      content = (
-        <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />
-      );
+      content = <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />;
     } else if (playlists.openSearch) {
       if (playlists.search.length > 0) {
         const list = playlists.search.map((video, i) => {
-          var playlistPosClass = Number.isInteger(i / 2)
-            ? "playlist-item-1"
-            : "playlist-item-2";
-	    var url;
-	    var humanDuration;
-	    var title;
-	    var channelTitle;
-	    var thumbnail;
+          var playlistPosClass = Number.isInteger(i / 2) ? "playlist-item-1" : "playlist-item-2";
+          var url;
+          var humanDuration;
+          var title;
+          var channelTitle;
+          var thumbnail;
+          var skipLink = "";
 
-	    if ( playlists.searchSource == 'youtube' ) {
-                url = `https://www.youtube.com/watch?v=${video.id}`;
-                var duration = moment.duration(video.contentDetails.duration);
-                var hours = duration.hours();
-                var hoursDisplay = "";
-                if (hours > 0) {
-                  hoursDisplay = hours + "h ";
-                }
-                var mins = duration.minutes();
-                var secs = "0" + duration.seconds();
-                humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
-		thumbnail = video.snippet.thumbnails.default.url;
-		title = video.snippet.title;
-	    } else if ( playlists.searchSource == 'soundcloud' ) {
-		    url = video.permalink_url;
-		    var duration = moment.duration(video.duration);
-		    var hours = duration.hours();
-		    var hoursDisplay = "";
-		    if ( hours > 0 ) {
-			    hoursDisplay = hours + "h ";
-		    }
-		    var mins = duration.minutes();
-		    var secs = "0" + duration.seconds();
-		    humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
-		    thumbnail = video.artwork_url || video.user.avatar_url || '/img/favicon.png';
-		    title = video.title;
-		    channelTitle = video.user.username;
-	    }
+          if (playlists.searchSource == "youtube") {
+            url = `https://www.youtube.com/watch?v=${video.id}`;
+            var duration = moment.duration(video.contentDetails.duration);
+            var hours = duration.hours();
+            var hoursDisplay = "";
+            if (hours > 0) {
+              hoursDisplay = hours + "h ";
+            }
+            var mins = duration.minutes();
+            var secs = "0" + duration.seconds();
+            humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
+            thumbnail = video.snippet.thumbnails.default.url;
+            title = video.snippet.title;
+            channelTitle = video.snippet.channelTitle;
+            skipLink = `https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.id}`;
+          } else if (playlists.searchSource == "soundcloud") {
+            url = video.permalink_url;
+            var duration = moment.duration(video.duration);
+            var hours = duration.hours();
+            var hoursDisplay = "";
+            if (hours > 0) {
+              hoursDisplay = hours + "h ";
+            }
+            var mins = duration.minutes();
+            var secs = "0" + duration.seconds();
+            humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
+            thumbnail = video.artwork_url || video.user.avatar_url || "/img/favicon.png";
+            title = video.title;
+            channelTitle = video.user.username;
+          }
           return (
             <li className={playlistPosClass} key={i}>
               <a target="_blank" href={url}>
-                <img
-                  className="pl-thumbnail"
-                  src={thumbnail}
-                />
+                <img className="pl-thumbnail" src={thumbnail} />
               </a>
               <span className="pl-media-title">{title}</span>
               <span className="pl-time">
@@ -143,6 +137,9 @@ export default (class PlaylistsPanel extends React.Component {
                 onClick={() => playlists.addFromSearch(i)}
                 className="fa fa-2x fa-plus add-to-playlist-btn"
               />
+              <a target="_blank" href={skipLink} show={skipLink && skipLink.length > 0}>
+                <i className="fa fa-2x fa-globe add-to-playlist-btn" />
+              </a>
             </li>
           );
         });
@@ -150,13 +147,9 @@ export default (class PlaylistsPanel extends React.Component {
       } else {
         content = <div className="search-empty">No results.</div>;
       }
-
-      
     } else if (playlists.playlist.length > 0) {
       let list = playlists.playlist.map((video, i) => {
-        var playlistPosClass = Number.isInteger(i / 2)
-          ? "playlist-item-1"
-          : "playlist-item-2";
+        var playlistPosClass = Number.isInteger(i / 2) ? "playlist-item-1" : "playlist-item-2";
         var humanDuration = "Unknown";
         if (video.duration) {
           var duration = moment.duration(video.duration);
@@ -188,6 +181,9 @@ export default (class PlaylistsPanel extends React.Component {
               onClick={() => playlists.moveTop(i)}
               className="fa fa-2x fa-arrow-up pl-move-to-top"
             />
+            <a target="_blank" href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}>
+              <i className="fa fa-2x fa-globe add-to-playlist-btn" />
+            </a>
           </li>
         );
       });
@@ -198,7 +194,9 @@ export default (class PlaylistsPanel extends React.Component {
 
     var playlistsList = playlists.playlistNames.map((name, i) => (
       <li key={i}>
-        <a onClick={() => this.selectPlaylist(i)} href="#">{name}</a>
+        <a onClick={() => this.selectPlaylist(i)} href="#">
+          {name}
+        </a>
         <div
           onClick={() => this.startRemovingPlaylist(name, i)}
           className="fa fa-trash remove-playlist"
@@ -206,76 +204,90 @@ export default (class PlaylistsPanel extends React.Component {
       </li>
     ));
 
-    var shuffle = playlists.hasPlaylist
-      ? <span
+    var shuffle = playlists.hasPlaylist ? (
+      <span
         onClick={() => playlists.shufflePlaylist()}
         className="playlist-shuffle-btn fa fa-random fa-3x"
       />
-      : false;
+    ) : (
+      false
+    );
 
     return (
       <div id="playlists-panel" ref="playlists-panel" className={mainClass}>
         <div id="playlists-panel-head">
-	<div class="row">
-	  <div class="col-md-7">
-          <input
-            type="text"
-            id="playlist-search-box"
-            ref={c => this._search = c}
-            placeholder="Search"
-            className="form-control"
-            onKeyPress={e => this.onEnterKey(e, () => this.search())}
-          /> &nbsp;
-	  <input 
-	  	type="radio" 
-		checked={ playlists.searchSource == "youtube" ? 'checked' : '' }
-		id="search-youtube"
-		name="search-source"
-		onClick={ c => { playlists.search = [];  playlists.searchSource = "youtube" } }
-		/> YouTube <br/>&nbsp;
-	  <input
-	        type="radio"
-		checked={ playlists.searchSource == "soundcloud" ? 'checked' : '' }
-		id="search-soundcloud"
-		name="search-source"
-		onClick={ c => { playlists.search = []; playlists.searchSource = "soundcloud" } }
-		/> Soundcloud
-	  </div>
-	  <div class="col-md-5">
-          <div className="btn-group" id="playlist-btn">
-            <a
-              className="btn btn-primary dropdown-toggle"
-              id="playlist-dropdown"
-              data-toggle="dropdown"
-              href="#"
-            >
-              {playlists.selectedPlaylistName || "Create or Select a Playlist"} <span class="fa fa-chevron-down"></span>
-            </a>
-            <ul className="dropdown-menu" id="pl-dd-menu">
-              <li>
-                <a href="#" onClick={() => this.addingPlaylist = true}>
-                  <i className="fa fa-plus" /> New Playlist
+          <div class="row">
+            <div class="col-md-7">
+              <input
+                type="text"
+                id="playlist-search-box"
+                ref={c => (this._search = c)}
+                placeholder="Search"
+                className="form-control"
+                onKeyPress={e => this.onEnterKey(e, () => this.search())}
+              />{" "}
+              &nbsp;
+              <input
+                type="radio"
+                checked={playlists.searchSource == "youtube" ? "checked" : ""}
+                id="search-youtube"
+                name="search-source"
+                onClick={c => {
+                  playlists.search = [];
+                  playlists.searchSource = "youtube";
+                }}
+              />{" "}
+              YouTube <br />
+              &nbsp;
+              <input
+                type="radio"
+                checked={playlists.searchSource == "soundcloud" ? "checked" : ""}
+                id="search-soundcloud"
+                name="search-source"
+                onClick={c => {
+                  playlists.search = [];
+                  playlists.searchSource = "soundcloud";
+                }}
+              />{" "}
+              Soundcloud
+            </div>
+            <div class="col-md-5">
+              <div className="btn-group" id="playlist-btn">
+                <a
+                  className="btn btn-primary dropdown-toggle"
+                  id="playlist-dropdown"
+                  data-toggle="dropdown"
+                  href="#"
+                >
+                  {playlists.selectedPlaylistName || "Create or Select a Playlist"}{" "}
+                  <span class="fa fa-chevron-down"></span>
                 </a>
-              </li>
-              <li>
-                <a href="#" onClick={() => this.importingPlaylist = true}>
-                  <i className="fa fa-youtube-play" /> Import Playlist
-                </a>
-              </li>
-              {playlistsList}
-            </ul>
+                <ul className="dropdown-menu" id="pl-dd-menu">
+                  <li>
+                    <a href="#" onClick={() => (this.addingPlaylist = true)}>
+                      <i className="fa fa-plus" /> New Playlist
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={() => (this.importingPlaylist = true)}>
+                      <i className="fa fa-youtube-play" /> Import Playlist
+                    </a>
+                  </li>
+                  {playlistsList}
+                </ul>
+              </div>
+              {shuffle}
+              <span
+                onClick={() => playlists.exportPlaylist()}
+                className="playlist-shuffle-btn fa fa-download fa-3x"
+              />
+            </div>
           </div>
-          {shuffle}
-	  <span onClick={() => playlists.exportPlaylist()} className="playlist-shuffle-btn fa fa-download fa-3x"/>
         </div>
-	</div>
-	</div>
-        <div id="playlists-panel-display">
-          {content}
-        </div>
+        <div id="playlists-panel-display">{content}</div>
         <Modal
           show={this.addingPlaylist}
-          hideModal={() => this.addingPlaylist = false}
+          hideModal={() => (this.addingPlaylist = false)}
           title="Adding Playlist"
           leftButton={() => this.addPlaylist()}
           leftButtonText="Add Playlist"
@@ -284,48 +296,41 @@ export default (class PlaylistsPanel extends React.Component {
           <input
             className="form-control"
             type="text"
-            ref={c => this._newPlaylist = c}
+            ref={c => (this._newPlaylist = c)}
             onKeyPress={e => this.onEnterKey(e, () => this.addPlaylist())}
             placeholder="Playlist Name"
           />
         </Modal>
         <Modal
           show={this.removingPlaylist}
-          hideModal={() => this.removingPlaylist = false}
+          hideModal={() => (this.removingPlaylist = false)}
           title="Removing Playlist"
           leftButton={() => this.removePlaylist()}
           leftButtonText="Confirm"
         >
           <p>
-            Are you sure you want to remove the playlist '
-            {this.playlistToRemove.name}
+            Are you sure you want to remove the playlist '{this.playlistToRemove.name}
             '?
           </p>
         </Modal>
         <Modal
           show={this.importingPlaylist}
-          hideModal={() => this.importingPlaylist = false}
+          hideModal={() => (this.importingPlaylist = false)}
           title="Importing Playlist"
           leftButton={() => this.importPlaylist()}
           leftButtonText={
-            (
-              <span>
-                Import{" "}
-                {
-                  playlists.importing &&
-                    <i className="fa fa-spin fa-circle-o-notch" />
-                }
-              </span>
-            )
+            <span>
+              Import {playlists.importing && <i className="fa fa-spin fa-circle-o-notch" />}
+            </span>
           }
         >
           <div className="form-group">
             <label>Playlist Name</label>
-            <input className="form-control" ref={c => this._importName = c} />
+            <input className="form-control" ref={c => (this._importName = c)} />
           </div>
           <div className="form-group">
             <label>Playlist URL</label>
-            <input className="form-control" ref={c => this._importUrl = c} />
+            <input className="form-control" ref={c => (this._importUrl = c)} />
           </div>
         </Modal>
       </div>

@@ -14,13 +14,15 @@ export default class Chat extends React.Component {
     return (
       <div id="chatcontainer" style={this.props.show ? {} : {display: "none"}}>
         <ChatContent />
-        {chat.canChat
-          ? <ChatSend />
-          : <ChatLocked
-              locked={chat.chatLocked}
-              loggedIn={profile.loggedIn}
-              secondsUntilUnlock={chat.secondsUntilUnlock}
-            />}
+        {chat.canChat ? (
+          <ChatSend />
+        ) : (
+          <ChatLocked
+            locked={chat.chatLocked}
+            loggedIn={profile.loggedIn}
+            secondsUntilUnlock={chat.secondsUntilUnlock}
+          />
+        )}
       </div>
     );
   }

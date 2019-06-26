@@ -58,7 +58,9 @@ path /_admin {
 path /events {
   read() {true}
 }
-
+path /toke {
+  read() {true}
+}
 path /onlineents {
 	read() {true} 
 }

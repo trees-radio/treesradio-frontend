@@ -4,7 +4,7 @@ var Config = require("webpack-config").default; // must be imported with .defaul
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var VersionFile = require("webpack-version-file-plugin");
 var short = require("git-rev-sync").short();
-var CleanWebpackPlugin = require("clean-webpack-plugin");
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = new Config().merge({
   entry: ["babel-polyfill", path.resolve(__dirname, "app/index.js")],

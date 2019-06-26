@@ -32,7 +32,7 @@ const GrabPlaylists = onClickOutside(
             if (!songInPlaylist) {
               onClick = () => {
                 playing.grab(p.key);
-                this.toggleGrab();
+                this.props.toggleGrab();
               };
             }
             var classes = classNames("fa", songInPlaylist ? "fa-check-circle-o" : "fa-circle-o");
