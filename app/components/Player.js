@@ -38,7 +38,6 @@ class Player extends React.Component {
     }
   }
   playerError(e) {
-    console.log(e);
     playing.userReportsError(e);
   }
 

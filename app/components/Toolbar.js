@@ -12,7 +12,7 @@ import toast from "utils/toast";
 import classNames from "classnames";
 import onClickOutside from "react-onclickoutside";
 import createClass from "create-react-class";
-
+import $ from "jquery";
 const loadingIconClass = "fa-spin fa-circle-o-notch";
 
 const GrabPlaylists = onClickOutside(

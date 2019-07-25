@@ -1,11 +1,9 @@
 import React from "react";
-import fbase from "../../libs/fbase";
 import {observer} from "mobx-react";
 import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import profile from "stores/profile";
 import online from "stores/online";
-import {autorun} from "mobx";
 
 @observer
 export default class OnlineUsers extends React.Component {

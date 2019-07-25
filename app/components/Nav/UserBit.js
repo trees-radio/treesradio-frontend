@@ -8,7 +8,7 @@ import playing from "stores/playing";
 import imageWhitelist, {allowedDomains} from "libs/imageWhitelist";
 import UserAvatar from "components/utility/User/UserAvatar";
 import waitlist from "stores/waitlist";
-
+import $ from "jquery";
 import Modal from "components/utility/Modal";
 
 @observer
@@ -81,7 +81,7 @@ export default class UserBit extends React.Component {
 
   hideGifs() {
     if (this.gifsHidden === false) {
-      var div = $("<div id='hidegifs' />")
+      $("<div id='hidegifs' />")
         .html(
           '&shy;<style>span.chat-text p img[src$=".gif"] { display: none; } span.chat-text p img[src$=".gifv"] {display: none;}</style>'
         )
@@ -247,7 +247,7 @@ export default class UserBit extends React.Component {
             leftButtonText="Go!"
           >
             <p>
-              We're missing a username for you! Please choose one. This will be your permanent
+              We&apos;re missing a username for you! Please choose one. This will be your permanent
               username, so choose wisely!
             </p>
             <input
@@ -269,8 +269,8 @@ export default class UserBit extends React.Component {
             noClose={true}
           >
             <p>
-              Your email hasn't been verified yet! Please click the link in the activation email
-              that was sent to your address or use one of the buttons below to help you.
+              Your email hasn&apos;t been verified yet! Please click the link in the activation
+              email that was sent to your address or use one of the buttons below to help you.
             </p>
             <button className="btn btn-primary" onClick={() => window.location.reload()}>
               Re-check Verification Status

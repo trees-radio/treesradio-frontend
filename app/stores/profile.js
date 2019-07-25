@@ -11,9 +11,44 @@ import app from "stores/app";
 
 export default new (class Profile {
   constructor() {
+    this.init = false;
     fbase.auth().onAuthStateChanged(user => {
       this.user = user;
       if (user !== null) {
+        fbase
+          .database()
+          .ref()
+          .child(".info/connected")
+          .on("value", snap => {
+            if (snap.val() === true) {
+              fbase.auth().updateCurrentUser(fbase.auth().currentUser);
+              clearInterval(this.presenceInterval); //stop any previous intervals
+              this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
+
+              let presenceRef = fbase.database().ref(`presence/${this.user.uid}`);
+              let timestamp = epoch();
+              this.presenceRef = presenceRef
+                .child("connections")
+                .push({timestamp, uid: this.user.uid});
+
+              this.presenceRef.onDisconnect().remove();
+              this.presenceRef.child("connected").set(epoch());
+              this.presenceInterval = setInterval(() => {
+                this.presenceRef.child("timestamp").set(epoch());
+              }, 10000);
+
+              this.ipRef && this.ipRef.remove();
+              this.ipRef = fbase
+                .database()
+                .ref("private")
+                .child(user.uid)
+                .child("ip")
+                .child(this.presenceRef.key);
+
+              this.ipRef.set(app.ipAddress);
+              this.ipRef.onDisconnect().remove();
+            }
+          });
         this.stopProfileSync = fbase
           .database()
           .ref("users")
@@ -21,43 +56,9 @@ export default new (class Profile {
           .on("value", snap => {
             var profile = snap.val() || {};
             this.profile = profile;
-            this.init = true;
-
-            send("hello");
-
-            fbase
-              .database()
-              .ref(".info/connected")
-              .on("value", snap => {
-                if (snap.val() === true) {
-                  clearInterval(this.presenceInterval); //stop any previous intervals
-                  this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
-
-                  let presenceRef = fbase.database().ref(`presence/${user.uid}`);
-                  let timestamp = epoch();
-                  this.presenceRef = presenceRef
-                    .child("connections")
-                    .push({timestamp, uid: user.uid});
-
-                  this.presenceRef.onDisconnect().remove();
-                  this.presenceInterval = setInterval(
-                    () => this.presenceRef.child("timestamp").set(epoch()),
-                    10000
-                  );
-
-                  this.ipRef && this.ipRef.remove();
-                  this.ipRef = fbase
-                    .database()
-                    .ref("private")
-                    .child(user.uid)
-                    .child("ip")
-                    .child(this.presenceRef.key);
-
-                  this.ipRef.set(app.ipAddress);
-                  this.ipRef.onDisconnect().remove();
-                }
-              });
           });
+
+        send("hello");
 
         this.stopPrivateSync = fbase
           .database()
@@ -102,7 +103,10 @@ export default new (class Profile {
     // self username handling
     autorun(() => {
       if (this.user) {
-        username(this.user.uid).then(username => (this.username = username));
+        username(this.user.uid).then(username => {
+          this.username = username;
+          this.init = true;
+        });
       } else {
         this.username = undefined;
       }
@@ -238,6 +242,9 @@ export default new (class Profile {
         })
         .then(user => {
           user.sendEmailVerification();
+          setTimeout(() => {
+            this.logout();
+          }, 10000);
         });
     }
   }

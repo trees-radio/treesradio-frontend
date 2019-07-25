@@ -11,6 +11,7 @@ import Toolbar from "./Toolbar";
 import Player from "./Player";
 import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import $ from "jquery";
 
 toast.configure({autoClose: 8000, position: toast.POSITION.TOP_CENTER});
 

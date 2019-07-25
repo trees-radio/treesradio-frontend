@@ -1,5 +1,5 @@
 import React from "react";
-import {observable, toJS} from "mobx";
+import {observable} from "mobx";
 import {observer} from "mobx-react";
 // import classNames from 'classnames';
 // import fbase from 'stores/fbase';
@@ -9,7 +9,7 @@ import toast from "utils/toast";
 import moment from "moment";
 
 @observer
-export default (class PlaylistsPanel extends React.Component {
+export default class PlaylistsPanel extends React.Component {
   @observable
   addingPlaylist = false;
   @observable
@@ -92,17 +92,22 @@ export default (class PlaylistsPanel extends React.Component {
           var channelTitle;
           var thumbnail;
           var skipLink = "";
+          var duration;
+          var hours;
+          var hoursDisplay;
+          var mins;
+          var secs;
 
           if (playlists.searchSource == "youtube") {
             url = `https://www.youtube.com/watch?v=${video.id}`;
-            var duration = moment.duration(video.contentDetails.duration);
-            var hours = duration.hours();
-            var hoursDisplay = "";
+            duration = moment.duration(video.contentDetails.duration);
+            hours = duration.hours();
+            hoursDisplay = "";
             if (hours > 0) {
               hoursDisplay = hours + "h ";
             }
-            var mins = duration.minutes();
-            var secs = "0" + duration.seconds();
+            mins = duration.minutes();
+            secs = "0" + duration.seconds();
             humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
             thumbnail = video.snippet.thumbnails.default.url;
             title = video.snippet.title;
@@ -110,14 +115,14 @@ export default (class PlaylistsPanel extends React.Component {
             skipLink = `https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.id}`;
           } else if (playlists.searchSource == "soundcloud") {
             url = video.permalink_url;
-            var duration = moment.duration(video.duration);
-            var hours = duration.hours();
-            var hoursDisplay = "";
+            duration = moment.duration(video.duration);
+            hours = duration.hours();
+            hoursDisplay = "";
             if (hours > 0) {
               hoursDisplay = hours + "h ";
             }
-            var mins = duration.minutes();
-            var secs = "0" + duration.seconds();
+            mins = duration.minutes();
+            secs = "0" + duration.seconds();
             humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
             thumbnail = video.artwork_url || video.user.avatar_url || "/img/favicon.png";
             title = video.title;
@@ -125,7 +130,7 @@ export default (class PlaylistsPanel extends React.Component {
           }
           return (
             <li className={playlistPosClass} key={i}>
-              <a target="_blank" href={url}>
+              <a target="_blank" href={url} rel="noopener noreferrer">
                 <img className="pl-thumbnail" src={thumbnail} />
               </a>
               <span className="pl-media-title">{title}</span>
@@ -137,7 +142,12 @@ export default (class PlaylistsPanel extends React.Component {
                 onClick={() => playlists.addFromSearch(i)}
                 className="fa fa-2x fa-plus add-to-playlist-btn"
               />
-              <a target="_blank" href={skipLink} show={skipLink && skipLink.length > 0}>
+              <a
+                target="_blank"
+                href={skipLink}
+                show={skipLink && skipLink.length > 0}
+                rel="noopener noreferrer"
+              >
                 <i className="fa fa-2x fa-globe add-to-playlist-btn" />
               </a>
             </li>
@@ -165,7 +175,7 @@ export default (class PlaylistsPanel extends React.Component {
 
         return (
           <li className={playlistPosClass} key={i}>
-            <a target="_blank" href={video.url}>
+            <a target="_blank" href={video.url} rel="noopener noreferrer">
               <img className="pl-thumbnail" src={video.thumb} />
             </a>
             <span className="pl-media-title">{video.title}</span>
@@ -181,7 +191,11 @@ export default (class PlaylistsPanel extends React.Component {
               onClick={() => playlists.moveTop(i)}
               className="fa fa-2x fa-arrow-up pl-move-to-top"
             />
-            <a target="_blank" href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}>
+            <a
+              target="_blank"
+              href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
+              rel="noopener noreferrer"
+            >
               <i className="fa fa-2x fa-globe add-to-playlist-btn" />
             </a>
           </li>
@@ -214,10 +228,10 @@ export default (class PlaylistsPanel extends React.Component {
     );
 
     return (
-      <div id="playlists-panel" ref="playlists-panel" className={mainClass}>
+      <div id="playlists-panel" className={mainClass}>
         <div id="playlists-panel-head">
-          <div class="row">
-            <div class="col-md-7">
+          <div className="row">
+            <div className="col-md-7">
               <input
                 type="text"
                 id="playlist-search-box"
@@ -232,7 +246,7 @@ export default (class PlaylistsPanel extends React.Component {
                 checked={playlists.searchSource == "youtube" ? "checked" : ""}
                 id="search-youtube"
                 name="search-source"
-                onClick={c => {
+                onClick={() => {
                   playlists.search = [];
                   playlists.searchSource = "youtube";
                 }}
@@ -244,14 +258,14 @@ export default (class PlaylistsPanel extends React.Component {
                 checked={playlists.searchSource == "soundcloud" ? "checked" : ""}
                 id="search-soundcloud"
                 name="search-source"
-                onClick={c => {
+                onClick={() => {
                   playlists.search = [];
                   playlists.searchSource = "soundcloud";
                 }}
               />{" "}
               Soundcloud
             </div>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <div className="btn-group" id="playlist-btn">
                 <a
                   className="btn btn-primary dropdown-toggle"
@@ -260,7 +274,7 @@ export default (class PlaylistsPanel extends React.Component {
                   href="#"
                 >
                   {playlists.selectedPlaylistName || "Create or Select a Playlist"}{" "}
-                  <span class="fa fa-chevron-down"></span>
+                  <span className="fa fa-chevron-down"></span>
                 </a>
                 <ul className="dropdown-menu" id="pl-dd-menu">
                   <li>
@@ -309,8 +323,8 @@ export default (class PlaylistsPanel extends React.Component {
           leftButtonText="Confirm"
         >
           <p>
-            Are you sure you want to remove the playlist '{this.playlistToRemove.name}
-            '?
+            Are you sure you want to remove the playlist &apos;{this.playlistToRemove.name}
+            @apos;?
           </p>
         </Modal>
         <Modal
@@ -336,4 +350,4 @@ export default (class PlaylistsPanel extends React.Component {
       </div>
     );
   }
-});
+}

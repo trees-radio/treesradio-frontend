@@ -20,6 +20,7 @@ export default class About extends React.Component {
   }
 
   showKaranObit() {
+    console.log(this.state.showKaran);
     this.setState({
       showKaran: !this.state.showKaran
     });
@@ -73,17 +74,17 @@ export default class About extends React.Component {
         </div>
         <div className="about-emoji">
           <h6>
-            <a href="https://www.emojione.com/emoji/v3" target="_blank">
+            <a href="https://www.emojione.com/emoji/v3" target="_blank" rel="noopener noreferrer">
               Emoji List
             </a>
           </h6>
           <h6>
-            <a href="https://youtu.be/84qIWSRRZM8" target="_blank">
+            <a href="https://youtu.be/84qIWSRRZM8" target="_blank" rel="noopener noreferrer">
               Video Tutorial/Walkthrough
             </a>
           </h6>
           <h6>
-            <a href="https://reddit.com/r/treesradio" target="_blank">
+            <a href="https://reddit.com/r/treesradio" target="_blank" rel="noopener noreferrer">
               /r/treesradio
             </a>
           </h6>
@@ -92,12 +93,15 @@ export default class About extends React.Component {
           <button
             type="button"
             className="btn btn-xs btn-default"
-            onClick={() => this.setState({showKaran: !this.state.showKaran})}
+            onClick={() => {
+              console.log(this.state);
+              this.setState({showKaran: !this.state.showKaran});
+            }}
           >
             <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft" />
           </button>
         </div>
-        {this.state.showKaran && <Karan />}
+        <Karan show={this.state.showKaran} hideCallback={this.showKaranObit} />
       </div>
     );
   }

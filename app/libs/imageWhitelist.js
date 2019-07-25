@@ -5,6 +5,7 @@ export const allowedDomains = [
   "imgur.com",
   "i.reddituploads.com",
   "media.giphy.com",
+  "media1.giphy.com",
   "tr-avatars.herokuapp.com",
   "thumbs.gfycat.com",
   "gfycat.com",

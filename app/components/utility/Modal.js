@@ -3,11 +3,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 class UtilityModal extends React.Component {
-  componentWillUnmount() {
-    this.setState = (state, callback) => {
-      return;
-    };
-  }
   constructor(props, context) {
     super(props, context);
     this.handleShow = this.handleShow.bind(this);

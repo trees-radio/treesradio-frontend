@@ -1,5 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
+import {observable} from "mobx";
 import {debounce} from "lodash";
 import chat from "stores/chat";
 import classNames from "classnames";
@@ -8,17 +9,19 @@ import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import Message from "./Message";
 import profile from "stores/profile";
+import $ from "jquery";
 
 const SCROLL_SENSITIVITY = 200;
 
 @observer
-export default (class ChatContent extends React.Component {
+export default class ChatContent extends React.Component {
   componentDidMount() {
     this.scroll();
     this.startup = Date.now();
   }
 
-  scroll = () => setTimeout(() => this._chatscroll.scrollTop = this._chatscroll.scrollHeight, 300);
+  scroll = () =>
+    setTimeout(() => (this._chatscroll.scrollTop = this._chatscroll.scrollHeight), 300);
 
   autoScroll = () => {
     if (Date.now() - this.startup < 3000) {
@@ -31,7 +34,7 @@ export default (class ChatContent extends React.Component {
 
   debouncedScroll = debounce(this.scroll, 5000);
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     var test = this._chatscroll.scrollHeight - this._chatscroll.scrollTop;
     var target = this._chatscroll.clientHeight;
     var testLow = test - SCROLL_SENSITIVITY;
@@ -50,16 +53,27 @@ export default (class ChatContent extends React.Component {
   render() {
     var messages = chat.messages;
 
-    var content = messages.map((msg, i, arr) => {
+    var content = messages.map((msg, i) => {
       var chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
-      var chatLineClasses = classNames("chat-item", chatPosClass, {
-        "blazebot-msg": msg.username == "BlazeBot"
-      }, ( profile.hideBlazeBot ? 'blazebot-hide' : ''));
+      var chatLineClasses = classNames(
+        "chat-item",
+        chatPosClass,
+        {
+          "blazebot-msg": msg.username == "BlazeBot"
+        },
+        profile.hideBlazeBot ? "blazebot-hide" : ""
+      );
 
       var humanTimestamp = moment.unix(msg.timestamp).format("LT");
       var msgs = msg.msgs.map((innerMsg, i) => {
         return (
-          <Message key={i} userName={msg.username} isEmote={msg.isemote} text={innerMsg} onLoad={() => setTimeout(this.autoScroll(true), 100)} />
+          <Message
+            key={i}
+            userName={msg.username}
+            isEmote={msg.isemote}
+            text={innerMsg}
+            onLoad={() => setTimeout(this.autoScroll(true), 100)}
+          />
         );
       });
 
@@ -72,20 +86,20 @@ export default (class ChatContent extends React.Component {
             <UserName
               uid={msg.uid}
               className="chat-username"
-              onClick={() => chat.appendMsg("@" + msg.username + " ")  && $('#chatinput').click() }
+              onClick={() => chat.appendMsg("@" + msg.username + " ") && $("#chatinput").click()}
             />
-            <span className="chat-timestamp">{humanTimestamp}</span><br />
+            <span className="chat-timestamp">{humanTimestamp}</span>
+            <br />
             <span className="chat-text">{msgs}</span>
           </div>
         </li>
       );
     });
     return (
-      <div id="chatscroll" ref={c => this._chatscroll = c}>
-        <ul id="chatbox">
-          {content}
-        </ul>
+      <div id="chatscroll" ref={c => (this._chatscroll = c)}>
+        <ul id="chatbox">{content}</ul>
       </div>
     );
   }
-});
+  @observable _chatscroll = {scrollTop: 0, scrollHeight: 0};
+}

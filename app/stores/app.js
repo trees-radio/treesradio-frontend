@@ -31,9 +31,8 @@ export default new (class App {
   @computed get init() {
     if (this.connected && this.ipAddress !== null && this.proceed === true) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   getIP() {

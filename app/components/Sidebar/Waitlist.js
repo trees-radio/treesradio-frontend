@@ -6,7 +6,7 @@ import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 
 @observer
-export default (class Waitlist extends React.Component {
+export default class Waitlist extends React.Component {
   render() {
     var list = waitlist.onlineOnly.map((u, i) => {
       return (
@@ -36,4 +36,4 @@ export default (class Waitlist extends React.Component {
       </div>
     );
   }
-});
+}

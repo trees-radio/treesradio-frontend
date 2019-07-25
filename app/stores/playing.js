@@ -42,7 +42,7 @@ export default new (class Playing {
   }
 
   userReportsError(e) {
-    if (epoch() - profile.lastchat < 1800) send("playerError", {e});
+    if (epoch() - profile.lastchat < 600 && (e == 150 || e == 100)) send("playerError", {e});
   }
 
   @observable fakeScroll = 0;
