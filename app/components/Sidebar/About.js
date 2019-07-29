@@ -6,7 +6,7 @@
 
 import React from "react";
 import Karan from "../Sidebar/karan";
-import giphy from "../../img/poweredbygiphy.gif";
+import giphy from "../../img/poweredbytenor.svg";
 
 export default class About extends React.Component {
   constructor(props, context) {
@@ -69,7 +69,7 @@ export default class About extends React.Component {
           </div>
           <div>
             <h5>BlazeBot&apos;s GIFs:</h5>
-            <img src="/img/poweredbygiphy.gif" />
+            <img src="/img/poweredbytenor.svg" />
           </div>
         </div>
         <div className="about-emoji">

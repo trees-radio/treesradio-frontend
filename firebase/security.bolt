@@ -191,6 +191,15 @@ path /avatars/{$uid} {
   write() {isUser($uid) && hasValidatedEmail()}
 }
 
+path /hypes {
+  read() {true}
+  write() {false}
+}
+
+path /hypes/{$uid} {
+  read() { true }
+  write() { false }
+}
 
 // Event Handlers //
 
