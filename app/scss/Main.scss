@@ -1,6 +1,8 @@
 
 html,
 body {
+  background-image: url("../img/loading_screen-01.svg");
+  background-size: cover;
   height: 100%;
   overflow-y: hidden;
   color: #77b300 !important;
@@ -71,15 +73,15 @@ h4 {
 }
 
 .main-load {
-  //background-image:url('../img/backgroundvideo.png');
-  background-image: url(/img/spacepineapples.jpg);
-  background-size:cover;
-  transition: ease-in-out !important;
+  background-image: url("../img/loading_screen-01.svgz");
+  background-size: cover;
+  transition: all 2s !important;
   transition-timing-function: ease-in-out !important;
   transition-property: all;
+  transition-delay: 2s;
   height: 100%;
   width: 100%;
-  display: table-cell;
+  display: block;
   vertical-align: middle;
   text-align: center;
 }
@@ -113,6 +115,8 @@ h4 {
 }
 
 .main-center {
+  background-image: url("../img/loading_screen-01.svgz");
+  background-size: cover;
 	display: inline-block;
   text-align: center;
   position:relative;
@@ -121,6 +125,8 @@ h4 {
 }
 
 .main-vcenter {
+  background-image: url("../img/loading_screen-01.svgz");
+  background-size: cover;
   display: table-cell;
   vertical-align: middle;
   align-content: center;
@@ -131,6 +137,8 @@ h4 {
   width: 100%;
 }
 .main-loading {
+  background-image: url("../img/loading_screen-01.svgz");
+  background-size: cover;
   position: relative;
   left:50%;
   right:50%;
@@ -145,6 +153,8 @@ h4 {
 
 .container-fluid
 {
+  background-image: url("../img/loading_screen-01.svg");
+  background-size: cover;
     height: 100%;
     width: 100%;
     margin-top: -50px;

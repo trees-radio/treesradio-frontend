@@ -12,14 +12,20 @@ export default class TokeTimer extends React.Component {
     return (
       <div
         style={{
-          display: toketimer.tokeUnderway ? "inline-block" : "none",
+          display: "inline-block",
           "margin-right": "15px",
           "margin-top": "7px"
         }}
       >
         <div>
-          <a className="btn btn-warning" onClick={this.joinToke}>
-            Toke in: <b>{millisToMinutesAndSeconds(toketimer.remainingTime)}</b>
+          <a
+            className={toketimer.tokeUnderway ? "btn btn-warning" : "btn btn-success"}
+            onClick={this.joinToke}
+          >
+            Toke
+            <span style={{display: toketimer.tokeUnderway ? "inherit" : "none"}}>
+              &nbsp;in: <b>{millisToMinutesAndSeconds(toketimer.remainingTime)}</b>
+            </span>
           </a>
         </div>
       </div>

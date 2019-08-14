@@ -6,7 +6,7 @@
 
 import React from "react";
 import Karan from "../Sidebar/karan";
-import giphy from "../../img/poweredbytenor.svg";
+import TENORGIF from "../../img/poweredbytenor.svg";
 
 export default class About extends React.Component {
   constructor(props, context) {
@@ -57,9 +57,12 @@ export default class About extends React.Component {
           <div>
             <h5>Shoutouts!</h5>
             <ul className="about-rules">
-              <li>@Rapty for @BlazeBot&apos;s awesome animated avatar.</li>
+              <li>@Rapty for @BlazeBot&apos;s awesome animated avatar, marketing, and sticker design. @JubieMeg for funding sticker production.</li>
+	      <li>
+	        @yellerjeep, @TheTyger for donating to the main Patreon page. <a href="https://www.patreon.com/treesradio">patreon.com/treesradio</a>
+		</li>
               <li>
-                @FredRodgers, @entlife, @JohnPyro for sponsoring @yellerjeep&apos;s ongoing
+                @FredRodgers, @JubieMeg, @JohnPyro, @entlife for sponsoring @yellerjeep&apos;s ongoing
                 development.
               </li>
               <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
@@ -68,8 +71,9 @@ export default class About extends React.Component {
             </ul>
           </div>
           <div>
-            <h5>BlazeBot&apos;s GIFs:</h5>
-            <img src="/img/poweredbytenor.svg" />
+            <div class="tenorgif-attr">
+                <h5>BlazeBot&apos;s GIFs:</h5>
+	    </div>
           </div>
         </div>
         <div className="about-emoji">
