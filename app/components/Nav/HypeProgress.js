@@ -11,7 +11,7 @@ export default class HypeProgress extends React.Component {
   };
   render() {
     return (
-      <div className="hypepb" style={{visibility: hypetimer.lasthype > 0 ? true : false}}>
+      <div className="hypepb" onClick={this.getHyped} style={{visibility: hypetimer.lasthype > 0 ? true : false}}>
         <div className="hypeprogress" style={{width: hypetimer.hypePercentageCharged + "%"}}>
           <a
             className="hypedone"

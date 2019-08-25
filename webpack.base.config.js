@@ -59,7 +59,7 @@ module.exports = new Config().merge({
         }
       },
       {
-        test: /\.(jpg|png|gif|svg|svgz)$/,
+        test: /\.(jpg|png|gif|svg|svgz|cur)$/,
         loader: "file-loader",
         options: {
           name: "img/[name].[ext]"

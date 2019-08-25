@@ -19,7 +19,27 @@ const specialemoji = {
   ":toke:": "emoji emoji-toke",
   ":smoke:": "emoji emoji-toke",
   ":hit:": "emoji emoji-toke",
-  ":plug:": "emoji emoji-plug"
+  ":plug:": "emoji emoji-plug",
+  ":joint:": "emoji emoji-joint",
+  ":j:": "emoji emoji-joint",
+  ":ferris:": "emoji emoji-ferris",
+  ":1:": "emoji emoji-one",
+  ":2:": "emoji emoji-two",
+  ":3:": "emoji emoji-three",
+  ":4:": "emoji emoji-four",
+  ":5:": "emoji emoji-five",
+  ":6:": "emoji emoji-six",
+  ":7:": "emoji emoji-seven",
+  ":8:": "emoji emoji-eight",
+  ":9:": "emoji emoji-nine",
+  ":10:": "emoji emoji-ten",
+  ":highaf:": "emoji emoji-highaf",
+  ":owo:": "emoji emoji-owo",
+  ":rolling:": "emoji emoji-rolling",
+  ":dude:": "emoji emoji-dude",
+  ":bong:": "emoji emoji-bong",
+  ":neat:": "emoji emoji-neat",
+  ":420:": "emoji emoji-420"
 };
 
 const emojifyOptions = {
