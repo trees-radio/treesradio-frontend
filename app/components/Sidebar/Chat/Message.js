@@ -78,7 +78,7 @@ export default class Message extends React.Component {
 
     let tokens = text.split(" ");
     let emojisize = "emoji";
-    if ( tokens.length == 1 ) emojisize="emojilarge";
+    if (tokens.length == 1) emojisize = "emojilarge";
 
     const result = tokens.map((tkn, i) => (
       <MessageItem
@@ -87,7 +87,7 @@ export default class Message extends React.Component {
         isEmote={this.props.isEmote}
         show={this.state.visible}
         onLoad={this.props.onLoad}
-	emojiSize={emojisize}
+        emojiSize={emojisize}
       />
     ));
 
@@ -136,12 +136,16 @@ class MessageItem extends React.Component {
     } else if (specialemoji[token]) {
       thisClass = this.props.emojiSize + " " + specialemoji[token];
       titletext = token;
-    } else if ( bolded = token.match(/^\*\*(\w+)\*\*$/)) {
+    } else if ((bolded = token.match(/^\*\*(\w+)\*\*$/))) {
       thisClass = "chat-bold";
       token = bolded[1];
     }
     return (
-      <span className={this.props.isEmote ? "chat-italic" : thisClass} show={show} title={titletext}>
+      <span
+        className={this.props.isEmote ? "chat-italic" : thisClass}
+        show={show}
+        title={titletext}
+      >
         {emojify(token, emojifyOptions)}{" "}
       </span>
     );
