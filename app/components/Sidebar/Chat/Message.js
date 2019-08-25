@@ -13,33 +13,33 @@ const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
 const specialemoji = {
-  ":weed:": "emoji emoji-weed",
-  ":marijuana:": "emoji emoji-weed",
-  ":canabis:": "emoji emoji-weed",
-  ":toke:": "emoji emoji-toke",
-  ":smoke:": "emoji emoji-toke",
-  ":hit:": "emoji emoji-toke",
-  ":plug:": "emoji emoji-plug",
-  ":joint:": "emoji emoji-joint",
-  ":j:": "emoji emoji-joint",
-  ":ferris:": "emoji emoji-ferris",
-  ":1:": "emoji emoji-one",
-  ":2:": "emoji emoji-two",
-  ":3:": "emoji emoji-three",
-  ":4:": "emoji emoji-four",
-  ":5:": "emoji emoji-five",
-  ":6:": "emoji emoji-six",
-  ":7:": "emoji emoji-seven",
-  ":8:": "emoji emoji-eight",
-  ":9:": "emoji emoji-nine",
-  ":10:": "emoji emoji-ten",
-  ":highaf:": "emoji emoji-highaf",
-  ":owo:": "emoji emoji-owo",
-  ":rolling:": "emoji emoji-rolling",
-  ":dude:": "emoji emoji-dude",
-  ":bong:": "emoji emoji-bong",
-  ":neat:": "emoji emoji-neat",
-  ":420:": "emoji emoji-420"
+  ":weed:": "emoji-weed",
+  ":marijuana:": "emoji-weed",
+  ":canabis:": "emoji-weed",
+  ":toke:": "emoji-toke",
+  ":smoke:": "emoji-toke",
+  ":hit:": "emoji-toke",
+  ":plug:": "emoji-plug",
+  ":joint:": "emoji-joint",
+  ":j:": "emoji-joint",
+  ":ferris:": "emoji-ferris",
+  ":1:": "emoji-one",
+  ":2:": "emoji-two",
+  ":3:": "emoji-three",
+  ":4:": "emoji-four",
+  ":5:": "emoji-five",
+  ":6:": "emoji-six",
+  ":7:": "emoji-seven",
+  ":8:": "emoji-eight",
+  ":9:": "emoji-nine",
+  ":10:": "emoji-ten",
+  ":highaf:": "emoji-highaf",
+  ":owo:": "emoji-owo",
+  ":rolling:": "emoji-rolling",
+  ":dude:": "emoji-dude",
+  ":bong:": "emoji-bong",
+  ":neat:": "emoji-neat",
+  ":420:": "emoji-420"
 };
 
 const emojifyOptions = {
@@ -77,6 +77,9 @@ export default class Message extends React.Component {
     }
 
     let tokens = text.split(" ");
+    let emojisize = "emoji";
+    if ( tokens.length == 1 ) emojisize="emojilarge";
+
     const result = tokens.map((tkn, i) => (
       <MessageItem
         key={i}
@@ -84,6 +87,7 @@ export default class Message extends React.Component {
         isEmote={this.props.isEmote}
         show={this.state.visible}
         onLoad={this.props.onLoad}
+	emojiSize={emojisize}
       />
     ));
 
@@ -104,6 +108,9 @@ class MessageItem extends React.Component {
   render() {
     var {token, show, onLoad} = this.props;
     let thisClass;
+    let bolded;
+    let titletext;
+
     if (imageCheck(token)) {
       let style = {};
       token.replace("http:", "https:");
@@ -127,13 +134,14 @@ class MessageItem extends React.Component {
         </span>
       );
     } else if (specialemoji[token]) {
-      thisClass = specialemoji[token];
-    } else if (token.match(/^\*\*\w+\*\*$/)) {
+      thisClass = this.props.emojiSize + " " + specialemoji[token];
+      titletext = token;
+    } else if ( bolded = token.match(/^\*\*(\w+)\*\*$/)) {
       thisClass = "chat-bold";
-      token = token.substr(2, -2);
+      token = bolded[1];
     }
     return (
-      <span className={this.props.isEmote ? "chat-italic" : thisClass} show={show}>
+      <span className={this.props.isEmote ? "chat-italic" : thisClass} show={show} title={titletext}>
         {emojify(token, emojifyOptions)}{" "}
       </span>
     );
@@ -143,9 +151,9 @@ class MessageItem extends React.Component {
 function emojifyWrap(text) {
   var newtext = text.replace(/:(\w+):/g, function(match, p1) {
     if (specialemoji[match]) {
-      return `<span class="emoji emoji-${p1}"></span>`;
+      return `<span class="emoji ${specialemoji[match]}" title="${match}"></span>`;
     } else {
-      return `<span class="emoji e1a-${p1}"></span>`;
+      return `<span class="emoji e1a-${p1}" title="${match}"></span>`;
     }
   });
   return newtext;

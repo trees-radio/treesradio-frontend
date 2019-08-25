@@ -453,6 +453,19 @@ div>blockquote {
 .chat-italic {
     font-style: italic;
 }
+.emojilarge {
+    height: 48px;
+    width: 48px;
+    font-size: inherit;
+    background-size: cover;
+    top: -3px;
+    position: relative;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    text-indent: -9999em;
+}
 .emoji {
     height: 24px;
     width: 24px;
@@ -523,6 +536,7 @@ div>blockquote {
 }
 .emoji-bong {
 	background-image: url("../img/bong.png");
+	background-size: cover;
 }
 .emoji-neat {
 	background-image: url("../img/neat.png");
