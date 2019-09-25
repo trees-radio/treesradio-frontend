@@ -183,6 +183,7 @@ export default class PlaylistsPanel extends React.Component {
               <i className="fa fa-clock-o" /> {humanDuration}
             </span>
             <span className="pl-channel">{video.channel}</span>
+            <span className="pl-channel">{video.user ? "  (Grab: " + video.user + ")" : ""}</span>
             <i
               onClick={() => playlists.removeVideo(i)}
               className="fa fa-2x fa-trash remove-from-playlist-btn"

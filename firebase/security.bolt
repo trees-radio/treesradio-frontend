@@ -51,6 +51,11 @@ path / {
 
 }
 
+path /help {
+	read() {true}
+	write() {false}
+}
+
 path /_admin {
   read() {true}
 }

@@ -5,6 +5,8 @@ import classNames from "classnames";
 
 import profile from "stores/profile";
 import playing from "stores/playing";
+import HelpList from "stores/help";
+
 import imageWhitelist, {allowedDomains} from "libs/imageWhitelist";
 import UserAvatar from "components/utility/User/UserAvatar";
 import waitlist from "stores/waitlist";
@@ -38,6 +40,9 @@ export default class UserBit extends React.Component {
 
   @observable
   resettingPassword = false;
+
+  @observable
+  showHelp = false;
 
   @observable
   settingAvatar = false;
@@ -79,6 +84,9 @@ export default class UserBit extends React.Component {
     profile.hideBlazebot ? (profile.hideBlazebot = false) : (profile.hideBlazebot = true);
   }
 
+  toggleHelp() {
+    this.showHelp ? (this.showHelp = false) : (this.showHelp = true);
+  }
   hideGifs() {
     if (this.gifsHidden === false) {
       $("<div id='hidegifs' />")
@@ -138,7 +146,43 @@ export default class UserBit extends React.Component {
             </a>
           </li>
         );
-
+      const helpCommands = [];
+      const allUserCommands = [
+        "join",
+        "toke",
+        "em",
+        "me",
+        "spirittoke",
+        "gif",
+        "gelato",
+        "score",
+        "leaderboard",
+        "roll",
+        "timelimit",
+        "spooky",
+        "joint",
+        "duckhunt",
+        "bang",
+        "friend",
+        "save",
+        "hype",
+        "t"
+      ];
+      HelpList.helpCommands.forEach((item, key, map) => {
+        if (
+          profile.rankPermissions.admin == true ||
+          (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||
+          allUserCommands.indexOf(key) != -1
+        )
+          helpCommands.push(
+            <tr>
+              <td>
+                /{key} {item.helpstring.split(" -- ")[0].replace(/^\/(\w+)\s/, " ")}
+              </td>
+              <td>{item.helpstring.split(" -- ")[1]}</td>
+            </tr>
+          );
+      });
       return (
         <div>
           <div className="btn-group">
@@ -232,6 +276,11 @@ export default class UserBit extends React.Component {
                   <i className="fa fa-sign-out"></i> Logout
                 </a>
               </li>
+              <li onClick={() => this.toggleHelp()}>
+                <a href="#">
+                  <i className="fa fa-question-circle"></i> Help
+                </a>
+              </li>
             </ul>
           </div>
           {/*  */}
@@ -259,6 +308,21 @@ export default class UserBit extends React.Component {
               placeholder="Username"
             />
           </Modal>
+          {/*  */}
+          {/* Show Help */}
+          {/*  */}
+          <Modal
+            show={this.showHelp}
+            hideModal={() => {
+              this.toggleHelp();
+            }}
+            title="Blazebot Commands"
+            noClose={false}
+          >
+            <p>Note that all commands may not be available.</p>
+            <table>{helpCommands}</table>
+          </Modal>
+
           {/*  */}
           {/* Email Not Verified Modal */}
           {/*  */}
