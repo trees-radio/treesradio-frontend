@@ -7,6 +7,7 @@ import online from "stores/online";
 import mention from "libs/mention";
 import {send} from "libs/events";
 import epoch from "../utils/epoch";
+import Favico from "favico.js";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const CHAT_DEBOUNCE_MSEC = 300;
@@ -14,9 +15,33 @@ const CHAT_PENALTY_MSEC = 500;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 const GIF_THROTTLE = 60;
+const favico = new Favico({animation: "slide"});
 
 export default new (class Chat {
   constructor() {
+    const myself = this;
+    if (/*@cc_on!@*/ false) {
+      // check for Internet Explorer
+      document.onfocusin = function() {
+        console.log("Focused IE");
+        myself.mentioncount = 0;
+        favico.badge(0);
+        myself.werefocused = true;
+      };
+      document.onfocusout = function() {
+        myself.werefocused = false;
+      };
+    } else {
+      window.onfocus = function() {
+        console.log("Focused Others");
+        myself.mentioncount = 0;
+        favico.badge(0);
+        myself.werefocused = true;
+      };
+      window.onblur = function() {
+        myself.werefocused = false;
+      };
+    }
     this.fbase = fbase;
     fbase
       .database()
@@ -62,6 +87,10 @@ export default new (class Chat {
             }
             if (mentioned) {
               mention(everyone, msg.username);
+              if (!this.werefocused) {
+                this.mentioncount++;
+                favico.badge(this.mentioncount);
+              }
             }
           }
         }
@@ -86,6 +115,8 @@ export default new (class Chat {
   @observable chatLocked = false;
 
   @observable chatcounter = [];
+  @observable werefocused = true;
+  @observable mentioncount = 0;
 
   updateMsg(msg) {
     if (msg.length <= MSG_CHAR_LIMIT) {
