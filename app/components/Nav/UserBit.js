@@ -168,6 +168,7 @@ export default class UserBit extends React.Component {
         "hype",
         "t"
       ];
+      if ( HelpList.helpCommands != undefined ) 
       HelpList.helpCommands.forEach((item, key, map) => {
         if (
           profile.rankPermissions.admin == true ||

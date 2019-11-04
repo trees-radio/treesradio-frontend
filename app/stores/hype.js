@@ -4,7 +4,7 @@ import {send} from "libs/events";
 import profile from "./profile";
 import epoch from "utils/epoch";
 
-const hypetime = 6 * 60 * 60; // 6 hours
+const hypetime = 60; // 60 seconds
 
 export default new (class HypeTimer {
   constructor() {

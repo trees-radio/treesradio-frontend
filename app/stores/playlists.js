@@ -306,7 +306,7 @@ export default new (class Playlists {
       .child(this.selectedPlaylistKey)
       .child("entries")
       .set(newPlaylist);
-    // toast.success(`Moved ${video.title} to bottom of playlist.`);
+    toast.success(`Moved ${video.title} to bottom of playlist.`);
   }
 
   removeVideo(index) {

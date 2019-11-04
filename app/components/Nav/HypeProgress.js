@@ -3,7 +3,7 @@ import {observer} from "mobx-react";
 
 import hypetimer from "stores/hype";
 
-const hypetime = 6 * 60 * 60;
+const hypetime = 60;
 @observer
 export default class HypeProgress extends React.Component {
   getHyped = () => {

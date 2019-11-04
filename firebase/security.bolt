@@ -56,6 +56,17 @@ path /help {
 	write() {false}
 }
 
+path /patreon {
+	read() {true}
+	write() {false}
+}
+
+path /flairs {
+	read() {true}
+	write() {false}
+}
+
+
 path /_admin {
   read() {true}
 }

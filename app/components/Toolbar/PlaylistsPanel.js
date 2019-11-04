@@ -192,6 +192,10 @@ export default class PlaylistsPanel extends React.Component {
               onClick={() => playlists.moveTop(i)}
               className="fa fa-2x fa-arrow-up pl-move-to-top"
             />
+	    <i
+	      onClick={() => playlists.moveBottom(i)}
+	      className="fa fa-2x fa-arrow-down pl-move-to-top"
+	    />
             <a
               target="_blank"
               href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
