@@ -3,7 +3,7 @@ import fbase from "libs/fbase";
 export default function getPatreon(uid) {
   if (uid === undefined || uid.length == 0) return false;
   if (uid === "BLAZEBOT") {
-    return Promise.resolve("Bot");
+    return Promise.resolve(false);
   }
   return fbase
     .database()

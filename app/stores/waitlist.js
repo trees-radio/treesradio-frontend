@@ -125,10 +125,12 @@ export default new (class Waitlist {
       chat.sendMsg("/skip");
       this.localPlayingState = false;
     } else if (this.inWaitlist) {
-      send("leave_waitlist");
-      clearInterval(this.autojoinTimer);
-      this.autojoinTimer = false;
-      this.localJoinState = false;
+      if (confirm("Are you sure?")) {
+        send("leave_waitlist");
+        clearInterval(this.autojoinTimer);
+        this.autojoinTimer = false;
+        this.localJoinState = false;
+      }
     } else {
       send("join_waitlist");
       this.localJoinState = true;

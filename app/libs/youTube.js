@@ -1,7 +1,7 @@
 import axios from "axios";
 import URL from "url-parse";
 
-export const YT_API_KEY = "AIzaSyDXl5mzL-3BUR8Kv5ssHxQYudFW1YaQckA";
+export const YT_API_KEY = "AIzaSyBqD_tDfVcDItWFvY1UvPue8Ag5V_gJVDc";
 const VALID_YT_HOSTNAMES = ["youtube.com", "www.youtube.com"];
 
 export async function searchYouTube(query) {

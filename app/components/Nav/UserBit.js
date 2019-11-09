@@ -168,22 +168,22 @@ export default class UserBit extends React.Component {
         "hype",
         "t"
       ];
-      if ( HelpList.helpCommands != undefined ) 
-      HelpList.helpCommands.forEach((item, key, map) => {
-        if (
-          profile.rankPermissions.admin == true ||
-          (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||
-          allUserCommands.indexOf(key) != -1
-        )
-          helpCommands.push(
-            <tr>
-              <td>
-                /{key} {item.helpstring.split(" -- ")[0].replace(/^\/(\w+)\s/, " ")}
-              </td>
-              <td>{item.helpstring.split(" -- ")[1]}</td>
-            </tr>
-          );
-      });
+      if (HelpList.helpCommands != undefined)
+        HelpList.helpCommands.forEach((item, key, map) => {
+          if (
+            profile.rankPermissions.admin == true ||
+            (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||
+            allUserCommands.indexOf(key) != -1
+          )
+            helpCommands.push(
+              <tr>
+                <td>
+                  /{key} {item.helpstring.split(" -- ")[0].replace(/^\/(\w+)\s/, " ")}
+                </td>
+                <td>{item.helpstring.split(" -- ")[1]}</td>
+              </tr>
+            );
+        });
       return (
         <div>
           <div className="btn-group">

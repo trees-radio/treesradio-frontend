@@ -75,7 +75,7 @@ export default class About extends React.Component {
             </ul>
           </div>
           <div>
-            <div class="tenorgif-attr">
+            <div className="tenorgif-attr">
               <h5>BlazeBot&apos;s GIFs:</h5>
             </div>
           </div>

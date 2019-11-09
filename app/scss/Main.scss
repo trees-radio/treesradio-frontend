@@ -9,6 +9,15 @@ body {
   background-color: #000000;
   font-family: "Open Sans", sans-serif;
 }
+
+#app {
+  height: 100vh;
+}
+
+#app > div {
+  height: 100vh;
+}
+
 h4 {
 	font-size: 16px;
 	min-height: 35px;
@@ -63,17 +72,12 @@ h4 {
   height: 100%;
 }
 
-#app > div {
-  height: 100%;
-  width: 100%;
-}
-
 #app:-webkit-any-link {
     cursor: auto;
 }
 
 .main-load {
-  background-image: url("../img/loading_screen-01.svgz");
+  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   transition: all 2s !important;
   transition-timing-function: ease-in-out !important;
@@ -115,17 +119,18 @@ h4 {
 }
 
 .main-center {
-  background-image: url("../img/loading_screen-01.svgz");
+  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
 	display: inline-block;
   text-align: center;
   position:relative;
   vertical-align: middle;
-  width: 100%;
+  width: 100vw;
+  height: 100vw;
 }
 
 .main-vcenter {
-  background-image: url("../img/loading_screen-01.svgz");
+  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   display: table-cell;
   vertical-align: middle;
@@ -134,10 +139,11 @@ h4 {
   background-color: rgba(16, 13, 27, 0.85);
   padding: 0px;
   margin: 0px;
-  width: 100%;
+  width: 100vw;
+  height: 100vw;
 }
 .main-loading {
-  background-image: url("../img/loading_screen-01.svgz");
+  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   position: relative;
   left:50%;
