@@ -20,28 +20,15 @@ const favico = new Favico({animation: "slide"});
 export default new (class Chat {
   constructor() {
     const myself = this;
-    if (/*@cc_on!@*/ false) {
-      // check for Internet Explorer
-      document.onfocusin = function() {
-        console.log("Focused IE");
-        myself.mentioncount = 0;
-        favico.badge(0);
-        myself.werefocused = true;
-      };
-      document.onfocusout = function() {
-        myself.werefocused = false;
-      };
-    } else {
-      window.onfocus = function() {
-        console.log("Focused Others");
-        myself.mentioncount = 0;
-        favico.badge(0);
-        myself.werefocused = true;
-      };
-      window.onblur = function() {
-        myself.werefocused = false;
-      };
-    }
+    window.onfocus = function() {
+      console.log("Focused Others");
+      myself.mentioncount = 0;
+      favico.badge(0);
+      myself.werefocused = true;
+    };
+    window.onblur = function() {
+      myself.werefocused = false;
+    };
     this.fbase = fbase;
     fbase
       .database()
@@ -52,7 +39,7 @@ export default new (class Chat {
         if (msg) {
           // Makes chat messages appear to the silenced user.
 
-          if (msg.uid !== profile.uid && (msg.silenced !== undefined && msg.silenced === true)) {
+          if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
             if ((profile.rank && !profile.showmuted) || !profile.rank) return;
           }
 

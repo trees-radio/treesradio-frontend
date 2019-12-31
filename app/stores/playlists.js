@@ -1,18 +1,29 @@
 import {observable, computed} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
-// import profile from 'stores/profile';
+import profile from "stores/profile";
 // import axios from 'axios';
 import moment from "moment";
 import {shuffle} from "lodash";
 // import events from 'stores/events';
-import {searchYouTube, getYtPlaylist} from "libs/youTube";
-import {searchSoundcloud} from "libs/soundcloud";
+import {send} from "../libs/events";
 
 export default new (class Playlists {
   constructor() {
     fbase.auth().onAuthStateChanged(user => {
       if (user !== null) {
+        const me = this;
+        fbase
+          .database()
+          .ref("searches")
+          .child(user.uid)
+          .on("value", snap => {
+            console.log(snap.val());
+            if (!snap.val() || snap.val() == null) return false;
+            me.search = snap.val();
+            me.openSearch = true;
+            me.searching = false;
+          });
         this.uid = user.uid;
         this.ref = fbase
           .database()
@@ -112,7 +123,6 @@ export default new (class Playlists {
 
   clearSearch() {
     this.openSearch = false;
-    this.search = [];
   }
 
   selectPlaylist(index) {
@@ -185,19 +195,8 @@ export default new (class Playlists {
   }
 
   async runSearch(query) {
-    this.search = [];
     this.searching = true;
-    let searchResults = [];
-    if (this.searchSource == "youtube") {
-      let {items} = await searchYouTube(query);
-      searchResults = items;
-    } else {
-      let {data} = await searchSoundcloud(query);
-      searchResults = data;
-    }
-    this.search = searchResults;
-    this.searching = false;
-    this.openSearch = true;
+    if (profile.init) send("search", {source: this.searchSource, query: query});
   }
 
   addFromSearch(index) {
@@ -331,7 +330,8 @@ export default new (class Playlists {
   @observable importing = false;
 
   async importYouTubePlaylist(name, url) {
-    this.importing = true;
+    return true; // Disable for now. See if traffic drops.
+    /*this.importing = true;
     const playlist = await getYtPlaylist(url);
 
     const playlistTransform = playlist.map(i => ({
@@ -352,5 +352,6 @@ export default new (class Playlists {
         this.importing = false;
         return true;
       });
+      */
   }
 })();

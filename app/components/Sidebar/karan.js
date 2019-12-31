@@ -28,16 +28,6 @@ export default class Karan extends React.Component {
               lightheartedness that was unmatched. His love of music and the laughs he shared with
               us is something that we&apos;re all going to miss dearly.
             </p>
-            {/* <p>If you or someone you know is suffering from depression or suicidal thoughts, please seek help immediately. 
-                            Self medication has its limits. All problems can be managed, and nobody has to suffer alone.</p>
-                        <ul>
-                          <li>
-                              <a href="https://www.reddit.com/r/SubstanceAbuseHelp/" target="_blank">Substance Abuse Help Sub-Reddit</a>
-                           </li>
-                           <li>
-                               <a href="https://www.reddit.com/r/SuicideWatch" target="_blank">Suicide Watch Sub-Reddit</a>
-                            </li>
-                        </ul> */}
           </div>
         </div>
       </Modal>

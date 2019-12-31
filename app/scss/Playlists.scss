@@ -380,13 +380,17 @@
   margin-top: 2%;
   background-color: inherit;
 }
-
+.track {
+	height: 100%
+}
+.track-0 {
+	background-image: linear-gradient(to right, #579300, #77b320);
+	border-radius: 5px;
+}
 .volume-slider {
   height: 49%;
   width: 95%;
   margin: 0 auto;
-  border-bottom-style:solid;
-  border-color: #2d2f39;
 }
 
 .volume-slider-icon {

@@ -98,7 +98,7 @@ export default class PlaylistsPanel extends React.Component {
           var mins;
           var secs;
 
-          if (playlists.searchSource == "youtube") {
+          if (video.snippet) {
             url = `https://www.youtube.com/watch?v=${video.id}`;
             duration = moment.duration(video.contentDetails.duration);
             hours = duration.hours();
@@ -113,7 +113,7 @@ export default class PlaylistsPanel extends React.Component {
             title = video.snippet.title;
             channelTitle = video.snippet.channelTitle;
             skipLink = `https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.id}`;
-          } else if (playlists.searchSource == "soundcloud") {
+          } else if (video.title) {
             url = video.permalink_url;
             duration = moment.duration(video.duration);
             hours = duration.hours();

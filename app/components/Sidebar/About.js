@@ -47,14 +47,31 @@ export default class About extends React.Component {
             </li>
             <li id="rules-8">Songs that have been recently played (2 hours) may be skipped.</li>
             <li id="rules-9">Staff reserve the right to skip any video.</li>
-            <li id="rules-10">
-              This is a multi-genre site that appreciates varying music types. Excessive criticism
-              of another&apos;s music will not be tolerated
-            </li>
           </ul>
         </div>
         <div className="about-suggestions">
           <div>
+            <h5>Legal</h5>
+            <ul className="about-rules">
+              <li>
+                <a
+                  href="https://www.youtube.com/static?template=terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  YouTube Terms of Service
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://policies.google.com/privacy?hl=en-US"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Privacy Policy
+                </a>
+              </li>
+            </ul>
             <h5>Shoutouts!</h5>
             <ul className="about-rules">
               <li>
@@ -67,7 +84,13 @@ export default class About extends React.Component {
               </li>
               <li>
                 @FredRodgers, @JubieMeg, @JohnPyro, @entlife for sponsoring @yellerjeep&apos;s
-                ongoing development.
+                <a
+                  href="https://www.patreon.com/yellerjeep_tr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ongoing development of the site.
+                </a>
               </li>
               <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
               <li>@Pixelmac for expanding our bump library</li>

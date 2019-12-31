@@ -6,13 +6,18 @@ import ReactPlayer from "react-player";
 import {Line} from "rc-progress";
 
 import playing from "stores/playing";
+import userbit from "./Nav/UserBit";
 
 const rPlayerYoutubeConfig = {
   playerVars: {
-    iv_load_policy: 3,
-    autoplay: 1
+    iv_load_policy: 1,
+    controls: true,
+    playsinline: true,
+    color: "white",
+    autoplay: true
   },
-  preload: true
+  preload: true,
+  controls: true
 };
 
 const rPlayerSoundcloudConfig = {
@@ -62,6 +67,13 @@ class Player extends React.Component {
     const containerStyle = {
       backgroundImage: `url(${playing.backgroundImage})`
     };
+    let controls = "true";
+    let progress = {};
+
+    if (userbit.legacyInterface) {
+      controls = "false";
+      progress = {display: "none"};
+    }
 
     return (
       <div id="vidcontainer" style={containerStyle}>
@@ -82,6 +94,7 @@ class Player extends React.Component {
               onProgress={p => this.onProgress(p)}
               onError={e => this.playerError(e)}
               onPause={undefined}
+              controls={controls}
               config={{
                 youtube: {
                   rPlayerYoutubeConfig
@@ -96,10 +109,11 @@ class Player extends React.Component {
         </div>{" "}
         <Line
           className="progressbar-container"
+          style={progress}
           strokeWidth="4"
           strikeLinecap="butt"
           percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
-          strokeColor="#77b300"
+          strokeColor="#000000"
         />
       </div>
     );

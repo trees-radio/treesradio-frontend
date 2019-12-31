@@ -41,28 +41,32 @@ module.exports = new Config().merge({
         options: {
           limit: "250000",
           mimetype: "application/font-woff",
-          name: "fonts/[hash].[ext]"
+          name: "fonts/[hash].[ext]",
+          esModule: false
         }
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "file-loader",
         options: {
-          name: "fonts/[hash].[ext]"
+          name: "fonts/[hash].[ext]",
+          esModule: false
         }
       },
       {
         test: /\.(mp3|wav|ogg)$/,
         loader: "file-loader",
         options: {
-          name: "audio/[hash].[ext]"
+          name: "audio/[hash].[ext]",
+          esModule: false
         }
       },
       {
         test: /\.(jpg|png|gif|svg|svgz|cur)$/,
         loader: "file-loader",
         options: {
-          name: "img/[name].[ext]"
+          name: "img/[name].[ext]",
+          esModule: false
         }
       }
     ]

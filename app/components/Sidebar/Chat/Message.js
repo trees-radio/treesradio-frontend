@@ -73,7 +73,14 @@ export default class Message extends React.Component {
     if (!text) text = "";
     if (text.substring(0, 12) === "==markdown==" || this.props.userName == "BlazeBot") {
       if (text.substring(0, 12) === "==markdown==") text = text.substring(12);
-      return <ReactMarkdown source={emojifyWrap(text)} escapeHtml={false} linkTarget="_blank" />;
+      return (
+        <ReactMarkdown
+          source={emojifyWrap(text)}
+          escapeHtml={false}
+          linkTarget="_blank"
+          rel="noopener noreferrer"
+        />
+      );
     }
 
     let tokens = text.split(" ");

@@ -36,6 +36,9 @@ export default class UserBit extends React.Component {
   }
 
   @observable
+  legacyInterface = false;
+
+  @observable
   gifsHidden = false;
 
   @observable
@@ -78,6 +81,10 @@ export default class UserBit extends React.Component {
 
   toggleShowMute() {
     profile.showmuted ? (profile.showmuted = false) : (profile.showmuted = true);
+  }
+
+  toggleInterface() {
+    this.legacyInterface ? (this.legacyInterface = false) : (this.legacyInterface = true);
   }
 
   hideBlazebot() {
@@ -280,6 +287,17 @@ export default class UserBit extends React.Component {
               <li onClick={() => this.toggleHelp()}>
                 <a href="#">
                   <i className="fa fa-question-circle"></i> Help
+                </a>
+              </li>
+              <li onClick={() => this.toggleInterface()}>
+                <a href="#">
+                  <i
+                    className={classNames(
+                      "fa",
+                      this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
+                    )}
+                  ></i>{" "}
+                  Gelato?
                 </a>
               </li>
             </ul>
