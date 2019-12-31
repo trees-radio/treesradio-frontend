@@ -3,7 +3,7 @@
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
 ---
-image: "node:8"
+image: "node:latest"
 
 cache:
   key: "$CI_BUILD_STAGE_$CI_BUILD_REF_NAME_02"
