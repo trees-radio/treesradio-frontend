@@ -389,7 +389,14 @@ export default class PlaylistsPanel extends React.Component {
           show={this.mergingPlaylists}
           hideModal={() => (this.mergingPlaylists = false)}
           title="Merge Playlists"
-          leftButton={() => { playlists.mergePlaylists($("#playlista").val(), $("#playlistb").val(), $("#newplaylistname").val()); this.mergingPlaylists = false; } }
+          leftButton={() => {
+            playlists.mergePlaylists(
+              $("#playlista").val(),
+              $("#playlistb").val(),
+              $("#newplaylistname").val()
+            );
+            this.mergingPlaylists = false;
+          }}
           leftButtonText="Merge"
         >
           <div className="form-group">
@@ -397,7 +404,7 @@ export default class PlaylistsPanel extends React.Component {
             <select id="playlista" className="form-control">
               <option value="-1">Select First Playlist</option>
               {playlists.playlistNames.map((name, i) => (
-                <option value={i}>{name}</option>
+                <option value={i} key={i}>{name}</option>
               ))}
             </select>
           </div>
@@ -406,7 +413,7 @@ export default class PlaylistsPanel extends React.Component {
             <select id="playlistb" className="form-control">
               <option value="-1">Select Second Playlist</option>
               {playlists.playlistNames.map((name, i) => (
-                <option value={i}>{name}</option>
+                <option value={i} key={i}>{name}</option>
               ))}
             </select>
           </div>
