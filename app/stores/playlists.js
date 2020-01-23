@@ -241,6 +241,12 @@ export default new (class Playlists {
     this.addSong(song, this.selectedPlaylistKey);
   }
 
+  mergePlaylists(playlista, playlistb, playlistname) {
+	  send("playlist.merge", { playlista: playlista, playlistb: playlistb, playlistname: playlistname });
+  }
+
+ 
+
   checkPlaylistForSong(playlistKey, songUrl) {
     var playlist = this.getPlaylistByKey(playlistKey);
     if (playlist.entries && playlist.entries.some(s => s.url === songUrl)) {
@@ -325,6 +331,10 @@ export default new (class Playlists {
       .child("entries")
       .set(newPlaylist);
     toast.success(`Playlist shuffled.`);
+  }
+
+  sortPlaylist(direction, key) {
+	  send('playlist.sort', { playlist: this.selectedPlaylistKey, direction: direction, field: key });
   }
 
   @observable importing = false;

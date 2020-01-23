@@ -58,6 +58,9 @@ export default class PlaylistsPanel extends React.Component {
   @observable
   importingPlaylist = false;
 
+  @observable
+  mergingPlaylists = false;
+
   async importPlaylist() {
     const name = this._importName.value;
     const url = this._importUrl.value;
@@ -226,7 +229,46 @@ export default class PlaylistsPanel extends React.Component {
     var shuffle = playlists.hasPlaylist ? (
       <span
         onClick={() => playlists.shufflePlaylist()}
-        className="playlist-shuffle-btn fa fa-random fa-3x"
+        className="playlist-shuffle-btn fa fa-random fa-2x"
+        title="Shuffle this Playlist"
+      />
+    ) : (
+      false
+    );
+
+    var sortnameasc = playlists.hasPlaylist ? (
+      <span
+        onClick={() => playlists.sortPlaylist("asc", "title")}
+        className="playlist-shuffle-btn fa fa-sort-alpha-asc fa-2x"
+        title="Sort this Playlist Alphabetically"
+      />
+    ) : (
+      false
+    );
+
+    var sortnamedesc = playlists.hasPlaylist ? (
+      <span
+        onClick={() => playlists.sortPlaylist("desc", "title")}
+        className="playlist-shuffle-btn fa fa-sort-alpha-desc fa-2x"
+        title="Sort this Playlist Reverse Alphabetically"
+      />
+    ) : (
+      false
+    );
+    var sorttimeasc = playlists.hasPlaylist ? (
+      <span
+        onClick={() => playlists.sortPlaylist("asc", "duration")}
+        className="playlist-shuffle-btn fa fa-sort-numeric-asc fa-2x"
+        title="Sort this Playlist by shortest song first"
+      />
+    ) : (
+      false
+    );
+    var sorttimedesc = playlists.hasPlaylist ? (
+      <span
+        onClick={() => playlists.sortPlaylist("desc", "duration")}
+        className="playlist-shuffle-btn fa fa-sort-numeric-desc fa-2x"
+        title="Sort this Playlist by longest song first"
       />
     ) : (
       false
@@ -296,10 +338,21 @@ export default class PlaylistsPanel extends React.Component {
                 </ul>
               </div>
               {shuffle}
+              {sortnameasc}
+              {sortnamedesc}
+              {sorttimeasc}
+              {sorttimedesc}
               <span
                 onClick={() => playlists.exportPlaylist()}
-                className="playlist-shuffle-btn fa fa-download fa-3x"
+                className="playlist-shuffle-btn fa fa-download fa-2x"
+                title="Download Playlist (json)"
               />
+              <a href="#" onClick={() => (this.mergingPlaylists = true)}>
+                <i
+                  className="playlist-shuffle-btn fa fa-code-fork fa-2x"
+                  title="Merge Two Playlists"
+                ></i>
+              </a>
             </div>
           </div>
         </div>
@@ -332,6 +385,37 @@ export default class PlaylistsPanel extends React.Component {
             @apos;?
           </p>
         </Modal>
+        <Modal
+          show={this.mergingPlaylists}
+          hideModal={() => (this.mergingPlaylists = false)}
+          title="Merge Playlists"
+          leftButton={() => { playlists.mergePlaylists($("#playlista").val(), $("#playlistb").val(), $("#newplaylistname").val()); this.mergingPlaylists = false; } }
+          leftButtonText="Merge"
+        >
+          <div className="form-group">
+            <label htmlFor="playlista">Select First Playlist:</label>
+            <select id="playlista" className="form-control">
+              <option value="-1">Select First Playlist</option>
+              {playlists.playlistNames.map((name, i) => (
+                <option value={i}>{name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="playlistb">Select Second Playlist:</label>
+            <select id="playlistb" className="form-control">
+              <option value="-1">Select Second Playlist</option>
+              {playlists.playlistNames.map((name, i) => (
+                <option value={i}>{name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="newplaylistname">Enter a new playlist name:</label>
+            <input type="text" className="form-control" id="newplaylistname" />
+          </div>
+        </Modal>
+
         <Modal
           show={this.importingPlaylist}
           hideModal={() => (this.importingPlaylist = false)}
