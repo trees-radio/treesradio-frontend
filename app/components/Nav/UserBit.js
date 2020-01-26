@@ -193,7 +193,7 @@ export default class UserBit extends React.Component {
         });
       return (
         <div>
-          <div className="btn-group">
+          <div id="userbitContainer" className="btn-group">
             <a className="btn btn-primary" id="usernametop">
               <div className="userbit-avatar">
                 <UserAvatar uid={profile.uid} />

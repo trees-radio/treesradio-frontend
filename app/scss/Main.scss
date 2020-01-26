@@ -1,9 +1,11 @@
 
 html,
 body {
+  display: grid;
+
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
-  height: 100%;
+  height: 100vh;
   overflow-y: hidden;
   color: #77b300 !important;
   background-color: #000000;
@@ -19,50 +21,61 @@ body {
 }
 
 h4 {
-	font-size: 16px;
-	min-height: 35px;
+  font-size: 16px;
+  min-height: 35px;
 }
+
 .modal-backdrop.fade {
-	opacity: .5;
+  opacity: .5;
 }
+
 .modal-dialog {
-	margin-top: 155px;
+  margin-top: 155px;
 }
+
 .fade {
-	opacity: .99;
+  opacity: .99;
 }
+
 .toast-box {
-	z-index: 99999;
+  z-index: 99999;
 }
+
 .april-fools {
   font-family: "Comic Sans MS", cursive, sans-serif !important;
 }
 
 .modal-content {
-	background-color: #202020;
-	color: #888;
+  background-color: #202020;
+  color: #888;
 }
 
 .btn-primary {
-	background-color: #77b300;
+  background-color: #77b300;
 }
+
 .btn-default {
-	background-color: #77b300;
+  background-color: #77b300;
 }
+
 .navbar, .navbar-default {
-	border: none;
+  border: none;
 }
+
 .btn, .btn-primary {
-	border-color:#87a310;
+  border-color: #87a310;
 }
+
 .dropdown-menu {
-	background-color: #000;
-	color: #77b300;
-	margin-right: 10px;
+  background-color: #000;
+  color: #77b300;
+  margin-right: 10px;
 }
-.dropdown-menu>li>a {
-	color: #87c300;
+
+.dropdown-menu > li > a {
+  color: #87c300;
 }
+
 .placeholder-txt {
   text-align: center;
   vertical-align: middle;
@@ -73,7 +86,7 @@ h4 {
 }
 
 #app:-webkit-any-link {
-    cursor: auto;
+  cursor: auto;
 }
 
 .main-load {
@@ -137,38 +150,37 @@ h4 {
   width: 100vw;
   height: 100vh;
 }
+
 .main-loading {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   position: relative;
-  left:50%;
-  right:50%;
-  margin-top:20%;
+  left: 50%;
+  right: 50%;
+  margin-top: 20%;
 }
 
 .loadingscreenwheel {
-  margin-top:1vh;
+  margin-top: 1vh;
 }
 
 /* Components Container */
 
-.container-fluid
-{
+.container-fluid {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
-    height: 100%;
-    width: 100%;
-    margin-top: -50px;
-    padding: 50px 0 0 0; /*set left/right padding according to needs*/
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  margin-top: -50px;
+  padding: 50px 0 0 0; /*set left/right padding according to needs*/
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.row
-{
-    height: 100%;
-    width: 100%;
-    margin: 0;
+.row {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .sweet-alert button.cancel {
@@ -186,15 +198,27 @@ h4 {
 
 $mqIterations: 19;
 @mixin fontResize($iterations) {
-   $i: 1;
-   @while $i <= $iterations {
-      @media all and (min-width: 100px * $i) {
-         .grab-button { font-size:0.06em * $i; }
-	 .volume-slider { font-size:0.06em * $i; }
-         .like-button { font-size:0.06em * $i; }
-         .dislike-button { font-size:0.06em * $i; } 
-	 .waitlist { font-size:0.1em * $i; } }
-      $i: $i + 1;
-   }
+  $i: 1;
+  @while $i <= $iterations {
+    @media all and (min-width: 100px * $i) {
+      .grab-button {
+        font-size: 0.06em * $i;
+      }
+      .volume-slider {
+        font-size: 0.06em * $i;
+      }
+      .like-button {
+        font-size: 0.06em * $i;
+      }
+      .dislike-button {
+        font-size: 0.06em * $i;
+      }
+      .waitlist {
+        font-size: 0.1em * $i;
+      }
+    }
+    $i: $i + 1;
+  }
 }
+
 @include fontResize($mqIterations);
