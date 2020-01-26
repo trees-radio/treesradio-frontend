@@ -13,14 +13,10 @@
   grid-area: space;
   grid-row: 1;
   grid-column: 2;
-  //align-content: center;
-  //height: 100%;
 }
 
 #navbar-grid {
   top: 0;
-  //margin-top: -50px;
-  //height: 5vh;
   display: inline-grid !important;
   grid-template-areas: "tr-watermark space hype-button toke-button userbit";
   grid-template-columns: 20vw 42vw 20vw 8vw 10vw;
@@ -42,9 +38,6 @@
   align-items: baseline;
   align-self: baseline;
   grid-column-start: 1;
-  // margin-right: 50px;
-  //  max-width: 25%;
-  //max-height: 50px;
   float: left !important;
 
 }
@@ -215,36 +208,33 @@
 }
 
 #usernav-container {
-  margin-top: -10px;
+  grid-column: 3;
   place-self: center;
-  display: inline-flex;
+  margin-top: -10px;
 
+  display: inline-flex;
   flex-flow: row nowrap;
   place-content: baseline;
-  //max-width: 20vw;
+
   width: 100% !important;
   height: 100% !important;
-  grid-column: 3;
-  //margin-right: -10vh;
 }
 
 #hype-container {
+  justify-self: baseline;
+  margin-top: -5vh;
+
   display: inline-flex;
   flex-flow: row nowrap;
-  justify-self: baseline;
-  margin-top: -50px;
-  //justify-self: end;
 }
 
 .hypepb {
   -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   background: #ccc;
-  width: 250px;
-  height: 38px;
+  width: 13.5vw;
+  height: 4vh;
   margin-top: .5vh;
-  //top: 4px;
-  //right: 365px;
   border-radius: 8px;
   border-top: 2px solid #DDD;
   border-left: 2px solid #DDD;
@@ -252,8 +242,8 @@
   border-right: 2px solid #BBB;
   overflow: hidden;
   text-align: center;
-  line-height: 38px;
-  font-size: 14px;
+  //line-height: 38px;
+  font-size: 1.29vh;
   font-weight: bold;
   color: #666;
   cursor: url('../img/lighter.cur'), pointer;
@@ -265,8 +255,10 @@
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  height: 38px;
-  width: 48px;
+  //height: 38px;
+  width: 1.5vw;
+  height: 4vh;
+  //width: 48px;
   background-color: #558B2F;
   border-radius: 6px;
   background: #689F38;
@@ -283,14 +275,17 @@
   cursor: url('../img/lighter.cur'), pointer;
 }
 
-.hypedone {
+.hypedone {;
   text-align: center;
-  line-height: 38px;
-  font-size: 14px;
+  margin-top: .5vh;
+  line-height: 3.5vh;
+  font-size: 1.29vh;
   font-weight: bold;
   color: #EEE;
-  height: 38px;
-  width: 250px;
+  width: 13.5vw;
+  height: 4vh;
+  //height: 38px;
+  //width: 250px;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
   cursor: url('../img/lighter.cur'), pointer;
 }
@@ -301,7 +296,7 @@
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  width: 125px;
+  //width: 125px;
 }
 
 .hypeprogress a:hover {
