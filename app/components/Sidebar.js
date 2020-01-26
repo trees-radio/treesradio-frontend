@@ -92,6 +92,8 @@ class Sidebar extends React.Component {
           <Waitlist show={this.currentSidebar === "WAITLIST"} />
           <About show={this.currentSidebar === "ABOUT"} />
         </div>
+        < div id="haaack"></div>
+
       </div>
     );
   }
