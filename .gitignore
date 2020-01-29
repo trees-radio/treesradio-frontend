@@ -5,6 +5,8 @@ firebase/rules.json
 app/version.json
 yarn.lock
 public.old
+run.bat
+run.sh
 
 ## Floobits
 .flooignore
@@ -178,14 +180,11 @@ build/
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.tmp_proj
-*.log
 *.vspscc
 *.vssscc
 .builds
 *.pidb
-*.log
 *.scc
 
 # Visual C++ cache files
@@ -325,7 +324,6 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 public/prepros.cfg
-public/app.css
 public/app.css
 public/app.js
 ._.DS_Store
