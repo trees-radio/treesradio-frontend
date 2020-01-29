@@ -95,6 +95,7 @@ export default class About extends React.Component {
               <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
               <li>@Pixelmac for expanding our bump library</li>
               <li>@Anarki for great ideas and assisting with debugging.</li>
+              <li>@Player:, @TweeZee for heading on the quest to make TR mobile.</li>
             </ul>
           </div>
           <div>
