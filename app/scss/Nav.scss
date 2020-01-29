@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+/* #### Variables #### */
+
+$navbar-button-height: 3.5vh !important;
+
 #tr-nav {
   height: 5vh;
   top: 0 !important;
@@ -187,24 +191,35 @@
   grid-area: toke-button;
   justify-self: end;
   align-self: start;
-  float:right;
+  float: right;
 }
 
 #userbit-container {
-  grid-area:userbit;
+  grid-area: userbit;
   margin-top: .1vh;
+  width: 100%;
+  height: auto;
   //margin-left: 50px;
   place-self: start;
-  float: right;
+  float: left;
   //justify-items: baseline;
 }
-#hype-grid-container{
-  grid-area:hype-button;
+
+  #userbit-wrapper{
+  margin-right: 2vw;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  height: $navbar-button-height!important;
+}
+
+#hype-grid-container {
+  grid-area: hype-button;
   align-self: end;
   display: inline-flex;
   flex-flow: row-reverse wrap;
-  grid-row:1;
-  grid-column:3;
+  grid-row: 1;
+  grid-column: 3;
 }
 
 #usernav-container {
@@ -218,6 +233,15 @@
 
   width: 100% !important;
   height: 100% !important;
+}
+
+#toke-button {
+  //max-width: 2vh;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: 1.5vh;
+  height: $navbar-button-height !important;
 }
 
 #hype-container {
@@ -243,7 +267,7 @@
   overflow: hidden;
   text-align: center;
   //line-height: 38px;
-  font-size: 1.29vh;
+  font-size: 1.8vh;
   font-weight: bold;
   color: #666;
   cursor: url('../img/lighter.cur'), pointer;
