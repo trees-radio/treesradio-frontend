@@ -106,7 +106,7 @@ export default class About extends React.Component {
         </div>
         <div className="about-emoji">
           <h6>
-            <a href="https://www.emojione.com/emoji/v3" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.emojicopy.com/" target="_blank" rel="noopener noreferrer">
               Emoji List
             </a>
           </h6>
