@@ -2,6 +2,7 @@ import React from "react";
 import {observer} from "mobx-react";
 
 import toketimer from "stores/toke";
+import profile from "stores/profile";
 
 @observer
 export default class TokeTimer extends React.Component {
@@ -22,7 +23,7 @@ export default class TokeTimer extends React.Component {
                 <div>
                     <a
                         id="toke-button"
-                        className={toketimer.tokeUnderway ? "btn btn-warning" : "btn btn-success"}
+                        className={this.getButtonClasses()}
                         onClick={this.joinToke}>
                         Toke
                         <span style={{display: toketimer.tokeUnderway ? "inherit" : "none"}}>
@@ -32,6 +33,14 @@ export default class TokeTimer extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    getButtonClasses() {
+if (profile.user !== null){
+    return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin" : "btn btn-success disabledNoLogin";
+}else {
+    return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin greyDisabled" : "btn btn-success disabledNoLogin greyDisabled"
+}
     }
 }
 

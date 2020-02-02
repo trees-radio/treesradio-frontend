@@ -2,21 +2,28 @@ import React from "react";
 import {observer} from "mobx-react";
 
 import hypetimer from "stores/hype";
+import profile from "stores/profile";
 
 const hypetime = 60;
 @observer
 export default class HypeProgress extends React.Component {
   getHyped = () => {
-    if (hypetimer.hypePercentageCharged == 100) hypetimer.getHyped();
+    if (hypetimer.hypePercentageCharged === 100) hypetimer.getHyped();
   };
+
+  disableIfNecessary() {
+
+    return profile.user !== null ? "" : " greyDisabled";
+  }
+
   render() {
     return (
       <div
-        className="hypepb"
+        className={"hypepb"+ this.disableIfNecessary()}
         onClick={this.getHyped}
-        style={{visibility: hypetimer.lasthype > 0 ? true : false}}
+        style={{visibility: hypetimer.lasthype > 0}}
       >
-        <div className="hypeprogress" style={{width: hypetimer.hypePercentageCharged + "%"}}>
+        <div className={"hypeprogress"+this.disableIfNecessary()} style={{width: hypetimer.hypePercentageCharged + "%"}}>
           <a
             className="hypedone"
             onClick={this.getHyped}
@@ -24,7 +31,7 @@ export default class HypeProgress extends React.Component {
               "Hype Recharging: " + convertHoursMinutesSeconds(hypetime - hypetimer.secondsfromhype)
             }
           >
-            {hypetimer.hypePercentageCharged == 100
+            {hypetimer.hypePercentageCharged === 100
               ? "Hype Ready!"
               : convertHoursMinutesSeconds(hypetime - hypetimer.secondsfromhype)}
           </a>

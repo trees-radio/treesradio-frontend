@@ -9,19 +9,69 @@ import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
-import {ToastContainer, toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
+import profile from "stores/profile";
+import {observable} from "mobx";
+
 
 toast.configure({autoClose: 8000, position: toast.POSITION.TOP_CENTER});
 
+
+
+
 @observer
 class Main extends React.Component {
+
+    //#region test shit
+
+    @observable
+    legacyInterface = false;
+
+    @observable
+    gifsHidden = false;
+
+    @observable
+    resettingPassword = false;
+
+    @observable
+    showHelp = false;
+
+    @observable
+    settingAvatar = false;
+    @observable
+    avatarField = "";
+
+    @observable
+    changingPassword = false;
+
+    @observable
+    changingEmail = false;
+
+    onEnterKey(e, cb) {
+        var key = e.keyCode || e.which;
+        if (key === 13) {
+            cb();
+        }
+    }
+
+    addUsername() {
+        profile.updateUsername(this._username.value.substr(0, 24));
+    }
+
+    async sendPassReset() {
+        const result = await profile.sendPassReset(this._resetEmail.value);
+        if (result) this.resettingPassword = false;
+    }
+
+//#endregion
+
     checkAprilFools() {
         const curtime = new Date(),
             curday = curtime.getDate(),
             curmonth = curtime.getMonth() + 1;
-        if (curmonth == 4 && curday == 1) {
+        if (curmonth === 4 && curday === 1) {
             this.aprilFoolsShenanigans();
             return "april-fools";
         }
@@ -45,6 +95,7 @@ class Main extends React.Component {
     }
 
     render() {
+
         if (!app.init) {
             let randmsg = [
                 // No messages over 40 characters

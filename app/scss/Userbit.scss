@@ -1,8 +1,4 @@
-#ytregcheck {
-    margin-top: 5px;
-    border-radius: 0;
-    padding: -2px;
-}
+
 
 #usernametop{
   //width:50%;
@@ -10,6 +6,15 @@
 
 }
 
+#usernamedropdown{
+//height: 3.5vh;
+  //width:20%;
+  //width:1vw;
+}
+
+#userbit-dropdown{
+  margin-right: 2vw !important;
+}
 div .userbit-avatar span .avatarimg {
   width:19px;
   height:19px;
@@ -25,13 +30,3 @@ div .userbit-avatar span .avatarimg {
   margin-top:2vh;
 }
 
-
-#usernamedropdown{
-
-  //width:20%;
-  //width:1vw;
-}
-
-#userbit-dropdown{
-  margin-right: 2vw !important;
-}

@@ -1,4 +1,4 @@
-import {observable, computed, autorun} from "mobx";
+import {autorun, computed, observable} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import epoch from "utils/epoch";
@@ -54,8 +54,7 @@ export default new (class Profile {
           .ref("users")
           .child(user.uid)
           .on("value", snap => {
-            var profile = snap.val() || {};
-            this.profile = profile;
+            this.profile = snap.val() || {};
           });
 
         send("hello");
@@ -65,8 +64,7 @@ export default new (class Profile {
           .ref("private")
           .child(user.uid)
           .on("value", snap => {
-            var priv = snap.val() || {};
-            this.private = priv;
+            this.private = snap.val() || {};
             this.privateInit = true;
           });
 
@@ -153,7 +151,7 @@ export default new (class Profile {
   @observable lastchat = epoch();
 
   @computed get canAutoplay() {
-    return this.rank && this.rank != "User";
+    return this.rank && this.rank !== "User";
   }
 
   // TODO can probably move these top functions to a lib
@@ -188,6 +186,7 @@ export default new (class Profile {
               .set(snap.val().avatar);
             snap.remove();
           });
+        return true;
       })
       .catch(error => {
         let msg = `Unknown error: ${error.code}`;
@@ -208,6 +207,7 @@ export default new (class Profile {
             return;
         }
         toast.error(msg);
+        return false;
       });
   }
 
@@ -316,16 +316,16 @@ export default new (class Profile {
     if (!this.banData) return false;
     if (this.banData.forever === true) return true;
     const now = Date.now() / 1000;
-    if (this.banData.time > now) return true;
-    return false;
+    return this.banData.time > now;
+
   }
 
   @computed get silenced() {
     if (!this.silenceData) return false;
     if (this.silenceData.forever === true) return true;
     const now = Date.now() / 1000;
-    if (this.silenceData.time > now) return true;
-    return false;
+    return this.silenceData.time > now;
+
   }
 
   getToken() {
@@ -386,6 +386,14 @@ export default new (class Profile {
       .ref("avatars")
       .child(this.user.uid)
       .set(url);
+  }
+
+  @computed get avatarURL(){
+    return fbase
+        .database()
+        .ref("avatars")
+        .child(this.user.uid)
+        .toString();
   }
 
   clearAvatar() {
