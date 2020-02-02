@@ -19,19 +19,3 @@ This repo comprises the front-end of Trees Radio. Backend served by Firebase and
   - `npm run update-env`: updates environment info in prod Firebase from `./firebase/env.json`
 
 See wiki for recommended Atom packages.
-
-# Updated Windows Instructions
-
-- install [npm (nodejs)](https://nodejs.org/en/)
-- install [yarn](https://yarnpkg.com)
-- install [git](https://git-scm.com/downloads) (!)
-- clone project into ide
-- open terminal in project root
-    ```cmd
-    del node_modules package-lock.json yarn.lock
-    yarn
-    build-dev.bat
-    ```
- - ```run.bat ``` to start
-
-
