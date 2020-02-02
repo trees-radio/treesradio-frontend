@@ -8,8 +8,8 @@
     "start": "node devserver.js",
     "lint": "./node_modules/.bin/eslint --quiet app/**/*.js app/**/**/*.js app/**/**/**/*.js webpack*js",
     "build-rules": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
-    "build-prod": "SET NODE_ENV=production webpack -p --config webpack.config.js",
-    "build-dev": "set NODE_ENV=development;  .\\node_modules\\.bin\\webpack -d --config=webpack.config.js --mode=development",
+    "build-prod": "NODE_ENV=production webpack -p --config webpack.config.js",
+    "build-dev": "NODE_ENV=development webpack -d --config webpack.config.js",
     "format": "prettier --print-width 100 --bracket-spacing=false --write app/**/**/*.js app/**/*.js app/**/**/**/*.js webpack*js"
   },
   "repository": {
