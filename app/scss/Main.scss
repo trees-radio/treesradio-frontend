@@ -124,6 +124,9 @@ h4 {
   border-radius: 20px;
   padding: 0;
   margin: auto;
+  border-radius: 20px;
+  display: table;
+  padding: 0;
 }
 
 .main-center {
@@ -136,6 +139,33 @@ h4 {
   width: 100vw;
   height: 100vh;
 }
+
+.disabledNoLogin{
+  //indicator class for disabling buttons
+}
+
+.greyDisabled{
+  background: grey !important;
+  border-color:darkgrey !important;
+  height:3.5vh !important;
+
+}
+div .userbit-avatar span .avatarimg {
+  width:19px;
+  height:19px;
+  border-radius: 5px;
+  float:left;
+  margin-right:5px;
+}
+
+.user-avatar-preview-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top:2vh;
+}
+
+
 .main-vcenter {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
