@@ -202,7 +202,7 @@ class Nav extends React.Component {
                         <UserBit/>
                         {/* .navbar-collapse */}
                     </div>
-                    <div id="bump"></div>
+                    {/*<div id="bump"></div>*/}
                     {" "}
                     {/* .container-fluid */}
                 </nav>
