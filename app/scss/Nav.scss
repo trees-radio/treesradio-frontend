@@ -13,11 +13,20 @@ $navbar-button-height: 3.5vh !important;
   overflow: hidden;
 }
 
+
+//#toke-button {
+//  //max-width: 2vh;
+//  display: flex;
+//  flex-flow: row nowrap;
+//  place-items: baseline;
+//  font-size: 1.5vh;
+//  height: $navbar-button-height !important;}
+
 #navbar-grid {
   top: 0;
   display: inline-grid !important;
-  grid-template-areas: "tr-watermark space hype-button toke-button userbit bump";
-  grid-template-columns: 15vw 47vw 20vw 8vw 9.5vw 0.5vw;
+  grid-template-areas: "tr-watermark space hype-button toke-button userbit";
+  grid-template-columns: 15vw 46vw 17vw 5vw 17vw;
   grid-template-rows: 5vh;
   grid-gap: 0;
   place-items: baseline;
@@ -108,8 +117,10 @@ $navbar-button-height: 3.5vh !important;
   display: block;
 }
 
-.login-form-button{
+.login-form-button {
   margin-top: 3.2vh;
+  height: 3.5vh;
+  padding-top: .8vh;
 }
 
 #nav-about {
@@ -120,7 +131,7 @@ $navbar-button-height: 3.5vh !important;
 
 #loginForm {
   height: 3vh;
-  display:inline-flex;
+  display: inline-flex;
   flex-flow: row nowrap;
   place-items: baseline;
 }
@@ -136,7 +147,7 @@ $navbar-button-height: 3.5vh !important;
 }
 
 #loginbutton {
-  margin-left:.5vw;
+  margin-left: .5vw;
   margin-right: .5vw;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
@@ -146,8 +157,8 @@ $navbar-button-height: 3.5vh !important;
 }
 
 #reset-password-btn {
-  margin-left:.5vw;
-  margin-right: .5vw;
+  margin-left: .5vw;
+  //margin-right: .5vw;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
@@ -164,19 +175,29 @@ $navbar-button-height: 3.5vh !important;
   color: white;
 }
 
+#userbit-wrapper {
+  margin-right: 2vw;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  height: $navbar-button-height !important;
+  place-self: start end;
+}
+
+
 div .userbit-avatar span .avatarimg {
-  width:19px;
-  height:19px;
+  width: 19px;
+  height: 19px;
   border-radius: 5px;
-  float:left;
-  margin-right:5px;
+  float: left;
+  margin-right: 5px;
 }
 
 .user-avatar-preview-img {
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  margin-top:2vh;
+  margin-top: 2vh;
 }
 
 #ytregcheck {
@@ -237,24 +258,22 @@ div .userbit-avatar span .avatarimg {
   grid-area: toke-button;
   justify-self: end;
   align-self: start;
-  float:right;
 }
 
 #userbit-container {
-  grid-area:userbit;
+  grid-area: userbit;
   margin-top: .1vh;
   //margin-left: 50px;
-  place-self: start;
-  float: right;
-  //justify-items: baseline;
+  place-self: start end;
 }
-#hype-grid-container{
-  grid-area:hype-button;
+
+#hype-grid-container {
+  grid-area: hype-button;
   align-self: end;
   display: inline-flex;
   flex-flow: row-reverse wrap;
-  grid-row:1;
-  grid-column:3;
+  grid-row: 1;
+  grid-column: 3;
 }
 
 #usernav-container {

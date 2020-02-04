@@ -197,7 +197,7 @@ export default class UserBit extends React.Component {
                     );
             });
         return (
-            <div>
+            <div id="userbit-wrapper">
                 <div id="userbitContainer" className="btn-group">
                     <a className={"btn btn-primary" + this.disableIfNecessary()} id="usernametop">
                         <div className="userbit-avatar">

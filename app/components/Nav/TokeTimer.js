@@ -10,6 +10,14 @@ export default class TokeTimer extends React.Component {
         toketimer.joinToke();
     };
 
+    getButtonClasses() {
+        if (profile.user !== null) {
+            return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin" : "btn btn-success disabledNoLogin";
+        } else {
+            return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin greyDisabled" : "btn btn-success disabledNoLogin greyDisabled"
+        }
+    }
+
     render() {
         return (
             <div
@@ -34,15 +42,8 @@ export default class TokeTimer extends React.Component {
             </div>
         );
     }
+}
 
-    getButtonClasses() {
-if (profile.user !== null){
-    return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin" : "btn btn-success disabledNoLogin";
-}else {
-    return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin greyDisabled" : "btn btn-success disabledNoLogin greyDisabled"
-}
-    }
-}
 
 function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
