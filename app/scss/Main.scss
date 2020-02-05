@@ -98,37 +98,32 @@ h4 {
 }
 
 .main-loadingcard {
-  width: 400px;
-  display: inline-block;
-	height: 200px;
+  width: 420px;
+  height: 242px;
   background-color: #333;
   background-image: url('../img/favicon.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center 42%;
+  background-size: 8%;
   color: white;
   font-size: 28px;
-	position: absolute;
-	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-  margin: auto;
-  border-radius: 20px;
+  position: center;
   display: table;
-  padding: 0px;
+  border-radius: 20px;
+  padding: 0;
+  margin: auto;
 }
 
 .main-center {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
-	display: inline-block;
+  display: inline-block;
   text-align: center;
-  position:relative;
+  position: relative;
   vertical-align: middle;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
 }
-
 .main-vcenter {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
@@ -137,10 +132,10 @@ h4 {
   align-content: center;
   text-align: center;
   background-color: rgba(16, 13, 27, 0.85);
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
 }
 .main-loading {
   background-image: url("../img/loading_screen-01.svg");
