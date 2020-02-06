@@ -119,6 +119,7 @@ node_modules
 .metadata
 bin/
 tmp/
+*.tmp
 *.bak
 *.swp
 *~.nib
