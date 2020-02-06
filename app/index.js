@@ -12,4 +12,4 @@ import 'font-awesome-webpack-4';
 import 'script-loader!localforage'; //needs to execute as script, ugly console warnings otherwise
 import Main from './components/Main';
 
-ReactDOM.render(<Main/>, document.getElementById('app'));
+ReactDOM.render(<Main />, document.getElementById('app'));
