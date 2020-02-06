@@ -119,7 +119,6 @@ node_modules
 .metadata
 bin/
 tmp/
-*.tmp
 *.bak
 *.swp
 *~.nib
@@ -292,18 +291,13 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 
-
-#############
-## Python
-#############
-
+##Python#####
 *.py[cod]
 
 # Packages
 *.egg
 *.egg-info
 dist/
-build/
 eggs/
 parts/
 var/
@@ -328,4 +322,3 @@ public/app.css
 public/app.js
 ._.DS_Store
 package-lock.json
-.DS_Store
