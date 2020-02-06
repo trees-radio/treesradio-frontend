@@ -24,7 +24,7 @@ module.exports = new Config().merge({
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.s[ac]ss$/,
         use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
