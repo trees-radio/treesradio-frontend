@@ -100,7 +100,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     list-style-type: none;
     margin-top: 8px;
     margin-bottom: 8px;
-    box-shadow: 2px 3px 2px 0px rgba(42, 0, 42, 0.8);
+    box-shadow: 2px 3px 2px 0 rgba(42, 0, 42, 0.8);
     padding-bottom: 3px;
     padding-left: 5px;
     width: 98%;
@@ -133,9 +133,9 @@ $chat-item-color: #c0c0c0; //light skin #000
 }
 
 .patreon {
-        width: 18px;
-	height: 18px;
-	color: gold;
+    width: 18px;
+    height: 18px;
+    color: gold;
 }
 
 .nopatreon {
@@ -244,10 +244,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     bottom: 6.5%;
     left: .75%;
     color: black;
-    padding-right: 2%;
-    padding-left: 2%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding: 1% 2%;
     border-radius: 5%;
 }
 
@@ -275,8 +272,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     //width: 98.5%;
     left: .75%;
     margin-top: 1px;
-    padding-top: 1px;
-    position: absolute;
+    padding-top: 1px; //rem position: absolute;
     bottom: .75vh;
 }
 
@@ -298,7 +294,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     font-size: 1.65vh;
     color: black;
     margin-top: 1px;
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 #chatinput {
@@ -414,7 +410,9 @@ img[alt="previewavatar"] {
 }
 
 img[alt="tenorgif"] {
-    width: 90%;
+    min-width: 4.2vw;
+    max-width: 95%;
+    max-height: 42vh;
 }
 
 a[title="previewlink"] {
@@ -423,21 +421,19 @@ a[title="previewlink"] {
 }
 
 div>blockquote {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .joinalert {
-    font-size: 1.65vh;
-    font-style: bold;
+    font-size: 1.65vh; //rem font-style: bold; mismatched prop
 }
 
 .sidebar-song-title {
     font-size: 1.65vh;
-    color: #0066dd;
-    font-style: bold;
+    color: #0066dd; //rem font-style: bold; mismatched prop
 }
 
 .songstats-likes {
