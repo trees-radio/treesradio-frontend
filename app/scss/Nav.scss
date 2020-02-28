@@ -26,10 +26,14 @@ $navbar-button-height: 3.5vh !important;
   top: 0;
   display: inline-grid !important;
   grid-template-areas: "tr-watermark space hype-button toke-button userbit";
-  grid-template-columns: 15vw 46vw 17vw 5vw 17vw;
+  grid-template-columns: 15vw 44vw 17vw 7vw 17vw;
   grid-template-rows: 5vh;
   grid-gap: 0;
   place-items: baseline;
+}
+
+.navbar-grid-nologin{
+  grid-template-columns: 15vw 51vw 17vw 7vw 10vw !important;
 }
 
 #navbar-space {
@@ -236,6 +240,7 @@ div .userbit-avatar span .avatarimg {
   border-radius: 0;
 }
 
+
 #emailbox {
   margin-right: 5px;
 }
@@ -263,7 +268,6 @@ div .userbit-avatar span .avatarimg {
 #userbit-container {
   grid-area: userbit;
   margin-top: .1vh;
-  //margin-left: 50px;
   place-self: start end;
 }
 

@@ -59,7 +59,10 @@ class Nav extends React.Component {
     }, 500);
 
     login() {
-        if (profile.login(this._email.value, this._pass.value)){
+        if (profile.login(this._email.value, this._pass.value)) {
+
+            document.getElementById('navbar-grid').classList.remove('navbar-grid-noLogin');
+
             let buttons = document.querySelectorAll('.disabledNoLogin');
 
             for (let i = 0; i < buttons.length; i++) {
@@ -70,30 +73,31 @@ class Nav extends React.Component {
             profile.setAvatar(this.avatarField);
 
         }
-            }
+    }
 
     render() {
 
         //TODO research what this is
-     /*   let emailVerificationResendIcon;
-        if (profile.resendVerificationLoading) {
-            emailVerificationResendIcon = (
-                <span>
-            <i className="fa fa-spin fa-circle-o-notch"></i>
-          </span>
-            );
-        } else if (profile.resendVerificationResult) {
-            emailVerificationResendIcon = (
-                <span>
-            <i className="fa fa-check"></i>
-          </span>
-            );
-        }*/
+        /*   let emailVerificationResendIcon;
+           if (profile.resendVerificationLoading) {
+               emailVerificationResendIcon = (
+                   <span>
+               <i className="fa fa-spin fa-circle-o-notch"></i>
+             </span>
+               );
+           } else if (profile.resendVerificationResult) {
+               emailVerificationResendIcon = (
+                   <span>
+               <i className="fa fa-check"></i>
+             </span>
+               );
+           }*/
 
         let login;
 
         if (profile.user !== null) {
             login = "";
+            //  document.getElementById('navbar-grid').classList.add('navbar-grid-nologin')
         } else {
             //TODO use state ?
             login = (
@@ -173,7 +177,7 @@ class Nav extends React.Component {
         );
         return (
             <div id="tr-nav">
-                <nav id="navbar-grid" className="navbar navbar-default">
+                <nav id="navbar-grid" className={profile.user === null ? "navbar navbar-default navbar-grid-nologin" : "navbar navbar-default"}>
                     <div className="navbar-header navbar-item">
                         <a
                             className="navbar-brand"
