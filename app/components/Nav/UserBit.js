@@ -131,16 +131,13 @@ export default class UserBit extends React.Component {
             );
         }
 
-        let resendVerificaton;
+        let resendVerification;
 
-        if (profile.user !== null) {
-            let resendVerification = "";
-        } else {
-            let resendVerification = (
+        if (profile.unverified && profile.user !== null) {
+            resendVerification = (
                 <Modal
                     show={profile.unverified}
-                    hideModal={() => {
-                    }}
+                    hideModal={profile === null || !profile.unverified}
                     title="Please Verify Your Email"
                     noClose={true}
                 >
@@ -156,7 +153,17 @@ export default class UserBit extends React.Component {
                     </button>
                 </Modal>
             );
+        } else {
+            resendVerification = "";
         }
+
+        // if (profile.user !== null) {
+        //     let resendVerification = "";
+        // } else {
+        //     let resendVerification = (
+        //
+        //     );
+        // }
 
         const helpCommands = [];
         const allUserCommands = [
@@ -287,8 +294,7 @@ export default class UserBit extends React.Component {
                 {/* Missing Username Modal */}
                 <Modal
                     show={profile.noName}
-                    hideModal={() => {
-                    }}
+                    hideModal={!profile.noName}
                     title="Missing Username"
                     noClose={true}
                     leftButton={() => this.addUsername()}
@@ -322,7 +328,7 @@ export default class UserBit extends React.Component {
                     <table>{helpCommands}</table>
                 </Modal>
 
-                {resendVerificaton}
+                {resendVerification}
                 {/*  */}
                 {/* Avatar Setting Modal */}
                 {/*  */}
