@@ -14,25 +14,25 @@ $navbar-button-height: 3.5vh !important;
 }
 
 
-//#toke-button {
-//  //max-width: 2vh;
-//  display: flex;
-//  flex-flow: row nowrap;
-//  place-items: baseline;
-//  font-size: 1.5vh;
-//  height: $navbar-button-height !important;}
+#toke-button {
+  //max-width: 2vh;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: 1.5vh;
+  height: $navbar-button-height !important;}
 
 #navbar-grid {
   top: 0;
   display: inline-grid !important;
   grid-template-areas: "tr-watermark space hype-button toke-button userbit";
-  grid-template-columns: 15vw 44vw 17vw 7vw 17vw;
+  grid-template-columns: 15vw 40vw 17vw 11vw 17vw;
   grid-template-rows: 5vh;
   grid-gap: 0;
   place-items: baseline;
 }
 
-.navbar-grid-nologin{
+.navbar-grid-nologin {
   grid-template-columns: 15vw 51vw 17vw 7vw 10vw !important;
 }
 
@@ -180,12 +180,19 @@ $navbar-button-height: 3.5vh !important;
 }
 
 #userbit-wrapper {
-  margin-right: 2vw;
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  height: $navbar-button-height !important;
-  place-self: start end;
+  //margin-right: 2vw;
+  //width: 100%;
+  //display: flex;
+  //flex-flow: row nowrap;
+  //height: $navbar-button-height !important;
+  //max-height: $navbar-button-height !important;
+  //place-self: start start;
+  //
+  ////display: flex;
+  ////flex-flow: row nowrap;
+  //place-items: baseline;
+  //font-size: 1.5vh;
+  ////height: $navbar-button-height !important;}
 }
 
 
@@ -267,7 +274,8 @@ div .userbit-avatar span .avatarimg {
 
 #userbit-container {
   grid-area: userbit;
-  margin-top: .1vh;
+  //margin-top: .1vh;
+  margin-bottom: .5vh;
   place-self: start end;
 }
 
