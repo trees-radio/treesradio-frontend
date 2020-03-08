@@ -35,7 +35,7 @@ export default class TokeTimer extends React.Component {
                         onClick={this.joinToke}>
                         Toke
                         <span style={{display: toketimer.tokeUnderway ? "inherit" : "none"}}>
-              &nbsp;in: <b>{millisToMinutesAndSeconds(toketimer.remainingTime)}</b>
+              &nbsp;in:&nbsp; <b>{millisToMinutesAndSeconds(toketimer.remainingTime)}</b>
             </span>
                     </a>
                 </div>
