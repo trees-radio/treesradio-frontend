@@ -19,7 +19,6 @@ export default class About extends React.Component {
   }
 
   showKaranObit() {
-    console.log(this.state.showKaran);
     this.setState({
       showKaran: !this.state.showKaran
     });
@@ -126,7 +125,6 @@ export default class About extends React.Component {
             type="button"
             className="btn btn-xs btn-default"
             onClick={() => {
-              console.log(this.state);
               this.setState({showKaran: !this.state.showKaran});
             }}
           >
