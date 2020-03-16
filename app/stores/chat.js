@@ -21,7 +21,6 @@ export default new (class Chat {
   constructor() {
     const myself = this;
     window.onfocus = function() {
-      console.log("Focused Others");
       myself.mentioncount = 0;
       favico.badge(0);
       myself.werefocused = true;

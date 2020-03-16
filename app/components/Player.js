@@ -74,8 +74,6 @@ class Player extends React.Component {
       controls = "false";
       progress = {display: "none"};
     }
-
-    console.log(progress);
     
     return (
       <div id="vidcontainer" style={containerStyle}>
