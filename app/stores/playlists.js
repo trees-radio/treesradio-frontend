@@ -18,7 +18,6 @@ export default new (class Playlists {
           .ref("searches")
           .child(user.uid)
           .on("value", snap => {
-            //console.log(snap.val());
             if (!snap.val() || snap.val() == null) return false;
             me.search = snap.val();
             me.openSearch = true;
