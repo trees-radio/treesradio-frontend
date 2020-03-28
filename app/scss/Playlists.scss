@@ -39,7 +39,7 @@
 }
 
 .playlists-panel-closed {
-  height: 0px;
+  height: 0;
   overflow: hidden;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -155,7 +155,6 @@
 #playlist-dropdown {
   background-color: #579300;
   border-color: #609606;
-  padding: 2px;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   font-size: 1.5vw;
   box-shadow: none;
@@ -315,7 +314,7 @@
   width: inherit;
   padding-left: 25%;
   padding-right: 25%;
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 #vote {
