@@ -13,8 +13,8 @@ export default class TokeTimer extends React.Component {
       <div
         style={{
           display: "inline-block",
-          "margin-right": "15px",
-          "margin-top": "7px"
+          marginRight: "15px",
+          marginTop: "7px"
         }}
       >
         <div>

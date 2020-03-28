@@ -67,7 +67,7 @@ class Player extends React.Component {
     const containerStyle = {
       backgroundImage: `url(${playing.backgroundImage})`
     };
-    let controls = "true";
+    let controls = true;
     let progress = {};
 
     if (userbit.legacyInterface) {
