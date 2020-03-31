@@ -258,11 +258,35 @@ $chat-item-color: #c0c0c0; //light skin #000
     cursor: pointer;
 }
 
+
 #chatscroll {
-    height: 92%; //23
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: 1px;
+}
+
+@media (min-width: 0) {
+    #chatscroll {
+        height: 92%; //23
+    }
+}
+
+@media (min-width: 720px) {
+    #chatscroll {
+        height: 91%;
+    }
+}
+
+@media (min-width: 750px) {
+    #chatscroll {
+        height: calc(82.5% + 1vw); //calc(82.75% - 2.25vw);
+    }
+}
+
+@media (min-width: 1200px) {
+    #chatscroll {
+        height: calc(90% + 1vw);
+    }
 }
 
 #sendbox {
