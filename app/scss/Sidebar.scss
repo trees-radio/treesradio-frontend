@@ -3,82 +3,113 @@
   height: 100%;
 }
 
+//@MEDIA SDSAHDLKHSADÖSADÖJSALÖ    10%
 .sidebar-changer {
-  height: 5% !important; //do not unimportant this is seriously fucking important
-  color:white;
+  color: white;
   text-align: center;
   line-height: 2vw;
   cursor: pointer;
   font-size: .75vw;
 }
 
+@media (min-width: 0px) {
+  .sidebar-changer {
+    height: max-content !important; //13% do not unimportant this is important
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidebar-changer {
+    height: 5% !important; //do not unimportant this is seriously fucking important
+  }
+}
+
 .sidebar-selected {
-  height: 100% !important; //do not unimportant this is seriously fucking important
-  color:white;
+  color: white;
   text-align: center;
-  background-color:#27272c;
+  background-color: #27272c;
   font-weight: bolder;
   border-radius: 5px;
 }
 
-@media (min-width: 0px) {
-.show-chat-btn {
-  padding: 0;
-  padding-top:5%;
-}
-.show-ousers-btn, .show-waitlist-btn, .show-about-btn {
-  display:none;
-}
-}
-
-@media (min-width: 720px) {
-.show-chat-btn {
-  padding: 0;
-}
-.show-ousers-btn, .show-waitlist-btn, .show-about-btn {
-  padding: 0;
-  display: block;
-}
+@media (min-width: 1200px) {
+  .sidebar-selected {
+    height: 100% !important; //do not unimportant this is seriously fucking important
+  }
 }
 
 @media (min-width: 0px) {
-.online-count {
-display: none;
-}
+  .show-chat-btn {
+    padding: 3px 0;
+  }
+  .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+    //display:none;
+  }
 }
 
 @media (min-width: 720px) {
-.online-count {
-  color: black;
-  background-color: white;
-  padding-left: 5.5%;
-  padding-right: 5.5%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  border-radius: 100px;
-  display: inline;
+  .show-chat-btn {
+    padding: 3px 0;
+  }
+  .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+    padding: 3px 0;
+    display: block;
+  }
 }
+
+@media (min-width: 1800px) {
+  .show-chat-btn {
+    padding: 0;
+  }
+  .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+    padding: 0;
+    display: block;
+  }
 }
 
 @media (min-width: 0px) {
-.waitlist-count {
-  display: none;
-}
-}
-
-@media (min-width: 720px) {
-.waitlist-count {
-  color: black;
-  background-color: white;
-  padding-left: 5.5%;
-  padding-right: 5.5%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  border-radius: 100px;
-  display: inline;
-}
+  .online-count {
+    color: black;
+    background-color: white;
+    padding: 0.4% 0.9%;
+    border-radius: 100px;
+    display: inline;
+  }
 }
 
+@media (min-width: 750px) {
+  .online-count {
+    padding: 1% 2%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .online-count {
+    padding: 2% 5.5%;
+  }
+}
+
+@media (min-width: 0px) {
+  .waitlist-count {
+    color: black;
+    background-color: white;
+    padding: 0.4% 0.9%;
+    border-radius: 100px;
+    display: inline;
+  }
+}
+
+@media (min-width: 750px) {
+  .waitlist-count {
+    padding: 1% 2%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .waitlist-count {
+    padding: 2% 5.5%;
+  }
+}
 
 .sel-chat {
 
