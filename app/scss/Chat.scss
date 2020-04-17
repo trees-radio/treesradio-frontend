@@ -31,25 +31,62 @@ $chat-item-color: #c0c0c0; //light skin #000
     }
 }
 
-#chatcontainertop>div {
+#chatcontainertop > div {
     height: 100%;
     width: 100%;
 }
 
-#chatcontainertop {
-    height: 100%;
-    width: 100%;
-    bottom: 0;
-    margin-right: 0;
-    overflow: hidden;
+@media (min-width: 0px) {
+    #chatcontainertop {
+        grid-area: 2 / 1 / 10 / 2;
+        height: unset;
+        width: unset;
+        bottom: 0;
+        margin-right: 0;
+        overflow: hidden;
+    }
 }
 
-#chatcontainer {
-    height: 100%;
-    padding-bottom: 7%;
-    width: 100%;
-    bottom: -25px;
-    overflow: hidden;
+@media (min-width: 1200px) {
+    #chatcontainertop {
+        grid-area: unset;
+        height: 100%;
+        width: 100%;
+        bottom: 0;
+        margin-right: 0;
+        overflow: hidden;
+    }
+}
+
+
+@media (min-width: 0px) {
+    #chatcontainer {
+        height: unset;
+        padding-bottom: unset;
+        width: unset;
+        bottom: unset;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(9, 1fr);
+        grid-column-gap: 0;
+        grid-row-gap: 0;
+    }
+}
+
+@media (min-width: 1200px) {
+    #chatcontainer {
+        height: 100%;
+        padding-bottom: 7%;
+        width: 100%;
+        bottom: -25px;
+        overflow: hidden;
+        display: unset;
+        grid-template-columns: unset;
+        grid-template-rows: unset;
+        grid-column-gap: unset;
+        grid-row-gap: unset;
+    }
 }
 
 #chatscroll::-webkit-scrollbar {
@@ -58,7 +95,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 #chatscroll::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 #chatscroll::-webkit-scrollbar-thumb {
@@ -68,10 +105,11 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 #chatbox {
     width: 100%;
-    bottom: 0;
-    height: 100%;
+    //bottom: 0;
+    //height: 100%;
     margin: 0;
-    padding-left: 0;
+    //padding-left: 0;
+    padding: 2vh 0;
 }
 
 .chat-line-0 {
@@ -260,39 +298,21 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 
 #chatscroll {
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin-bottom: 1px;
+    margin: -2vh 0;
+    overflow: hidden auto;
 }
 
-@media (min-width: 0) {
+@media (min-width: 0px) {
     #chatscroll {
-        height: 92%; //23
+        height: unset;
+        grid-area: 1 / 1 / 9 / 2;
     }
 }
-
-@media (min-width: 720px) {
-    #chatscroll {
-        height: 91%;
-    }
-}
-
-@media (min-width: 750px) {
-    #chatscroll {
-        height: calc(82.5% + 1vw); //calc(82.75% - 2.25vw);
-    }
-}
-
-@media (min-width: 720px) and (max-height: 1000px) {
-    #chatscroll {
-        height: calc(67.5% + 10vh);
-    }
-}
-
 
 @media (min-width: 1200px) {
     #chatscroll {
-        height: calc(90% + 1vw);
+        height: 92%; //23
+        grid-area: unset;
     }
 }
 
@@ -311,21 +331,45 @@ $chat-item-color: #c0c0c0; //light skin #000
     width: 100% !important;
 }
 
-.chatbar {
-    height: 8%;
+@media (min-width: 0px) {
+    .chatbar {
+        height: unset;
+        grid-area: 9 / 1 / 10 / 2;
+    }
+}
+
+@media (min-width: 1200px) {
+    .chatbar {
+        height: 8%;
+        grid-area: unset;
+    }
 }
 
 .chatboxform {
     height: 100%;
 }
 
+
 #sendbox_test {
-    height: 75%;
-    max-height: 55px;
+    max-height: 58px;
     font-size: 1.65vh;
     color: black;
-    margin-top: 1px;
     padding-right: 0;
+}
+
+@media (min-width: 0px) {
+    #sendbox_test {
+        height: 100%;
+        margin-top: 3%;
+        padding-right: 1px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #sendbox_test {
+        height: 75%;
+        margin: 1% 0;
+    }
 }
 
 #chatinput {
