@@ -78,7 +78,7 @@ export default class About extends React.Component {
                 @JubieMeg for funding sticker production.
               </li>
               <li>
-                @yellerjeep, @TheTyger for donating to the main Patreon page.{" "}
+                @yellerjeep, @entlife, and many others for donating to the main Patreon page.{" "}
                 <a href="https://www.patreon.com/treesradio">patreon.com/treesradio</a>
               </li>
               <li>
