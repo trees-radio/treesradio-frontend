@@ -60,7 +60,7 @@
     grid-area: unset;
     height: 5% !important; //do not unimportant this is seriously fucking important
     font-size: .75vw;
-    padding: unset;
+    padding: 0;
   }
 }
 
@@ -95,7 +95,6 @@
     height: 25%;
   }
 }
-
 @media (min-width: 720px) {
   .show-chat-btn {
     padding: 5% 0;
@@ -104,6 +103,18 @@
   .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
     padding: 5% 0;
     height: 25%;
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .show-chat-btn {
+    padding: 0;
+    height: 100%;
+  }
+  .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+    padding: 0;
+    height: 100%;
     display: block;
   }
 }
