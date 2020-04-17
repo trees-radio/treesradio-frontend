@@ -21,7 +21,7 @@ export default class UserBit extends React.Component {
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
-    if (key == 13) {
+    if (key === 13) {
       cb();
     }
   }
@@ -114,13 +114,13 @@ export default class UserBit extends React.Component {
       if (profile.resendVerificationLoading) {
         emailVerificationResendIcon = (
           <span>
-            <i className="fa fa-spin fa-circle-o-notch"></i>
+            <i className="fa fa-spin fa-circle-o-notch"/>
           </span>
         );
       } else if (profile.resendVerificationResult) {
         emailVerificationResendIcon = (
           <span>
-            <i className="fa fa-check"></i>
+            <i className="fa fa-check"/>
           </span>
         );
       }
@@ -130,11 +130,11 @@ export default class UserBit extends React.Component {
           <li onClick={() => this.toggleShowMute()}>
             <a href="#">
               <i
-                className={classNames(
-                  "fa",
-                  profile.showmuted ? "fa-check-square-o" : "fa-square-o"
-                )}
-              ></i>{" "}
+                  className={classNames(
+                      "fa",
+                      profile.showmuted ? "fa-check-square-o" : "fa-square-o"
+                  )}
+              />{" "}
               Show Muted Users
             </a>
           </li>
@@ -142,16 +142,16 @@ export default class UserBit extends React.Component {
 
       let showautoplay = "";
 
-      if (profile.rank && profile.rank != "User")
+      if (profile.rank && profile.rank !== "User")
         showautoplay = (
-          <li onClick={() => waitlist.setAutojoin()}>
-            <a href="#">
-              <i
-                className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
-              ></i>{" "}
-              Auto Join Waitlist
-            </a>
-          </li>
+            <li onClick={() => waitlist.setAutojoin()}>
+              <a href="#">
+                <i
+                    className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
+                />{" "}
+                Auto Join Waitlist
+              </a>
+            </li>
         );
       const helpCommands = [];
       const allUserCommands = [
@@ -207,73 +207,73 @@ export default class UserBit extends React.Component {
               id="usernamedropdown"
               data-toggle="dropdown"
             >
-              <span className="fa fa-caret-down"></span>
+              <span className="fa fa-caret-down"/>
             </a>
             <ul className="dropdown-menu">
               <li onClick={() => (this.settingAvatar = true)}>
                 <a href="#">
-                  <i className="fa fa-pencil fa-fw"></i> Set Avatar
+                  <i className="fa fa-pencil fa-fw"/> Set Avatar
                 </a>
               </li>
               <li onClick={() => playing.togglePlayerSize()}>
                 <a href="#">
                   <i
                     className={classNames(
-                      "fa",
-                      playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                        "fa",
+                        playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
                     )}
-                  ></i>
+                  />
                   {playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player"}
                 </a>
               </li>
               <li onClick={() => (this.changingEmail = true)}>
                 <a href="#">
-                  <i className="fa fa-envelope"></i> Change Email
+                  <i className="fa fa-envelope"/> Change Email
                 </a>
               </li>
               <li onClick={() => (this.changingPassword = true)}>
                 <a href="#">
-                  <i className="fa fa-key"></i> Change Password
+                  <i className="fa fa-key"/> Change Password
                 </a>
               </li>
               <li>
                 <a
-                  href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
-                  target="blank"
+                    href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
+                    target="blank"
                 >
-                  <i className="fa fa-youtube-play"></i> Region Check
+                  <i className="fa fa-youtube-play"/> Region Check
                 </a>
               </li>
               <li onClick={() => this.hideGifs()}>
                 <a href="#">
                   <i
-                    className={classNames(
-                      "fa",
-                      this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                  ></i>{" "}
+                      className={classNames(
+                          "fa",
+                          this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
+                      )}
+                  />{" "}
                   Hide Gifs?
                 </a>
               </li>
               <li onClick={() => this.hideBlazebot()}>
                 <a href="#">
                   <i
-                    className={classNames(
-                      "fa",
-                      profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                  ></i>{" "}
+                      className={classNames(
+                          "fa",
+                          profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
+                      )}
+                  />{" "}
                   Hide BlazeBot?
                 </a>
               </li>
               <li onClick={() => this.toggleNotifications()}>
                 <a href="#">
                   <i
-                    className={classNames(
-                      "fa",
-                      profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                  ></i>{" "}
+                      className={classNames(
+                          "fa",
+                          profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
+                      )}
+                  />{" "}
                   Mention Audio?
                 </a>
               </li>
@@ -281,22 +281,22 @@ export default class UserBit extends React.Component {
               {showautoplay}
               <li onClick={() => profile.logout()}>
                 <a href="#">
-                  <i className="fa fa-sign-out"></i> Logout
+                  <i className="fa fa-sign-out"/> Logout
                 </a>
               </li>
               <li onClick={() => this.toggleHelp()}>
                 <a href="#">
-                  <i className="fa fa-question-circle"></i> Help
+                  <i className="fa fa-question-circle"/> Help
                 </a>
               </li>
               <li onClick={() => this.toggleInterface()}>
                 <a href="#">
                   <i
-                    className={classNames(
-                      "fa",
-                      this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                  ></i>{" "}
+                      className={classNames(
+                          "fa",
+                          this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
+                      )}
+                  />{" "}
                   Gelato?
                 </a>
               </li>
@@ -390,7 +390,7 @@ export default class UserBit extends React.Component {
                       onChange={e => (this.avatarField = e.target.value)}
                     />
                     <div className="input-group-addon">
-                      <i className={this.avatarFieldValid ? "fa fa-check" : "fa fa-times"}></i>
+                      <i className={this.avatarFieldValid ? "fa fa-check" : "fa fa-times"}/>
                     </div>
                   </div>
                   <br />
@@ -463,7 +463,7 @@ export default class UserBit extends React.Component {
             <div className="form-group" id="emailpassfields">
               <div className="input-group margin-bottom-sm" id="emailbox">
                 <span className="input-group-addon">
-                  <i className="fa fa-envelope-o fa-fw"></i>
+                  <i className="fa fa-envelope-o fa-fw"/>
                 </span>
                 <input
                   className="form-control"
@@ -475,7 +475,7 @@ export default class UserBit extends React.Component {
               </div>
               <div className="input-group">
                 <span className="input-group-addon">
-                  <i className="fa fa-key fa-fw"></i>
+                  <i className="fa fa-key fa-fw"/>
                 </span>
                 <input
                   className="form-control"
