@@ -85,10 +85,13 @@
 
 @media (min-width: 0px) {
   .show-chat-btn {
-    padding: 3px 0;
+    padding: 5% 0;
+    height: 25%;
   }
   .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
     //display:none;
+    padding: 5% 0;
+    height: 25%;
   }
 }
 
