@@ -55,6 +55,13 @@
     font-size: 1.85vw;
   }
 }
+
+@media (min-width: 0px) {
+  .sidebar-changer {
+    font-size: 1.4vw;
+  }
+}
+
 @media (min-width: 1200px) {
   .sidebar-changer {
     grid-area: unset;
@@ -86,22 +93,22 @@
 
 @media (min-width: 0px) and (max-width: 719px) {
   .show-chat-btn {
-    padding: 5% 0;
+    padding: 2% 0;
     height: 25%;
   }
   .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
     //display:none;
-    padding: 5% 0;
+    padding: 2% 0;
     height: 25%;
   }
 }
 @media (min-width: 720px) {
   .show-chat-btn {
-    padding: 5% 0;
+    padding: 2% 0;
     height: 25%;
   }
   .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
-    padding: 5% 0;
+    padding: 2% 0;
     height: 25%;
     display: block;
   }
