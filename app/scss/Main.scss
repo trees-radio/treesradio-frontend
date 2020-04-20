@@ -4,7 +4,7 @@ body {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   height: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
   color: #77b300 !important;
   background-color: #000000;
   font-family: "Open Sans", sans-serif;
@@ -25,22 +25,30 @@ h4 {
 .modal-backdrop.fade {
 	opacity: .5;
 }
+
 .modal-dialog {
-	margin-top: 155px;
+  margin-top: 155px;
 }
+
 .fade {
-	opacity: .99;
+  opacity: .99;
 }
+
 .toast-box {
-	z-index: 99999;
+  z-index: 99999;
 }
+
+.Toastify__toast-container .Toastify__toast-container--top-right {
+  top: 6em;
+}
+
 .april-fools {
   font-family: "Comic Sans MS", cursive, sans-serif !important;
 }
 
 .modal-content {
-	background-color: #202020;
-	color: #888;
+  background-color: #202020;
+  color: #888;
 }
 
 .btn-primary {
@@ -88,13 +96,6 @@ h4 {
   display: block;
   vertical-align: middle;
   text-align: center;
-}
-
-.container-fluid {
-  transition: ease-in-out !important;
-  transition-timing-function: ease-in-out !important;
-  transition-property: all;
-  padding-bottom: -23px;
 }
 
 .main-loadingcard {
@@ -152,16 +153,18 @@ h4 {
 
 /* Components Container */
 
-.container-fluid
-{
+.container-fluid {
   background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
-    height: 100%;
-    width: 100%;
-    margin-top: -50px;
-    padding: 50px 0 0 0; /*set left/right padding according to needs*/
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  margin-top: -50px;
+  padding: 49px 0 0 0; /*set left/right padding according to needs*/
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: ease-in-out !important;
+  transition-timing-function: ease-in-out !important;
+  transition-property: all;
 }
 
 .row

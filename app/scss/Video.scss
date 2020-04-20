@@ -291,8 +291,8 @@ $videotoplevel-bg: #171717;
   }
   .progressbar-container {
     position: absolute;
-    bottom: 0;
-    height: .5vh;
+    bottom: -3px;
+    height: .6vh;
     width: 100%;
   }
 }

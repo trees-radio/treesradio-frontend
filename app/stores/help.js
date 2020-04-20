@@ -1,4 +1,4 @@
-import {observable, computed, autorun} from "mobx";
+import {autorun, observable} from "mobx";
 import fbase from "libs/fbase";
 
 export default new (class HelpList {

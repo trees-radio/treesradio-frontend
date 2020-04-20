@@ -82,11 +82,11 @@ export default class About extends React.Component {
                 <a href="https://www.patreon.com/treesradio">patreon.com/treesradio</a>
               </li>
               <li>
-                @FredRodgers, @JubieMeg, @JohnPyro, @entlife for sponsoring @yellerjeep&apos;s
+                @FredRodgers, @JubieMeg, @JohnPyro, @entlife for sponsoring @yellerjeep&apos;s{" "}
                 <a
-                  href="https://www.patreon.com/yellerjeep_tr"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                    href="https://www.patreon.com/yellerjeep_tr"
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
                   ongoing development of the site.
                 </a>

@@ -67,7 +67,7 @@ class Player extends React.Component {
     const containerStyle = {
       backgroundImage: `url(${playing.backgroundImage})`
     };
-    let controls = "true";
+    let controls = true;
     let progress = {};
 
     if (userbit.legacyInterface) {
@@ -108,12 +108,14 @@ class Player extends React.Component {
           )}{" "}
         </div>{" "}
         <Line
-          className="progressbar-container"
-          style={progress}
-          strokeWidth="4"
-          strikeLinecap="butt"
-          percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
-          strokeColor="#000000"
+            className="progressbar-container"
+            style={progress}
+            strokeWidth="4"
+            strikeLinecap="butt"
+            percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
+            strokeColor="#000000"
+            TrailColor="#77b300"
+            trailColor="#77b300"
         />
       </div>
     );
