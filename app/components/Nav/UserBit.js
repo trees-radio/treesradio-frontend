@@ -17,12 +17,12 @@ import {toast} from "react-toastify";
 @observer
 export default class UserBit extends React.Component {
 
-  onEnterKey(e, cb) {
-    var key = e.keyCode || e.which;
-    if (key === 13) {
-      cb();
+    onEnterKey(e, cb) {
+        var key = e.keyCode || e.which;
+        if (key === 13) {
+            cb();
+        }
     }
-  }
 
     addUsername() {
         profile.updateUsername(this._username.value.substr(0, 24));
