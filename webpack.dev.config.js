@@ -4,7 +4,7 @@ var webpack = require("webpack");
 var Config = require("webpack-config").default;
 
 module.exports = new Config().extend("./webpack.base.config.js").merge({
-  mode: "development",
+  mode: 'development',
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
