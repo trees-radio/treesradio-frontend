@@ -71,19 +71,6 @@ div .userbit-avatar span .avatarimg {
   }
 }
 
-@media only screen and (max-width: 1615px) {
-  #username {
-    //max-width: 9vw;
-    font-size: .65 * $navbar-font-size;
-  }
-}
-
-@media only screen and (max-width: 1500px) {
-  #username {
-    max-width: 12vw;
-  }
-}
-
 @media only screen and (max-width: 1300px) {
   #username {
     font-size: .6 * $navbar-font-size;
