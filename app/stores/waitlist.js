@@ -7,11 +7,16 @@ import chat from "stores/chat";
 import {send} from "libs/events";
 import {setInterval, clearInterval} from "timers";
 import epoch from "../utils/epoch";
+import events from "stores/events";
 
 export default new (class Waitlist {
   constructor() {
     this.reloadList();
-
+    events.register('stop_autoplay', (data) => {
+      if ( data.uid === profile.user.uid ) {
+        this.cancelAutojoin();
+      }
+    });
     fbase
       .database()
       .ref("waitlist")
