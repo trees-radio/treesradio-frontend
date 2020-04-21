@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import "variables";
 
 /* #### Variables #### */
-
-$navbar-button-height: 3.5vh !important;
 
 #tr-nav {
   height: 5vh;
@@ -15,21 +14,31 @@ $navbar-button-height: 3.5vh !important;
 
 
 #toke-button {
+  //padding: .5vh .5vw;
+  padding: 4px 1vw 1vh;
   //max-width: 2vh;
+  place-self: flex-start;
   display: flex;
   flex-flow: row nowrap;
   place-items: baseline;
-  font-size: 1.5vh;
-  height: $navbar-button-height !important;}
+  font-size: $navbar-font-size;
+  height: $navbar-button-height !important;
+}
 
 #navbar-grid {
   top: 0;
   display: inline-grid !important;
   grid-template-areas: "tr-watermark space hype-button toke-button userbit";
-  grid-template-columns: 15vw 40vw 17vw 11vw 17vw;
-  grid-template-rows: 5vh;
+  grid-template-columns: 15vw 46vw 14vw 9vw 16vw;
+  grid-template-rows: $navbar-height;
   grid-gap: 0;
   place-items: baseline;
+}
+
+@media #{$isPortraitMode} {
+  #navbar-grid {
+    grid-template-rows: 5vw !important;
+  }
 }
 
 .navbar-grid-nologin {
@@ -68,7 +77,6 @@ $navbar-button-height: 3.5vh !important;
   align-self: baseline;
   grid-column-start: 1;
   float: left !important;
-
 }
 
 .navbar-item {
@@ -122,9 +130,14 @@ $navbar-button-height: 3.5vh !important;
 }
 
 .login-form-button {
-  margin-top: 3.2vh;
-  height: 3.5vh;
-  padding-top: .8vh;
+  place-self: center;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: 1.5vh;
+  height: $navbar-button-height !important;
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
 }
 
 #nav-about {
@@ -134,10 +147,18 @@ $navbar-button-height: 3.5vh !important;
 }
 
 #loginForm {
+  //display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: 1.5vh;
+  //height: $navbar-button-height !important;
+  margin-top: 3.2vh;
+  padding-top: .8vh;
+
   height: 3vh;
   display: inline-flex;
   flex-flow: row nowrap;
-  place-items: baseline;
+  //place-items: baseline;
 }
 
 #loginWrapper {
@@ -146,8 +167,19 @@ $navbar-button-height: 3.5vh !important;
 }
 
 #emailpassfields {
+  z-index: 2;
+  place-self: center;
   //margin-top: 7px;
   margin-bottom: unset !important;
+}
+
+#loginButtons {
+  height: $navbar-button-height;
+  display: inline-flex;
+  place-self: center;
+  place-items: baseline;
+  padding-bottom: .5vh;
+  font-size: $navbar-font-size !important;
 }
 
 #loginbutton {
@@ -180,19 +212,19 @@ $navbar-button-height: 3.5vh !important;
 }
 
 #userbit-wrapper {
-  //margin-right: 2vw;
-  //width: 100%;
-  //display: flex;
-  //flex-flow: row nowrap;
-  //height: $navbar-button-height !important;
-  //max-height: $navbar-button-height !important;
-  //place-self: start start;
-  //
+  margin-right: 2vw;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  height: $navbar-button-height !important;
+  max-height: $navbar-button-height !important;
+  place-self: start start;
   ////display: flex;
   ////flex-flow: row nowrap;
-  //place-items: baseline;
+  place-items: baseline;
   //font-size: 1.5vh;
-  ////height: $navbar-button-height !important;}
+  font-size: .75 * $navbar-font-size !important;
+  border-radius: 0 !important;
 }
 
 
@@ -229,13 +261,13 @@ div .userbit-avatar span .avatarimg {
 }
 
 #usernametop {
-  padding-right: 2vw;
-  padding-left: 1vw;
+  //padding-right: 2vw;
+  //padding-left: 1vw;
   margin-top: 6px;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 110%;
-  border-radius: 0;
+  //border-radius: 0;
 }
 
 #usernamedropdown {
@@ -268,24 +300,24 @@ div .userbit-avatar span .avatarimg {
 
 #toketimer-container {
   grid-area: toke-button;
-  justify-self: end;
+  justify-self: start;
   align-self: start;
 }
 
 #userbit-container {
   grid-area: userbit;
   //margin-top: .1vh;
-  margin-bottom: .5vh;
   place-self: start end;
+  //display: flex;
+  margin-bottom: .5vh;
 }
 
 #hype-grid-container {
   grid-area: hype-button;
   align-self: end;
+  place-content: center;
   display: inline-flex;
   flex-flow: row-reverse wrap;
-  grid-row: 1;
-  grid-column: 3;
 }
 
 #usernav-container {
@@ -302,9 +334,7 @@ div .userbit-avatar span .avatarimg {
 }
 
 #hype-container {
-  justify-self: baseline;
-  margin-top: -5vh;
-
+  margin-bottom: .75vh;
   display: inline-flex;
   flex-flow: row nowrap;
 }
@@ -314,7 +344,7 @@ div .userbit-avatar span .avatarimg {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   background: #ccc;
   width: 13.5vw;
-  height: 4vh;
+  height: $navbar-button-height;
   margin-top: .5vh;
   border-radius: 8px;
   border-top: 2px solid #DDD;
@@ -324,7 +354,7 @@ div .userbit-avatar span .avatarimg {
   overflow: hidden;
   text-align: center;
   //line-height: 38px;
-  font-size: 1.29vh;
+  font-size: $navbar-font-size;
   font-weight: bold;
   color: #666;
   cursor: url('../img/lighter.cur'), pointer;
@@ -360,11 +390,10 @@ div .userbit-avatar span .avatarimg {
   text-align: center;
   margin-top: .5vh;
   line-height: 3.5vh;
-  font-size: 1.29vh;
   font-weight: bold;
   color: #EEE;
   width: 13.5vw;
-  height: 4vh;
+  height: $navbar-button-height;
   //height: 38px;
   //width: 250px;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
@@ -404,3 +433,38 @@ div .userbit-avatar span .avatarimg {
     height: 1vh;
   }
 }
+
+@media only screen and (max-width: 1300px) {
+  #toke-button {
+    //padding: .5vw .5vh;
+    font-size: .75 * $navbar-font-size;
+  }
+  .hypepb {
+    font-size: $navbar-font-size * .75;
+  }
+}
+
+@media only screen and (max-width: 1730px) {
+  #navbar-grid {
+    grid-template-columns: 15vw 44vw 14vw 9vw 18vw;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  #navbar-grid {
+    grid-template-columns: 15vw 42vw 14vw 9vw 20vw;
+  }
+}
+
+
+//@media only screen and (min-width: 0px){
+//  #loginButtons, #userbit-wrapper{
+//    font-size: $font-size-small;
+//  }
+//}
+//
+//@media only screen and (min-width: 1200px) {
+//  #loginButtons, #userbit-wrapper{
+//    font-size: $font-size-medium;
+//  }
+//}

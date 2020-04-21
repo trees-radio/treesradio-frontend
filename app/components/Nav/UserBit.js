@@ -219,7 +219,7 @@ export default class UserBit extends React.Component {
                         id="usernamedropdown"
                         data-toggle="dropdown"
                     >
-                        <span className="fa fa-caret-down"/>
+                        <span className="fa fa-caret-down" id="userbit-expander"/>
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}

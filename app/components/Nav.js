@@ -129,24 +129,26 @@ class Nav extends React.Component {
                                 />
                             </div>
                         </div>
-                        <button className="btn btn-primary login-form-button" id="loginbutton"
-                                onClick={() => this.login()}>
-                            Login
-                        </button>
-                        <button
-                            className="btn btn-default login-form-button"
-                            id="regbutton"
-                            onClick={() => profile.register(this._email.value, this._pass.value)}
-                        >
-                            Register
-                        </button>
-                        <button
-                            className="btn btn-primary login-form-button"
-                            id="reset-password-btn"
-                            onClick={() => (this.resettingPassword = true)}
-                        >
-                            Password Reset
-                        </button>
+                        <div id="loginButtons">
+                            <button className="btn btn-primary login-form-button" id="loginbutton"
+                                    onClick={() => this.login()}>
+                                Login
+                            </button>
+                            <button
+                                className="btn btn-default login-form-button"
+                                id="regbutton"
+                                onClick={() => profile.register(this._email.value, this._pass.value)}
+                            >
+                                Register
+                            </button>
+                            <button
+                                className="btn btn-primary login-form-button"
+                                id="reset-password-btn"
+                                onClick={() => (this.resettingPassword = true)}
+                            >
+                                Password Reset
+                            </button>
+                        </div>
                     </div>
                     {/* Password Reset Modal */}
                     <Modal
@@ -177,7 +179,8 @@ class Nav extends React.Component {
         );
         return (
             <div id="tr-nav">
-                <nav id="navbar-grid" className={profile.user === null ? "navbar navbar-default navbar-grid-nologin" : "navbar navbar-default"}>
+                <nav id="navbar-grid"
+                     className={profile.user === null ? "navbar navbar-default navbar-grid-nologin" : "navbar navbar-default"}>
                     <div className="navbar-header navbar-item">
                         <a
                             className="navbar-brand"
@@ -189,14 +192,9 @@ class Nav extends React.Component {
                         </a>
                     </div>
                     <div id="navbar-space">{login}</div>
-                    <div id="hype-grid-container" className="container-fluid">
-                        <div className="collapse navbar-collapse navbar-item" id="bs-example-navbar-collapse-1">
-                            {/* <ul className="nav navbar-nav" id="nav-about">
-                <li><a>About</a></li>
-              </ul> */}
-                            <div id="hype-container" className="nav navbar-nav navbar-right">
+                    <div id="hype-grid-container" className="">
+                            <div id="hype-container" className="">
                                 <HypeProgress/>
-                            </div>
                         </div>
                     </div>
                     <div id="toketimer-container">
