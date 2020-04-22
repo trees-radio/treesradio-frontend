@@ -4,7 +4,7 @@
 /* #### Variables #### */
 
 #tr-nav {
-  height: 5vh;
+  height: 6vh;
   top: 0 !important;
 }
 
@@ -15,7 +15,7 @@
 
 #toke-button {
   //padding: .5vh .5vw;
-  padding: 4px 1vw 1vh;
+  padding: 0 0.7vw;
   //max-width: 2vh;
   place-self: flex-start;
   display: flex;
@@ -109,7 +109,8 @@
   font-family: 'Open Sans', sans-serif;
   letter-spacing: 1px;
   vertical-align: baseline;
-  overflow-y: hidden;
+  overflow: hidden;
+  padding: .8vh .6vw;
 }
 
 //Trees Radio Logo Color
@@ -387,14 +388,12 @@ div .userbit-avatar span .avatarimg {
 
 .hypedone {;
   text-align: center;
-  margin-top: .5vh;
-  line-height: 3.5vh;
+  //margin-top: .5vh;
+  line-height: 3vh;
   font-weight: bold;
   color: #EEE;
   width: 13.5vw;
   height: $navbar-button-height;
-  //height: 38px;
-  //width: 250px;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
   cursor: url('../img/lighter.cur'), pointer;
 }
@@ -427,9 +426,9 @@ div .userbit-avatar span .avatarimg {
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 750px) {
   #tr-nav {
-    height: 1vh;
+    height: 0vh;
   }
 }
 
@@ -437,6 +436,7 @@ div .userbit-avatar span .avatarimg {
   #toke-button {
     //padding: .5vw .5vh;
     font-size: .75 * $navbar-font-size;
+    padding: 0.4vh 0.7vw;
   }
   .hypepb {
     font-size: $navbar-font-size * .7;
