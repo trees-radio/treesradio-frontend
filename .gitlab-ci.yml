@@ -40,6 +40,8 @@ build-dev:
     - time npm run build-dev
   only:
     - develop
+  except: 
+    - master
 
 build-prod:
   stage: build-prod
