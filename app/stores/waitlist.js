@@ -14,6 +14,7 @@ export default new (class Waitlist {
     this.reloadList();
     events.register('stop_autoplay', (data) => {
       console.log(`${data.uid} === ${profile.user.uid}`);
+      console.log(data);
       if ( data.uid === profile.user.uid ) {
         this.cancelAutojoin();
       }
