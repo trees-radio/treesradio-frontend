@@ -252,7 +252,6 @@ div .userbit-avatar span .avatarimg {
 #logoutbutton {
   margin-top: 6px;
   margin-right: 10px;
-  border-radius: 5px;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
@@ -354,7 +353,7 @@ div .userbit-avatar span .avatarimg {
   overflow: hidden;
   text-align: center;
   //line-height: 38px;
-  font-size: $navbar-font-size;
+  font-size: $navbar-font-size * .75;
   font-weight: bold;
   color: #666;
   cursor: url('../img/lighter.cur'), pointer;
@@ -370,7 +369,7 @@ div .userbit-avatar span .avatarimg {
   width: 1.5vw;
   height: 4vh;
   //width: 48px;
-  background-color: #558B2F;
+  //background-color: #558B2F;
   border-radius: 6px;
   background: #689F38;
   background: linear-gradient(to bottom, #689F38 0%, #689F38 50%, #689F38 51%, #558B2F 100%);
@@ -440,7 +439,7 @@ div .userbit-avatar span .avatarimg {
     font-size: .75 * $navbar-font-size;
   }
   .hypepb {
-    font-size: $navbar-font-size * .75;
+    font-size: $navbar-font-size * .7;
   }
 }
 
