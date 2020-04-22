@@ -28,6 +28,9 @@ lint:
   stage: build-dev
   script:
     - npm run lint
+  except:
+    - develop
+    - master
 
 build-dev:
   stage: build-dev
