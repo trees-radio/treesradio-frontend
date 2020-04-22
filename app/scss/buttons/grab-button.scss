@@ -62,16 +62,16 @@
 }
 
 .grab-playlists {
-  width:375%;
-  background: linear-gradient(135deg, rgba(63,9,101,0.95) 35%, rgba(84,27,72,0.95) 100%);
-  position:absolute;
-  bottom:110%;
-  left:-9em;
-  color:black;
-  border-radius:2%;
-  text-align:left;
-  overflow-y:scroll;
-  max-height:250px;
+  width: 375%;
+  background: linear-gradient(135deg, rgba(63, 9, 101, 0.95) 35%, rgba(84, 27, 72, 0.95) 100%);
+  position: absolute;
+  bottom: 110%;
+  left: -9em;
+  color: black;
+  border-radius: 2%;
+  text-align: left;
+  overflow-y: scroll;
+  max-height: 420px;
   z-index: 1000;
 }
 
