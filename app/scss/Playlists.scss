@@ -2,7 +2,7 @@
 #playlists-container {
   width: 100%;
   float: right;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .media-time {
@@ -172,8 +172,8 @@
   padding-top: 0;
   border-top-width: 0;
   margin-top: 0;
-  max-height:50vh;
-  overflow-y:auto;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 #pl-dd-menu::-webkit-scrollbar {
@@ -282,7 +282,7 @@
 }
 
 #grabtrack {
-  height: 8.25vh;
+  height: 8.75vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -294,11 +294,11 @@
 #playlists-open-button {
   height: 100%;
   cursor: pointer;
-  width: 4vw;
+  width: 4.3vw;
   font-size: 0.75vw;
   border-right: solid;
   border-color: #2d2f39;
-  background: linear-gradient(135deg, rgba(118,158,20,0.9755847774751005) 35%, rgba(99,163,45,0.9872806839078491) 100%);
+  background: linear-gradient(135deg, rgba(118, 158, 20, 0.9755847774751005) 35%, rgba(99, 163, 45, 0.9872806839078491) 100%);
   padding: 0;
   margin: 0;
   border-radius: 10px;
@@ -310,7 +310,7 @@
 
 #playlists-open-icon {
   color: white;
-  line-height: 8vh;
+  line-height: 9vh;
   height: inherit;
   width: inherit;
   padding-left: 25%;
@@ -319,13 +319,14 @@
 }
 
 #vote {
-  height: 8.25vh;
+  height: 8.75vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
   align-items: center;
   margin: 0 auto;
   padding: 0;
+
   a {
     text-decoration: none;
   }
