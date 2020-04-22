@@ -1,20 +1,101 @@
-#ytregcheck {
-    margin-top: 5px;
-    border-radius: 0px;
-    padding: -2px;
+@import "variables";
+
+#usernametop {
+  display: flex;
+  border-radius: 0 !important;
+  vertical-align: baseline;
+  text-align: center;
+  align-self: baseline;
+  align-content: baseline;
+  //width:50%;
+  //width: 6.5vw;
+  max-width: 15vw;
+  height: $navbar-button-height;
+  //padding: 4px 12px !important;
+}
+
+#usernamedropdown {
+  height: $navbar-button-height;
+  border-radius: 0 !important;
+  //width:20%;
+  //width:1vw;
+}
+
+#username {
+  place-self: center;
+}
+
+
+#userbit-dropdown {
+  margin-right: 1.75vw !important;
+}
+
+#userbit-expander {
+  font-size: $navbar-font-size;
+  height: 1.5vh !important;
 }
 
 div .userbit-avatar span .avatarimg {
-  width:19px;
-  height:19px;
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+  place-self: center;
+  align-content: baseline;
   border-radius: 5px;
-  float:left;
-  margin-right:5px;
+  text-align: center;
+  //float: left;
+  margin-right: 10px;
+}
+
+.userbit-avatar {
+  place-self: center;
 }
 
 .user-avatar-preview-img {
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  margin-top:2vh;
+  margin-top: 2vh;
+}
+
+@media only screen and (max-width: 1625px) {
+  #username, #usernamedropdown {
+    //max-width: 10vw;
+    font-size: .7 * $navbar-font-size;
+  }
+}
+
+@media only screen and (max-width: 1730px) {
+  #username, #usernamedropdown {
+    max-width: 11vw;
+    font-size: .65 * $navbar-font-size;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #username, #usernamedropdown {
+    font-size: .6 * $navbar-font-size;
+    //max-width: 8vw;
+  }
+}
+
+@media only screen and (max-height: 1000px) {
+  div .userbit-avatar span .avatarimg {
+    height: 2rem !important;
+    width: 2rem !important;
+  }
+
+}
+
+@media only screen and (max-height: 630px) {
+  div .userbit-avatar span .avatarimg {
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+  }
+}
+
+@media only screen and (max-height: 500px) {
+  div .userbit-avatar span .avatarimg {
+    height: 1rem !important;
+    width: 1rem !important;
+  }
 }

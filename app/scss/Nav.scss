@@ -1,223 +1,469 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-.navbar {
-    margin-bottom: 1px;
-    background-color: #0c0c0e;
+@import "variables";
+
+/* #### Variables #### */
+
+#tr-nav {
+  height: 5vh;
+  top: 0 !important;
+}
+
+#tr-watermark {
+  overflow: hidden;
+}
+
+
+#toke-button {
+  //padding: .5vh .5vw;
+  padding: 4px 1vw 1vh;
+  //max-width: 2vh;
+  place-self: flex-start;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: $navbar-font-size;
+  height: $navbar-button-height !important;
+}
+
+#navbar-grid {
+  top: 0;
+  display: inline-grid !important;
+  grid-template-areas: "tr-watermark space hype-button toke-button userbit";
+  grid-template-columns: 15vw 46vw 14vw 9vw 16vw;
+  grid-template-rows: $navbar-height;
+  grid-gap: 0;
+  place-items: baseline;
+}
+
+@media #{$isPortraitMode} {
+  #navbar-grid {
+    grid-template-rows: 5vw !important;
+  }
+}
+
+.navbar-grid-nologin {
+  grid-template-columns: 15vw 51vw 17vw 7vw 10vw !important;
+}
+
+#navbar-space {
+  grid-area: space;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  grid-template-areas: "email password login register resetpw";
+  grid-template-columns: 15vw 15vw 5vw 5vw 5vw;
+  grid-template-rows: 5vh;
+  height: inherit;
+  width: inherit;
+  position: relative;
+  top: -2.7vh;
+}
+
+#bump {
+  grid-area: bump;
+  width: 0.5vh;
+  padding-left: .5vw;
+}
+
+#navbar-grid:before {
+  display: none !important;
+  content: none !important;
 }
 
 .navbar-header {
-    max-width: 25%;
-    max-height: 50px;
-    float: left;
+  grid-area: tr-watermark;
+  padding-bottom: 1vh;
+  display: flex;
+  align-items: baseline;
+  align-self: baseline;
+  grid-column-start: 1;
+  float: left !important;
+}
+
+.navbar-item {
+  overflow: hidden;
+}
+
+.nav-title {
+  overflow: hidden;
+}
+
+.navbar {
+  margin-bottom: 1px;
+  background-color: #0c0c0e;
 }
 
 .navbar-collapse {
-    max-width: 75%;
-    max-height: 50px;
-    float: right;
+  max-width: 75%;
+  max-height: 50px;
+  float: right;
 }
 
 .navbar-default {
-    background-color: #0A0A0A;
+  background-color: #0A0A0A;
 }
 
 .navbar-brand {
-    position: relative;
-    left: 10px;
-    font-size: 150%;
-    font-family: 'Open Sans', sans-serif;
-    letter-spacing: 1px;
-    vertical-align: baseline;
+  line-height: normal !important;
+  position: relative;
+  font-size: 150%;
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 1px;
+  vertical-align: baseline;
+  overflow-y: hidden;
 }
 
 //Trees Radio Logo Color
 .navbar-default .navbar-brand {
-    color: #77b300; // old color = 77b300
+  color: #77b300; // old color = 77b300
 }
 
 #usernametop.btn.btn-primary {
-    background-color: #77b300;
+  background-color: #77b300;
 }
 
 #usernamedropdown.btn.btn-primary.dropdown-toggle {
-    background-color: #77b300;
+  background-color: #77b300;
 }
 
 .collapse {
-    display: block;
+  display: block;
 }
 
-#nav-about {}
+.login-form-button {
+  place-self: center;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: 1.5vh;
+  height: $navbar-button-height !important;
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
+}
 
-#nav-divider {}
+#nav-about {
+}
+
+#nav-divider {
+}
+
+#loginForm {
+  //display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: 1.5vh;
+  //height: $navbar-button-height !important;
+  margin-top: 3.2vh;
+  padding-top: .8vh;
+
+  height: 3vh;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  //place-items: baseline;
+}
+
+#loginWrapper {
+  place-self: start;
+  //height: 3vh;
+}
 
 #emailpassfields {
-    margin-top: 7px;
+  z-index: 2;
+  place-self: center;
+  //margin-top: 7px;
+  margin-bottom: unset !important;
+}
+
+#loginButtons {
+  height: $navbar-button-height;
+  display: inline-flex;
+  place-self: center;
+  place-items: baseline;
+  padding-bottom: .5vh;
+  font-size: $navbar-font-size !important;
 }
 
 #loginbutton {
-    margin-top: 7px;
-    margin-left: 5px;
-    margin-right: 5px;
-    font-weight: bold;
-    text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    letter-spacing: 1.5px;
-    font-size: 110%;
-    border-radius: 0;
+  margin-left: .5vw;
+  margin-right: .5vw;
+  font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
 }
 
 #reset-password-btn {
-    margin-top: 7px;
-    margin-left: 5px;
-    margin-right: 5px;
-    font-weight: bold;
-    text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    letter-spacing: 1.5px;
-    font-size: 110%;
-    border-radius: 0;
+  margin-left: .5vw;
+  //margin-right: .5vw;
+  font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
 }
 
 #regbutton {
-    margin-top: 7px;
-    margin-right: 10px;
-    font-weight: bold;
-    text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    letter-spacing: 1.5px;
-    font-size: 110%;
-    border-radius: 0;
-    color: white;
+  font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
+  color: white;
+}
+
+#userbit-wrapper {
+  margin-right: 2vw;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  height: $navbar-button-height !important;
+  max-height: $navbar-button-height !important;
+  place-self: start start;
+  ////display: flex;
+  ////flex-flow: row nowrap;
+  place-items: baseline;
+  //font-size: 1.5vh;
+  font-size: .75 * $navbar-font-size !important;
+  border-radius: 0 !important;
+}
+
+
+div .userbit-avatar span .avatarimg {
+  width: 19px;
+  height: 19px;
+  border-radius: 5px;
+  float: left;
+  margin-right: 5px;
+}
+
+.user-avatar-preview-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 2vh;
+}
+
+#ytregcheck {
+  margin-top: 5px;
+  border-radius: 0;
+  padding: -2px;
 }
 
 #logoutbutton {
-    margin-top: 6px;
-    margin-right: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    letter-spacing: 1.5px;
-    font-size: 110%;
-    border-radius: 0;
+  margin-top: 6px;
+  margin-right: 10px;
+  font-weight: bold;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
 }
 
 #usernametop {
-    padding-right: 2vw;
-    padding-left: 1vw;
-    margin-top: 6px;
-    text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    letter-spacing: 1.5px;
-    font-size: 110%;
-    border-radius: 0;
+  //padding-right: 2vw;
+  //padding-left: 1vw;
+  margin-top: 6px;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  //border-radius: 0;
 }
 
 #usernamedropdown {
-    margin-left: 0;
-    margin-right: 5px;
-    margin-top: 6px;
-    text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
-    font-size: 110%;
-    border-radius: 0;
+  margin-left: 0;
+  margin-right: 5px;
+  margin-top: 6px;
+  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  font-size: 110%;
+  border-radius: 0;
 }
 
+
 #emailbox {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .version-tag {
-    font-size: 50%;
+  font-size: 50%;
 }
 
 .nav-title {
-    font-family: "Roboto", sans-serif;
-    color: rgba(255, 255, 255, 0.87);
-    transition: 250ms;
+  font-family: "Roboto", sans-serif;
+  color: rgba(255, 255, 255, 0.87);
+  transition: 250ms;
 }
 
 .nav-title:hover {
-    color: #77b300;
+  color: #77b300;
+}
+
+#toketimer-container {
+  grid-area: toke-button;
+  justify-self: start;
+  align-self: start;
+}
+
+#userbit-container {
+  grid-area: userbit;
+  //margin-top: .1vh;
+  place-self: start end;
+  //display: flex;
+  margin-bottom: .5vh;
+}
+
+#hype-grid-container {
+  grid-area: hype-button;
+  align-self: end;
+  place-content: center;
+  display: inline-flex;
+  flex-flow: row-reverse wrap;
+}
+
+#usernav-container {
+  grid-column: 3;
+  place-self: center;
+  margin-top: -10px;
+
+  display: inline-flex;
+  flex-flow: row nowrap;
+  place-content: baseline;
+
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#hype-container {
+  margin-bottom: .75vh;
+  display: inline-flex;
+  flex-flow: row nowrap;
 }
 
 .hypepb {
-    -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
-    background: #ccc;
-    width: 250px;
-    height: 38px;
-    position: absolute;
-    top: 4px;
-    right: 365px;
-    border-radius: 8px;
-    border-top: 2px solid #DDD;
-    border-left: 2px solid #DDD;
-    border-bottom: 2px solid #BBB;
-    border-right: 2px solid #BBB;
-    overflow: hidden;
-    text-align: center;
-    line-height: 38px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #666;
-    cursor: url('../img/lighter.cur'), pointer;
+  -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
+  background: #ccc;
+  width: 13.5vw;
+  height: $navbar-button-height;
+  margin-top: .5vh;
+  border-radius: 8px;
+  border-top: 2px solid #DDD;
+  border-left: 2px solid #DDD;
+  border-bottom: 2px solid #BBB;
+  border-right: 2px solid #BBB;
+  overflow: hidden;
+  text-align: center;
+  //line-height: 38px;
+  font-size: $navbar-font-size * .75;
+  font-weight: bold;
+  color: #666;
+  cursor: url('../img/lighter.cur'), pointer;
 }
 
 .hypeprogress {
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    height: 38px;
-    width: 48px;
-    background-color: #558B2F;
-    border-radius: 6px;
-    background: #689F38;
-    background: linear-gradient(to bottom, #689F38 0%, #689F38 50%, #689F38 51%, #558B2F 100%);
-    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    overflow: hidden;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  //height: 38px;
+  width: 1.5vw;
+  height: 4vh;
+  //width: 48px;
+  //background-color: #558B2F;
+  border-radius: 6px;
+  background: #689F38;
+  background: linear-gradient(to bottom, #689F38 0%, #689F38 50%, #689F38 51%, #558B2F 100%);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  overflow: hidden;
 }
 
 .hypedone:active {
-    -webkit-box-shadow: inset 0px 0px 18px rgba(0, 0, 0, 0.4);
-    box-shadow: inset 0px 0px 18px rgba(0, 0, 0, 0.4);
-    border-radius: 6px;
-    cursor: url('../img/lighter.cur'), pointer;
+  -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  cursor: url('../img/lighter.cur'), pointer;
 }
 
-.hypedone {
-    text-align: center;
-    line-height: 38px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #EEE;
-    height: 38px;
-    width: 250px;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
-    cursor: url('../img/lighter.cur'), pointer;
+.hypedone {;
+  text-align: center;
+  margin-top: .5vh;
+  line-height: 3.5vh;
+  font-weight: bold;
+  color: #EEE;
+  width: 13.5vw;
+  height: $navbar-button-height;
+  //height: 38px;
+  //width: 250px;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  cursor: url('../img/lighter.cur'), pointer;
 }
 
 .hypepb:hover #progress {
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    width: 125px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  //width: 125px;
 }
 
 .hypeprogress a:hover {
-    animation: pulse 1s infinite;
-    animation-timing-function: linear;
-    text-decoration: none;
-    color: #eee;
+  animation: pulse 1s infinite;
+  animation-timing-function: linear;
+  text-decoration: none;
+  color: #eee;
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
+
+@media only screen and (max-width: 768px) {
+  #tr-nav {
+    height: 1vh;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #toke-button {
+    //padding: .5vw .5vh;
+    font-size: .75 * $navbar-font-size;
+  }
+  .hypepb {
+    font-size: $navbar-font-size * .7;
+  }
+}
+
+@media only screen and (max-width: 1730px) {
+  #navbar-grid {
+    grid-template-columns: 15vw 44vw 14vw 9vw 18vw;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  #navbar-grid {
+    grid-template-columns: 15vw 42vw 14vw 9vw 20vw;
+  }
+}
+
+
+//@media only screen and (min-width: 0px){
+//  #loginButtons, #userbit-wrapper{
+//    font-size: $font-size-small;
+//  }
+//}
+//
+//@media only screen and (min-width: 1200px) {
+//  #loginButtons, #userbit-wrapper{
+//    font-size: $font-size-medium;
+//  }
+//}
