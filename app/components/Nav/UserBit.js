@@ -169,6 +169,8 @@ export default class UserBit extends React.Component {
         const allUserCommands = [
             "join",
             "toke",
+            "session",
+            "joinsesh",
             "em",
             "me",
             "spirittoke",
