@@ -22,15 +22,15 @@
 .dislike-button {
   height: 49%;
   width: 95%;
-  margin: 0 auto;
+  margin: 2px 3px;
   box-sizing: content-box;
   overflow: hidden;
   border: none;
   border-radius: 6px;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   text-align: center;
   text-overflow: ellipsis;
-  background: linear-gradient(135deg, rgba(230,26,39,1) 35%, rgba(255,102,115,1) 100%);
+  background: linear-gradient(135deg, rgba(230, 26, 39, 1) 35%, rgba(255, 102, 115, 1) 100%);
   transition: background 500ms ease;
   background-size: 125%;
 }

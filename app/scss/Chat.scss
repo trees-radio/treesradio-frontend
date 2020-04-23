@@ -22,7 +22,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     #chattoplevel {
         background-color: $chattoplevel-bg;
         position: relative;
-        height: 100%;
+        height: 101%;
         width: 25%;
         overflow: hidden;
         padding-right: 0;
@@ -50,7 +50,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 @media (min-width: 1200px) {
     #chatcontainertop {
         grid-area: unset;
-        height: 100%;
+        height: calc(100vh - 5vh - 5%);
         width: 100%;
         bottom: 0;
         margin-right: 0;
@@ -311,7 +311,8 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 @media (min-width: 1200px) {
     #chatscroll {
-        height: 92%; //23
+        height: calc(100% + 2vh); //92%
+        margin: -4vh 0 -4vh 0;
         grid-area: unset;
     }
 }
@@ -340,7 +341,8 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 @media (min-width: 1200px) {
     .chatbar {
-        height: 8%;
+        height: calc(100% + 2vh);
+        margin-top: -6vh;
         grid-area: unset;
     }
 }
@@ -367,14 +369,15 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 @media (min-width: 1200px) {
     #sendbox_test {
-        height: 75%;
-        margin: 1.5% 0;
+        height: 6%;
+        margin: 2% 0;
     }
 }
 
 #chatinput {
     height: 100%;
     width: 100%;
+    border-radius: 6px 0 0 6px;
 }
 
 #chat-counter_test {
@@ -475,21 +478,36 @@ img[alt="previewvideo"] {
     float: right;
 }
 
+@media #{$isPortraitMode}, (min-height: 1440px) AND (max-width: 1199px) {
+    img[alt="previewvideo"] {
+        height: unset;
+        max-width: 90px;
+        float: right;
+    }
+}
+
 img[alt="previewavatar"] {
     height: 40px;
     width: 40px;
     float: right;
     margin-top: -1vh;
     border-radius: 5px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 img[alt="tenorgif"] {
     min-width: 4.2vw;
     max-width: 95%;
-    max-height: 42vh;
+    max-height: 25vh;
 }
 
+@media #{$isPortraitMode}, (min-height: 1440px) {
+    img[alt="tenorgif"] {
+        min-width: 4.2vw;
+        max-width: 95%;
+        max-height: 35vh;
+    }
+}
 a[title="previewlink"] {
     color: white !important;
     font-weight: bold;

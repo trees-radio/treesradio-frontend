@@ -23,21 +23,18 @@
 .like-button {
   height: 49%;
   width: 95%;
-  margin: 0 auto;
-  margin-bottom: 2px;
-  margin-top:2px;
   float:left;
   box-sizing: content-box;
   overflow: hidden;
   border: none;
   border-radius: 6px;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   text-align: center;
   text-overflow: ellipsis;
-  background: linear-gradient(135deg, rgba(10,82,255,1) 35%, rgba(96,168,255,1) 100%);
+  background: linear-gradient(135deg, rgba(10, 82, 255, 1) 35%, rgba(96, 168, 255, 1) 100%);
   background-size: 125%;
   transition: background 500ms ease;
-  margin-left: 3px;
+  margin: 2px 3px;
 }
 
 .like-button:hover {
