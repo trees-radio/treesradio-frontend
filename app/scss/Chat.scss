@@ -108,8 +108,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     //bottom: 0;
     //height: 100%;
     margin: 0;
-    //padding-left: 0;
-    padding: 2vh 0;
+    padding: 5vh 0;
 }
 
 .chat-line-0 {
@@ -311,8 +310,8 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 @media (min-width: 1200px) {
     #chatscroll {
-        height: calc(100% + 2vh); //92%
-        margin: -4vh 0 -4vh 0;
+        height: calc(100% + 4vh); //92%
+        margin: -6vh 0;
         grid-area: unset;
     }
 }
@@ -341,8 +340,8 @@ $chat-item-color: #c0c0c0; //light skin #000
 
 @media (min-width: 1200px) {
     .chatbar {
-        height: calc(100% + 2vh);
-        margin-top: -6vh;
+        height: calc(100% + 4vh);
+        margin-top: 0;
         grid-area: unset;
     }
 }
