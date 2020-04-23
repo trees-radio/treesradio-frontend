@@ -282,7 +282,7 @@
 }
 
 #grabtrack {
-  height: 8.75vh;
+  height: 9vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -294,7 +294,7 @@
 #playlists-open-button {
   height: 100%;
   cursor: pointer;
-  width: 4.3vw;
+  width: 4.4vw;
   font-size: 0.75vw;
   border-right: solid;
   border-color: #2d2f39;
@@ -310,7 +310,7 @@
 
 #playlists-open-icon {
   color: white;
-  line-height: 9vh;
+  line-height: calc(9vh + 2px);
   height: inherit;
   width: inherit;
   padding-left: 25%;
@@ -319,7 +319,7 @@
 }
 
 #vote {
-  height: 8.75vh;
+  height: 9vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -361,7 +361,8 @@
 
 @media (min-width: 1300px) {
 .waitlist {
-    width: 14.925%;
+  width: 14.925%;
+  margin-top: 2px;
 }
 }
 

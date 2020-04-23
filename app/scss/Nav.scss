@@ -35,11 +35,7 @@
   place-items: baseline;
 }
 
-@media #{$isPortraitMode} {
-  #navbar-grid {
-    grid-template-rows: 5vw !important;
-  }
-}
+
 
 .navbar-grid-nologin {
   grid-template-columns: 15vw 51vw 17vw 7vw 10vw !important;
@@ -337,6 +333,32 @@ div .userbit-avatar span .avatarimg {
   margin-bottom: .75vh;
   display: inline-flex;
   flex-flow: row nowrap;
+}
+
+@media #{$isPortraitMode}, (min-height: 1440px) {
+  #tr-nav {
+    height: unset;
+  }
+  #navbar-grid {
+    grid-template-rows: 5vw !important;
+  }
+  #hype-grid-container {
+    align-self: center;
+  }
+  #hype-container {
+    margin: unset;
+    margin-bottom: unset;
+  }
+  .hypepb {
+    height: 2vh;
+    margin: .2vh 0;
+  }
+  .hypeprogress {
+    height: 1.5vh;
+  }
+  .hypedone {
+    line-height: 1.7vh;
+  }
 }
 
 .hypepb {
