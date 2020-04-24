@@ -463,7 +463,9 @@
 }
 
 .current-playing-user {
-  float:left;
+  float: left;
   color: #77b300;
   cursor: pointer;
+  max-width: 40vh;
+  text-align: left;
 }
