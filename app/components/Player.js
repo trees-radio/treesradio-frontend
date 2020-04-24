@@ -110,11 +110,11 @@ class Player extends React.Component {
         <Line
             className="progressbar-container"
             style={progress}
-            strokeWidth="4"
+            strokeWidth="2"
             strikeLinecap="butt"
             percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
             strokeColor="#000000"
-            TrailColor="#77b300"
+            //TrailColor="#77b300"
             trailColor="#77b300"
         />
       </div>
