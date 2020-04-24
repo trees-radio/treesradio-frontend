@@ -1,6 +1,6 @@
-import {computed, observable, autorun} from "mobx";
+import { computed, observable, autorun } from "mobx";
 import fbase from "libs/fbase";
-import {send} from "libs/events";
+import { send } from "libs/events";
 
 export default new (class TokeTimer {
   constructor() {
@@ -27,6 +27,10 @@ export default new (class TokeTimer {
     return this.time;
   }
   joinToke() {
-    send("chat", {mentions: [], msg: "/join"});
+    if (this.underway) {
+      send("chat", { mentions: [], msg: "/join" });
+    } else {
+      send("chat", { mentiones: [], msg: "/toke" });
+    }
   }
 })();
