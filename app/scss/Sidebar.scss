@@ -132,6 +132,18 @@
   }
 }
 
+@media (min-width: 1800px) and (min-height: 1640px) {
+  .show-chat-btn {
+    padding: 0.8vh 0;
+    height: 100%;
+  }
+  .show-ousers-btn, .show-waitlist-btn, .show-about-btn {
+    padding: 0.8vh 0;
+    height: 100%;
+    display: block;
+  }
+}
+
 @media (min-width: 0px) {
   .online-count {
     color: black;

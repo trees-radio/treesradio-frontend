@@ -4,7 +4,7 @@
 /* #### Variables #### */
 
 #tr-nav {
-  height: 6vh;
+  height: 5vh;
   top: 0 !important;
 }
 
@@ -15,7 +15,7 @@
 
 #toke-button {
   //padding: .5vh .5vw;
-  padding: 0 0.7vw;
+  padding: 0.5vh 0.7vw;
   //max-width: 2vh;
   place-self: flex-start;
   display: flex;
@@ -25,6 +25,11 @@
   height: $navbar-button-height !important;
 }
 
+@media #{$isPortraitMode}, screen and (min-height: 1339px) {
+  #toke-button {
+    padding: 0.8vh 0.7vw;
+  }
+}
 #navbar-grid {
   top: 0;
   display: inline-grid !important;
@@ -107,6 +112,13 @@
   vertical-align: baseline;
   overflow: hidden;
   padding: .8vh .6vw;
+}
+
+@media #{$isPortraitMode}, (min-height: 1439px) {
+  .navbar-brand {
+    font-size: 250%;
+    height: unset;
+  }
 }
 
 //Trees Radio Logo Color
@@ -340,7 +352,7 @@ div .userbit-avatar span .avatarimg {
     height: unset;
   }
   #navbar-grid {
-    grid-template-rows: 5vw !important;
+    //grid-template-rows: 5vw !important;
   }
   #hype-grid-container {
     align-self: center;
@@ -450,7 +462,7 @@ div .userbit-avatar span .avatarimg {
 
 @media only screen and (max-width: 750px) {
   #tr-nav {
-    height: 0vh;
+    height: 0;
   }
 }
 
@@ -465,18 +477,17 @@ div .userbit-avatar span .avatarimg {
   }
 }
 
-@media only screen and (max-width: 1730px) {
-  #navbar-grid {
-    grid-template-columns: 15vw 44vw 14vw 9vw 18vw;
-  }
-}
-
 @media only screen and (max-width: 1500px) {
   #navbar-grid {
     grid-template-columns: 15vw 42vw 14vw 9vw 20vw;
   }
 }
 
+@media only screen and (max-width: 1730px) {
+  #navbar-grid {
+    grid-template-columns: 15vw 44vw 14vw 9vw 18vw;
+  }
+}
 
 //@media only screen and (min-width: 0px){
 //  #loginButtons, #userbit-wrapper{
