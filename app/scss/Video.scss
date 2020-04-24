@@ -166,7 +166,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 700px) {
 #player-size {
-  height: 83.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -175,7 +175,7 @@ $videotoplevel-bg: #171717;
 }
 .progressbar-container {
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   height: .5vh;
   width: 100%;
 }
@@ -183,7 +183,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 800px) {
 #player-size {
-  height: 84.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -201,7 +201,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 900px) {
 #player-size {
-  height: 84.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+  height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
   width: 100%;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -230,7 +230,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 1000px) {
   #player-size {
-    height: 86vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -248,7 +248,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 1200px) {
   #player-size {
-    height: 86.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -265,7 +265,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 1400px) {
   #player-size {
-    height: 88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    height: 85vh; //88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -282,7 +282,7 @@ $videotoplevel-bg: #171717;
 
 @media (min-height: 1600px) {
   #player-size {
-    height: 88.75vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -291,7 +291,7 @@ $videotoplevel-bg: #171717;
   }
   .progressbar-container {
     position: absolute;
-    bottom: -3px;
+    bottom: -2px;
     height: .6vh;
     width: 100%;
   }
@@ -325,7 +325,7 @@ $videotoplevel-bg: #171717;
 }
 
 .progressbar-container {
-
+  z-index: 2;
 }
 
 .progressbar-progress {
