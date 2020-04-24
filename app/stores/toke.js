@@ -29,8 +29,10 @@ export default new (class TokeTimer {
   joinToke() {
     console.log(`${this.underway} <-- toke underway`);
     if (this.underway) {
+      console.log(`sending a /join`);
       send("chat", { mentions: [], msg: "/join" });
     } else {
+      console.log(`sending a /toke`);
       send("chat", { mentiones: [], msg: "/toke" });
     }
   }
