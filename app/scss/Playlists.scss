@@ -2,7 +2,7 @@
 #playlists-container {
   width: 100%;
   float: right;
-  margin-top: 4px;
+  //margin-top: 4px;
 }
 
 .media-time {
@@ -466,6 +466,14 @@
   float: left;
   color: #77b300;
   cursor: pointer;
-  max-width: 40vh;
+  max-width: 33vh;
+  text-align: left;
+}
+
+.current-playing-user {
+  float: left;
+  color: #77b300;
+  cursor: pointer;
+  max-width: 33vh;
   text-align: left;
 }
