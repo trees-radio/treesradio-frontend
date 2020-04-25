@@ -135,16 +135,30 @@ class Toolbar extends React.Component {
         {playlists.init ? <PlaylistsPanel open={this.panelOpen} /> : false}
         <div id="playlists-bar" className="row">
           <div
-            id="playlists-open-button"
-            className="col-lg-1 col-md-1 col-sm-1 col-xs-1"
-            onClick={() => this.togglePlaylistsPanel()}
+              id="playlists-open-button"
+              className="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+              onClick={() => this.togglePlaylistsPanel()}
           >
-            <i id="playlists-open-icon" className={openButtonIcon} />
+            <i id="playlists-open-icon" className={openButtonIcon}/>
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <a className="current-playlist-name">{playlists.selectedPlaylistName}</a>
+            <a className={
+              playlists.selectedSong && playlists.selectedSong.length > 18
+                  ? "current-playlist-name marquee"
+                  : "current-playlist-name"
+            }
+            >
+              {playlists.selectedPlaylistName}
+            </a>
             <br/>
-            <a className="current-selected-media">{playlists.selectedSong}</a>
+            <a className={
+              playlists.selectedSong && playlists.selectedSong.length > 18
+                  ? "current-selected-media marquee"
+                  : "current-selected-media"
+            }
+            >
+              {playlists.selectedSong}
+            </a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
               <span className="current-song-title">
