@@ -1,3 +1,4 @@
+@import './variables';
 
 #playlists-container {
   width: 100%;
@@ -6,7 +7,12 @@
 }
 
 .media-time {
-  float:right;
+  float: right;
+  background-color: $ctrl-area-bg;
+  position: absolute;
+  padding-left: .5em;
+  z-index: 2;
+  right: 0;
 }
 .current-playlist-name {
 	color: #77b300 !important;
@@ -252,12 +258,12 @@
   width: 19em;
   border-right: solid;
   color: #77b300 !important;
-  border-top:solid;
-  border-bottom:solid;
+  border-top: solid;
+  border-bottom: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
   line-height: 2vw;
-  padding: 5px;
+  padding: 0 5px;
   overflow-x: hidden;
   scrollbar-width: 1px;
 }
@@ -268,15 +274,16 @@
 
 #currentsong-metadata {
   height: 100%;
-  border-right: solid;
-  border-top:solid;
-  border-bottom:solid;
+  border-top: solid;
+  border-bottom: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
   line-height: 2vw;
-  padding: 5px;
-  overflow-x:hidden;
+  padding: 1px 0 0 0;
+  overflow-x: hidden;
   text-align: right;
+  border-left: #0c0c0e solid .5em;
+  border-right: #0c0c0e solid .5em;
 }
 
 #currentsong-metadata a {
@@ -463,18 +470,25 @@
   margin-top:20%;
 }
 
-.current-playing-user {
+.toolbar-playertxt {
   float: left;
-  color: #77b300;
+  color: $trees-primary;
   cursor: pointer;
-  max-width: 33vh;
+  max-width: 7em;
   text-align: left;
+  background-color: $ctrl-area-bg;
+  position: inherit;
+  padding-right: .5em;
+  z-index: 2;
 }
 
 .current-playing-user {
   float: left;
-  color: #77b300;
+  color: $trees-primary;
   cursor: pointer;
-  max-width: 33vh;
+  max-width: 16em;
   text-align: left;
+  position: inherit;
+  padding-left: 1em;
+  z-index: 1;
 }
