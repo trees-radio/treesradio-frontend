@@ -19,7 +19,7 @@ export default class PlaylistsPanel extends React.Component {
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
-    if (key == 13) {
+    if (key === 13) {
       cb();
     }
   }
@@ -151,7 +151,7 @@ export default class PlaylistsPanel extends React.Component {
                 show={skipLink && skipLink.length > 0}
                 rel="noopener noreferrer"
               >
-                <i className="fa fa-2x fa-globe add-to-playlist-btn" />
+                <i className="fa fa-2x fa-globe add-to-playlist-btn"/>
               </a>
             </li>
           );

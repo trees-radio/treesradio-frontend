@@ -13,6 +13,7 @@ import classNames from "classnames";
 import onClickOutside from "react-onclickoutside";
 import createClass from "create-react-class";
 import $ from "jquery";
+
 const loadingIconClass = "fa-spin fa-circle-o-notch";
 
 const GrabPlaylists = onClickOutside(
@@ -142,29 +143,36 @@ class Toolbar extends React.Component {
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <a className="current-playlist-name">{playlists.selectedPlaylistName}</a>
-            <br />
+            <br/>
             <a className="current-selected-media">{playlists.selectedSong}</a>
           </div>
           <div id="currentsong-metadata" className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <span className="current-song-title">
-              <a
-                className={
-                  playing.data.info.title && playing.data.info.title.length > 35
-                    ? "current-playing-media marquee"
-                    : "current-playing-media"
-                }
-              >
-                {playing.data.info.title}
-              </a>
-            </span>
-            <br />
+              <span className="current-song-title">
+                  <a
+                      className={
+                        playing.data.info.title && playing.data.info.title.length > 35
+                            ? "current-playing-media marquee"
+                            : "current-playing-media"
+                      }
+                  >
+                    {playing.data.info.title}
+                  </a>
+              </span>
+            <br/>
+            <span className="toolbar-playertxt">
+                Player:
+              </span>
             <a
-              className="current-playing-user"
-              onClick={() => {
-                $("#chatinput").val($("#chatinput").val() + " @" + playing.data.info.user + " ");
-              }}
+                className={
+                  playing.data.info.user && playing.data.info.user.length > 18
+                      ? "current-playing-user marquee"
+                      : "current-playing-user"
+                }
+                onClick={() => {
+                  $("#chatinput").val($("#chatinput").val() + " @" + playing.data.info.user + " ");
+                }}
             >
-              Player: {playing.data.info.user}
+              {" "}{" " + playing.data.info.user}
             </a>
             <span className="media-time">
               {playing.humanCurrent} / {playing.humanDuration}
@@ -172,11 +180,11 @@ class Toolbar extends React.Component {
           </div>
           <div className="waitlist col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div
-              className={classNames(
-                "join-waitlist",
-                waitlist.inWaitlist ? "join-waitlist-pressed" : false
-              )}
-              onClick={() => waitlist.bigButton()}
+                className={classNames(
+                    "join-waitlist",
+                    waitlist.inWaitlist ? "join-waitlist-pressed" : false
+                )}
+                onClick={() => waitlist.bigButton()}
             >
               {waitlistButtonText}
             </div>
