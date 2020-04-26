@@ -101,19 +101,24 @@ export default class UserBit extends React.Component {
     }
 
     logoutAndDisableButtons() {
-        profile.logout().then(function () {
-            let buttons = document.querySelectorAll('disabledNoLogin');
+        profile.logout()
+            .then(() => {
+                if (window.matchMedia("only screen and (orientation: portrait)")) {
+                    document.getElementById("navbar-grid")
+                        .setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
+                }
 
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].classList.add('greyDisabled');
-            }
-        });
+                let buttons = document.querySelectorAll('disabledNoLogin');
+
+                for (let i = 0; i < buttons.length; i++) {
+                    buttons[i].classList.add('greyDisabled');
+                }
+            });
     }
 
     disableIfNecessary() {
         return this.userLoggedIn() ? "" : " greyDisabled";
     }
-
 
     render() {
         let emailVerificationResendIcon;
@@ -228,11 +233,11 @@ export default class UserBit extends React.Component {
                         <li onClick={() => (playing.togglePlayerSize())}>
                             <a href="#">
                                 <i
-    className={classNames(
-        "fa",
-        playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
-    )}
-    />
+                                    className={classNames(
+                                        "fa",
+                                        playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                                    )}
+                                />
                                 {playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player"}
                             </a>
                         </li>
@@ -249,22 +254,22 @@ export default class UserBit extends React.Component {
                         <li onClick={() => this.hideGifs()}>
                             <a href="#">
                                 <i
-    className={classNames(
-        "fa",
-        this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
-    )}
-    />{" "}
+                                    className={classNames(
+                                        "fa",
+                                        this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
                                 Hide Gifs?
                             </a>
                         </li>
                         <li onClick={() => this.hideBlazebot()}>
                             <a href="#">
                                 <i
-    className={classNames(
-        "fa",
-        profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
-    )}
-    />{" "}
+                                    className={classNames(
+                                        "fa",
+                                        profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
                                 Hide BlazeBot?
                             </a>
                         </li>
@@ -280,11 +285,11 @@ export default class UserBit extends React.Component {
                         <li onClick={() => this.toggleInterface()}>
                             <a href="#">
                                 <i
-    className={classNames(
-        "fa",
-        this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
-    )}
-    />{" "}
+                                    className={classNames(
+                                        "fa",
+                                        this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
                                 Gelato?
                             </a>
                         </li>
@@ -433,11 +438,11 @@ export default class UserBit extends React.Component {
                 <li onClick={() => this.toggleShowMute()}>
                     <a href="#">
                         <i
-    className={classNames(
-        "fa",
-        profile.showmuted ? "fa-check-square-o" : "fa-square-o"
-    )}
-    />{" "}
+                            className={classNames(
+                                "fa",
+                                profile.showmuted ? "fa-check-square-o" : "fa-square-o"
+                            )}
+                        />{" "}
                         Show Muted Users
                     </a>
                 </li>
@@ -450,11 +455,11 @@ export default class UserBit extends React.Component {
         return this.userLoggedIn() ? (<li onClick={() => this.toggleNotifications()}>
                 <a href="#">
                     <i
-    className={classNames(
-        "fa",
-        profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
-    )} reset
-    />{" "}
+                        className={classNames(
+                            "fa",
+                            profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
+                        )} reset
+                    />{" "}
                     Mention Audio?
                 </a>
             </li>
@@ -476,8 +481,8 @@ export default class UserBit extends React.Component {
             <li onClick={() => waitlist.setAutojoin()}>
                 <a href="#">
                     <i
-    className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
-    />{" "}
+                        className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
+                    />{" "}
                     Auto Join Waitlist
                 </a>
             </li>

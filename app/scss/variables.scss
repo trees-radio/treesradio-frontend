@@ -1,14 +1,18 @@
 /* #### Media Queries ####*/
 
-$isPortraitMode: 'only screen and (orientation: portrait)';
+$isPortrait: 'only screen and (orientation: portrait)';
 $isLandscapeMode: 'only screen and (orientation: landscape)';
 
 /* #### Navbar #### */
 
+$navbar-font-size: 1.2em;
+$navbar-font-size-dynamic: 1vw; //use in elements that break easily when cramped
+
 $navbar-height: 5vh;
 $navbar-button-height: 3.5vh;
-$navbar-font-size: 1.2em;
 
+$navbar-height-portrait: 3vh;
+$navbar-button-height-portrait: 2vh;
 
 /* #### colors #### */
 
