@@ -15,10 +15,27 @@ const SCROLL_SENSITIVITY = 200;
 
 @observer
 export default class ChatContent extends React.Component {
-  componentDidMount() {
-    this.scroll();
-    this.startup = Date.now();
-  }
+
+    @observable
+    touchOffset = 0;
+
+    componentDidMount() {
+        this.scroll();
+        this.startup = Date.now();
+        document.getElementById("chatscroll").addEventListener("touchstart", evt => {
+            evt.preventDefault();
+
+            this.touchOffset = evt.changedTouches[0].clientY;
+
+        });
+        document.getElementById("chatscroll").addEventListener("touchmove", evt => {
+            evt.preventDefault();
+
+            document.getElementById("chatscroll").scrollBy(0, (this.touchOffset - evt.changedTouches[0].clientY));
+
+            this.touchOffset = evt.changedTouches[0].clientY;
+        })
+    }
 
   scroll = () =>
     setTimeout(() => (this._chatscroll.scrollTop = this._chatscroll.scrollHeight), 300);
