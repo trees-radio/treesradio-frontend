@@ -256,13 +256,15 @@
   height: 100%;
   max-height: 9vh;
   width: 19em;
-  border-right: solid;
   color: #77b300 !important;
-  border-top: solid;
+  border-top: solid #2d2f39;
+  border-right: solid;
   border-bottom: solid;
-  border-color: #2d2f39;
+  border-bottom-color: #0c0c0e;
+  border-right-width: 10px;
+  border-right-color: #0c0c0e;
   font-size: 1.15vw;
-  line-height: 2vw;
+  line-height: 4.1vh;
   padding: 0 5px;
   overflow-x: hidden;
 }
@@ -277,12 +279,13 @@
   border-bottom: solid;
   border-color: #2d2f39;
   font-size: 1.15vw;
-  line-height: 2vw;
+  line-height: 4.5vh;
   padding: 0;
   overflow-x: hidden;
   text-align: right;
   border-left: #0c0c0e solid .5em;
   border-right: #0c0c0e solid .5em;
+  border-bottom-color: #0c0c0e;
 }
 
 #currentsong-metadata a {
@@ -306,7 +309,7 @@
   font-size: 0.75vw;
   border-right: solid;
   border-color: #2d2f39;
-  background: linear-gradient(135deg, rgba(118, 158, 20, 0.9755847774751005) 35%, rgba(99, 163, 45, 0.9872806839078491) 100%);
+  background: linear-gradient(135deg, #b4ea00 30%, rgba(99, 163, 45, 0.987281) 100%);
   padding: 0;
   margin: 0;
   border-radius: 10px;
