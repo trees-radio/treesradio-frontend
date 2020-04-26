@@ -71,15 +71,15 @@ export default class ChatContent extends React.Component {
     var messages = chat.messages;
 
     var content = messages.map((msg, i) => {
-      var chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
-      var chatLineClasses = classNames(
-        "chat-item",
-        chatPosClass,
-        {
-          "blazebot-msg": msg.username == "BlazeBot"
-        },
-        profile.hideBlazeBot ? "blazebot-hide" : ""
-      );
+        var chatPosClass = i % 2 === 0 ? "chat-line-1" : "chat-line-0";
+        var chatLineClasses = classNames(
+            "chat-item",
+            chatPosClass,
+            {
+                "blazebot-msg": msg.username === "BlazeBot"
+            },
+            profile.hideBlazeBot ? "blazebot-hide" : ""
+        );
 
       var humanTimestamp = moment.unix(msg.timestamp).format("LT");
       var msgs = msg.msgs.map((innerMsg, i) => {
