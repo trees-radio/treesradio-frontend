@@ -30,7 +30,7 @@
   color: rgba(255, 255, 255, 1);
   text-align: center;
   text-overflow: ellipsis;
-  background: linear-gradient(135deg, rgba(230, 26, 39, 1) 35%, rgba(255, 102, 115, 1) 100%);
+  background: linear-gradient(135deg, #FF4F0A 42%, #B32226 100%);
   transition: background 500ms ease;
   background-size: 125%;
 }
@@ -40,7 +40,7 @@
 }
 
 .dislike-button:active {
-  background-color: rgba(255,0,16,1);
+  background-color: #b30c0e;
   background-position: 50% 50%;
   background-origin: padding-box;
   background-clip: border-box;
@@ -48,7 +48,7 @@
 }
 
 .dislike-button-active {
-  background-color: rgba(255,0,16,1);
+  background-color: #b30c0e;
   background-position: 50% 50%;
   background-origin: padding-box;
   background-clip: border-box;

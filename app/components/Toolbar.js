@@ -143,7 +143,7 @@ class Toolbar extends React.Component {
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <a className={
-              playlists.selectedSong && playlists.selectedSong.length > 18
+              playlists.selectedPlaylistName && playlists.selectedPlaylistName.length > 18
                   ? "current-playlist-name marquee"
                   : "current-playlist-name"
             }
