@@ -284,6 +284,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     padding: 1% 2%;
     border-radius: 5%;
     z-index: 100;
+    display: table;
 }
 
 .mention-item:hover {
@@ -294,6 +295,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     padding-left: 2%;
     padding-right: 2%;
     cursor: pointer;
+    display: table-row;
 }
 
 
