@@ -106,7 +106,7 @@
   letter-spacing: 1px;
   vertical-align: baseline;
   overflow: hidden;
-  padding: .8vh .6vw;
+  //padding: .8vh .6vw;
 }
 
 @media #{$isPortrait}, (min-height: 1439px) {
@@ -138,8 +138,9 @@
   display: flex;
   flex-flow: row nowrap;
   place-items: baseline;
-  font-size: 1.5vh;
+  font-size: $navbar-font-size;
   height: $navbar-button-height !important;
+  line-height: $navbar-button-height / 2 !important;
   padding-bottom: 4px !important;
   padding-top: 4px !important;
 }
@@ -151,34 +152,33 @@
 }
 
 #loginForm {
-  //display: flex;
   flex-flow: row nowrap;
   place-items: baseline;
-  font-size: 1.5vh;
   margin-top: 3.2vh;
   padding-top: .8vh;
 
-  height: 3vh;
+  height: $navbar-button-height-portrait;
   display: inline-flex;
   flex-flow: row nowrap;
 }
 
 #loginWrapper {
   place-self: start;
+  display: inline-flex;
 }
 
 #emailpassfields {
   z-index: 2;
   place-self: center;
   margin-bottom: unset !important;
+  height: $navbar-button-height-portrait !important;
 }
 
 #loginButtons {
-  height: $navbar-button-height;
+  margin-top: $navbar-height - $navbar-button-height;
+  height: $navbar-button-height-portrait;
   display: inline-flex;
   place-self: center;
-  place-items: baseline;
-  padding-bottom: .5vh;
   font-size: $navbar-font-size !important;
 }
 
@@ -188,7 +188,6 @@
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
-  font-size: 110%;
   border-radius: 0;
 }
 
@@ -298,9 +297,7 @@ div .userbit-avatar span .avatarimg {
 
 #userbit-container {
   grid-area: userbit;
-  //margin-top: .1vh;
   place-self: start end;
-  //display: flex;
   margin-bottom: .5vh;
 }
 
@@ -370,7 +367,7 @@ div .userbit-avatar span .avatarimg {
     border-right: 2px solid #699200;*/
   overflow: hidden;
   text-align: center;
-  font-size: $navbar-font-size * .75;
+  font-size: $navbar-font-size-dynamic;
   font-weight: bold;
   color: #767;
   cursor: url('../img/lighter.cur'), pointer;
@@ -384,11 +381,8 @@ div .userbit-avatar span .avatarimg {
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  //height: 38px;
   width: 1.5vw;
   height: 4vh;
-  //width: 48px;
-  //background-color: #558B2F;
   border-radius: 6px;
   background: #689F38;
   background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
@@ -404,7 +398,7 @@ div .userbit-avatar span .avatarimg {
   cursor: url('../img/lighter.cur'), pointer;
 }
 
-.hypedone {;
+.hypedone {
   text-align: center;
   //margin-top: .5vh;
   line-height: 3vh;
@@ -461,30 +455,43 @@ div .userbit-avatar span .avatarimg {
   }
 }
 
-@media only screen and (max-width: 1500px) {
+
+@media (orientation: portrait) {
+  .navbar-grid-nologin {
+    grid-template-columns: 15vw 85vw 0 0 0 !important;
+  }
+
   #navbar-grid {
-    grid-template-columns: 15vw 42vw 14vw 9vw 20vw;
+    grid-template-rows: $navbar-height-portrait !important;
+  }
+
+  #reset-password-btn {
+    margin-right: 1vw;
+  }
+
+  .login-form-button {
+    font-size: $navbar-font-size-dynamic * 1.5 !important;
+    height: $navbar-button-height-portrait !important;
+    line-height: $navbar-button-height-portrait / 2;
+    //max-height: $navbar-button-height-portrait;
+  }
+
+  #loginButtons {
+    font-size: $navbar-font-size-dynamic * 1.5;
+    place-self: center baseline;
+    margin-top: 0;
+  }
+
+  #emailInput {
+    width: 15vw !important;
+    height: $navbar-button-height-portrait;
+  }
+
+  #passInput {
+    width: 15vw !important;
+    height: $navbar-button-height-portrait;
   }
 }
-
-@media only screen and (max-width: 1730px) {
-  #navbar-grid {
-    grid-template-columns: 15vw 44vw 14vw 9vw 18vw;
-  }
-}
-
-//@media only screen and (min-width: 0px){
-//  #loginButtons, #userbit-wrapper{
-//    font-size: $font-size-small;
-//  }
-//}
-//
-//@media only screen and (min-width: 1200px) {
-//  #loginButtons, #userbit-wrapper{
-//    font-size: $font-size-medium;
-//  }
-//  }
-//}
 
 /*explosive hype*/
 /*Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
