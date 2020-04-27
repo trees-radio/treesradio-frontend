@@ -135,6 +135,7 @@ export default new (class Profile {
   @observable private = null;
   @observable privateInit = false;
   @observable hideBlazeBot = false;
+  @observable hypeBoom = true;
 
   @observable rank = null;
   @observable rankPermissions = {};

@@ -111,6 +111,11 @@ class Nav extends React.Component {
                );
            }*/
 
+
+        // document.addEventListener("DOMContentLoaded",() => {
+        //     let button = new ExplosiveButton("button");
+        // });
+
         let login;
 
         if (profile.user !== null) {
@@ -241,5 +246,3 @@ function Version({show}) {
     </span>
     );
 }
-
-

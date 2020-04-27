@@ -1,5 +1,5 @@
 import React from "react";
-import {listenAvatar, defaultAvatar} from "../../../libs/avatar";
+import {defaultAvatar, listenAvatar} from "../../../libs/avatar";
 import imageWhitelist from "../../../libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
 import EMPTY_IMG from "../../../img/nothing.png";
@@ -45,9 +45,9 @@ export default class UserAvatar extends React.Component {
     let style = {};
 
     return (
-      <span className={this.props.className}>
-        <img src={avatar} className={this.props.imgClass || "avatarimg"} style={style} />
-        <VisibilitySensor onChange={this.onVisibility} />
+        <span className={this.props.className}>
+        <img src={avatar} className={this.props.imgClass || "avatarimg"} style={style} id="user-avatar"/>
+        <VisibilitySensor onChange={this.onVisibility}/>
       </span>
     );
   }

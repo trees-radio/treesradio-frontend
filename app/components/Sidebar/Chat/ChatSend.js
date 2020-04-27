@@ -50,7 +50,7 @@ export default class ChatSend extends React.Component {
         return (
           <span key={i} className="mention-item" onClick={() => chat.replaceMention(i)}>
             {" "}
-            @{m} <br />
+            @{m}
           </span>
         );
       });

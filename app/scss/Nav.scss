@@ -15,7 +15,7 @@
 
 #toke-button {
   //padding: .5vh .5vw;
-  padding: 0.5vh 0.7vw;
+  padding: 0.2vh 0.7vw;
   //max-width: 2vh;
   place-self: flex-start;
   display: flex;
@@ -23,6 +23,7 @@
   place-items: baseline;
   font-size: $navbar-font-size;
   height: $navbar-button-height !important;
+  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689F38 100%);
 }
 
 @media #{$isPortrait}, screen and (min-height: 1339px) {
@@ -57,12 +58,6 @@
   width: inherit;
   position: relative;
   top: -2.7vh;
-}
-
-#bump {
-  grid-area: bump;
-  width: 0.5vh;
-  padding-left: .5vw;
 }
 
 #navbar-grid:before {
@@ -159,24 +154,33 @@
 #loginForm {
   flex-flow: row nowrap;
   place-items: baseline;
+<<<<<<< app/scss/Nav.scss
+=======
+  font-size: 1.5vh;
+>>>>>>> app/scss/Nav.scss
   margin-top: 3.2vh;
   padding-top: .8vh;
 
   height: $navbar-button-height-portrait;
   display: inline-flex;
   flex-flow: row nowrap;
+<<<<<<< app/scss/Nav.scss
 
+=======
+>>>>>>> app/scss/Nav.scss
 }
 
 #loginWrapper {
   place-self: start;
+<<<<<<< app/scss/Nav.scss
   display: inline-flex;
+=======
+>>>>>>> app/scss/Nav.scss
 }
 
 #emailpassfields {
   z-index: 2;
   place-self: center;
-  //margin-top: 7px;
   margin-bottom: unset !important;
   height: $navbar-button-height-portrait !important;
 }
@@ -200,7 +204,6 @@
 
 #reset-password-btn {
   margin-left: .5vw;
-  //margin-right: .5vw;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
@@ -365,21 +368,26 @@ div .userbit-avatar span .avatarimg {
 .hypepb {
   -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
-  background: #ccc;
   width: 13.5vw;
   height: $navbar-button-height;
   margin-top: .5vh;
   border-radius: 8px;
-  border-top: 2px solid #DDD;
-  border-left: 2px solid #DDD;
-  border-bottom: 2px solid #BBB;
-  border-right: 2px solid #BBB;
+  /*  border-top: 2px solid #699420;
+    border-left: 2px solid #699420;
+    border-bottom: 2px solid #699200;
+    border-right: 2px solid #699200;*/
   overflow: hidden;
   text-align: center;
+<<<<<<< app/scss/Nav.scss
   font-size: $navbar-font-size-dynamic;
+=======
+  font-size: $navbar-font-size * .75;
+>>>>>>> app/scss/Nav.scss
   font-weight: bold;
-  color: #666;
+  color: #767;
   cursor: url('../img/lighter.cur'), pointer;
+  //background: #77b420;
+  line-height: 3.2vh;
 }
 
 .hypeprogress {
@@ -392,7 +400,7 @@ div .userbit-avatar span .avatarimg {
   height: 4vh;
   border-radius: 6px;
   background: #689F38;
-  background: linear-gradient(to bottom, #689F38 0%, #689F38 50%, #689F38 51%, #558B2F 100%);
+  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
   display: inline-block;
   overflow: hidden;
@@ -462,28 +470,7 @@ div .userbit-avatar span .avatarimg {
   }
 }
 
-//@media  {
-//  #navbar-grid }
-//grid-template-columns: 15vw 42vw 14vw 9vw 20vw;
-//  }
-//}
-//
-//@media only screen and (max-width: 1730px) {
-//  #navbar-grid {
-//    grid-template-columns: 15vw 44vw 14vw 9vw 18vw;
-//  }
 
-//@media only screen and (min-width: 0px){
-//  #loginButtons, #userbit-wrapper{
-//    font-size: $font-size-small;
-//  }
-//}
-//
-//@media only screen and (min-width: 1200px) {
-//  #loginButtons, #userbit-wrapper{
-//    font-size: $font-size-medium;
-//  }
-//}
 @media (orientation: portrait) {
   .navbar-grid-nologin {
     grid-template-columns: 15vw 85vw 0 0 0 !important;
@@ -521,4 +508,43 @@ div .userbit-avatar span .avatarimg {
   }
 
 
+/*explosive hype*/
+/*Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
+
+.exploding, .exploding:focus, .exploding:hover, .exploding > div {
+  background: transparent;
+  color: transparent;
+}
+
+.exploding {
+  pointer-events: none;
+  position: relative;
+  will-change: transform;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  content: none;
+}
+
+.particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+
+.particle--debris {
+  background: #77B420;
+  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
+}
+
+.particle--fire {
+  border-radius: 50%;
 }

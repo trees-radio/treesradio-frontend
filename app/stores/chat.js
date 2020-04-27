@@ -189,7 +189,7 @@ export default new (class Chat {
       return online.userlist.filter(
         n =>
           n &&
-          n.toUpperCase().includes(name.toUpperCase()) &&
+          n.toUpperCase().startsWith(name.toUpperCase()) &&
           n.toUpperCase() !== name.toUpperCase()
       );
     } else {

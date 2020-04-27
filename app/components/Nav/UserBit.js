@@ -28,6 +28,33 @@ export default class UserBit extends React.Component {
         profile.updateUsername(this._username.value.substr(0, 24));
     }
 
+    /* componentDidMount() {
+         console.log("testtesttesttesttest"); //TODO remove
+
+         username(profile.uid)
+             .then(result => {
+                 if (profile.user !== null) {
+                     let userNameLength = result.toString().length;
+
+                     let usernamespan = document.getElementById("username")
+
+                     // let fontSizeString = window.getComputedStyle(usernamespan).getPropertyValue("font-size");
+                     let fontSizeString = "1.2em";
+                     // let fontSize = parseFloat(fontSizeString);
+                     // let unit = fontSizeString.replace("!important","").trim().replace(fontSize.toString(), "");
+
+                     this.fontSize = (!this.modifierApplied && userNameLength >= 15) ? (this.fontSize * 0.9 * this.getQueryMultiplier()) : (this.fontSize * this.getQueryMultiplier());
+                     // fontSize = Math.round(((fontSize * (userNameLength / 100)) + Number.EPSILON) * 100) / 100;
+                     usernamespan.setAttribute("style", "font-size: " + fontSize + "em");
+                 }
+             })
+     }*/
+
+    @observable
+    fontSize = 1.2;
+
+    @observable
+    modifierApplied = false;
 
     @observable
     legacyInterface = false;
@@ -80,6 +107,10 @@ export default class UserBit extends React.Component {
 
     hideBlazebot() {
         profile.hideBlazebot ? (profile.hideBlazebot = false) : (profile.hideBlazebot = true);
+    }
+
+    hideHypeBoom() {
+        profile.hypeBoom = !profile.hypeBoom;
     }
 
     toggleHelp() {
@@ -161,6 +192,33 @@ export default class UserBit extends React.Component {
         } else {
             resendVerification = "";
         }
+
+        /*     window.addEventListener("DOMContentLoaded", () => { //TODO !IMP
+                 let userNameLength = 0;
+
+                 username(profile.uid)
+                     .then(result => {
+                         if (profile.user !== null) {
+                             userNameLength = result.toString().length;
+
+                             let usernamespan = document.getElementById("username")
+
+                             // let fontSizeString = window.getComputedStyle(usernamespan).getPropertyValue("font-size");
+                             let fontSizeString = "1.2em";
+                             let fontSize = parseFloat(fontSizeString);
+                             let unit = fontSizeString.replace("!important", "").trim().replace(fontSize.toString(), "");
+
+                             fontSize = userNameLength >= 15 ? (fontSize * 0.7 * this.getQueryMultiplier()) : (fontSize * this.getQueryMultiplier());
+                             // fontSize = Math.round(((fontSize * (userNameLength / 100)) + Number.EPSILON) * 100) / 100;
+                             usernamespan.setAttribute("style", "font-size: " + fontSize + unit);
+                         }
+                     })
+             });*/
+
+
+        // if (userNameLength > 0){
+        //
+        // }
 
         // if (profile.user !== null) {
         //     let resendVerification = "";
@@ -271,6 +329,17 @@ export default class UserBit extends React.Component {
                                     )}
                                 />{" "}
                                 Hide BlazeBot?
+                            </a>
+                        </li>
+                        <li onClick={() => this.hideHypeBoom()}>
+                            <a href="#">
+                                <i
+                                    className={classNames(
+                                        "fa",
+                                        profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
+                                Hype Animation?
                             </a>
                         </li>
                         {this.showMentionAudio()}
@@ -547,5 +616,20 @@ export default class UserBit extends React.Component {
             <img className="avatarimg" src="img/nothing.png" alt="avatar"/>
         </span>
         )
+    }
+
+    getQueryMultiplier() {
+        if ($(window).width() > 1730) {
+            return 1;
+        }
+        if (window.matchMedia("only screen and (max-width: 1300px)")) {
+            return 0.6;
+        } else if (window.matchMedia("only screen and (max-width: 1625px)")) {
+            return 0.65;
+        } else if (window.matchMedia("only screen and (max-width: 1730px")) {
+            return 0.7;
+        } else {
+            return 1;
+        }
     }
 }

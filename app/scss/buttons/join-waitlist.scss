@@ -9,11 +9,11 @@
   cursor: pointer;
   color: white;
   text-overflow: clip;
-  background: linear-gradient(135deg, rgba(119, 179, 0, 1) 35%, rgba(155, 255, 76, 1) 100%);
+  background: linear-gradient(135deg, #4c7a20 10%, #77b420 34%, #93CF00 45%, #fffc00 81%);
   transition: background 500ms ease;
   border-radius: 6px;
   background-size: 125%;
-  max-height: 9vh;
+  max-height: 9.25vh;
 }
 
 .join-waitlist:hover {
@@ -26,7 +26,7 @@
 
 
 .join-waitlist-pressed {
-  background: linear-gradient(135deg, rgba(156,47,234,1) 35%, rgba(219,100,193,1) 100%);
+  background: linear-gradient(135deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
   transition: background 500ms ease;
   background-size: 125%;
 }
