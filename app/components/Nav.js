@@ -24,6 +24,15 @@ class Nav extends React.Component {
     @observable
     resettingPassword = false;
 
+    componentDidMount() {
+        if (window.matchMedia("only screen and (orientation: portrait)") && profile === null) {
+            document.getElementById("navbar-grid").setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+    }
+
     @computed
     get avatarFieldValid() {
         return this.avatarField && imageWhitelist(this.avatarField);
@@ -60,8 +69,17 @@ class Nav extends React.Component {
 
     login() {
         if (profile.login(this._email.value, this._pass.value)) {
+            let navbarGrid = document.getElementById("navbar-grid");
 
-            document.getElementById('navbar-grid').classList.remove('navbar-grid-noLogin');
+            navbarGrid.classList.remove('navbar-grid-noLogin');
+
+            if (window.matchMedia("only screen and (orientation: portrait)")) {
+                navbarGrid
+                    .setAttribute("grid-template-columns",
+                        window
+                            .matchMedia("only screen and (max-width: 1500px")
+                            .matches ? "15vw 42vw 14vw 9vw 20vw" : "15vw 46vw 14vw 9vw 16vw");
+            }
 
             let buttons = document.querySelectorAll('.disabledNoLogin');
 
@@ -102,7 +120,6 @@ class Nav extends React.Component {
 
         if (profile.user !== null) {
             login = "";
-            //  document.getElementById('navbar-grid').classList.add('navbar-grid-nologin')
         } else {
             //TODO use state ?
             login = (
@@ -198,8 +215,8 @@ class Nav extends React.Component {
                     </div>
                     <div id="navbar-space">{login}</div>
                     <div id="hype-grid-container" className="">
-                            <div id="hype-container" className="">
-                                <HypeProgress/>
+                        <div id="hype-container" className="">
+                            <HypeProgress/>
                         </div>
                     </div>
                     <div id="toketimer-container">

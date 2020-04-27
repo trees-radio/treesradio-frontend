@@ -257,4 +257,10 @@ $mqIterations: 19;
   }
 }
 
+@media only screen and (orientation: portrait) {
+  .greyDisabled {
+    visibility: hidden;
+  }
+}
+
 @include fontResize($mqIterations);

@@ -481,11 +481,11 @@ img[alt="previewvideo"] {
 }
 
 @media #{$isPortrait}, (min-height: 1440px) AND (max-width: 1199px) {
-    img[alt="previewvideo"] {
-        height: unset;
-        max-width: 90px;
-        float: right;
-    }
+  img[alt="previewvideo"] {
+    height: unset;
+    max-width: 90px;
+    float: right;
+  }
 }
 
 img[alt="previewavatar"] {
@@ -504,11 +504,11 @@ img[alt="tenorgif"] {
 }
 
 @media #{$isPortrait}, (min-height: 1440px) {
-    img[alt="tenorgif"] {
-        min-width: 4.2vw;
-        max-width: 95%;
-        max-height: 35vh;
-    }
+  img[alt="tenorgif"] {
+    min-width: 4.2vw;
+    max-width: 95%;
+    max-height: 35vh;
+  }
 }
 a[title="previewlink"] {
     color: white !important;
