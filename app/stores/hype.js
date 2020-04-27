@@ -1,4 +1,4 @@
-import {computed, observable, autorun} from "mobx";
+import {autorun, observable} from "mobx";
 import fbase from "libs/fbase";
 import {send} from "libs/events";
 import profile from "./profile";
@@ -58,7 +58,8 @@ export default new (class HypeTimer {
     if (timeleft > 100) timeleft = 100;
     this.hypePercentageCharged = timeleft;
   }
+
   getHyped() {
-    send("chat", {mentions: [], msg: "/hype"});
+    return send("chat", {mentions: [], msg: "/hype"});
   }
 })();

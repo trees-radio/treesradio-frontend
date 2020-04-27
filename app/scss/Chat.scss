@@ -480,7 +480,7 @@ img[alt="previewvideo"] {
     float: right;
 }
 
-@media #{$isPortraitMode}, (min-height: 1440px) AND (max-width: 1199px) {
+@media #{$isPortrait}, (min-height: 1440px) AND (max-width: 1199px) {
     img[alt="previewvideo"] {
         height: unset;
         max-width: 90px;
@@ -503,7 +503,7 @@ img[alt="tenorgif"] {
     max-height: 25vh;
 }
 
-@media #{$isPortraitMode}, (min-height: 1440px) {
+@media #{$isPortrait}, (min-height: 1440px) {
     img[alt="tenorgif"] {
         min-width: 4.2vw;
         max-width: 95%;
