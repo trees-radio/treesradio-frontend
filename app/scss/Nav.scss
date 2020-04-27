@@ -154,28 +154,17 @@
 #loginForm {
   flex-flow: row nowrap;
   place-items: baseline;
-<<<<<<< app/scss/Nav.scss
-=======
-  font-size: 1.5vh;
->>>>>>> app/scss/Nav.scss
   margin-top: 3.2vh;
   padding-top: .8vh;
 
   height: $navbar-button-height-portrait;
   display: inline-flex;
   flex-flow: row nowrap;
-<<<<<<< app/scss/Nav.scss
-
-=======
->>>>>>> app/scss/Nav.scss
 }
 
 #loginWrapper {
   place-self: start;
-<<<<<<< app/scss/Nav.scss
   display: inline-flex;
-=======
->>>>>>> app/scss/Nav.scss
 }
 
 #emailpassfields {
@@ -378,11 +367,7 @@ div .userbit-avatar span .avatarimg {
     border-right: 2px solid #699200;*/
   overflow: hidden;
   text-align: center;
-<<<<<<< app/scss/Nav.scss
   font-size: $navbar-font-size-dynamic;
-=======
-  font-size: $navbar-font-size * .75;
->>>>>>> app/scss/Nav.scss
   font-weight: bold;
   color: #767;
   cursor: url('../img/lighter.cur'), pointer;
@@ -413,7 +398,7 @@ div .userbit-avatar span .avatarimg {
   cursor: url('../img/lighter.cur'), pointer;
 }
 
-.hypedone {;
+.hypedone {
   text-align: center;
   //margin-top: .5vh;
   line-height: 3vh;
@@ -506,7 +491,7 @@ div .userbit-avatar span .avatarimg {
     width: 15vw !important;
     height: $navbar-button-height-portrait;
   }
-
+}
 
 /*explosive hype*/
 /*Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
