@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
 import profile from "stores/profile";
 import {observable} from "mobx";
+import events from "stores/events";
 
 
 toast.configure({autoClose: 8000, position: toast.POSITION.TOP_CENTER});
@@ -95,6 +96,10 @@ class Main extends React.Component {
     }
 
     render() {
+
+        events.register('force_refresh', () => {
+            location.reload();
+        });
 
         if (!app.init) {
             let randmsg = [
