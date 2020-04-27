@@ -26,11 +26,12 @@
   background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689F38 100%);
 }
 
-@media #{$isPortraitMode}, screen and (min-height: 1339px) {
+@media #{$isPortrait}, screen and (min-height: 1339px) {
   #toke-button {
     padding: 0.8vh 0.7vw;
   }
 }
+
 #navbar-grid {
   top: 0;
   display: inline-grid !important;
@@ -40,7 +41,6 @@
   grid-gap: 0;
   place-items: baseline;
 }
-
 
 
 .navbar-grid-nologin {
@@ -109,7 +109,7 @@
   padding: .8vh .6vw;
 }
 
-@media #{$isPortraitMode}, (min-height: 1439px) {
+@media #{$isPortrait}, (min-height: 1439px) {
   .navbar-brand {
     font-size: 250%;
     height: unset;
@@ -155,25 +155,21 @@
   flex-flow: row nowrap;
   place-items: baseline;
   font-size: 1.5vh;
-  //height: $navbar-button-height !important;
   margin-top: 3.2vh;
   padding-top: .8vh;
 
   height: 3vh;
   display: inline-flex;
   flex-flow: row nowrap;
-  //place-items: baseline;
 }
 
 #loginWrapper {
   place-self: start;
-  //height: 3vh;
 }
 
 #emailpassfields {
   z-index: 2;
   place-self: center;
-  //margin-top: 7px;
   margin-bottom: unset !important;
 }
 
@@ -198,7 +194,6 @@
 
 #reset-password-btn {
   margin-left: .5vw;
-  //margin-right: .5vw;
   font-weight: bold;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
@@ -223,10 +218,7 @@
   height: $navbar-button-height !important;
   max-height: $navbar-button-height !important;
   place-self: start start;
-  ////display: flex;
-  ////flex-flow: row nowrap;
   place-items: baseline;
-  //font-size: 1.5vh;
   font-size: .75 * $navbar-font-size !important;
   border-radius: 0 !important;
 }
@@ -264,13 +256,10 @@ div .userbit-avatar span .avatarimg {
 }
 
 #usernametop {
-  //padding-right: 2vw;
-  //padding-left: 1vw;
   margin-top: 6px;
   text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 1px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
   letter-spacing: 1.5px;
   font-size: 110%;
-  //border-radius: 0;
 }
 
 #usernamedropdown {
@@ -342,7 +331,7 @@ div .userbit-avatar span .avatarimg {
   flex-flow: row nowrap;
 }
 
-@media #{$isPortraitMode}, (min-height: 1440px) {
+@media #{$isPortrait}, (min-height: 1440px) {
   #tr-nav {
     height: unset;
   }
@@ -402,7 +391,7 @@ div .userbit-avatar span .avatarimg {
   //background-color: #558B2F;
   border-radius: 6px;
   background: #689F38;
-  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689F38 100%);
+  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
   display: inline-block;
   overflow: hidden;
@@ -494,4 +483,46 @@ div .userbit-avatar span .avatarimg {
 //  #loginButtons, #userbit-wrapper{
 //    font-size: $font-size-medium;
 //  }
+//  }
 //}
+
+/*explosive hype*/
+/*Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
+
+.exploding, .exploding:focus, .exploding:hover, .exploding > div {
+  background: transparent;
+  color: transparent;
+}
+
+.exploding {
+  pointer-events: none;
+  position: relative;
+  will-change: transform;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  content: none;
+}
+
+.particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+
+.particle--debris {
+  background: #77B420;
+  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
+}
+
+.particle--fire {
+  border-radius: 50%;
+}
