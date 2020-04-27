@@ -13,6 +13,7 @@ import waitlist from "stores/waitlist";
 import $ from "jquery";
 import Modal from "components/utility/Modal";
 import {toast} from "react-toastify";
+import LeaderBoard from "components/Nav/LeaderBoard";
 
 @observer
 export default class UserBit extends React.Component {
@@ -27,28 +28,6 @@ export default class UserBit extends React.Component {
     addUsername() {
         profile.updateUsername(this._username.value.substr(0, 24));
     }
-
-    /* componentDidMount() {
-         console.log("testtesttesttesttest"); //TODO remove
-
-         username(profile.uid)
-             .then(result => {
-                 if (profile.user !== null) {
-                     let userNameLength = result.toString().length;
-
-                     let usernamespan = document.getElementById("username")
-
-                     // let fontSizeString = window.getComputedStyle(usernamespan).getPropertyValue("font-size");
-                     let fontSizeString = "1.2em";
-                     // let fontSize = parseFloat(fontSizeString);
-                     // let unit = fontSizeString.replace("!important","").trim().replace(fontSize.toString(), "");
-
-                     this.fontSize = (!this.modifierApplied && userNameLength >= 15) ? (this.fontSize * 0.9 * this.getQueryMultiplier()) : (this.fontSize * this.getQueryMultiplier());
-                     // fontSize = Math.round(((fontSize * (userNameLength / 100)) + Number.EPSILON) * 100) / 100;
-                     usernamespan.setAttribute("style", "font-size: " + fontSize + "em");
-                 }
-             })
-     }*/
 
     @observable
     fontSize = 1.2;
@@ -115,6 +94,10 @@ export default class UserBit extends React.Component {
 
     toggleHelp() {
         this.showHelp ? (this.showHelp = false) : (this.showHelp = true);
+    }
+
+    toggleLeaderboard() {
+        this.showLeaders ? (this.showLeaders = false) : (this.showLeaders = true);
     }
 
     hideGifs() {
@@ -346,6 +329,11 @@ export default class UserBit extends React.Component {
                         {this.showMute()}
                         {this.showAutoplay()}
                         {this.showLogout()}
+                        <li onClick={() => this.toggleLeaderboard()}>
+                            <a href="#">
+                                <i className="fa fa-trophy"></i> Leader Board
+                            </a>
+                        </li>
                         <li onClick={() => this.toggleHelp()}>
                             <a href="#">
                                 <i className="fa fa-question-circle"/> Help
@@ -389,6 +377,15 @@ export default class UserBit extends React.Component {
                         placeholder="Username"
                     />
                 </Modal>
+                <Modal
+                    show={this.showLeaders}
+                    hideModal={() => {
+                        this.toggleLeaderboard();
+                    }}
+                    title="Leader Board"
+                    noClose={false}>
+                        <LeaderBoard />
+                    </Modal>
                 {/*  */}
                 {/* Show Help */}
                 {/*  */}
