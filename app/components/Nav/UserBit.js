@@ -13,6 +13,7 @@ import waitlist from "stores/waitlist";
 import $ from "jquery";
 import Modal from "components/utility/Modal";
 import {toast} from "react-toastify";
+import LeaderBoard from "components/Nav/LeaderBoard";
 
 @observer
 export default class UserBit extends React.Component {
@@ -27,28 +28,6 @@ export default class UserBit extends React.Component {
     addUsername() {
         profile.updateUsername(this._username.value.substr(0, 24));
     }
-
-    /* componentDidMount() {
-         console.log("testtesttesttesttest"); //TODO remove
-
-         username(profile.uid)
-             .then(result => {
-                 if (profile.user !== null) {
-                     let userNameLength = result.toString().length;
-
-                     let usernamespan = document.getElementById("username")
-
-                     // let fontSizeString = window.getComputedStyle(usernamespan).getPropertyValue("font-size");
-                     let fontSizeString = "1.2em";
-                     // let fontSize = parseFloat(fontSizeString);
-                     // let unit = fontSizeString.replace("!important","").trim().replace(fontSize.toString(), "");
-
-                     this.fontSize = (!this.modifierApplied && userNameLength >= 15) ? (this.fontSize * 0.9 * this.getQueryMultiplier()) : (this.fontSize * this.getQueryMultiplier());
-                     // fontSize = Math.round(((fontSize * (userNameLength / 100)) + Number.EPSILON) * 100) / 100;
-                     usernamespan.setAttribute("style", "font-size: " + fontSize + "em");
-                 }
-             })
-     }*/
 
     @observable
     fontSize = 1.2;
@@ -115,6 +94,10 @@ export default class UserBit extends React.Component {
 
     toggleHelp() {
         this.showHelp ? (this.showHelp = false) : (this.showHelp = true);
+    }
+
+    toggleLeaderboard() {
+        this.showLeaders ? (this.showLeaders = false) : (this.showLeaders = true);
     }
 
     hideGifs() {
@@ -288,7 +271,7 @@ export default class UserBit extends React.Component {
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
-                        <li onClick={() => (playing.togglePlayerSize())}>
+                        <li key={1} onClick={() => (playing.togglePlayerSize())}>
                             <a href="#">
                                 <i
                                     className={classNames(
@@ -301,7 +284,7 @@ export default class UserBit extends React.Component {
                         </li>
                         {this.showChangeEmail()}
                         {this.showChangePassword()}
-                        <li>
+                        <li key={2}>
                             <a
                                 href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
                                 target="blank"
@@ -309,7 +292,7 @@ export default class UserBit extends React.Component {
                                 <i className="fa fa-youtube-play"/> Region Check
                             </a>
                         </li>
-                        <li onClick={() => this.hideGifs()}>
+                        <li key={3} onClick={() => this.hideGifs()}>
                             <a href="#">
                                 <i
                                     className={classNames(
@@ -320,7 +303,7 @@ export default class UserBit extends React.Component {
                                 Hide Gifs?
                             </a>
                         </li>
-                        <li onClick={() => this.hideBlazebot()}>
+                        <li key={4} onClick={() => this.hideBlazebot()}>
                             <a href="#">
                                 <i
                                     className={classNames(
@@ -331,7 +314,7 @@ export default class UserBit extends React.Component {
                                 Hide BlazeBot?
                             </a>
                         </li>
-                        <li onClick={() => this.hideHypeBoom()}>
+                        <li key={5} onClick={() => this.hideHypeBoom()}>
                             <a href="#">
                                 <i
                                     className={classNames(
@@ -346,12 +329,17 @@ export default class UserBit extends React.Component {
                         {this.showMute()}
                         {this.showAutoplay()}
                         {this.showLogout()}
-                        <li onClick={() => this.toggleHelp()}>
+                        <li key={6} onClick={() => this.toggleLeaderboard()}>
+                            <a href="#">
+                                <i className="fa fa-trophy"></i> Leader Board
+                            </a>
+                        </li>
+                        <li key={7} onClick={() => this.toggleHelp()}>
                             <a href="#">
                                 <i className="fa fa-question-circle"/> Help
                             </a>
                         </li>
-                        <li onClick={() => this.toggleInterface()}>
+                        <li key={8} onClick={() => this.toggleInterface()}>
                             <a href="#">
                                 <i
                                     className={classNames(
@@ -389,6 +377,15 @@ export default class UserBit extends React.Component {
                         placeholder="Username"
                     />
                 </Modal>
+                <Modal
+                    show={this.showLeaders}
+                    hideModal={() => {
+                        this.toggleLeaderboard();
+                    }}
+                    title="Leader Board"
+                    noClose={false}>
+                        <LeaderBoard />
+                    </Modal>
                 {/*  */}
                 {/* Show Help */}
                 {/*  */}
@@ -504,7 +501,7 @@ export default class UserBit extends React.Component {
     showMute() {
         return profile.rank && profile.rank.match(/Admin|Mod|Dev/) ?
             (
-                <li onClick={() => this.toggleShowMute()}>
+                <li key={20} onClick={() => this.toggleShowMute()}>
                     <a href="#">
                         <i
                             className={classNames(
@@ -516,24 +513,24 @@ export default class UserBit extends React.Component {
                     </a>
                 </li>
             ) : (
-                <li></li>
+                <li key={20}></li>
             )
     }
 
     showMentionAudio() {
-        return this.userLoggedIn() ? (<li onClick={() => this.toggleNotifications()}>
+        return this.userLoggedIn() ? (<li key={10} onClick={() => this.toggleNotifications()}>
                 <a href="#">
                     <i
                         className={classNames(
                             "fa",
                             profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
-                        )} reset
+                        )}
                     />{" "}
                     Mention Audio?
                 </a>
             </li>
         ) : (
-            <li></li>
+            <li key={10}></li>
         );
     }
 
@@ -547,7 +544,7 @@ export default class UserBit extends React.Component {
 
     showAutoplay() {
         return profile.rank && profile.rank !== "User" ? (
-            <li onClick={() => waitlist.setAutojoin()}>
+            <li key={11} onClick={() => waitlist.setAutojoin()}>
                 <a href="#">
                     <i
                         className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
@@ -556,55 +553,55 @@ export default class UserBit extends React.Component {
                 </a>
             </li>
         ) : (
-            <li></li>
+            <li key={11}></li>
         )
     }
 
     showLogout() {
         return this.userLoggedIn() ? (
-            <li onClick={() => this.logoutAndDisableButtons()}>
+            <li key={12} onClick={() => this.logoutAndDisableButtons()}>
                 <a href="#">
                     <i className="fa fa-sign-out"/> Logout
                 </a>
             </li>
         ) : (
-            <li></li>
+            <li key={12}></li>
         )
     }
 
     showChangePassword() {
         return this.userLoggedIn() ? (
-            <li onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
+            <li key={13} onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
                 <a href="#">
                     <i className="fa fa-key"/> Change Password
                 </a>
             </li>
         ) : (
-            <li/>
+            <li key={13}/>
         )
     }
 
     showChangeEmail() {
         return this.userLoggedIn() ? (
-            <li onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
+            <li key={14} onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
                 <a href="#">
                     <i className="fa fa-envelope"/> Change Email
                 </a>
             </li>
         ) : (
-            <li></li>
+            <li key={14}></li>
         )
     }
 
     showSetAvatar() {
         return this.userLoggedIn() ? (
-            <li onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
+            <li key={15} onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
                 <a href="#">
                     <i className="fa fa-pencil fa-fw"/> Set Avatar
                 </a>
             </li>
         ) : (
-            <li></li>
+            <li key={15}></li>
         )
     }
 

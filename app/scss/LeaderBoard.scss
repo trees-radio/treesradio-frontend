@@ -1,0 +1,24 @@
+div.leaderboard-row {
+    display: table-row;
+    font-size: 1.2em;
+}
+span.leaderboard-cell-rank {
+    display: table-cell;
+    font-size: 24;
+}
+span.leaderboard-cell-avatar {
+    display: table-cell;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+span.leaderbpard-cell-username {
+    display:table-cell;
+}
+span.leaderboard-cell-songtitle {
+    display:table-cell;
+}
+span.leaderboard-cell-songthumb {
+    display:table-cell;
+    width: 100px;
+}
