@@ -1,24 +1,39 @@
+div.leaderboard-list {
+    width: 100%;
+    display:table;
+}
 div.leaderboard-row {
     display: table-row;
     font-size: 1.2em;
+    width:100%;
+    vertical-align: middle;
+    padding-bottom: 5px;
 }
 span.leaderboard-cell-rank {
     display: table-cell;
-    font-size: 24;
+    font-size: 24px;
+    padding-right: 1.1em;
+    vertical-align: middle;
 }
 span.leaderboard-cell-avatar {
     display: table-cell;
     width: 40px;
     height: 40px;
     border-radius: 5px;
+    vertical-align: middle;
 }
-span.leaderbpard-cell-username {
+span.leaderboard-cell-username {
     display:table-cell;
+    vertical-align: middle;
 }
 span.leaderboard-cell-songtitle {
     display:table-cell;
+    vertical-align: middle;
 }
-span.leaderboard-cell-songthumb {
+span.leaderboard-cell-songthumb > img{
     display:table-cell;
-    width: 100px;
+    height: 100px;
+    float: right;
+    vertical-align: middle;
+    
 }
