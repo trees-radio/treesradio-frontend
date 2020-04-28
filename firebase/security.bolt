@@ -71,7 +71,6 @@ path /flairs {
 	write() {false}
 }
 
-
 path /_admin {
   read() {true}
 }
