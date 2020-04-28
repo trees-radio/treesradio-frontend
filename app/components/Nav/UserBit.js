@@ -15,6 +15,8 @@ import Modal from "components/utility/Modal";
 import {toast} from "react-toastify";
 import LeaderBoard from "components/Nav/LeaderBoard";
 
+import events from "stores/events";
+
 @observer
 export default class UserBit extends React.Component {
 
@@ -135,6 +137,7 @@ export default class UserBit extends React.Component {
     }
 
     render() {
+        events.register("show_leaderboard", () => this.toggleLeaderboard());
         let emailVerificationResendIcon;
         if (profile.resendVerificationLoading) {
             emailVerificationResendIcon = (
