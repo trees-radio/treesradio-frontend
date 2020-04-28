@@ -1,25 +1,21 @@
-import { observable } from "mobx";
+import { observable, autorun } from "mobx";
 import fbase from "libs/fbase";
 
-export default new (class LeadersBoard {
-  constructor() {
-    console.log(`foo`);
-    fbase
-      .database()
-      .ref("leaderboard")
-      .once("value", snap => {
-
-        this.leaders = snap.val();
-        console.log(this.leaders);
-      });
-    fbase
-      .database()
-      .ref("leaderboard")
-      .once("value", snap => {
-        this.leaders = snap.val();
-        console.log(this.leaders);
-      });
-  }
+export default new class LeadersBoard {
 
   @observable leaders = [];
-})();
+
+  constructor() {
+    autorun(() => this.setupLeaderboard());
+  }
+
+  setupLeaderboard() {
+    fbase
+      .database()
+      .ref("leaderboard")
+      .on("value", (snap) => {
+        let leaders = snap.val();
+        this.leaders = leaders;
+      });
+  };
+}

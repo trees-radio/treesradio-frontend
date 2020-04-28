@@ -8,6 +8,7 @@ import classNames from "classnames";
 const noop = () => {};
 
 export default class UserName extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,6 +16,14 @@ export default class UserName extends React.Component {
     this.getUsername();
     this.getFlair();
     this.getPatreon();
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   getRank = async () => {

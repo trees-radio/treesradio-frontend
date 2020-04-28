@@ -290,7 +290,7 @@ export default class PlaylistsPanel extends React.Component {
               &nbsp;
               <input
                 type="radio"
-                checked={playlists.searchSource == "youtube" ? "checked" : ""}
+                defaultChecked={playlists.searchSource == "youtube" ? "checked" : ""}
                 id="search-youtube"
                 name="search-source"
                 onClick={() => {
@@ -302,7 +302,7 @@ export default class PlaylistsPanel extends React.Component {
               &nbsp;
               <input
                 type="radio"
-                checked={playlists.searchSource == "soundcloud" ? "checked" : ""}
+                defaultChecked={playlists.searchSource == "soundcloud" ? "checked" : ""}
                 id="search-soundcloud"
                 name="search-source"
                 onClick={() => {

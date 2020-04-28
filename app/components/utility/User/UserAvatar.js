@@ -5,6 +5,7 @@ import VisibilitySensor from "react-visibility-sensor";
 import EMPTY_IMG from "../../../img/nothing.png";
 
 export default class UserAvatar extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +14,12 @@ export default class UserAvatar extends React.Component {
     this.getAvatar();
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   getAvatar = async () => {
     const fallback = await defaultAvatar(this.props.uid);
 
@@ -21,6 +28,7 @@ export default class UserAvatar extends React.Component {
         avatar: fallback
       },
       () => {
+        if ( this._isMounted ) 
         listenAvatar(this.props.uid, snap => {
           this.setState({
             avatar: snap.val() || fallback

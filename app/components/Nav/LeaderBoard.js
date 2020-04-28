@@ -7,9 +7,10 @@ import UserName from "components/utility/User/UserName";
 
 @observer
 export default class LeaderBoard extends React.Component {
-
+    
     render() {
-        let leaders = LeadersBoard.leaders.forEach((leader, index) => {
+        let leadersarray = LeadersBoard.leaders;
+        let leaders = leadersarray.map((leader, index) => {
             return (
                 <div key={index} className="leaderboard-row">
                     <span className="leaderboard-cell-rank">#{index+1}</span>
