@@ -17,5 +17,5 @@ export default new class LeadersBoard {
         let leaders = snap.val();
         this.leaders = leaders;
       });
-  };
+  }
 }
