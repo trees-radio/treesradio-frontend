@@ -12,7 +12,7 @@ div.leaderboard-row {
 span.leaderboard-cell-rank {
     display: table-cell;
     font-size: 24px;
-    padding-right: 1.1em;
+    width: 2.8em;
     vertical-align: middle;
 }
 span.leaderboard-cell-avatar {
@@ -21,6 +21,7 @@ span.leaderboard-cell-avatar {
     height: 40px;
     border-radius: 5px;
     vertical-align: middle;
+    padding-right:10px;
 }
 span.leaderboard-cell-username {
     display:table-cell;
