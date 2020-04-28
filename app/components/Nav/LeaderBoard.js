@@ -1,7 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 
-import leaderboard from "stores/leaderboard";
+import LeadersBoard from "stores/leaderboard";
 import UserAvatar from "components/utility/User/UserAvatar";
 import UserName from "components/utility/User/UserName";
 
@@ -9,9 +9,9 @@ import UserName from "components/utility/User/UserName";
 export default class LeaderBoard extends React.Component {
 
     render() {
-        let leaders = leaderboard.leaders.map((leader, index) => {
+        let leaders = LeadersBoard.leaders.forEach((leader, index) => {
             return (
-                <div className="leaderboard-row">
+                <div key={index} className="leaderboard-row">
                     <span className="leaderboard-cell-rank">#{index+1}</span>
                     <span className="leaderboard-cell-avatar"><UserAvatar uid={leader.uid} /></span>
                     <span className="leaderboard-cell-username"><UserName uid={leader.uid} /></span>
