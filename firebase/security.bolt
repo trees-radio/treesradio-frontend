@@ -51,6 +51,11 @@ path / {
 
 }
 
+path /leaderboard {
+  read() {true}
+  write() {false}
+}
+
 path /help {
 	read() {true}
 	write() {false}

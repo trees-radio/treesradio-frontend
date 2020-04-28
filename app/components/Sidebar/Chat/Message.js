@@ -92,7 +92,7 @@ export default class Message extends React.Component {
         key={i}
         token={tkn}
         isEmote={this.props.isEmote}
-        show={this.state.visible}
+        show={this.state.visible.toString()}
         onLoad={this.props.onLoad}
         emojiSize={emojisize}
       />
