@@ -237,14 +237,40 @@
   // text-align: right;
 }
 
+#cstmEaseIn {
+  margin: 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation-name: cstmEaseInOut;
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  position: relative;
+  --PLlength: 9.5em;
+  // text-align: right;
+}
+
+@keyframes cstmEaseInOut {
+  from {
+    left: 0;
+  }
+  50% {
+    left: calc(-100% - 19em); //var(--PLlength)
+  }
+  to {
+    left: 0;
+  }
+}
+
 .current-selected-media, .current-playing-media {
   display: inline-block;
-  float:left;
+  float: left;
   color: #77b300;
 }
 
 .current-selected-media:hover, .current-playing-media:hover {
-    animation-play-state: paused
+  animation-play-state: paused
 }
 
 @keyframes marquee {
@@ -493,3 +519,4 @@
   position: inherit;
   z-index: 1;
 }
+

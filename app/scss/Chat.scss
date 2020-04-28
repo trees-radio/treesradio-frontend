@@ -311,7 +311,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 @media (min-width: 1200px) {
     #chatscroll {
         height: calc(100% + 4vh); //92%
-        margin: -6vh 0;
+        margin: -5vh 0;
         grid-area: unset;
     }
 }
@@ -369,7 +369,7 @@ $chat-item-color: #c0c0c0; //light skin #000
 @media (min-width: 1200px) {
     #sendbox_test {
         height: 6%;
-        margin: 2% 0;
+        margin: 0;
     }
 }
 
