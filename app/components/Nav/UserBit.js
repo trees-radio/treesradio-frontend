@@ -137,7 +137,9 @@ export default class UserBit extends React.Component {
     }
 
     render() {
-        events.register("show_leaderboard", () => this.toggleLeaderboard());
+        events.register("show_leaderboard", (data) => {
+            if ( profile.user.uid == data.data.uid ) this.toggleLeaderboard()
+        });
         let emailVerificationResendIcon;
         if (profile.resendVerificationLoading) {
             emailVerificationResendIcon = (
