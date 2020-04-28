@@ -34,7 +34,7 @@ export default class LeaderBoard extends React.Component {
                     <span className="leaderboard-cell-rank"><i className="fa fa-trophy"></i> {index + 1}:</span>
                     <span className="leaderboard-cell-avatar"><UserAvatar uid={leader.uid} /></span>
                     <span className="leaderboard-cell-username"><UserName uid={leader.uid} /><br />
-                        <strong>{actualscore}</strong>  Likes 👍 {ago}</span>
+                        Score: <strong>{actualscore}</strong> {ago}</span>
                     <span className="leaderboard-cell-songtitle"><a target="_blank" rel="noopener noreferrer" href={leader.url}>{leader.title}</a></span>
                     <span className="leaderboard-cell-songthumb"><img src={leader.thumb} /></span>
                 </div>
