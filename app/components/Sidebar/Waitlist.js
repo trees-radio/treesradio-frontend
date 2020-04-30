@@ -53,9 +53,5 @@ function checkTime(i) {
 
 function startTime(dateObj) {
   var today = new Date(dateObj);
-  var h = today.getHours();
-  var m = today.getMinutes();
-  // add a zero in front of numbers<10
-  m = checkTime(m);
-  return  `${h}:${m}`;
+  return today.toLocaleTimeString();
 }

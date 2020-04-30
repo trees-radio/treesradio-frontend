@@ -3,9 +3,9 @@ var WebpackDevServer = require("webpack-dev-server");
 var Config = require('webpack-config').default;
 var helpers = require('./helpers');
 
-var config = new Config().extend('./webpack.dev.config.js').merge({
+var config = new Config().extend('./webpack.prod.config.js').merge({
   plugins: [
-    new webpack.DefinePlugin(helpers.getWebpackDefine('development'))
+    new webpack.DefinePlugin(helpers.getWebpackDefine('production'))
   ]
 });
 
