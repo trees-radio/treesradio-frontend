@@ -276,6 +276,7 @@ export default class UserBit extends React.Component {
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
+                        
                         <li key={1} onClick={() => (playing.togglePlayerSize())}>
                             <a href="#">
                                 <i
@@ -285,6 +286,17 @@ export default class UserBit extends React.Component {
                                     )}
                                 />
                                 {playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player"}
+                            </a>
+                        </li>
+                        <li key={101} onClick={() => waitlist.setShowMinutesUntil()}>
+                            <a href="#">
+                                <i className={
+                                    classNames(
+                                        "fa",
+                                        waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
+                                    )
+                                }/>
+                                &nbsp;Waitlist Minutes Until
                             </a>
                         </li>
                         {this.showChangeEmail()}
