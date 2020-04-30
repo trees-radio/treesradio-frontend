@@ -13,7 +13,6 @@ export default class Waitlist extends React.Component {
     var list = waitlist.onlineOnly.map((u, i) => {
       var nextsong = playing.timeStarted + playing.playerDuration + accumulator;
       accumulator += u.songlength/1000;
-
       return (
         <li
           key={i}
@@ -30,7 +29,7 @@ export default class Waitlist extends React.Component {
           </div>
           <div className="waitlist-name-top">
             <UserName className="waitlist-name" uid={u.uid} />
-            {startTime(nextsong*1000)}
+            <span className="waitlist-play-time">{startTime(nextsong*1000)}</span> 
           </div>
         </li>
       );
