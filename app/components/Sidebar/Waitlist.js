@@ -47,7 +47,7 @@ export default class Waitlist extends React.Component {
 function minutesSeconds(time) {
   var minutes = Math.floor(time/60);
   var seconds = time - minutes * 60;
-  return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  return `${minutes < 10 ? '0' : ''}${Math.floor(minutes)}:${seconds < 10 ? '0' : ''}${Math.floor(seconds)}`;
 }
 function startTime(dateObj) {
   var today = new Date(dateObj);
