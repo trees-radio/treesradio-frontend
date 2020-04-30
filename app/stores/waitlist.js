@@ -77,6 +77,12 @@ export default new (class Waitlist {
   @observable localJoinState = false;
   @observable localPlayingState = false;
   @observable autojoinTimer = false;
+  @observable showMinutesUntil = localforage.getItem("showminutes") || false;
+
+  setShowMinutesUntil() {
+    this.showMinutesUntil = this.showMinutesUntil ? false : true;
+    localforage.setItem("showminutes", this.showMinutesUntil);
+  }
 
   setAutojoin() {
     if (profile.canAutoplay && !profile.autoplay) {
