@@ -4,11 +4,16 @@ import waitlist from "stores/waitlist";
 import classNames from "classnames";
 import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
+import playing from "stores/playing";
 
 @observer
 export default class Waitlist extends React.Component {
   render() {
+    var accumulator = 0;
     var list = waitlist.onlineOnly.map((u, i) => {
+      var nextsong = playing.timeStarted + playing.playerDuration + accumulator;
+      accumulator += u.songlength/1000;
+
       return (
         <li
           key={i}
@@ -25,6 +30,7 @@ export default class Waitlist extends React.Component {
           </div>
           <div className="waitlist-name-top">
             <UserName className="waitlist-name" uid={u.uid} />
+            {startTime(nextsong*1000)}
           </div>
         </li>
       );
@@ -36,4 +42,21 @@ export default class Waitlist extends React.Component {
       </div>
     );
   }
+}
+
+
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime(dateObj) {
+  var today = new Date(dateObj);
+  var h = today.getHours();
+  var m = today.getMinutes();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  return  `${h}:${m}`;
 }

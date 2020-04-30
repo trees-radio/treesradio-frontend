@@ -14,7 +14,7 @@ import spacePineapples from "img/spacepineapples.jpg";
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
-export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
+export const VOLUME_NUDGE_FRACTION = 0.01; // out of 1
 
 export default new (class Playing {
   constructor() {
@@ -33,6 +33,7 @@ export default new (class Playing {
             this.data = data;
             var newtitle = "TreesRadio [  " + data.info.title + " ] ";
             document.title = newtitle;
+            this.timeStarted = data.starttime;
           }
         });
       this.localLikeState = this.liked;
@@ -87,6 +88,12 @@ export default new (class Playing {
   @computed get elapsed() {
     return this.time;
   }
+
+  @computed get timeLeft() {
+    return this.data.info.duration - this.time;
+  }
+
+  @observable timeStarted;
 
   @computed get fraction() {
     if (!this.data.time || !this.data.info.duration) {
