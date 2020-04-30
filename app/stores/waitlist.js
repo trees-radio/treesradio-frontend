@@ -61,7 +61,7 @@ export default new (class Waitlist {
 
   @computed get onlineOnly() {
     return this.list.filter(function(user) {
-      return {uid: user.uid};
+      return {uid: user.uid, songlength: user.songlength};
     });
     //return this.list.filter(usr => online.uids.includes(usr));
   }
