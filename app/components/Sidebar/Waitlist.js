@@ -12,6 +12,8 @@ export default class Waitlist extends React.Component {
     var accumulator = 0;
     var list = waitlist.onlineOnly.map((u, i) => {
       var nextsong = playing.timeStarted + playing.playerDuration + accumulator;
+      var until = playing.playerDuration - playing.elapsed + accumulator;
+      
       accumulator += u.songlength/1000;
       return (
         <li
@@ -29,7 +31,7 @@ export default class Waitlist extends React.Component {
           </div>
           <div className="waitlist-name-top">
             <UserName className="waitlist-name" uid={u.uid} />
-            <span className="waitlist-play-time">{startTime(nextsong*1000)}</span> 
+            <span className="waitlist-play-time">{waitlist.showMinutesUntil ? minutesSeconds(until) : startTime(nextsong*1000)}</span> 
           </div>
         </li>
       );
@@ -42,15 +44,11 @@ export default class Waitlist extends React.Component {
     );
   }
 }
-
-
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
+function minutesSeconds(time) {
+  var minutes = Math.floor(time/60);
+  var seconds = time - minutes * 60;
+  return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
-
 function startTime(dateObj) {
   var today = new Date(dateObj);
   return today.toLocaleTimeString();
