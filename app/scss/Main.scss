@@ -2,7 +2,6 @@
 html,
 body {
   display: grid;
-  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   height: 100vh;
   overflow: hidden;
@@ -98,7 +97,6 @@ h4 {
 }
 
 .main-load {
-  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   transition: all 2s !important;
   transition-timing-function: ease-in-out !important;
@@ -129,7 +127,6 @@ h4 {
 }
 
 .main-center {
-  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   display: inline-block;
   text-align: center;
@@ -166,7 +163,6 @@ div .userbit-avatar span .avatarimg {
 
 
 .main-vcenter {
-  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   display: table-cell;
   vertical-align: middle;
@@ -180,7 +176,6 @@ div .userbit-avatar span .avatarimg {
 }
 
 .main-loading {
-  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   position: relative;
   left: 50%;
@@ -195,7 +190,6 @@ div .userbit-avatar span .avatarimg {
 /* Components Container */
 
 .container-fluid {
-  background-image: url("../img/loading_screen-01.svg");
   background-size: cover;
   height: 95vh;
   width: 100vw;
