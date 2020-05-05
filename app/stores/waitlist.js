@@ -50,9 +50,11 @@ export default new (class Waitlist {
         var list = [];
         this.list = [];
         var wl = snap.val();
-        for (var key in wl) {
+        
+        Object.keys(wl).forEach((key) => {
           list.push(wl[key]);
-        }
+        });
+
         this.list = list;
       });
   }
@@ -166,11 +168,12 @@ export default new (class Waitlist {
   }
 
   @computed get waitlistPosition() {
-    for (let i = 0; i < this.list.length; i++) {
-      if (this.list[i].uid === profile.user.uid) {
-        return i + 1;
+    let waitlistpos = this.list.forEach((item, i) => {
+      if ( item.uid == profile.user.uid ) {
+        return i+1;
       }
-    }
+    });
+    if (waitlistpos) return waitlistpos[0];
     return false;
   }
 

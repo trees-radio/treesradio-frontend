@@ -124,15 +124,13 @@ export default new (class Chat {
     return msg;
   }
 
-  pushMsg() {
+  async pushMsg() {
     // Clear out expired timers.
-    for (var i = 0; i < this.chatcounter.length; i++) {
-      if (Date.now() - this.chatcounter[i].time > 5000) {
-        i--;
-        this.chatcounter.shift();
-        continue;
+    this.chatcounter.forEach((counter, i) => {
+      if (Date.now() - counter.time > 5000) {
+        this.chatcounter.slice(i, 1);
       }
-    }
+    });
 
     this.chatDebounce =
       this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
