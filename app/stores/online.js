@@ -13,7 +13,7 @@ export default new (class Online {
       });
   }
 
-  loadOnlineEnts() {
+  async loadOnlineEnts() {
     fbase
       .database()
       .ref("onlineents")
@@ -24,14 +24,16 @@ export default new (class Online {
         this.online = [];
         this.userlist = [];
 
-        for (var i = 0; i < thislist.length; i++) {
-          list.push(thislist[i]);
-        }
+        thislist.forEach((item) => {
+          list.push(item);
+        });
+
         this.online = list;
         let users = [];
-        for (let key in thislist) {
+        Object.keys(thislist).forEach((key) => {
           users.push(thislist[key].username);
-        }
+        });
+
         this.userlist = users;
       });
   }
@@ -42,9 +44,10 @@ export default new (class Online {
   @computed get usernames() {
     let names = [];
     this.userlist = [];
-    for (let i = 0; i < this.online.length; i++) {
-      names.push(this.online[i].username);
-    }
+    this.online.forEach((online) => {
+      names.push(online.username);
+    });
+    
     this.userlist = names;
     return names;
   }
@@ -56,9 +59,9 @@ export default new (class Online {
 
   @computed get uids() {
     let uids = [];
-    for (let i = 0; i < this.online.length; i++) {
-      uids.push(this.online[i].uid);
-    }
+    this.online.forEach((online) => {
+      uids.push(online.uid);
+    })
     return uids;
   }
 })();

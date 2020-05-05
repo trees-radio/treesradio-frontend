@@ -1,8 +1,9 @@
 export function countArrayOccurences(array, check) {
   var count = 0;
-  for (var i = 0; i < array.length; ++i) {
-    if (array[i] == check) count++;
-  }
+  array.forEach(item => {
+    if ( item == check ) count++;
+  });
+  
   return count;
 }
 
