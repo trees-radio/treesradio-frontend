@@ -168,12 +168,8 @@ export default new (class Waitlist {
   }
 
   @computed get waitlistPosition() {
-    let waitlistpos = this.list.forEach((item, i) => {
-      if ( item.uid == profile.user.uid ) {
-        return i+1;
-      }
-    });
-    if (waitlistpos) return waitlistpos[0];
+    let waitlistpos = this.list.forEach(item=> item.uid === profile.user.uid);
+    if (waitlistpos.indexOf(true) >= 0) return waitlistpos.indexOf(true)+1;
     return false;
   }
 
