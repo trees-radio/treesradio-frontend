@@ -126,9 +126,7 @@ export default class UserBit extends React.Component {
 
                 let buttons = document.querySelectorAll('disabledNoLogin');
 
-                for (let i = 0; i < buttons.length; i++) {
-                    buttons[i].classList.add('greyDisabled');
-                }
+                buttons.forEach(button => button.classList.add('greyDisabled'));
             });
     }
 

@@ -101,7 +101,7 @@ class ExplosiveButton {
         this.element.addEventListener("click", document.body.animate ? this.explode.bind(this, this.duration) : hypetimer.getHyped());
     }
 
-    updateDimensions() {
+      updateDimensions() {
         this.width = pxToEm(this.element.offsetWidth);
         this.height = pxToEm(this.element.offsetHeight);
         this.centerX = this.width / 2;
@@ -111,7 +111,7 @@ class ExplosiveButton {
     }
 
 
-    explode(duration) {
+      explode(duration) {
         if (!profile.hypeBoom || hypetimer.hypePercentageCharged !== 100) {
             hypetimer.getHyped();
             return;
@@ -135,7 +135,7 @@ class ExplosiveButton {
         }
     }
 
-    createParticles(kind, count, duration) {
+      createParticles(kind, count, duration) {
         for (let c = 0; c < count; ++c) {
             let r = randomFloat(0.25, 0.5),
                 diam = r * 2,
@@ -190,7 +190,7 @@ class Particle {
         };
     }
 
-    runSequence(el, keyframesArray, duration = 1e3, easing = "linear", delay = 0) {
+      runSequence(el, keyframesArray, duration = 1e3, easing = "linear", delay = 0) {
         let animation = el.animate(keyframesArray, {
                 duration: duration,
                 easing: easing,
@@ -272,7 +272,7 @@ class FireParticle extends Particle {
     }
 }
 
-function calcAngle(x1, y1, x2, y2) {
+  function calcAngle(x1, y1, x2, y2) {
     let opposite = y2 - y1,
         adjacent = x2 - x1,
         angle = Math.atan(opposite / adjacent);
@@ -286,7 +286,7 @@ function calcAngle(x1, y1, x2, y2) {
     return angle;
 }
 
-function propertyUnitsStripped(el, property, unit) {
+  function propertyUnitsStripped(el, property, unit) {
     let cs = window.getComputedStyle(el),
         valueRaw = cs.getPropertyValue(property),
         value = +valueRaw.substr(0, valueRaw.indexOf(unit));
@@ -294,15 +294,15 @@ function propertyUnitsStripped(el, property, unit) {
     return value;
 }
 
-function pxToEm(px) {
+  function pxToEm(px) {
     let el = document.querySelector(":root");
     return px / propertyUnitsStripped(el, "font-size", "px");
 }
 
-function randomFloat(min, max) {
+  function randomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function randomInt(min, max) {
+  function randomInt(min, max) {
     return Math.round(Math.random() * (max - min)) + min;
 }

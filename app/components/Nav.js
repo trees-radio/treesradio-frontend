@@ -83,9 +83,7 @@ class Nav extends React.Component {
 
             let buttons = document.querySelectorAll('.disabledNoLogin');
 
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove('greyDisabled');
-            }
+            buttons.forEach(button => button.classList.remove('greyDisabled'));
 
             // this.avatarField = profile.avatarURL;
             profile.setAvatar(this.avatarField);
