@@ -129,7 +129,6 @@ export default new (class Chat {
     this.chatcounter.forEach((counter, i) => {
       if (Date.now() - counter.time > 500) {
         this.chatcounter.slice(i, 1);
-        console.log(`slicing ${i}`);
       }
     });
 
