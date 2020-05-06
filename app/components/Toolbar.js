@@ -72,7 +72,6 @@ class Toolbar extends React.Component {
       this.panelOpen = !this.panelOpen;
       if (playlists.selectedPlaylistName) {
         this.cstmEaseInOut.style.setProperty('--PLlength', playlists.selectedPlaylistName.length.toString() + 'em');
-        console.log(playlists.selectedPlaylistName.length);
       }
     } else {
       toast.error("You must be logged in to use playlists!");
