@@ -39,7 +39,8 @@ const specialemoji = {
   ":dude:": "emoji-dude",
   ":bong:": "emoji-bong",
   ":neat:": "emoji-neat",
-  ":420:": "emoji-420"
+  ":420:": "emoji-420",
+  ":rasta:": "emoji-rasta"
 };
 
 const emojifyOptions = {
