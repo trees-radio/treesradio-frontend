@@ -127,7 +127,7 @@ export default new (class Chat {
   async pushMsg() {
     // Clear out expired timers.
     this.chatcounter.forEach((counter, i) => {
-      if (Date.now() - counter.time > 500) {
+      if (Date.now() - counter.time > 1) {
         this.chatcounter.slice(i, 1);
       }
     });
