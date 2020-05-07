@@ -17,6 +17,7 @@ export default new (class Events {
           this.onEvent(val);
         }
       });
+      
   }
 
   onEvent(evt) {

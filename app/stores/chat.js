@@ -11,7 +11,7 @@ import Favico from "favico.js";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const CHAT_DEBOUNCE_MSEC = 300;
-const CHAT_PENALTY_MSEC = 500;
+const CHAT_PENALTY_MSEC = 1.1;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 const GIF_THROTTLE = 60;
@@ -124,15 +124,13 @@ export default new (class Chat {
     return msg;
   }
 
-  pushMsg() {
+  async pushMsg() {
     // Clear out expired timers.
-    for (var i = 0; i < this.chatcounter.length; i++) {
-      if (Date.now() - this.chatcounter[i].time > 5000) {
-        i--;
-        this.chatcounter.shift();
-        continue;
+    this.chatcounter.forEach((counter, i) => {
+      if (Date.now() - counter.time > 1) {
+        this.chatcounter.slice(i, 1);
       }
-    }
+    });
 
     this.chatDebounce =
       this.chatcounter.length * CHAT_DEBOUNCE_MSEC +

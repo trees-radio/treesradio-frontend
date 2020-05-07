@@ -1,11 +1,11 @@
-import {observable, computed, autorun} from "mobx";
+import { observable, computed, autorun } from "mobx";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import toast from "utils/toast";
 import playing from "stores/playing";
 import chat from "stores/chat";
-import {send} from "libs/events";
-import {setInterval, clearInterval} from "timers";
+import { send } from "libs/events";
+import { setInterval, clearInterval } from "timers";
 import epoch from "../utils/epoch";
 import events from "stores/events";
 
@@ -13,7 +13,7 @@ export default new (class Waitlist {
   constructor() {
     this.reloadList();
     events.register('stop_autoplay', (data) => {
-      if ( data.data.uid === profile.user.uid ) {
+      if (data.data.uid === profile.user.uid) {
         this.cancelAutojoin();
       }
     });
@@ -50,9 +50,11 @@ export default new (class Waitlist {
         var list = [];
         this.list = [];
         var wl = snap.val();
-        for (var key in wl) {
+
+        Object.keys(wl).forEach((key) => {
           list.push(wl[key]);
-        }
+        });
+
         this.list = list;
       });
   }
@@ -60,8 +62,8 @@ export default new (class Waitlist {
   @observable list = [];
 
   @computed get onlineOnly() {
-    return this.list.filter(function(user) {
-      return {uid: user.uid};
+    return this.list.filter(function (user) {
+      return { uid: user.uid, songlength: user.songlength };
     });
     //return this.list.filter(usr => online.uids.includes(usr));
   }
@@ -77,6 +79,12 @@ export default new (class Waitlist {
   @observable localJoinState = false;
   @observable localPlayingState = false;
   @observable autojoinTimer = false;
+  @observable showMinutesUntil = localforage.getItem("showminutes") || false;
+
+  setShowMinutesUntil() {
+    this.showMinutesUntil = this.showMinutesUntil ? false : true;
+    localforage.setItem("showminutes", this.showMinutesUntil);
+  }
 
   setAutojoin() {
     if (profile.canAutoplay && !profile.autoplay) {
@@ -160,11 +168,9 @@ export default new (class Waitlist {
   }
 
   @computed get waitlistPosition() {
-    for (let i = 0; i < this.list.length; i++) {
-      if (this.list[i].uid === profile.user.uid) {
-        return i + 1;
-      }
-    }
+    let waitlistpos = this.list.map(item => (item.uid === profile.user.uid) && true);
+    if (!waitlistpos) return false;
+    if (waitlistpos.indexOf(true) >= 0) return waitlistpos.indexOf(true) + 1;
     return false;
   }
 

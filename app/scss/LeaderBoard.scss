@@ -1,0 +1,40 @@
+div.leaderboard-list {
+    width: 100%;
+    display:table;
+}
+div.leaderboard-row {
+    display: table-row;
+    font-size: 1.2em;
+    width:100%;
+    vertical-align: middle;
+    padding-bottom: 5px;
+}
+span.leaderboard-cell-rank {
+    display: table-cell;
+    font-size: 24px;
+    width: 2.8em;
+    vertical-align: middle;
+}
+span.leaderboard-cell-avatar {
+    display: table-cell;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    vertical-align: middle;
+    padding-right:10px;
+}
+span.leaderboard-cell-username {
+    display:table-cell;
+    vertical-align: middle;
+}
+span.leaderboard-cell-songtitle {
+    display:table-cell;
+    vertical-align: middle;
+}
+span.leaderboard-cell-songthumb > img{
+    display:table-cell;
+    height: 100px;
+    float: right;
+    vertical-align: middle;
+    
+}

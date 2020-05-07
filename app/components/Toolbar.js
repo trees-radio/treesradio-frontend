@@ -14,6 +14,7 @@ import onClickOutside from "react-onclickoutside";
 import createClass from "create-react-class";
 import $ from "jquery";
 
+
 const loadingIconClass = "fa-spin fa-circle-o-notch";
 
 const GrabPlaylists = onClickOutside(
@@ -55,11 +56,23 @@ const GrabPlaylists = onClickOutside(
 
 @observer
 class Toolbar extends React.Component {
+  @observable cstmEaseInOut;
+
+  componentDidMount() {
+    this.cstmEaseInOut = document.getElementById("cstmEaseIn");
+    // eslint-disable-next-line no-undef
+
+  }
+
+
   @observable panelOpen = false;
 
   togglePlaylistsPanel() {
     if (playlists.init) {
       this.panelOpen = !this.panelOpen;
+      if (playlists.selectedPlaylistName) {
+        this.cstmEaseInOut.style.setProperty('--PLlength', playlists.selectedPlaylistName.length.toString() + 'em');
+      }
     } else {
       toast.error("You must be logged in to use playlists!");
     }
@@ -142,20 +155,21 @@ class Toolbar extends React.Component {
             <i id="playlists-open-icon" className={openButtonIcon}/>
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <a className={
-              playlists.selectedPlaylistName && playlists.selectedPlaylistName.length > 18
-                  ? "current-playlist-name marquee"
-                  : "current-playlist-name"
-            }
+            <a id={
+              playlists.selectedPlaylistName && playlists.selectedPlaylistName.length > 32
+                  ? "cstmEaseIn"
+                  : ""
+            } className={"current-playlist-name"}
             >
               {playlists.selectedPlaylistName}
             </a>
             <br/>
-            <a className={
-              playlists.selectedSong && playlists.selectedSong.length > 18
-                  ? "current-selected-media marquee"
-                  : "current-selected-media"
-            }
+
+            <a id={
+              playlists.selectedSong && playlists.selectedSong.length > 19
+                  ? "cstmEaseIn2"
+                  : ""
+            } className={"current-selected-media"}
             >
               {playlists.selectedSong}
             </a>
