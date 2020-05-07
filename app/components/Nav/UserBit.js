@@ -291,7 +291,7 @@ export default class UserBit extends React.Component {
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
                         
-                        <li key={1} onClick={() => (playing.togglePlayerSize())}>
+                        <li key={1} onClick={() => (this.togglePlayer())}>
                             <a href="#">
                                 <i
                                     className={classNames(
