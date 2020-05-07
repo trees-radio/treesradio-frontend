@@ -1,46 +1,49 @@
-import {observable, computed, autorun} from "mobx";
+import { observable, computed, autorun } from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import epoch from "../utils/epoch";
 // import ax from 'utils/ax';
 import moment from "moment";
-import {padStart} from "lodash";
+import { padStart } from "lodash";
 // import events from 'stores/events';
 import playlists from "stores/playlists";
-import {send} from "libs/events";
+import { send } from "libs/events";
 
 import spacePineapples from "img/spacepineapples.jpg";
 import gelatoGif from "img/gelatogif.gif";
 
 const PLAYER_SYNC_CAP = 20; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_SENSITIVITY = 30; //seconds
-export const VOLUME_NUDGE_FRACTION = 0.01; // out of 1
+export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 export default new (class Playing {
-  constructor() {
-    this.fbase = fbase;
+    constructor() {
+        this.fbase = fbase;
 
-    localforage.getItem("volume").then(v => (v ? (this.volume = v) : false));
-    localforage.getItem("playerSize").then(s => (s ? (this.playerSize = s) : false));
+        localforage.getItem("volume").then(v => (v ? (this.volume = v) : false));
+        localforage.getItem("playerSize").then(s => (s ? (this.playerSize = s) : false));
 
-    autorun(() => {
-      fbase
-        .database()
-        .ref("playing")
-        .on("value", snap => {
-          var data = snap.val();
-          if (data) {
-            this.data = data;
-            var newtitle = "TreesRadio [  " + data.info.title + " ] ";
-            document.title = newtitle;
-            this.timeStarted = data.starttime;
-          }
+        autorun(() => {
+            fbase
+                .database()
+                .ref("playing")
+                .on("value", snap => {
+                    var data = snap.val();
+                    if (data) {
+                        this.data = data;
+                        var newtitle = "TreesRadio [  " + data.info.title + " ] ";
+                        document.title = newtitle;
+                    }
+                });
+            this.localLikeState = this.liked;
+            this.localDislikeState = this.disliked;
+            this.localGrabState = this.grabbed;
         });
     }
 
     userReportsError(e) {
-        if (epoch() - profile.lastchat < 600 && (e == 150 || e == 100)) send("playerError", {e});
+        if (epoch() - profile.lastchat < 600 && (e == 150 || e == 100)) send("playerError", { e });
     }
 
     @observable fakeScroll = 0;
@@ -82,15 +85,8 @@ export default new (class Playing {
         }
     }
 
-  @computed get timeLeft() {
-    return this.data.info.duration - this.time;
-  }
-
-  @observable timeStarted;
-
-  @computed get fraction() {
-    if (!this.data.time || !this.data.info.duration) {
-      return 0;
+    @computed get elapsed() {
+        return this.time;
     }
 
     @computed get fraction() {
