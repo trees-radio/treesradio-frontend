@@ -28,28 +28,6 @@ export default class UserBit extends React.Component {
         profile.updateUsername(this._username.value.substr(0, 24));
     }
 
-    /* componentDidMount() {
-         console.log("testtesttesttesttest"); //TODO remove
-
-         username(profile.uid)
-             .then(result => {
-                 if (profile.user !== null) {
-                     let userNameLength = result.toString().length;
-
-                     let usernamespan = document.getElementById("username")
-
-                     // let fontSizeString = window.getComputedStyle(usernamespan).getPropertyValue("font-size");
-                     let fontSizeString = "1.2em";
-                     // let fontSize = parseFloat(fontSizeString);
-                     // let unit = fontSizeString.replace("!important","").trim().replace(fontSize.toString(), "");
-
-                     this.fontSize = (!this.modifierApplied && userNameLength >= 15) ? (this.fontSize * 0.9 * this.getQueryMultiplier()) : (this.fontSize * this.getQueryMultiplier());
-                     // fontSize = Math.round(((fontSize * (userNameLength / 100)) + Number.EPSILON) * 100) / 100;
-                     usernamespan.setAttribute("style", "font-size: " + fontSize + "em");
-                 }
-             })
-     }*/
-
     @observable
     fontSize = 1.2;
 
@@ -103,6 +81,22 @@ export default class UserBit extends React.Component {
 
     toggleInterface() {
         this.legacyInterface ? (this.legacyInterface = false) : (this.legacyInterface = true);
+
+        playing.updateBackgroundImage(this.legacyInterface);
+
+        document.getElementById("vidcontainer").setAttribute("style", "background-image: " + `url("${playing.backgroundImage}")`);
+
+        if ((playing.playerSize === "BIG" && this.legacyInterface === true) || (playing.playerSize === "SMALL" && this.legacyInterface === false)) {
+            this.togglePlayer();
+        } else if (this.legacyInterface === false && playing.playerSize === "BIG") {
+            document.getElementById("reactplayerid").setAttribute("style", "width:100%;height:100%;");
+        }
+    }
+
+    togglePlayer() {
+        playing.togglePlayerSize();
+
+        document.getElementById("reactplayerid").setAttribute("style", this.legacyInterface && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;");
     }
 
     hideBlazebot() {
@@ -288,15 +282,15 @@ export default class UserBit extends React.Component {
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
-                        <li onClick={() => (playing.togglePlayerSize())}>
+                        <li onClick={() => (this.togglePlayer())}>
                             <a href="#">
                                 <i
                                     className={classNames(
                                         "fa",
-                                        playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                                        this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
                                     )}
                                 />
-                                {playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player"}
+                                {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
                             </a>
                         </li>
                         {this.showChangeEmail()}
