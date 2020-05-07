@@ -17,11 +17,7 @@ stages:
   - deploy
 
 before_script:
-  - mkdir -p /root/
-  - mkdir -p yarn-cache
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - source ~/.bashrc
-  - ln -s $PWD/yarn-cache /root/.yarn-cache
+  - apk add yarn
   - yarn
 
 lint:
