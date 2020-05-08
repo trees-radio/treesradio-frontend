@@ -26,9 +26,10 @@ lint:
   stage: build-dev
   script:
     - npm run lint
-  except:
-    - develop
-    - master
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: always
+    - when: on_success
 
 build-dev:
   stage: build-dev
@@ -39,10 +40,10 @@ build-dev:
   script:
     - time npm run build-rules
     - time npm run build-dev
-  only:
-    - develop
-  except: 
-    - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+      when: always
+    - when: on_success
 
 build-prod:
   stage: build-prod
@@ -53,8 +54,10 @@ build-prod:
   script:
     - time npm run build-rules
     - time npm run build-prod
-  only:
-    - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
+    - when: on_success
 
 deploy_staging:
   stage: deploy
@@ -65,8 +68,10 @@ deploy_staging:
     - gem install dpl
   dependencies:
     - build-dev
-  only:
-    - develop
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+      when: always
+    - when: on_success
   script:
     - 'dpl --skip_cleanup --provider=firebase
     --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging'
@@ -80,8 +85,10 @@ deploy_production:
     - gem install dpl
   dependencies:
     - build-prod
-  only:
-    - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
+    - when: on_success
   script:
     - 'dpl --skip_cleanup --provider=firebase
     --token=$FIREBASE_DEPLOY_PROD --project=treesradio-live'
