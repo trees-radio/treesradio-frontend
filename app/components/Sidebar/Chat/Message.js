@@ -4,8 +4,7 @@ import imageWhitelist from "libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
 import ReactMarkdown from "react-markdown";
 
-// regex for links (protocol not required): http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
-const expression = /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi;
+const expression = /[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi;
 const regex = new RegExp(expression);
 
 // regex for detecting an inline image.

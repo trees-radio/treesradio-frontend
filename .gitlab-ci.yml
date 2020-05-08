@@ -17,20 +17,18 @@ stages:
   - deploy
 
 before_script:
-  - mkdir -p /root/
-  - mkdir -p yarn-cache
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - source ~/.bashrc
-  - ln -s $PWD/yarn-cache /root/.yarn-cache
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+  - apt update && apt install yarn
   - yarn
 
 lint:
   stage: build-dev
   script:
     - npm run lint
-  except:
-    - develop
-    - master
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: always
 
 build-dev:
   stage: build-dev
@@ -41,10 +39,9 @@ build-dev:
   script:
     - time npm run build-rules
     - time npm run build-dev
-  only:
-    - develop
-  except: 
-    - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+      when: always
 
 build-prod:
   stage: build-prod
@@ -55,8 +52,9 @@ build-prod:
   script:
     - time npm run build-rules
     - time npm run build-prod
-  only:
-    - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
 
 deploy_staging:
   stage: deploy
@@ -67,8 +65,9 @@ deploy_staging:
     - gem install dpl
   dependencies:
     - build-dev
-  only:
-    - develop
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+      when: always
   script:
     - 'dpl --skip_cleanup --provider=firebase
     --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging'
@@ -82,8 +81,9 @@ deploy_production:
     - gem install dpl
   dependencies:
     - build-prod
-  only:
-    - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
   script:
     - 'dpl --skip_cleanup --provider=firebase
     --token=$FIREBASE_DEPLOY_PROD --project=treesradio-live'

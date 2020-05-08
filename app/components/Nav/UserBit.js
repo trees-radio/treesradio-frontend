@@ -84,6 +84,22 @@ export default class UserBit extends React.Component {
 
     toggleInterface() {
         this.legacyInterface ? (this.legacyInterface = false) : (this.legacyInterface = true);
+
+        playing.updateBackgroundImage(this.legacyInterface);
+
+        document.getElementById("vidcontainer").setAttribute("style", "background-image: " + `url("${playing.backgroundImage}")`);
+
+        if ((playing.playerSize === "BIG" && this.legacyInterface === true) || (playing.playerSize === "SMALL" && this.legacyInterface === false)) {
+            this.togglePlayer();
+        } else if (this.legacyInterface === false && playing.playerSize === "BIG") {
+            document.getElementById("reactplayerid").setAttribute("style", "width:100%;height:100%;");
+        }
+    }
+
+    togglePlayer() {
+        playing.togglePlayerSize();
+
+        document.getElementById("reactplayerid").setAttribute("style", this.legacyInterface && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;");
     }
 
     hideBlazebot() {
@@ -275,15 +291,15 @@ export default class UserBit extends React.Component {
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
                         
-                        <li key={1} onClick={() => (playing.togglePlayerSize())}>
+                        <li key={1} onClick={() => (this.togglePlayer())}>
                             <a href="#">
                                 <i
                                     className={classNames(
                                         "fa",
-                                        playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                                        this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
                                     )}
                                 />
-                                {playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player"}
+                                {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
                             </a>
                         </li>
                         <li key={101} onClick={() => waitlist.setShowMinutesUntil()}>
