@@ -134,7 +134,7 @@ export default new (class Chat {
 
     this.chatDebounce =
       this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
-      (this.chatcounter.length > 5 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
+      (this.chatcounter.length > 20 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
 
     if (
       this.chatcounter.length == 0 ||
