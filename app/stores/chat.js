@@ -98,7 +98,6 @@ export default new (class Chat {
 
   @observable chatLocked = false;
 
-  @observable chatcounter = [];
   @observable werefocused = true;
   @observable mentioncount = 0;
 
