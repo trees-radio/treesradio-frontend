@@ -10,8 +10,6 @@ import epoch from "../utils/epoch";
 import Favico from "favico.js";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
-const CHAT_DEBOUNCE_MSEC = 300;
-const CHAT_PENALTY_MSEC = 1.1;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 const GIF_THROTTLE = 60;
@@ -136,10 +134,6 @@ export default new (class Chat {
       this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
       (this.chatcounter.length > 20 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
 
-    if (
-      this.chatcounter.length == 0 ||
-      Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce
-    ) {
       if (this.msg.length !== 0) {
         if (this.msg.match(/^\/gif/) && epoch() - this.lastgif > GIF_THROTTLE * 1000) {
           toast.warning(
@@ -157,9 +151,6 @@ export default new (class Chat {
           });
         }
       }
-    } else if (this.msg !== "") {
-      toast.warning(`Please wait ${this.chatDebounce / 1000} second(s) between messages.`);
-    }
   }
 
   sendMsg(msg, cb) {
