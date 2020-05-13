@@ -1,5 +1,4 @@
-import {observable, computed} from "mobx";
-import toast from "utils/toast";
+import {computed, observable} from "mobx";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import events from "stores/events";
@@ -10,22 +9,20 @@ import epoch from "../utils/epoch";
 import Favico from "favico.js";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
-const CHAT_DEBOUNCE_MSEC = 300;
-const CHAT_PENALTY_MSEC = 1.1;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
-const GIF_THROTTLE = 60;
+//const GIF_THROTTLE = 60; //("ESLint: 'GIF_THROTTLE' is assigned a value but never used")
 const favico = new Favico({animation: "slide"});
 
 export default new (class Chat {
   constructor() {
     const myself = this;
-    window.onfocus = function() {
+    window.onfocus = function () {
       myself.mentioncount = 0;
       favico.badge(0);
       myself.werefocused = true;
     };
-    window.onblur = function() {
+    window.onblur = function () {
       myself.werefocused = false;
     };
     this.fbase = fbase;
@@ -100,7 +97,6 @@ export default new (class Chat {
 
   @observable chatLocked = false;
 
-  @observable chatcounter = [];
   @observable werefocused = true;
   @observable mentioncount = 0;
 
@@ -125,42 +121,18 @@ export default new (class Chat {
   }
 
   async pushMsg() {
-    // Clear out expired timers.
-    this.chatcounter.forEach((counter, i) => {
-      if (Date.now() - counter.time > 1) {
-        this.chatcounter.slice(i, 1);
-      }
-    });
+    // moving throttling to the backend.
+    if (this.msg.length !== 0) {
+      this.msg = this.msg.replace("<3", ":heart:");
+      this.sendMsg(this.getMsg());
 
-    this.chatDebounce =
-      this.chatcounter.length * CHAT_DEBOUNCE_MSEC +
-      (this.chatcounter.length > 20 ? this.chatcounter.length * CHAT_PENALTY_MSEC : 0);
-
-    if (
-      this.chatcounter.length == 0 ||
-      Date.now() - this.chatcounter[this.chatcounter.length - 1].time > this.chatDebounce
-    ) {
-      if (this.msg.length !== 0) {
-        if (this.msg.match(/^\/gif/) && epoch() - this.lastgif > GIF_THROTTLE * 1000) {
-          toast.warning(
-            `It has been less than a minute since you last used gif, let it cool down buddy..`
-          );
-        } else {
-          if (this.msg.match(/^\/gif/)) this.lastgif = epoch();
-
-          this.msg = this.msg.replace("<3", ":heart:");
-          this.sendMsg(this.getMsg());
-
-          profile.lastchat = epoch();
-          this.chatcounter.push({
-            time: Date.now()
-          });
-        }
-      }
-    } else if (this.msg !== "") {
-      toast.warning(`Please wait ${this.chatDebounce / 1000} second(s) between messages.`);
+      profile.lastchat = epoch();
+      this.chatcounter.push({
+        time: Date.now()
+      });
     }
   }
+
 
   sendMsg(msg, cb) {
     var mentions = msg.match(mentionPattern) || [];

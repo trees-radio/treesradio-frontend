@@ -272,7 +272,7 @@ $chat-item-color: #c0c0c0; //light skin #000
     border-radius: 5px;
     height: 45px;
     width: 45px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .mentions-container {
@@ -653,7 +653,6 @@ div>blockquote {
 .emoji-ten {
     background-image: url("../img/10.png");
 }
-
 .emoji-rasta {
     background-image: url("../img/rasta.png");
 }
