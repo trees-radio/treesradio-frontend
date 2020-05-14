@@ -4,15 +4,15 @@ import profile from "stores/profile";
 import events from "stores/events";
 import online from "stores/online";
 import mention from "libs/mention";
-import {send} from "libs/events";
+import { send } from "libs/events";
 import epoch from "../utils/epoch";
 import Favico from "favico.js";
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
-//const GIF_THROTTLE = 60; //("ESLint: 'GIF_THROTTLE' is assigned a value but never used")
-const favico = new Favico({animation: "slide"});
+const GIF_THROTTLE = 60;
+const favico = new Favico({ animation: "slide" });
 
 export default new (class Chat {
   constructor() {
