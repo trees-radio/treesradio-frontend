@@ -7,12 +7,27 @@ import moment from "moment";
 import {shuffle} from "lodash";
 // import events from 'stores/events';
 import {send} from "../libs/events";
+import events from "stores/events";
 
 export default new (class Playlists {
   constructor() {
     fbase.auth().onAuthStateChanged(user => {
+      const me = this;
       if (user !== null) {
-        const me = this;
+        events.register('searchfailed', (data) => {
+          if ( data.uid === profile.user.uid ) {
+            toast('Search failed, please try again later');
+            me.searching = false;
+            me.search = [];
+          } 
+        });
+        events.register('searchexceeded', (data) => {
+          if ( data.uid === profile.user.uid) {
+            toast('Search limit exceeded, try again in thirty minutes');
+            me.searching = false;
+            me.search = [];
+          }
+        })
         fbase
           .database()
           .ref("searches")
