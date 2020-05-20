@@ -347,7 +347,10 @@
 }
 
 #playlists-open-icon {
-  color: black;
+
+  color: white;
+  text-shadow: 1px 0 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1.25px 0 #000000;
+  letter-spacing: 1.5px;
   line-height: calc(9vh + 2px);
   height: inherit;
   width: inherit;
@@ -443,6 +446,7 @@
   right: 3.75vw;
   // margin-left: -40%;
   color: white;
+  text-shadow: 1px 0 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1.25px 0 #000000;
   pointer-events: none;
   top: 2.1vw;
 }
