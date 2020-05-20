@@ -162,7 +162,7 @@
   background-color: #579300;
   border-color: #609606;
   //padding: 2px; Bacchus request March'20
-  text-shadow: 1.5px 0 0 #000000, -1.25px 0 0 #000000, 0 2.25px 0 #000000, 0 -1.25px 0 #000000, 1.25px 1.25px #000000, -1.25px -1.25px 0 #000000, 1.25px -1.25px 0 #000000, -1.25px 1.25px 0 #000000;
+  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
   font-size: 1.5vw;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -349,7 +349,7 @@
 #playlists-open-icon {
 
   color: white;
-  text-shadow: 1px 0 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1.25px 0 #000000;
+  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;
   letter-spacing: 1.5px;
   line-height: calc(9vh + 2px);
   height: inherit;
@@ -446,7 +446,7 @@
   right: 3.75vw;
   // margin-left: -40%;
   color: white;
-  text-shadow: 1px 0 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1.25px 0 #000000;
+  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000
   pointer-events: none;
   top: 2.1vw;
 }
