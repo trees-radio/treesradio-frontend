@@ -2,18 +2,18 @@
 // http://enjoycss.com/zbuttram/item/rQT/1
 
 .join-waitlist {
-  line-height: 4.5vw;
+  line-height: 10vh;
   width: 95%;
   margin: 0 auto;
   box-sizing: content-box;
   cursor: pointer;
-  color: white;
+  color: black;
   text-overflow: clip;
   background: linear-gradient(135deg, #4c7a20 10%, #77b420 34%, #93CF00 45%, #fffc00 81%);
   transition: background 500ms ease;
   border-radius: 6px;
   background-size: 125%;
-  max-height: 9.25vh;
+  // height: 100vh;
 }
 
 .join-waitlist:hover {
@@ -29,6 +29,7 @@
   background: linear-gradient(135deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
   transition: background 500ms ease;
   background-size: 125%;
+  color: black;
 }
 
 .join-waitlist-pressed:hover {

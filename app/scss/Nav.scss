@@ -19,6 +19,7 @@
   //max-width: 2vh;
   place-self: flex-start;
   display: flex;
+  color: black;
   flex-flow: row nowrap;
   place-items: baseline;
   font-size: $navbar-font-size;
@@ -369,7 +370,7 @@ div .userbit-avatar span .avatarimg {
   text-align: center;
   font-size: $navbar-font-size-dynamic;
   font-weight: bold;
-  color: #767;
+  color: rgb(26, 17, 26);
   cursor: url('../img/lighter.cur'), pointer;
   //background: #77b420;
   line-height: 3.2vh;
@@ -403,7 +404,7 @@ div .userbit-avatar span .avatarimg {
   //margin-top: .5vh;
   line-height: 3vh;
   font-weight: bold;
-  color: #EEE;
+  color: black;
   width: 13.5vw;
   height: $navbar-button-height;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
@@ -423,7 +424,7 @@ div .userbit-avatar span .avatarimg {
   animation: pulse 1s infinite;
   animation-timing-function: linear;
   text-decoration: none;
-  color: #eee;
+  color: rgb(0, 0, 0);
 }
 
 @keyframes pulse {
