@@ -15,14 +15,14 @@ export default new (class Playlists {
       const me = this;
       if (user !== null) {
         events.register('searchfailed', (data) => {
-          if ( data.uid === profile.user.uid ) {
+          if ( data.data.uid === profile.user.uid ) {
             toast('Search failed, please try again later');
             me.searching = false;
             me.search = [];
           } 
         });
         events.register('searchexceeded', (data) => {
-          if ( data.uid === profile.user.uid) {
+          if ( data.data.uid === profile.user.uid) {
             toast('Search limit exceeded, try again in thirty minutes');
             me.searching = false;
             me.search = [];
