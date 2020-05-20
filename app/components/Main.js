@@ -121,7 +121,7 @@ class Main extends React.Component {
                     <div className="container main-loadingcard">
                         <div className="main-vcenter">
                             <div className="main-center">
-                                <center>
+                                <center className="loading-txt">
                                     {" "}
                                     {randmsg[Math.floor(Math.random() * randmsg.length)]} <br/>
                                     <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel"/>
