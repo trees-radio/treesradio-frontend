@@ -26,9 +26,9 @@ export default class PlayHistory extends React.Component {
                     <span className="leaderboard-cell-avatar"><UserAvatar uid={song.uid} /></span>
                     <span className="leaderboard-cell-username"><UserName uid={song.uid} /><br/>
                     <a target="_blank" rel="noopener noreferrer" href={song.url}>{song.title}</a><br />
-                    👍 {song.likes}      
-                    👎 {song.dislikes}                  
-                    ⊕ {song.grabs}
+                    👍 {song.likes} │  
+                    👎 {song.dislikes} │              
+                    ⊕ {song.grabs} │ 
                     🔥 {song.hypes} <br/>{ago}
                     </span>
                     <span className="leaderboard-cell-songthumb"><img src={song.thumb} /></span>
