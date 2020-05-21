@@ -14,6 +14,7 @@ import $ from "jquery";
 import Modal from "components/utility/Modal";
 import {toast} from "react-toastify";
 import LeaderBoard from "components/Nav/LeaderBoard";
+import PlayHistory from "components/Nav/SongHistory";
 
 import events from "stores/events";
 
@@ -116,6 +117,10 @@ export default class UserBit extends React.Component {
 
     toggleLeaderboard() {
         this.showLeaders ? (this.showLeaders = false) : (this.showLeaders = true);
+    }
+
+    toggleSongHistory() {
+        this.showHistory ? (this.showHistory = false) : (this.showHistory = true);
     }
 
     hideGifs() {
@@ -365,6 +370,12 @@ export default class UserBit extends React.Component {
                                 <i className="fa fa-trophy"></i> Leader Board
                             </a>
                         </li>
+
+                        <li key={66} onClick={() => this.toggleSongHistory()}>
+                            <a href="#">
+                                <i className="fa fa-history"></i> Play History
+                            </a>
+                        </li>
                         <li key={7} onClick={() => this.toggleHelp()}>
                             <a href="#">
                                 <i className="fa fa-question-circle"/> Help
@@ -416,6 +427,15 @@ export default class UserBit extends React.Component {
                     title="Leader Board"
                     noClose={false}>
                         <LeaderBoard />
+                    </Modal>
+                <Modal 
+                    show={this.showHistory}
+                    hideModal={() => {
+                        this.toggleSongHistory();
+                    }}
+                    title="Play History (24 hours)"
+                    noClose={false}>
+                        <PlayHistory />
                     </Modal>
                 {/*  */}
                 {/* Show Help */}
