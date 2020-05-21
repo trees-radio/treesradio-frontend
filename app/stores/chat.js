@@ -127,9 +127,6 @@ export default new (class Chat {
       this.sendMsg(this.getMsg());
 
       profile.lastchat = epoch();
-      this.chatcounter.push({
-        time: Date.now()
-      });
     }
   }
 
