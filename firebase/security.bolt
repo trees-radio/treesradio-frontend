@@ -214,6 +214,11 @@ path /hypes {
   write() {false}
 }
 
+path /songhistory {
+  read() {true}
+  write() {false}
+}
+
 path /hypes/{$uid} {
   read() { true }
   write() { false }
