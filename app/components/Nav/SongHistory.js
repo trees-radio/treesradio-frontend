@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import SongHistory from "stores/songhistory";
 import UserAvatar from "components/utility/User/UserAvatar";
 import UserName from "components/utility/User/UserName";
-import classNames from "classnames";
 
 @observer
 export default class PlayHistory extends React.Component {
@@ -27,10 +26,10 @@ export default class PlayHistory extends React.Component {
                     <span className="leaderboard-cell-avatar"><UserAvatar uid={song.uid} /></span>
                     <span className="leaderboard-cell-username"><UserName uid={song.uid} /><br/>
                     <a target="_blank" rel="noopener noreferrer" href={song.url}>{song.title}</a><br />
-                    <i className={classNames("fa", 'fa-thumbs-up')} /> {song.likes}      
-                    <i className={classNames("fa", 'fa-thumbs-down')} /> {song.dislikes}                  
-                    <i className={classNames("fa", 'fa-plus-square')} /> {song.grabs}
-                    <i className={classNames("fs", "fa-fire")}/> {song.hypes} <br/>{ago}
+                    <i className="fa fa-thumbs-up"/> {song.likes}      
+                    <i className="fa fa-thumbs-down"/> {song.dislikes}                  
+                    <i className="fa fa-plus-square"/> {song.grabs}
+                    <i className="fa fa-fire"/> {song.hypes} <br/>{ago}
                     </span>
                     <span className="leaderboard-cell-songthumb"><img src={song.thumb} /></span>
                 </div>
