@@ -75,6 +75,32 @@ export default class UserBit extends React.Component {
         profile.changeEmail(email).then(res => !!res && (this.changingEmail = false));
     }
 
+    checkNotificationPromise() {
+        try {
+            Notification.requestPermission().then();
+        } catch (e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    handleNotificationPermission(permission) {
+        let permitted = false;
+        if (!('permission' in Notification)) {
+            Notification.permission = permission;
+        }
+
+        if (!(Notification.permission === 'denied' || Notification.permission === 'default')) {
+            permitted = true;
+        } else {
+            toast.warn('Seems like you blocked notifications for this site. Please unblock and try again.')
+        }
+
+        profile.setDesktopNotifications(permitted);
+
+    }
+
     toggleNotifications() {
         profile.notifications ? (profile.notifications = false) : (profile.notifications = true);
     }
@@ -101,6 +127,23 @@ export default class UserBit extends React.Component {
         playing.togglePlayerSize();
 
         document.getElementById("reactplayerid").setAttribute("style", this.legacyInterface && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;");
+    }
+
+    toggleDesktopNotifications() {
+
+        if (profile.desktopNotifications) {
+            profile.setDesktopNotifications(false)
+            return;
+        }
+
+
+        if ("Notification" in window && this.checkNotificationPromise()) {
+            Notification.requestPermission()
+                .then((permission) => this.handleNotificationPermission(permission));
+        } else {
+            toast.error("Seems like your browser doesn't support notifications :/");
+        }
+
     }
 
     hideBlazebot() {
@@ -155,9 +198,10 @@ export default class UserBit extends React.Component {
         return this.userLoggedIn() ? "" : " greyDisabled";
     }
 
+
     render() {
         events.register("show_leaderboard", (data) => {
-            if ( profile.user.uid == data.data.uid ) this.toggleLeaderboard()
+            if (profile.user.uid == data.data.uid) this.toggleLeaderboard()
         });
         let emailVerificationResendIcon;
         if (profile.resendVerificationLoading) {
@@ -295,7 +339,7 @@ export default class UserBit extends React.Component {
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
-                        
+
                         <li key={1} onClick={() => (this.togglePlayer())}>
                             <a href="#">
                                 <i
@@ -361,6 +405,7 @@ export default class UserBit extends React.Component {
                                 Hype Animation?
                             </a>
                         </li>
+                        {this.showToggleDesktopNotifications()}
                         {this.showMentionAudio()}
                         {this.showMute()}
                         {this.showAutoplay()}
@@ -426,17 +471,17 @@ export default class UserBit extends React.Component {
                     }}
                     title="Leader Board"
                     noClose={false}>
-                        <LeaderBoard />
-                    </Modal>
-                <Modal 
+                    <LeaderBoard/>
+                </Modal>
+                <Modal
                     show={this.showHistory}
                     hideModal={() => {
                         this.toggleSongHistory();
                     }}
                     title="Play History (24 hours)"
                     noClose={false}>
-                        <PlayHistory />
-                    </Modal>
+                    <PlayHistory/>
+                </Modal>
                 {/*  */}
                 {/* Show Help */}
                 {/*  */}
@@ -608,6 +653,24 @@ export default class UserBit extends React.Component {
         )
     }
 
+    showToggleDesktopNotifications() {
+        return this.userLoggedIn() ? (
+            <li key={100 /*TODO*/} onClick={() => this.toggleDesktopNotifications()}>
+                <a href="#">
+                    <i
+                        className={classNames(
+                            "fa",
+                            profile.desktopNotifications ? "fa-check-square-o" : "fa-square-o"
+                        )}
+                    />{" "}
+                    Desktop Notifications<sup>BETA</sup>
+                </a>
+            </li>
+        ) : (
+            <li key={100/*TODO*/}></li>
+        );
+    }
+
     showLogout() {
         return this.userLoggedIn() ? (
             <li key={12} onClick={() => this.logoutAndDisableButtons()}>
@@ -622,7 +685,8 @@ export default class UserBit extends React.Component {
 
     showChangePassword() {
         return this.userLoggedIn() ? (
-            <li key={13} onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
+            <li key={13}
+                onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
                 <a href="#">
                     <i className="fa fa-key"/> Change Password
                 </a>
