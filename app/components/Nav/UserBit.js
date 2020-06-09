@@ -326,7 +326,7 @@ export default class UserBit extends React.Component {
                             {this.showAvatar()}
                         </div>
                         <span id="username" className={"userLevel"}>
-                <b>{profile.safeUsername}</b><span id="userbit-expander" class="fa fa-caret-down"></span>
+                <b>{profile.safeUsername}</b><span id="userbit-expander" className="fa fa-caret-down"></span>
               </span>
                     </a>
                     <ul className="dropdown-menu">
