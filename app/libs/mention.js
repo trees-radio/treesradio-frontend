@@ -3,17 +3,17 @@ import audioNotify from "libs/audioNotify";
 import profile from "../stores/profile";
 import favicon from "../img/favicon.png"
 
-export default function mention(everyone, username) {
+export default function mention(everyone, username, toke) {
 
     if (profile.username !== username) {
 
-
         setTimeout(() => {
+            let notificationMessage = toke ? 'Toke!' : 'You were mentioned by ' + username + '.';
             if (profile.desktopNotifications) {
                 let options = {
                     icon: favicon,
                     badge: favicon,
-                    body: 'You were mentioned by ' + username + '.',
+                    body: notificationMessage,
                     renotify: true,
                     silent: true,
                 }
@@ -22,7 +22,7 @@ export default function mention(everyone, username) {
                 n.onclick = () => document.getElementById("chatinput").focus();
 
             } else {
-                toast.info(`You were mentioned by ${username}.`);
+                toast.info(notificationMessage);
             }
         });
         if (profile.notifications) audioNotify.play();

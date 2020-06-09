@@ -130,7 +130,6 @@ export default class UserBit extends React.Component {
     }
 
     toggleDesktopNotifications() {
-
         if (profile.desktopNotifications) {
             profile.setDesktopNotifications(false)
             return;
@@ -143,7 +142,6 @@ export default class UserBit extends React.Component {
         } else {
             toast.error("Seems like your browser doesn't support notifications :/");
         }
-
     }
 
     hideBlazebot() {
@@ -322,20 +320,14 @@ export default class UserBit extends React.Component {
         return (
             <div id="userbit-wrapper">
                 <div id="userbitContainer" className="btn-group">
-                    <a className={"btn btn-primary" + this.disableIfNecessary()} id="usernametop">
+                    <a className={"btn btn-primary" + this.disableIfNecessary()} id="usernametop"
+                       data-toggle="dropdown">
                         <div className="userbit-avatar">
                             {this.showAvatar()}
                         </div>
                         <span id="username" className={"userLevel"}>
-                <b>{profile.safeUsername}</b>
+                <b>{profile.safeUsername}</b><span id="userbit-expander" class="fa fa-caret-down"></span>
               </span>
-                    </a>
-                    <a
-                        className={"btn btn-primary dropdown-toggle" + this.disableIfNecessary()}
-                        id="usernamedropdown"
-                        data-toggle="dropdown"
-                    >
-                        <span className="fa fa-caret-down" id="userbit-expander"/>
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
@@ -426,17 +418,7 @@ export default class UserBit extends React.Component {
                                 <i className="fa fa-question-circle"/> Help
                             </a>
                         </li>
-                        <li key={8} onClick={() => this.toggleInterface()}>
-                            <a href="#">
-                                <i
-                                    className={classNames(
-                                        "fa",
-                                        this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
-                                    )}
-                                />{" "}
-                                Gelato?
-                            </a>
-                        </li>
+                        {this.showGelato()}
                     </ul>
                 </div>
                 {/*  */}
@@ -728,6 +710,21 @@ export default class UserBit extends React.Component {
             <img className="avatarimg" src="img/nothing.png" alt="avatar"/>
         </span>
         )
+    }
+
+    showGelato() {
+        return this.userLoggedIn() ? (
+            <li key={8} onClick={() => this.toggleInterface()}>
+                <a href="#">
+                    <i
+                        className={classNames(
+                            "fa",
+                            this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
+                        )}
+                    />{" "}
+                    Gelato?
+                </a>
+            </li>) : (<li key={8}></li>);
     }
 
     getQueryMultiplier() {

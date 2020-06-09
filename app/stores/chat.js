@@ -4,7 +4,7 @@ import profile from "stores/profile";
 import events from "stores/events";
 import online from "stores/online";
 import mention from "libs/mention";
-import { send } from "libs/events";
+import {send} from "libs/events";
 import epoch from "../utils/epoch";
 import Favico from "favico.js";
 
@@ -69,7 +69,7 @@ export default new (class Chat {
               mentioned = mentions.includes(profile.safeUsername.toLowerCase());
             }
             if (mentioned) {
-              mention(everyone, msg.username);
+              mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
               if (!this.werefocused) {
                 this.mentioncount++;
                 favico.badge(this.mentioncount);

@@ -97,6 +97,9 @@ export default new (class Profile {
 
                 clearInterval(this.presenceInterval);
             }
+
+            //desktop notification check
+            this.determineDesktopNotifications()
         });
 
         // self username handling
@@ -137,7 +140,7 @@ export default new (class Profile {
     @observable privateInit = false;
     @observable hideBlazeBot = false;
     @observable hypeBoom = true;
-    @observable desktopNotifications = localforage.getItem("desktopnotify") && Notification.permission === "granted" || false;
+    @observable desktopNotifications = false;
 
     @observable rank = null;
     @observable rankPermissions = {};
@@ -157,9 +160,25 @@ export default new (class Profile {
         return this.rank && this.rank !== "User";
     }
 
+    determineDesktopNotifications() {
+        localforage.getItem("desktopnotify").then((result) => {
+            let userEnabled = (result === 1);
+            let notify = false;
+
+            if (userEnabled && Notification.permission === "granted") {
+                notify = true;
+            } else if (userEnabled) {
+                toast.error("Desktop notifications need your permission. Please re-enable from the menu.");
+            }
+
+            localforage.setItem("desktopnotify", notify ? 1 : 0);
+            this.desktopNotifications = notify;
+        });
+    }
+
     setDesktopNotifications(enabled) {
         this.desktopNotifications = enabled;
-        localforage.setItem("desktopnotify", this.desktopNotifications);
+        localforage.setItem("desktopnotify", enabled ? 1 : 0);
     }
 
     // TODO can probably move these top functions to a lib
