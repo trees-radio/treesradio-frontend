@@ -19,7 +19,8 @@
   //max-width: 2vh;
   place-self: flex-start;
   display: flex;
-  color: black;
+  color: white;
+  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;;
   flex-flow: row nowrap;
   place-items: baseline;
   font-size: $navbar-font-size;
@@ -404,10 +405,11 @@ div .userbit-avatar span .avatarimg {
   //margin-top: .5vh;
   line-height: 3vh;
   font-weight: bold;
-  color: black;
+  color: white;
+  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;;
   width: 13.5vw;
   height: $navbar-button-height;
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  //text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
   cursor: url('../img/lighter.cur'), pointer;
 }
 
@@ -423,8 +425,8 @@ div .userbit-avatar span .avatarimg {
 .hypeprogress a:hover {
   animation: pulse 1s infinite;
   animation-timing-function: linear;
+  color: white;
   text-decoration: none;
-  color: rgb(0, 0, 0);
 }
 
 @keyframes pulse {

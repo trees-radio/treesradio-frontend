@@ -1,20 +1,26 @@
 import React from "react";
 import {observer} from "mobx-react";
 
+import toast from "utils/toast"
+
 import toketimer from "stores/toke";
 import profile from "stores/profile";
 
 @observer
 export default class TokeTimer extends React.Component {
     joinToke = () => {
-        toketimer.joinToke();
+        if (profile.user !== null) {
+            toketimer.joinToke();
+        } else {
+            toast.info("Log in to start or join a toke and toke with other users!", {delay: 1300})
+        }
     };
 
     getButtonClasses() {
         if (profile.user !== null) {
-            return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin" : "btn btn-success disabledNoLogin";
+            return toketimer.tokeUnderway ? "btn toke-active disabledNoLogin" : "btn disabledNoLogin";
         } else {
-            return toketimer.tokeUnderway ? "btn btn-warning disabledNoLogin greyDisabled" : "btn btn-success disabledNoLogin greyDisabled"
+            return toketimer.tokeUnderway ? "btn toke-active disabledNoLogin greyDisabled" : "btn disabledNoLogin greyDisabled"
         }
     }
 

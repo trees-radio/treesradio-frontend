@@ -4,12 +4,18 @@ import {observer} from "mobx-react";
 import hypetimer from "stores/hype";
 import profile from "stores/profile";
 import {observable} from "mobx";
+import toast from "utils/toast";
+
 
 const hypetime = 60;
 @observer
 export default class HypeProgress extends React.Component {
     getHyped = () => {
-        if (hypetimer.hypePercentageCharged === 100) hypetimer.getHyped();
+        if (profile.user !== null) {
+            if (hypetimer.hypePercentageCharged === 100) hypetimer.getHyped();
+        } else {
+            toast.info("Log in to hype this song and boost it's likes!", {delay: 1300});
+        }
     };
 
     @observable
@@ -101,7 +107,7 @@ class ExplosiveButton {
         this.element.addEventListener("click", document.body.animate ? this.explode.bind(this, this.duration) : hypetimer.getHyped());
     }
 
-      updateDimensions() {
+    updateDimensions() {
         this.width = pxToEm(this.element.offsetWidth);
         this.height = pxToEm(this.element.offsetHeight);
         this.centerX = this.width / 2;
@@ -111,7 +117,7 @@ class ExplosiveButton {
     }
 
 
-      explode(duration) {
+    explode(duration) {
         if (!profile.hypeBoom || hypetimer.hypePercentageCharged !== 100) {
             hypetimer.getHyped();
             return;
@@ -125,8 +131,8 @@ class ExplosiveButton {
             hypetimer.getHyped().then(() => {
                     document.querySelector(".hypedone").setAttribute("style", "visibility: hidden;");
 
-                   this.createParticles("fire", 35, duration);
-                this.createParticles("debris", this.piecesX * this.piecesY, duration);
+                    this.createParticles("fire", 35, duration);
+                    this.createParticles("debris", this.piecesX * this.piecesY, duration);
                     window.setTimeout(() => {
                         document.querySelector(".hypedone").setAttribute("style", "visibility: visible;");
                     }, duration)
@@ -135,7 +141,7 @@ class ExplosiveButton {
         }
     }
 
-      createParticles(kind, count, duration) {
+    createParticles(kind, count, duration) {
         for (let c = 0; c < count; ++c) {
             let r = randomFloat(0.25, 0.5),
                 diam = r * 2,
@@ -190,7 +196,7 @@ class Particle {
         };
     }
 
-      runSequence(el, keyframesArray, duration = 1e3, easing = "linear", delay = 0) {
+    runSequence(el, keyframesArray, duration = 1e3, easing = "linear", delay = 0) {
         let animation = el.animate(keyframesArray, {
                 duration: duration,
                 easing: easing,
@@ -272,7 +278,7 @@ class FireParticle extends Particle {
     }
 }
 
-  function calcAngle(x1, y1, x2, y2) {
+function calcAngle(x1, y1, x2, y2) {
     let opposite = y2 - y1,
         adjacent = x2 - x1,
         angle = Math.atan(opposite / adjacent);
@@ -286,7 +292,7 @@ class FireParticle extends Particle {
     return angle;
 }
 
-  function propertyUnitsStripped(el, property, unit) {
+function propertyUnitsStripped(el, property, unit) {
     let cs = window.getComputedStyle(el),
         valueRaw = cs.getPropertyValue(property),
         value = +valueRaw.substr(0, valueRaw.indexOf(unit));
@@ -294,15 +300,15 @@ class FireParticle extends Particle {
     return value;
 }
 
-  function pxToEm(px) {
+function pxToEm(px) {
     let el = document.querySelector(":root");
     return px / propertyUnitsStripped(el, "font-size", "px");
 }
 
-  function randomFloat(min, max) {
+function randomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-  function randomInt(min, max) {
+function randomInt(min, max) {
     return Math.round(Math.random() * (max - min)) + min;
 }
