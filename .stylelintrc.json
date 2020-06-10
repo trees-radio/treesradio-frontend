@@ -1,0 +1,23 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "no-eol-whitespace": null,
+    "scss/selector-no-redundant-nesting-selector": true,
+    "scss/at-rule-no-unknown": true,
+    "scss/at-each-key-value-single-line": true,
+    "scss/at-extend-no-missing-placeholder": true,
+    "scss/at-function-named-arguments": true,
+    "scss/at-mixin-argumentless-call-parentheses": true,
+    "scss/comment-no-empty": true,
+    "scss/media-feature-value-dollar-variable": true,
+    "scss/operator-no-unspaced": true,
+    "scss/no-duplicate-dollar-variables": true,
+    "scss/no-duplicate-mixins": true,
+    "scss/dollar-variable-pattern": "[a-z]*(-|[a-z])+[a-z]",
+    "scss/at-mixin-pattern": "[a-z]*(-|[a-z])+[a-z]"
+  }
+}
