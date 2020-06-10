@@ -1,0 +1,458 @@
+@import "variables";
+
+/* ## Main ## */
+@media (min-width: 1200px) {
+  .container-fluid {
+    margin-top: 0;
+  }
+}
+
+@media #{$isPortrait} {
+  .greyDisabled {
+    visibility: hidden;
+  }
+}
+
+/* ## Navbar ## */
+@media #{$isPortrait}, (min-height: 1439px) {
+  .navbar-brand {
+    font-size: 250%;
+    height: unset;
+  }
+}
+
+@media #{$isPortrait}, (min-height: 1440px) {
+  #tr-nav {
+    height: unset;
+  }
+
+  #navbar-grid {
+    //grid-template-rows: 5vw !important;
+  }
+
+  #hype-grid-container {
+    align-self: center;
+  }
+
+  #hype-container {
+    margin: unset;
+    margin-bottom: unset;
+  }
+
+  .hypepb {
+    height: 2vh;
+    margin: 0.2vh 0;
+  }
+
+  .hypeprogress {
+    height: 1.5vh;
+  }
+
+  .hypedone {
+    line-height: 1.7vh;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  #tr-nav {
+    height: 0;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #toke-button {
+    font-size: 0.75 * $navbar-font-size;
+    padding: 0.4vh 0.7vw;
+  }
+
+  .hypepb {
+    font-size: $navbar-font-size * 0.7;
+  }
+}
+
+@media (orientation: portrait) {
+  .navbar-grid-nologin {
+    grid-template-columns: 15vw 85vw 0 0 0 !important;
+  }
+
+  @media #{$isPortrait}, screen and (min-height: 1339px) {
+    #toke-button {
+      padding: 0.8vh 0.7vw;
+    }
+  }
+}
+
+/* ## Playlists ## */
+
+@media (min-width: 800px) {
+  .waitlist {
+    width: 14.875%;
+  }
+}
+
+@media (min-width: 1300px) {
+  .waitlist {
+    width: 14.925%;
+    margin-top: 2px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .waitlist {
+    width: 14.98%;
+  }
+}
+
+
+/** ## Video ## */
+
+@media (min-width: 0) {
+  #videotoplevel {
+    display: none;
+  }
+}
+
+@media (min-width: 750px) {
+  #videotoplevel {
+    height: 100%;
+    background-color: black;
+    padding: 0;
+    display: block;
+  }
+}
+
+@media (min-height: 0) {
+  #player-size {
+    height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 3vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 100px) {
+  #player-size {
+    height: 63vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 3.5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 200px) {
+  #player-size {
+    height: 68.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 3vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 300px) {
+  #player-size {
+    height: 73.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 2.5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 350px) {
+  #player-size {
+    height: 75.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 2.5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 400px) {
+  #player-size {
+    height: 79vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 1.5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 480px) {
+  #player-size {
+    height: 80.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 1.25vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 600px) {
+  #player-size {
+    height: 82vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 0.75vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 700px) {
+  #player-size {
+    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: 0;
+    height: 0.5vh;
+    width: 100%;
+  }
+}
+
+@media (min-height: 1400px) {
+  #player-size {
+    height: 85vh; //88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+}
+
+@media (min-height: 1600px) {
+  #player-size {
+    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
+    width: 100%;
+    transition: all 0.15s ease-in 50ms;
+    -webkit-transition: all 0.15s ease-in 50ms;
+    -moz-transition: all 0.15s ease-in 50ms;
+    -o-transition: all 0.15s ease-in 50ms;
+  }
+
+  .progressbar-container {
+    position: absolute;
+    bottom: -2px;
+    height: 0.6vh;
+    width: 100%;
+  }
+}
+
+/** ## Sidebar ##**/
+
+@media (min-width: 0) {
+  .sidebar-changer {
+    grid-area: 1 / 1 / 2 / 2;
+    font-size: 1.4vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidebar-changer {
+    grid-area: unset;
+    height: 5% !important; //do not unimportant this is seriously fucking important
+    font-size: 0.75vw;
+    padding: 0;
+  }
+}
+
+@media (min-width: 0) {
+  .sidebar-selected {
+    height: unset;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidebar-selected {
+    height: 100% !important; //do not unimportant this is seriously fucking important
+  }
+}
+
+@media (min-width: 0) and (max-width: 719px) {
+  .show-chat-btn {
+    padding: 2% 0;
+    height: 25%;
+  }
+
+  .show-ousers-btn,
+  .show-waitlist-btn,
+  .show-about-btn {
+    padding: 2% 0;
+    height: 25%;
+  }
+}
+
+@media (min-width: 720px) {
+  .show-chat-btn {
+    padding: 2% 0;
+    height: 25%;
+  }
+  .show-ousers-btn,
+  .show-waitlist-btn,
+  .show-about-btn {
+    padding: 2% 0;
+    height: 25%;
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .show-chat-btn {
+    padding: 0;
+    height: 100%;
+  }
+  .show-ousers-btn,
+  .show-waitlist-btn,
+  .show-about-btn {
+    padding: 0;
+    height: 100%;
+    display: block;
+  }
+}
+
+@media (min-width: 1800px) {
+  .show-chat-btn {
+    padding: 0;
+    height: 100%;
+  }
+
+  .show-ousers-btn,
+  .show-waitlist-btn,
+  .show-about-btn {
+    padding: 0;
+    height: 100%;
+    display: block;
+  }
+}
+
+@media (min-width: 1800px) and (min-height: 1640px) {
+  .show-chat-btn {
+    padding: 0.8vh 0;
+    height: 100%;
+  }
+  .show-ousers-btn,
+  .show-waitlist-btn,
+  .show-about-btn {
+    padding: 0.8vh 0;
+    height: 100%;
+    display: block;
+  }
+}
+
+@media (min-width: 0) {
+  .online-count {
+    color: black;
+    background-color: white;
+    padding: 0.4% 0.9%;
+    border-radius: 100px;
+    display: inline;
+  }
+}
+
+@media (min-width: 750px) {
+  .online-count {
+    padding: 1% 2%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .online-count {
+    padding: 2% 5.5%;
+  }
+}
+
+@media (min-width: 0) {
+  .waitlist-count {
+    color: black;
+    background-color: white;
+    padding: 0.4% 0.9%;
+    border-radius: 100px;
+    display: inline;
+  }
+}
+
+@media (min-width: 750px) {
+  .waitlist-count {
+    padding: 1% 2%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .waitlist-count {
+    padding: 2% 5.5%;
+  }
+}

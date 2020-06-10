@@ -15,8 +15,9 @@ const SCROLL_SENSITIVITY = 200;
 
 @observer
 export default class ChatContent extends React.Component {
-  @observable
-  touchOffset = 0;
+
+    @observable
+    touchOffset = 0;
 
   componentDidMount() {
     this.scroll();
@@ -43,7 +44,7 @@ export default class ChatContent extends React.Component {
 
   scroll = () =>
     setTimeout(
-      () => (this._chatscroll.scrollTop = this._chatscroll.scrollHeight),
+      () => (this.chatScrollAmount.scrollTop = this.chatScrollAmount.scrollHeight),
       300
     );
 
@@ -58,48 +59,44 @@ export default class ChatContent extends React.Component {
 
   debouncedScroll = debounce(this.scroll, 5000);
 
-  UNSAFE_componentWillUpdate() {
-    var test = this._chatscroll.scrollHeight - this._chatscroll.scrollTop;
-    var target = this._chatscroll.clientHeight;
-    var testLow = test - SCROLL_SENSITIVITY;
-    var testHigh = test + SCROLL_SENSITIVITY;
-    if (target > testLow && target < testHigh) {
-      this.shouldScroll = true;
-    } else {
-      this.shouldScroll = false;
+  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
+    let test = this.chatScrollAmount.scrollHeight - this.chatScrollAmount.scrollTop;
+    let target = this.chatScrollAmount.clientHeight;
+    let testLow = test - SCROLL_SENSITIVITY;
+    let testHigh = test + SCROLL_SENSITIVITY;
+    this.shouldScroll = target > testLow && target < testHigh;
     }
-  }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     this.autoScroll();
   }
 
   render() {
-    var messages = chat.messages;
+    let messages = chat.messages;
 
     // Clear out old messages
     if (messages.length > 250) messages.slice(0, messages.length - 250);
 
-    var content = messages.map((msg, i) => {
-      var chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
-      var chatLineClasses = classNames(
+    let content = messages.map((msg, i) => {
+      let chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
+      let chatLineClasses = classNames(
         "chat-item",
         chatPosClass,
         {
-          "blazebot-msg": msg.username == "BlazeBot",
+          "blazebot-msg": msg.username === "BlazeBot",
         },
         profile.hideBlazeBot ? "blazebot-hide" : ""
       );
 
-      var humanTimestamp = moment.unix(msg.timestamp).format("LT");
-      var msgs = msg.msgs.map((innerMsg, i) => {
+      let humanTimestamp = moment.unix(msg.timestamp).format("LT");
+      let msgs = msg.msgs.map((innerMsg, i) => {
         return (
           <Message
             key={i}
             userName={msg.username}
             isEmote={msg.isemote}
             text={innerMsg}
-            onLoad={() => setTimeout(this.autoScroll(true), 100)}
+            onLoad={() => setTimeout(() => this.autoScroll(), 100)}
           />
         );
       });
@@ -126,11 +123,11 @@ export default class ChatContent extends React.Component {
       );
     });
     return (
-      <div id="chatscroll" ref={(c) => (this._chatscroll = c)}>
+      <div id="chatscroll" ref={(c) => (this.chatScrollAmount = c)}>
         <ul id="chatbox">{content}</ul>
       </div>
     );
   }
 
-  @observable _chatscroll = { scrollTop: 0, scrollHeight: 0 };
+  @observable chatScrollAmount = { scrollTop: 0, scrollHeight: 0 };
 }

@@ -1,61 +1,36 @@
-
-
 // http://enjoycss.com/zbuttram/item/rQW/2
-
+@import "../core/variables";
+@import "../core/mixins";
 .fa-thumbs-o-up {
   position: absolute;
-  padding-top:.39vw;
-  right: 3.75vw
+  padding-top: 0.39vw;
+  right: 3.75vw;
 }
 
 .fa-thumbs-up {
   position: absolute;
-  padding-top:.39vw;
+  padding-top: 0.39vw;
   right: 3.75vw;
 }
 
 .feedback-likes {
   float: right;
   padding-right: 1.75vw;
-  padding-top: .1vw;
+  padding-top: 0.1vw;
 }
 
 .like-button {
-  height: 49%;
-  width: 95%;
-  float: left;
-  box-sizing: content-box;
-  overflow: hidden;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;
-  letter-spacing: 1.5px;
-  font-size: 110%;
-  text-align: center;
-  text-overflow: ellipsis;
-  background: linear-gradient(135deg, #BCFF17 4%, #77b420 60%);
-  background-size: 125%;
-  transition: background 500ms ease;
-  margin: 2px 3px;
+  @include toolbar-button-small;
+
+  color: $color-button-text;
+  background: $color-button-like;
 }
 
 .like-button:hover {
-  background-position: -1vw;
+  background: $color-button-like-hover;
 }
 
 .like-button:active {
-  background-color: rgba(0,72,230,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-}
-
-.like-button-pressed {
-  background-color: rgba(0,72,230,1);
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
+  background: $color-button-like-active 50% 50%;
+  transition-duration: 10ms;
 }

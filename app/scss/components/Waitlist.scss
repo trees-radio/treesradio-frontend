@@ -1,3 +1,5 @@
+@import "../core/variables";
+
 .waitlist-item {
   width: 100%;
   list-style-position: inside;
@@ -9,7 +11,7 @@
 
 .waitlist-avatar {
   cursor: pointer;
-  padding-right:.5vw;
+  padding-right: .5vw;
 }
 
 .waitlist-avatarimg {
@@ -30,7 +32,7 @@
 
 .waitlist-play-time {
   font-size: .8em;
-  float:right;
+  float: right;
 }
 
 .waitlist-name-top:hover {
@@ -39,13 +41,13 @@
 
 .waitlist-list {
   padding: 0;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 }
 
 .waitlist-position {
   width: 10%;
   max-width: 10%;
-  margin-top: .25vw;
+  margin-top: 0.25vw;
   font-size: 22px;
 }
 
@@ -55,11 +57,11 @@
 }
 
 .waitlist-scroll::-webkit-scrollbar {
-    width: 1em;
+  width: 1em;
 }
 
 .waitlist-scroll::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .waitlist-scroll::-webkit-scrollbar-thumb {
@@ -68,11 +70,11 @@
 }
 
 .waitlist-line-1 {
-  background-color: #0A0A0A; //light skin cbd6dc
+  background-color: $color-trees-bg; //light skin cbd6dc
   padding: 10px;
 }
 
 .waitlist-line-0 {
-  background-color: #121317; //light skin e9eef0
+  background-color: $color-trees-bg; //light skin e9eef0
   padding: 10px;
 }

@@ -1,0 +1,58 @@
+
+#sidebar {
+  height: 100%;
+}
+
+@media (min-width: 0) {
+  #sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(9, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  #sidebar {
+    display: unset;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    grid-column-gap: unset;
+    grid-row-gap: unset;
+  }
+}
+
+//moving sidebar-changer and online-Ents/Waitlist-Cnt classes to bottom
+
+.sel-chat {
+  //TODO needed?
+}
+
+.sel-online {
+  margin-left: 1%;
+}
+
+.sel-waitlist {
+  margin-left: 1%;
+}
+
+.sel-about {
+  //TODO needed?
+}
+
+.sidebar-changer {
+  color: white;
+  text-align: center;
+  line-height: 2vw;
+  cursor: pointer;
+  flex-flow: row nowrap;
+}
+
+.sidebar-selected {
+  color: white;
+  text-align: center;
+  background-color: #27272c;
+  font-weight: bolder;
+  border-radius: 5px;
+}

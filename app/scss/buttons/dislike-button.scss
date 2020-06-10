@@ -1,59 +1,37 @@
-
 // http://enjoycss.com/zbuttram/item/rQX/3
+@import "../core/variables";
+@import "../core/mixins";
 
 .fa-thumbs-o-down {
   position: absolute;
-  padding-top: .38vw;
+  padding-top: 0.38vw;
   right: 3.75vw;
 }
 
 .fa-thumbs-down {
   position: absolute;
-  padding-top: .38vw;
+  padding-top: 0.38vw;
   right: 3.75vw;
 }
 
 .feedback-dislikes {
   float: right;
   padding-right: 1.75vw;
-  padding-top: .1vw;
+  padding-top: 0.1vw;
 }
 
 .dislike-button {
-  height: 49%;
-  width: 95%;
-  margin: 2px 3px;
-  box-sizing: content-box;
-  overflow: hidden;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;
-  letter-spacing: 1.5px;
-  font-size: 110%;
-  text-align: center;
-  text-overflow: ellipsis;
-  background: linear-gradient(135deg, #FF4F0A 42%, #B32226 100%);
-  transition: background 500ms ease;
-  background-size: 125%;
+  @include toolbar-button-small;
+
+  color: $color-button-text;
+  background: $color-button-dislike;
 }
 
 .dislike-button:hover {
-  background-position: -1vw;
+  background: $color-button-dislike-hover;
 }
 
 .dislike-button:active {
-  background-color: #b30c0e;
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
-}
-
-.dislike-button-active {
-  background-color: #b30c0e;
-  background-position: 50% 50%;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-size: auto auto;
+  background: $color-button-dislike-active 50% 50%;
+  transition-duration: 10ms;
 }

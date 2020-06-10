@@ -1,39 +1,33 @@
-
 // http://enjoycss.com/zbuttram/item/rQT/1
+@import "../core/variables";
 
 .join-waitlist {
+  background: $color-button-waitlist-join;
+  color: white;
   line-height: 10vh;
   width: 95%;
   margin: 0 auto;
   box-sizing: content-box;
   cursor: pointer;
-  color: white;
-  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;
+  text-shadow: $text-shadow-light;
   letter-spacing: 1.5px;
   font-size: 110%;
   text-overflow: clip;
-  background: linear-gradient(135deg, #4c7a20 10%, #77b420 34%, #93CF00 45%, #fffc00 81%);
   transition: background 500ms ease;
   border-radius: 6px;
   background-size: 125%;
-  // height: 100vh;
 }
 
 .join-waitlist:hover {
   background-position: -1vw;
 }
 
-.join-waitlist:active {
-  background-color: rgba(102,154,0,1);
-}
-
-
 .join-waitlist-pressed {
-  background: linear-gradient(135deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
+  background: $color-button-waitlist-active;
   transition: background 500ms ease;
   background-size: 125%;
   color: white;
-  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;
+  text-shadow: $text-shadow-light;
   letter-spacing: 1.5px;
   font-size: 100% !important;
 }

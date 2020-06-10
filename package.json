@@ -53,6 +53,8 @@
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
     "script-loader": "^0.7.2",
+    "stylelint": "^13.4.0",
+    "stylelint-config-standard": "^20.0.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-config": "^7.5.0",
@@ -91,6 +93,7 @@
     "react-slider": "^1.0.2",
     "react-toastify": "^5.5.0",
     "react-visibility-sensor": "^5.1.1",
+    "stylelint-scss": "^3.17.2",
     "url-parse": "^1.4.7"
   },
   "babel": {

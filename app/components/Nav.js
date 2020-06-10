@@ -69,6 +69,8 @@ class Nav extends React.Component {
 
     login() {
         if (profile.login(this._email.value, this._pass.value)) {
+            document.getElementById("chatscroll").setAttribute("style", "");
+
             let navbarGrid = document.getElementById("navbar-grid");
 
             navbarGrid.classList.remove('navbar-grid-noLogin');
@@ -82,12 +84,9 @@ class Nav extends React.Component {
             }
 
             let buttons = document.querySelectorAll('.disabledNoLogin');
-
             buttons.forEach(button => button.classList.remove('greyDisabled'));
 
-            // this.avatarField = profile.avatarURL;
             profile.setAvatar(this.avatarField);
-
         }
     }
 

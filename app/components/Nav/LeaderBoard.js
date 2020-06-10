@@ -1,5 +1,5 @@
 import React from "react";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 
 import LeadersBoard from "stores/leaderboard";
 import UserAvatar from "components/utility/User/UserAvatar";
@@ -32,11 +32,11 @@ export default class LeaderBoard extends React.Component {
             return (
                 <div key={index} className="leaderboard-row">
                     <span className="leaderboard-cell-rank"><i className="fa fa-trophy"></i> {index + 1}:</span>
-                    <span className="leaderboard-cell-avatar"><UserAvatar uid={leader.uid} /></span>
-                    <span className="leaderboard-cell-username"><UserName uid={leader.uid} /><br/>
-                    <a target="_blank" rel="noopener noreferrer" href={leader.url}>{leader.title}</a><br />
+                    <span className="leaderboard-cell-avatar"><UserAvatar uid={leader.uid}/></span>
+                    <span className="leaderboard-cell-username"><UserName uid={leader.uid}/><br/>
+                    <a target="_blank" rel="noopener noreferrer" href={leader.url}>{leader.title}</a><br/>
                         Score: <strong>{actualscore}</strong> {ago}</span>
-                    <span className="leaderboard-cell-songthumb"><img src={leader.thumb} /></span>
+                    <span className="leaderboard-cell-song-thumb"><img src={leader.thumb}/></span>
                 </div>
             )
         });
