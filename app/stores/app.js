@@ -1,4 +1,4 @@
-import {observable, computed} from "mobx";
+import {computed, observable} from "mobx";
 import axios from "axios";
 import fbase from "libs/fbase";
 import epoch from "utils/epoch";
@@ -10,11 +10,7 @@ export default new (class App {
       .database()
       .ref(".info/connected")
       .on("value", snap => {
-        if (snap.val() === true) {
-          this.connected = true;
-        } else {
-          this.connected = false;
-        }
+        this.connected = snap.val() === true;
       });
 
     setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
@@ -29,10 +25,7 @@ export default new (class App {
   @observable APP_EPOCH = epoch();
 
   @computed get init() {
-    if (this.connected && this.ipAddress !== null && this.proceed === true) {
-      return true;
-    }
-    return false;
+    return this.connected && this.ipAddress !== null && this.proceed;
   }
 
   getIP() {

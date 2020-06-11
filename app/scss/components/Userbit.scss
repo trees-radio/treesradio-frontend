@@ -1,4 +1,4 @@
-@import "variables";
+@import "../core/variables";
 
 #usernametop {
   display: flex;
@@ -7,7 +7,6 @@
   text-align: center;
   align-self: baseline;
   align-content: baseline;
-
   max-width: 15vw;
   height: $navbar-button-height;
 }
@@ -20,7 +19,6 @@
 #username {
   place-self: center;
 }
-
 
 #userbit-dropdown {
   margin-right: 1.75vw !important;
@@ -52,22 +50,24 @@ div .userbit-avatar span .avatarimg {
 }
 
 @media only screen and (max-width: 1625px) {
-  #username, #usernamedropdown {
+  #username,
+  #usernamedropdown {
     //max-width: 10vw;
-    font-size: .7 * $navbar-font-size;
+    font-size: 0.7 * $navbar-font-size;
   }
 }
 
 @media only screen and (max-width: 1730px) {
-  #username, #usernamedropdown {
+  #username,
+  #usernamedropdown {
     max-width: 11vw;
-    font-size: .65 * $navbar-font-size;
+    font-size: 0.65 * $navbar-font-size;
   }
 }
 
 @media only screen and (max-width: 1300px) {
   #username, #usernamedropdown {
-    font-size: .6 * $navbar-font-size;
+    font-size: 0.6 * $navbar-font-size;
     //max-width: 8vw;
   }
 }

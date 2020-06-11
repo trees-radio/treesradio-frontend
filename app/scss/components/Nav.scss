@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import "variables";
-
-/* #### Variables #### */
+@import "../core/variables";
 
 #tr-nav {
   height: 5vh;
@@ -12,26 +10,21 @@
   overflow: hidden;
 }
 
-
 #toke-button {
-  //padding: .5vh .5vw;
   padding: 0.2vh 0.7vw;
-  //max-width: 2vh;
   place-self: flex-start;
   display: flex;
   color: white;
-  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;;
+  text-shadow: $text-shadow-light;
   flex-flow: row nowrap;
   place-items: baseline;
   font-size: $navbar-font-size;
   height: $navbar-button-height !important;
-  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689F38 100%);
+  background: $color-button-toke;
 }
 
-@media #{$isPortrait}, screen and (min-height: 1339px) {
-  #toke-button {
-    padding: 0.8vh 0.7vw;
-  }
+.toke-active {
+  //TODO change color when active
 }
 
 #navbar-grid {
@@ -43,7 +36,6 @@
   grid-gap: 0;
   place-items: baseline;
 }
-
 
 .navbar-grid-nologin {
   grid-template-columns: 15vw 51vw 17vw 7vw 10vw !important;
@@ -62,7 +54,7 @@
   top: -2.7vh;
 }
 
-#navbar-grid:before {
+#navbar-grid::before {
   display: none !important;
   content: none !important;
 }
@@ -82,7 +74,14 @@
 }
 
 .nav-title {
+  font-family: "Roboto", sans-serif;
+  color: rgba(255, 255, 255, 0.87);
+  transition: 250ms;
   overflow: hidden;
+}
+
+.nav-title:hover {
+  color: #77b300;
 }
 
 .navbar {
@@ -97,7 +96,7 @@
 }
 
 .navbar-default {
-  background-color: #0A0A0A;
+  background-color: $color-trees-bg;
 }
 
 .navbar-brand {
@@ -109,13 +108,6 @@
   vertical-align: baseline;
   overflow: hidden;
   //padding: .8vh .6vw;
-}
-
-@media #{$isPortrait}, (min-height: 1439px) {
-  .navbar-brand {
-    font-size: 250%;
-    height: unset;
-  }
 }
 
 //Trees Radio Logo Color
@@ -147,21 +139,13 @@
   padding-top: 4px !important;
 }
 
-#nav-about {
-}
-
-#nav-divider {
-}
-
 #loginForm {
+  display: inline-flex;
   flex-flow: row nowrap;
   place-items: baseline;
   margin-top: 3.2vh;
-  padding-top: .8vh;
-
+  padding-top: 0.8vh;
   height: $navbar-button-height-portrait;
-  display: inline-flex;
-  flex-flow: row nowrap;
 }
 
 #loginWrapper {
@@ -185,18 +169,18 @@
 }
 
 #loginbutton {
-  margin-left: .5vw;
-  margin-right: .5vw;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
   font-weight: bold;
-  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
+  text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   border-radius: 0;
 }
 
 #reset-password-btn {
-  margin-left: .5vw;
+  margin-left: 0.5vw;
   font-weight: bold;
-  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
+  text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   font-size: 110%;
   border-radius: 0;
@@ -204,7 +188,7 @@
 
 #regbutton {
   font-weight: bold;
-  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
+  text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   font-size: 110%;
   border-radius: 0;
@@ -220,10 +204,9 @@
   max-height: $navbar-button-height !important;
   place-self: start start;
   place-items: baseline;
-  font-size: .75 * $navbar-font-size !important;
+  font-size: 0.75 * $navbar-font-size !important;
   border-radius: 0 !important;
 }
-
 
 div .userbit-avatar span .avatarimg {
   width: 19px;
@@ -250,7 +233,7 @@ div .userbit-avatar span .avatarimg {
   margin-top: 6px;
   margin-right: 10px;
   font-weight: bold;
-  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
+  text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   font-size: 110%;
   border-radius: 0;
@@ -258,7 +241,7 @@ div .userbit-avatar span .avatarimg {
 
 #usernametop {
   margin-top: 6px;
-  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
+  text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   font-size: 110%;
 }
@@ -267,11 +250,10 @@ div .userbit-avatar span .avatarimg {
   margin-left: 0;
   margin-right: 5px;
   margin-top: 6px;
-  text-shadow: .75px 0 0 #000000, -.6px 0 0 #000000, 0 .5px 0 #000000, 0 -.6px 0 #000000, .6px .6px #000000, -.6px -.6px 0 #000000, .6px -.6px 0 #000000, -.6px .6px 0 #000000;
+  text-shadow: $text-shadow-heavy;
   font-size: 110%;
   border-radius: 0;
 }
-
 
 #emailbox {
   margin-right: 5px;
@@ -279,16 +261,6 @@ div .userbit-avatar span .avatarimg {
 
 .version-tag {
   font-size: 50%;
-}
-
-.nav-title {
-  font-family: "Roboto", sans-serif;
-  color: rgba(255, 255, 255, 0.87);
-  transition: 250ms;
-}
-
-.nav-title:hover {
-  color: #77b300;
 }
 
 #toketimer-container {
@@ -300,7 +272,7 @@ div .userbit-avatar span .avatarimg {
 #userbit-container {
   grid-area: userbit;
   place-self: start end;
-  margin-bottom: .5vh;
+  margin-bottom: 0.5vh;
 }
 
 #hype-grid-container {
@@ -315,45 +287,17 @@ div .userbit-avatar span .avatarimg {
   grid-column: 3;
   place-self: center;
   margin-top: -10px;
-
   display: inline-flex;
   flex-flow: row nowrap;
   place-content: baseline;
-
   width: 100% !important;
   height: 100% !important;
 }
 
 #hype-container {
-  margin-bottom: .75vh;
+  margin-bottom: 0.75vh;
   display: inline-flex;
   flex-flow: row nowrap;
-}
-
-@media #{$isPortrait}, (min-height: 1440px) {
-  #tr-nav {
-    height: unset;
-  }
-  #navbar-grid {
-    //grid-template-rows: 5vw !important;
-  }
-  #hype-grid-container {
-    align-self: center;
-  }
-  #hype-container {
-    margin: unset;
-    margin-bottom: unset;
-  }
-  .hypepb {
-    height: 2vh;
-    margin: .2vh 0;
-  }
-  .hypeprogress {
-    height: 1.5vh;
-  }
-  .hypedone {
-    line-height: 1.7vh;
-  }
 }
 
 .hypepb {
@@ -361,18 +305,14 @@ div .userbit-avatar span .avatarimg {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   width: 13.5vw;
   height: $navbar-button-height;
-  margin-top: .5vh;
+  margin-top: 0.5vh;
   border-radius: 8px;
-  /*  border-top: 2px solid #699420;
-    border-left: 2px solid #699420;
-    border-bottom: 2px solid #699200;
-    border-right: 2px solid #699200;*/
   overflow: hidden;
   text-align: center;
   font-size: $navbar-font-size-dynamic;
   font-weight: bold;
   color: rgb(26, 17, 26);
-  cursor: url('../img/lighter.cur'), pointer;
+  cursor: url('../../img/lighter.cur'), pointer;
   //background: #77b420;
   line-height: 3.2vh;
 }
@@ -386,31 +326,29 @@ div .userbit-avatar span .avatarimg {
   width: 1.5vw;
   height: 4vh;
   border-radius: 6px;
-  background: #689F38;
-  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
+  background: $color-button-hype;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
   display: inline-block;
   overflow: hidden;
 }
 
-.hypedone:active {
-  -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
-  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
-  border-radius: 6px;
-  cursor: url('../img/lighter.cur'), pointer;
-}
-
 .hypedone {
   text-align: center;
-  //margin-top: .5vh;
   line-height: 3vh;
   font-weight: bold;
   color: white;
   text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;;
   width: 13.5vw;
   height: $navbar-button-height;
-  //text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
-  cursor: url('../img/lighter.cur'), pointer;
+  //text-shadow: $text-shadow-heavy;
+  cursor: $img-cursor-lighter, pointer;
+}
+
+.hypedone:active {
+  -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  cursor: url('../../img/lighter.cur'), pointer;
 }
 
 .hypepb:hover #progress {
@@ -427,88 +365,32 @@ div .userbit-avatar span .avatarimg {
   animation-timing-function: linear;
   color: white;
   text-decoration: none;
+  color: white;
 }
 
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
-@media only screen and (max-width: 750px) {
-  #tr-nav {
-    height: 0;
-  }
-}
+/* #### Explosive Hype Button #### */
 
-@media only screen and (max-width: 1300px) {
-  #toke-button {
-    //padding: .5vw .5vh;
-    font-size: .75 * $navbar-font-size;
-    padding: 0.4vh 0.7vw;
-  }
-  .hypepb {
-    font-size: $navbar-font-size * .7;
-  }
-}
-
-
-@media (orientation: portrait) {
-  .navbar-grid-nologin {
-    grid-template-columns: 15vw 85vw 0 0 0 !important;
-  }
-
-  #navbar-grid {
-    grid-template-rows: $navbar-height-portrait !important;
-  }
-
-  #reset-password-btn {
-    margin-right: 1vw;
-  }
-
-  .login-form-button {
-    font-size: $navbar-font-size-dynamic * 1.5 !important;
-    height: $navbar-button-height-portrait !important;
-    line-height: $navbar-button-height-portrait / 2;
-    //max-height: $navbar-button-height-portrait;
-  }
-
-  #loginButtons {
-    font-size: $navbar-font-size-dynamic * 1.5;
-    place-self: center baseline;
-    margin-top: 0;
-  }
-
-  #emailInput {
-    width: 15vw !important;
-    height: $navbar-button-height-portrait;
-  }
-
-  #passInput {
-    width: 15vw !important;
-    height: $navbar-button-height-portrait;
-  }
-}
-
-/*explosive hype*/
-/*Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
+/* Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
-
-.exploding, .exploding:focus, .exploding:hover, .exploding > div {
-  background: transparent;
-  color: transparent;
-}
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE */
 
 .exploding {
   pointer-events: none;
@@ -521,6 +403,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   content: none;
 }
 
+.exploding,
+.exploding:focus,
+.exploding:hover,
+.exploding > div {
+  background: transparent;
+  color: transparent;
+}
+
 .particle {
   position: absolute;
   top: 0;
@@ -529,8 +419,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 .particle--debris {
-  background: #77B420;
-  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
+  background: $color-trees-primary;
+  background: $color-button-hype;
 }
 
 .particle--fire {

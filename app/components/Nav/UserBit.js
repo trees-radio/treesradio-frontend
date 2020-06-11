@@ -181,6 +181,7 @@ export default class UserBit extends React.Component {
     logoutAndDisableButtons() {
         profile.logout()
             .then(() => {
+                console.log("please show")
                 if (window.matchMedia("only screen and (orientation: portrait)")) {
                     document.getElementById("navbar-grid")
                         .setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
@@ -189,6 +190,8 @@ export default class UserBit extends React.Component {
                 let buttons = document.querySelectorAll('disabledNoLogin');
 
                 buttons.forEach(button => button.classList.add('greyDisabled'));
+
+                document.getElementById("chatscroll").setAttribute("style", "overflow:hidden;")
             });
     }
 

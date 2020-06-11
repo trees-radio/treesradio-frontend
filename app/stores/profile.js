@@ -183,39 +183,11 @@ export default new (class Profile {
 
     // TODO can probably move these top functions to a lib
     login(email, password) {
-        fbase
+        return fbase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then(user => {
-                // Convert old profile into new datastore.
-                let oldranks = ["User", "Mod", "Senior Mod", "Dev", "Admin"];
-                fbase.database
-                    .ref("moderator")
-                    .child(user.uid)
-                    .on("value", snap => {
-                        fbase.database
-                            .ref("ranks")
-                            .child(user.uid)
-                            .set(oldranks[snap.val()]);
-                        snap.remove();
-                    });
-                fbase.database
-                    .ref("users")
-                    .child(user.uid)
-                    .on("value", snap => {
-                        fbase.database
-                            .ref("usernames")
-                            .child(user.uid)
-                            .set(snap.val().username);
-                        fbase.database
-                            .ref("avatar")
-                            .child(user.uid)
-                            .set(snap.val().avatar);
-                        snap.remove();
-                    });
-                return true;
-            })
-            .catch(error => {
+            .then(() => true)
+                  .catch(error => {
                 let msg = `Unknown error: ${error.code}`;
                 switch (error.code) {
                     case "auth/email-already-in-use":
@@ -231,7 +203,8 @@ export default new (class Profile {
                         msg = `Your chosen password is too weak. Please use a stronger password`;
                         break;
                     case undefined:
-                        return;
+                        msg = `An unknown error occurred while trying to log you in :/`;
+                        break;
                 }
                 toast.error(msg);
                 return false;

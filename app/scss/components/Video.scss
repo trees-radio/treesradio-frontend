@@ -1,0 +1,55 @@
+@import "../core/variables";
+
+/////////////////////////////// Make Video Unclickable
+
+// #youtube-player-0 {
+//   pointer-events: none;
+// }
+
+///////////////////////////////////////////////////////
+
+// CLASS FOR SMALL PLAYER TO TOGGLE
+.small-player-size {
+  height: 40vh !important;
+  width: 35vw !important;
+  margin-left: 27.5%;
+  padding-top: 1%;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+
+#playerdiv {
+  //TODO needed?
+}
+
+#vidcontainer {
+  height: 90%;
+  max-height: 90%;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+}
+
+.reactplayer {
+  //TODO needed?
+}
+
+#reactplayerid {
+  //TODO needed?
+}
+
+.section-divider {
+  background-color: $color-trees-primary;
+  height: 5px;
+  width: 100%;
+}
+
+.progressbar-container {
+  z-index: 2;
+}
+
+.progressbar-progress {
+  //TODO needed?
+}

@@ -2,9 +2,9 @@ import React from 'react'; //eslint-disable-line
 //React is required here for ReactDOM to work properly, has already been tested
 import ReactDOM from 'react-dom';
 // (S)CSS
-import './scss/index.scss'; // our scss entry
+import './scss/core/index.scss'; // our scss entry
 // B u lma flex-fw
-import "./scss/bulma.sass";
+import "./scss/core/bulma.sass";
 
 import 'bootstrap'; //load bootstrap js, depends on $
 import 'font-awesome-webpack-4';
@@ -12,4 +12,4 @@ import 'font-awesome-webpack-4';
 import 'script-loader!localforage'; //needs to execute as script, ugly console warnings otherwise
 import Main from './components/Main';
 
-ReactDOM.render(<Main />, document.getElementById('app'));
+ReactDOM.render(<Main/>, document.getElementById('app'));
