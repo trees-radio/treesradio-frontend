@@ -1,3 +1,4 @@
+console.log(`TreesRadio`);
 import React from 'react'; //eslint-disable-line
 //React is required here for ReactDOM to work properly, has already been tested
 import ReactDOM from 'react-dom';
@@ -8,7 +9,7 @@ import "./scss/core/bulma.sass";
 
 import 'bootstrap'; //load bootstrap js, depends on $
 import 'font-awesome-webpack-4';
-//import 'babel-polyfill'; // required for IE
+import 'babel-polyfill'; // required for IE
 import 'script-loader!localforage'; //needs to execute as script, ugly console warnings otherwise
 import Main from './components/Main';
 
