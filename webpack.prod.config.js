@@ -8,16 +8,16 @@ module.exports = new Config().extend("./webpack.base.config.js").merge({
   optimization: {
     minimize: true,
     splitChunks: {
-      chunks: "all",
+      chunks: "async",
       minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
+      maxSize: 600000,
+      minChunks: 2,
+      maxAsyncRequests: 10,
+      maxInitialRequests: 6,
       automaticNameDelimiter: "~",
       name: true,
       cacheGroups: {
-        vendors: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10
         },
