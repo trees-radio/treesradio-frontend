@@ -7,11 +7,10 @@ var short = require("git-rev-sync").short();
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = new Config().merge({
-  entry: ["babel-polyfill", path.resolve(__dirname, "app/index.js")],
+  entry: "./app/index.js",
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: "[name].bundle.js",
-    chunkFilename: "[name].bundle.js"
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
@@ -21,6 +20,17 @@ module.exports = new Config().merge({
         loader: "babel-loader",
         query: {
           plugins: ["lodash"]
+        }
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime']
+          }
         }
       },
       {
@@ -95,7 +105,6 @@ module.exports = new Config().merge({
       filename: "index.html",
       template: require("html-webpack-template"),
       title: "TreesRadio",
-      inject: false,
       hash: true,
       favicon: "app/img/favicon.png",
       appMountId: "app"

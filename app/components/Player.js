@@ -2,7 +2,7 @@ import React from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
 
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/lazy";
 import {Line} from "rc-progress";
 
 import playing from "stores/playing";
