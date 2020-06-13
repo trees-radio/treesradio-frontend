@@ -246,6 +246,8 @@ export default new (class Profile {
                         this.logout();
                     }, 10000);
                 });
+        } else {
+            toast.error(`You may not use "disposable" email addresses for TreesRadio`);
         }
     }
 

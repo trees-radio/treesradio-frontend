@@ -7,8 +7,6 @@ var config = new Config().extend("./webpack.config.js").merge({
   plugins: [new webpack.DefinePlugin(helpers.getWebpackDefine("development"))],
 });
 
-console.log(process.env);
-
 const path = require('path');
 
 var compiler = webpack(config);
