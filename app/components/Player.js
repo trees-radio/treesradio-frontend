@@ -2,7 +2,8 @@ import React from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
 
-import ReactPlayer from "react-player/lazy";
+// Note that lazy loading doesn't work. Filing an issue with the project
+import ReactPlayer from "react-player";
 import {Line} from "rc-progress";
 
 import playing from "stores/playing";
