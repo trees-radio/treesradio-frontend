@@ -11,12 +11,10 @@ export default new (class App {
       .ref(".info/connected")
       .on("value", snap => {
         this.connected = snap.val() === true;
+        this.proceed = snap.val() === true;
       });
 
     setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
-    setTimeout(() => {
-      this.proceed = true;
-    }, 2500);
   }
 
   @observable connected = false;
