@@ -1,4 +1,3 @@
-console.log(`TreesRadio`);
 import React from 'react'; //eslint-disable-line
 //React is required here for ReactDOM to work properly, has already been tested
 import ReactDOM from 'react-dom';

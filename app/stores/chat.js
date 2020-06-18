@@ -7,15 +7,20 @@ import mention from "libs/mention";
 import {send} from "libs/events";
 import epoch from "../utils/epoch";
 import Favico from "favico.js";
+import $ from 'jquery';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
-const GIF_THROTTLE = 60;
 const favico = new Favico({ animation: "slide" });
 
 export default new (class Chat {
   constructor() {
+    setInterval(()=> {
+      if ( $('ul#chatbox').children().length > 20 ) 
+        $('ul#chatbox').children[0].remove();
+      
+    }, 1000);
     const myself = this;
     window.onfocus = function () {
       myself.mentioncount = 0;
