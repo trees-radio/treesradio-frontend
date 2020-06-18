@@ -18,7 +18,7 @@ export default new (class Chat {
   constructor() {
     setInterval(()=> {
       if ( $('ul#chatbox').children().length > 20 ) 
-        $('ul#chatbox').children[0].remove();
+        $('ul#chatbox').children()[0].remove();
       
     }, 1000);
     const myself = this;
