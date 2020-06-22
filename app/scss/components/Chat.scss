@@ -263,6 +263,8 @@
   border-radius: 5px;
   height: 45px;
   width: 45px;
+  object-fit: scale-down;
+  object-position: center;
   background-color: $color-avatar-background;
 }
 
