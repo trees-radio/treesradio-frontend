@@ -24,7 +24,7 @@
 }
 
 .toke-active {
-  //TODO change color when active
+  background: $color-button-waitlist-active-invrt;
 }
 
 #navbar-grid {
@@ -365,7 +365,6 @@ div .userbit-avatar span .avatarimg {
   animation-timing-function: linear;
   color: white;
   text-decoration: none;
-  color: white;
 }
 
 @keyframes pulse {
