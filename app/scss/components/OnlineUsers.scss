@@ -47,10 +47,15 @@
   width: 85%;
   max-width: 85%;
   height: 1vw;
+  line-height: 1;
   padding-top: 1.5%;
   padding-left: 2%;
   font-size: 22px;
   cursor: pointer;
+}
+
+.userflair {
+  font-size: 10.4px;
 }
 
 .users-name:hover {

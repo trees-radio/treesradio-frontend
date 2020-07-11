@@ -1,14 +1,14 @@
-import { observable, computed, autorun } from "mobx";
+import {autorun, computed, observable} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import epoch from "../utils/epoch";
 // import ax from 'utils/ax';
 import moment from "moment";
-import { padStart } from "lodash";
+import {padStart} from "lodash";
 // import events from 'stores/events';
 import playlists from "stores/playlists";
-import { send } from "libs/events";
+import {send} from "libs/events";
 
 import spacePineapples from "img/spacepineapples.jpg";
 import gelatoGif from "img/gelatogif.gif";
@@ -42,8 +42,23 @@ export default new (class Playing {
         });
     }
 
-    userReportsError(e) {
-        if (epoch() - profile.lastchat < 600 && (e == 150 || e == 100)) send("playerError", { e });
+    @computed get shouldSync() {
+        if (!this.data.time || !this.data.info.duration || !this.data.playing) {
+            return false;
+        }
+        var serverSeconds = this.time;
+        var durationSeconds = this.data.info.duration / 1000;
+        var cap = durationSeconds - PLAYER_SYNC_CAP;
+        if (serverSeconds > cap) {
+            return false;
+        }
+        var slow = serverSeconds - PLAYER_SYNC_SENSITIVITY;
+        var fast = serverSeconds + PLAYER_SYNC_SENSITIVITY;
+        var player = this.playerSeconds;
+        if (player < slow || player > fast) {
+            return true;
+        }
+        return false;
     }
 
     @observable fakeScroll = 0;
@@ -104,23 +119,15 @@ export default new (class Playing {
         return this.playerDuration * this.playerProgress;
     }
 
-    @computed get shouldSync() {
-        if (!this.data.time || !this.data.info.duration || !this.data.playing) {
+    @computed get liked() {
+        if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
             return false;
         }
-        var serverSeconds = this.time;
-        var durationSeconds = this.data.info.duration / 1000;
-        var cap = durationSeconds - PLAYER_SYNC_CAP;
-        if (serverSeconds > cap) {
-            return false;
-        }
-        var slow = serverSeconds - PLAYER_SYNC_SENSITIVITY;
-        var fast = serverSeconds + PLAYER_SYNC_SENSITIVITY;
-        var player = this.playerSeconds;
-        if (player < slow || player > fast) {
+        if (this.data.feedback_users.likes.includes(profile.user.uid)) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @observable volume = 0.15;
@@ -194,15 +201,8 @@ export default new (class Playing {
         }
     }
 
-    @computed get liked() {
-        if (!this.data.feedback_users || !this.data.feedback_users.likes || !profile.user) {
-            return false;
-        }
-        if (this.data.feedback_users.likes.includes(profile.user.uid)) {
-            return true;
-        } else {
-            return false;
-        }
+    userReportsError(e) {
+        if (epoch() - profile.lastchat < 600 && (e == 150 || e == 100)) send("playerError", {e});
     }
 
     @computed get disliked() {

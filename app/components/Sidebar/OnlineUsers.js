@@ -28,27 +28,27 @@ export default class OnlineUsers extends React.Component {
             {online.online.map((user, i) => {
               return (
                 <li
-                  key={i}
-                  className={i % 2 == 0 ? "user-line-1 user-item" : "user-line-0 user-item"}
+                    key={i}
+                    className={i % 2 === 0 ? "user-line-1 user-item" : "user-line-0 user-item"}
                 >
-                  <UserAvatar uid={user.uid} />
-                  <div className="users-info">
-                    <UserName className="users-username" uid={user.uid} username={user.username} />{" "}
-                    <i
-                      className={
-                        user.feedback.likes === true
-                          ? "fa fa-arrow-up users-upvote"
-                          : user.feedback.dislikes === true && userCanSeeDislikes
-                          ? "fa fa-arrow-down users-downvote"
-                          : ""
-                      }
-                    />{" "}
-                    <i
-                      className={
-                        user.feedback.grabs === true ? "fa fa-plus-square-o users-grab" : ""
-                      }
-                    />
-                  </div>
+                    <UserAvatar uid={user.uid}/>
+                    <div className="users-info">
+                        <i
+                            className={
+                                user.feedback.likes === true
+                                    ? "fa fa-arrow-up users-upvote"
+                                    : user.feedback.dislikes === true && userCanSeeDislikes
+                                    ? "fa fa-arrow-down users-downvote"
+                                    : ""
+                            }
+                        />{" "}
+                        <i
+                            className={
+                                user.feedback.grabs === true ? "fa fa-plus-square-o users-grab" : ""
+                            }
+                        />
+                        <UserName className="users-username" uid={user.uid} username={user.username}/>{" "}
+                    </div>
                 </li>
               );
             })}

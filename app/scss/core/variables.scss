@@ -5,7 +5,7 @@ $img-trees-favicon: url('../../img/favicon.png');
 $img-trees-loading: url('../../img/tr-loading.png');
 $img-trees-about: url(../../img/about.jpg);
 $img-cursor-lighter: url('../../img/lighter.cur');
-$img-powered-by-tenor: url(../../img/poweredbytenor.svg);
+$img-powered-by-tenor: url(../../img/poweredbytenor.png);
 
 /* ## Emoji ## */
 $img-emoji-one: url("../../img/1.png");
@@ -94,6 +94,7 @@ $color-button-open-playlists-hover: linear-gradient(135deg, #b4ea00 20%, rgba(99
 
 $color-button-waitlist-join: linear-gradient(135deg, #4c7a20 10%, #77b420 34%, #93cf00 45%, #fffc00 81%);
 $color-button-waitlist-active: linear-gradient(135deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
+$color-button-waitlist-active-invrt: linear-gradient(-45deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
 
 /* ## BlazeBot Messages ## */
 $color-blazebot-message: #bbb;
