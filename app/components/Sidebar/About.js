@@ -100,22 +100,28 @@ export default class About extends React.Component {
           <div>
             <div className="tenorgif-attr">
               <h5>BlazeBot&apos;s GIFs:</h5>
+              {/*<img className="tenorgif-attr" src="/app/img/poweredbytenor.svg/" alt="powered by Tenor" />*/}
             </div>
           </div>
         </div>
         <div className="about-emoji">
           <h6>
-            <a href="https://www.emojicopy.com/" target="_blank" rel="noopener noreferrer">
-              Emoji List
+            <a href="https://discord.gg/tMmDQtn" target="_blank" rel="noopener noreferrer" id="about-lnk">
+              Join the Discord-Entmoot
             </a>
           </h6>
           <h6>
-            <a href="https://youtu.be/84qIWSRRZM8" target="_blank" rel="noopener noreferrer">
-              Video Tutorial/Walkthrough
+            <a href="https://www.emojicopy.com/" target="_blank" rel="noopener noreferrer" id="about-lnk">
+              Emoji List / Emoji Copy
             </a>
           </h6>
           <h6>
-            <a href="https://reddit.com/r/treesradio" target="_blank" rel="noopener noreferrer">
+            <a href="https://youtu.be/84qIWSRRZM8" target="_blank" rel="noopener noreferrer" id="about-lnk">
+              Video Tutorial / Walkthrough
+            </a>
+          </h6>
+          <h6>
+            <a href="https://reddit.com/r/treesradio" target="_blank" rel="noopener noreferrer" id="about-lnk">
               /r/treesradio
             </a>
           </h6>

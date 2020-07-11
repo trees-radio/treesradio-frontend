@@ -12,18 +12,18 @@ import ChatLocked from "./Chat/ChatLocked";
 export default class Chat extends React.Component {
   render() {
     return (
-      <div id="chatcontainer" style={this.props.show ? {} : {display: "none"}}>
-        <ChatContent />
-        {chat.canChat ? (
-          <ChatSend />
-        ) : (
-          <ChatLocked
-            locked={chat.chatLocked}
-            loggedIn={profile.loggedIn}
-            secondsUntilUnlock={chat.secondsUntilUnlock}
-          />
-        )}
-      </div>
+        <div id="chatcontainer" style={this.props.show ? {} : {display: "none"}}>
+          <ChatContent/>
+          {chat.canChat ? (
+              <ChatSend/>
+          ) : (
+              <ChatLocked
+                  locked={chat.chatLocked}
+                  loggedIn={profile.loggedIn}
+                  secondsUntilUnlock={chat.secondsUntilUnlock}
+              />
+          )}
+        </div>
     );
   }
 }
