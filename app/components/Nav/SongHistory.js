@@ -31,7 +31,7 @@ export default class PlayHistory extends React.Component {
                     ⊕ {song.grabs} │ 
                     🔥 {song.hypes} <br/>{ago}
                     </span>
-                    <span className="leaderboard-cell-songthumb"><img src={song.thumb} id="#songHistory-img"
+                    <span className="leaderboard-cell-songthumb"><img src={song.thumb} id="songHistory-img"
                                                                       alt="imagine image"/></span>
                 </div>
             )
