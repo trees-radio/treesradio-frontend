@@ -505,6 +505,11 @@ img[alt="tenorgif"] {
   }
 }
 
+strong > img {
+  max-width: 97%;
+  padding: 2% 0;
+}
+
 a[title="previewlink"] {
   color: white !important;
   font-weight: bold;
