@@ -44,3 +44,13 @@ span.leaderboard-cell-song-thumb > img {
   height: 100px;
   float: right;
 }
+
+span.leaderboard-cell-song-thumb {
+  display: inline-flex;
+  max-width: 6.3vw;
+}
+
+#songHistory-img {
+  display: inline-flex;
+  max-width: 6.3vw;
+}
