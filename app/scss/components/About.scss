@@ -69,6 +69,7 @@
 
 #about-lnk {
   font-size: 0.75vw;
+  color: $color-trees-primary;
 }
 
 .about-karan {
@@ -90,6 +91,10 @@
 .rules-list > ol, ul {
   margin-top: 0;
   margin-bottom: 5.420px;
+}
+
+li a {
+  color: $color-trees-primary;
 }
 
 /* stylelint-enable */

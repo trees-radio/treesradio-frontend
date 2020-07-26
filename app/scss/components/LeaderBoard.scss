@@ -39,6 +39,8 @@ span.leaderboard-cell-songtitle {
 
 span.leaderboard-cell-song-thumb > img {
   @include leaderboard-table-cell;
+  display: inline-flex;
+  max-width: 6.3vw;
   height: 100px;
   float: right;
 }
