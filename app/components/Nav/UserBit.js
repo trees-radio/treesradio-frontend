@@ -404,7 +404,6 @@ export default class UserBit extends React.Component {
                         {this.showMentionAudio()}
                         {this.showMute()}
                         {this.showAutoplay()}
-                        {this.showLogout()}
                         <li key={6} onClick={() => this.toggleLeaderboard()}>
                             <a href="#">
                                 <i className="fa fa-trophy"></i> Leader Board
@@ -422,6 +421,8 @@ export default class UserBit extends React.Component {
                             </a>
                         </li>
                         {this.showGelato()}
+                        {/* logout @ bottom */}
+                        {this.showLogout()}
                     </ul>
                 </div>
                 {/*  */}
