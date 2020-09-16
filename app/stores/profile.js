@@ -32,7 +32,7 @@ export default new (class Profile {
                                 .child("connections")
                                 .push({timestamp, uid: this.user.uid});
 
-                            // this.presenceRef.onDisconnect().remove(); I have a feeling this is causing some issues.
+                        this.presenceRef.onDisconnect().remove(); //I have a feeling this is causing some issues.
 
                             window.onbeforeunload = function () {
                                 fbase.database().ref(`presence/${this.user.uid}`).remove();
