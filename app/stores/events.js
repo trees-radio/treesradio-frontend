@@ -4,6 +4,7 @@ import moment from "moment";
 import mitt from "mitt";
 
 const emitter = mitt();
+const events = {};
 
 export default new (class Events {
   constructor() {
@@ -25,7 +26,10 @@ export default new (class Events {
   }
 
   register(type, handler) {
+    if ( !events[type]) { //prevent reregistering events after regustering once.
+      events[type] = true;
     emitter.on(type, handler);
     return () => emitter.off(handler);
+    }
   }
 })();
