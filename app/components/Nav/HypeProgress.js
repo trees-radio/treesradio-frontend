@@ -107,8 +107,8 @@ class ExplosiveButton {
     this.piecesY = 4;
     this.duration = 5000;
 
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    //this.updateDimensions();
+    //window.addEventListener("resize", this.updateDimensions.bind(this));
 
     this.element.addEventListener(
       "click",
