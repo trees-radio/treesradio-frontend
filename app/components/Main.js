@@ -87,11 +87,12 @@ class Main extends React.Component {
   }
 
   render() {
+
+    if (!app.init) {
+
     events.register("force_refresh", () => {
       location.reload();
     });
-
-    if (!app.init) {
       let randmsg = [
         // No messages over 40 characters
         "Grab a Bong and Sing A Long!",
