@@ -60,7 +60,7 @@ class Player extends React.Component {
     window.addEventListener("keydown", this.onkeydownListener);
   }
 
-  componentWillUnmount() {
+  componentDidUnmount() {
     window.removeEventListener("keydown", this.onkeydownListener);
   }
 
