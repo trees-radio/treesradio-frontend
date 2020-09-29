@@ -1,7 +1,7 @@
 import React from "react";
-import { observer } from "mobx-react";
-import { observable } from "mobx";
-import { debounce } from "lodash";
+import {observer} from "mobx-react";
+import {observable} from "mobx";
+import {debounce} from "lodash";
 import chat from "stores/chat";
 import classNames from "classnames";
 import moment from "moment";
@@ -78,26 +78,30 @@ export default class ChatContent extends React.Component {
     if (messages.length > 250) messages.slice(0, messages.length - 250);
 
     let content = messages.map((msg, i) => {
-      let chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
-      let chatLineClasses = classNames(
-        "chat-item",
-        chatPosClass,
-        {
-          "blazebot-msg": msg.username === "BlazeBot",
-        },
-        profile.hideBlazeBot ? "blazebot-hide" : ""
-      );
+        let chatPosClass = i % 2 === 0 ? "chat-line-1" : "chat-line-0";
+        let chatLineClasses = classNames(
+            "chat-item",
+            chatPosClass,
+            {
+                "blazebot-msg": msg.username === "BlazeBot",
+            },
+            profile.hideBlazeBot ? "blazebot-hide" : ""
+        );
 
       let humanTimestamp = moment.unix(msg.timestamp).format("LT");
       let msgs = msg.msgs.map((innerMsg, i) => {
+          let $scrollSetTimeID;
         return (
-          <Message
-            key={i}
-            userName={msg.username}
-            isEmote={msg.isemote}
-            text={innerMsg}
-            onLoad={() => setTimeout(() => this.autoScroll(), 100)}
-          />
+            <Message
+                key={i}
+                userName={msg.username}
+                isEmote={msg.isemote}
+                text={innerMsg}
+                onLoad={() => $scrollSetTimeID = setTimeout(() => {
+                    this.autoScroll();
+                    window.clearTimeout($scrollSetTimeID);
+                }, 100)}
+            />
         );
       });
 

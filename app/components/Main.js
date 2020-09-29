@@ -1,7 +1,7 @@
 // NEW MAIN COMPONENT
 
 import React from "react";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 
 import app from "stores/app";
 
@@ -9,11 +9,11 @@ import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
 import profile from "stores/profile";
-import { observable } from "mobx";
+import {observable} from "mobx";
 import events from "stores/events";
 
 toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
@@ -76,13 +76,15 @@ class Main extends React.Component {
 
   aprilFoolsShenanigans() {
     const me = this;
-    setTimeout(function () {
+    let $aprilSetTimeID;
+    $aprilSetTimeID = setTimeout(function () {
       if ($(".april-fools")) {
         $(".april-fools").removeClass("april-fools").addClass("noop");
       } else {
         $(".noop").removeClass("noop").addClass("april-fools");
       }
       me.aprilFoolsShenanigans();
+      clearTimeout($aprilSetTimeID);
     }, Math.floor(Math.random() * 5000) + 300000);
   }
 
@@ -108,19 +110,19 @@ class Main extends React.Component {
         "Home of the original musical inspiration",
       ];
       return (
-        <div className="main-load">
-          <div className="container main-loadingcard">
-            <div className="main-vcenter">
-              <div className="main-center">
-                <center className="loading-txt">
-                  {" "}
-                  {randmsg[Math.floor(Math.random() * randmsg.length)]} <br />
-                  <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
-                </center>
+          <div className="main-load">
+            <div className="container main-loadingcard">
+              <div className="main-vcenter">
+                <div className="main-center">
+                  <center className="loading-txt">
+                    {" "}
+                    {randmsg[Math.floor(Math.random() * randmsg.length)]} <br />
+                    <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
+                  </center>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       );
     }
     return (
