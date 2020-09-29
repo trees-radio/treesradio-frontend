@@ -131,7 +131,7 @@ export default class UserBit extends React.Component {
 
     toggleDesktopNotifications() {
         if (profile.desktopNotifications) {
-            profile.setDesktopNotifications(false)
+            profile.setDesktopNotifications(false);
             return;
         }
 
@@ -181,7 +181,7 @@ export default class UserBit extends React.Component {
     logoutAndDisableButtons() {
         profile.logout()
             .then(() => {
-                console.log("please show")
+                console.log("please show");
                 if (window.matchMedia("only screen and (orientation: portrait)")) {
                     document.getElementById("navbar-grid")
                         .setAttribute("grid-template-columns", "15vw 85vw 0 0 0");

@@ -211,49 +211,17 @@ export default new (class Profile {
                         msg = `An unknown error occurred while trying to log you in :/`;
                         break;
                 }
-                toast.error(msg);
-                return false;
-            });
+                      toast.error(msg);
+                      return false;
+                  });
     }
 
     logout() {
         return fbase.auth().signOut();
     }
 
-    async register(email, password) {
-        if (disposable.validate(email)) {
-            fbase
-                .auth()
-                .createUserWithEmailAndPassword(email, password)
-                .catch(error => {
-                    let msg = `Unknown error: ${error.code}`;
-                    switch (error.code) {
-                        case "auth/invalid-email":
-                            msg = `You entered an invalid email address.`;
-                            break;
-                        case "auth/user-disabled":
-                            msg = `That user account is disabled.`;
-                            break;
-                        case "auth/user-not-found":
-                            msg = `No user account found for this login`;
-                            break;
-                        case "auth/wrong-password":
-                            msg = `That's the wrong password for that account!`;
-                            break;
-                        case undefined:
-                            return;
-                    }
-                    toast.error(msg);
-                })
-                .then(user => {
-                    user.sendEmailVerification();
-                    setTimeout(() => {
-                        this.logout();
-                    }, 10000);
-                });
-        } else {
-            toast.error(`You may not use "disposable" email addresses for TreesRadio`);
-        }
+    @computed get unverified() {
+        return !(this.user && this.user.emailVerified);
     }
 
     sendPassReset(email) {
@@ -293,11 +261,41 @@ export default new (class Profile {
         }
     }
 
-    @computed get unverified() {
-        if (this.user && this.user.emailVerified) {
-            return false;
+    async register(email, password) {
+        if (disposable.validate(email)) {
+            fbase
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+                .catch(error => {
+                    let msg = `Unknown error: ${error.code}`;
+                    switch (error.code) {
+                        case "auth/invalid-email":
+                            msg = `You entered an invalid email address.`;
+                            break;
+                        case "auth/user-disabled":
+                            msg = `That user account is disabled.`;
+                            break;
+                        case "auth/user-not-found":
+                            msg = `No user account found for this login`;
+                            break;
+                        case "auth/wrong-password":
+                            msg = `That's the wrong password for that account!`;
+                            break;
+                        case undefined:
+                            return;
+                    }
+                    toast.error(msg);
+                })
+                .then(user => {
+                    user.sendEmailVerification();
+                    let $authSetTimeID;
+                    $authSetTimeID = setTimeout(() => {
+                        this.logout();
+                        clearTimeout($authSetTimeID);
+                    }, 10000);
+                });
         } else {
-            return true;
+            toast.error(`You may not use "disposable" email addresses for TreesRadio`);
         }
     }
 
