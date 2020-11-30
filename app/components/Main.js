@@ -152,7 +152,7 @@ class Main extends React.Component {
               id="chattoplevel"
             >
               {" "}
-              { <Sidebar
+              {/* <Sidebar
                                 loginData={this.state.user}
                                 chatData={this.state.chat}
                                 sendMsg={this.handleSendMsg}
@@ -163,8 +163,8 @@ class Main extends React.Component {
                                 waitlist={this.state.waitlist}
                                 staff={this.state.staff}
                                 chatlock={this.state.chatlock}
-                              /> 
-                              /* <Sidebar /> */ }
+                              /> */}
+              <Sidebar />
             </div>
             {/* End Container */}
           </div>
