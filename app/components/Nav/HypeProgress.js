@@ -1,5 +1,5 @@
 import React from "react";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 
 import hypetimer from "stores/hype";
 import profile from "stores/profile";
@@ -150,15 +150,17 @@ class ExplosiveButton {
 
       hypetimer.getHyped().then(() => {
         document
-          .querySelector(".hypedone")
-          .setAttribute("style", "visibility: hidden;");
+            .querySelector(".hypedone")
+            .setAttribute("style", "visibility: hidden;");
 
         this.createParticles("fire", 35, duration);
         this.createParticles("debris", this.piecesX * this.piecesY, duration);
-        window.setTimeout(() => {
+        let $hypeSetTimeID;
+        $hypeSetTimeID = window.setTimeout(() => {
           document
-            .querySelector(".hypedone")
-            .setAttribute("style", "visibility: visible;");
+              .querySelector(".hypedone")
+              .setAttribute("style", "visibility: visible;");
+          window.clearTimeout($hypeSetTimeID);
         }, duration);
       });
     }
