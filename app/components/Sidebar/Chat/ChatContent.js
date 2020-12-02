@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { observable } from "mobx";
+import { makeAutoObservable, action } from "mobx";
 import { debounce } from "lodash";
 import chat from "stores/chat";
 import classNames from "classnames";
@@ -16,8 +16,17 @@ const SCROLL_SENSITIVITY = 200;
 @observer
 export default class ChatContent extends React.Component {
 
-    @observable
-    touchOffset = 0;
+  
+  touchOffset = 0;
+  chatScrollAmount = { scrollTop: 0, scrollHeight: 0 };
+  setTouchOffset = action;
+  setChatScrollAmount = action;
+  @action setChatScrollAmount = prop => this.chatScrollAmount = prop;
+  @action setTouchOffset = prop => this.touchOffset = prop;
+
+  super() {
+    makeAutoObservable(this);
+  }
 
   componentDidMount() {
     this.scroll();
@@ -27,8 +36,8 @@ export default class ChatContent extends React.Component {
       .addEventListener("touchstart", (evt) => {
         evt.preventDefault();
 
-        this.touchOffset = evt.changedTouches[0].clientY;
-      });
+        this.setTouchOffset(evt.changedTouches[0].clientY);
+      }, { passive: true });
     document
       .getElementById("chatscroll")
       .addEventListener("touchmove", (evt) => {
@@ -38,8 +47,8 @@ export default class ChatContent extends React.Component {
           .getElementById("chatscroll")
           .scrollBy(0, this.touchOffset - evt.changedTouches[0].clientY);
 
-        this.touchOffset = evt.changedTouches[0].clientY;
-      });
+        this.setTouchOffset( evt.changedTouches[0].clientY);
+      }, { passive: true });
   }
 
   scroll = () =>
@@ -123,11 +132,10 @@ export default class ChatContent extends React.Component {
       );
     });
     return (
-      <div id="chatscroll" ref={(c) => (this.chatScrollAmount = c)}>
+      <div id="chatscroll" ref={(c) => (this.setChatScrollAmount(c))}>
         <ul id="chatbox">{content}</ul>
       </div>
     );
   }
 
-  @observable chatScrollAmount = { scrollTop: 0, scrollHeight: 0 };
 }

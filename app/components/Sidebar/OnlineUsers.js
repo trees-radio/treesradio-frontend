@@ -4,6 +4,7 @@ import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import profile from "stores/profile";
 import online from "stores/online";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 @observer
 export default class OnlineUsers extends React.Component {
@@ -32,22 +33,23 @@ export default class OnlineUsers extends React.Component {
                     className={i % 2 === 0 ? "user-line-1 user-item" : "user-line-0 user-item"}
                 >
                     <UserAvatar uid={user.uid}/>
+
                     <div className="users-info">
-                        <i
-                            className={
-                                user.feedback.likes === true
-                                    ? "fa fa-arrow-up users-upvote"
+                      <span className="users-username">
+                    <UserName className="users-username" uid={user.uid} username={user.username}/>{" "}</span>
+                      <span className={user.feedback.likes
+                                    ? "users-upvote"
                                     : user.feedback.dislikes === true && userCanSeeDislikes
-                                    ? "fa fa-arrow-down users-downvote"
-                                    : ""
-                            }
-                        />{" "}
-                        <i
-                            className={
-                                user.feedback.grabs === true ? "fa fa-plus-square-o users-grab" : ""
-                            }
-                        />
-                        <UserName className="users-username" uid={user.uid} username={user.username}/>{" "}
+                                    ? "users-downvote"
+                                    : ""}>
+                        <FontAwesomeIcon icon={['fas', user.feedback.likes
+                                    ? "arrow-up"
+                                    : user.feedback.dislikes === true && userCanSeeDislikes
+                                    ? "arrow-down"
+                                    : ""]} /></span>
+                      <span className="users-grab">
+                        <FontAwesomeIcon icon={['fas', user.feedback.grabs ? "plus-square": "" ]} />
+                      </span>
                     </div>
                 </li>
               );

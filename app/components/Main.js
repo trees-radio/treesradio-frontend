@@ -13,8 +13,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
 import profile from "stores/profile";
-import { observable } from "mobx";
+import { observable, makeObservable } from "mobx";
 import events from "stores/events";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import "../utils/fontawesome";
 
 toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
 
@@ -44,6 +47,10 @@ class Main extends React.Component {
 
   @observable
   changingEmail = false;
+
+  super() {
+    makeObservable(this);
+  }
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
@@ -88,11 +95,10 @@ class Main extends React.Component {
 
   render() {
 
-    if (!app.init) {
-
     events.register("force_refresh", () => {
       location.reload();
     });
+    if ( !app.init ) {
       let randmsg = [
         // No messages over 40 characters
         "Grab a Bong and Sing A Long!",
@@ -115,7 +121,7 @@ class Main extends React.Component {
                 <center className="loading-txt">
                   {" "}
                   {randmsg[Math.floor(Math.random() * randmsg.length)]} <br />
-                  <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
+      {  <FontAwesomeIcon icon={['fas', 'cog']} size="2x" spin/> }
                 </center>
               </div>
             </div>
@@ -125,12 +131,6 @@ class Main extends React.Component {
     }
     return (
       <div className={this.checkAprilFools()}>
-        <link
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossOrigin="anonymous"
-        />
         <ToastContainer />
         <Nav /> {/* Start Container */}
         <div className="container-fluid">

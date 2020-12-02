@@ -3,12 +3,21 @@ import { observer } from "mobx-react";
 
 import hypetimer from "stores/hype";
 import profile from "stores/profile";
-import { observable } from "mobx";
+import { makeAutoObservable, action } from "mobx";
 import toast from "utils/toast";
 
 const hypetime = 60;
 @observer
 export default class HypeProgress extends React.Component {
+  explosiveButton;
+  setExplosiveButton = action;
+
+  @action setExplosiveButton = prop => this.explosiveButton = prop;
+
+  super() {
+    makeAutoObservable(this);
+  }
+
   getHyped = () => {
     if (profile.user !== null) {
       if (hypetimer.hypePercentageCharged === 100) hypetimer.getHyped();
@@ -19,18 +28,16 @@ export default class HypeProgress extends React.Component {
     }
   };
 
-  @observable
-  explosiveButton;
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     this.componentDidMount();
   }
 
   componentDidMount() {
     if (profile.user !== null && this.explosiveButton === null) {
-      this.explosiveButton = new ExplosiveButton("#hypeboom");
+      this.setExplosiveButton(new ExplosiveButton("#hypeboom"));
     } else {
-      this.explosiveButton = null;
+      this.setExplosiveButton(null);
     }
   }
 
