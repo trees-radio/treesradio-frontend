@@ -5,6 +5,7 @@ var Config = require("webpack-config").default;
 
 module.exports = new Config().extend("./webpack.base.config.js").merge({
   mode: "production",
+  devtool: false,
   optimization: {
     minimize: true,
     splitChunks: {

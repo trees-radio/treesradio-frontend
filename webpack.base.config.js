@@ -12,15 +12,15 @@ module.exports = new Config().merge({
     path: path.resolve(__dirname, "public"),
     filename: '[name].bundle.js'
   },
+  devtool: "source-map",
   devServer: {
-
-  contentBase: path.join(__dirname, 'public'),
-  contentBasePublicPath: path.join(__dirname, 'public'),
-  compress: true,
-  stats: { colors: true },
-  clientLogLevel: 'trace',
-  historyApiFallback: true,
-  publicPath: undefined
+    contentBase: path.join(__dirname, 'public'),
+    contentBasePublicPath: path.join(__dirname, 'public'),
+    compress: true,
+    stats: { colors: true },
+    clientLogLevel: 'trace',
+    historyApiFallback: true,
+    publicPath: undefined
   },
   module: {
     rules: [
