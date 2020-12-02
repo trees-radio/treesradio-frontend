@@ -8,7 +8,7 @@ module.exports = {
     filename: "app.js",
     sourceMapFilename: "smaps/[file].map"
   },
-  devtool: "source-map",
+  devtool: "eval-source-map",
   module: {
     loaders: [
       {

@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {computed, observable, makeObservable, action} from "mobx";
+import {computed, observable, makeObservable} from "mobx";
 import {debounce} from "lodash";
 
 import UserBit from "./Nav/UserBit";
@@ -37,7 +37,7 @@ class Nav extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate() {
     }
 
     @computed
