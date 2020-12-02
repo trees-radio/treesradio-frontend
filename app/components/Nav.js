@@ -160,7 +160,7 @@ class Nav extends React.Component {
                     {/* Password Reset Modal */}
                     <Modal
                         title="Password Reset"
-                        show={this.resettingPassword.toString()}
+                        show={this.resettingPassword}
                         hideModal={() => (this.resettingPassword = false)}
                         leftButton={() => this.sendPassReset()}
                         leftButtonText="Send!"
