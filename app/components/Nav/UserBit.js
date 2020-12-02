@@ -145,7 +145,7 @@ export default class UserBit extends React.Component {
 
     toggleDesktopNotifications() {
         if (profile.desktopNotifications) {
-            profile.setDesktopNotifications(false)
+            profile.setDesktopNotifications(false);
             return;
         }
 

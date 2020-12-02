@@ -1,7 +1,7 @@
 // NEW MAIN COMPONENT
 
 import React from "react";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 
 import app from "stores/app";
 
@@ -9,7 +9,7 @@ import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
 import profile from "stores/profile";
@@ -83,13 +83,15 @@ class Main extends React.Component {
 
   aprilFoolsShenanigans() {
     const me = this;
-    setTimeout(function () {
+    let $aprilSetTimeID;
+    $aprilSetTimeID = setTimeout(function () {
       if ($(".april-fools")) {
         $(".april-fools").removeClass("april-fools").addClass("noop");
       } else {
         $(".noop").removeClass("noop").addClass("april-fools");
       }
       me.aprilFoolsShenanigans();
+      clearTimeout($aprilSetTimeID);
     }, Math.floor(Math.random() * 5000) + 300000);
   }
 
@@ -126,7 +128,6 @@ class Main extends React.Component {
               </div>
             </div>
           </div>
-        </div>
       );
     }
     return (
