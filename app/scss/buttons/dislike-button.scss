@@ -2,16 +2,8 @@
 @import "../core/variables";
 @import "../core/mixins";
 
-.fa-thumbs-o-down {
-  position: absolute;
-  padding-top: 0.38vw;
-  right: 3.75vw;
-}
-
-.fa-thumbs-down {
-  position: absolute;
-  padding-top: 0.38vw;
-  right: 3.75vw;
+.dislike-icon {
+  font-size: 125%;
 }
 
 .feedback-dislikes {

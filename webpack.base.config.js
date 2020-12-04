@@ -12,15 +12,22 @@ module.exports = new Config().merge({
     path: path.resolve(__dirname, "public"),
     filename: '[name].bundle.js'
   },
+  devtool: "source-map",
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    contentBasePublicPath: path.join(__dirname, 'public'),
+    compress: true,
+    stats: { colors: true },
+    clientLogLevel: 'trace',
+    historyApiFallback: true,
+    publicPath: undefined
+  },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        query: {
-          plugins: ["lodash"]
-        }
+        loader: "babel-loader"
       },
       {
         test: /\.m?js$/,
@@ -92,7 +99,8 @@ module.exports = new Config().merge({
       modules: path.join(__dirname, "node_modules"),
       img: path.join(__dirname, "app/img"),
       audio: path.join(__dirname, "app/audio")
-    }
+    },
+    fallback: {"path": require.resolve("path-browserify")}
   },
   plugins: [
     new webpack.ProvidePlugin({

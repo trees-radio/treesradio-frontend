@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {computed, observable} from "mobx";
+import {computed, observable, makeObservable} from "mobx";
 import {debounce} from "lodash";
 
 import UserBit from "./Nav/UserBit";
@@ -13,6 +13,8 @@ import $ from "jquery";
 import Modal from "components/utility/Modal";
 import imageWhitelist from "libs/imageWhitelist";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 @observer
 class Nav extends React.Component {
 
@@ -24,13 +26,17 @@ class Nav extends React.Component {
     @observable
     resettingPassword = false;
 
+    super() {
+        makeObservable(this);
+    }
+
     componentDidMount() {
         if (window.matchMedia("only screen and (orientation: portrait)") && profile === null) {
             document.getElementById("navbar-grid").setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate() {
     }
 
     @computed
@@ -62,6 +68,7 @@ class Nav extends React.Component {
         500,
         {leading: true}
     );
+
     offHover = debounce(() => {
         this.hoveredTitle = false;
         this.title = "[tr]";
@@ -92,26 +99,6 @@ class Nav extends React.Component {
 
     render() {
 
-        //TODO research what this is
-        /*   let emailVerificationResendIcon;
-           if (profile.resendVerificationLoading) {
-               emailVerificationResendIcon = (
-                   <span>
-               <i className="fa fa-spin fa-circle-o-notch"></i>
-             </span>
-               );
-           } else if (profile.resendVerificationResult) {
-               emailVerificationResendIcon = (
-                   <span>
-               <i className="fa fa-check"></i>
-             </span>
-               );
-           }*/
-
-
-        // document.addEventListener("DOMContentLoaded",() => {
-        //     let button = new ExplosiveButton("button");
-        // });
 
         let login;
 
@@ -125,7 +112,7 @@ class Nav extends React.Component {
                         <div className="form-group" id="emailpassfields">
                             <div className="input-group margin-bottom-sm" id="emailbox">
                 <span className="input-group-addon">
-                  <i className="fa fa-envelope-o fa-fw"></i>
+                  <FontAwesomeIcon icon={faEnvelope} fixedWidth />
                 </span>
                                 <input
                                     className="form-control"
@@ -137,7 +124,7 @@ class Nav extends React.Component {
                             </div>
                             <div className="input-group">
                 <span className="input-group-addon">
-                  <i className="fa fa-key fa-fw"></i>
+                    <FontAwesomeIcon icon={faKey} fixedWidth />
                 </span>
                                 <input
                                     className="form-control"

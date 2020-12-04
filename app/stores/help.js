@@ -1,17 +1,22 @@
-import {autorun, observable} from "mobx";
+import {autorun, makeAutoObservable, action, observable} from "mobx";
 import fbase from "libs/fbase";
 
 export default new (class HelpList {
+  helpCommands;
+  setHelpCommand = action;
   constructor() {
+    makeAutoObservable(this);
     autorun(() => {
       fbase
         .database()
         .ref("help")
         .once("value", snap => {
-          this.helpCommands = observable.map(snap.val());
+          this.setHelpCommands( snap.val() );
         });
     });
   }
-  @observable
-  helpCommands;
+
+  @action setHelpCommands = (commands) => {
+    this.helpCommands = observable.map(commands);
+  }
 })();
