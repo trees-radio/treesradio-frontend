@@ -88,14 +88,13 @@ export default new (class Profile {
       makeAutoObservable(this);
     this.init = false;
     fbase.auth().onAuthStateChanged((user) => {
-      this.user = user;
+      this.setUser(user);
       if (user !== null) {
         fbase
           .database()
           .ref()
           .child(".info/connected")
           .on("value", (snap) => {
-              console.log(`Firebase is reporting info connected: `, snap.val());
             if (snap.val() === true) {
               fbase.auth().updateCurrentUser(fbase.auth().currentUser);
               clearInterval(this.presenceInterval); //stop any previous intervals
@@ -171,7 +170,6 @@ export default new (class Profile {
           .child(user.uid)
           .on("value", (snap) => (this.setSilenceData(snap.val())));
       } else {
-        console.log(`Stopping sync...??`);
         this.stopProfileSync && this.stopProfileSync();
         this.stopPrivateSync && this.stopPrivateSync();
         this.stopRegistrationSync && this.stopRegistrationSync();

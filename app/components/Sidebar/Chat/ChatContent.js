@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { makeAutoObservable, action } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 import { debounce } from "lodash";
 import chat from "stores/chat";
 import classNames from "classnames";
@@ -15,40 +15,42 @@ const SCROLL_SENSITIVITY = 200;
 
 @observer
 export default class ChatContent extends React.Component {
-
-  
-  touchOffset = 0;
-  chatScrollAmount = { scrollTop: 0, scrollHeight: 0 };
-  setTouchOffset = action;
-  setChatScrollAmount = action;
-  @action setChatScrollAmount = prop => this.chatScrollAmount = prop;
-  @action setTouchOffset = prop => this.touchOffset = prop;
-
-  super() {
-    makeAutoObservable(this);
-  }
+  @observable touchOffset = 0;
+  @observable chatScrollAmount = { scrollTop: 0, scrollHeight: 0 };
+  @observable tick = Date.now();
+  @action setTick = (prop) => (this.tick = prop);
+  @action setChatScrollAmount = (prop) => (this.chatScrollAmount = prop);
+  @action setTouchOffset = (prop) => (this.touchOffset = prop);
 
   componentDidMount() {
+    makeObservable(this);
+    setInterval(() => {
+      this.setTick(Date.now());
+    }, 1000);
     this.scroll();
     this.startup = Date.now();
-    document
-      .getElementById("chatscroll")
-      .addEventListener("touchstart", (evt) => {
+    document.getElementById("chatscroll").addEventListener(
+      "touchstart",
+      (evt) => {
         evt.preventDefault();
 
         this.setTouchOffset(evt.changedTouches[0].clientY);
-      }, { passive: true });
-    document
-      .getElementById("chatscroll")
-      .addEventListener("touchmove", (evt) => {
+      },
+      { passive: true }
+    );
+    document.getElementById("chatscroll").addEventListener(
+      "touchmove",
+      (evt) => {
         evt.preventDefault();
 
         document
           .getElementById("chatscroll")
           .scrollBy(0, this.touchOffset - evt.changedTouches[0].clientY);
 
-        this.setTouchOffset( evt.changedTouches[0].clientY);
-      }, { passive: true });
+        this.setTouchOffset(evt.changedTouches[0].clientY);
+      },
+      { passive: true }
+    );
   }
 
   scroll = () =>
@@ -69,7 +71,8 @@ export default class ChatContent extends React.Component {
   debouncedScroll = debounce(this.scroll, 5000);
 
   UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
-    let test = this.chatScrollAmount.scrollHeight - this.chatScrollAmount.scrollTop;
+    let test =
+      this.chatScrollAmount.scrollHeight - this.chatScrollAmount.scrollTop;
     let target = this.chatScrollAmount.clientHeight;
     let testLow = test - SCROLL_SENSITIVITY;
     let testHigh = test + SCROLL_SENSITIVITY;
@@ -82,9 +85,6 @@ export default class ChatContent extends React.Component {
 
   render() {
     let messages = chat.messages;
-
-    // Clear out old messages
-    if (messages.length > 250) messages.slice(0, messages.length - 250);
 
     let content = messages.map((msg, i) => {
         let chatPosClass = i % 2 === 0 ? "chat-line-1" : "chat-line-0";
@@ -106,10 +106,12 @@ export default class ChatContent extends React.Component {
                 userName={msg.username}
                 isEmote={msg.isemote}
                 text={innerMsg}
-                onLoad={() => $scrollSetTimeID = setTimeout(() => {
+            onLoad={() =>
+              ($scrollSetTimeID = setTimeout(() => {
                     this.autoScroll();
                     window.clearTimeout($scrollSetTimeID);
-                }, 100)}
+              }, 100))
+            }
             />
         );
       });
@@ -117,12 +119,13 @@ export default class ChatContent extends React.Component {
       return (
         <li key={i} className={chatLineClasses}>
           <div className="chat-avatar">
-            <UserAvatar uid={msg.uid} />
+            <UserAvatar uid={msg.uid} tick={this.tick} />
           </div>
           <div className="chat-msg">
             <UserName
               uid={msg.uid}
               className="chat-username"
+              tick={this.tick}
               onClick={() =>
                 chat.appendMsg("@" + msg.username + " ") &&
                 $("#chatinput").click()
@@ -136,10 +139,9 @@ export default class ChatContent extends React.Component {
       );
     });
     return (
-      <div id="chatscroll" ref={(c) => (this.setChatScrollAmount(c))}>
+      <div id="chatscroll" ref={(c) => this.setChatScrollAmount(c)}>
         <ul id="chatbox">{content}</ul>
       </div>
     );
   }
-
 }

@@ -42,13 +42,14 @@ export default class OnlineUsers extends React.Component {
                                     : user.feedback.dislikes === true && userCanSeeDislikes
                                     ? "users-downvote"
                                     : ""}>
-                        <FontAwesomeIcon icon={['fas', user.feedback.likes
+                        { ( user.feedback.likes || user.feedback.dislikes ) &&
+                            <FontAwesomeIcon icon={['fas', user.feedback.likes
                                     ? "arrow-up"
                                     : user.feedback.dislikes === true && userCanSeeDislikes
                                     ? "arrow-down"
-                                    : ""]} /></span>
+                        : ""]} /> }</span>
                       <span className="users-grab">
-                        <FontAwesomeIcon icon={['fas', user.feedback.grabs ? "plus-square": "" ]} />
+                        { user.feedback.grabs && <FontAwesomeIcon icon={['fas', user.feedback.grabs ? "plus-square": "" ]} /> }
                       </span>
                     </div>
                 </li>

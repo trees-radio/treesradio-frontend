@@ -1,65 +1,46 @@
 import React from "react";
-import {defaultAvatar, listenAvatar} from "../../../libs/avatar";
+import { defaultAvatar, listenAvatar } from "../../../libs/avatar";
 import imageWhitelist from "../../../libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
 import EMPTY_IMG from "../../../img/nothing.png";
+import { observable, action, makeObservable } from "mobx";
 
 export default class UserAvatar extends React.Component {
-    _isMounted = false;
+  @observable avatar;
+  @action setAvatar = (prop) => (this.avatar = prop);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            visible: true
-        };
-        this.getAvatar();
-    }
+  constructor(props) {
+    super(props);
+    makeObservable(this);
+  }
 
-    componentDidMount() {
-        this._isMounted = true;
-    }
+  componentDidMount() {
+    this.setState({ visible: true });
 
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
+    if (!this.avatar)
+      defaultAvatar(this.props.uid).then((avatar) => this.setAvatar(avatar));
+    listenAvatar(this.props.uid, (snap) =>
+      this.setAvatar(snap.val() || this.avatar)
+    );
+  }
 
-    getAvatar = async () => {
-        const fallback = await defaultAvatar(this.props.uid);
+  onVisibility = (isVisible) => this.setState({ visible: isVisible });
 
-        this.setState(
-            {
-                avatar: fallback
-            },
-            () => {
-                if (this._isMounted)
-                    listenAvatar(this.props.uid, snap => {
-                        this.setState({
-                            avatar: snap.val() || fallback
-                        });
-                    });
-            }
-        );
-    };
-
-    onVisibility = isVisible => this.setState({visible: isVisible});
-
-    render() {
-        let avatar;
-        if (imageWhitelist(this.state.avatar)) {
-            avatar = this.state.avatar;
-        } else {
-            avatar = EMPTY_IMG;
-        }
-
-        avatar = avatar.replace("http:", "https:");
-
-        let style = {};
-
-        return (
-            <span className={this.props.className}>
-        <img src={avatar} className={this.props.imgClass || "avatarimg"} style={style} id="user-avatar"/>
-        <VisibilitySensor onChange={this.onVisibility}/>
+  render() {
+    return (
+      <span className={this.props.className}>
+        <img
+          src={
+            imageWhitelist(this.avatar)
+              ? this.avatar.replace("http:", "https:")
+              : EMPTY_IMG
+          }
+          className={this.props.imgClass || "avatarimg"}
+          id="user-avatar"
+        />
+        <VisibilitySensor onChange={this.onVisibility} />
+        <span className="hide">{this.props.tick}</span>
       </span>
-        );
-    }
+    );
+  }
 }

@@ -194,7 +194,7 @@ export default class PlaylistsPanel extends React.Component {
             </a>
             <span className="pl-media-title">{video.title}</span>
             <span className="pl-time">
-              <FontAwesomeIcon icon={['fas', 'clock-o']} /> {humanDuration}
+              <FontAwesomeIcon icon={['far', 'clock']} /> {humanDuration}
             </span>
             <span className="pl-channel">{video.channel}</span>
             <span className="pl-channel">{video.user ? "  (Grab: " + video.user + ")" : ""}</span>

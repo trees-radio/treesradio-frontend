@@ -14,7 +14,6 @@ import Modal from "components/utility/Modal";
 import imageWhitelist from "libs/imageWhitelist";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 
 @observer
 class Nav extends React.Component {
