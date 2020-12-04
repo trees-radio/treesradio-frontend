@@ -39,7 +39,7 @@ const GrabPlaylists = onClickOutside(
             return (
               <div key={i} className="grab-playlist" onClick={onClick}>
                 {p.name}
-                <FontAwesomeIcon icon={['fas', 'circle-check']} />
+            { songInPlaylist && <FontAwesomeIcon icon={['far', 'check-circle']} /> }
               </div>
             );
           });

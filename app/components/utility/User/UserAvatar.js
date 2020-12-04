@@ -17,11 +17,11 @@ export default class UserAvatar extends React.Component {
   componentDidMount() {
     this.setState({ visible: true });
 
-    if (!this.avatar)
-      defaultAvatar(this.props.uid).then((avatar) => this.setAvatar(avatar));
     listenAvatar(this.props.uid, (snap) =>
       this.setAvatar(snap.val() || this.avatar)
     );
+    if (!this.avatar)
+      defaultAvatar(this.props.uid).then((avatar) => this.setAvatar(avatar));
   }
 
   onVisibility = (isVisible) => this.setState({ visible: isVisible });

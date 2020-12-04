@@ -18,6 +18,7 @@ import events from "stores/events";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "../utils/fontawesome";
+import "../utils/fontawesome_regular";
 
 toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
 

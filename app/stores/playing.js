@@ -1,4 +1,4 @@
-import {autorun, computed, makeAutoObservable, action} from "mobx";
+import {autorun, computed, makeAutoObservable, action, observable} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
@@ -18,8 +18,8 @@ const PLAYER_SYNC_SENSITIVITY = 30; //seconds
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 export default new (class Playing {
-    fakeScroll = 0;
-    data = {
+    @observable fakeScroll = 0;
+    @observable data = {
         info: {},
         feedback: {},
         feedback_users: {
@@ -28,22 +28,14 @@ export default new (class Playing {
             grabs: []
         }
     };
-    setData = action;
-    playerProgress = 0; //fraction (0.12, 0.57, etc.)
-    setPlayerProgress = action;
-    playerDuration = 0; //seconds
-    setPlayerDuration = action;
-    volume = 0.15;
-    setVolumeProp = action;
-    localLikeState = false;
-    setLocalLikeState = action;
-    localGrabState = false;
-    setLocalGrabState = action;
-    localDislikeState = false;
-    setLocalDislikeState = action;
-    playerSize = "BIG";
-    setPlayerSize = action;
-    backgroundImage = spacePineapples;
+    @observable playerProgress = 0; //fraction (0.12, 0.57, etc.)
+    @observable playerDuration = 0; //seconds
+    @observable volume = 0.15;
+    @observable localLikeState = false;
+    @observable localGrabState = false;
+    @observable localDislikeState = false;
+    @observable playerSize = "BIG";
+    @observable backgroundImage = spacePineapples;
 
     @action setVolumeProp = (prop) => {
         this.volume = prop;
