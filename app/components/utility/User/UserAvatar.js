@@ -2,12 +2,13 @@ import React from "react";
 import { defaultAvatar, listenAvatar } from "../../../libs/avatar";
 import imageWhitelist from "../../../libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
-import EMPTY_IMG from "../../../img/nothing.png";
 import { observable, action, makeObservable } from "mobx";
 
 export default class UserAvatar extends React.Component {
-  @observable avatar;
-  @action setAvatar = (prop) => (this.avatar = prop);
+  @observable realAvatar;
+  @action setRealAvatar = (prop) => (this.realAvatar = prop.replace('http:', 'https:'));
+  @observable defaultAvatar;
+  @action setDefaultAvatar = (prop) => (this.realAvatar = prop);
 
   constructor(props) {
     super(props);
@@ -18,10 +19,9 @@ export default class UserAvatar extends React.Component {
     this.setState({ visible: true });
 
     listenAvatar(this.props.uid, (snap) =>
-      this.setAvatar(snap.val() || this.avatar)
+      this.setRealAvatar(snap.val() || this.defaultAvatar)
     );
-    if (!this.avatar)
-      defaultAvatar(this.props.uid).then((avatar) => this.setAvatar(avatar));
+      defaultAvatar(this.props.uid).then((avatar) => this.setDefaultAvatar(avatar));
   }
 
   onVisibility = (isVisible) => this.setState({ visible: isVisible });
@@ -31,9 +31,7 @@ export default class UserAvatar extends React.Component {
       <span className={this.props.className}>
         <img
           src={
-            imageWhitelist(this.avatar)
-              ? this.avatar.replace("http:", "https:")
-              : EMPTY_IMG
+            ( this.realAvatar ? imageWhitelist(this.realAvatar) : this.defaultAvatar )
           }
           className={this.props.imgClass || "avatarimg"}
           id="user-avatar"
