@@ -8,10 +8,12 @@ import React from "react";
 import Karan from "../Sidebar/karan";
 
 export default class About extends React.Component {
-  constructor(props, context) {
-    super(props, context);
 
-    this.state = {
+  state = { showKaran: false };
+  
+  super(props, context) {
+
+    this.setState = {
       showKaran: false
     };
 

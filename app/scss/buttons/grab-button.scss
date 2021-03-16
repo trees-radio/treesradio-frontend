@@ -1,16 +1,9 @@
 // http://enjoycss.com/zbuttram/item/rQV/3
 @import "../core/variables";
 @import "../core/mixins";
-.fa-plus-square-o {
-  position: absolute;
-  padding-top: 0.39vw;
-  right: 3.75vw;
-}
 
-.fa-plus-square {
-  position: absolute;
-  padding-top: 0.39vw;
-  right: 3.75vw;
+.grab-icon {
+  font-size: 125%;
 }
 
 .feedback-grab {
@@ -56,6 +49,7 @@
 
 .grab-playlists::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .grab-playlists::-webkit-scrollbar-thumb {
@@ -74,7 +68,7 @@
     width: 92%;
   }
 
-  .fa {
+  svg {
     width: 8%;
     float: right;
   }

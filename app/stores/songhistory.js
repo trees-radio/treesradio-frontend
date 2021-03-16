@@ -1,11 +1,15 @@
-import { observable, autorun } from "mobx";
+import { makeAutoObservable,action, autorun } from "mobx";
 import fbase from "libs/fbase";
 
 export default new class SongHistory {
 
-  @observable history = [];
+  history = [];
+  setHistory = action;
+
+  @action setHistory = prop => this.history = prop;
 
   constructor() {
+    makeAutoObservable(this);
     autorun(() => this.setupSongHistory());
   }
 
@@ -15,7 +19,7 @@ export default new class SongHistory {
       .ref("songhistory")
       .on("value", (snap) => {
         let history = snap.val();
-        this.history = history;
+        this.setHistory(history);
       });
   }
 }

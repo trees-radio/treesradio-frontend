@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {observable} from "mobx";
+import {action, makeObservable} from "mobx";
 import ReactSlider from "react-slider";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
@@ -13,9 +13,8 @@ import classNames from "classnames";
 import onClickOutside from "react-onclickoutside";
 import createClass from "create-react-class";
 import $ from "jquery";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-const loadingIconClass = "fa-spin fa-circle-o-notch";
 
 const GrabPlaylists = onClickOutside(
   observer(
@@ -37,11 +36,10 @@ const GrabPlaylists = onClickOutside(
                 this.props.toggleGrab();
               };
             }
-            var classes = classNames("fa", songInPlaylist ? "fa-check-circle-o" : "fa-circle-o");
             return (
               <div key={i} className="grab-playlist" onClick={onClick}>
                 {p.name}
-                <span className={classes} />
+            { songInPlaylist && <FontAwesomeIcon icon={['far', 'check-circle']} /> }
               </div>
             );
           });
@@ -56,20 +54,39 @@ const GrabPlaylists = onClickOutside(
 
 @observer
 class Toolbar extends React.Component {
-  @observable cstmEaseInOut;
+  
+  super() {
+    makeObservable(this, {
+      cstmEaseInOut: document.getElementById("cstmEaseIn"),
+      setcstmEaseInOut: action,
+      panelOpen: false,
+      setPanelOpen: action,
+      grabbing: false,
+      setGrabbing: action
+    });
+
+  }
 
   componentDidMount() {
-    this.cstmEaseInOut = document.getElementById("cstmEaseIn");
-    // eslint-disable-next-line no-undef
 
   }
 
 
-  @observable panelOpen = false;
+  @action setcstmEaseInOut = (prop) => {
+    this.cstmEaseInOut = prop;
+  }
+
+  @action setPanelOpen = (prop) => {
+    this.panelOpen = prop;
+  }
+
+  @action setGrabbing = (prop) => {
+    this.grabbing = prop;
+  }
 
   togglePlaylistsPanel() {
     if (playlists.init) {
-      this.panelOpen = !this.panelOpen;
+      this.setPanelOpen(!this.panelOpen);
       if (playlists.selectedPlaylistName) {
         this.cstmEaseInOut.style.setProperty('--PLlength', playlists.selectedPlaylistName.length.toString() + 'em');
       }
@@ -88,7 +105,6 @@ class Toolbar extends React.Component {
     }
   }
 
-  @observable grabbing = false;
 
   toggleGrab(setting) {
     if (!profile.user) {
@@ -96,13 +112,13 @@ class Toolbar extends React.Component {
       return;
     }
     var set = typeof setting === "boolean" ? setting : !this.grabbing;
-    this.grabbing = set;
+    this.setGrabbing(set);
   }
 
   render() {
     let waitlistButtonText = "Join Waitlist";
     if (waitlist.bigButtonLoading) {
-      waitlistButtonText = <i className={`fa ${loadingIconClass}`} />;
+      waitlistButtonText = <FontAwesomeIcon icon={['fas', 'yin-yang']} size="2x" spin/>;
     } else if (waitlist.isPlaying) {
       waitlistButtonText = "Skip Song";
     } else if (waitlist.inWaitlist) {
@@ -111,36 +127,36 @@ class Toolbar extends React.Component {
 
     let volClass;
     if (playing.volume < 0.1) {
-      volClass = classNames("fa", "fa-volume-off", "volume-slider-icon");
+      volClass = <FontAwesomeIcon icon={['fas', 'volume-off']} />;
     } else if (playing.volume < 0.6) {
-      volClass = classNames("fa", "fa-volume-down", "volume-slider-icon");
+      volClass = <FontAwesomeIcon icon={['fas', 'volume-down']} />; 
     } else {
-      volClass = classNames("fa", "fa-volume-up", "volume-slider-icon");
+      volClass = <FontAwesomeIcon icon={['fas', 'volume-up']} />;
     }
 
     let openButtonIcon =
       this.panelOpen && playlists.init
-        ? "fa fa-angle-double-down fa-4x"
-        : "fa fa-angle-double-up fa-4x";
+        ? <FontAwesomeIcon icon={['fas', 'angle-double-down']} size="4x"/>
+        : <FontAwesomeIcon icon={['fas', 'angle-double-up']} size="4x"/>;
 
     let grabIcon, likeIcon, dislikeIcon;
 
     if (playing.grabLoading) {
-      grabIcon = loadingIconClass;
+      grabIcon = <FontAwesomeIcon icon={['fas', 'yin-yang']} spin/>;
     } else {
-      grabIcon = playing.grabbed ? "fa-plus-square" : "fa-plus-square-o";
+      grabIcon = playing.grabbed ? <FontAwesomeIcon icon={['fas', 'plus-square']} /> : <FontAwesomeIcon icon={['far', 'plus-square']} />;
     }
 
     if (playing.likeLoading) {
-      likeIcon = loadingIconClass;
+      likeIcon = <FontAwesomeIcon icon={['fas', 'yin-yang']} spin/>;
     } else {
-      likeIcon = playing.liked ? "fa-thumbs-up" : "fa-thumbs-o-up";
+      likeIcon = playing.liked ? <FontAwesomeIcon icon={['fas', 'thumbs-up']} />: <FontAwesomeIcon icon={['far', 'thumbs-up']} />;
     }
 
     if (playing.dislikeLoading) {
-      dislikeIcon = loadingIconClass;
+      dislikeIcon = <FontAwesomeIcon icon={['fas', 'yin-yang']} spin/>;
     } else {
-      dislikeIcon = playing.disliked ? "fa-thumbs-down" : "fa-thumbs-o-down";
+      dislikeIcon = playing.disliked ? <FontAwesomeIcon icon={['fas', 'thumbs-down']} /> : <FontAwesomeIcon icon={['far', 'thumbs-down']} />;
     }
 
     return (
@@ -152,7 +168,8 @@ class Toolbar extends React.Component {
               className="col-lg-1 col-md-1 col-sm-1 col-xs-1"
               onClick={() => this.togglePlaylistsPanel()}
           >
-            <i id="playlists-open-icon" className={openButtonIcon}/>
+            <br/>
+            <i id="playlists-open-icon">{openButtonIcon}</i>
           </div>
           <div id="playlist-metadata" className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <a id={
@@ -223,11 +240,11 @@ class Toolbar extends React.Component {
               toggleGrab={setting => this.toggleGrab(setting)}
             />
             <div className="grab-button" onClick={() => this.toggleGrab()}>
-              <i className={classNames("fa", grabIcon)} />
+              {grabIcon}
               <span className="feedback-grab">{playing.grabs}</span>
             </div>
             <div className="volume-slider" onWheel={e => this.volumeWheel(e)}>
-              <i className={volClass} />
+              <i className="volume-slider-icon">{volClass}</i>
               <ReactSlider
                 max={1}
                 step={VOLUME_NUDGE_FRACTION}
@@ -249,7 +266,7 @@ class Toolbar extends React.Component {
                 if (!waitlist.playing) playing.like();
               }}
             >
-              <i className={classNames("fa", likeIcon)} />
+              {likeIcon}
               <span className="feedback-likes">{playing.likes}</span>
             </div>
             <div
@@ -258,7 +275,7 @@ class Toolbar extends React.Component {
                 if (!waitlist.playing) playing.dislike();
               }}
             >
-              <i className={classNames("fa", dislikeIcon)} />
+              { dislikeIcon }
               <span className="feedback-dislikes">{playing.dislikes}</span>
             </div>
           </div>

@@ -4,81 +4,60 @@ import getUsername from "libs/username";
 import getFlair from "libs/flair";
 import getPatreon from "libs/patreon";
 import classNames from "classnames";
+import { observable, action, makeObservable, autorun } from "mobx";
 
 const noop = () => {};
 
 export default class UserName extends React.Component {
-  _isMounted = false;
+  @observable rank;
+  @action setRank = (rank) => (this.rank = rank);
+  @observable username;
+  @action setUsername = (username) => (this.username = username);
+  @observable flair;
+  @action setFlair = (flair) => (this.flair = flair);
+  @observable patreon;
+  @action setPatreon = (patreon) => (this.patreon = patreon);
+
   constructor(props) {
     super(props);
-    this.state = {};
-    this.getRank();
-    this.getUsername();
-    this.getFlair();
-    this.getPatreon();
+    makeObservable(this);
+    autorun(() => {
+      rank(this.props.uid).then((rank) => this.setRank(rank));
+      getUsername(this.props.uid).then((username) =>
+        this.setUsername(username)
+      );
+      getFlair(this.props.uid).then((flair) => this.setFlair(flair));
+      getPatreon(this.props.uid).then((patreon) => this.setPatreon(patreon));
+    });
   }
-
-  componentDidMount() {
-    this._isMounted = true;
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  getRank = async () => {
-    const title = await rank(this.props.uid);
-    this.setState({title});
-  };
-
-  getUsername = async () => {
-    const username = await getUsername(this.props.uid);
-    this.setState({username});
-  };
-
-  getFlair = async () => {
-    const userflair = await getFlair(this.props.uid);
-    this.setState({userflair});
-  };
-
-  getPatreon = async () => {
-    const userpatreon = await getPatreon(this.props.uid);
-    this.setState({userpatreon});
-  };
 
   render() {
-    let userClass = "username-user";
-    if (this.state.username == "BlazeBot") userClass = "username-bot";
-
-    if (this.state.title) {
-      userClass = `username-${this.state.title
-        .split(" ")
-        .join("")
-        .toLowerCase()}`;
-    }
-
-    let userflair = "";
-
-    if (this.state.userflair) {
-      userflair = this.state.userflair;
-    }
-    let isPatreon = "nopatreon";
-    if (this.state.userpatreon) {
-      isPatreon = "patreon";
-    }
-
-    const usernameClasses = classNames(this.props.className, userClass);
-
     return (
       <span>
-        <span onClick={this.props.onClick || noop} className={usernameClasses}>
-          {this.state.username}
+        <span
+          onClick={this.props.onClick || noop}
+          className={classNames(
+            this.props.className,
+            this.username == "BlazeBot"
+              ? "username-bot"
+              : `username-${
+                  this.rank
+                    ? this.rank.split(" ").join("").toLowerCase()
+                    : "username-user"
+                }`
+          )}
+        >
+          {this.username}
         </span>
         <span>
           &nbsp;
-          <img className={isPatreon} src="img/marijuana.png" />
+          <img
+            className={this.patreon ? "patreon" : "nopatreon"}
+            src="img/marijuana.png"
+          />
         </span>
-        <span className="userflair">&nbsp;{userflair}</span>
+        <span className="userflair">&nbsp;{this.flair || ""}</span>
+        <span className="hide">{this.props.tick}</span>
       </span>
     );
   }

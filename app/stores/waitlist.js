@@ -1,18 +1,35 @@
-import { autorun, computed, observable } from "mobx";
+import { autorun, computed, action, makeAutoObservable } from "mobx";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import toast from "utils/toast";
 import playing from "stores/playing";
 import chat from "stores/chat";
 import { send } from "libs/events";
-import { clearInterval, setInterval } from "timers";
 import epoch from "../utils/epoch";
 import events from "stores/events";
 import favicon from "img/favicon.png";
 import * as localforage from "localforage";
 
 export default new (class Waitlist {
+  list = [];
+  setList = action;
+  localJoinState = false;
+  setLocalJoinState = action;
+  localPlayingState = false;
+  setLocalPlayingState = action;
+  autojoinTimer = false;
+  setAutojoinTimer = action;
+  showMinutesUntil = localforage.getItem("showminutes") || false;
+  setShowMinutesUntil = action;
+
+  @action setList = prop => this.list =prop;
+  @action setLocalJoinState = prop => this.localJoinState = prop;
+  @action setLocalPlayingState = prop => this.localPlayingState = prop;
+  @action setAutojoinTimer = prop => this.autojoinTimer = prop;
+  @action setShowMinutesUntil = prop => this.showMinutesUntil = prop;
+
   constructor() {
+    makeAutoObservable(this);
     this.reloadList();
     events.register("stop_autoplay", (data) => {
       if (data.data.uid === profile.user.uid) {
@@ -27,8 +44,8 @@ export default new (class Waitlist {
       });
 
     autorun(() => {
-      this.localJoinState = this.inWaitlist;
-      this.localPlayingState = this.isPlaying;
+      this.setLocalJoinState(this.inWaitlist);
+      this.setLocalPlayingState(this.isPlaying);
     });
 
     let checkAutojoin = setInterval(() => {
@@ -50,18 +67,17 @@ export default new (class Waitlist {
       .ref("waitlist")
       .once("value", (snap) => {
         var list = [];
-        this.list = [];
+        this.setList([]);
         var wl = snap.val();
         if (wl)
           Object.keys(wl).forEach((key) => {
             list.push(wl[key]);
           });
 
-        this.list = list;
+        this.setList(list);
       });
   }
 
-  @observable list = [];
 
   @computed get onlineOnly() {
     return this.list.filter(function (user) {
@@ -78,13 +94,9 @@ export default new (class Waitlist {
     send("join_waitlist");
   }
 
-  @observable localJoinState = false;
-  @observable localPlayingState = false;
-  @observable autojoinTimer = false;
-  @observable showMinutesUntil = localforage.getItem("showminutes") || false;
 
   setShowMinutesUntil() {
-    this.showMinutesUntil = !this.showMinutesUntil;
+    this.setShowMinutesUntil(!this.showMinutesUntil);
     localforage.setItem("showminutes", this.showMinutesUntil);
   }
 
@@ -92,7 +104,7 @@ export default new (class Waitlist {
     if (profile.canAutoplay && !profile.autoplay) {
       profile.autoplay = true;
 
-      this.autojoinTimer = setInterval(() => {
+      this.setAutojoinTimer(setInterval(() => {
         if (
           !this.inWaitlist &&
           !this.localJoinState &&
@@ -119,7 +131,7 @@ export default new (class Waitlist {
           profile.autoplay = false;
           this.cancelAutojoin();
         }
-      }, 10000);
+      }, 10000));
     } else {
       this.cancelAutojoin();
     }
@@ -127,9 +139,9 @@ export default new (class Waitlist {
 
   cancelAutojoin() {
     if (profile.canAutoplay && this.autojoinTimer != false) {
-      profile.autoplay = false;
+      profile.setAutoplay(false);
       clearInterval(this.autojoinTimer);
-      this.autojoinTimer = false;
+      this.setAutojoinTimer(false);
     }
   }
 
@@ -148,21 +160,21 @@ export default new (class Waitlist {
 
     if (this.bigButtonLoading) {
       // reset our state if the user clicks again while loading
-      this.localJoinState = this.inWaitlist;
-      this.localPlayingState = this.isPlaying;
+      this.setLocalJoinState(this.inWaitlist);
+      this.setLocalPlayingState(this.isPlaying);
     } else if (this.isPlaying) {
       chat.sendMsg("/skip");
-      this.localPlayingState = false;
+      this.setLocalPlayingState(false);
     } else if (this.inWaitlist) {
       if (confirm("Are you sure?")) {
         send("leave_waitlist");
         clearInterval(this.autojoinTimer);
-        this.autojoinTimer = false;
-        this.localJoinState = false;
+        this.setAutojoinTimer(false);
+        this.setLocalJoinState(false);
       }
     } else {
       send("join_waitlist");
-      this.localJoinState = true;
+      this.setLocalJoinState(true);
     }
   }
 

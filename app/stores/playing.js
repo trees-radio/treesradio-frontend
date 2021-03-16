@@ -1,4 +1,4 @@
-import {autorun, computed, observable} from "mobx";
+import {autorun, computed, makeAutoObservable, action, observable} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
@@ -18,7 +18,54 @@ const PLAYER_SYNC_SENSITIVITY = 30; //seconds
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 export default new (class Playing {
+    @observable fakeScroll = 0;
+    @observable data = {
+        info: {},
+        feedback: {},
+        feedback_users: {
+            likes: [],
+            dislikes: [],
+            grabs: []
+        }
+    };
+    @observable playerProgress = 0; //fraction (0.12, 0.57, etc.)
+    @observable playerDuration = 0; //seconds
+    @observable volume = 0.15;
+    @observable localLikeState = false;
+    @observable localGrabState = false;
+    @observable localDislikeState = false;
+    @observable playerSize = "BIG";
+    @observable backgroundImage = spacePineapples;
+
+    @action setVolumeProp = (prop) => {
+        this.volume = prop;
+    }
+
+    @action setLocalLikeState = (prop) => {
+        this.localLikeState = prop;
+    }
+
+    @action setLocalGrabState = (prop) => {
+        this.localGrabState = prop;
+    }
+
+    @action setLocalDislikeState = (prop) => {
+        this.localDislikeState = prop;
+    }
+
+    @action setPlayerProgress = (prog) => {
+        this.playerProgress = prog;
+    }
+    @action setData = (data) => {
+        this.data = data;
+    };
+
+    @action setPlayerDuration = (dur) => {
+        this.playerDuration = dur;
+    }
+
     constructor() {
+        makeAutoObservable(this);
         this.fbase = fbase;
 
         localforage.getItem("volume").then(v => (v ? (this.volume = v) : false));
@@ -31,24 +78,27 @@ export default new (class Playing {
                 .on("value", snap => {
                     var data = snap.val();
                     if (data) {
-                        this.data = data;
+                        this.setData(data);
                         var newtitle = "TreesRadio [  " + data.info.title + " ] ";
                         document.title = newtitle;
                     }
                 });
-            this.localLikeState = this.liked;
-            this.localDislikeState = this.disliked;
-            this.localGrabState = this.grabbed;
+            this.setLocalLikeState(this.liked);
+            this.setLocalDislikeState(this.disliked);
+            this.setLocalGrabState(this.grabbed);
         });
     }
 
     @computed get shouldSync() {
+        let localData = this.data;
+
         if (!this.data.time || !this.data.info.duration || !this.data.playing) {
             return false;
         }
         var serverSeconds = this.time;
-        var durationSeconds = this.data.info.duration / 1000;
+        var durationSeconds = localData.info.duration / 1000;
         var cap = durationSeconds - PLAYER_SYNC_CAP;
+        this.setData(localData);
         if (serverSeconds > cap) {
             return false;
         }
@@ -61,17 +111,7 @@ export default new (class Playing {
         return false;
     }
 
-    @observable fakeScroll = 0;
-
-    @observable data = {
-        info: {},
-        feedback: {},
-        feedback_users: {
-            likes: [],
-            dislikes: [],
-            grabs: []
-        }
-    };
+    
 
     @computed get humanDuration() {
         var mo = moment.duration(this.data.info.duration, "milliseconds");
@@ -111,9 +151,6 @@ export default new (class Playing {
         return this.data.time / (this.data.info.duration / 1000);
     }
 
-    @observable playerProgress = 0; //fraction (0.12, 0.57, etc.)
-
-    @observable playerDuration = 0; //seconds
 
     @computed get playerSeconds() {
         return this.playerDuration * this.playerProgress;
@@ -130,10 +167,9 @@ export default new (class Playing {
         }
     }
 
-    @observable volume = 0.15;
 
     setVolume(v) {
-        this.volume = v;
+        this.setVolumeProp(v);
         localforage.setItem("volume", v);
     }
 
@@ -145,7 +181,6 @@ export default new (class Playing {
         }
     }
 
-    @observable localLikeState = false;
 
     @computed get likeLoading() {
         return this.localLikeState !== this.liked;
@@ -154,7 +189,7 @@ export default new (class Playing {
     like() {
         // reset our state if the user clicks again while loading
         if (this.likeLoading) {
-            this.localLikeState = this.liked;
+            this.setLocalLikeState(this.liked);
             return;
         }
 
@@ -163,10 +198,9 @@ export default new (class Playing {
             return false;
         }
         send("like");
-        this.localLikeState = true;
+        this.setLocalLikeState(true);
     }
 
-    @observable localDislikeState = false;
 
     @computed get dislikeLoading() {
         return this.localDislikeState !== this.disliked;
@@ -186,7 +220,6 @@ export default new (class Playing {
         this.localDislikeState = true;
     }
 
-    @observable localGrabState = false;
 
     @computed get grabLoading() {
         return this.localGrabState !== this.grabbed;
@@ -248,7 +281,6 @@ export default new (class Playing {
         return this.data.feedback.grabs;
     }
 
-    @observable playerSize = "BIG";
 
     togglePlayerSize() {
         if (this.playerSize === "BIG") {
@@ -259,7 +291,6 @@ export default new (class Playing {
         localforage.setItem("playerSize", this.playerSize);
     }
 
-    @observable backgroundImage = spacePineapples;
 
     updateBackgroundImage(gelato) {
         this.backgroundImage = gelato ? gelatoGif : spacePineapples;

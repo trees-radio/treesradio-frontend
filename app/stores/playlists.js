@@ -1,4 +1,4 @@
-import {computed, observable} from "mobx";
+import {makeAutoObservable, action, computed} from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
@@ -10,7 +10,55 @@ import {send} from "../libs/events";
 import events from "stores/events";
 
 export default new (class Playlists {
+  init = false;
+  setInit = action;
+  playlists = [];
+  setPlaylists = action;
+  selectedPlaylist = 0;
+  setSelectedPlaylist = action;
+  selectedPlaylistKey = "";
+  setSelectedPlaylistKey = action;
+  playlist = [];
+  setPlaylist = action;
+  searching = false;
+  setSearching = action;
+  search = [];
+  setSearch = action;
+  searchSource = "youtube";
+  openSearch = false;
+  removedPlaylist = false;
+  importing = false;
+
+  @action setSearch = (prop) => {
+    this.search = prop;
+  }
+
+  @action setSearching = (prop) => {
+    this.searching = prop;
+  }
+
+  @action setPlaylist = (prop) => {
+    this.playlist = prop;
+  }
+
+  @action setSelectedPlaylistKey = (prop) => {
+    this.selectedPlaylistKey = prop;
+  }
+
+  @action setInit = (prop) => {
+    this.init = prop;
+  }
+
+  @action setPlaylists = (prop) => {
+    this.playlists = prop;
+  }
+
+  @action setSelectedPlaylist = (prop) => {
+    this.selectedPlaylist = prop;
+  }
+
   constructor() {
+    makeAutoObservable(this);
     fbase.auth().onAuthStateChanged(user => {
       const me = this;
       if (user !== null) {
@@ -30,7 +78,7 @@ export default new (class Playlists {
         });
         events.register('playlistImported', (data) => {
           if ( data.data.uid === profile.user.uid ) {
-            toast(`${data.data.name} Playlist Imported`);
+            toast(`${data.data.data.name}   Imported`);
             me.importing = false;
           } 
         });
@@ -56,7 +104,7 @@ export default new (class Playlists {
             data.key = playlist.key;
             playlists.push(data);
           });
-          this.playlists = playlists;
+          this.setPlaylists(playlists);
 
           if (!this.init || this.removedPlaylist) {
             fbase
@@ -80,10 +128,10 @@ export default new (class Playlists {
               });
           }
 
-          this.init = true;
+          this.setInit(true);
         });
       } else {
-        this.init = false;
+        this.setInit(false);
         if (this.disposeEvent) {
           this.disposeEvent();
           this.disposeEvent = null;
@@ -94,20 +142,11 @@ export default new (class Playlists {
         if (this.stopPlaylistSync) {
           this.stopPlaylistSync();
         }
-        this.playlists = [];
+        this.setPlaylists([]);
       }
     });
   }
 
-  @observable init = false;
-  @observable playlists = [];
-  @observable selectedPlaylist = 0;
-  @observable selectedPlaylistKey = "";
-  @observable playlist = [];
-  @observable searching = false;
-  @observable search = [];
-  @observable searchSource = "youtube";
-  @observable openSearch = false;
 
   addPlaylist(name) {
     return this.ref.push(
@@ -150,10 +189,10 @@ export default new (class Playlists {
     if (this.stopPlaylistSync) {
       this.stopPlaylistSync();
     }
-    this.selectedPlaylist = index;
+    this.setSelectedPlaylist(index);
     if (this.playlists[index]) {
       var key = this.playlists[index].key;
-      this.selectedPlaylistKey = key;
+      this.setSelectedPlaylistKey(key);
       fbase
         .database()
         .ref("private")
@@ -172,12 +211,11 @@ export default new (class Playlists {
               playlist.push(entry.val());
             });
           }
-          this.playlist = playlist;
+          this.setPlaylist(playlist);
         });
     }
   }
 
-  @observable removedPlaylist = false;
 
   removePlaylist(index) {
     var key = this.playlists[index].key;
@@ -215,7 +253,7 @@ export default new (class Playlists {
   }
 
   async runSearch(query) {
-    this.searching = true;
+    this.setSearching(true);
     if (profile.init) send("search", {source: this.searchSource, query: query});
   }
 
@@ -291,8 +329,6 @@ export default new (class Playlists {
     return playlist;
   }
 
-  // @observable addedTo = [];
-
   addSong(song, playlistKey, isGrab) {
     var playlist = this.getPlaylistByKey(playlistKey);
     var newPlaylist = [];
@@ -359,7 +395,6 @@ export default new (class Playlists {
     send("playlist.sort", {playlist: this.selectedPlaylistKey, direction: direction, field: key});
   }
 
-  @observable importing = false;
 
   async importYouTubePlaylist(name, url) {
     this.importing = true;
