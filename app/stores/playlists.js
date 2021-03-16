@@ -27,7 +27,13 @@ export default new (class Playlists {
             me.searching = false;
             me.search = [];
           }
-        })
+        });
+        events.register('playlistImported', (data) => {
+          if ( data.data.uid === profile.user.uid ) {
+            toast(`${data.data.name} Playlist Imported`);
+            me.importing = false;
+          } 
+        });
         fbase
           .database()
           .ref("searches")
