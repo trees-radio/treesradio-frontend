@@ -27,7 +27,7 @@ export default class OnlineUsers extends React.Component {
           <ul className="users-list">
             {online.online.map((user, i) => {
               return (
-                <li
+                <li title={`Member Since: ${user.memberSince}`}
                     key={i}
                     className={i % 2 === 0 ? "user-line-1 user-item" : "user-line-0 user-item"}
                 >
