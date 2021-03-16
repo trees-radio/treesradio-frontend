@@ -1,18 +1,9 @@
-import { computed, makeAutoObservable, action, autorun } from "mobx";
+import { computed, observable, autorun } from "mobx";
 import fbase from "libs/fbase";
 import { send } from "libs/events";
 
 export default new (class TokeTimer {
-  underway = false;
-  time = 0;
-  setTime = action;
-  setUnderway = action;
-
-  @action setTime = prop => this.time = prop;
-  @action setUnderway = prop => this.underway = prop;
-
   constructor() {
-    makeAutoObservable(this);
     autorun(() => {
       fbase
         .database()
@@ -20,16 +11,18 @@ export default new (class TokeTimer {
         .on("value", snap => {
           var tokestatus = snap.val();
           if (tokestatus != null) {
-            this.setUnderway(tokestatus.tokeUnderway);
-            this.setTime(tokestatus.remainingTime);
+            this.underway = tokestatus.tokeUnderway;
+            this.time = tokestatus.remainingTime;
           }
         });
     });
   }
 
+  @observable underway = false;
   @computed get tokeUnderway() {
     return this.underway;
   }
+  @observable time = 0;
   @computed get remainingTime() {
     return this.time;
   }

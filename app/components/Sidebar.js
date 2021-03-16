@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {makeObservable, observable, autorun, action} from "mobx";
+import {observable, autorun} from "mobx";
 import classNames from "classnames";
 
 import online from "stores/online";
@@ -14,12 +14,9 @@ import Waitlist from "./Sidebar/Waitlist";
 
 @observer
 class Sidebar extends React.Component {
-  @observable currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
-  @action setCurrentSidebar = prop => this.currentSidebar = prop;
-
   constructor() {
     super();
-    makeObservable(this);
+
     const loggedInAtRender = profile.loggedIn;
     this.selChatRef = React.createRef();
     this.selOnlineRef = React.createRef();
@@ -29,16 +26,17 @@ class Sidebar extends React.Component {
     autorun(() => {
       const loggedInAfterRender = !loggedInAtRender && profile.loggedIn;
       if (this.currentSidebar === "ABOUT" && loggedInAfterRender) {
-        this.setCurrentSidebar("CHAT");
+        this.currentSidebar = "CHAT";
       }
     });
   }
 
   update(tab) {
     if (tab === this.currentSidebar) return;
-    this.setCurrentSidebar(tab);
+    this.currentSidebar = tab;
   }
 
+  @observable currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
 
   render() {
     const chatBtnClass = classNames("show-chat-btn", "col-lg-3", {
@@ -89,10 +87,10 @@ class Sidebar extends React.Component {
           </div>
         </div>
         <div id="chatcontainertop" className="">
-          <Chat show={(this.currentSidebar === "CHAT")} />
-          <OnlineUsers show={(this.currentSidebar === "ONLINE")} />
-          <Waitlist show={(this.currentSidebar === "WAITLIST")} />
-          <About show={(this.currentSidebar === "ABOUT")} />
+          <Chat show={this.currentSidebar === "CHAT"} />
+          <OnlineUsers show={this.currentSidebar === "ONLINE"} />
+          <Waitlist show={this.currentSidebar === "WAITLIST"} />
+          <About show={this.currentSidebar === "ABOUT"} />
         </div>
       </div>
     );

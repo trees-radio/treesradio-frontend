@@ -7,7 +7,8 @@ import './scss/core/index.scss'; // our scss entry
 import "./scss/core/bulma.sass";
 
 import 'bootstrap'; //load bootstrap js, depends on $
-//import 'babel-polyfill'; // required for IE
+import 'font-awesome-webpack-4';
+import 'babel-polyfill'; // required for IE
 import 'script-loader!localforage'; //needs to execute as script, ugly console warnings otherwise
 import Main from './components/Main';
 

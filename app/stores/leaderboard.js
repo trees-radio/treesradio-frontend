@@ -1,13 +1,11 @@
-import { makeAutoObservable, action, autorun } from "mobx";
+import { observable, autorun } from "mobx";
 import fbase from "libs/fbase";
 
 export default new class LeadersBoard {
 
-  leaders = [];
-  setLeaders = action;
+  @observable leaders = [];
 
   constructor() {
-    makeAutoObservable(this);
     autorun(() => this.setupLeaderboard());
   }
 
@@ -17,11 +15,7 @@ export default new class LeadersBoard {
       .ref("leaderboard")
       .on("value", (snap) => {
         let leaders = snap.val();
-        this.setLeaders(leaders);
+        this.leaders = leaders;
       });
-  }
-
-  @action setLeaders = (leaders) => {
-    this.leaders = leaders;
   }
 }

@@ -7,8 +7,7 @@ export default function mention(everyone, username, toke) {
 
     if (profile.username !== username) {
 
-        let $mentionSetTimeID;
-        $mentionSetTimeID = setTimeout(() => {
+        setTimeout(() => {
             let notificationMessage = toke ? 'Toke!' : 'You were mentioned by ' + username + '.';
             if (profile.desktopNotifications) {
                 let options = {
@@ -17,7 +16,7 @@ export default function mention(everyone, username, toke) {
                     body: notificationMessage,
                     renotify: true,
                     silent: true,
-                };
+                }
 
                 let n = new Notification("TreesRadio", options);
                 n.onclick = () => document.getElementById("chatinput").focus();
@@ -25,7 +24,6 @@ export default function mention(everyone, username, toke) {
             } else {
                 toast.info(notificationMessage);
             }
-            clearTimeout($mentionSetTimeID);
         });
         if (profile.notifications) audioNotify.play();
     }

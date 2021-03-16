@@ -4,13 +4,9 @@ import {observer} from "mobx-react";
 
 @observer
 export default class Karan extends React.Component {
-  state = {
-    modalIsOpen: false,
-    hideCallback: false
-  };
-  
-  super(props, context) {
-    this.setState = {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
       modalIsOpen: props.isVisible,
       hideCallback: props.hideCallback
     };

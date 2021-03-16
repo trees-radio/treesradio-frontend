@@ -5,7 +5,6 @@ var Config = require("webpack-config").default;
 
 module.exports = new Config().extend("./webpack.base.config.js").merge({
   mode: "production",
-  devtool: false,
   optimization: {
     minimize: true,
     splitChunks: {
@@ -16,7 +15,7 @@ module.exports = new Config().extend("./webpack.base.config.js").merge({
       maxAsyncRequests: 10,
       maxInitialRequests: 6,
       automaticNameDelimiter: "~",
-      name: false,
+      name: true,
       cacheGroups: {
         defaultVendors: {
           test: /[\\/]node_modules[\\/]/,

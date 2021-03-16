@@ -2,9 +2,7 @@ import React from "react";
 import {emojify} from "react-emojione";
 import imageWhitelist from "libs/imageWhitelist";
 import VisibilitySensor from "react-visibility-sensor";
-import marked from 'marked';
-
-import ReactHtmlParser from 'react-html-parser';
+import ReactMarkdown from "react-markdown";
 
 const expression = /[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi;
 const regex = new RegExp(expression);
@@ -76,7 +74,12 @@ export default class Message extends React.Component {
     if (text.substring(0, 12) === "==markdown==" || this.props.userName == "BlazeBot") {
       if (text.substring(0, 12) === "==markdown==") text = text.substring(12);
       return (
-        ReactHtmlParser(marked(emojifyWrap(text)))
+        <ReactMarkdown
+          source={emojifyWrap(text)}
+          escapeHtml={false}
+          linkTarget="_blank"
+          rel="noopener noreferrer"
+        />
       );
     }
 

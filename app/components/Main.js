@@ -1,7 +1,7 @@
 // NEW MAIN COMPONENT
 
 import React from "react";
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 
 import app from "stores/app";
 
@@ -9,16 +9,12 @@ import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import Player from "./Player";
-import {toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
 import profile from "stores/profile";
-import { observable, makeObservable } from "mobx";
+import { observable } from "mobx";
 import events from "stores/events";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import "../utils/fontawesome";
-import "../utils/fontawesome_regular";
 
 toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
 
@@ -48,10 +44,6 @@ class Main extends React.Component {
 
   @observable
   changingEmail = false;
-
-  super() {
-    makeObservable(this);
-  }
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
@@ -84,24 +76,23 @@ class Main extends React.Component {
 
   aprilFoolsShenanigans() {
     const me = this;
-    let $aprilSetTimeID;
-    $aprilSetTimeID = setTimeout(function () {
+    setTimeout(function () {
       if ($(".april-fools")) {
         $(".april-fools").removeClass("april-fools").addClass("noop");
       } else {
         $(".noop").removeClass("noop").addClass("april-fools");
       }
       me.aprilFoolsShenanigans();
-      clearTimeout($aprilSetTimeID);
     }, Math.floor(Math.random() * 5000) + 300000);
   }
 
   render() {
 
+    if (!app.init) {
+
     events.register("force_refresh", () => {
       location.reload();
     });
-    if ( !app.init ) {
       let randmsg = [
         // No messages over 40 characters
         "Grab a Bong and Sing A Long!",
@@ -124,7 +115,7 @@ class Main extends React.Component {
                 <center className="loading-txt">
                   {" "}
                   {randmsg[Math.floor(Math.random() * randmsg.length)]} <br />
-      {  <FontAwesomeIcon icon={['fas', 'cog']} size="2x" spin/> }
+                  <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
                 </center>
               </div>
             </div>
@@ -134,6 +125,12 @@ class Main extends React.Component {
     }
     return (
       <div className={this.checkAprilFools()}>
+        <link
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossOrigin="anonymous"
+        />
         <ToastContainer />
         <Nav /> {/* Start Container */}
         <div className="container-fluid">

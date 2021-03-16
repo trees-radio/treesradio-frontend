@@ -1,9 +1,16 @@
 // http://enjoycss.com/zbuttram/item/rQW/2
 @import "../core/variables";
 @import "../core/mixins";
+.fa-thumbs-o-up {
+  position: absolute;
+  padding-top: 0.39vw;
+  right: 3.75vw;
+}
 
-.like-icon {
-  font-size: 125%;
+.fa-thumbs-up {
+  position: absolute;
+  padding-top: 0.39vw;
+  right: 3.75vw;
 }
 
 .feedback-likes {

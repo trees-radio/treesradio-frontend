@@ -1,6 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {computed, makeAutoObservable, action} from "mobx";
+import {computed, observable} from "mobx";
+import classNames from "classnames";
 
 import profile from "stores/profile";
 import playing from "stores/playing";
@@ -16,50 +17,9 @@ import LeaderBoard from "components/Nav/LeaderBoard";
 import PlayHistory from "components/Nav/SongHistory";
 
 import events from "stores/events";
-import { v4 as uuidv4 } from 'uuid';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 @observer
 export default class UserBit extends React.Component {
-
-    fontSize = 1.2;
-    setFontSize = action;
-    modifierApplied = false;
-    setModifierApplied = action;
-    legacyInterface = false;
-    setLegacyInterface = action;
-    gifsHidden = false;
-    setGifsHidden = action;
-    showHelp = false;
-    setShowHelp = action;
-    settingAvatar = false;
-    setSettingAvatar = action;
-    avatarField = "";
-    setAvatarField = action;
-    changingPassword = false;
-    setChangingPassword = action;
-    changingEmail = false;
-    setChangingEmail = action;
-    showHistory = false;
-    setShowHistory = action;
-    showLeaders = false;
-
-    @action setShowLeaders = prop => this.showLeaders = prop;
-    @action setShowHistory = prop => this.showHistory = prop;
-    @action setFontSize = prop => this.fontSize = prop;
-    @action setModifierApplied = prop => this.modifierApplied = prop;
-    @action setLegacyInterface = prop => this.setLegacyInterface = prop;
-    @action setGifsHidden = prop => this.gifsHidden = prop;
-    @action setShowHelp = prop => this.showHelp = prop;
-    @action setSettingAvatar = prop => this.settingAvatar = prop;
-    @action setAvatarField = prop => this.avatarField = prop;
-    @action setChangingPassword = prop => this.changingPassword = prop;
-    @action setChangingEmail = prop => this.changingEmail = prop;
-
-    super() {
-        makeAutoObservable(this);
-    }
 
     onEnterKey(e, cb) {
         var key = e.keyCode || e.which;
@@ -72,6 +32,31 @@ export default class UserBit extends React.Component {
         profile.updateUsername(this._username.value.substr(0, 24));
     }
 
+    @observable
+    fontSize = 1.2;
+
+    @observable
+    modifierApplied = false;
+
+    @observable
+    legacyInterface = false;
+
+    @observable
+    gifsHidden = false;
+
+    @observable
+    showHelp = false;
+
+    @observable
+    settingAvatar = false;
+    @observable
+    avatarField = "";
+
+    @observable
+    changingPassword = false;
+
+    @observable
+    changingEmail = false;
 
     @computed
     get avatarFieldValid() {
@@ -117,15 +102,15 @@ export default class UserBit extends React.Component {
     }
 
     toggleNotifications() {
-        profile.setNotifications(!profile.notifications);
+        profile.notifications ? (profile.notifications = false) : (profile.notifications = true);
     }
 
     toggleShowMute() {
-        profile.setShowMuted(!profile.showmuted);
+        profile.showmuted ? (profile.showmuted = false) : (profile.showmuted = true);
     }
 
     toggleInterface() {
-        this.setLegacyInterface(!this.legacyInterface);
+        this.legacyInterface ? (this.legacyInterface = false) : (this.legacyInterface = true);
 
         playing.updateBackgroundImage(this.legacyInterface);
 
@@ -146,7 +131,7 @@ export default class UserBit extends React.Component {
 
     toggleDesktopNotifications() {
         if (profile.desktopNotifications) {
-            profile.setDesktopNotifications(false);
+            profile.setDesktopNotifications(false)
             return;
         }
 
@@ -160,23 +145,23 @@ export default class UserBit extends React.Component {
     }
 
     hideBlazebot() {
-        profile.setHideBlazeBot(!profile.hideBlazebot);
+        profile.hideBlazebot ? (profile.hideBlazebot = false) : (profile.hideBlazebot = true);
     }
 
     hideHypeBoom() {
-        profile.setHypeBoom(!profile.hypeBoom);
+        profile.hypeBoom = !profile.hypeBoom;
     }
 
     toggleHelp() {
-        this.setShowHelp(!this.showHelp);
+        this.showHelp ? (this.showHelp = false) : (this.showHelp = true);
     }
 
     toggleLeaderboard() {
-        this.setShowLeaders(!this.showLeaders);
+        this.showLeaders ? (this.showLeaders = false) : (this.showLeaders = true);
     }
 
     toggleSongHistory() {
-        this.setShowHistory(!this.showHistory);
+        this.showHistory ? (this.showHistory = false) : (this.showHistory = true);
     }
 
     hideGifs() {
@@ -186,10 +171,10 @@ export default class UserBit extends React.Component {
                     '&shy;<style>span.chat-text p img[src$=".gif"] { display: none; } span.chat-text p img[src$=".gifv"] {display: none;}</style>'
                 )
                 .appendTo("body");
-            this.setGifsHidden(true);
+            this.gifsHidden = true;
         } else {
             $("#hidegifs").remove();
-            this.setGifsHidden(false);
+            this.gifsHidden = false;
         }
     }
 
@@ -222,13 +207,13 @@ export default class UserBit extends React.Component {
         if (profile.resendVerificationLoading) {
             emailVerificationResendIcon = (
                 <span>
-            <FontAwesomeIcon icon={['far', 'circle-notch']} spin />
+            <i className="fa fa-spin fa-circle-o-notch"/>
           </span>
             );
         } else if (profile.resendVerificationResult) {
             emailVerificationResendIcon = (
                 <span>
-                    <FontAwesomeIcon icon={['fas', 'check']} />
+            <i className="fa fa-check"/>
           </span>
             );
         }
@@ -238,7 +223,7 @@ export default class UserBit extends React.Component {
         if (profile.unverified && profile.user !== null) {
             resendVerification = (
                 <Modal
-                    show={(profile.unverified).toString()}
+                    show={profile.unverified}
                     hideModal={profile === null || !profile.unverified}
                     title="Please Verify Your Email"
                     noClose={true}
@@ -326,7 +311,7 @@ export default class UserBit extends React.Component {
                     allUserCommands.indexOf(key) !== -1
                 )
                     helpCommands.push(
-                        <tr key={uuidv4()}>
+                        <tr>
                             <td>
                                 /{key} {item.helpstring.split(" -- ")[0].replace(/^\/(\w+)\s/, " ")}
                             </td>
@@ -343,50 +328,74 @@ export default class UserBit extends React.Component {
                             {this.showAvatar()}
                         </div>
                         <span id="username" className={"userLevel"}>
-                <b>{profile.safeUsername}</b><span id="userbit-expander"><FontAwesomeIcon icon={['fas', 'caret-down']} /></span>
+                <b>{profile.safeUsername}</b><span id="userbit-expander" className="fa fa-caret-down"></span>
               </span>
                     </a>
                     <ul className="dropdown-menu">
                         {this.showSetAvatar()}
 
-                        <li key={uuidv4()} onClick={() => (this.togglePlayer())}>
+                        <li key={1} onClick={() => (this.togglePlayer())}>
                             <a href="#">
-                                <FontAwesomeIcon icon={
-                                    ['fas', this.legacyInterface ? playing.playerSize === "BIG" ? "plus" : "remove" : playing.playerSize === "BIG" ? "compress" : "expand"]} />
+                                <i
+                                    className={classNames(
+                                        "fa",
+                                        this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                                    )}
+                                />
                                 {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
                             </a>
                         </li>
-                        <li key={uuidv4()} onClick={() => waitlist.setShowMinutesUntil()}>
+                        <li key={101} onClick={() => waitlist.setShowMinutesUntil()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['far', waitlist.showMinutesUntil ? "check-square" : "square"]} />
+                                <i className={
+                                    classNames(
+                                        "fa",
+                                        waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
+                                    )
+                                }/>
                                 &nbsp;Waitlist Minutes Until
                             </a>
                         </li>
                         {this.showChangeEmail()}
                         {this.showChangePassword()}
-                        <li key={uuidv4()}>
+                        <li key={2}>
                             <a
                                 href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
                                 target="blank"
                             >
-                                <FontAwesomeIcon icon={['fab', 'youtube']} /> Region Check
+                                <i className="fa fa-youtube-play"/> Region Check
                             </a>
                         </li>
-                        <li key={uuidv4()} onClick={() => this.hideGifs()}>
+                        <li key={3} onClick={() => this.hideGifs()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['far', this.gifsHidden === true ? "check-square" : "square"]}/>{" "}
+                                <i
+                                    className={classNames(
+                                        "fa",
+                                        this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
                                 Hide Gifs?
                             </a>
                         </li>
-                        <li key={uuidv4()} onClick={() => this.hideBlazebot()}>
+                        <li key={4} onClick={() => this.hideBlazebot()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['far', profile.hideBlazebot === true ? "check-square" : "square"]}/>{" "}
+                                <i
+                                    className={classNames(
+                                        "fa",
+                                        profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
                                 Hide BlazeBot?
                             </a>
                         </li>
-                        <li key={uuidv4()} onClick={() => this.hideHypeBoom()}>
+                        <li key={5} onClick={() => this.hideHypeBoom()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['far', profile.hypeBoom === true ? "check-square" : "square"]} />{" "}
+                                <i
+                                    className={classNames(
+                                        "fa",
+                                        profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
+                                    )}
+                                />{" "}
                                 Hype Animation?
                             </a>
                         </li>
@@ -394,20 +403,20 @@ export default class UserBit extends React.Component {
                         {this.showMentionAudio()}
                         {this.showMute()}
                         {this.showAutoplay()}
-                        <li key={uuidv4()} onClick={() => this.toggleLeaderboard()}>
+                        <li key={6} onClick={() => this.toggleLeaderboard()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['fas', 'trophy']} /> Leader Board
+                                <i className="fa fa-trophy"></i> Leader Board
                             </a>
                         </li>
 
-                        <li key={uuidv4()} onClick={() => this.toggleSongHistory()}>
+                        <li key={66} onClick={() => this.toggleSongHistory()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['fas', 'history']} /> Play History
+                                <i className="fa fa-history"></i> Play History
                             </a>
                         </li>
-                        <li key={uuidv4()} onClick={() => this.toggleHelp()}>
+                        <li key={7} onClick={() => this.toggleHelp()}>
                             <a href="#">
-                                <FontAwesomeIcon icon={['far', 'question-circle']} /> Help
+                                <i className="fa fa-question-circle"/> Help
                             </a>
                         </li>
                         {this.showGelato()}
@@ -502,7 +511,7 @@ export default class UserBit extends React.Component {
                                         onChange={e => (this.avatarField = e.target.value)}
                                     />
                                     <div className="input-group-addon">
-                                        <FontAwesomeIcon icon={['fas', this.avatarFieldValid ? "check" : "times"]} />
+                                        <i className={this.avatarFieldValid ? "fa fa-check" : "fa fa-times"}></i>
                                     </div>
                                 </div>
                                 <br/>
@@ -533,7 +542,7 @@ export default class UserBit extends React.Component {
                 {/*  */}
                 <Modal
                     show={this.changingPassword}
-                    hideModal={() => (this.setChangingPassword(false))}
+                    hideModal={() => (this.changingPassword = false)}
                     title="Change Your Password"
                 >
                     <div className="form-group">
@@ -552,7 +561,7 @@ export default class UserBit extends React.Component {
                 {/*  */}
                 <Modal
                     show={this.changingEmail}
-                    hideModal={() => (this.setChangingEmail = false)}
+                    hideModal={() => (this.changingEmail = false)}
                     title="Change Your Email"
                 >
                     <div className="form-group">
@@ -573,26 +582,36 @@ export default class UserBit extends React.Component {
     showMute() {
         return profile.rank && profile.rank.match(/Admin|Mod|Dev/) ?
             (
-                <li key={uuidv4()} onClick={() => this.toggleShowMute()}>
+                <li key={20} onClick={() => this.toggleShowMute()}>
                     <a href="#">
-                        <FontAwesomeIcon icon={['far', profile.showmuted ? "check-square" : "square" ]} />{" "}
+                        <i
+                            className={classNames(
+                                "fa",
+                                profile.showmuted ? "fa-check-square-o" : "fa-square-o"
+                            )}
+                        />{" "}
                         Show Muted Users
                     </a>
                 </li>
             ) : (
-                <li key={uuidv4()}></li>
+                <li key={20}></li>
             )
     }
 
     showMentionAudio() {
-        return this.userLoggedIn() ? (<li key={uuidv4()} onClick={() => this.toggleNotifications()}>
+        return this.userLoggedIn() ? (<li key={10} onClick={() => this.toggleNotifications()}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['far', profile.notifications ? "check-square" : "square"]} />{" "}
+                    <i
+                        className={classNames(
+                            "fa",
+                            profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
+                        )}
+                    />{" "}
                     Mention Audio?
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}></li>
+            <li key={10}></li>
         );
     }
 
@@ -606,76 +625,83 @@ export default class UserBit extends React.Component {
 
     showAutoplay() {
         return profile.rank && profile.rank !== "User" ? (
-            <li key={uuidv4()} onClick={() => waitlist.setAutojoin()}>
+            <li key={11} onClick={() => waitlist.setAutojoin()}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['far', profile.autoplay ? "check-square" : "square"]} />{" "}
+                    <i
+                        className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
+                    />{" "}
                     Auto Join Waitlist
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}></li>
+            <li key={11}></li>
         )
     }
 
     showToggleDesktopNotifications() {
         return this.userLoggedIn() ? (
-            <li key={uuidv4()} onClick={() => this.toggleDesktopNotifications()}>
+            <li key={100 /*TODO*/} onClick={() => this.toggleDesktopNotifications()}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['far', profile.desktopNotifications ? "check-square" : "square"]} />{" "}
+                    <i
+                        className={classNames(
+                            "fa",
+                            profile.desktopNotifications ? "fa-check-square-o" : "fa-square-o"
+                        )}
+                    />{" "}
                     Desktop Notifications<sup>BETA</sup>
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}></li>
+            <li key={100/*TODO*/}></li>
         );
     }
 
     showLogout() {
         return this.userLoggedIn() ? (
-            <li key={uuidv4()} onClick={() => this.logoutAndDisableButtons()}>
+            <li key={12} onClick={() => this.logoutAndDisableButtons()}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['fas', 'sign-out-alt']} /> Logout
+                    <i className="fa fa-sign-out"/> Logout
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}></li>
+            <li key={12}></li>
         )
     }
 
     showChangePassword() {
         return this.userLoggedIn() ? (
-            <li key={uuidv4()}
+            <li key={13}
                 onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['fas', 'key']} /> Change Password
+                    <i className="fa fa-key"/> Change Password
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}/>
+            <li key={13}/>
         )
     }
 
     showChangeEmail() {
         return this.userLoggedIn() ? (
-            <li key={uuidv4()} onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
+            <li key={14} onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['far', 'envelope']} /> Change Email
+                    <i className="fa fa-envelope"/> Change Email
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}></li>
+            <li key={14}></li>
         )
     }
 
     showSetAvatar() {
         return this.userLoggedIn() ? (
-            <li key={uuidv4()} onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
+            <li key={15} onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['fas', 'pencil-alt'] } fixedWidth /> Set Avatar
+                    <i className="fa fa-pencil fa-fw"/> Set Avatar
                 </a>
             </li>
         ) : (
-            <li key={uuidv4()}></li>
+            <li key={15}></li>
         )
     }
 
@@ -691,12 +717,17 @@ export default class UserBit extends React.Component {
 
     showGelato() {
         return this.userLoggedIn() ? (
-            <li key={uuidv4()} onClick={() => this.toggleInterface()}>
+            <li key={8} onClick={() => this.toggleInterface()}>
                 <a href="#">
-                    <FontAwesomeIcon icon={['far', this.legacyInterface === true ? "check-square" : "square"]} />{" "}
+                    <i
+                        className={classNames(
+                            "fa",
+                            this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
+                        )}
+                    />{" "}
                     Gelato?
                 </a>
-            </li>) : (<li key={uuidv4()}></li>);
+            </li>) : (<li key={8}></li>);
     }
 
     getQueryMultiplier() {

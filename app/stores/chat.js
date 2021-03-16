@@ -1,4 +1,4 @@
-import {computed, observable, makeAutoObservable, action} from "mobx";
+import {computed, observable} from "mobx";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 import events from "stores/events";
@@ -15,25 +15,7 @@ const CHAT_LOCK_REGISTRATION_SEC = 1800;
 const favico = new Favico({ animation: "slide" });
 
 export default new (class Chat {
-
-  messages = [];
-  msg = "";
-
-  setMessage = action;
-
-  lastgif = epoch();
-
-  chatLocked = false;
-
-  werefocused = true;
-  mentioncount = 0;
-  addChatMessage = action;
-  setChatLock = action;
-
   constructor() {
-
-    makeAutoObservable(this);
-
     setInterval(()=> {
       if ( $('ul#chatbox').children().length > 20 ) 
         $('ul#chatbox').children()[0].remove();
@@ -56,9 +38,49 @@ export default new (class Chat {
       .on("child_added", snap => {
         var msg = snap.val();
         if (msg) {
-          this.addChatMessage(msg);
           // Makes chat messages appear to the silenced user.
 
+          if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
+            if ((profile.rank && !profile.showmuted) || !profile.rank) return;
+          }
+
+          if (
+            msg.adminOnly !== undefined &&
+            msg.adminOnly === true &&
+            (profile.rank === null || profile.rank.match(/User|Frient|VIP/i))
+          ) {
+            // This is an admin only message.
+            return;
+          }
+          if (
+            this.messages[this.messages.length - 1] &&
+            msg.username === this.messages[this.messages.length - 1].username
+          ) {
+            this.messages[this.messages.length - 1].msgs.push(msg.msg);
+            this.messages[this.messages.length - 1].timestamp = msg.timestamp;
+          } else {
+            msg.msgs = [msg.msg];
+            this.messages.push(msg);
+          }
+
+          if (msg.mentions && profile.username) {
+            //mention check
+            let mentions = msg.mentions.map(s => {
+              return s ? s.substr(1).toLowerCase() : "";
+            });
+            let everyone = mentions.includes("everyone");
+            let mentioned = everyone;
+            if (!mentioned) {
+              mentioned = mentions.includes(profile.safeUsername.toLowerCase());
+            }
+            if (mentioned) {
+              mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
+              if (!this.werefocused) {
+                this.mentioncount++;
+                favico.badge(this.mentioncount);
+              }
+            }
+          }
         }
       });
 
@@ -70,65 +92,22 @@ export default new (class Chat {
       .database()
       .ref("backend")
       .child("chatlock")
-      .on("value", snap => (this.setChatLock(!!snap.val()))); // listen to backend chatlock value
+      .on("value", snap => (this.chatLocked = !!snap.val())); // listen to backend chatlock value
   }
 
-  @action setChatLock = (locked) => {
-    this.chatLocked = locked;
-  }
+  @observable messages = [];
+  @observable msg = "";
 
-  @action addChatMessage = (msg) => {
+  @observable lastgif = epoch();
 
-    if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
-      if ((profile.rank && !profile.showmuted) || !profile.rank) return;
-    }
+  @observable chatLocked = false;
 
-    if (
-      msg.adminOnly !== undefined &&
-      msg.adminOnly === true &&
-      (profile.rank === null || profile.rank.match(/User|Frient|VIP/i))
-    ) {
-      // This is an admin only message.
-      return;
-    }
-    if (
-      this.messages[this.messages.length - 1] &&
-      msg.username === this.messages[this.messages.length - 1].username
-    ) {
-      this.messages[this.messages.length - 1].msgs.push(msg.msg);
-      this.messages[this.messages.length - 1].timestamp = msg.timestamp;
-    } else {
-      msg.msgs = [msg.msg];
-      this.messages.push(msg);
-    }
-
-    if (msg.mentions && profile.username) {
-      //mention check
-      let mentions = msg.mentions.map(s => {
-        return s ? s.substr(1).toLowerCase() : "";
-      });
-      let everyone = mentions.includes("everyone");
-      let mentioned = everyone;
-      if (!mentioned) {
-        mentioned = mentions.includes(profile.safeUsername.toLowerCase());
-      }
-      if (mentioned) {
-        mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
-        if (!this.werefocused) {
-          this.mentioncount++;
-          favico.badge(this.mentioncount);
-        }
-      }
-    }
-  }
-
-  @action setMessage = (msg) => {
-    this.msg = msg;
-  }
+  @observable werefocused = true;
+  @observable mentioncount = 0;
 
   updateMsg(msg) {
     if (msg.length <= MSG_CHAR_LIMIT) {
-      this.setMessage(msg);
+      this.msg = msg;
     }
   }
 
@@ -137,19 +116,19 @@ export default new (class Chat {
   }
 
   appendMsg(msg) {
-    this.setMessage(this.msg + " " + msg);
+    this.msg += " " + msg;
   }
 
   getMsg() {
     var msg = this.msg;
-    this.setMessage("");
+    this.msg = "";
     return msg;
   }
 
   async pushMsg() {
     // moving throttling to the backend.
     if (this.msg.length !== 0) {
-      this.setMessage(this.msg.replace("<3", ":heart:"));
+      this.msg = this.msg.replace("<3", ":heart:");
       this.sendMsg(this.getMsg());
 
       profile.lastchat = epoch();
@@ -159,6 +138,7 @@ export default new (class Chat {
 
   sendMsg(msg, cb) {
     var mentions = msg.match(mentionPattern) || [];
+
     send("chat", {
       mentions,
       msg
@@ -192,7 +172,7 @@ export default new (class Chat {
   replaceMention(index) {
     var words = this.msg.split(" ");
     words[words.length - 1] = "@" + this.mentionMatches[index] + " ";
-    this.setMessage( words.join(" ") );
+    this.msg = words.join(" ");
   }
 
   @computed get canChat() {

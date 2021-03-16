@@ -1,5 +1,5 @@
 import React from "react";
-import {makeAutoObservable, action} from "mobx";
+import {observable} from "mobx";
 import {observer} from "mobx-react";
 // import classNames from 'classnames';
 // import fbase from 'stores/fbase';
@@ -11,26 +11,12 @@ import $ from "jquery";
 
 @observer
 export default class PlaylistsPanel extends React.Component {
+  @observable
   addingPlaylist = false;
-  setAddingPlaylist = action;
+  @observable
   removingPlaylist = false;
-  setRemovingPlaylist = action;
+  @observable
   playlistToRemove = {};
-  setPlaylistToRemove = action;
-  importingPlaylist = false;
-  setImportingPlaylist = action;
-  mergingPlaylists = false;
-  setMergingPlaylists = action;
-
-  @action setAddingPlaylist = prop => this.addingPlaylist = prop;
-  @action setRemovingPlaylist = prop => this.removingPlaylist = prop;
-  @action setPlaylistToRemove = prop => this.playlistToRemove = prop;
-  @action setImportingPlaylist = prop => this.importingPlaylist = prop;
-  @action setMergingPlaylists = prop => this.mergingPlaylists = prop;
-
-  super() {
-    makeAutoObservable(this);
-  }
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
@@ -47,7 +33,7 @@ export default class PlaylistsPanel extends React.Component {
     }
     this._newPlaylist.value = "";
     playlists.addPlaylist(name);
-    this.setAddingPlaylist(false);
+    this.addingPlaylist = false;
   }
 
   selectPlaylist(i) {
@@ -69,6 +55,12 @@ export default class PlaylistsPanel extends React.Component {
     playlists.removePlaylist(this.playlistToRemove.index);
     this.removingPlaylist = false;
   }
+
+  @observable
+  importingPlaylist = false;
+
+  @observable
+  mergingPlaylists = false;
 
   async importPlaylist() {
     const name = this._importName.value;
@@ -93,7 +85,7 @@ export default class PlaylistsPanel extends React.Component {
     var content;
 
     if (playlists.searching) {
-      content = <span className="playlist-loading"><FontAwesomeIcon icon={['fas', 'yin-yang']} spin size="8x" /></span>;
+      content = <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />;
     } else if (playlists.openSearch) {
       if (playlists.search.length > 0) {
         const list = playlists.search.map((video, i) => {
@@ -147,22 +139,20 @@ export default class PlaylistsPanel extends React.Component {
               </a>
               <span className="pl-media-title">{title}</span>
               <span className="pl-time">
-                <FontAwesomeIcon icon={['far', 'clock']} /> {humanDuration}
+                <i className="fa fa-clock-o" /> {humanDuration}
               </span>
               <span className="pl-channel">{channelTitle}</span>
-              <span className="add-to-playlist-btn" onClick={() => playlists.addFromSearch(i)}>
-                <FontAwesomeIcon icon={['fas', 'plus']} size="2x" />
-              </span>
+              <i
+                onClick={() => playlists.addFromSearch(i)}
+                className="fa fa-2x fa-plus add-to-playlist-btn"
+              />
               <a
                 target="_blank"
                 href={skipLink}
-                show={(skipLink && skipLink.length > 0).toString()}
+                show={skipLink && skipLink.length > 0}
                 rel="noopener noreferrer"
-                
               >
-                <span className="add-to-playlist-btn">
-                <FontAwesomeIcon icon={['fas', 'globe']} size="2x" />
-                </span>
+                <i className="fa fa-2x fa-globe add-to-playlist-btn"/>
               </a>
             </li>
           );
@@ -194,30 +184,28 @@ export default class PlaylistsPanel extends React.Component {
             </a>
             <span className="pl-media-title">{video.title}</span>
             <span className="pl-time">
-              <FontAwesomeIcon icon={['far', 'clock']} /> {humanDuration}
+              <i className="fa fa-clock-o" /> {humanDuration}
             </span>
             <span className="pl-channel">{video.channel}</span>
             <span className="pl-channel">{video.user ? "  (Grab: " + video.user + ")" : ""}</span>
-            <span className="remove-from-playlist-btn"
-              onClick={() => playlists.removeVideo(i)}>
-                <FontAwesomeIcon icon={['fas', 'trash']} size="2x" />
-              </span>
-            <span className="pl-move-to-top" onClick={() => playlists.moveTop(i)}>
-              <FontAwesomeIcon icon={['fas', "arrow-up"]} size="2x" />
-            </span>
-            <span
+            <i
+              onClick={() => playlists.removeVideo(i)}
+              className="fa fa-2x fa-trash remove-from-playlist-btn"
+            />
+            <i
+              onClick={() => playlists.moveTop(i)}
+              className="fa fa-2x fa-arrow-up pl-move-to-top"
+            />
+            <i
               onClick={() => playlists.moveBottom(i)}
-              className="pl-move-to-top"
-            >
-              <FontAwesomeIcon icon={['fas', 'arrow-down']} size="2x" />
-              </span>
+              className="fa fa-2x fa-arrow-down pl-move-to-top"
+            />
             <a
               target="_blank"
               href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
               rel="noopener noreferrer"
-              className="add-to-playlist-btn"
             >
-              <FontAwesomeIcon size="2x" icon={['fas', 'globe']} />
+              <i className="fa fa-2x fa-globe add-to-playlist-btn" />
             </a>
           </li>
         );
@@ -234,19 +222,17 @@ export default class PlaylistsPanel extends React.Component {
         </a>
         <div
           onClick={() => this.startRemovingPlaylist(name, i)}
-          className="remove-playlist"
-        ><FontAwesomeIcon icon={['fas', 'trash']} />
-        </div>
+          className="fa fa-trash remove-playlist"
+        />
       </li>
     ));
 
     var shuffle = playlists.hasPlaylist ? (
       <span
         onClick={() => playlists.shufflePlaylist()}
-        className="playlist-shuffle-btn"
+        className="playlist-shuffle-btn fa fa-random fa-2x"
         title="Shuffle this Playlist"
-      ><FontAwesomeIcon icon={['fas', 'random']} size="2x" />
-      </span>
+      />
     ) : (
       false
     );
@@ -254,9 +240,9 @@ export default class PlaylistsPanel extends React.Component {
     var sortnameasc = playlists.hasPlaylist ? (
       <span
         onClick={() => playlists.sortPlaylist("asc", "title")}
-        className="playlist-shuffle-btn"
+        className="playlist-shuffle-btn fa fa-sort-alpha-asc fa-2x"
         title="Sort this Playlist Alphabetically"
-      ><FontAwesomeIcon size="2x" icon={['fas', 'sort-alpha-up']} /></span>
+      />
     ) : (
       false
     );
@@ -264,30 +250,27 @@ export default class PlaylistsPanel extends React.Component {
     var sortnamedesc = playlists.hasPlaylist ? (
       <span
         onClick={() => playlists.sortPlaylist("desc", "title")}
-        className="playlist-shuffle-btn"
+        className="playlist-shuffle-btn fa fa-sort-alpha-desc fa-2x"
         title="Sort this Playlist Reverse Alphabetically"
-      ><FontAwesomeIcon size="2x" icon={['fas', 'sort-alpha-down']} />
-      </span>
+      />
     ) : (
       false
     );
     var sorttimeasc = playlists.hasPlaylist ? (
       <span
         onClick={() => playlists.sortPlaylist("asc", "duration")}
-        className="playlist-shuffle-btn"
+        className="playlist-shuffle-btn fa fa-sort-numeric-asc fa-2x"
         title="Sort this Playlist by shortest song first"
-      ><FontAwesomeIcon size="2x" icon={['fas', 'sort-numeric-up']} />
-      </span>
+      />
     ) : (
       false
     );
     var sorttimedesc = playlists.hasPlaylist ? (
       <span
         onClick={() => playlists.sortPlaylist("desc", "duration")}
-        className="playlist-shuffle-btn"
+        className="playlist-shuffle-btn fa fa-sort-numeric-desc fa-2x"
         title="Sort this Playlist by longest song first"
-      ><FontAwesomeIcon size="2x" icon={['fas', 'sort-numeric-down']} />
-      </span>
+      />
     ) : (
       false
     );
@@ -339,17 +322,17 @@ export default class PlaylistsPanel extends React.Component {
                   href="#"
                 >
                   {playlists.selectedPlaylistName || "Create or Select a Playlist"}{" "}
-                  <FontAwesomeIcon icon={['fas', 'chevron-down']} />
+                  <span className="fa fa-chevron-down"></span>
                 </a>
                 <ul className="dropdown-menu" id="pl-dd-menu">
                   <li>
-                    <a href="#" onClick={() => (this.setAddingPlaylist(true))}>
-                      <FontAwesomeIcon icon={['fas', 'plus']} /> New Playlist
+                    <a href="#" onClick={() => (this.addingPlaylist = true)}>
+                      <i className="fa fa-plus" /> New Playlist
                     </a>
                   </li>
                   <li>
-                    <a href="#" onClick={() => (this.setImportingPlaylist(true))}>
-                      <FontAwesomeIcon icon={['fab', 'youtube']} /> Import Playlist
+                    <a href="#" onClick={() => (this.importingPlaylist = true)}>
+                      <i className="fa fa-youtube-play" /> Import Playlist
                     </a>
                   </li>
                   {playlistsList}
@@ -362,12 +345,14 @@ export default class PlaylistsPanel extends React.Component {
               {sorttimedesc}
               <span
                 onClick={() => playlists.exportPlaylist()}
-                className="playlist-shuffle-btn"
+                className="playlist-shuffle-btn fa fa-download fa-2x"
                 title="Download Playlist (json)"
-              ><FontAwesomeIcon size="2x" icon={['fas', 'download']} />
-              </span>
-              <a href="#" onClick={() => (this.setMergingPlaylists(true))} className="playlist-shuffle-btn">
-                <FontAwesomeIcon size="2x" icon={['fas', 'code-branch']} />
+              />
+              <a href="#" onClick={() => (this.mergingPlaylists = true)}>
+                <i
+                  className="playlist-shuffle-btn fa fa-code-fork fa-2x"
+                  title="Merge Two Playlists"
+                ></i>
               </a>
             </div>
           </div>
@@ -375,7 +360,7 @@ export default class PlaylistsPanel extends React.Component {
         <div id="playlists-panel-display">{content}</div>
         <Modal
           show={this.addingPlaylist}
-          hideModal={() => (this.setAddingPlaylist(false))}
+          hideModal={() => (this.addingPlaylist = false)}
           title="Adding Playlist"
           leftButton={() => this.addPlaylist()}
           leftButtonText="Add Playlist"
@@ -391,7 +376,7 @@ export default class PlaylistsPanel extends React.Component {
         </Modal>
         <Modal
           show={this.removingPlaylist}
-          hideModal={() => (this.setRemovingPlaylist(false))}
+          hideModal={() => (this.removingPlaylist = false)}
           title="Removing Playlist"
           leftButton={() => this.removePlaylist()}
           leftButtonText="Confirm"
@@ -403,7 +388,7 @@ export default class PlaylistsPanel extends React.Component {
         </Modal>
         <Modal
           show={this.mergingPlaylists}
-          hideModal={() => (this.setMergingPlaylists(false))}
+          hideModal={() => (this.mergingPlaylists = false)}
           title="Merge Playlists"
           leftButton={() => {
             playlists.mergePlaylists(
@@ -441,12 +426,12 @@ export default class PlaylistsPanel extends React.Component {
 
         <Modal
           show={this.importingPlaylist}
-          hideModal={() => (this.setImportingPlaylist(false))}
+          hideModal={() => (this.importingPlaylist = false)}
           title="Importing Playlist"
           leftButton={() => this.importPlaylist()}
           leftButtonText={
             <span>
-              Import {playlists.importing && <FontAwesomeIcon icon={['fas', 'circle-notch']} spin />}
+              Import {playlists.importing && <i className="fa fa-spin fa-circle-o-notch" />}
             </span>
           }
         >
