@@ -58,7 +58,8 @@ build-prod:
 
 deploy_staging:
   stage: deploy
-  environment: staging
+  environment: 
+    name: staging
   before_script:
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
@@ -74,7 +75,8 @@ deploy_staging:
 
 deploy_production:
   stage: deploy
-  environment: production
+  environment: 
+    name: production
   before_script:
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems

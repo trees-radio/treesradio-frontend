@@ -22,7 +22,7 @@ export default class HypeProgress extends React.Component {
   @observable
   explosiveButton;
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     this.componentDidMount();
   }
 

@@ -59,7 +59,7 @@ export default class ChatContent extends React.Component {
 
   debouncedScroll = debounce(this.scroll, 5000);
 
-  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
+  UNSAFE_componentWillUpdate() {
     let test = this.chatScrollAmount.scrollHeight - this.chatScrollAmount.scrollTop;
     let target = this.chatScrollAmount.clientHeight;
     let testLow = test - SCROLL_SENSITIVITY;
@@ -67,7 +67,7 @@ export default class ChatContent extends React.Component {
     this.shouldScroll = target > testLow && target < testHigh;
     }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     this.autoScroll();
   }
 

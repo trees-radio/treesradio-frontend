@@ -30,9 +30,6 @@ class Nav extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-    }
-
     @computed
     get avatarFieldValid() {
         return this.avatarField && imageWhitelist(this.avatarField);

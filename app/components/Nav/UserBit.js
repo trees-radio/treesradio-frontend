@@ -181,7 +181,6 @@ export default class UserBit extends React.Component {
     logoutAndDisableButtons() {
         profile.logout()
             .then(() => {
-                console.log("please show")
                 if (window.matchMedia("only screen and (orientation: portrait)")) {
                     document.getElementById("navbar-grid")
                         .setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
@@ -305,7 +304,7 @@ export default class UserBit extends React.Component {
             "t"
         ];
         if (HelpList.helpCommands !== undefined)
-            HelpList.helpCommands.forEach((item, key, map) => {
+            HelpList.helpCommands.forEach((item, key) => {
                 if (
                     profile.rankPermissions.admin === true ||
                     (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||

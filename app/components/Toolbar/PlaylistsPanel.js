@@ -7,6 +7,7 @@ import playlists from "stores/playlists";
 import Modal from "components/utility/Modal";
 import toast from "utils/toast";
 import moment from "moment";
+import $ from "jquery";
 
 @observer
 export default class PlaylistsPanel extends React.Component {
