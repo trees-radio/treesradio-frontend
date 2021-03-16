@@ -356,28 +356,7 @@ export default new (class Playlists {
   @observable importing = false;
 
   async importYouTubePlaylist(name, url) {
-    return true; // Disable for now. See if traffic drops.
-    /*this.importing = true;
-    const playlist = await getYtPlaylist(url);
-
-    const playlistTransform = playlist.map(i => ({
-      url: `https://www.youtube.com/watch?v=${i.id}`,
-      title: i.snippet.title,
-      thumb: i.snippet.thumbnails.default.url,
-      channel: i.snippet.channelTitle,
-      duration: moment.duration(i.contentDetails.duration).valueOf()
-    }));
-
-    const playlistRef = this.addPlaylist(name);
-
-    return playlistRef
-      .child("entries")
-      .set(playlistTransform)
-      .then(() => {
-        toast.success(`Imported songs from playlist URL.`);
-        this.importing = false;
-        return true;
-      });
-      */
+    this.importing = true;
+    if ( profile.init ) send('importPlaylist', { name, url });
   }
 })();
