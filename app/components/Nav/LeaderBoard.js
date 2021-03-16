@@ -5,6 +5,8 @@ import LeadersBoard from "stores/leaderboard";
 import UserAvatar from "components/utility/User/UserAvatar";
 import UserName from "components/utility/User/UserName";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 @observer
 export default class LeaderBoard extends React.Component {
 
@@ -31,7 +33,7 @@ export default class LeaderBoard extends React.Component {
 
             return (
                 <div key={index} className="leaderboard-row">
-                    <span className="leaderboard-cell-rank"><i className="fa fa-trophy"></i> {index + 1}:</span>
+                    <span className="leaderboard-cell-rank"><FontAwesomeIcon icon={['fas', 'trophy']} /> {index + 1}:</span>
                     <span className="leaderboard-cell-avatar"><UserAvatar uid={leader.uid}/></span>
                     <span className="leaderboard-cell-username"><UserName uid={leader.uid}/><br/>
                     <a target="_blank" rel="noopener noreferrer" href={leader.url}>{leader.title}</a><br/>

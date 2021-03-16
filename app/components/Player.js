@@ -1,7 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
-
 // Note that lazy loading doesn't work. Filing an issue with the project
 import ReactPlayer from "react-player";
 import {Line} from "rc-progress";
@@ -38,7 +37,7 @@ const rPlayerSoundcloudConfig = {
 @observer
 class Player extends React.Component {
   onProgress(p) {
-    playing.playerProgress = p.played;
+    playing.setPlayerProgress( p.played );
     if (playing.shouldSync) {
       this._player.seekTo(playing.fraction);
     }
@@ -60,7 +59,7 @@ class Player extends React.Component {
     window.addEventListener("keydown", this.onkeydownListener);
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     window.removeEventListener("keydown", this.onkeydownListener);
   }
 
@@ -104,7 +103,7 @@ class Player extends React.Component {
                   rPlayerSoundcloudConfig
                 }
               }}
-              onDuration={d => (playing.playerDuration = d)}
+              onDuration={d => (playing.setPlayerDuration(d))}
             />
           )}{" "}
         </div>{" "}

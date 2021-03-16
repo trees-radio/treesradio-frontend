@@ -1,8 +1,15 @@
-import {observable, computed} from "mobx";
+import {makeAutoObservable, computed, action} from "mobx";
 import fbase from "libs/fbase";
 
 export default new (class Online {
+  online = [];
+  userlist = [];
+  sorted = [];
+  setUserList = action;
+  setOnlineEnts = action;
+
   constructor() {
+    makeAutoObservable(this);
     this.loadOnlineEnts();
 
     fbase
@@ -21,37 +28,41 @@ export default new (class Online {
         const thislist = snap.val();
         if (thislist == null) return;
         let list = [];
-        this.online = [];
-        this.userlist = [];
+        this.setOnlineEnts([]);
+        this.setUserList([]);
 
         thislist.forEach((item) => {
           list.push(item);
         });
 
-        this.online = list;
+        this.setOnlineEnts(list);
         let users = [];
         Object.keys(thislist).forEach((key) => {
           users.push(thislist[key].username);
         });
 
-        this.userlist = users;
+        this.setUserList(users);
       });
   }
-  @observable online = [];
-  @observable userlist = [];
-  @observable sorted = [];
+
+  @action setUserList = (ents) => {
+    this.userlist = ents;
+  }
+
+  @action setOnlineEnts = (ents) => {
+    this.online = ents;
+  }
 
   @computed get usernames() {
     let names = [];
-    this.userlist = [];
+    this.setUserList([]);
     this.online.forEach((online) => {
       names.push(online.username);
     });
     
-    this.userlist = names;
+    this.setUserList(names);
     return names;
   }
-  @observable usernames = [];
 
   @computed get onlineCount() {
     return this.online.length;

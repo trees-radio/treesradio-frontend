@@ -1,14 +1,23 @@
 import React from "react";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 
 import hypetimer from "stores/hype";
 import profile from "stores/profile";
-import { observable } from "mobx";
+import { makeAutoObservable, action } from "mobx";
 import toast from "utils/toast";
 
 const hypetime = 260; //4:20
 @observer
 export default class HypeProgress extends React.Component {
+  explosiveButton;
+  setExplosiveButton = action;
+
+  @action setExplosiveButton = prop => this.explosiveButton = prop;
+
+  super() {
+    makeAutoObservable(this);
+  }
+
   getHyped = () => {
     if (profile.user !== null) {
       if (hypetimer.hypePercentageCharged === 100) hypetimer.getHyped();
@@ -19,8 +28,6 @@ export default class HypeProgress extends React.Component {
     }
   };
 
-  @observable
-  explosiveButton;
 
   componentDidUpdate() {
     this.componentDidMount();
@@ -28,9 +35,9 @@ export default class HypeProgress extends React.Component {
 
   componentDidMount() {
     if (profile.user !== null && this.explosiveButton === null) {
-      this.explosiveButton = new ExplosiveButton("#hypeboom");
+      this.setExplosiveButton(new ExplosiveButton("#hypeboom"));
     } else {
-      this.explosiveButton = null;
+      this.setExplosiveButton(null);
     }
   }
 
@@ -143,15 +150,17 @@ class ExplosiveButton {
 
       hypetimer.getHyped().then(() => {
         document
-          .querySelector(".hypedone")
-          .setAttribute("style", "visibility: hidden;");
+            .querySelector(".hypedone")
+            .setAttribute("style", "visibility: hidden;");
 
         this.createParticles("fire", 35, duration);
         this.createParticles("debris", this.piecesX * this.piecesY, duration);
-        window.setTimeout(() => {
+        let $hypeSetTimeID;
+        $hypeSetTimeID = window.setTimeout(() => {
           document
-            .querySelector(".hypedone")
-            .setAttribute("style", "visibility: visible;");
+              .querySelector(".hypedone")
+              .setAttribute("style", "visibility: visible;");
+          window.clearTimeout($hypeSetTimeID);
         }, duration);
       });
     }
