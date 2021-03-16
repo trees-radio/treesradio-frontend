@@ -30,7 +30,7 @@ export default new (class Playlists {
         });
         events.register('playlistImported', (data) => {
           if ( data.data.uid === profile.user.uid ) {
-            toast(`${data.data.name} Playlist Imported`);
+            toast(`${data.data.data.name}   Imported`);
             me.importing = false;
           } 
         });
