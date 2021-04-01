@@ -1,4 +1,4 @@
-@import '../core/variables';
+@import "../core/variables";
 
 #playlists-container {
   width: 100%;
@@ -51,6 +51,7 @@
 
 .playlists-panel-open {
   height: 90%;
+  opacity: 90%;
   background-color: $color-trees-bg;
   border-left: solid;
   border-right: solid;

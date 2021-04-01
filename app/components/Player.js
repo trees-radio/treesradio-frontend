@@ -1,10 +1,10 @@
 import React from "react";
-import {observer} from "mobx-react";
-import {observable} from "mobx";
+import { observer } from "mobx-react";
+import { observable } from "mobx";
 
 // Note that lazy loading doesn't work. Filing an issue with the project
 import ReactPlayer from "react-player";
-import {Line} from "rc-progress";
+import { Line } from "rc-progress";
 
 import playing from "stores/playing";
 import userbit from "./Nav/UserBit";
@@ -60,7 +60,7 @@ class Player extends React.Component {
     window.addEventListener("keydown", this.onkeydownListener);
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     window.removeEventListener("keydown", this.onkeydownListener);
   }
 
@@ -73,9 +73,9 @@ class Player extends React.Component {
 
     if (userbit.legacyInterface) {
       controls = "false";
-      progress = {display: "none"};
+      progress = { display: "none" };
     }
-    
+
     return (
       <div id="vidcontainer" style={containerStyle}>
         <div
@@ -109,13 +109,13 @@ class Player extends React.Component {
           )}{" "}
         </div>{" "}
         <Line
-            className="progressbar-container"
-            style={progress}
-            strokeWidth="2"
-            percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
-            strokeColor="#000000"
-            //TrailColor="#77b300"
-            trailColor="#77b300"
+          className="progressbar-container"
+          style={progress}
+          strokeWidth="2"
+          percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
+          strokeColor="#000000"
+          //TrailColor="#77b300"
+          trailColor="#77b300"
         />
       </div>
     );
