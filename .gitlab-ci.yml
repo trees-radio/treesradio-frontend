@@ -39,9 +39,8 @@ build-dev:
   script:
     - time npm run build-rules
     - time npm run build-dev
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
-      when: always
+  only:
+    - develop
 
 build-prod:
   stage: build-prod
@@ -65,9 +64,8 @@ deploy_staging:
     - gem install dpl
   dependencies:
     - build-dev
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
-      when: always
+  only:
+    - develop
   script:
     - 'dpl --skip_cleanup --provider=firebase
     --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging'
