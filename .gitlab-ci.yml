@@ -52,9 +52,8 @@ build-prod:
   script:
     - time npm run build-rules
     - time npm run build-prod
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
-      when: always
+  only:
+    - master
 
 deploy_staging:
   stage: deploy
@@ -83,9 +82,8 @@ deploy_production:
     - gem install dpl
   dependencies:
     - build-prod
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
-      when: always
+  only: 
+    - master
   script:
     - 'dpl --skip_cleanup --provider=firebase
     --token=$FIREBASE_DEPLOY_PROD --project=treesradio-live'
