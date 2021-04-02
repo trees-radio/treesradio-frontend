@@ -42,7 +42,7 @@
   box-sizing: content-box;
   overflow: hidden;
   border: none;
-  border-radius: 6px;
+  border-radius: $button-border-radius;
   text-align: center;
   text-overflow: ellipsis;
   transition: background 500ms ease;
