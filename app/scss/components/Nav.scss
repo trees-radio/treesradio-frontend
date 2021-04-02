@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 @import "../core/variables";
 
 #tr-nav {
-  height: 5vh;
+  max-height: 5vh;
   top: 0 !important;
+  min-height: 4.5rem;
 }
 
 #tr-watermark {
@@ -21,6 +22,7 @@
   font-size: $navbar-font-size;
   height: $navbar-button-height !important;
   background: $color-button-toke;
+  border-radius: $button-border-radius;
 }
 
 .toke-active {
@@ -29,12 +31,10 @@
 
 #navbar-grid {
   top: 0;
-  display: inline-grid !important;
-  grid-template-areas: "tr-watermark space hype-button toke-button userbit";
-  grid-template-columns: 15vw 46vw 14vw 9vw 16vw;
-  grid-template-rows: $navbar-height;
-  grid-gap: 0;
-  place-items: baseline;
+  display: flex !important;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: flex-start;
 }
 
 .navbar-grid-nologin {
@@ -44,14 +44,13 @@
 #navbar-space {
   grid-area: space;
   display: inline-flex;
+  flex-grow: 1;
   flex-flow: row nowrap;
   grid-template-areas: "email password login register resetpw";
   grid-template-columns: 15vw 15vw 5vw 5vw 5vw;
   grid-template-rows: 5vh;
   height: inherit;
   width: inherit;
-  position: relative;
-  top: -2.7vh;
 }
 
 #navbar-grid::before {
@@ -103,7 +102,8 @@
   line-height: normal !important;
   position: relative;
   font-size: 150%;
-  font-family: 'Open Sans', sans-serif;
+  width: 25rem;
+  font-family: "Open Sans", sans-serif;
   letter-spacing: 1px;
   vertical-align: baseline;
   overflow: hidden;
@@ -121,6 +121,11 @@
 
 #usernamedropdown.btn.btn-primary.dropdown-toggle {
   background-color: #77b300;
+}
+
+#userbitContainer .dropdown-menu {
+  right: 0;
+  left: auto;
 }
 
 .collapse {
@@ -143,8 +148,7 @@
   display: inline-flex;
   flex-flow: row nowrap;
   place-items: baseline;
-  margin-top: 3.2vh;
-  padding-top: 0.8vh;
+  margin-top: 0.75vh;
   height: $navbar-button-height-portrait;
 }
 
@@ -166,6 +170,10 @@
   display: inline-flex;
   place-self: center;
   font-size: $navbar-font-size !important;
+}
+
+#loginButtons button {
+  border-radius: $button-border-radius;
 }
 
 #loginbutton {
@@ -240,7 +248,7 @@ div .userbit-avatar span .avatarimg {
 }
 
 #usernametop {
-  margin-top: 6px;
+  margin-top: 0.75vh;
   text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   font-size: 110%;
@@ -305,14 +313,14 @@ div .userbit-avatar span .avatarimg {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   width: 13.5vw;
   height: $navbar-button-height;
-  margin-top: 0.5vh;
-  border-radius: 8px;
+  margin-top: 0.75vh;
+  border-radius: $button-border-radius;
   overflow: hidden;
   text-align: center;
   font-size: $navbar-font-size-dynamic;
   font-weight: bold;
   color: rgb(26, 17, 26);
-  cursor: url('../../img/lighter.cur'), pointer;
+  cursor: url("../../img/lighter.cur"), pointer;
   //background: #77b420;
   line-height: 3.2vh;
 }
@@ -325,7 +333,7 @@ div .userbit-avatar span .avatarimg {
   transition: all 0.3s ease;
   width: 1.5vw;
   height: 4vh;
-  border-radius: 6px;
+  border-radius: $button-border-radius;
   background: $color-button-hype;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
   display: inline-block;
@@ -337,7 +345,8 @@ div .userbit-avatar span .avatarimg {
   line-height: 3vh;
   font-weight: bold;
   color: white;
-  text-shadow: .5px 0 0 #000000, -.5px 0 0 #000000, 0 .5px 0 #000000, 0 -.5px 0 #000000, .5px .5px #000000, -.5px -.5px 0 #000000, .5px -.5px 0 #000000, -.5px .7px 0 #000000;;
+  text-shadow: 0.5px 0 0 #000000, -0.5px 0 0 #000000, 0 0.5px 0 #000000, 0 -0.5px 0 #000000, 0.5px 0.5px #000000,
+    -0.5px -0.5px 0 #000000, 0.5px -0.5px 0 #000000, -0.5px 0.7px 0 #000000;
   width: 13.5vw;
   height: $navbar-button-height;
   //text-shadow: $text-shadow-heavy;
@@ -347,8 +356,8 @@ div .userbit-avatar span .avatarimg {
 .hypedone:active {
   -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
   box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
-  border-radius: 6px;
-  cursor: url('../../img/lighter.cur'), pointer;
+  border-radius: $button-border-radius;
+  cursor: url("../../img/lighter.cur"), pointer;
 }
 
 .hypepb:hover #progress {

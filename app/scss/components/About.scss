@@ -6,6 +6,7 @@
   max-height: 100%;
   background-image: $img-trees-about;
   background-size: cover;
+  overflow-y: auto;
 }
 
 .tenorgif-attr {
@@ -23,7 +24,7 @@
 }
 
 .about-summary {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 0.654vw;
   width: 100%;
   padding-left: 5%;
@@ -83,14 +84,20 @@
 }
 
 /* stylelint-disable */
-.sidebar-about div > .h4, .h5, .h6, h4, h5, h6 {
+.sidebar-about div > .h4,
+.h5,
+.h6,
+h4,
+h5,
+h6 {
   margin-top: 7px;
   margin-bottom: 3px;
 }
 
-.rules-list > ol, ul {
+.rules-list > ol,
+ul {
   margin-top: 0;
-  margin-bottom: 5.420px;
+  margin-bottom: 5.42px;
 }
 
 li a {
