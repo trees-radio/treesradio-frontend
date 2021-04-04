@@ -83,7 +83,8 @@
   padding-right: 5px;
 }
 
-#playlist-ul {
+#playlist-ul,
+#playlist-ol {
   height: 90%;
   margin-top: 1%;
   padding-left: 1%;
@@ -95,10 +96,17 @@
   height: 100%;
 
   li {
-    list-style-position: inside;
-    list-style-type: none;
     padding: 10px;
     color: #77b300;
+  }
+
+  ul li {
+    list-style-position: inside;
+    list-style-type: none;
+  }
+
+  ol li {
+    margin-left: 1rem;
   }
 }
 
