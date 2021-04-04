@@ -1,7 +1,7 @@
 import React from "react";
-import {observer} from "mobx-react";
-import {computed, observable} from "mobx";
-import {debounce} from "lodash";
+import { observer } from "mobx-react";
+import { computed, observable } from "mobx";
+import { debounce } from "lodash";
 
 import UserBit from "./Nav/UserBit";
 import TokeTimer from "./Nav/TokeTimer";
@@ -57,7 +57,7 @@ class Nav extends React.Component {
             this.title = "[treesradio]";
         },
         500,
-        {leading: true}
+        { leading: true }
     );
     offHover = debounce(() => {
         this.hoveredTitle = false;
@@ -85,6 +85,10 @@ class Nav extends React.Component {
 
             profile.setAvatar(this.avatarField);
         }
+    }
+
+    disableIfNecessary() {
+        return profile.user !== null ? "" : "hide-small";
     }
 
     render() {
@@ -121,9 +125,9 @@ class Nav extends React.Component {
                     <div className="form-inline" id="loginForm">
                         <div className="form-group" id="emailpassfields">
                             <div className="input-group margin-bottom-sm" id="emailbox">
-                <span className="input-group-addon">
-                  <i className="fa fa-envelope-o fa-fw"></i>
-                </span>
+                                <span className="input-group-addon">
+                                    <i className="fa fa-envelope-o fa-fw"></i>
+                                </span>
                                 <input
                                     className="form-control"
                                     type="email"
@@ -133,9 +137,9 @@ class Nav extends React.Component {
                                 />
                             </div>
                             <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="fa fa-key fa-fw"></i>
-                </span>
+                                <span className="input-group-addon">
+                                    <i className="fa fa-key fa-fw"></i>
+                                </span>
                                 <input
                                     className="form-control"
                                     type="password"
@@ -147,7 +151,7 @@ class Nav extends React.Component {
                         </div>
                         <div id="loginButtons">
                             <button className="btn btn-primary login-form-button" id="loginbutton"
-                                    onClick={() => this.login()}>
+                                onClick={() => this.login()}>
                                 Login
                             </button>
                             <button
@@ -190,13 +194,14 @@ class Nav extends React.Component {
 
         const title = (
             <span className="nav-title">
-        <span>{this.title}</span> <Version show={this.hoveredTitle}/>
-      </span>
+                <span>{this.title}</span> <Version show={this.hoveredTitle} />
+            </span>
         );
+
         return (
             <div id="tr-nav">
                 <nav id="navbar-grid"
-                     className={profile.user === null ? "navbar navbar-default navbar-grid-nologin" : "navbar navbar-default"}>
+                    className={profile.user === null ? "navbar navbar-default navbar-grid-nologin" : "navbar navbar-default"}>
                     <div className="navbar-header navbar-item">
                         <a
                             className="navbar-brand"
@@ -208,23 +213,23 @@ class Nav extends React.Component {
                         </a>
                     </div>
                     <div id="navbar-space">{login}</div>
-                    <div id="hype-grid-container" className="">
+                    <div id="hype-grid-container" className={this.disableIfNecessary()}>
                         <div id="hype-container" className="">
-                            <HypeProgress/>
+                            <HypeProgress />
                         </div>
                     </div>
-                    <div id="toketimer-container">
-                        <TokeTimer/>
+                    <div id="toketimer-container" className={this.disableIfNecessary()}>
+                        <TokeTimer />
                     </div>
-                    <div id="userbit-container">
-                        <UserBit/>
+                    <div id="userbit-container" className={this.disableIfNecessary()}>
+                        <UserBit />
                         {/* .navbar-collapse */}
                     </div>
                     {/*<div id="bump"></div>*/}
                     {" "}
                     {/* .container-fluid */}
                 </nav>
-                <div id="nav-divider"/>
+                <div id="nav-divider" />
             </div>
         );
     }
@@ -232,11 +237,11 @@ class Nav extends React.Component {
 
 export default Nav;
 
-function Version({show}) {
+function Version({ show }) {
     if (show === false) return null;
     return (
         <span className="version-tag">
-      v{file.version.version}-{file.version.short}
-    </span>
+            v{file.version.version}-{file.version.short}
+        </span>
     );
 }
