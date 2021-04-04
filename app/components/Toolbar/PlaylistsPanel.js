@@ -1,6 +1,6 @@
 import React from "react";
-import {observable} from "mobx";
-import {observer} from "mobx-react";
+import { observable } from "mobx";
+import { observer } from "mobx-react";
 // import classNames from 'classnames';
 // import fbase from 'stores/fbase';
 import playlists from "stores/playlists";
@@ -47,7 +47,7 @@ export default class PlaylistsPanel extends React.Component {
   }
 
   startRemovingPlaylist(name, index) {
-    this.playlistToRemove = {name, index};
+    this.playlistToRemove = { name, index };
     this.removingPlaylist = true;
   }
 
@@ -152,7 +152,7 @@ export default class PlaylistsPanel extends React.Component {
                 show={skipLink && skipLink.length > 0}
                 rel="noopener noreferrer"
               >
-                <i className="fa fa-2x fa-globe add-to-playlist-btn"/>
+                <i className="fa fa-2x fa-globe add-to-playlist-btn" />
               </a>
             </li>
           );
@@ -210,7 +210,7 @@ export default class PlaylistsPanel extends React.Component {
           </li>
         );
       });
-      content = <ul id="playlist-ul">{list}</ul>;
+      content = <ol id="playlist-ol">{list}</ol>;
     } else {
       content = <div className="empty-playlist">Empty playlist.</div>;
     }
