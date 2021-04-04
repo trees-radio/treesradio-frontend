@@ -41,7 +41,7 @@ export default class HypeProgress extends React.Component {
   render() {
     return (
       <div
-        className={"hypepb" + this.disableIfNecessary()}
+        className={"hypepb"}
         onClick={this.getHyped}
         style={{ visibility: hypetimer.lasthype > 0 }}
       >
@@ -60,8 +60,8 @@ export default class HypeProgress extends React.Component {
               {hypetimer.hypePercentageCharged === 100
                 ? "Hype Ready!"
                 : convertHoursMinutesSeconds(
-                    hypetime - hypetimer.secondsfromhype
-                  )}
+                  hypetime - hypetimer.secondsfromhype
+                )}
             </a>
           </div>
         </div>
@@ -310,15 +310,13 @@ class FireParticle extends Particle {
         },
         {
           background: "hsl(60,100%,80%)",
-          transform: `translate(${sx + (dx - sx) * 0.25}em,${
-            sy + (dy - sy) * 0.25
-          }em) scale(4)`,
+          transform: `translate(${sx + (dx - sx) * 0.25}em,${sy + (dy - sy) * 0.25
+            }em) scale(4)`,
         },
         {
           background: "hsl(40,100%,60%)",
-          transform: `translate(${sx + (dx - sx) * 0.5}em,${
-            sy + (dy - sy) * 0.5
-          }em) scale(7)`,
+          transform: `translate(${sx + (dx - sx) * 0.5}em,${sy + (dy - sy) * 0.5
+            }em) scale(7)`,
         },
         {
           background: "hsl(20,100%,40%)",

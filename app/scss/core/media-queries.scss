@@ -8,16 +8,23 @@
 }
 
 @media #{$isPortrait} {
-  .greyDisabled {
-    visibility: hidden;
+  .hide-small {
+    display: none;
   }
 }
 
 /* ## Navbar ## */
+@media only screen and (max-width: 800px) {
+  .navbar-brand {
+    width: 5rem;
+  }
+}
+
 @media #{$isPortrait}, (min-height: 1439px) {
   .navbar-brand {
     font-size: 250%;
     height: unset;
+    width: 5rem;
   }
 }
 
@@ -30,34 +37,16 @@
     //grid-template-rows: 5vw !important;
   }
 
-  #hype-grid-container {
-    align-self: center;
-  }
-
-  #hype-container {
-    margin: unset;
-    margin-bottom: unset;
-  }
-
-  .hypepb {
-    height: 2vh;
-    margin: 0.2vh 0;
-  }
-
-  .hypeprogress {
-    height: 1.5vh;
-  }
-
   .hypedone {
     line-height: 1.7vh;
   }
 }
 
-@media only screen and (max-width: 750px) {
-  #tr-nav {
-    height: 0;
-  }
-}
+// @media only screen and (max-width: 750px) {
+//   #tr-nav {
+//     height: 0;
+//   }
+// }
 
 @media only screen and (max-width: 1300px) {
   #toke-button {
@@ -71,10 +60,6 @@
 }
 
 @media (orientation: portrait) {
-  .navbar-grid-nologin {
-    grid-template-columns: 15vw 85vw 0 0 0 !important;
-  }
-
   @media #{$isPortrait}, screen and (min-height: 1339px) {
     #toke-button {
       padding: 0.8vh 0.7vw;
@@ -102,7 +87,6 @@
     width: 14.98%;
   }
 }
-
 
 /** ## Video ## */
 

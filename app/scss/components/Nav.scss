@@ -2,9 +2,9 @@
 @import "../core/variables";
 
 #tr-nav {
-  max-height: 5vh;
+  max-height: $navbar-height;
   top: 0 !important;
-  min-height: 4.5rem;
+  min-height: 4rem;
 }
 
 #tr-watermark {
@@ -12,17 +12,18 @@
 }
 
 #toke-button {
-  padding: 0.2vh 0.7vw;
   place-self: flex-start;
+  padding: 0 1rem 0;
   display: flex;
   color: white;
   text-shadow: $text-shadow-light;
   flex-flow: row nowrap;
   place-items: baseline;
   font-size: $navbar-font-size;
-  height: $navbar-button-height !important;
+  height: 100% !important;
   background: $color-button-toke;
   border-radius: $button-border-radius;
+  align-items: center;
 }
 
 .toke-active {
@@ -34,21 +35,13 @@
   display: flex !important;
   justify-content: space-between;
   flex-wrap: nowrap;
-  align-items: flex-start;
-}
-
-.navbar-grid-nologin {
-  grid-template-columns: 15vw 51vw 17vw 7vw 10vw !important;
+  align-items: stretch;
 }
 
 #navbar-space {
-  grid-area: space;
   display: inline-flex;
   flex-grow: 1;
   flex-flow: row nowrap;
-  grid-template-areas: "email password login register resetpw";
-  grid-template-columns: 15vw 15vw 5vw 5vw 5vw;
-  grid-template-rows: 5vh;
   height: inherit;
   width: inherit;
 }
@@ -59,13 +52,12 @@
 }
 
 .navbar-header {
-  grid-area: tr-watermark;
   padding-bottom: 1vh;
   display: flex;
   align-items: baseline;
   align-self: baseline;
-  grid-column-start: 1;
   float: left !important;
+  padding-bottom: 0;
 }
 
 .navbar-item {
@@ -86,6 +78,7 @@
 .navbar {
   margin-bottom: 1px;
   background-color: #0c0c0e;
+  min-height: auto;
 }
 
 .navbar-collapse {
@@ -107,7 +100,10 @@
   letter-spacing: 1px;
   vertical-align: baseline;
   overflow: hidden;
-  //padding: .8vh .6vw;
+  margin-top: 0.75vh;
+  margin-left: 1rem;
+  padding: 0 !important;
+  height: auto;
 }
 
 //Trees Radio Logo Color
@@ -148,28 +144,24 @@
   display: inline-flex;
   flex-flow: row nowrap;
   place-items: baseline;
-  margin-top: 0.75vh;
-  height: $navbar-button-height-portrait;
 }
 
 #loginWrapper {
   place-self: start;
   display: inline-flex;
+  height: 100%;
 }
 
 #emailpassfields {
   z-index: 2;
   place-self: center;
   margin-bottom: unset !important;
-  height: $navbar-button-height-portrait !important;
+  display: flex;
 }
 
 #loginButtons {
-  margin-top: $navbar-height - $navbar-button-height;
-  height: $navbar-button-height-portrait;
   display: inline-flex;
   place-self: center;
-  font-size: $navbar-font-size !important;
 }
 
 #loginButtons button {
@@ -204,7 +196,7 @@
 }
 
 #userbit-wrapper {
-  margin-right: 2vw;
+  margin-right: 1rem;
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -272,27 +264,21 @@ div .userbit-avatar span .avatarimg {
 }
 
 #toketimer-container {
-  grid-area: toke-button;
   justify-self: start;
-  align-self: start;
+  // height: 100%;
 }
 
 #userbit-container {
-  grid-area: userbit;
   place-self: start end;
   margin-bottom: 0.5vh;
 }
 
 #hype-grid-container {
-  grid-area: hype-button;
-  align-self: end;
   place-content: center;
-  display: inline-flex;
-  flex-flow: row-reverse wrap;
+  margin-left: 0.75rem;
 }
 
 #usernav-container {
-  grid-column: 3;
   place-self: center;
   margin-top: -10px;
   display: inline-flex;
@@ -303,17 +289,16 @@ div .userbit-avatar span .avatarimg {
 }
 
 #hype-container {
-  margin-bottom: 0.75vh;
   display: inline-flex;
   flex-flow: row nowrap;
+  height: 100%;
 }
 
 .hypepb {
   -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   width: 13.5vw;
-  height: $navbar-button-height;
-  margin-top: 0.75vh;
+  height: 100%;
   border-radius: $button-border-radius;
   overflow: hidden;
   text-align: center;
@@ -332,12 +317,17 @@ div .userbit-avatar span .avatarimg {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   width: 1.5vw;
-  height: 4vh;
+  height: 100%;
   border-radius: $button-border-radius;
   background: $color-button-hype;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
-  display: inline-block;
   overflow: hidden;
+}
+
+#hypeboom {
+  height: 100%;
+  padding-bottom: 0.75rem;
+  padding-top: 0.75rem;
 }
 
 .hypedone {

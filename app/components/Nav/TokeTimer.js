@@ -1,5 +1,5 @@
 import React from "react";
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 
 import toast from "utils/toast"
 
@@ -12,15 +12,15 @@ export default class TokeTimer extends React.Component {
         if (profile.user !== null) {
             toketimer.joinToke();
         } else {
-            toast.info("Log in to start or join a toke and toke with other users!", {delay: 1300})
+            toast.info("Log in to start or join a toke and toke with other users!", { delay: 1300 })
         }
     };
 
     getButtonClasses() {
         if (profile.user !== null) {
-            return toketimer.tokeUnderway ? "btn toke-active disabledNoLogin" : "btn disabledNoLogin";
+            return toketimer.tokeUnderway ? "toke-active disabledNoLogin" : "disabledNoLogin";
         } else {
-            return toketimer.tokeUnderway ? "btn toke-active disabledNoLogin greyDisabled" : "btn disabledNoLogin greyDisabled"
+            return toketimer.tokeUnderway ? "toke-active disabledNoLogin greyDisabled" : "disabledNoLogin greyDisabled"
         }
     }
 
@@ -29,20 +29,18 @@ export default class TokeTimer extends React.Component {
             <div
                 style={{
                     display: "inline-block",
-                    margin: "0 1vw",
-                    marginTop: ".75vh",
-                    height: "1.5vh"
+                    height: "100%"
                 }}
             >
-                <div>
+                <div style={{ height: "100%", padding: "0.75rem" }}>
                     <a
                         id="toke-button"
                         className={this.getButtonClasses()}
                         onClick={this.joinToke}>
                         Toke
-                        <span style={{display: toketimer.tokeUnderway ? "inherit" : "none"}}>
-              &nbsp;in:&nbsp; <b>{millisToMinutesAndSeconds(toketimer.remainingTime)}</b>
-            </span>
+                        <span style={{ display: toketimer.tokeUnderway ? "inherit" : "none" }}>
+                            &nbsp;in:&nbsp; <b>{millisToMinutesAndSeconds(toketimer.remainingTime)}</b>
+                        </span>
                     </a>
                 </div>
             </div>
