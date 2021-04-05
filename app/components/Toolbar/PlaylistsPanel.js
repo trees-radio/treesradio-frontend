@@ -9,6 +9,8 @@ import toast from "utils/toast";
 import moment from "moment";
 import $ from "jquery";
 
+const PLAYLIST_OPACITY = 'playlistOpacity';
+
 @observer
 export default class PlaylistsPanel extends React.Component {
   @observable
@@ -17,6 +19,29 @@ export default class PlaylistsPanel extends React.Component {
   removingPlaylist = false;
   @observable
   playlistToRemove = {};
+
+  constructor(props) {
+    super(props);
+    this.state = { opacity: this.getOpacityFromLocalStorage() };
+    this.changeOpacity = this.changeOpacity.bind(this);
+  }
+
+  getOpacityFromLocalStorage() {
+    const opacity = window.localStorage.getItem(PLAYLIST_OPACITY);
+    return opacity ? opacity : 90;
+  }
+
+  changeOpacity(event) {
+    let opacity = event.target.value;
+    window.localStorage.setItem(PLAYLIST_OPACITY, opacity);
+    this.setState({ opacity: opacity });
+  }
+
+  getOpacityStyle() {
+    return {
+      backgroundColor: "rgba(11,11,11," + this.state.opacity / 100 + ")"
+    };
+  }
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
@@ -276,7 +301,7 @@ export default class PlaylistsPanel extends React.Component {
     );
 
     return (
-      <div id="playlists-panel" className={mainClass}>
+      <div id="playlists-panel" className={mainClass} style={this.getOpacityStyle()}>
         <div id="playlists-panel-head">
           <div className="row">
             <div className="col-md-7">
@@ -358,6 +383,13 @@ export default class PlaylistsPanel extends React.Component {
           </div>
         </div>
         <div id="playlists-panel-display">{content}</div>
+        <div id="playlists-footer">
+          <span>Playlist opacity:</span>
+          <span className="slidecontainer">
+            <input type="range" min="0" max="100" className="slider" id="opacityRange" value={this.state.opacity}
+              onChange={this.changeOpacity} />
+          </span>
+        </div>
         <Modal
           show={this.addingPlaylist}
           hideModal={() => (this.addingPlaylist = false)}
@@ -444,7 +476,7 @@ export default class PlaylistsPanel extends React.Component {
             <input className="form-control" ref={c => (this._importUrl = c)} />
           </div>
         </Modal>
-      </div>
+      </div >
     );
   }
 }
