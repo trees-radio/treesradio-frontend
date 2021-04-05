@@ -51,8 +51,7 @@
 
 .playlists-panel-open {
   height: 90%;
-  opacity: 90%;
-  background-color: $color-trees-bg;
+  background-color: rgba(11, 11, 11, 0.9);
   border-left: solid;
   border-right: solid;
   border-top: solid;
@@ -165,11 +164,11 @@
 }
 
 .playlist-item-1 {
-  background-color: #121317;
+  background-color: rgba(18, 19, 23, 0.5);
 }
 
 .playlist-item-2 {
-  background-color: $color-trees-bg;
+  background-color: rgba(11, 11, 11, 0.5);
 }
 
 .pl-media-title {
