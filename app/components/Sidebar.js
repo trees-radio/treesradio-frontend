@@ -1,6 +1,6 @@
 import React from "react";
-import {observer} from "mobx-react";
-import {observable, autorun} from "mobx";
+import { observer } from "mobx-react";
+import { observable, autorun } from "mobx";
 import classNames from "classnames";
 
 import online from "stores/online";
@@ -29,11 +29,17 @@ class Sidebar extends React.Component {
         this.currentSidebar = "CHAT";
       }
     });
+
+    this.goToChat = this.goToChat.bind(this);
   }
 
   update(tab) {
     if (tab === this.currentSidebar) return;
     this.currentSidebar = tab;
+  }
+
+  goToChat() {
+    this.currentSidebar = "CHAT";
   }
 
   @observable currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
@@ -88,7 +94,7 @@ class Sidebar extends React.Component {
         </div>
         <div id="chatcontainertop" className="">
           <Chat show={this.currentSidebar === "CHAT"} />
-          <OnlineUsers show={this.currentSidebar === "ONLINE"} />
+          <OnlineUsers show={this.currentSidebar === "ONLINE"} goToChat={this.goToChat} />
           <Waitlist show={this.currentSidebar === "WAITLIST"} />
           <About show={this.currentSidebar === "ABOUT"} />
         </div>
