@@ -73,7 +73,7 @@
 }
 
 .nav-title:hover {
-  color: #77b300;
+  color: $color-trees-primary;
 }
 
 .navbar {
@@ -109,15 +109,15 @@
 
 //Trees Radio Logo Color
 .navbar-default .navbar-brand {
-  color: #77b300; // old color = 77b300
+  color: $color-trees-primary; // old color = 77b300
 }
 
 #usernametop.btn.btn-primary {
-  background-color: #77b300;
+  background-color: $color-trees-primary;
 }
 
 #usernamedropdown.btn.btn-primary.dropdown-toggle {
-  background-color: #77b300;
+  background-color: $color-trees-primary;
 }
 
 #userbitContainer .dropdown-menu {
