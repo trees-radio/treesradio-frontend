@@ -25,10 +25,23 @@
   border-radius: $button-border-radius;
   align-items: center;
   cursor: pointer;
+  text-decoration: none;
+  border: solid 1px darken($color-trees-primary, 20%);
+}
+
+#toke-button:hover {
+  border: solid 1px white;
+  background: $color-button-toke-hover;
+}
+
+.toke-button-container:hover {
+  padding-top: 0.42rem !important;
+  padding-bottom: 0.42rem !important;
 }
 
 .toke-active {
-  background: $color-button-waitlist-active-invrt;
+  background: darken(#ffac2b, 30%) !important;
+  background: $color-button-waitlist-active-invrt !important;
 }
 
 #navbar-grid {
