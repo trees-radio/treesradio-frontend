@@ -41,7 +41,7 @@
 }
 
 .toke-active {
-  background: darken(#ffac2b, 30%) !important;
+  border: 1px solid darken(#ffac2b, 30%) !important;
   background: $color-button-waitlist-active-invrt !important;
 }
 
