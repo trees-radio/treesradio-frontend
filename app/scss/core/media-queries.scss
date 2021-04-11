@@ -11,6 +11,20 @@
   .hide-small {
     display: none;
   }
+
+  #app-grid {
+    grid:
+      [row1-start] "nav" 5rem [row1-end]
+      [row2-start] "player" 1fr [row2-end]
+      [row3-start] "toolbar" 10rem [row3-end]
+      [row4-start] "chat" 2fr [row4-end]
+      / 1fr;
+  }
+
+  #vidcontainer,
+  #player-size {
+    height: 100%;
+  }
 }
 
 /* ## Navbar ## */
@@ -107,7 +121,6 @@
 
 @media (min-height: 0) {
   #player-size {
-    height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -125,7 +138,6 @@
 
 @media (min-height: 100px) {
   #player-size {
-    height: 63vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -143,7 +155,6 @@
 
 @media (min-height: 200px) {
   #player-size {
-    height: 68.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -161,7 +172,6 @@
 
 @media (min-height: 300px) {
   #player-size {
-    height: 73.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -179,7 +189,6 @@
 
 @media (min-height: 350px) {
   #player-size {
-    height: 75.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -197,7 +206,6 @@
 
 @media (min-height: 400px) {
   #player-size {
-    height: 79vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -215,7 +223,6 @@
 
 @media (min-height: 480px) {
   #player-size {
-    height: 80.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -233,7 +240,6 @@
 
 @media (min-height: 600px) {
   #player-size {
-    height: 82vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -251,7 +257,6 @@
 
 @media (min-height: 700px) {
   #player-size {
-    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -269,7 +274,6 @@
 
 @media (min-height: 1400px) {
   #player-size {
-    height: 85vh; //88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -280,7 +284,6 @@
 
 @media (min-height: 1600px) {
   #player-size {
-    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
