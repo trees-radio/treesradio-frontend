@@ -26,6 +26,27 @@ body {
   height: 100vh;
 }
 
+#app-grid {
+  display: grid;
+  grid:
+    [row1-start] "nav nav" 5rem [row1-end]
+    [row2-start] "player chat" auto [row2-end]
+    [row3-start] "toolbar chat" 10rem [row3-end]
+    / 3fr 1fr;
+}
+
+#toolbar {
+  grid-area: toolbar;
+}
+
+#videotoplevel {
+  grid-area: player;
+}
+
+#chattoplevel {
+  grid-area: chat;
+}
+
 h4 {
   font-size: 16px;
   min-height: 35px;

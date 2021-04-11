@@ -66,7 +66,8 @@
 #playlists-panel {
   position: absolute;
   width: 100%;
-  bottom: 10%;
+  bottom: 10rem;
+  top: 5rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -99,7 +100,6 @@
 }
 
 .playlists-panel-open {
-  height: 90%;
   border-left: solid;
   border-right: solid;
   border-top: solid;

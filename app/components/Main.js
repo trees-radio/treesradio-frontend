@@ -90,9 +90,9 @@ class Main extends React.Component {
 
     if (!app.init) {
 
-    events.register("force_refresh", () => {
-      location.reload();
-    });
+      events.register("force_refresh", () => {
+        location.reload();
+      });
       let randmsg = [
         // No messages over 40 characters
         "Grab a Bong and Sing A Long!",
@@ -124,35 +124,37 @@ class Main extends React.Component {
       );
     }
     return (
-      <div className={this.checkAprilFools()}>
+      <div className={this.checkAprilFools()} id="app-grid">
         <link
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossOrigin="anonymous"
         />
-        <ToastContainer />
         <Nav /> {/* Start Container */}
-        <div className="container-fluid">
-          <div className="row">
-            {" "}
-            {/* Video Component */}
-            <div
-              className="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-float"
-              id="videotoplevel"
-            >
-              <Player />
-              <div id="playlists-container">
-                <Toolbar />
-              </div>
-            </div>
-            {/* Chat Component */}
-            <div
-              className="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-float"
-              id="chattoplevel"
-            >
-              {" "}
-              {/* <Sidebar
+        {" "}
+        {/* Video Component */}
+        <div
+          id="videotoplevel"
+        >
+          <Player />
+          {playlists.init ? <PlaylistsPanel open={this.panelOpen} /> : false}
+
+        </div>
+        <div id="toolbar">
+          <div id="playlists-container">
+            <Toolbar />
+          </div>
+          <a id="exportPlaylistDownload" />
+        </div>
+        {/* Chat Component */}
+        <div
+          id="chattoplevel"
+        >
+          <ToastContainer />
+
+          {" "}
+          {/* <Sidebar
                                 loginData={this.state.user}
                                 chatData={this.state.chat}
                                 sendMsg={this.handleSendMsg}
@@ -164,12 +166,10 @@ class Main extends React.Component {
                                 staff={this.state.staff}
                                 chatlock={this.state.chatlock}
                               /> */}
-              <Sidebar />
-            </div>
-            {/* End Container */}
-          </div>
+          <Sidebar />
+
         </div>
-        <a id="exportPlaylistDownload" />
+        {/* End Container */}
       </div>
     );
   }
