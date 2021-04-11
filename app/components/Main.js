@@ -138,7 +138,7 @@ class Main extends React.Component {
           id="videotoplevel"
         >
           <Player />
-          {playlists.init ? <PlaylistsPanel open={this.panelOpen} /> : false}
+
 
         </div>
         <div id="toolbar">
