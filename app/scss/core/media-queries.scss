@@ -15,9 +15,9 @@
   #app-grid {
     grid:
       [row1-start] "nav" 5rem [row1-end]
-      [row2-start] "player" 1fr [row2-end]
+      [row2-start] "player" 40rem [row2-end]
       [row3-start] "toolbar" 10rem [row3-end]
-      [row4-start] "chat" 2fr [row4-end]
+      [row4-start] "chat" auto [row4-end]
       / 1fr;
   }
 
