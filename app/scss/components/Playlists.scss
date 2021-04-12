@@ -16,11 +16,11 @@
 }
 
 .current-playlist-name {
-  color: #77b300 !important;
+  color: $color-trees-primary !important;
 }
 
 .current-selected-media {
-  color: #77b300 !important;
+  color: $color-trees-primary !important;
 }
 
 .slidecontainer {
@@ -32,12 +32,13 @@
 .slider {
   -webkit-appearance: none;
   width: 100%;
-  height: 2rem;
+  height: 1rem;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
+  border-radius: 6px;
 }
 
 .slider:hover {
@@ -49,15 +50,17 @@
   appearance: none;
   width: 2rem;
   height: 2rem;
-  background: #77b300;
+  background: $color-trees-primary;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .slider::-moz-range-thumb {
   width: 2rem;
   height: 2rem;
-  background: #77b300;
+  background: $color-trees-primary;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 #playlists-panel {
@@ -80,7 +83,7 @@
   padding-top: 1.25%;
   padding-right: 1%;
   float: right;
-  color: #77b300;
+  color: $color-trees-primary;
   cursor: pointer;
   z-index: 2;
 }
@@ -141,7 +144,7 @@
 
   li {
     padding: 10px;
-    color: #77b300;
+    color: $color-trees-primary;
   }
 
   ul li {
@@ -277,7 +280,7 @@
 .current-playing-media {
   display: inline-block;
   float: left;
-  color: #77b300;
+  color: $color-trees-primary;
 }
 
 .current-selected-media:hover,
@@ -521,12 +524,12 @@
   text-align: center;
   cursor: pointer;
   margin-top: 0.3vw;
-  background-color: #77b300;
+  background-color: $color-trees-primary;
   border: 1px solid #2e2e38;
 }
 
 .volume-slider-bar {
-  background-color: #77b300;
+  background-color: $color-trees-primary;
   height: 100%;
 }
 
