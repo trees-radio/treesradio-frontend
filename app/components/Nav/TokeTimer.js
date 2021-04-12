@@ -32,7 +32,7 @@ export default class TokeTimer extends React.Component {
                     height: "100%"
                 }}
             >
-                <div style={{ height: "100%", padding: "0.75rem" }}>
+                <div className="toke-button-container" style={{ height: "100%", padding: "0.75rem" }}>
                     <a
                         id="toke-button"
                         className={this.getButtonClasses()}
