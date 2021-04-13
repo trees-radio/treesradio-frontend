@@ -67,7 +67,7 @@
 }
 
 .navbar-header {
-  padding-bottom: 1vh;
+  padding-bottom: 1rem;
   display: flex;
   align-items: baseline;
   align-self: baseline;
@@ -115,7 +115,7 @@
   letter-spacing: 1px;
   vertical-align: baseline;
   overflow: hidden;
-  margin-top: 0.75vh;
+  margin-top: 0.75rem;
   margin-left: 1rem;
   padding: 0 !important;
   height: auto;
@@ -235,7 +235,7 @@ div .userbit-avatar span .avatarimg {
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  margin-top: 2vh;
+  margin-top: 2rem;
 }
 
 #ytregcheck {
@@ -255,7 +255,7 @@ div .userbit-avatar span .avatarimg {
 }
 
 #usernametop {
-  margin-top: 0.75vh;
+  margin-top: 0.75rem;
   text-shadow: $text-shadow-heavy;
   letter-spacing: 1.5px;
   font-size: 110%;
@@ -285,7 +285,7 @@ div .userbit-avatar span .avatarimg {
 
 #userbit-container {
   place-self: start end;
-  margin-bottom: 0.5vh;
+  margin-bottom: 0.5rem;
 }
 
 #hype-grid-container {
@@ -322,7 +322,7 @@ div .userbit-avatar span .avatarimg {
   color: rgb(26, 17, 26);
   cursor: url("../../img/lighter.cur"), pointer;
   //background: #77b420;
-  line-height: 3.2vh;
+  line-height: 3.2rem;
 }
 
 .hypeprogress {
@@ -347,7 +347,7 @@ div .userbit-avatar span .avatarimg {
 
 .hypedone {
   text-align: center;
-  line-height: 3vh;
+  line-height: 3rem;
   font-weight: bold;
   color: white;
   text-shadow: 0.5px 0 0 #000000, -0.5px 0 0 #000000, 0 0.5px 0 #000000, 0 -0.5px 0 #000000, 0.5px 0.5px #000000,

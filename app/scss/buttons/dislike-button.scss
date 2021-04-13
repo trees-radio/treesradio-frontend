@@ -21,6 +21,7 @@
 }
 
 .dislike-button {
+  grid-area: dislike;
   @include toolbar-button-small;
 
   color: $color-button-text;

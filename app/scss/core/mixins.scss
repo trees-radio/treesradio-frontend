@@ -36,15 +36,9 @@
 
 /* ## Toolbar ## */
 @mixin toolbar-button-small {
-  height: 49%;
-  width: 95%;
-  margin: 2px auto;
-  box-sizing: content-box;
-  overflow: hidden;
   border: none;
   border-radius: $button-border-radius;
   text-align: center;
-  text-overflow: ellipsis;
   transition: background 500ms ease;
   background-size: 125%;
   text-shadow: $text-shadow-light;

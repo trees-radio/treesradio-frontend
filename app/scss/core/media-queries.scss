@@ -16,9 +16,14 @@
     grid:
       [row1-start] "nav" 5rem [row1-end]
       [row2-start] "player" 40rem [row2-end]
-      [row3-start] "toolbar" 10rem [row3-end]
+      [row3-start] "toolbar" 7rem [row3-end]
       [row4-start] "chat" auto [row4-end]
       / 1fr;
+  }
+
+  .join-waitlist,
+  #playlists-open-icon {
+    line-height: 7rem;
   }
 
   #vidcontainer,
@@ -78,27 +83,6 @@
     #toke-button {
       padding: 0.8vh 0.7vw;
     }
-  }
-}
-
-/* ## Playlists ## */
-
-@media (min-width: 800px) {
-  .waitlist {
-    width: 14.875%;
-  }
-}
-
-@media (min-width: 1300px) {
-  .waitlist {
-    width: 14.925%;
-    margin-top: 2px;
-  }
-}
-
-@media (min-width: 1600px) {
-  .waitlist {
-    width: 14.98%;
   }
 }
 

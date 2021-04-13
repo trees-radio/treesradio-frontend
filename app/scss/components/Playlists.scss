@@ -2,8 +2,12 @@
 
 #playlists-container {
   width: 100%;
-  float: right;
-  //margin-top: 4px;
+  height: 100%;
+}
+
+#playlists-component {
+  height: 100%;
+  width: 100%;
 }
 
 .media-time {
@@ -231,11 +235,15 @@
 }
 
 #playlists-bar {
-  width: 100%;
-  color: $color-trees-primary;
+  display: grid;
   height: 100%;
+  grid:
+    [row1-start] "playlist-btn playlist current-song waitlist-btn grab like" 1fr [row1-end]
+    [row2-start] "playlist-btn playlist current-song waitlist-btn volume dislike" 1fr [row2-end]
+    / 6rem 1fr 1fr 16rem 7rem 7rem;
+  color: $color-trees-primary;
+
   background-color: #0c0c0e;
-  float: left;
 }
 
 .marquee {
@@ -299,10 +307,10 @@
 }
 
 .waitlist {
+  grid-area: waitlist-btn;
   height: 100%;
   padding-left: 0;
   padding-right: 0;
-  line-height: 75px;
   text-align: center;
   display: table-cell;
   align-items: center;
@@ -324,8 +332,8 @@
 }
 
 #playlist-metadata {
+  grid-area: playlist;
   height: 100%;
-  max-height: 9vh;
   width: 19em;
   color: $color-trees-primary !important;
   border-top: solid $color-border-top;
@@ -335,7 +343,7 @@
   border-right-width: 10px;
   border-right-color: #0c0c0e;
   font-size: 1.15vw;
-  line-height: 4.1vh;
+  line-height: 2rem;
   padding: 0 5px;
   overflow-x: hidden;
   scrollbar-width: 10px;
@@ -350,12 +358,13 @@
 }
 
 #currentsong-metadata {
+  grid-area: current-song;
   height: 100%;
   border-top: solid;
   border-bottom: solid;
   border-color: #2d2f39;
-  font-size: 1.15vw;
-  line-height: 4.5vh;
+  font-size: 1.15rem;
+  line-height: 2rem;
   padding: 0;
   overflow-x: hidden;
   text-align: right;
@@ -373,19 +382,18 @@
 }
 
 #grabtrack {
-  height: 9vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
   padding: 0;
   margin: 0;
-  line-height: 25px;
 }
 
 #playlists-open-button {
+  grid-area: playlist-btn;
   height: 100%;
   cursor: pointer;
-  width: 4.4vw;
+  width: 100%;
   font-size: 0.75vw;
   border-right: solid;
   border-color: #2d2f39;
@@ -412,7 +420,6 @@
 }
 
 #vote {
-  height: 9vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -451,12 +458,6 @@
   width: 87%;
 }
 
-@media (min-width: 0) {
-  .waitlist {
-    width: 14.825%;
-  }
-}
-
 .add-to-playlist-button {
   cursor: pointer;
 }
@@ -479,9 +480,7 @@
 }
 
 .volume-slider {
-  height: 49%;
-  width: 95%;
-  margin: 0 auto;
+  grid-area: volume;
 }
 
 .volume-slider-icon {

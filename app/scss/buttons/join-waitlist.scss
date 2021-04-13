@@ -2,10 +2,9 @@
 @import "../core/variables";
 
 .join-waitlist {
+  height: 100%;
   background: $color-button-waitlist-join;
   color: white;
-  line-height: 9vh;
-  width: 95%;
   margin: 0 auto;
   box-sizing: content-box;
   cursor: pointer;

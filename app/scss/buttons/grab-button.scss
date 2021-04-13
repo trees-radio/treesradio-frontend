@@ -20,11 +20,11 @@
 }
 
 .grab-button {
+  grid-area: grab;
   @include toolbar-button-small;
 
   color: $color-button-text;
   background: $color-button-grab;
-  line-height: 1.75vw;
 }
 
 .grab-button:hover {

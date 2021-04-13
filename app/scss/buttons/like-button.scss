@@ -20,6 +20,7 @@
 }
 
 .like-button {
+  grid-area: like;
   @include toolbar-button-small;
 
   color: $color-button-text;
