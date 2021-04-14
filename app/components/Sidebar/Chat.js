@@ -25,4 +25,6 @@ const Chat = React.forwardRef((props, ref) =>
   </div>
 ));
 
+Chat.displayName = "Chat";
+
 export default Chat;
