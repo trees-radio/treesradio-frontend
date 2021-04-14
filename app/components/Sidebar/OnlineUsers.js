@@ -4,6 +4,7 @@ import UserName from "components/utility/User/UserName";
 import UserAvatar from "components/utility/User/UserAvatar";
 import profile from "stores/profile";
 import online from "stores/online";
+import getUsername from "../../libs/username";
 
 @observer
 export default class OnlineUsers extends React.Component {
@@ -52,8 +53,9 @@ export default class OnlineUsers extends React.Component {
                         user.feedback.grabs === true ? "fa fa-plus-square-o users-grab" : ""
                       }
                     />
-                    <UserName className="users-username" uid={user.uid} username={user.username} onClick={() => {
-                      $("#chatinput").val($("#chatinput").val() + " @" + user.username + " ");
+                    <UserName className="users-username" uid={user.uid} onClick={async () => {
+                      const username = await getUsername(user.uid);
+                      $("#chatinput").val($("#chatinput").val() + " @" + username + " ");
                       this.props.goToChat();
                       // TODO: implement focus with forward ref, jquery not working: $("#chatinput").focus();
                     }} />{" "}
