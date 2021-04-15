@@ -16,8 +16,8 @@ const SCROLL_SENSITIVITY = 200;
 @observer
 export default class ChatContent extends React.Component {
 
-    @observable
-    touchOffset = 0;
+  @observable
+  touchOffset = 0;
 
   componentDidMount() {
     this.scroll();
@@ -65,7 +65,7 @@ export default class ChatContent extends React.Component {
     let testLow = test - SCROLL_SENSITIVITY;
     let testHigh = test + SCROLL_SENSITIVITY;
     this.shouldScroll = target > testLow && target < testHigh;
-    }
+  }
 
   componentDidUpdate() {
     this.autoScroll();
@@ -110,9 +110,10 @@ export default class ChatContent extends React.Component {
             <UserName
               uid={msg.uid}
               className="chat-username"
-              onClick={() =>
-                chat.appendMsg("@" + msg.username + " ") &&
-                $("#chatinput").click()
+              onClick={() => {
+                chat.appendMsg("@" + msg.username + " ");
+                this.props.goToChat();
+              }
               }
             />
             <span className="chat-timestamp">{humanTimestamp}</span>

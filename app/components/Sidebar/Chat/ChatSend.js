@@ -1,6 +1,6 @@
 import React from "react";
 // import {observable} from 'mobx';
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 // import fbase from 'stores/fbase';
 import chat from "stores/chat";
 import profile from "stores/profile";
@@ -64,6 +64,7 @@ export default class ChatSend extends React.Component {
           {matchContainer}{" "}
           <div id="sendbox_test" className="input-group tr-form-group">
             <input
+              ref={this.props.myref}
               type="text"
               placeholder="enter to send"
               id="chatinput"
