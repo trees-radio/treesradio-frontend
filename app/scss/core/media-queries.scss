@@ -15,9 +15,9 @@
   #app-grid {
     grid:
       [row1-start] "nav" 5rem [row1-end]
-      [row2-start] "player" 40rem [row2-end]
+      [row2-start] "player" 30rem [row2-end]
       [row3-start] "toolbar" 7rem [row3-end]
-      [row4-start] "chat" auto [row4-end]
+      [row4-start] "chat" 1fr [row4-end]
       / 1fr;
   }
 
@@ -74,7 +74,7 @@
   }
 
   .hypepb {
-    font-size: $navbar-font-size * 0.7;
+    font-size: $navbar-font-size;
   }
 }
 

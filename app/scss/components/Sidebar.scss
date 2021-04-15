@@ -1,5 +1,7 @@
 #sidebar {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 //moving sidebar-changer and online-Ents/Waitlist-Cnt classes to bottom

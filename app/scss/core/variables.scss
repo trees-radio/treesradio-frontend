@@ -127,7 +127,7 @@ $button-border-radius: 6px;
 
 /* ### Navbar ### */
 $navbar-font-size: 1.2em;
-$navbar-font-size-dynamic: 0.75vw; //use in elements that break easily when cramped
+$navbar-font-size-dynamic: 1em; //use in elements that break easily when cramped
 
 $navbar-height: 5vh;
 $navbar-button-height: auto;
@@ -136,10 +136,10 @@ $navbar-height-portrait: 3vh;
 $navbar-button-height-portrait: 2vh;
 
 /* ### Sidebar ### */
-$rank-font-size: 1.1vh;
+$rank-font-size: 1.1em;
 
 /* ### Toolbar ### */
-$toolbar-grab-panel-font-size: 16px;
+$toolbar-grab-panel-font-size: 1em;
 
 /* ### Playlists ### */
 

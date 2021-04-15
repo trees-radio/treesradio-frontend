@@ -13,10 +13,8 @@
 .media-time {
   float: right;
   background-color: $color-controlarea-background;
-  position: absolute;
   padding-left: 0.5em;
   z-index: 2;
-  right: 0;
 }
 
 .current-playlist-name {
@@ -121,7 +119,7 @@
 
 .pl-time {
   padding-right: 2%;
-  font-size: 12px;
+  font-size: 0.8em;
 }
 
 .pl-channel {
@@ -202,7 +200,7 @@
   border-color: #609606;
   //padding: 2px; Bacchus request March'20
   text-shadow: $text-shadow-heavy;
-  font-size: 1.5vw;
+  font-size: 1.5em;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
@@ -236,11 +234,14 @@
 
 #playlists-bar {
   display: grid;
+  grid-gap: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   height: 100%;
   grid:
     [row1-start] "playlist-btn playlist current-song waitlist-btn grab like" 1fr [row1-end]
     [row2-start] "playlist-btn playlist current-song waitlist-btn volume dislike" 1fr [row2-end]
-    / 6rem 1fr 1fr 16rem 7rem 7rem;
+    / 4rem 1fr 1fr 12rem 4.5rem 4.5rem;
   color: $color-trees-primary;
 
   background-color: #0c0c0e;
@@ -334,7 +335,6 @@
 #playlist-metadata {
   grid-area: playlist;
   height: 100%;
-  width: 19em;
   color: $color-trees-primary !important;
   border-top: solid $color-border-top;
   border-right: solid;
@@ -342,7 +342,7 @@
   border-bottom-color: #0c0c0e;
   border-right-width: 10px;
   border-right-color: #0c0c0e;
-  font-size: 1.15vw;
+  font-size: 1.15em;
   line-height: 2rem;
   padding: 0 5px;
   overflow-x: hidden;
@@ -363,7 +363,7 @@
   border-top: solid;
   border-bottom: solid;
   border-color: #2d2f39;
-  font-size: 1.15rem;
+  font-size: 1.15em;
   line-height: 2rem;
   padding: 0;
   overflow-x: hidden;
@@ -394,7 +394,7 @@
   height: 100%;
   cursor: pointer;
   width: 100%;
-  font-size: 0.75vw;
+  font-size: 0.75em;
   border-right: solid;
   border-color: #2d2f39;
   background: $color-button-open-playlists;
@@ -486,7 +486,7 @@
 .volume-slider-icon {
   position: absolute;
   z-index: 2;
-  font-size: 1.15vw !important;
+  font-size: 1.15em !important;
   text-align: right;
   padding: 0;
   line-height: 5.5vh !important;
