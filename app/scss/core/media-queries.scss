@@ -67,24 +67,24 @@
 //   }
 // }
 
-@media only screen and (max-width: 1300px) {
-  #toke-button {
-    font-size: 0.75 * $navbar-font-size;
-    padding: 0.4vh 0.7vw;
-  }
+// @media only screen and (max-width: 1300px) {
+//   #toke-button {
+//     font-size: 0.75 * $navbar-font-size;
+//     padding: 0.4vh 0.7vw;
+//   }
 
-  .hypepb {
-    font-size: $navbar-font-size;
-  }
-}
+//   .hypepb {
+//     font-size: $navbar-font-size;
+//   }
+// }
 
-@media (orientation: portrait) {
-  @media #{$isPortrait}, screen and (min-height: 1339px) {
-    #toke-button {
-      padding: 0.8vh 0.7vw;
-    }
-  }
-}
+// @media (orientation: portrait) {
+//   @media #{$isPortrait}, screen and (min-height: 1339px) {
+//     #toke-button {
+//       padding: 0.8vh 0.7vw;
+//     }
+//   }
+// }
 
 /** ## Video ## */
 

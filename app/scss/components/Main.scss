@@ -1,8 +1,6 @@
 @import "../core/variables";
 @import "../core/mixins";
 
-@include fontResize(19);
-
 html,
 body {
   background-size: cover;

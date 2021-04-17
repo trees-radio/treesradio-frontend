@@ -7,7 +7,6 @@
   text-align: center;
   align-self: baseline;
   align-content: baseline;
-  max-width: 15vw;
   height: $navbar-button-height;
 }
 
@@ -52,7 +51,6 @@ div .userbit-avatar span .avatarimg {
 @media only screen and (max-width: 1625px) {
   #username,
   #usernamedropdown {
-    //max-width: 10vw;
     font-size: 0.7 * $navbar-font-size;
   }
 }
@@ -60,15 +58,14 @@ div .userbit-avatar span .avatarimg {
 @media only screen and (max-width: 1730px) {
   #username,
   #usernamedropdown {
-    max-width: 11vw;
     font-size: 0.65 * $navbar-font-size;
   }
 }
 
 @media only screen and (max-width: 1300px) {
-  #username, #usernamedropdown {
+  #username,
+  #usernamedropdown {
     font-size: 0.6 * $navbar-font-size;
-    //max-width: 8vw;
   }
 }
 
@@ -77,7 +74,6 @@ div .userbit-avatar span .avatarimg {
     height: 2rem !important;
     width: 2rem !important;
   }
-
 }
 
 @media only screen and (max-height: 630px) {

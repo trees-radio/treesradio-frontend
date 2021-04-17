@@ -304,7 +304,7 @@ export default class PlaylistsPanel extends React.Component {
       <div id="playlists-panel" className={mainClass} style={this.getOpacityStyle()}>
         <div id="playlists-panel-head">
           <div className="row">
-            <div className="col-md-7">
+            <div className="col-xs-7">
               <input
                 type="text"
                 id="playlist-search-box"
@@ -338,7 +338,7 @@ export default class PlaylistsPanel extends React.Component {
               />{" "}
               Soundcloud
             </div>
-            <div className="col-md-5">
+            <div className="col-xs-5">
               <div className="btn-group" id="playlist-btn">
                 <a
                   className="btn btn-primary dropdown-toggle"

@@ -68,11 +68,11 @@
 #playlists-panel {
   position: absolute;
   width: 100%;
-  bottom: 10rem;
   top: 5rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 30rem; // ,-- should be media query
 }
 
 #playlists-footer {
@@ -92,7 +92,7 @@
 }
 
 .playlists-panel-closed {
-  height: 0;
+  height: 0 !important;
   overflow: hidden;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -411,7 +411,6 @@
   color: white;
   text-shadow: $text-shadow-light;
   letter-spacing: 1.5px;
-  line-height: calc(9vh + 2px);
   height: inherit;
   width: inherit;
   padding-left: 25%;
@@ -481,29 +480,20 @@
 
 .volume-slider {
   grid-area: volume;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .volume-slider-icon {
-  position: absolute;
   z-index: 2;
   font-size: 1.15em !important;
   text-align: right;
   padding: 0;
-  line-height: 5.5vh !important;
-  right: 3.75vw;
   // margin-left: -40%;
   color: white;
   text-shadow: $text-shadow-light;
   pointer-events: none;
-  top: 2.1vw;
-}
-
-.fa-volume-off {
-  right: 3.75vw;
-}
-
-.fa-volume-down {
-  right: 3.75vw;
 }
 
 .volume-slider-node {
