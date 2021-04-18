@@ -33,17 +33,6 @@
   }
 }
 
-@media (min-width: 1200px) {
-  #chatcontainertop {
-    grid-area: unset;
-    height: calc(100vh - 5vh - 5%);
-    width: 100%;
-    bottom: 0;
-    margin-right: 0;
-    overflow: hidden;
-  }
-}
-
 @media (min-width: 0px) {
   #chatcontainer {
     height: unset;
@@ -61,16 +50,7 @@
 
 @media (min-width: 1200px) {
   #chatcontainer {
-    height: 100%;
-    padding-bottom: 7%;
     width: 100%;
-    bottom: -25px;
-    overflow: hidden;
-    display: unset;
-    grid-template-columns: unset;
-    grid-template-rows: unset;
-    grid-column-gap: unset;
-    grid-row-gap: unset;
   }
 }
 
@@ -287,14 +267,6 @@
   #chatscroll {
     height: unset;
     grid-area: 1 / 1 / 9 / 2;
-  }
-}
-
-@media (min-width: 1200px) {
-  #chatscroll {
-    height: calc(100% + 4vh); //92%
-    margin: 0;
-    grid-area: unset;
   }
 }
 

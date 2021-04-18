@@ -2,6 +2,7 @@
 @import "../core/variables";
 
 .join-waitlist {
+  line-height: $sidebar-height;
   height: 100%;
   background: $color-button-waitlist-join;
   color: white;

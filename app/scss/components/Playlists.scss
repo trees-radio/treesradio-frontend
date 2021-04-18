@@ -68,11 +68,11 @@
 #playlists-panel {
   position: absolute;
   width: 100%;
-  top: 5rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 30rem; // ,-- should be media query
+  bottom: $sidebar-height;
+  height: calc(100% - #{$navbar-height} - #{$sidebar-height});
 }
 
 #playlists-footer {
@@ -234,7 +234,7 @@
 
 #playlists-bar {
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 4px;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   height: 100%;
@@ -416,6 +416,7 @@
   padding-left: 25%;
   padding-right: 25%;
   padding-top: 0;
+  line-height: $sidebar-height;
 }
 
 #vote {
@@ -480,9 +481,7 @@
 
 .volume-slider {
   grid-area: volume;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  position: relative;
 }
 
 .volume-slider-icon {
@@ -490,7 +489,9 @@
   font-size: 1.15em !important;
   text-align: right;
   padding: 0;
-  // margin-left: -40%;
+  position: absolute;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
   color: white;
   text-shadow: $text-shadow-light;
   pointer-events: none;

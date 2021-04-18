@@ -21,6 +21,11 @@
       / 1fr;
   }
 
+  #playlists-panel {
+    bottom: calc(100%- #{$player-height} - #{$navbar-height});
+    height: 30rem;
+  }
+
   .join-waitlist,
   #playlists-open-icon {
     line-height: 7rem;

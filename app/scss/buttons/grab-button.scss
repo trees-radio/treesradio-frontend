@@ -2,12 +2,6 @@
 @import "../core/variables";
 @import "../core/mixins";
 
-.feedback-grab {
-  float: right;
-  padding-right: 1.5vw;
-  padding-top: 0.1vw;
-}
-
 .grab-button {
   grid-area: grab;
   @include toolbar-button-small;
