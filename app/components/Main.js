@@ -45,6 +45,15 @@ class Main extends React.Component {
   @observable
   changingEmail = false;
 
+  constructor(props) {
+    super(props);
+    this.state = { show420: false };
+  }
+
+  componentDidMount() {
+    this.check420();
+  }
+
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
     if (key === 13) {
@@ -74,6 +83,15 @@ class Main extends React.Component {
     return "noop";
   }
 
+  check420() {
+    const curtime = new Date(),
+      curday = curtime.getDate(),
+      curmonth = curtime.getMonth() + 1;
+    if (curmonth === 4 && curday === 20) {
+      this.effects420();
+    }
+  }
+
   aprilFoolsShenanigans() {
     const me = this;
     setTimeout(function () {
@@ -86,13 +104,17 @@ class Main extends React.Component {
     }, Math.floor(Math.random() * 5000) + 300000);
   }
 
+  effects420() {
+    this.setState({ show420: true });
+  }
+
   render() {
 
     if (!app.init) {
 
-    events.register("force_refresh", () => {
-      location.reload();
-    });
+      events.register("force_refresh", () => {
+        location.reload();
+      });
       let randmsg = [
         // No messages over 40 characters
         "Grab a Bong and Sing A Long!",
@@ -132,7 +154,7 @@ class Main extends React.Component {
           crossOrigin="anonymous"
         />
         <ToastContainer />
-        <Nav /> {/* Start Container */}
+        <Nav show420={this.state.show420} /> {/* Start Container */}
         <div className="container-fluid">
           <div className="row">
             {" "}
