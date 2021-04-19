@@ -2,6 +2,7 @@ import toast from "utils/toast";
 import audioNotify from "libs/audioNotify";
 import profile from "../stores/profile";
 import favicon from "../img/favicon.png"
+import tokeEvent from "../libs/tokeEvent";
 
 export default function mention(everyone, username, toke) {
 
@@ -9,6 +10,9 @@ export default function mention(everyone, username, toke) {
 
         setTimeout(() => {
             let notificationMessage = toke ? 'Toke!' : 'You were mentioned by ' + username + '.';
+            if (toke) {
+                tokeEvent.tokeNow();
+            }
             if (profile.desktopNotifications) {
                 let options = {
                     icon: favicon,
@@ -27,4 +31,5 @@ export default function mention(everyone, username, toke) {
         });
         if (profile.notifications) audioNotify.play();
     }
+
 }

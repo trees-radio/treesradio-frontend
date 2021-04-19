@@ -23,23 +23,23 @@ module.exports = {
       {
         test: /\.scss$/,
         // loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css!sass", {publicPath: "/assets/"})
+        loader: ExtractTextPlugin.extract("style", "css!sass", { publicPath: "/assets/" })
       },
       {
         test: /\.css$/,
         // loader: 'style!css!sass'
-        loader: ExtractTextPlugin.extract("style", "css", {publicPath: "/assets/"})
+        loader: ExtractTextPlugin.extract("style", "css", { publicPath: "/assets/" })
+      },
+      {
+        test: /\.svg$/,
+        loader: "file"
       },
       {
         test: /\.png$/,
         loader: "file"
       },
       {
-        test: /\.jpg$/,
-        loader: "file"
-      },
-      {
-        test: /\.(eot|woff|woff2|ttf|svg)(\?\S*)?$/,
+        test: /\.(eot|woff|woff2|ttf)(\?\S*)?$/,
         loader: "url?limit=100000&name=[name].[ext]"
       }
     ]
