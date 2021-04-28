@@ -6,10 +6,10 @@ import './scss/core/index.scss'; // our scss entry
 // B u lma flex-fw
 import "./scss/core/bulma.sass";
 
-import 'bootstrap'; //load bootstrap js, depends on $
+// import 'bootstrap'; //load bootstrap js, depends on $
 import 'font-awesome-webpack-4';
 import 'babel-polyfill'; // required for IE
 import 'script-loader!localforage'; //needs to execute as script, ugly console warnings otherwise
 import Main from './components/Main';
 
-ReactDOM.render(<Main/>, document.getElementById('app'));
+ReactDOM.render(<Main />, document.getElementById('app'));

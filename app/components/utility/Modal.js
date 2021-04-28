@@ -1,27 +1,27 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+// import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
 
 class UtilityModal extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.state = {show: false};
+    this.state = { show: false };
   }
   handleClose() {
     this.props.hideModal();
   }
   handleShow() {
-    this.setState({show: true});
+    this.setState({ show: true });
   }
   render() {
     var leftButton;
     if (this.props.leftButton && this.props.leftButtonText) {
       leftButton = (
-        <Button onClick={this.props.leftButton} variant="primary">
+        <button onClick={this.props.leftButton} variant="primary">
           {this.props.leftButtonText}
-        </Button>
+        </button>
       );
     }
 
@@ -30,7 +30,7 @@ class UtilityModal extends React.Component {
     var backdrop = this.props.backdrop || true;
     return (
       <>
-        <Modal
+        {/* <Modal
           show={this.props.show}
           onHide={this.handleClose}
           size={size}
@@ -51,7 +51,7 @@ class UtilityModal extends React.Component {
             )}
             {leftButton}
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </>
     );
   }
