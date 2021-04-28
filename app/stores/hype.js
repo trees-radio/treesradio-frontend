@@ -1,16 +1,16 @@
-import {autorun, observable} from "mobx";
+import { autorun, observable } from "mobx";
 import fbase from "libs/fbase";
-import {send} from "libs/events";
+import { send } from "libs/events";
 import profile from "./profile";
 import epoch from "utils/epoch";
 
-const hypetime = 260; // 60 seconds
+export const hypetime = 120; // It was 260 = 4:20 before, people found that too long
 
 export default new (class HypeTimer {
   constructor() {
     autorun(() => {
       const hypetimer = this;
-      var recheck = setInterval(function() {
+      var recheck = setInterval(function () {
         if (profile.uid == false) return;
         clearInterval(recheck);
         fbase
@@ -43,7 +43,7 @@ export default new (class HypeTimer {
             }
           });
       }, 10000);
-      setInterval(function() {
+      setInterval(function () {
         hypetimer.checkTimer();
       }, 1000);
     });
@@ -60,6 +60,6 @@ export default new (class HypeTimer {
   }
 
   getHyped() {
-    return send("chat", {mentions: [], msg: "/hype"});
+    return send("chat", { mentions: [], msg: "/hype" });
   }
 })();
