@@ -3,7 +3,7 @@
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
 ---
-image: "node:latest"
+image: "node:lts-alpine"
 
 cache:
   key: "$CI_BUILD_STAGE_$CI_BUILD_REF_NAME_02"
@@ -17,9 +17,7 @@ stages:
   - deploy
 
 before_script:
-  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-  - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-  - apt update && apt -y install yarn
+  - apk -U add yarn git
   - yarn
 
 lint:
@@ -59,8 +57,7 @@ deploy_staging:
   environment: 
     name: staging
   before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev rubygems
+    - apk -U add ruby-dev rubygems
     - gem install dpl
   dependencies:
     - build-dev
@@ -75,8 +72,7 @@ deploy_production:
   environment: 
     name: production
   before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev rubygems
+    - apk -U add ruby-dev rubygems
     - gem install dpl
   dependencies:
     - build-prod
