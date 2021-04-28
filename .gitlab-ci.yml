@@ -57,7 +57,7 @@ deploy_staging:
   environment: 
     name: staging
   before_script:
-    - apk -U add ruby-dev rubygems
+    - apk -U add ruby-dev
     - gem install dpl
   dependencies:
     - build-dev
@@ -72,7 +72,7 @@ deploy_production:
   environment: 
     name: production
   before_script:
-    - apk -U add ruby-dev rubygems
+    - apk -U add ruby-dev
     - gem install dpl
   dependencies:
     - build-prod
