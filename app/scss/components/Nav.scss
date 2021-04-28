@@ -12,6 +12,195 @@
   overflow: hidden;
 }
 
+.container-weed {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.heart {
+  width: 50%;
+  margin: 5em;
+  animation: 0.8s infinite beatHeart;
+}
+
+.peace {
+  width: 50%;
+  margin: 5em;
+  animation: 0.8s infinite pulseWeed;
+}
+
+.weed {
+  font-size: 1em;
+  font-family: Arial;
+  text-shadow: 0 0 1px #000;
+  width: 5%;
+}
+
+@-webkit-keyframes weed-fall {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@-webkit-keyframes weed-shake {
+  0% {
+    -webkit-transform: translateX(0px) rotate(-0.2turn);
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+  50% {
+    -webkit-transform: translateX(80px) rotate(0.2turn);
+    transform: translateX(80px) rotate(0.2turn);
+  }
+  100% {
+    -webkit-transform: translateX(0px) rotate(-0.2turn);
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+}
+@keyframes weed-fall {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@keyframes weed-shake {
+  0% {
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+  50% {
+    transform: translateX(80px) rotate(0.2turn);
+  }
+  100% {
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+}
+.weed {
+  position: fixed;
+  top: -10%;
+  z-index: 9999;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  -webkit-animation-name: weed-fall, weed-shake;
+  -webkit-animation-duration: 10s, 3s;
+  -webkit-animation-timing-function: linear, ease-in-out;
+  -webkit-animation-iteration-count: infinite, infinite;
+  -webkit-animation-play-state: running, running;
+  animation-name: weed-fall, weed-shake;
+  animation-duration: 10s, 3s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-play-state: running, running;
+}
+.weed:nth-of-type(0) {
+  left: 1%;
+  -webkit-animation-delay: 0s, 0s;
+  animation-delay: 0s, 0s;
+}
+.weed:nth-of-type(1) {
+  left: 10%;
+  -webkit-animation-delay: 1s, 1s;
+  animation-delay: 1s, 1s;
+}
+.weed:nth-of-type(2) {
+  left: 20%;
+  -webkit-animation-delay: 6s, 0.5s;
+  animation-delay: 6s, 0.5s;
+}
+.weed:nth-of-type(3) {
+  left: 30%;
+  -webkit-animation-delay: 4s, 2s;
+  animation-delay: 4s, 2s;
+}
+.weed:nth-of-type(4) {
+  left: 40%;
+  -webkit-animation-delay: 2s, 2s;
+  animation-delay: 2s, 2s;
+}
+.weed:nth-of-type(5) {
+  left: 50%;
+  -webkit-animation-delay: 8s, 3s;
+  animation-delay: 8s, 3s;
+}
+.weed:nth-of-type(6) {
+  left: 60%;
+  -webkit-animation-delay: 6s, 2s;
+  animation-delay: 6s, 2s;
+}
+.weed:nth-of-type(7) {
+  left: 70%;
+  -webkit-animation-delay: 2.5s, 1s;
+  animation-delay: 2.5s, 1s;
+}
+.weed:nth-of-type(8) {
+  left: 80%;
+  -webkit-animation-delay: 1s, 0s;
+  animation-delay: 1s, 0s;
+}
+.weed:nth-of-type(9) {
+  left: 90%;
+  -webkit-animation-delay: 3s, 1.5s;
+  animation-delay: 3s, 1.5s;
+}
+
+@keyframes beatHeart {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseWeed {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shine {
+  10% {
+    opacity: 1;
+    top: 0;
+    left: 100%;
+    transition-property: left, top, opacity;
+    transition-duration: 1s, 1s, 0.15s;
+    transition-timing-function: ease;
+  }
+
+  100% {
+    opacity: 0;
+    top: 0;
+    left: 100%;
+    transition-property: left, top, opacity;
+  }
+}
+
 #toke-button {
   place-self: flex-start;
   padding: 0 1rem 0;
@@ -22,22 +211,65 @@
   place-items: baseline;
   font-size: $navbar-font-size;
   height: 100% !important;
-  background: $color-button-toke;
+  background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    );
   border-radius: $button-border-radius;
   align-items: center;
   cursor: pointer;
   text-decoration: none;
-  border: solid 1px darken($color-trees-primary, 20%);
-}
+  position: relative;
+  overflow: hidden;
+  border: solid 1px darken(#b38728, 20%);
 
-#toke-button:hover {
-  border: solid 1px white;
-  background: $color-button-toke-hover;
-}
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    border: solid 1px white;
+  }
 
-.toke-button-container:hover {
-  padding-top: 0.42rem !important;
-  padding-bottom: 0.42rem !important;
+  &:after {
+    animation: shine 3s ease-in-out infinite;
+    animation-fill-mode: forwards;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -200%;
+    width: 200%;
+    height: 100%;
+    opacity: 0;
+    transform: rotate(42deg);
+
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.13) 0%,
+      rgba(255, 255, 255, 0.13) 20%,
+      rgba(255, 255, 255, 0.8) 92%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  /* Hover state - trigger effect */
+
+  /* Active state */
+
+  &:active:after {
+    opacity: 0;
+  }
 }
 
 .toke-active {
@@ -67,7 +299,7 @@
 }
 
 .navbar-header {
-  padding-bottom: 1rem;
+  padding-bottom: 1vh;
   display: flex;
   align-items: baseline;
   align-self: baseline;

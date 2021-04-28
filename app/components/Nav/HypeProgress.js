@@ -1,12 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import hypetimer from "stores/hype";
+import hypetimer, { hypetime } from "stores/hype";
 import profile from "stores/profile";
 import { observable } from "mobx";
 import toast from "utils/toast";
 
-const hypetime = 260; //4:20
 @observer
 export default class HypeProgress extends React.Component {
   getHyped = () => {

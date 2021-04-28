@@ -31,6 +31,7 @@ class Sidebar extends React.Component {
     });
 
     this.goToChat = this.goToChat.bind(this);
+    this.chatInputRef = React.createRef();
   }
 
   update(tab) {
@@ -40,6 +41,7 @@ class Sidebar extends React.Component {
 
   goToChat() {
     this.currentSidebar = "CHAT";
+    this.chatInputRef.current.focus();
   }
 
   @observable currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
@@ -93,9 +95,9 @@ class Sidebar extends React.Component {
           </div>
         </div>
         <div id="chatcontainertop" className="">
-          <Chat show={this.currentSidebar === "CHAT"} />
+          <Chat show={this.currentSidebar === "CHAT"} ref={this.chatInputRef} goToChat={this.goToChat} />
           <OnlineUsers show={this.currentSidebar === "ONLINE"} goToChat={this.goToChat} />
-          <Waitlist show={this.currentSidebar === "WAITLIST"} />
+          <Waitlist show={this.currentSidebar === "WAITLIST"} goToChat={this.goToChat} />
           <About show={this.currentSidebar === "ABOUT"} />
         </div>
       </div>

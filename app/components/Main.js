@@ -45,6 +45,15 @@ class Main extends React.Component {
   @observable
   changingEmail = false;
 
+  constructor(props) {
+    super(props);
+    this.state = { show420: false };
+  }
+
+  componentDidMount() {
+    this.check420();
+  }
+
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
     if (key === 13) {
@@ -74,6 +83,15 @@ class Main extends React.Component {
     return "noop";
   }
 
+  check420() {
+    const curtime = new Date(),
+      curday = curtime.getDate(),
+      curmonth = curtime.getMonth() + 1;
+    if (curmonth === 4 && curday === 20) {
+      this.effects420();
+    }
+  }
+
   aprilFoolsShenanigans() {
     const me = this;
     setTimeout(function () {
@@ -84,6 +102,10 @@ class Main extends React.Component {
       }
       me.aprilFoolsShenanigans();
     }, Math.floor(Math.random() * 5000) + 300000);
+  }
+
+  effects420() {
+    this.setState({ show420: true });
   }
 
   render() {
@@ -124,14 +146,14 @@ class Main extends React.Component {
       );
     }
     return (
-      <div className={this.checkAprilFools()} id="app-grid">
+      <div className={this.checkAprilFools()} id="app-grid" >
         <link
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossOrigin="anonymous"
         />
-        <Nav /> {/* Start Container */}
+        <Nav show420={this.state.show420} /> {/* Start Container */}
         {" "}
         {/* Video Component */}
         <div

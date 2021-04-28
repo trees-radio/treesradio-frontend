@@ -12,6 +12,7 @@ import profile from "stores/profile";
 import $ from "jquery";
 import Modal from "components/utility/Modal";
 import imageWhitelist from "libs/imageWhitelist";
+import tokeEvent from "../libs/tokeEvent";
 
 @observer
 class Nav extends React.Component {
@@ -23,6 +24,16 @@ class Nav extends React.Component {
     avatarField = "";
     @observable
     resettingPassword = false;
+
+
+    constructor(props) {
+        super(props);
+        this.state = { showHeartWeed: false, showPeaceWeed: false, showWeed: false };
+        this.triggerTokeEffect = this.triggerTokeEffect.bind(this);
+        if (this.props.show420) {
+            tokeEvent.addEventListener('toke', this.triggerTokeEffect);
+        }
+    }
 
     componentDidMount() {
         if (window.matchMedia("only screen and (orientation: portrait)") && profile === null) {
@@ -63,6 +74,21 @@ class Nav extends React.Component {
         this.hoveredTitle = false;
         this.title = "[tr]";
     }, 500);
+
+    triggerTokeEffect() {
+        let randomEffect = Math.floor(Math.random() * 3);
+
+        if (randomEffect === 0) {
+            this.setState({ showHeartWeed: true });
+            setTimeout(() => this.setState({ showHeartWeed: false }), 10000);
+        } else if (randomEffect === 1) {
+            this.setState({ showPeaceWeed: true });
+            setTimeout(() => this.setState({ showPeaceWeed: false }), 10000);
+        } else {
+            this.setState({ showWeed: true });
+            setTimeout(() => this.setState({ showWeed: false }), 10000);
+        }
+    }
 
     login() {
         if (profile.login(this._email.value, this._pass.value)) {
@@ -108,7 +134,6 @@ class Nav extends React.Component {
              </span>
                );
            }*/
-
 
         // document.addEventListener("DOMContentLoaded",() => {
         //     let button = new ExplosiveButton("button");
@@ -198,6 +223,8 @@ class Nav extends React.Component {
             </span>
         );
 
+
+
         return (
             <div id="tr-nav">
                 <nav id="navbar-grid"
@@ -213,6 +240,26 @@ class Nav extends React.Component {
                         </a>
                     </div>
                     <div id="navbar-space">{login}</div>
+                    {this.props.show420 && <div id="toke-effects">
+                        {this.state.showHeartWeed && <div className="container-weed">
+                            <img className="heart" src="img/heart_weed.svg" />
+                        </div>}
+                        {this.state.showPeaceWeed && <div className="container-weed">
+                            <img className="peace" src="img/peace_and_weed.svg" />
+                        </div>}
+                        {this.state.showWeed && <div className="container-weed">
+                            <img className="weed" src="img/weed1.svg" />
+                            <img className="weed" src="img/weed2.svg" />
+                            <img className="weed" src="img/weed3.svg" />
+                            <img className="weed" src="img/weed4.svg" />
+                            <img className="weed" src="img/weed5.svg" />
+                            <img className="weed" src="img/weed1.svg" />
+                            <img className="weed" src="img/weed2.svg" />
+                            <img className="weed" src="img/weed3.svg" />
+                            <img className="weed" src="img/weed4.svg" />
+                            <img className="weed" src="img/weed5.svg" />
+                        </div>}
+                    </div>}
                     <div id="hype-grid-container" className={this.disableIfNecessary()}>
                         <div id="hype-container" className="">
                             <HypeProgress />
