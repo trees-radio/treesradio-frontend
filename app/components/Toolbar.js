@@ -70,7 +70,7 @@ class Toolbar extends React.Component {
   togglePlaylistsPanel() {
     if (playlists.init) {
       this.panelOpen = !this.panelOpen;
-      if (playlists.selectedPlaylistName) {
+      if (playlists.selectedPlaylistName && this.cstmEaseInOut) {
         this.cstmEaseInOut.style.setProperty('--PLlength', playlists.selectedPlaylistName.length.toString() + 'em');
       }
     } else {
