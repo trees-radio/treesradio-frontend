@@ -1,6 +1,7 @@
 import React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
+import { debounce } from 'lodash';
 // import classNames from 'classnames';
 // import fbase from 'stores/fbase';
 import playlists from "stores/playlists";
@@ -22,8 +23,9 @@ export default class PlaylistsPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { opacity: this.getOpacityFromLocalStorage() };
-    this.changeOpacity = this.changeOpacity.bind(this);
+    let opacity = this.getOpacityFromLocalStorage();
+    this.state = { sliderOpacity: opacity, opacity };
+    this.changeOpacityDebounced = this.changeOpacityDebounced.bind(this);
   }
 
   getOpacityFromLocalStorage() {
@@ -31,8 +33,20 @@ export default class PlaylistsPanel extends React.Component {
     return opacity ? opacity : 90;
   }
 
-  changeOpacity(event) {
+  changeOpacityDebounced(event) {
     let opacity = event.target.value;
+
+    this.setState({ sliderOpacity: opacity });
+
+    if (!this.debounceOpacitySlider) {
+      this.debounceOpacitySlider = debounce(() => this.changeOpacity(), 100);
+    }
+
+    this.debounceOpacitySlider();
+  }
+
+  changeOpacity() {
+    let opacity = this.state.sliderOpacity;
     window.localStorage.setItem(PLAYLIST_OPACITY, opacity);
     this.setState({ opacity: opacity });
   }
@@ -386,8 +400,8 @@ export default class PlaylistsPanel extends React.Component {
         <div id="playlists-footer">
           <span>Playlist opacity:</span>
           <span className="slidecontainer">
-            <input type="range" min="0" max="100" className="slider" id="opacityRange" value={this.state.opacity}
-              onChange={this.changeOpacity} />
+            <input type="range" min="0" max="100" className="slider" id="opacityRange" value={this.state.sliderOpacity}
+              onChange={this.changeOpacityDebounced} />
           </span>
         </div>
         <Modal
