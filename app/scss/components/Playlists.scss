@@ -83,12 +83,10 @@
 }
 
 .playlist-shuffle-btn {
-  padding-top: 1.25%;
-  padding-right: 1%;
-  float: right;
   color: $color-trees-primary;
   cursor: pointer;
   z-index: 2;
+  margin-right: 0.2rem;
 }
 
 .playlists-panel-closed {
@@ -173,15 +171,17 @@
 }
 
 #playlist-search-box {
-  width: 30vw;
-  height: 45px;
-  margin-right: 0.5vw;
-  float: left;
+  flex-grow: 1;
+  height: $playlist-search-height;
+  margin-right: 0.5rem;
+  margin-left: 0.2rem;
   font-size: 1.25em;
 }
 
 #playlist-btn {
-  width: 15vw;
+  flex-grow: 1;
+  margin-left: 0.75rem;
+  height: 100%;
 }
 
 .remove-from-playlist-btn {
@@ -342,7 +342,6 @@
   border-bottom-color: #0c0c0e;
   border-right-width: 10px;
   border-right-color: #0c0c0e;
-  font-size: 1.15em;
   line-height: 2rem;
   padding: 0 5px;
   overflow-x: hidden;
@@ -363,7 +362,6 @@
   border-top: solid;
   border-bottom: solid;
   border-color: #2d2f39;
-  font-size: 1.15em;
   line-height: 2rem;
   padding: 0;
   overflow-x: hidden;

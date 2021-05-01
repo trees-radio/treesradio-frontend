@@ -10,6 +10,7 @@ body {
   color: $color-trees-primary !important;
   background-color: $color-trees-bg;
   font-family: "Open Sans", sans-serif;
+  margin: 0;
 }
 
 #app {
@@ -48,6 +49,10 @@ body {
 
 #chattoplevel {
   grid-area: chat;
+}
+
+a {
+  text-decoration: none;
 }
 
 h4 {
@@ -100,7 +105,75 @@ h4 {
 
 .btn,
 .btn-primary {
-  border-color: #87a310;
+  height: 100%;
+  color: white;
+  text-shadow: 0.75px 0 0 #000, -0.6px 0 0 #000, 0 0.5px 0 #000, 0 -0.6px 0 #000, 0.6px 0.6px #000, -0.6px -0.6px 0 #000,
+    0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.btn:before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown {
+  position: relative;
+  height: 100%;
+}
+
+.dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.dropdown-btn {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+  text-align: center;
+  font-size: large;
+  width: calc(100% - 3rem);
+}
+
+.dropdown-list {
+  position: absolute;
+  z-index: 420;
+  top: calc($playlist-search-height + 6px);
+  left: 0.75rem;
+  background-color: $color-trees-bg;
+  width: 15rem;
 }
 
 .dropdown-menu {

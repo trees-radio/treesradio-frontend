@@ -30,18 +30,18 @@ class UtilityModal extends React.Component {
     var backdrop = this.props.backdrop || true;
     return (
       <>
-        {/* <Modal
+        {/* <BaseModal
           show={this.props.show}
           onHide={this.handleClose}
           size={size}
           keyboard={keyboard}
           backdrop={backdrop}
         >
-          <Modal.Header closeButton>
-            <Modal.Title>{this.props.title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>{this.props.children}</Modal.Body>
-          <Modal.Footer>
+          <BaseModal.Header closeButton>
+            <BaseModal.Title>{this.props.title}</BaseModal.Title>
+          </BaseModal.Header>
+          <BaseModal.Body>{this.props.children}</BaseModal.Body>
+          <BaseModal.Footer>
             {this.props.noClose ? (
               false
             ) : (
@@ -50,8 +50,8 @@ class UtilityModal extends React.Component {
               </button>
             )}
             {leftButton}
-          </Modal.Footer>
-        </Modal> */}
+          </BaseModal.Footer>
+        </BaseModal> */}
       </>
     );
   }

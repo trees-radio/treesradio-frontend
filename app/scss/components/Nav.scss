@@ -366,6 +366,10 @@
   background-color: $color-trees-primary;
 }
 
+#userbitContainer {
+  margin-top: 0.75rem;
+}
+
 #userbitContainer .dropdown-menu {
   right: 0;
   left: auto;
@@ -513,11 +517,6 @@ div .userbit-avatar span .avatarimg {
 #toketimer-container {
   justify-self: start;
   // height: 100%;
-}
-
-#userbit-container {
-  place-self: start end;
-  margin-bottom: 0.5rem;
 }
 
 #hype-grid-container {
