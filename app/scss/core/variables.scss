@@ -137,7 +137,7 @@ $navbar-font-size: 1.2em;
 $navbar-font-size-dynamic: 1em; //use in elements that break easily when cramped
 
 $navbar-height: 5vh;
-$navbar-button-height: auto;
+$navbar-button-height: 100%;
 
 $navbar-height-portrait: 3vh;
 $navbar-button-height-portrait: 2vh;
@@ -148,7 +148,7 @@ $rank-font-size: 0.9em;
 /* ### Toolbar ### */
 $toolbar-grab-panel-font-size: 1em;
 $sidebar-height: 5rem;
-$navbar-height: 4.5rem;
+$navbar-height: 3.5rem;
 $player-height: 30rem;
 $playlist-search-height: 45px;
 /* ### Playlists ### */

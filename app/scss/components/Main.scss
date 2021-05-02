@@ -176,6 +176,11 @@ h4 {
   width: 15rem;
 }
 
+.dropdown-list.to-right {
+  right: 0;
+  left: auto;
+}
+
 .dropdown-menu {
   background-color: $color-trees-bg;
   color: $color-trees-primary;

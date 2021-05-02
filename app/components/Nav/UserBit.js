@@ -323,7 +323,7 @@ export default class UserBit extends React.Component {
         return (
             <div id="userbit-wrapper">
                 <div id="userbitContainer" className="btn-group">
-                    <Dropdown title={<><div className="userbit-avatar">
+                    <Dropdown id={'usernametop'} toRight="true" title={<><div className="userbit-avatar">
                         {this.showAvatar()}
                     </div>
                         <span id="username" className={"userLevel"}>

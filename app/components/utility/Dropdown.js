@@ -7,10 +7,12 @@ const Dropdown = (props) => {
         setDropdownToggle(!dropdownToggle);
     }
 
+    const dropdownClasses = props.toRight ? 'dropdown-list to-right' : 'dropdown-list';
+
     return (
-        <div class="dropdown">
-            <a href="#" class="btn btn-primary dropdown-btn" onClick={toggleDropdown}>{props.title}</a>
-            {dropdownToggle && <div class="dropdown-list">
+        <div className="dropdown">
+            <a href="#" class="btn btn-primary dropdown-btn" onClick={toggleDropdown} id={props.id}>{props.title}</a>
+            {dropdownToggle && <div className={dropdownClasses}>
                 {props.children}
             </div>}
         </div>

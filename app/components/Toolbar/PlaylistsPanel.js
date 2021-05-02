@@ -339,7 +339,7 @@ export default class PlaylistsPanel extends React.Component {
                     playlists.searchSource = "youtube";
                   }}
                 />
-                <label for="search-youtube">YouTube</label>
+                <label htmlFor="search-youtube">YouTube</label>
               </div>
               <div>
                 <input
@@ -352,7 +352,7 @@ export default class PlaylistsPanel extends React.Component {
                     playlists.searchSource = "soundcloud";
                   }}
                 />
-                <label for="search-soundcloud">Soundcloud</label>
+                <label htmlFor="search-soundcloud">Soundcloud</label>
 
               </div>
             </div>
