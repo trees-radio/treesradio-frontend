@@ -22,7 +22,7 @@
   }
 
   #playlists-panel {
-    bottom: calc(100%- #{$player-height} - #{$navbar-height});
+    bottom: calc(100% - #{$player-height} - #{$navbar-height} - 1rem);
     height: 30rem;
   }
 

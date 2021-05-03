@@ -11,7 +11,7 @@ const Dropdown = (props) => {
 
     return (
         <div className="dropdown">
-            <a href="#" class="btn btn-primary dropdown-btn" onClick={toggleDropdown} id={props.id}>{props.title}</a>
+            <a href="#" className="btn btn-primary dropdown-btn" onClick={toggleDropdown} id={props.id}>{props.title}</a>
             {dropdownToggle && <div className={dropdownClasses}>
                 {props.children}
             </div>}

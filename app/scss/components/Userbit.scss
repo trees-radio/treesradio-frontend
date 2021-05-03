@@ -28,8 +28,8 @@
 }
 
 div .userbit-avatar span .avatarimg {
-  height: 2.5rem !important;
-  width: 2.5rem !important;
+  // height: 2.5rem !important;
+  // width: 2.5rem !important;
   place-self: center;
   align-content: baseline;
   border-radius: 5px;
@@ -66,27 +66,6 @@ div .userbit-avatar span .avatarimg {
   #username,
   #usernamedropdown {
     font-size: 0.6 * $navbar-font-size;
-  }
-}
-
-@media only screen and (max-height: 1000px) {
-  div .userbit-avatar span .avatarimg {
-    height: 2rem !important;
-    width: 2rem !important;
-  }
-}
-
-@media only screen and (max-height: 630px) {
-  div .userbit-avatar span .avatarimg {
-    height: 1.5rem !important;
-    width: 1.5rem !important;
-  }
-}
-
-@media only screen and (max-height: 500px) {
-  div .userbit-avatar span .avatarimg {
-    height: 1rem !important;
-    width: 1rem !important;
   }
 }
 
