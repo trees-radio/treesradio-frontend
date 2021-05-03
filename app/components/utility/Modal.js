@@ -1,6 +1,6 @@
 import React from "react";
-// import Button from "react-bootstrap/Button";
-// import Modal from "react-bootstrap/Modal";
+import Modal from "react-bootstrap/Modal";
+import './Modal.scss';
 
 class UtilityModal extends React.Component {
   constructor(props, context) {
@@ -30,18 +30,18 @@ class UtilityModal extends React.Component {
     var backdrop = this.props.backdrop || true;
     return (
       <>
-        {/* <BaseModal
+        <Modal
           show={this.props.show}
           onHide={this.handleClose}
           size={size}
           keyboard={keyboard}
           backdrop={backdrop}
         >
-          <BaseModal.Header closeButton>
-            <BaseModal.Title>{this.props.title}</BaseModal.Title>
-          </BaseModal.Header>
-          <BaseModal.Body>{this.props.children}</BaseModal.Body>
-          <BaseModal.Footer>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.props.children}</Modal.Body>
+          <Modal.Footer>
             {this.props.noClose ? (
               false
             ) : (
@@ -50,8 +50,8 @@ class UtilityModal extends React.Component {
               </button>
             )}
             {leftButton}
-          </BaseModal.Footer>
-        </BaseModal> */}
+          </Modal.Footer>
+        </Modal>
       </>
     );
   }
