@@ -74,9 +74,6 @@ export default class ChatContent extends React.Component {
   render() {
     let messages = chat.messages;
 
-    // Clear out old messages
-    if (messages.length > 250) messages.slice(0, messages.length - 250);
-
     let content = messages.map((msg, i) => {
       let chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
       let chatLineClasses = classNames(
