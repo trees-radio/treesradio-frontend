@@ -25,3 +25,9 @@ See wiki for recommended Atom packages.
 
 In the console, run `set NODE_ENV=development`.
 
+## Package size analyzer
+
+* On windows, run `set NODE_ENV=production`.
+* On Windows, run `webpack -p --config webpack.config.js` else run `npm run build-prod`.
+* Run `webpack -p --config webpack.config.js`.
+* Then start the bundle analyzer with `webpack-bundle-analyzer stats.json public/`.
