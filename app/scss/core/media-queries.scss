@@ -14,21 +14,22 @@
 
   #app-grid {
     grid:
-      [row1-start] "nav" 5rem [row1-end]
+      [row1-start] "nav" $navbar-height [row1-end]
       [row2-start] "player" 30rem [row2-end]
-      [row3-start] "toolbar" 7rem [row3-end]
+      [row3-start] "toolbar" $sidebar-height [row3-end]
       [row4-start] "chat" 1fr [row4-end]
       / 1fr;
   }
 
   #playlists-panel {
-    bottom: calc(100% - #{$player-height} - #{$navbar-height} - 1rem);
+    bottom: calc(100% - #{$player-height} - #{$navbar-height});
+    width: 100%;
     height: 30rem;
   }
 
   .join-waitlist,
   #playlists-open-icon {
-    line-height: 7rem;
+    line-height: $sidebar-height;
   }
 
   #vidcontainer,
@@ -46,7 +47,7 @@
 
 @media #{$isPortrait}, (min-height: 1439px) {
   .navbar-brand {
-    font-size: 250%;
+    font-size: 150%;
     height: unset;
     width: 5rem;
   }

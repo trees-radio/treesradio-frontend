@@ -341,7 +341,7 @@ export default class PlaylistsPanel extends React.Component {
                 />
                 <label htmlFor="search-youtube">YouTube</label>
               </div>
-              <div>
+              <div className="inline-flex">
                 <input
                   type="radio"
                   defaultChecked={playlists.searchSource == "soundcloud" ? "checked" : ""}

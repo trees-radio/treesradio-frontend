@@ -42,13 +42,16 @@ div.modal-dialog {
     max-height: 30vh;
 }
 .modal-dialog {
-    margin-top: 155px;
+    margin: 155px auto;
     width: 720px;
 }
-.modal-dialog {
-    width: 600px;
-    margin: 30px auto;
-    margin-top: 30px;
+
+.close {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
 }
 
 .modal-content {
@@ -65,6 +68,8 @@ div.modal-dialog {
 }
 
 .modal-header {
+    display: flex;
+    justify-content: space-between;
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
 }
@@ -92,4 +97,14 @@ div.modal-dialog {
     left: 0;
     z-index: 1040;
     background-color: #000;
+}
+
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
