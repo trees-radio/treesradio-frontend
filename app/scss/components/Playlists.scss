@@ -2,17 +2,19 @@
 
 #playlists-container {
   width: 100%;
-  float: right;
-  //margin-top: 4px;
+  height: 100%;
+}
+
+#playlists-component {
+  height: 100%;
+  width: 100%;
 }
 
 .media-time {
   float: right;
   background-color: $color-controlarea-background;
-  position: absolute;
   padding-left: 0.5em;
   z-index: 2;
-  right: 0;
 }
 
 .current-playlist-name {
@@ -65,11 +67,12 @@
 
 #playlists-panel {
   position: absolute;
-  width: 100%;
-  bottom: 10%;
+  width: 75%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  bottom: $sidebar-height;
+  height: calc(100% - #{$navbar-height} - #{$sidebar-height});
 }
 
 #playlists-footer {
@@ -80,16 +83,14 @@
 }
 
 .playlist-shuffle-btn {
-  padding-top: 1.25%;
-  padding-right: 1%;
-  float: right;
   color: $color-trees-primary;
   cursor: pointer;
   z-index: 2;
+  margin-right: 0.2rem;
 }
 
 .playlists-panel-closed {
-  height: 0;
+  height: 0 !important;
   overflow: hidden;
   transition: all 0.15s ease-in 50ms;
   -webkit-transition: all 0.15s ease-in 50ms;
@@ -99,7 +100,6 @@
 }
 
 .playlists-panel-open {
-  height: 90%;
   border-left: solid;
   border-right: solid;
   border-top: solid;
@@ -113,11 +113,12 @@
 
 .pl-thumbnail {
   width: 5%;
+  vertical-align: middle;
 }
 
 .pl-time {
   padding-right: 2%;
-  font-size: 12px;
+  font-size: 0.8em;
 }
 
 .pl-channel {
@@ -127,7 +128,7 @@
 .add-to-playlist-btn {
   float: right;
   cursor: pointer;
-  padding-right: 5px;
+  margin-right: 1%;
 }
 
 #playlist-ul,
@@ -171,15 +172,34 @@
 }
 
 #playlist-search-box {
-  width: 30vw;
-  height: 45px;
-  margin-right: 0.5vw;
-  float: left;
+  flex-grow: 1;
+  max-width: 40rem;
+  margin-right: 0.5rem;
+  margin-left: 0.2rem;
   font-size: 1.25em;
+  display: block;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
 }
 
 #playlist-btn {
-  width: 15vw;
+  flex-grow: 1;
+  margin-left: 0.75rem;
+  height: 100%;
 }
 
 .remove-from-playlist-btn {
@@ -198,7 +218,7 @@
   border-color: #609606;
   //padding: 2px; Bacchus request March'20
   text-shadow: $text-shadow-heavy;
-  font-size: 1.5vw;
+  font-size: 1.5em;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
@@ -231,11 +251,19 @@
 }
 
 #playlists-bar {
-  width: 100%;
-  color: $color-trees-primary;
+  position: relative;
+  display: grid;
+  grid-gap: 4px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   height: 100%;
+  grid:
+    [row1-start] "playlist-btn playlist current-song waitlist-btn grab like" 1fr [row1-end]
+    [row2-start] "playlist-btn playlist current-song waitlist-btn volume dislike" 1fr [row2-end]
+    / 4rem 1fr 1fr 12rem 4.5rem 4.5rem;
+  color: $color-trees-primary;
+
   background-color: #0c0c0e;
-  float: left;
 }
 
 .marquee {
@@ -299,10 +327,10 @@
 }
 
 .waitlist {
+  grid-area: waitlist-btn;
   height: 100%;
   padding-left: 0;
   padding-right: 0;
-  line-height: 75px;
   text-align: center;
   display: table-cell;
   align-items: center;
@@ -324,9 +352,8 @@
 }
 
 #playlist-metadata {
+  grid-area: playlist;
   height: 100%;
-  max-height: 9vh;
-  width: 19em;
   color: $color-trees-primary !important;
   border-top: solid $color-border-top;
   border-right: solid;
@@ -334,8 +361,7 @@
   border-bottom-color: #0c0c0e;
   border-right-width: 10px;
   border-right-color: #0c0c0e;
-  font-size: 1.15vw;
-  line-height: 4.1vh;
+  line-height: 2rem;
   padding: 0 5px;
   overflow-x: hidden;
   scrollbar-width: 10px;
@@ -350,12 +376,12 @@
 }
 
 #currentsong-metadata {
+  grid-area: current-song;
   height: 100%;
   border-top: solid;
   border-bottom: solid;
   border-color: #2d2f39;
-  font-size: 1.15vw;
-  line-height: 4.5vh;
+  line-height: 2rem;
   padding: 0;
   overflow-x: hidden;
   text-align: right;
@@ -373,20 +399,19 @@
 }
 
 #grabtrack {
-  height: 9vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
   padding: 0;
   margin: 0;
-  line-height: 25px;
 }
 
 #playlists-open-button {
+  grid-area: playlist-btn;
   height: 100%;
   cursor: pointer;
-  width: 4.4vw;
-  font-size: 0.75vw;
+  width: 100%;
+  font-size: 0.75em;
   border-right: solid;
   border-color: #2d2f39;
   background: $color-button-open-playlists;
@@ -403,16 +428,15 @@
   color: white;
   text-shadow: $text-shadow-light;
   letter-spacing: 1.5px;
-  line-height: calc(9vh + 2px);
   height: inherit;
   width: inherit;
   padding-left: 25%;
   padding-right: 25%;
   padding-top: 0;
+  line-height: $sidebar-height;
 }
 
 #vote {
-  height: 9vh;
   cursor: pointer;
   font-size: 150%;
   text-align: center;
@@ -451,12 +475,6 @@
   width: 87%;
 }
 
-@media (min-width: 0) {
-  .waitlist {
-    width: 14.825%;
-  }
-}
-
 .add-to-playlist-button {
   cursor: pointer;
 }
@@ -479,32 +497,21 @@
 }
 
 .volume-slider {
-  height: 49%;
-  width: 95%;
-  margin: 0 auto;
+  grid-area: volume;
+  position: relative;
 }
 
 .volume-slider-icon {
-  position: absolute;
   z-index: 2;
-  font-size: 1.15vw !important;
+  font-size: 1.15em !important;
   text-align: right;
   padding: 0;
-  line-height: 5.5vh !important;
-  right: 3.75vw;
-  // margin-left: -40%;
+  position: absolute;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
   color: white;
   text-shadow: $text-shadow-light;
   pointer-events: none;
-  top: 2.1vw;
-}
-
-.fa-volume-off {
-  right: 3.75vw;
-}
-
-.fa-volume-down {
-  right: 3.75vw;
 }
 
 .volume-slider-node {
@@ -573,4 +580,8 @@
   text-align: left;
   position: inherit;
   z-index: 1;
+}
+
+.inline-flex {
+  display: inline-flex;
 }

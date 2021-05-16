@@ -1,30 +1,16 @@
 // http://enjoycss.com/zbuttram/item/rQV/3
 @import "../core/variables";
 @import "../core/mixins";
-.fa-plus-square-o {
-  position: absolute;
-  padding-top: 0.39vw;
-  right: 3.75vw;
-}
-
-.fa-plus-square {
-  position: absolute;
-  padding-top: 0.39vw;
-  right: 3.75vw;
-}
-
-.feedback-grab {
-  float: right;
-  padding-right: 1.5vw;
-  padding-top: 0.1vw;
-}
 
 .grab-button {
+  grid-area: grab;
   @include toolbar-button-small;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   color: $color-button-text;
   background: $color-button-grab;
-  line-height: 1.75vw;
 }
 
 .grab-button:hover {
@@ -37,11 +23,11 @@
 }
 
 .grab-playlists {
-  width: 375%;
+  width: 25rem;
   background: $color-grab-panel;
   position: absolute;
-  bottom: 110%;
-  left: -9em;
+  right: 0;
+  bottom: calc(#{$sidebar-height} + 0.5rem);
   color: black;
   border-radius: $button-border-radius;
   text-align: left;
@@ -64,7 +50,6 @@
 }
 
 .grab-playlist {
-  width: 100%;
   line-height: 12px;
   color: $color-button-text;
   font-size: $toolbar-grab-panel-font-size;

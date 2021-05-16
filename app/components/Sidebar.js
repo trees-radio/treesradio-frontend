@@ -47,22 +47,22 @@ class Sidebar extends React.Component {
   @observable currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
 
   render() {
-    const chatBtnClass = classNames("show-chat-btn", "col-lg-3", {
+    const chatBtnClass = classNames("show-chat-btn", {
       "sidebar-selected": this.currentSidebar === "CHAT"
     });
-    const onlineBtnClass = classNames("show-ousers-btn", "col-lg-3", {
+    const onlineBtnClass = classNames("show-ousers-btn", {
       "sidebar-selected": this.currentSidebar === "ONLINE"
     });
-    const waitlistBtnClass = classNames("show-waitlist-btn", "col-lg-3", {
+    const waitlistBtnClass = classNames("show-waitlist-btn", {
       "sidebar-selected": this.currentSidebar === "WAITLIST"
     });
-    const aboutBtnClass = classNames("show-about-btn", "col-lg-3", {
+    const aboutBtnClass = classNames("show-about-btn", {
       "sidebar-selected": this.currentSidebar === "ABOUT"
     });
 
     return (
       <div id="sidebar">
-        <div className="row sidebar-changer">
+        <div className="sidebar-changer">
           <div className={chatBtnClass} ref={this.selChatRef} onClick={() => this.update("CHAT")}>
             Chat
           </div>

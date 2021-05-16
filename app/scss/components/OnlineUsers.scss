@@ -50,12 +50,12 @@
   line-height: 1;
   padding-top: 1.5%;
   padding-left: 2%;
-  font-size: 22px;
+  font-size: 1.6em;
   cursor: pointer;
 }
 
 .userflair {
-  font-size: 10.4px;
+  font-size: 0.8em;
 }
 
 .users-name:hover {
@@ -89,4 +89,5 @@
   padding-left: 5px;
   float: right;
   padding-top: 1px !important;
+  position: relative !important;
 }

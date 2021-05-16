@@ -1,22 +1,23 @@
 import React from "react";
-import {observer} from "mobx-react";
-import {computed, observable} from "mobx";
+import { observer } from "mobx-react";
+import { computed, observable } from "mobx";
 import classNames from "classnames";
 
 import profile from "stores/profile";
 import playing from "stores/playing";
 import HelpList from "stores/help";
 
-import imageWhitelist, {allowedDomains} from "libs/imageWhitelist";
+import imageWhitelist, { allowedDomains } from "libs/imageWhitelist";
 import UserAvatar from "components/utility/User/UserAvatar";
 import waitlist from "stores/waitlist";
 import $ from "jquery";
-import Modal from "components/utility/Modal";
-import {toast} from "react-toastify";
+import Modal from "../utility/Modal";
+import { toast } from "react-toastify";
 import LeaderBoard from "components/Nav/LeaderBoard";
 import PlayHistory from "components/Nav/SongHistory";
 
 import events from "stores/events";
+import Dropdown from "../utility/Dropdown";
 
 @observer
 export default class UserBit extends React.Component {
@@ -207,14 +208,14 @@ export default class UserBit extends React.Component {
         if (profile.resendVerificationLoading) {
             emailVerificationResendIcon = (
                 <span>
-            <i className="fa fa-spin fa-circle-o-notch"/>
-          </span>
+                    <i className="fa fa-spin fa-circle-o-notch" />
+                </span>
             );
         } else if (profile.resendVerificationResult) {
             emailVerificationResendIcon = (
                 <span>
-            <i className="fa fa-check"/>
-          </span>
+                    <i className="fa fa-check" />
+                </span>
             );
         }
 
@@ -322,107 +323,107 @@ export default class UserBit extends React.Component {
         return (
             <div id="userbit-wrapper">
                 <div id="userbitContainer" className="btn-group">
-                    <a className={"btn btn-primary" + this.disableIfNecessary()} id="usernametop"
-                       data-toggle="dropdown">
-                        <div className="userbit-avatar">
-                            {this.showAvatar()}
-                        </div>
+                    <Dropdown id={'usernametop'} toRight="true" title={<><div className="userbit-avatar">
+                        {this.showAvatar()}
+                    </div>
                         <span id="username" className={"userLevel"}>
-                <b>{profile.safeUsername}</b><span id="userbit-expander" className="fa fa-caret-down"></span>
-              </span>
-                    </a>
-                    <ul className="dropdown-menu">
-                        {this.showSetAvatar()}
+                            <b>{profile.safeUsername}</b><span id="userbit-expander" className="fa fa-caret-down"></span>
+                        </span></>} className={"btn btn-primary" + this.disableIfNecessary()}>
+                        <ul className="dropdown-menu">
+                            {this.showSetAvatar()}
 
-                        <li key={1} onClick={() => (this.togglePlayer())}>
-                            <a href="#">
-                                <i
-                                    className={classNames(
-                                        "fa",
-                                        this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
-                                    )}
-                                />
-                                {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
-                            </a>
-                        </li>
-                        <li key={101} onClick={() => waitlist.setShowMinutesUntil()}>
-                            <a href="#">
-                                <i className={
-                                    classNames(
-                                        "fa",
-                                        waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
-                                    )
-                                }/>
+                            <li key={1} onClick={() => (this.togglePlayer())}>
+                                <a href="#">
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                                        )}
+                                    />
+                                    {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
+                                </a>
+                            </li>
+                            <li key={101} onClick={() => waitlist.setShowMinutesUntil()}>
+                                <a href="#">
+                                    <i className={
+                                        classNames(
+                                            "fa",
+                                            waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
+                                        )
+                                    } />
                                 &nbsp;Waitlist Minutes Until
                             </a>
-                        </li>
-                        {this.showChangeEmail()}
-                        {this.showChangePassword()}
-                        <li key={2}>
-                            <a
-                                href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
-                                target="blank"
-                            >
-                                <i className="fa fa-youtube-play"/> Region Check
+                            </li>
+                            {this.showChangeEmail()}
+                            {this.showChangePassword()}
+                            <li key={2}>
+                                <a
+                                    href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
+                                    target="blank"
+                                >
+                                    <i className="fa fa-youtube-play" /> Region Check
                             </a>
-                        </li>
-                        <li key={3} onClick={() => this.hideGifs()}>
-                            <a href="#">
-                                <i
-                                    className={classNames(
-                                        "fa",
-                                        this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
-                                    )}
-                                />{" "}
+                            </li>
+                            <li key={3} onClick={() => this.hideGifs()}>
+                                <a href="#">
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
+                                        )}
+                                    />{" "}
                                 Hide Gifs?
                             </a>
-                        </li>
-                        <li key={4} onClick={() => this.hideBlazebot()}>
-                            <a href="#">
-                                <i
-                                    className={classNames(
-                                        "fa",
-                                        profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
-                                    )}
-                                />{" "}
+                            </li>
+                            <li key={4} onClick={() => this.hideBlazebot()}>
+                                <a href="#">
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
+                                        )}
+                                    />{" "}
                                 Hide BlazeBot?
                             </a>
-                        </li>
-                        <li key={5} onClick={() => this.hideHypeBoom()}>
-                            <a href="#">
-                                <i
-                                    className={classNames(
-                                        "fa",
-                                        profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
-                                    )}
-                                />{" "}
+                            </li>
+                            <li key={5} onClick={() => this.hideHypeBoom()}>
+                                <a href="#">
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
+                                        )}
+                                    />{" "}
                                 Hype Animation?
                             </a>
-                        </li>
-                        {this.showToggleDesktopNotifications()}
-                        {this.showMentionAudio()}
-                        {this.showMute()}
-                        {this.showAutoplay()}
-                        <li key={6} onClick={() => this.toggleLeaderboard()}>
-                            <a href="#">
-                                <i className="fa fa-trophy"></i> Leader Board
+                            </li>
+                            {this.showToggleDesktopNotifications()}
+                            {this.showMentionAudio()}
+                            {this.showMute()}
+                            {this.showAutoplay()}
+                            <li key={6} onClick={() => this.toggleLeaderboard()}>
+                                <a href="#">
+                                    <i className="fa fa-trophy"></i> Leader Board
                             </a>
-                        </li>
+                            </li>
 
-                        <li key={66} onClick={() => this.toggleSongHistory()}>
-                            <a href="#">
-                                <i className="fa fa-history"></i> Play History
+                            <li key={66} onClick={() => this.toggleSongHistory()}>
+                                <a href="#">
+                                    <i className="fa fa-history"></i> Play History
                             </a>
-                        </li>
-                        <li key={7} onClick={() => this.toggleHelp()}>
-                            <a href="#">
-                                <i className="fa fa-question-circle"/> Help
+                            </li>
+                            <li key={7} onClick={() => this.toggleHelp()}>
+                                <a href="#">
+                                    <i className="fa fa-question-circle" /> Help
                             </a>
-                        </li>
-                        {this.showGelato()}
-                        {/* logout @ bottom */}
-                        {this.showLogout()}
-                    </ul>
+                            </li>
+                            {this.showGelato()}
+                            {/* logout @ bottom */}
+                            {this.showLogout()}
+                        </ul>
+
+                    </Dropdown>
+
                 </div>
                 {/*  */}
                 {/* LOGGED-IN MODALS */}
@@ -456,7 +457,7 @@ export default class UserBit extends React.Component {
                     }}
                     title="Leader Board"
                     noClose={false}>
-                    <LeaderBoard/>
+                    <LeaderBoard />
                 </Modal>
                 <Modal
                     show={this.showHistory}
@@ -465,7 +466,7 @@ export default class UserBit extends React.Component {
                     }}
                     title="Play History (24 hours)"
                     noClose={false}>
-                    <PlayHistory/>
+                    <PlayHistory />
                 </Modal>
                 {/*  */}
                 {/* Show Help */}
@@ -499,7 +500,7 @@ export default class UserBit extends React.Component {
                             <li key={i}>{d}</li>
                         ))}
                     </ul>
-                    <hr/>
+                    <hr />
                     <div className="row">
                         <div className="col-md-8">
                             <div className="form-group">
@@ -514,7 +515,7 @@ export default class UserBit extends React.Component {
                                         <i className={this.avatarFieldValid ? "fa fa-check" : "fa fa-times"}></i>
                                     </div>
                                 </div>
-                                <br/>
+                                <br />
                                 <div className="btn-group">
                                     <button
                                         className="btn btn-primary"
@@ -547,9 +548,9 @@ export default class UserBit extends React.Component {
                 >
                     <div className="form-group">
                         <label>New Password</label>
-                        <input className="form-control" type="password" ref={c => (this._newPassword = c)}/>
+                        <input className="form-control" type="password" ref={c => (this._newPassword = c)} />
                     </div>
-                    <br/>
+                    <br />
                     <div>
                         <button className="btn btn-primary" onClick={() => this.changePassword()}>
                             Change Password
@@ -566,9 +567,9 @@ export default class UserBit extends React.Component {
                 >
                     <div className="form-group">
                         <label>New Email</label>
-                        <input className="form-control" type="email" ref={c => (this._newEmail = c)}/>
+                        <input className="form-control" type="email" ref={c => (this._newEmail = c)} />
                     </div>
-                    <br/>
+                    <br />
                     <div>
                         <button className="btn btn-primary" onClick={() => this.changeEmail()}>
                             Change Email
@@ -600,16 +601,16 @@ export default class UserBit extends React.Component {
 
     showMentionAudio() {
         return this.userLoggedIn() ? (<li key={10} onClick={() => this.toggleNotifications()}>
-                <a href="#">
-                    <i
-                        className={classNames(
-                            "fa",
-                            profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
-                        )}
-                    />{" "}
+            <a href="#">
+                <i
+                    className={classNames(
+                        "fa",
+                        profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
+                    )}
+                />{" "}
                     Mention Audio?
                 </a>
-            </li>
+        </li>
         ) : (
             <li key={10}></li>
         );
@@ -660,7 +661,7 @@ export default class UserBit extends React.Component {
         return this.userLoggedIn() ? (
             <li key={12} onClick={() => this.logoutAndDisableButtons()}>
                 <a href="#">
-                    <i className="fa fa-sign-out"/> Logout
+                    <i className="fa fa-sign-out" /> Logout
                 </a>
             </li>
         ) : (
@@ -673,11 +674,11 @@ export default class UserBit extends React.Component {
             <li key={13}
                 onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
                 <a href="#">
-                    <i className="fa fa-key"/> Change Password
+                    <i className="fa fa-key" /> Change Password
                 </a>
             </li>
         ) : (
-            <li key={13}/>
+            <li key={13} />
         )
     }
 
@@ -685,7 +686,7 @@ export default class UserBit extends React.Component {
         return this.userLoggedIn() ? (
             <li key={14} onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
                 <a href="#">
-                    <i className="fa fa-envelope"/> Change Email
+                    <i className="fa fa-envelope" /> Change Email
                 </a>
             </li>
         ) : (
@@ -697,7 +698,7 @@ export default class UserBit extends React.Component {
         return this.userLoggedIn() ? (
             <li key={15} onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
                 <a href="#">
-                    <i className="fa fa-pencil fa-fw"/> Set Avatar
+                    <i className="fa fa-pencil fa-fw" /> Set Avatar
                 </a>
             </li>
         ) : (
@@ -707,11 +708,11 @@ export default class UserBit extends React.Component {
 
     showAvatar() {
         return this.userLoggedIn() ? (
-            <UserAvatar uid={profile.uid}/>
+            <UserAvatar uid={profile.uid} />
         ) : (
             <span>
-            <img className="avatarimg" src="img/nothing.png" alt="avatar"/>
-        </span>
+                <img className="avatarimg" src="img/nothing.png" alt="avatar" />
+            </span>
         )
     }
 

@@ -5,10 +5,11 @@ import { debounce } from 'lodash';
 // import classNames from 'classnames';
 // import fbase from 'stores/fbase';
 import playlists from "stores/playlists";
-import Modal from "components/utility/Modal";
+import Modal from "../utility/Modal";
 import toast from "utils/toast";
 import moment from "moment";
 import $ from "jquery";
+import Dropdown from "../utility/Dropdown";
 
 const PLAYLIST_OPACITY = 'playlistOpacity';
 
@@ -318,51 +319,47 @@ export default class PlaylistsPanel extends React.Component {
       <div id="playlists-panel" className={mainClass} style={this.getOpacityStyle()}>
         <div id="playlists-panel-head">
           <div className="row">
-            <div className="col-md-7">
-              <input
-                type="text"
-                id="playlist-search-box"
-                ref={c => (this._search = c)}
-                placeholder="Search"
-                className="form-control"
-                onKeyPress={e => this.onEnterKey(e, () => this.search())}
-              />{" "}
-              &nbsp;
-              <input
-                type="radio"
-                defaultChecked={playlists.searchSource == "youtube" ? "checked" : ""}
-                id="search-youtube"
-                name="search-source"
-                onClick={() => {
-                  playlists.search = [];
-                  playlists.searchSource = "youtube";
-                }}
-              />{" "}
-              YouTube <br />
-              &nbsp;
-              <input
-                type="radio"
-                defaultChecked={playlists.searchSource == "soundcloud" ? "checked" : ""}
-                id="search-soundcloud"
-                name="search-source"
-                onClick={() => {
-                  playlists.search = [];
-                  playlists.searchSource = "soundcloud";
-                }}
-              />{" "}
-              Soundcloud
+            <input
+              type="text"
+              id="playlist-search-box"
+              ref={c => (this._search = c)}
+              placeholder="Search"
+              className="form-control"
+              onKeyPress={e => this.onEnterKey(e, () => this.search())}
+            />
+            <div>
+              <div>
+                <input
+                  type="radio"
+                  defaultChecked={playlists.searchSource == "youtube" ? "checked" : ""}
+                  id="search-youtube"
+                  name="search-youtube"
+                  onClick={() => {
+                    playlists.search = [];
+                    playlists.searchSource = "youtube";
+                  }}
+                />
+                <label htmlFor="search-youtube">YouTube</label>
+              </div>
+              <div className="inline-flex">
+                <input
+                  type="radio"
+                  defaultChecked={playlists.searchSource == "soundcloud" ? "checked" : ""}
+                  id="search-soundcloud"
+                  name="search-soundcloud"
+                  onClick={() => {
+                    playlists.search = [];
+                    playlists.searchSource = "soundcloud";
+                  }}
+                />
+                <label htmlFor="search-soundcloud">Soundcloud</label>
+
+              </div>
             </div>
-            <div className="col-md-5">
-              <div className="btn-group" id="playlist-btn">
-                <a
-                  className="btn btn-primary dropdown-toggle"
-                  id="playlist-dropdown"
-                  data-toggle="dropdown"
-                  href="#"
-                >
-                  {playlists.selectedPlaylistName || "Create or Select a Playlist"}{" "}
-                  <span className="fa fa-chevron-down"></span>
-                </a>
+            <div className="btn-group" id="playlist-btn">
+              <Dropdown title={<>{playlists.selectedPlaylistName || "Create or Select a Playlist"}
+                <span className="fa fa-chevron-down"></span></>}>
+
                 <ul className="dropdown-menu" id="pl-dd-menu">
                   <li>
                     <a href="#" onClick={() => (this.addingPlaylist = true)}>
@@ -376,24 +373,24 @@ export default class PlaylistsPanel extends React.Component {
                   </li>
                   {playlistsList}
                 </ul>
-              </div>
-              {shuffle}
-              {sortnameasc}
-              {sortnamedesc}
-              {sorttimeasc}
-              {sorttimedesc}
-              <span
-                onClick={() => playlists.exportPlaylist()}
-                className="playlist-shuffle-btn fa fa-download fa-2x"
-                title="Download Playlist (json)"
-              />
-              <a href="#" onClick={() => (this.mergingPlaylists = true)}>
-                <i
-                  className="playlist-shuffle-btn fa fa-code-fork fa-2x"
-                  title="Merge Two Playlists"
-                ></i>
-              </a>
+              </Dropdown>
             </div>
+            <a href="#" onClick={() => (this.mergingPlaylists = true)}>
+              <i
+                className="playlist-shuffle-btn fa fa-code-fork fa-2x"
+                title="Merge Two Playlists"
+              ></i>
+            </a>
+            <span
+              onClick={() => playlists.exportPlaylist()}
+              className="playlist-shuffle-btn fa fa-download fa-2x"
+              title="Download Playlist (json)"
+            />
+            {sorttimedesc}
+            {sorttimeasc}
+            {sortnamedesc}
+            {sortnameasc}
+            {shuffle}
           </div>
         </div>
         <div id="playlists-panel-display">{content}</div>

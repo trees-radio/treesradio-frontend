@@ -1,27 +1,27 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import './Modal.scss';
 
 class UtilityModal extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.state = {show: false};
+    this.state = { show: false };
   }
   handleClose() {
     this.props.hideModal();
   }
   handleShow() {
-    this.setState({show: true});
+    this.setState({ show: true });
   }
   render() {
     var leftButton;
     if (this.props.leftButton && this.props.leftButtonText) {
       leftButton = (
-        <Button onClick={this.props.leftButton} variant="primary">
+        <button onClick={this.props.leftButton} variant="primary" className="btn btn-primary">
           {this.props.leftButtonText}
-        </Button>
+        </button>
       );
     }
 
