@@ -173,7 +173,7 @@
 
 #playlist-search-box {
   flex-grow: 1;
-  // height: $playlist-search-height;
+  max-width: 40rem;
   margin-right: 0.5rem;
   margin-left: 0.2rem;
   font-size: 1.25em;
