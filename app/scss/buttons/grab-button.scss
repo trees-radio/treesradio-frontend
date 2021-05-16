@@ -23,11 +23,11 @@
 }
 
 .grab-playlists {
-  width: 375%;
+  width: 25rem;
   background: $color-grab-panel;
   position: absolute;
-  bottom: 110%;
-  left: -9em;
+  right: 0;
+  bottom: calc(#{$sidebar-height} + 0.5rem);
   color: black;
   border-radius: $button-border-radius;
   text-align: left;
@@ -50,7 +50,6 @@
 }
 
 .grab-playlist {
-  width: 100%;
   line-height: 12px;
   color: $color-button-text;
   font-size: $toolbar-grab-panel-font-size;

@@ -21,6 +21,10 @@
       / 1fr;
   }
 
+  .small-player-size {
+    height: 15rem !important;
+  }
+
   #playlists-panel {
     bottom: calc(100% - #{$player-height} - #{$navbar-height});
     width: 100%;
