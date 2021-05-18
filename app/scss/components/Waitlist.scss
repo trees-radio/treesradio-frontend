@@ -1,7 +1,6 @@
 @import "../core/variables";
 
 .waitlist-item {
-  width: 100%;
   list-style-position: inside;
   list-style-type: none;
   display: flex;
@@ -21,6 +20,9 @@
 }
 
 .waitlist-name-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   width: 80%;
   max-width: 80%;
   padding-top: 2.5%;
@@ -42,6 +44,7 @@
 .waitlist-list {
   padding: 0;
   margin-bottom: 50px;
+  height: 100%;
 }
 
 .waitlist-position {
@@ -52,6 +55,7 @@
 }
 
 .waitlist-scroll {
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
