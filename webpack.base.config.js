@@ -107,7 +107,8 @@ module.exports = new Config().merge({
       title: "TreesRadio",
       hash: true,
       favicon: "app/img/favicon.png",
-      appMountId: "app"
+      appMountId: "app",
+      meta: { "viewport": { name: "viewport", content: "width=device-width, initial-scale=1" } }
     }),
     new VersionFile({
       packageFile: path.join(__dirname, "package.json"),
