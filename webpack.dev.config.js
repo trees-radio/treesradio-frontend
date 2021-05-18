@@ -31,6 +31,18 @@ module.exports = new Config().extend("./webpack.base.config.js").merge({
   },
   plugins: [
     new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production"),
+      FIREBASE_URL: JSON.stringify("https://treesradio-live.firebaseio.com"),
+      FIREBASE_KEY: JSON.stringify("AIzaSyBqtjxpWp17r6wfOTxF4WvzV6_MgRN-zwk"),
+      FIREBASE_AUTH: JSON.stringify("treesradio-live.firebaseapp.com"),
+      FIREBASE_BUCKET: JSON.stringify("treesradio-live.appspot.com"),
+    }),
+  ],
+});
+
+/*
+plugins: [
+    new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
       FIREBASE_URL: JSON.stringify("https://treesradio-staging.firebaseio.com"),
       FIREBASE_KEY: JSON.stringify("AIzaSyB_w_sx6mMUQil5nWhn0sd5CjgOtDFGICw"),
@@ -38,4 +50,4 @@ module.exports = new Config().extend("./webpack.base.config.js").merge({
       FIREBASE_BUCKET: JSON.stringify("treesradio-staging.appspot.com"),
     }),
   ],
-});
+  */
