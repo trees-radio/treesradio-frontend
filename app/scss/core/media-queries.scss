@@ -7,7 +7,100 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+  html,
+  body {
+    font-size: 12px !important;
+  }
+
+  #playlists-panel-display {
+    font-size: 12px;
+  }
+
+  .pl-media-title {
+    overflow: hidden;
+    font-size: 100%;
+    flex-grow: 1;
+  }
+
+  #search {
+    position: fixed;
+    bottom: 0;
+    width: 99%;
+  }
+
+  #playlists-panel-display ol li {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .pl-thumbnail {
+    width: 2rem;
+  }
+
+  .dropdown-btn {
+    font-size: 100%;
+  }
+
+  #playlist-btn {
+    margin-left: 0;
+  }
+
+  .fa-2x {
+    font-size: 1.5em;
+  }
+
+  #chatcontainertop {
+    font-size: 8px;
+    height: calc(100% - 5rem) !important;
+  }
+
+  #playlist-metadata,
+  #currentsong-metadata {
+    line-height: 1.5rem;
+  }
+
+  .emojilarge {
+    height: 24px;
+    width: 24px;
+  }
+
+  #chat-counter_test {
+    line-height: 0.4;
+  }
+
+  #playlists-bar {
+    grid:
+      [row1-start] "playlist-btn playlist current-song current-song current-song" 2fr [row1-end]
+      [row2-start] "waitlist-btn waitlist-btn waitlist-btn grab like" 1fr [row2-end]
+      [row3-start] "waitlist-btn waitlist-btn waitlist-btn volume dislike" 1fr [row3-end]
+      / 4rem 1.2fr 1fr 4.5rem 4.5rem;
+  }
+
+  p {
+    margin-block-start: 0.3em;
+    margin-block-end: 0.3em;
+  }
+
+  .navbar-brand {
+    width: 2.5rem !important;
+  }
+
+  #playlist-ul,
+  #playlist-ol {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 1em;
+    height: 100%;
+  }
+}
+
 @media #{$isPortrait} {
+  video {
+    left: 0 !important;
+  }
+
   .hide-small {
     display: none;
   }
@@ -15,10 +108,19 @@
   #app-grid {
     grid:
       [row1-start] "nav" $navbar-height [row1-end]
-      [row2-start] "player" 30rem [row2-end]
-      [row3-start] "toolbar" $sidebar-height [row3-end]
+      [row2-start] "player" $player-height [row2-end]
+      [row3-start] "toolbar" calc(#{$sidebar-height} * 2) [row3-end]
       [row4-start] "chat" 1fr [row4-end]
       / 1fr;
+  }
+
+  .sidebar-changer {
+    height: $chatmenu-mini;
+    line-height: $chatmenu-mini;
+  }
+
+  #chatcontainertop {
+    height: calc(100% - #{$chatmenu-mini});
   }
 
   .small-player-size {
@@ -28,10 +130,9 @@
   #playlists-panel {
     bottom: calc(100% - #{$player-height} - #{$navbar-height});
     width: 100%;
-    height: 30rem;
+    height: $player-height;
   }
 
-  .join-waitlist,
   #playlists-open-icon {
     line-height: $sidebar-height;
   }
@@ -39,6 +140,10 @@
   #vidcontainer,
   #player-size {
     height: 100%;
+  }
+
+  .join-waitlist {
+    line-height: 4rem;
   }
 }
 
@@ -97,12 +202,6 @@
 // }
 
 /** ## Video ## */
-
-@media (min-width: 0) {
-  #videotoplevel {
-    display: none;
-  }
-}
 
 @media (min-width: 750px) {
   #videotoplevel {
