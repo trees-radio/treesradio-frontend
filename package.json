@@ -62,7 +62,9 @@
     "webpack-cli": "^3.3.12",
     "webpack-config": "^7.5.0",
     "webpack-dev-server": "^3.11.0",
-    "webpack-version-file-plugin": "^0.4.0"
+    "webpack-pwa-manifest": "^4.3.0",
+    "webpack-version-file-plugin": "^0.4.0",
+    "workbox-webpack-plugin": "^6.1.5"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.11.5",

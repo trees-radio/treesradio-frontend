@@ -4,6 +4,8 @@ var Config = require("webpack-config").default; // must be imported with .defaul
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var VersionFile = require("webpack-version-file-plugin");
 var short = require("git-rev-sync").short();
+var WebpackPwaManifest = require('webpack-pwa-manifest');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = new Config().merge({
@@ -109,6 +111,25 @@ module.exports = new Config().merge({
       favicon: "app/img/favicon.png",
       appMountId: "app",
       meta: { "viewport": { name: "viewport", content: "width=device-width, initial-scale=1" } }
+    }),
+    new WebpackPwaManifest({
+      name: 'TreesRadio',
+      short_name: 'TR',
+      description: 'Toke to great music with fellow ents',
+      background_color: '#0a0a0a',
+      // crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+      icons: [
+        {
+          src: path.resolve('app/img/favicon.png'),
+          sizes: [96, 128, 192, 256, 384, 512, 1024] // multiple sizes
+        }
+      ]
+    }),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
     }),
     new VersionFile({
       packageFile: path.join(__dirname, "package.json"),
