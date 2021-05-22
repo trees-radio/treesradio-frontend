@@ -397,6 +397,7 @@
   display: inline-flex;
   flex-flow: row nowrap;
   place-items: baseline;
+  flex-wrap: wrap;
 }
 
 #loginWrapper {
@@ -418,7 +419,11 @@
 }
 
 #loginButtons button {
+  text-overflow: ellipsis;
   border-radius: $button-border-radius;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30vw;
 }
 
 #loginbutton {
