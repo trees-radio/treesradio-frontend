@@ -7,102 +7,178 @@
   }
 }
 
-@media screen and (max-width: 700px) {
-  html,
-  body {
-    font-size: 12px !important;
-  }
-
-  #playlists-panel-display {
-    font-size: 12px;
-  }
-
-  .pl-media-title {
-    overflow: hidden;
-    font-size: 100%;
-    flex-grow: 1;
-  }
-
-  #search {
-    position: fixed;
-    bottom: 0;
-    width: 99%;
-  }
-
-  #playlists-panel-display ol li {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-  .pl-thumbnail {
-    width: 2rem;
-  }
-
-  .dropdown-btn {
-    font-size: 100%;
-  }
-
-  #playlist-btn {
-    margin-left: 0;
-  }
-
-  .fa-2x {
-    font-size: 1.5em;
-  }
-
-  #chatcontainertop {
-    font-size: 8px;
-    height: calc(100% - 5rem) !important;
-  }
-
-  #playlist-metadata,
-  #currentsong-metadata {
-    line-height: 1.5rem;
-  }
-
-  .emojilarge {
-    height: 24px;
-    width: 24px;
-  }
-
-  #chat-counter_test {
-    line-height: 0.4;
-  }
-
-  #playlists-bar {
-    grid:
-      [row1-start] "playlist-btn playlist current-song current-song current-song" 2fr [row1-end]
-      [row2-start] "waitlist-btn waitlist-btn waitlist-btn grab like" 1fr [row2-end]
-      [row3-start] "waitlist-btn waitlist-btn waitlist-btn volume dislike" 1fr [row3-end]
-      / 4rem 1.2fr 1fr 4.5rem 4.5rem;
-  }
-
-  p {
-    margin-block-start: 0.3em;
-    margin-block-end: 0.3em;
-  }
-
-  .navbar-brand {
-    width: 2.5rem !important;
-  }
-
-  #playlist-ul,
-  #playlist-ol {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 1em;
-    height: 100%;
-  }
-
-  #usernametop {
-    max-width: 20vw;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
 @media #{$isPortrait} {
+  @media only screen and (max-width: 700px) and (min-width: 0) {
+    #app-grid {
+      grid:
+        [row1-start] "nav" 3.5rem [row1-end]
+        [row2-start] "player" 56.25vw [row2-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height} * 2) [row3-end]
+        [row4-start] "chat" 1fr [row4-end]/1fr !important;
+    }
+
+    html,
+    body {
+      font-size: 12px !important;
+    }
+
+    #playlists-panel-display {
+      font-size: 12px;
+    }
+
+    .pl-media-title {
+      overflow: hidden;
+      font-size: 100%;
+      flex-grow: 1;
+    }
+
+    #search {
+      position: fixed;
+      bottom: 0;
+      width: 99%;
+    }
+
+    #playlists-panel-display ol li {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+    .pl-thumbnail {
+      width: 2rem;
+    }
+
+    .dropdown-btn {
+      font-size: 100%;
+    }
+
+    #playlist-btn {
+      margin-left: 0;
+    }
+
+    .fa-2x {
+      font-size: 1.5em;
+    }
+
+    #chatcontainertop {
+      font-size: 8px;
+      height: calc(100% - 5rem) !important;
+    }
+
+    #playlists-panel.playlists-panel-closed {
+      height: 0 !important;
+    }
+
+    .join-waitlist {
+      line-height: calc(#{$sidebar-height} * 2 / 3) !important;
+    }
+
+    #playlists-panel {
+      bottom: calc(100% - 56.25vw - 3.5rem - 6.1rem) !important;
+      height: calc(56.25vw + 6.1rem) !important;
+      z-index: 420;
+    }
+
+    #playlist-metadata {
+      line-height: 1.2rem;
+    }
+
+    #currentsong-metadata {
+      line-height: 2rem;
+    }
+
+    #username b {
+      display: inline-block;
+      max-width: 3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #userbit-expander {
+      margin-left: 4px;
+    }
+
+    .emojilarge {
+      height: 24px;
+      width: 24px;
+    }
+
+    div.leaderboard-row {
+      font-size: 1em;
+    }
+    .modal-dialog {
+      margin-top: 50px !important;
+    }
+
+    span.leaderboard-cell-rank {
+      width: 1.2em;
+    }
+
+    .modal-content {
+      max-width: 100vw;
+    }
+
+    span.leaderboard-cell-song-thumb > img {
+      max-width: none;
+      height: 50px;
+    }
+
+    #chat-counter_test {
+      line-height: 0.4;
+    }
+
+    #playlists-bar {
+      grid:
+        [row1-start] "current-song current-song grab like" 1fr [row1-end]
+        [row2-start] "current-song current-song volume dislike" 1fr [row2-end]
+        [row3-start] "playlist-btn playlist waitlist-btn waitlist-btn" 1fr [row3-end]
+        / 4rem 1fr 4.5rem 4.5rem;
+    }
+
+    #playlists-open-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      line-height: 0 !important;
+      height: auto;
+      width: auto;
+      z-index: 1;
+    }
+
+    #playlists-open-icon {
+      line-height: 0 !important;
+    }
+
+    p {
+      margin-block-start: 0.3em;
+      margin-block-end: 0.3em;
+    }
+
+    .navbar-brand {
+      width: 2.5rem !important;
+    }
+
+    .fa-4x {
+      font-size: 3em !important;
+    }
+
+    #playlist-ul,
+    #playlist-ol {
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-inline-start: 1em;
+      height: 100%;
+    }
+
+    #usernametop {
+      max-width: 20vw;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
   video {
     left: 0 !important;
   }
@@ -115,7 +191,7 @@
     grid:
       [row1-start] "nav" $navbar-height [row1-end]
       [row2-start] "player" $player-height [row2-end]
-      [row3-start] "toolbar" calc(#{$sidebar-height} * 2) [row3-end]
+      [row3-start] "toolbar" #{$sidebar-height} [row3-end]
       [row4-start] "chat" 1fr [row4-end]
       / 1fr;
   }
@@ -141,6 +217,7 @@
 
   #playlists-open-icon {
     line-height: $sidebar-height;
+    z-index: 1;
   }
 
   #vidcontainer,
@@ -149,7 +226,7 @@
   }
 
   .join-waitlist {
-    line-height: 4rem;
+    font-size: 1em;
   }
 }
 
