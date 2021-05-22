@@ -41,6 +41,7 @@ body {
 
 #toolbar {
   grid-area: toolbar;
+  z-index: 2;
 }
 
 #videotoplevel {

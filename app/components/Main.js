@@ -47,11 +47,16 @@ class Main extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { show420: false };
+    this.state = { show420: false, isPlaylistOpen: false };
+    this.togglePlaylist = this.togglePlaylist.bind(this);
   }
 
   componentDidMount() {
     this.check420();
+  }
+
+  togglePlaylist() {
+    this.setState(state => ({ isPlaylistOpen: !state.isPlaylistOpen }));
   }
 
   onEnterKey(e, cb) {
@@ -108,6 +113,10 @@ class Main extends React.Component {
     this.setState({ show420: true });
   }
 
+  isPlaylistOpen() {
+    return this.state.isPlaylistOpen ? 'playlist-open' : '';
+  }
+
   render() {
 
     if (!app.init) {
@@ -146,7 +155,7 @@ class Main extends React.Component {
       );
     }
     return (
-      <div className={this.checkAprilFools()} id="app-grid" >
+      <div className={this.checkAprilFools() + ' ' + this.isPlaylistOpen()} id="app-grid" >
         <link
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet"
@@ -165,7 +174,7 @@ class Main extends React.Component {
         </div>
         <div id="toolbar">
           <div id="playlists-container">
-            <Toolbar />
+            <Toolbar togglePlaylist={this.togglePlaylist} />
           </div>
           <a id="exportPlaylistDownload" />
         </div>

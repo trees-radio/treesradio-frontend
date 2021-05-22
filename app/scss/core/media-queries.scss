@@ -11,10 +11,33 @@
   @media only screen and (max-width: 700px) and (min-width: 0) {
     #app-grid {
       grid:
-        [row1-start] "nav" 3.5rem [row1-end]
+        [row1-start] "nav" $navbar-height [row1-end]
         [row2-start] "player" 56.25vw [row2-end]
-        [row3-start] "toolbar" calc(#{$sidebar-height} * 2) [row3-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
         [row4-start] "chat" 1fr [row4-end]/1fr !important;
+    }
+
+    #app-grid.playlist-open {
+      grid:
+        [row1-start] "nav" $navbar-height [row1-end]
+        [row2-start] "player" 56.25vw [row2-end]
+        [row4-start] "chat" 1fr [row4-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
+        / 1fr !important;
+    }
+
+    #app-grid.playlist-open #playlists-panel {
+      bottom: calc(#{$sidebar-height-mini} * 2) !important;
+      height: calc(100vh - #{$sidebar-height-mini} * 2 - #{$navbar-height}) !important;
+    }
+
+    #playlist-search-box {
+      max-width: 60vw;
+    }
+
+    .row {
+      flex-wrap: wrap;
+      height: auto;
     }
 
     html,
@@ -32,12 +55,6 @@
       flex-grow: 1;
     }
 
-    #search {
-      position: fixed;
-      bottom: 0;
-      width: 99%;
-    }
-
     #playlists-panel-display ol li {
       display: flex;
       justify-content: space-around;
@@ -48,8 +65,26 @@
       width: 2rem;
     }
 
+    .pl-channel {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .dropdown-btn {
       font-size: 100%;
+      max-width: 40vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown {
+      max-width: 40vw;
+    }
+
+    .dropdown-list {
+      top: 2rem;
     }
 
     #playlist-btn {
@@ -62,7 +97,7 @@
 
     #chatcontainertop {
       font-size: 8px;
-      height: calc(100% - 5rem) !important;
+      height: calc(100% - 4rem) !important;
     }
 
     #playlists-panel.playlists-panel-closed {
@@ -70,7 +105,7 @@
     }
 
     .join-waitlist {
-      line-height: calc(#{$sidebar-height} * 2 / 3) !important;
+      line-height: calc(#{$sidebar-height-mini} * 2 / 3) !important;
     }
 
     #playlists-panel {
@@ -179,6 +214,13 @@
     }
   }
 
+  #search {
+    position: fixed;
+    bottom: 0;
+    width: 90vw;
+    margin-left: 5vw;
+  }
+
   video {
     left: 0 !important;
   }
@@ -191,7 +233,7 @@
     grid:
       [row1-start] "nav" $navbar-height [row1-end]
       [row2-start] "player" $player-height [row2-end]
-      [row3-start] "toolbar" #{$sidebar-height} [row3-end]
+      [row3-start] "toolbar" #{$sidebar-height-mini} [row3-end]
       [row4-start] "chat" 1fr [row4-end]
       / 1fr;
   }
@@ -202,7 +244,7 @@
   }
 
   #chatcontainertop {
-    height: calc(100% - #{$chatmenu-mini});
+    height: calc(100% - 4rem);
   }
 
   .small-player-size {
@@ -216,7 +258,7 @@
   }
 
   #playlists-open-icon {
-    line-height: $sidebar-height;
+    line-height: $sidebar-height-mini;
     z-index: 1;
   }
 
