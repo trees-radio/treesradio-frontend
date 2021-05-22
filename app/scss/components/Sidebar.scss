@@ -24,12 +24,12 @@
 
 .sidebar-changer {
   display: flex;
-  height: 5rem;
+  height: $chatmenu;
   align-items: stretch;
   justify-content: space-between;
   color: white;
   text-align: center;
-  line-height: 5rem;
+  line-height: $chatmenu;
   cursor: pointer;
   flex-flow: row nowrap;
 }

@@ -13,7 +13,7 @@
       grid:
         [row1-start] "nav" $navbar-height [row1-end]
         [row2-start] "player" 56.25vw [row2-end]
-        [row3-start] "toolbar" calc(#{$sidebar-height} * 2) [row3-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
         [row4-start] "chat" 1fr [row4-end]/1fr !important;
     }
 
@@ -22,13 +22,13 @@
         [row1-start] "nav" $navbar-height [row1-end]
         [row2-start] "player" 56.25vw [row2-end]
         [row4-start] "chat" 1fr [row4-end]
-        [row3-start] "toolbar" calc(#{$sidebar-height} * 2) [row3-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
         / 1fr !important;
     }
 
     #app-grid.playlist-open #playlists-panel {
-      bottom: calc(#{$sidebar-height} * 2) !important;
-      height: calc(100vh - #{$sidebar-height} * 2 - #{$navbar-height}) !important;
+      bottom: calc(#{$sidebar-height-mini} * 2) !important;
+      height: calc(100vh - #{$sidebar-height-mini} * 2 - #{$navbar-height}) !important;
     }
 
     #playlist-search-box {
@@ -112,7 +112,7 @@
     }
 
     .join-waitlist {
-      line-height: calc(#{$sidebar-height} * 2 / 3) !important;
+      line-height: calc(#{$sidebar-height-mini} * 2 / 3) !important;
     }
 
     #playlists-panel {
@@ -233,7 +233,7 @@
     grid:
       [row1-start] "nav" $navbar-height [row1-end]
       [row2-start] "player" $player-height [row2-end]
-      [row3-start] "toolbar" #{$sidebar-height} [row3-end]
+      [row3-start] "toolbar" #{$sidebar-height-mini} [row3-end]
       [row4-start] "chat" 1fr [row4-end]
       / 1fr;
   }
@@ -258,7 +258,7 @@
   }
 
   #playlists-open-icon {
-    line-height: $sidebar-height;
+    line-height: $sidebar-height-mini;
     z-index: 1;
   }
 
