@@ -104,6 +104,26 @@
       width: 24px;
     }
 
+    div.leaderboard-row {
+      font-size: 1em;
+    }
+    .modal-dialog {
+      margin-top: 50px !important;
+    }
+
+    span.leaderboard-cell-rank {
+      width: 1.2em;
+    }
+
+    .modal-content {
+      max-width: 100vw;
+    }
+
+    span.leaderboard-cell-song-thumb > img {
+      max-width: none;
+      height: 50px;
+    }
+
     #chat-counter_test {
       line-height: 0.4;
     }
