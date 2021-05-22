@@ -24,12 +24,14 @@
 }
 
 #chatscroll {
-  flex-grow: 1;
-  height: calc(100% - 2.5rem);
+  height: calc(100% - 2rem);
 }
 
 .chatbar {
-  height: 2.5rem;
+  height: 2.8rem;
+  bottom: 0;
+  position: absolute;
+  width: 25vw;
 }
 
 #chatcontainertop {
