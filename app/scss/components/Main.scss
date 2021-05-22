@@ -1,6 +1,15 @@
 @import "../core/variables";
 @import "../core/mixins";
 
+// toolbar on mobile browsers hides whatever is below it, causing display issues on TR mobile
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+html {
+  height: -webkit-fill-available;
+}
+
 html,
 body {
   background-size: cover;
