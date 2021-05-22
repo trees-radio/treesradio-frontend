@@ -212,6 +212,14 @@
       overflow-x: hidden;
       text-overflow: ellipsis;
     }
+
+    .grab-playlists {
+      bottom: calc(2 * #{$sidebar-height-mini} + 0.5rem) !important;
+    }
+  }
+
+  .grab-playlists {
+    bottom: calc(#{$sidebar-height-mini} + 0.5rem);
   }
 
   #search {
@@ -269,6 +277,7 @@
 
   .join-waitlist {
     font-size: 1em;
+    line-height: $sidebar-height-mini;
   }
 }
 
