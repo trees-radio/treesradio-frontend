@@ -22,6 +22,10 @@ body {
   margin: 0;
 }
 
+input {
+  font-size: 16px !important; // if font-size is smaller that 16px on inputs, ios zooms in and users have trouble zooming out
+}
+
 #app {
   height: 100%;
 }
