@@ -111,12 +111,6 @@
       line-height: calc(#{$sidebar-height-mini} * 2 / 3) !important;
     }
 
-    #playlists-panel {
-      bottom: calc(100% - 56.25vw - 3.5rem - 6.1rem) !important;
-      height: calc(56.25vw + 6.1rem) !important;
-      z-index: 419;
-    }
-
     #playlist-metadata {
       line-height: 1.2rem;
     }
@@ -267,6 +261,7 @@
     bottom: calc(100% - #{$player-height} - #{$navbar-height});
     width: 100%;
     height: $player-height;
+    z-index: 419;
   }
 
   #playlists-open-icon {
