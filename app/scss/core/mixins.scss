@@ -1,50 +1,12 @@
 @import "variables";
 
-/* ## Misc ## */
-/* stylelint-disable scss/dollar-variable-pattern, scss/no-duplicate-dollar-variables */
-@mixin fontResize($iterations) {
-  $i: 1;
-
-  @while ($i <= $iterations) {
-    @media all and (min-width: 100px * $i) {
-      .grab-button {
-        font-size: 0.06em * $i;
-      }
-
-      .volume-slider {
-        font-size: 0.06em * $i;
-      }
-
-      .like-button {
-        font-size: 0.06em * $i;
-      }
-
-      .dislike-button {
-        font-size: 0.06em * $i;
-      }
-
-      .waitlist {
-        font-size: 0.1em * $i;
-      }
-    }
-
-    $i: $i + 1;
-  }
-}
-
 /* stylelint-enable scss/dollar-variable-pattern, scss/no-duplicate-dollar-variables */
 
 /* ## Toolbar ## */
 @mixin toolbar-button-small {
-  height: 49%;
-  width: 95%;
-  margin: 2px auto;
-  box-sizing: content-box;
-  overflow: hidden;
   border: none;
   border-radius: $button-border-radius;
   text-align: center;
-  text-overflow: ellipsis;
   transition: background 500ms ease;
   background-size: 125%;
   text-shadow: $text-shadow-light;

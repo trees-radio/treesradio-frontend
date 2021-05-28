@@ -1,7 +1,6 @@
 @import "../core/variables";
 
 .waitlist-item {
-  width: 100%;
   list-style-position: inside;
   list-style-type: none;
   display: flex;
@@ -11,7 +10,7 @@
 
 .waitlist-avatar {
   cursor: pointer;
-  padding-right: .5vw;
+  padding-right: 0.5vw;
 }
 
 .waitlist-avatarimg {
@@ -21,17 +20,20 @@
 }
 
 .waitlist-name-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   width: 80%;
   max-width: 80%;
   padding-top: 2.5%;
   padding-left: 2.5%;
-  font-size: 22px;
+  font-size: 1.4em;
   line-height: 1vw;
   cursor: pointer;
 }
 
 .waitlist-play-time {
-  font-size: .8em;
+  font-size: 0.8em;
   float: right;
 }
 
@@ -42,16 +44,18 @@
 .waitlist-list {
   padding: 0;
   margin-bottom: 50px;
+  height: 100%;
 }
 
 .waitlist-position {
   width: 10%;
   max-width: 10%;
   margin-top: 0.25vw;
-  font-size: 22px;
+  font-size: 1.4em;
 }
 
 .waitlist-scroll {
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }

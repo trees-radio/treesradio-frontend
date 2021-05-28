@@ -1,26 +1,7 @@
-
 #sidebar {
   height: 100%;
-}
-
-@media (min-width: 0) {
-  #sidebar {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(9, 1fr);
-    grid-column-gap: 0;
-    grid-row-gap: 0;
-  }
-}
-
-@media (min-width: 1200px) {
-  #sidebar {
-    display: unset;
-    grid-template-columns: unset;
-    grid-template-rows: unset;
-    grid-column-gap: unset;
-    grid-row-gap: unset;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 //moving sidebar-changer and online-Ents/Waitlist-Cnt classes to bottom
@@ -42,11 +23,19 @@
 }
 
 .sidebar-changer {
+  display: flex;
+  height: $chatmenu;
+  align-items: stretch;
+  justify-content: space-between;
   color: white;
   text-align: center;
-  line-height: 2vw;
+  line-height: $chatmenu;
   cursor: pointer;
   flex-flow: row nowrap;
+}
+
+.sidebar-changer div {
+  flex-grow: 1;
 }
 
 .sidebar-selected {

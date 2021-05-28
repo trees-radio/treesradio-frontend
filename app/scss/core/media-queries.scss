@@ -8,8 +8,275 @@
 }
 
 @media #{$isPortrait} {
+  @media only screen and (max-width: 700px) and (min-width: 0) {
+    #app-grid {
+      grid:
+        [row1-start] "nav" $navbar-height [row1-end]
+        [row2-start] "player" 56.25vw [row2-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
+        [row4-start] "chat" 1fr [row4-end]/1fr !important;
+    }
+
+    #app-grid.playlist-open {
+      grid:
+        [row1-start] "nav" $navbar-height [row1-end]
+        [row2-start] "player" 56.25vw [row2-end]
+        [row4-start] "chat" 1fr [row4-end]
+        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
+        / 1fr !important;
+    }
+
+    #app-grid.playlist-open #playlists-panel {
+      bottom: calc(#{$sidebar-height-mini} * 2) !important;
+      height: calc(100vh - #{$sidebar-height-mini} * 2 - #{$navbar-height}) !important;
+    }
+    #app-grid.playlist-open #toolbar {
+      z-index: 419;
+    }
+
+    #playlist-search-box {
+      max-width: 60vw;
+    }
+
+    .row {
+      flex-wrap: wrap;
+      height: auto;
+    }
+
+    html,
+    body {
+      font-size: 12px !important;
+    }
+
+    #playlists-panel-display {
+      font-size: 12px;
+    }
+
+    .pl-media-title {
+      overflow: hidden;
+      font-size: 100%;
+      flex-grow: 1;
+    }
+
+    #playlists-panel-display ol li {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+    .pl-thumbnail {
+      width: 2rem;
+    }
+
+    .pl-channel {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown-btn {
+      font-size: 100%;
+      max-width: 40vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown {
+      max-width: 40vw;
+    }
+
+    .dropdown-list {
+      top: 2rem;
+    }
+
+    #playlist-btn {
+      margin-left: 0;
+    }
+
+    .fa-2x {
+      font-size: 1.5em;
+    }
+
+    #chatcontainertop {
+      font-size: 8px;
+      height: calc(100% - 4rem) !important;
+    }
+
+    #playlists-panel.playlists-panel-closed {
+      height: 0 !important;
+    }
+
+    .join-waitlist {
+      line-height: calc(#{$sidebar-height-mini} * 2 / 3) !important;
+    }
+
+    #playlist-metadata {
+      line-height: 1.2rem;
+    }
+
+    #currentsong-metadata {
+      line-height: 2rem;
+    }
+
+    #username b {
+      display: inline-block;
+      max-width: 3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #userbit-expander {
+      margin-left: 4px;
+    }
+
+    .emojilarge {
+      height: 24px;
+      width: 24px;
+    }
+
+    div.leaderboard-row {
+      font-size: 1em;
+    }
+    .modal-dialog {
+      margin-top: 50px !important;
+    }
+
+    span.leaderboard-cell-rank {
+      width: 1.2em;
+    }
+
+    .modal-content {
+      max-width: 100vw;
+    }
+
+    span.leaderboard-cell-song-thumb > img {
+      max-width: none;
+      height: 50px;
+    }
+
+    #chat-counter_test {
+      line-height: 0.4;
+    }
+
+    #playlists-bar {
+      grid:
+        [row1-start] "current-song current-song grab like" 1fr [row1-end]
+        [row2-start] "current-song current-song volume dislike" 1fr [row2-end]
+        [row3-start] "playlist-btn playlist waitlist-btn waitlist-btn" 1fr [row3-end]
+        / 4rem 1fr 4.5rem 4.5rem;
+    }
+
+    #playlists-open-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      line-height: 0 !important;
+      height: auto;
+      width: auto;
+      z-index: 1;
+    }
+
+    #playlists-open-icon {
+      line-height: 0 !important;
+    }
+
+    p {
+      margin-block-start: 0.3em;
+      margin-block-end: 0.3em;
+    }
+
+    .navbar-brand {
+      width: 2.5rem !important;
+    }
+
+    .fa-4x {
+      font-size: 3em !important;
+    }
+
+    #playlist-ul,
+    #playlist-ol {
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-inline-start: 1em;
+      height: 100%;
+    }
+
+    #usernametop {
+      max-width: 20vw;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .grab-playlists {
+      bottom: calc(2 * #{$sidebar-height-mini} + 0.5rem) !important;
+    }
+  }
+
+  .grab-playlists {
+    bottom: calc(#{$sidebar-height-mini} + 0.5rem);
+  }
+
+  #search {
+    position: fixed;
+    bottom: 0;
+    width: 90vw;
+    margin-left: 5vw;
+    z-index: 10;
+  }
+
+  video {
+    left: 0 !important;
+  }
+
   .hide-small {
     display: none;
+  }
+
+  #app-grid {
+    grid:
+      [row1-start] "nav" $navbar-height [row1-end]
+      [row2-start] "player" $player-height [row2-end]
+      [row3-start] "toolbar" #{$sidebar-height-mini} [row3-end]
+      [row4-start] "chat" 1fr [row4-end]
+      / 1fr;
+  }
+
+  .sidebar-changer {
+    height: $chatmenu-mini;
+    line-height: $chatmenu-mini;
+  }
+
+  #chatcontainertop {
+    height: calc(100% - 4rem);
+  }
+
+  .small-player-size {
+    height: 15rem !important;
+  }
+
+  #playlists-panel {
+    bottom: calc(100% - #{$player-height} - #{$navbar-height});
+    width: 100%;
+    height: $player-height;
+    z-index: 419;
+  }
+
+  #playlists-open-icon {
+    line-height: $sidebar-height-mini;
+    z-index: 1;
+  }
+
+  #vidcontainer,
+  #player-size {
+    height: 100%;
+  }
+
+  .join-waitlist {
+    font-size: 1em;
+    line-height: $sidebar-height-mini;
   }
 }
 
@@ -22,7 +289,7 @@
 
 @media #{$isPortrait}, (min-height: 1439px) {
   .navbar-brand {
-    font-size: 250%;
+    font-size: 150%;
     height: unset;
     width: 5rem;
   }
@@ -48,53 +315,26 @@
 //   }
 // }
 
-@media only screen and (max-width: 1300px) {
-  #toke-button {
-    font-size: 0.75 * $navbar-font-size;
-    padding: 0.4vh 0.7vw;
-  }
+// @media only screen and (max-width: 1300px) {
+//   #toke-button {
+//     font-size: 0.75 * $navbar-font-size;
+//     padding: 0.4vh 0.7vw;
+//   }
 
-  .hypepb {
-    font-size: $navbar-font-size * 0.7;
-  }
-}
+//   .hypepb {
+//     font-size: $navbar-font-size;
+//   }
+// }
 
-@media (orientation: portrait) {
-  @media #{$isPortrait}, screen and (min-height: 1339px) {
-    #toke-button {
-      padding: 0.8vh 0.7vw;
-    }
-  }
-}
-
-/* ## Playlists ## */
-
-@media (min-width: 800px) {
-  .waitlist {
-    width: 14.875%;
-  }
-}
-
-@media (min-width: 1300px) {
-  .waitlist {
-    width: 14.925%;
-    margin-top: 2px;
-  }
-}
-
-@media (min-width: 1600px) {
-  .waitlist {
-    width: 14.98%;
-  }
-}
+// @media (orientation: portrait) {
+//   @media #{$isPortrait}, screen and (min-height: 1339px) {
+//     #toke-button {
+//       padding: 0.8vh 0.7vw;
+//     }
+//   }
+// }
 
 /** ## Video ## */
-
-@media (min-width: 0) {
-  #videotoplevel {
-    display: none;
-  }
-}
 
 @media (min-width: 750px) {
   #videotoplevel {
@@ -107,7 +347,6 @@
 
 @media (min-height: 0) {
   #player-size {
-    height: 70vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -125,7 +364,6 @@
 
 @media (min-height: 100px) {
   #player-size {
-    height: 63vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -143,7 +381,6 @@
 
 @media (min-height: 200px) {
   #player-size {
-    height: 68.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -161,7 +398,6 @@
 
 @media (min-height: 300px) {
   #player-size {
-    height: 73.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -179,7 +415,6 @@
 
 @media (min-height: 350px) {
   #player-size {
-    height: 75.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -197,7 +432,6 @@
 
 @media (min-height: 400px) {
   #player-size {
-    height: 79vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -215,7 +449,6 @@
 
 @media (min-height: 480px) {
   #player-size {
-    height: 80.5vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -233,7 +466,6 @@
 
 @media (min-height: 600px) {
   #player-size {
-    height: 82vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -251,7 +483,6 @@
 
 @media (min-height: 700px) {
   #player-size {
-    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -269,7 +500,6 @@
 
 @media (min-height: 1400px) {
   #player-size {
-    height: 85vh; //88.25vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -280,7 +510,6 @@
 
 @media (min-height: 1600px) {
   #player-size {
-    height: 85.2vh; //any less/more will cause black bars on most videos instead of a few (when video is playing only).
     width: 100%;
     transition: all 0.15s ease-in 50ms;
     -webkit-transition: all 0.15s ease-in 50ms;
@@ -297,105 +526,6 @@
 }
 
 /** ## Sidebar ##**/
-
-@media (min-width: 0) {
-  .sidebar-changer {
-    grid-area: 1 / 1 / 2 / 2;
-    font-size: 1.4vw;
-  }
-}
-
-@media (min-width: 1200px) {
-  .sidebar-changer {
-    grid-area: unset;
-    height: 5% !important; //do not unimportant this is seriously fucking important
-    font-size: 0.75vw;
-    padding: 0;
-  }
-}
-
-@media (min-width: 0) {
-  .sidebar-selected {
-    height: unset;
-  }
-}
-
-@media (min-width: 1200px) {
-  .sidebar-selected {
-    height: 100% !important; //do not unimportant this is seriously fucking important
-  }
-}
-
-@media (min-width: 0) and (max-width: 719px) {
-  .show-chat-btn {
-    padding: 2% 0;
-    height: 25%;
-  }
-
-  .show-ousers-btn,
-  .show-waitlist-btn,
-  .show-about-btn {
-    padding: 2% 0;
-    height: 25%;
-  }
-}
-
-@media (min-width: 720px) {
-  .show-chat-btn {
-    padding: 2% 0;
-    height: 25%;
-  }
-  .show-ousers-btn,
-  .show-waitlist-btn,
-  .show-about-btn {
-    padding: 2% 0;
-    height: 25%;
-    display: block;
-  }
-}
-
-@media (min-width: 1200px) {
-  .show-chat-btn {
-    padding: 0;
-    height: 100%;
-  }
-  .show-ousers-btn,
-  .show-waitlist-btn,
-  .show-about-btn {
-    padding: 0;
-    height: 100%;
-    display: block;
-  }
-}
-
-@media (min-width: 1800px) {
-  .show-chat-btn {
-    padding: 0;
-    height: 100%;
-  }
-
-  .show-ousers-btn,
-  .show-waitlist-btn,
-  .show-about-btn {
-    padding: 0;
-    height: 100%;
-    display: block;
-  }
-}
-
-@media (min-width: 1800px) and (min-height: 1640px) {
-  .show-chat-btn {
-    padding: 0.8vh 0;
-    height: 100%;
-  }
-  .show-ousers-btn,
-  .show-waitlist-btn,
-  .show-about-btn {
-    padding: 0.8vh 0;
-    height: 100%;
-    display: block;
-  }
-}
 
 @media (min-width: 0) {
   .online-count {

@@ -1,5 +1,5 @@
 import React from "react";
-// import {observer} from "mobx-react";
+
 
 import chat from "stores/chat";
 import profile from "stores/profile";
@@ -8,7 +8,7 @@ import ChatContent from "./Chat/ChatContent";
 import ChatSend from "./Chat/ChatSend";
 import ChatLocked from "./Chat/ChatLocked";
 
-// @observer
+
 const Chat = React.forwardRef((props, ref) =>
 (
   <div id="chatcontainer" style={props.show ? {} : { display: "none" }}>

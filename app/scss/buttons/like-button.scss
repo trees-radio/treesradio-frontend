@@ -1,27 +1,14 @@
 // http://enjoycss.com/zbuttram/item/rQW/2
 @import "../core/variables";
 @import "../core/mixins";
-.fa-thumbs-o-up {
-  position: absolute;
-  padding-top: 0.39vw;
-  right: 3.75vw;
-}
-
-.fa-thumbs-up {
-  position: absolute;
-  padding-top: 0.39vw;
-  right: 3.75vw;
-}
-
-.feedback-likes {
-  float: right;
-  padding-right: 1.75vw;
-  padding-top: 0.1vw;
-}
 
 .like-button {
+  grid-area: like;
   @include toolbar-button-small;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   color: $color-button-text;
   background: $color-button-like;
 }

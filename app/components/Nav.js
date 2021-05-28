@@ -10,7 +10,7 @@ import HypeProgress from "./Nav/HypeProgress";
 import file from "src/version.json";
 import profile from "stores/profile";
 import $ from "jquery";
-import Modal from "components/utility/Modal";
+import Modal from "./utility/Modal";
 import imageWhitelist from "libs/imageWhitelist";
 import tokeEvent from "../libs/tokeEvent";
 

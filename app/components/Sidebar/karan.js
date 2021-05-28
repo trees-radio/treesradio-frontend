@@ -1,6 +1,6 @@
 import React from "react";
-import Modal from "../../components/utility/Modal";
-import {observer} from "mobx-react";
+import Modal from "../utility/Modal";
+import { observer } from "mobx-react";
 
 @observer
 export default class Karan extends React.Component {

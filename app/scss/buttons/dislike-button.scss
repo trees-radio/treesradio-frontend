@@ -2,27 +2,12 @@
 @import "../core/variables";
 @import "../core/mixins";
 
-.fa-thumbs-o-down {
-  position: absolute;
-  padding-top: 0.38vw;
-  right: 3.75vw;
-}
-
-.fa-thumbs-down {
-  position: absolute;
-  padding-top: 0.38vw;
-  right: 3.75vw;
-}
-
-.feedback-dislikes {
-  float: right;
-  padding-right: 1.75vw;
-  padding-top: 0.1vw;
-}
-
 .dislike-button {
+  grid-area: dislike;
   @include toolbar-button-small;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   color: $color-button-text;
   background: $color-button-dislike;
 }

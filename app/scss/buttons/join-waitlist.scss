@@ -2,16 +2,16 @@
 @import "../core/variables";
 
 .join-waitlist {
+  line-height: $sidebar-height;
+  height: 100%;
   background: $color-button-waitlist-join;
   color: white;
-  line-height: 9vh;
-  width: 95%;
   margin: 0 auto;
   box-sizing: content-box;
   cursor: pointer;
   text-shadow: $text-shadow-light;
   letter-spacing: 1.5px;
-  font-size: 110%;
+  font-size: 1.5em;
   text-overflow: clip;
   transition: background 500ms ease;
   border-radius: $button-border-radius;
@@ -29,7 +29,6 @@
   color: white;
   text-shadow: $text-shadow-light;
   letter-spacing: 1.5px;
-  font-size: 100% !important;
 }
 
 .join-waitlist-pressed:hover {

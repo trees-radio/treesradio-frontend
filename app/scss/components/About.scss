@@ -7,6 +7,7 @@
   background-image: $img-trees-about;
   background-size: cover;
   overflow-y: auto;
+  font-size: 16px;
 }
 
 .tenorgif-attr {
@@ -25,23 +26,20 @@
 
 .about-summary {
   font-family: "Open Sans", sans-serif;
-  font-size: 0.654vw;
-  width: 100%;
+  font-size: 0.8em;
   padding-left: 5%;
   padding-top: 4%;
   position: relative;
 }
 
 .about-rules {
-  width: 100%;
-  font-size: 0.75vw;
+  font-size: 1em;
   padding-left: 5%;
   padding-top: 0.35%;
 }
 
 .about-promotion {
-  width: 100%;
-  font-size: 0.75vw;
+  font-size: 0.75em;
   padding-left: 5%;
 }
 
@@ -52,24 +50,22 @@
 }
 
 .about-bugs {
-  width: 100%;
-  font-size: 0.75vw;
+  font-size: 0.75em;
 }
 
 .about-suggestions {
-  width: 90%;
-  font-size: 0.75vw;
+  font-size: 0.9em;
   margin-left: 20px;
 }
 
 .about-emoji {
-  width: 100%;
+  font-size: 22px;
   padding-left: 5%;
   padding-top: 7%;
 }
 
 #about-lnk {
-  font-size: 0.75vw;
+  font-size: 0.75em;
   color: $color-trees-primary;
 }
 
