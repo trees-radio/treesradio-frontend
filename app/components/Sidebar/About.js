@@ -26,7 +26,7 @@ export default class About extends React.Component {
 
   render() {
     return (
-      <div className="sidebar-about" style={this.props.show ? {} : {display: "none"}}>
+      <div className="sidebar-about" style={this.props.show ? {} : { display: "none" }}>
         <div className="about-summary">
           <p>TreesRadio is a online social music site.</p>
         </div>
@@ -84,9 +84,9 @@ export default class About extends React.Component {
               <li>
                 @FredRodgers, @JubieMeg, @JohnPyro, @entlife for sponsoring @yellerjeep&apos;s{" "}
                 <a
-                    href="https://www.patreon.com/yellerjeep_tr"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  href="https://www.patreon.com/yellerjeep_tr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   ongoing development of the site.
                 </a>
@@ -94,8 +94,9 @@ export default class About extends React.Component {
               <li>@SpeedWeed for the awesome bumps for SaeftBot</li>
               <li>@Pixelmac for expanding our bump library</li>
               <li>@Anarki for great ideas and assisting with debugging.</li>
-              <li>@Player: Winamp, @TweeZee for <a href={"https://patreon.com/tr_frontents"}>heading on the quest to
-                make TR mobile</a></li>
+              <li>@Player: Winamp, @TweeZee for heading on the quest to
+                make TR mobile</li>
+              <li>Thanks to @karvin for his hard work on improving the UX and mobile experience</li>
             </ul>
           </div>
           <div>
@@ -132,7 +133,7 @@ export default class About extends React.Component {
             type="button"
             className="btn btn-xs btn-default"
             onClick={() => {
-              this.setState({showKaran: !this.state.showKaran});
+              this.setState({ showKaran: !this.state.showKaran });
             }}
           >
             <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft" />

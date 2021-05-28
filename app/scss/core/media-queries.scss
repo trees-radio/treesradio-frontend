@@ -30,6 +30,9 @@
       bottom: calc(#{$sidebar-height-mini} * 2) !important;
       height: calc(100vh - #{$sidebar-height-mini} * 2 - #{$navbar-height}) !important;
     }
+    #app-grid.playlist-open #toolbar {
+      z-index: 419;
+    }
 
     #playlist-search-box {
       max-width: 60vw;
@@ -106,12 +109,6 @@
 
     .join-waitlist {
       line-height: calc(#{$sidebar-height-mini} * 2 / 3) !important;
-    }
-
-    #playlists-panel {
-      bottom: calc(100% - 56.25vw - 3.5rem - 6.1rem) !important;
-      height: calc(56.25vw + 6.1rem) !important;
-      z-index: 420;
     }
 
     #playlist-metadata {
@@ -227,6 +224,7 @@
     bottom: 0;
     width: 90vw;
     margin-left: 5vw;
+    z-index: 10;
   }
 
   video {
@@ -263,6 +261,7 @@
     bottom: calc(100% - #{$player-height} - #{$navbar-height});
     width: 100%;
     height: $player-height;
+    z-index: 419;
   }
 
   #playlists-open-icon {
