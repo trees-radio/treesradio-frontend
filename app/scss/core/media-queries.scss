@@ -87,7 +87,11 @@
     }
 
     .dropdown-list {
-      top: 2rem;
+      // top: 2rem;
+    }
+
+    #playlist-btn .dropdown-inner-text {
+      max-height: 50vh;
     }
 
     #playlist-btn {
