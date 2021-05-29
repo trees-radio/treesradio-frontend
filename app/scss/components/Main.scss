@@ -187,7 +187,7 @@ h4 {
 .dropdown-list {
   position: absolute;
   z-index: 420;
-  top: calc(#{$playlist-search-height} + 6px);
+  // top: calc(#{$playlist-search-height} + 6px);
   left: 0.75rem;
   background-color: $color-trees-bg;
   width: 15rem;
@@ -201,15 +201,37 @@ h4 {
 .dropdown-menu {
   background-color: $color-trees-bg;
   color: $color-trees-primary;
+  z-index: 422;
+
+  font-size: 1.2em;
+  width: 16rem;
 }
 
-.dropdown-menu > li > a {
+.dropdown-inner-text {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.dropdown-menu > div > span {
+  padding: 0.4rem;
+}
+
+.dropdown-menu > div > span > a {
   color: #87c300;
 }
 
 .placeholder-txt {
   text-align: center;
   vertical-align: middle;
+}
+
+.form-control:focus {
+  background-color: #fff;
+  border-color: $color-trees-primary !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba($color-trees-primary, 0.25) !important;
 }
 
 .main-load {
