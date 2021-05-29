@@ -227,6 +227,13 @@ h4 {
   vertical-align: middle;
 }
 
+.form-control:focus {
+  background-color: #fff;
+  border-color: $color-trees-primary !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba($color-trees-primary, 0.25) !important;
+}
+
 .main-load {
   transition: all 2s !important;
   transition-timing-function: ease-in-out !important;
