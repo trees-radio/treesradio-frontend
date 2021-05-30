@@ -200,6 +200,11 @@
   flex-grow: 1;
   margin-left: 0.75rem;
   height: 100%;
+  font-size: 1.1em;
+}
+
+#playlist-btn button {
+  font-size: 1em !important;
 }
 
 .remove-from-playlist-btn {
