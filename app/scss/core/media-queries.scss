@@ -206,8 +206,9 @@
 
     #usernametop {
       max-width: 20vw;
-      overflow-x: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
+      padding: 1px;
     }
 
     .grab-playlists {

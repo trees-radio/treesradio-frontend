@@ -11,6 +11,7 @@
 }
 
 .media-time {
+  grid-area: media-time;
   float: right;
   background-color: $color-controlarea-background;
   padding-left: 0.5em;
@@ -321,6 +322,18 @@
   animation-play-state: paused;
 }
 
+#currentsong-metadata {
+  display: grid;
+  grid:
+    [row1-start] "current-song-title current-song-title current-song-title" 1fr [row1-end]
+    [row2-start] "player-text player-name media-time" auto [row2-end]
+    / auto 1fr auto;
+}
+
+.current-song-title {
+  grid-area: current-song-title;
+}
+
 @keyframes marquee {
   0% {
     transform: translate(100%);
@@ -566,6 +579,7 @@
 }
 
 .toolbar-playertxt {
+  grid-area: player-text;
   float: left;
   color: $color-trees-primary;
   cursor: pointer;
@@ -578,6 +592,7 @@
 }
 
 .current-playing-user {
+  grid-area: player-name;
   float: left;
   color: $color-trees-primary;
   cursor: pointer;
