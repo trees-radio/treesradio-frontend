@@ -4,6 +4,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
+  font-size: 1.1em;
 }
 
 .users-scroll::-webkit-scrollbar {
@@ -40,7 +41,6 @@
 }
 
 .users-list {
-  height: 100%;
   padding: 0;
   margin-bottom: 50px;
 }
@@ -48,7 +48,6 @@
 .users-info {
   width: 85%;
   max-width: 85%;
-  height: 1vw;
   line-height: 1;
   padding-top: 1.5%;
   padding-left: 2%;
@@ -66,12 +65,12 @@
 
 .user-line-1 {
   background-color: #0a0a0a; //light skin cbd6dc
-  padding: 10px;
+  padding: 5px;
 }
 
 .user-line-0 {
   background-color: #121317; //light skin e9eef0
-  padding: 10px;
+  padding: 5px;
 }
 
 .users-upvote {
