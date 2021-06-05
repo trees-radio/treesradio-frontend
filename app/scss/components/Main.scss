@@ -211,7 +211,6 @@ h4 {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  max-height: 90vh;
 }
 
 .dropdown-menu > div > span {
@@ -232,6 +231,10 @@ h4 {
   border-color: $color-trees-primary !important;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba($color-trees-primary, 0.25) !important;
+}
+
+.fa-2x {
+  font-size: 1.4em !important;
 }
 
 .main-load {

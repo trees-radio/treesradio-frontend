@@ -98,10 +98,6 @@
       margin-left: 0;
     }
 
-    .fa-2x {
-      font-size: 1.5em;
-    }
-
     #chatcontainertop {
       font-size: 8px;
       height: calc(100% - 4rem) !important;
@@ -210,8 +206,9 @@
 
     #usernametop {
       max-width: 20vw;
-      overflow-x: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
+      padding: 1px;
     }
 
     .grab-playlists {

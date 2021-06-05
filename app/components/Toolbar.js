@@ -186,7 +186,6 @@ class Toolbar extends React.Component {
                 {playing.data.info.title}
               </a>
             </span>
-            <br />
             <span className="toolbar-playertxt">
               Player:
               </span>
