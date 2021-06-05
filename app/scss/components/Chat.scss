@@ -309,6 +309,7 @@
 }
 
 #chatinput {
+  z-index: 3;
   height: calc(100% - 7px);
   width: calc(100% - 1rem);
   border: 1px solid #ccc;

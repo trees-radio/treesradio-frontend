@@ -21,7 +21,7 @@
 }
 
 .user-item {
-  width: 100%;
+  width: calc(100% - 10px);
   list-style-position: inside;
   list-style-type: none;
   display: flex;
@@ -46,13 +46,19 @@
 }
 
 .users-info {
-  width: 85%;
-  max-width: 85%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
   line-height: 1;
   padding-top: 1.5%;
   padding-left: 2%;
   font-size: 1.6em;
   cursor: pointer;
+}
+
+.users-info span {
+  flex-grow: 1;
 }
 
 .userflair {
