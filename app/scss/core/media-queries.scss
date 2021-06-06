@@ -218,6 +218,7 @@
 
   .grab-playlists {
     bottom: calc(#{$sidebar-height-mini} + 0.5rem);
+    max-height: calc(56.25vw + 2.5rem);
   }
 
   #search {

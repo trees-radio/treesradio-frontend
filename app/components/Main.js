@@ -49,6 +49,15 @@ class Main extends React.Component {
     super(props);
     this.state = { show420: false, isPlaylistOpen: false };
     this.togglePlaylist = this.togglePlaylist.bind(this);
+
+    this.setDocHeight();
+
+    window.addEventListener('resize', this.setDocHeight);
+    window.addEventListener('orientationchange', this.setDocHeight);
+  }
+
+  setDocHeight() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight / 100}px`);
   }
 
   componentDidMount() {
