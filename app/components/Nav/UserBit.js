@@ -339,91 +339,70 @@ export default class UserBit extends React.Component {
                             <div className="dropdown-inner-text">
                                 {this.showSetAvatar()}
 
-                                <Dropdown.ItemText key={1} onClick={() => (this.togglePlayer())}>
-                                    <a href="#">
-                                        <i
-                                            className={classNames(
-                                                "fa",
-                                                this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
-                                            )}
-                                        />
-                                        {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
-                                    </a>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText key={101} onClick={() => waitlist.setShowMinutesUntil()}>
-                                    <a href="#">
-                                        <i className={
-                                            classNames(
-                                                "fa",
-                                                waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
-                                            )
-                                        } />
-                                &nbsp;Waitlist Minutes Until
-                            </a>
-                                </Dropdown.ItemText>
+                                <Dropdown.Item key={1} onClick={() => (this.togglePlayer())}>
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
+                                        )}
+                                    />
+                                    {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
+                                </Dropdown.Item>
+                                <Dropdown.Item key={101} onClick={() => waitlist.setShowMinutesUntil()}>
+                                    <i className={
+                                        classNames(
+                                            "fa",
+                                            waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
+                                        )
+                                    } />
+                                    &nbsp;Waitlist Minutes Until
+                                </Dropdown.Item>
                                 {this.showChangeEmail()}
                                 {this.showChangePassword()}
-                                <Dropdown.ItemText key={2}>
-                                    <a
-                                        href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}
-                                        target="blank"
-                                    >
-                                        <i className="fa fa-youtube-play" /> Region Check
-                            </a>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText key={3} onClick={() => this.hideGifs()}>
-                                    <a href="#">
-                                        <i
-                                            className={classNames(
-                                                "fa",
-                                                this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
-                                            )}
-                                        />{" "}
-                                Hide Gifs?
-                            </a>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText key={4} onClick={() => this.hideBlazebot()}>
-                                    <a href="#">
-                                        <i
-                                            className={classNames(
-                                                "fa",
-                                                profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
-                                            )}
-                                        />{" "}
-                                Hide BlazeBot?
-                            </a>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText key={5} onClick={() => this.hideHypeBoom()}>
-                                    <a href="#">
-                                        <i
-                                            className={classNames(
-                                                "fa",
-                                                profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
-                                            )}
-                                        />{" "}
-                                Hype Animation?
-                            </a>
-                                </Dropdown.ItemText>
+                                <Dropdown.Item key={2} href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}>
+                                    <i className="fa fa-youtube-play" /> Region Check
+                                </Dropdown.Item>
+                                <Dropdown.Item key={3} onClick={() => this.hideGifs()}>
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
+                                        )}
+                                    />{" "}
+                                    Hide Gifs?
+                                </Dropdown.Item>
+                                <Dropdown.Item key={4} onClick={() => this.hideBlazebot()}>
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
+                                        )}
+                                    />{" "}
+                                    Hide BlazeBot?
+                                </Dropdown.Item>
+                                <Dropdown.Item key={5} onClick={() => this.hideHypeBoom()}>
+                                    <i
+                                        className={classNames(
+                                            "fa",
+                                            profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
+                                        )}
+                                    />{" "}
+                                    Hype Animation?
+                                </Dropdown.Item>
                                 {this.showToggleDesktopNotifications()}
                                 {this.showMentionAudio()}
                                 {this.showMute()}
                                 {this.showAutoplay()}
-                                <Dropdown.ItemText key={6} onClick={() => this.toggleLeaderboard()}>
-                                    <a href="#">
-                                        <i className="fa fa-trophy"></i> Leader Board
-                            </a>
-                                </Dropdown.ItemText>
+                                <Dropdown.Item key={6} onClick={() => this.toggleLeaderboard()}>
+                                    <i className="fa fa-trophy"></i> Leader Board
+                                </Dropdown.Item>
 
-                                <Dropdown.ItemText key={66} onClick={() => this.toggleSongHistory()}>
-                                    <a href="#">
-                                        <i className="fa fa-history"></i> Play History
-                            </a>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText key={7} onClick={() => this.toggleHelp()}>
-                                    <a href="#">
-                                        <i className="fa fa-question-circle" /> Help
-                            </a>
-                                </Dropdown.ItemText>
+                                <Dropdown.Item key={66} onClick={() => this.toggleSongHistory()}>
+                                    <i className="fa fa-history"></i> Play History
+                                </Dropdown.Item>
+                                <Dropdown.Item key={7} onClick={() => this.toggleHelp()}>
+                                    <i className="fa fa-question-circle" /> Help
+                                </Dropdown.Item>
                                 {this.showGelato()}
                                 {/* logout @ bottom */}
                                 {this.showLogout()}
@@ -504,7 +483,7 @@ export default class UserBit extends React.Component {
                     <p>Avatars must be hosted at one of the following sites:</p>
                     <ul>
                         {allowedDomains.map((d, i) => (
-                            <Dropdown.ItemText key={i}>{d}</Dropdown.ItemText>
+                            <Dropdown.Item key={i}>{d}</Dropdown.Item>
                         ))}
                     </ul>
                     <hr />
@@ -590,36 +569,32 @@ export default class UserBit extends React.Component {
     showMute() {
         return profile.rank && profile.rank.match(/Admin|Mod|Dev/) ?
             (
-                <Dropdown.ItemText key={20} onClick={() => this.toggleShowMute()}>
-                    <a href="#">
-                        <i
-                            className={classNames(
-                                "fa",
-                                profile.showmuted ? "fa-check-square-o" : "fa-square-o"
-                            )}
-                        />{" "}
-                        Show Muted Users
-                    </a>
-                </Dropdown.ItemText>
+                <Dropdown.Item key={20} onClick={() => this.toggleShowMute()}>
+                    <i
+                        className={classNames(
+                            "fa",
+                            profile.showmuted ? "fa-check-square-o" : "fa-square-o"
+                        )}
+                    />{" "}
+                    Show Muted Users
+                </Dropdown.Item>
             ) : (
-                <Dropdown.ItemText key={20}></Dropdown.ItemText>
+                <Dropdown.Item key={20}></Dropdown.Item>
             )
     }
 
     showMentionAudio() {
-        return this.userLoggedIn() ? (<Dropdown.ItemText key={10} onClick={() => this.toggleNotifications()}>
-            <a href="#">
-                <i
-                    className={classNames(
-                        "fa",
-                        profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                />{" "}
-                    Mention Audio?
-                </a>
-        </Dropdown.ItemText>
+        return this.userLoggedIn() ? (<Dropdown.Item key={10} onClick={() => this.toggleNotifications()}>
+            <i
+                className={classNames(
+                    "fa",
+                    profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
+                )}
+            />{" "}
+            Mention Audio?
+        </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={10}></Dropdown.ItemText>
+            <Dropdown.Item key={10}></Dropdown.Item>
         );
     }
 
@@ -633,83 +608,71 @@ export default class UserBit extends React.Component {
 
     showAutoplay() {
         return profile.rank && profile.rank !== "User" ? (
-            <Dropdown.ItemText key={11} onClick={() => waitlist.setAutojoin()}>
-                <a href="#">
-                    <i
-                        className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
-                    />{" "}
-                    Auto Join Waitlist
-                </a>
-            </Dropdown.ItemText>
+            <Dropdown.Item key={11} onClick={() => waitlist.setAutojoin()}>
+                <i
+                    className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
+                />{" "}
+                Auto Join Waitlist
+            </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={11}></Dropdown.ItemText>
+            <Dropdown.Item key={11}></Dropdown.Item>
         )
     }
 
     showToggleDesktopNotifications() {
         return this.userLoggedIn() ? (
-            <Dropdown.ItemText key={100 /*TODO*/} onClick={() => this.toggleDesktopNotifications()}>
-                <a href="#">
-                    <i
-                        className={classNames(
-                            "fa",
-                            profile.desktopNotifications ? "fa-check-square-o" : "fa-square-o"
-                        )}
-                    />{" "}
-                    Desktop Notifications<sup>BETA</sup>
-                </a>
-            </Dropdown.ItemText>
+            <Dropdown.Item key={100 /*TODO*/} onClick={() => this.toggleDesktopNotifications()}>
+                <i
+                    className={classNames(
+                        "fa",
+                        profile.desktopNotifications ? "fa-check-square-o" : "fa-square-o"
+                    )}
+                />{" "}
+                Desktop Notifications<sup>BETA</sup>
+            </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={100/*TODO*/}></Dropdown.ItemText>
+            <Dropdown.Item key={100/*TODO*/}></Dropdown.Item>
         );
     }
 
     showLogout() {
         return this.userLoggedIn() ? (
-            <Dropdown.ItemText key={12} onClick={() => this.logoutAndDisableButtons()}>
-                <a href="#">
-                    <i className="fa fa-sign-out" /> Logout
-                </a>
-            </Dropdown.ItemText>
+            <Dropdown.Item key={12} onClick={() => this.logoutAndDisableButtons()}>
+                <i className="fa fa-sign-out" /> Logout
+            </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={12}></Dropdown.ItemText>
+            <Dropdown.Item key={12}></Dropdown.Item>
         )
     }
 
     showChangePassword() {
         return this.userLoggedIn() ? (
-            <Dropdown.ItemText key={13}
+            <Dropdown.Item key={13}
                 onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
-                <a href="#">
-                    <i className="fa fa-key" /> Change Password
-                </a>
-            </Dropdown.ItemText>
+                <i className="fa fa-key" /> Change Password
+            </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={13} />
+            <Dropdown.Item key={13} />
         )
     }
 
     showChangeEmail() {
         return this.userLoggedIn() ? (
-            <Dropdown.ItemText key={14} onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
-                <a href="#">
-                    <i className="fa fa-envelope" /> Change Email
-                </a>
-            </Dropdown.ItemText>
+            <Dropdown.Item key={14} onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
+                <i className="fa fa-envelope" /> Change Email
+            </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={14}></Dropdown.ItemText>
+            <Dropdown.Item key={14}></Dropdown.Item>
         )
     }
 
     showSetAvatar() {
         return this.userLoggedIn() ? (
-            <Dropdown.ItemText key={15} onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
-                <a href="#">
-                    <i className="fa fa-pencil fa-fw" /> Set Avatar
-                </a>
-            </Dropdown.ItemText>
+            <Dropdown.Item key={15} onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
+                <i className="fa fa-pencil fa-fw" /> Set Avatar
+            </Dropdown.Item>
         ) : (
-            <Dropdown.ItemText key={15}></Dropdown.ItemText>
+            <Dropdown.Item key={15}></Dropdown.Item>
         )
     }
 
@@ -725,17 +688,15 @@ export default class UserBit extends React.Component {
 
     showGelato() {
         return this.userLoggedIn() ? (
-            <Dropdown.ItemText key={8} onClick={() => this.toggleInterface()}>
-                <a href="#">
-                    <i
-                        className={classNames(
-                            "fa",
-                            this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
-                        )}
-                    />{" "}
-                    Gelato?
-                </a>
-            </Dropdown.ItemText>) : (<Dropdown.ItemText key={8}></Dropdown.ItemText>);
+            <Dropdown.Item key={8} onClick={() => this.toggleInterface()}>
+                <i
+                    className={classNames(
+                        "fa",
+                        this.legacyInterface === true ? "fa-check-square-o" : "fa-square-o"
+                    )}
+                />{" "}
+                Gelato?
+            </Dropdown.Item>) : (<Dropdown.Item key={8}></Dropdown.Item>);
     }
 
     getQueryMultiplier() {
