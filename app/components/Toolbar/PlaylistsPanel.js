@@ -256,15 +256,13 @@ export default class PlaylistsPanel extends React.Component {
     }
 
     var playlistsList = playlists.playlistNames.map((name, i) => (
-      <Dropdown.ItemText key={i}>
-        <a onClick={() => this.selectPlaylist(i)} href="#">
-          {name}
-        </a>
+      <Dropdown.Item key={i} onClick={() => this.selectPlaylist(i)}>
+        {name}
         <div
           onClick={() => this.startRemovingPlaylist(name, i)}
           className="fa fa-trash remove-playlist"
         />
-      </Dropdown.ItemText>
+      </Dropdown.Item>
     ));
 
     var shuffle = playlists.hasPlaylist ? (
@@ -365,16 +363,12 @@ export default class PlaylistsPanel extends React.Component {
                 <Dropdown.Menu className="dropdown-menu" id="pl-dd-menu">
                   <div className="dropdown-inner-text">
 
-                    <Dropdown.ItemText>
-                      <a href="#" onClick={() => (this.addingPlaylist = true)}>
-                        <i className="fa fa-plus" /> New Playlist
-                    </a>
-                    </Dropdown.ItemText>
-                    <Dropdown.ItemText>
-                      <a href="#" onClick={() => (this.importingPlaylist = true)}>
-                        <i className="fa fa-youtube-play" /> Import Playlist
-                    </a>
-                    </Dropdown.ItemText>
+                    <Dropdown.Item onClick={() => (this.addingPlaylist = true)}>
+                      <i className="fa fa-plus" /> New Playlist
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => (this.importingPlaylist = true)}>
+                      <i className="fa fa-youtube-play" /> Import Playlist
+                    </Dropdown.Item>
                     {playlistsList}
                   </div>
                 </Dropdown.Menu>
