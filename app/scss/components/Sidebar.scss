@@ -29,13 +29,16 @@
   justify-content: space-between;
   color: white;
   text-align: center;
-  line-height: $chatmenu;
   cursor: pointer;
   flex-flow: row nowrap;
+  align-content: center;
 }
 
 .sidebar-changer div {
   flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-selected {
