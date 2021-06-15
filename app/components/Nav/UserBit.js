@@ -430,7 +430,7 @@ export default class UserBit extends React.Component {
                     <input
                         className="form-control"
                         type="text"
-                        maxLength={24}
+                        maxLength={20}
                         ref={c => (this._username = c)}
                         onKeyPress={e => this.onEnterKey(e, () => this.addUsername())}
                         placeholder="Username"

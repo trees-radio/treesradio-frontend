@@ -1,11 +1,11 @@
 import React from "react";
 import rank from "libs/rank";
 import getUsername from "libs/username";
-import getFlair from "libs/flair";
+import { getFlair, getFlairColors } from "libs/flair";
 import getPatreon from "libs/patreon";
 import classNames from "classnames";
 
-const noop = () => {};
+const noop = () => { };
 
 export default class UserName extends React.Component {
   _isMounted = false;
@@ -15,6 +15,7 @@ export default class UserName extends React.Component {
     this.getRank();
     this.getUsername();
     this.getFlair();
+    this.getFlairColors();
     this.getPatreon();
   }
 
@@ -28,22 +29,49 @@ export default class UserName extends React.Component {
 
   getRank = async () => {
     const title = await rank(this.props.uid);
-    this.setState({title});
+    this.setState({ title });
   };
 
   getUsername = async () => {
     const username = await getUsername(this.props.uid);
-    this.setState({username});
+    this.setState({ username });
   };
 
   getFlair = async () => {
     const userflair = await getFlair(this.props.uid);
-    this.setState({userflair});
+    this.setState({ userflair });
+  };
+
+  getFlairColors = async () => {
+    //Temporarely hardcoding colors, while working on the input form
+    const userflair = await getFlairColors(this.props.uid);
+
+    let colors = {
+      "qifxxxAQXSQkWiVgc31QrF9YWeY2": { colors: ['red', 'yellow', 'green'] },
+      "PWwkfOr9Jjb0EPrOAfpRCCEmuNH3": { colors: ['red', 'yellow', 'green'] }
+    };
+
+    // const userflairColors = await getFlairColors(this.props.uid);
+    const userflairColors = colors[this.props.uid];
+    this.setState({ userflairColors });
   };
 
   getPatreon = async () => {
     const userpatreon = await getPatreon(this.props.uid);
-    this.setState({userpatreon});
+    this.setState({ userpatreon });
+  };
+
+  getFlairStyle = () => {
+
+    if (!this.state.userflairColors || !this.state.userflairColors.colors || this.state.userflairColors.colors.length === 0) {
+      return {};
+    }
+
+    return {
+      'background': `-webkit-linear-gradient(0deg, ${this.state.userflairColors.colors.join(',')})`,
+      '-webkit-background-clip': 'text',
+      '-webkit-text-fill-color': 'transparent'
+    };
   };
 
   render() {
@@ -78,7 +106,7 @@ export default class UserName extends React.Component {
           &nbsp;
           <img className={isPatreon} src="img/marijuana.png" />
         </span>
-        <span className="userflair">&nbsp;{userflair}</span>
+        <span className="userflair" style={this.getFlairStyle()}>&nbsp;{userflair}</span>
       </span>
     );
   }
