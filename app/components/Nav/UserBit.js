@@ -14,13 +14,20 @@ import $ from "jquery";
 import Modal from "../utility/Modal";
 import { toast } from "react-toastify";
 import LeaderBoard from "components/Nav/LeaderBoard";
+import FlairColor from "components/Nav/FlairColor";
 import PlayHistory from "components/Nav/SongHistory";
 
 import events from "stores/events";
 import Dropdown from "react-bootstrap/Dropdown";
+import { getFlair } from "../../libs/flair";
 
 @observer
 export default class UserBit extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.toggleFlairColor = this.toggleFlairColor.bind(this);
+    }
 
     onEnterKey(e, cb) {
         var key = e.keyCode || e.which;
@@ -159,6 +166,10 @@ export default class UserBit extends React.Component {
 
     toggleLeaderboard() {
         this.showLeaders ? (this.showLeaders = false) : (this.showLeaders = true);
+    }
+
+    toggleFlairColor() {
+        this.showFlairColor ? (this.showFlairColor = false) : (this.showFlairColor = true);
     }
 
     toggleSongHistory() {
@@ -338,7 +349,7 @@ export default class UserBit extends React.Component {
                         <Dropdown.Menu>
                             <div className="dropdown-inner-text">
                                 {this.showSetAvatar()}
-
+                                {this.showSetFlairColor()}
                                 <Dropdown.Item key={1} onClick={() => (this.togglePlayer())}>
                                     <i
                                         className={classNames(
@@ -444,6 +455,15 @@ export default class UserBit extends React.Component {
                     title="Leader Board"
                     noClose={false}>
                     <LeaderBoard />
+                </Modal>
+                <Modal
+                    show={this.showFlairColor}
+                    hideModal={() => {
+                        this.toggleFlairColor();
+                    }}
+                    title="Change flair color"
+                    noClose={false}>
+                    <FlairColor close={this.toggleFlairColor} />
                 </Modal>
                 <Modal
                     show={this.showHistory}
@@ -674,6 +694,18 @@ export default class UserBit extends React.Component {
         ) : (
             <Dropdown.Item key={15}></Dropdown.Item>
         )
+    }
+
+    showSetFlairColor() {
+        if (this.userLoggedIn()) {
+            return (
+                <Dropdown.Item key={20} onClick={() => this.toggleFlairColor()}>
+                    <i className="fa fa-palette" /> Change flair color
+                </Dropdown.Item>
+            );
+        }
+        return (<></>);
+
     }
 
     showAvatar() {
