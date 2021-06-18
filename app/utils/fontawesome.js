@@ -32,14 +32,15 @@ import {
   faCircleNotch,
   faExpand,
   faArrowUp,
-  faArrowDown
+  faArrowDown,
+  faPaintBrush
 } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 library.add(
-    faArrowUp,
-    faArrowDown,
-    faExpand,
+  faArrowUp,
+  faArrowDown,
+  faExpand,
   faCog,
   faYinYang,
   faVolumeOff,
@@ -70,5 +71,6 @@ library.add(
   faDownload,
   faCodeBranch,
   faCircleNotch,
-  faYoutube
+  faYoutube,
+  faPaintBrush
 );

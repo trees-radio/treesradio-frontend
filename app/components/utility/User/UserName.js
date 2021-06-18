@@ -43,16 +43,8 @@ export default class UserName extends React.Component {
   };
 
   getFlairColors = async () => {
-    //Temporarely hardcoding colors, while working on the input form
-    const userflair = await getFlairColors(this.props.uid);
+    const userflairColors = await getFlairColors(this.props.uid);
 
-    let colors = {
-      "qifxxxAQXSQkWiVgc31QrF9YWeY2": { colors: ['red', 'yellow', 'green'] },
-      "PWwkfOr9Jjb0EPrOAfpRCCEmuNH3": { colors: ['red', 'yellow', 'green'] }
-    };
-
-    // const userflairColors = await getFlairColors(this.props.uid);
-    const userflairColors = colors[this.props.uid];
     this.setState({ userflairColors });
   };
 
@@ -64,13 +56,17 @@ export default class UserName extends React.Component {
   getFlairStyle = () => {
 
     if (!this.state.userflairColors || !this.state.userflairColors.colors || this.state.userflairColors.colors.length === 0) {
-      return {};
+      return { color: '#808080' };
+    }
+
+    if (this.state.userflairColors.colors.length === 1) {
+      return { color: this.state.userflairColors.colors[0] };
     }
 
     return {
       'background': `-webkit-linear-gradient(0deg, ${this.state.userflairColors.colors.join(',')})`,
-      '-webkit-background-clip': 'text',
-      '-webkit-text-fill-color': 'transparent'
+      'WebkitTextFillColor': 'transparent',
+      'WebkitBackgroundClip': 'text'
     };
   };
 
