@@ -1,0 +1,23 @@
+.flair-color {
+    margin-bottom: 1rem;
+}
+
+.preview {
+    width: 100%;
+    text-align: center;
+    background-color: rgba(18, 0, 41, 0.6);
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.color {
+    display: flex;
+}
+
+.color > * {
+    padding-right: 5px;
+}
+
+input {
+    flex-grow: 1;
+}
