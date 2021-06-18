@@ -209,6 +209,14 @@ path /avatars/{$uid} {
   write() {isUser($uid) && hasValidatedEmail()}
 }
 
+path /flair_colors {
+  read() {true}
+}
+
+path /flair_colors/{$uid} {
+  write() {isUser($uid) && hasValidatedEmail()}
+}
+
 path /hypes {
   read() {true}
   write() {false}
