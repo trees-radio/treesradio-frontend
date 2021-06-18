@@ -700,7 +700,7 @@ export default class UserBit extends React.Component {
         if (this.userLoggedIn()) {
             return (
                 <Dropdown.Item key={20} onClick={() => this.toggleFlairColor()}>
-                    <i className="fa fa-palette" /> Change flair color
+                    <i className="fa fa-paint-brush" /> Change flair color
                 </Dropdown.Item>
             );
         }

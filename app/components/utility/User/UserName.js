@@ -56,7 +56,11 @@ export default class UserName extends React.Component {
   getFlairStyle = () => {
 
     if (!this.state.userflairColors || !this.state.userflairColors.colors || this.state.userflairColors.colors.length === 0) {
-      return {};
+      return { color: '#808080' };
+    }
+
+    if (this.state.userflairColors.colors.length === 1) {
+      return { color: this.state.userflairColors.colors[0] };
     }
 
     return {

@@ -2,9 +2,8 @@ import React from "react";
 import { getFlairColors, setFlairColors } from "../../libs/flair";
 import profile from "../../stores/profile";
 import { debounce } from "lodash";
-import { send } from "../../libs/events";
 
-
+const GREY = ['#808080'];
 
 export default class FlairColor extends React.Component {
 
@@ -12,6 +11,7 @@ export default class FlairColor extends React.Component {
         super(props);
         this.state = { colors: ['#808080'], backgroundColor: [] };
         this.saveFlairColors = this.saveFlairColors.bind(this);
+        this.resetFlairColors = this.resetFlairColors.bind(this);
     }
 
     async componentDidMount() {
@@ -78,6 +78,11 @@ export default class FlairColor extends React.Component {
         this.props.close();
     }
 
+    resetFlairColors() {
+        // setFlairColors(profile.uid, { colors: GREY });
+        this.setState({ colors: GREY });
+    }
+
     render() {
 
         return (
@@ -104,9 +109,12 @@ export default class FlairColor extends React.Component {
 
 
                 </div>
-                <div>
+                <div className="buttons">
                     <button className="btn btn-primary" onClick={this.saveFlairColors}>
                         Save flair colors
+                    </button>
+                    <button className="btn btn-primary" onClick={this.resetFlairColors}>
+                        Reset
                     </button>
                 </div>
             </>
