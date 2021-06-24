@@ -577,3 +577,8 @@ div .userbit-avatar span .avatarimg {
   margin-bottom: 0;
   margin-left: 5px;
 }
+
+.gradient-text {
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text !important;
+}

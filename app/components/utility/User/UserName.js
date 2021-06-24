@@ -64,9 +64,7 @@ export default class UserName extends React.Component {
     }
 
     return {
-      'background': `-webkit-linear-gradient(0deg, ${this.state.userflairColors.colors.join(',')})`,
-      'WebkitTextFillColor': 'transparent',
-      'WebkitBackgroundClip': 'text'
+      'background': `-webkit-linear-gradient(${this.state.userflairColors.angle ?? 0}deg, ${this.state.userflairColors.colors.join(',')})`
     };
   };
 
@@ -102,7 +100,7 @@ export default class UserName extends React.Component {
           &nbsp;
           <img className={isPatreon} src="img/marijuana.png" />
         </span>
-        <span className="userflair" style={this.getFlairStyle()}>&nbsp;{userflair}</span>
+        <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>
       </span>
     );
   }
