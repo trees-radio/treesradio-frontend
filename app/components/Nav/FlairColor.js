@@ -21,7 +21,7 @@ export default class FlairColor extends React.Component {
         let flairColors = await getFlairColors(profile.uid);
 
         if (flairColors) {
-            this.setState({ ...flairColors, backgroundColorInput: flairColors.backgroundColor, backgroundOpacityInput: flairColors.backgroundOpacity });
+            this.setState({ ...flairColors, backgroundColorInput: flairColors.backgroundColor ?? BLACK, backgroundOpacityInput: flairColors.backgroundOpacity ?? 0 });
         }
     }
 
