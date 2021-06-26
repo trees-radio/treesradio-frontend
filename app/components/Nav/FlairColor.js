@@ -5,21 +5,23 @@ import { debounce } from "lodash";
 import AngleInput from "../utility/AngleInput";
 
 const GREY = ['#808080'];
+const BLACK = ['#000000'];
 
 export default class FlairColor extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { colors: ['#808080'], backgroundColor: [], backgroundOpacity: 0, angle: 0 };
+        this.state = { colors: ['#808080'], backgroundColor: BLACK, backgroundOpacity: 0, angle: 0, backgroundColorInput: BLACK, backgroundOpacityInput: 0 };
         this.saveFlairColors = this.saveFlairColors.bind(this);
         this.resetFlairColors = this.resetFlairColors.bind(this);
+        this.changeBackgroundOpacityDebounced = this.changeBackgroundOpacityDebounced.bind(this);
     }
 
     async componentDidMount() {
         let flairColors = await getFlairColors(profile.uid);
 
         if (flairColors) {
-            this.setState({ ...flairColors });
+            this.setState({ ...flairColors, backgroundColorInput: flairColors.backgroundColor, backgroundOpacityInput: flairColors.backgroundOpacity });
         }
     }
 
@@ -50,6 +52,17 @@ export default class FlairColor extends React.Component {
 
         return {
             'background': `-webkit-linear-gradient(${this.state.angle ?? 0}deg, ${this.state.colors.join(',')})`
+        };
+    }
+
+    getFlairBackgroundColor() {
+        if (!this.state || !this.state.backgroundColor || this.state.backgroundColor.length === 0) {
+            return {};
+        }
+
+        let opacity = Math.floor(this.state.backgroundOpacity * 255 / 100);
+        return {
+            'background': this.state.backgroundColor[0] + opacity.toString(16).padStart(2, '0')
         };
     }
 
@@ -84,11 +97,43 @@ export default class FlairColor extends React.Component {
 
     resetFlairColors() {
         // setFlairColors(profile.uid, { colors: GREY });
-        this.setState({ colors: GREY, angle: 0, backgroundOpacity: 0 });
+        this.setState({ colors: GREY, angle: 0, backgroundOpacity: 0, backgroundColor: BLACK, backgroundColorInput: BLACK, backgroundOpacityInput: 0 });
     }
 
     angleChange(newAngle) {
         this.setState({ angle: newAngle });
+    }
+
+    changeBackgroundOpacityDebounced(event) {
+        let opacity = event.target.value;
+
+        this.setState({ backgroundOpacityInput: opacity });
+
+        if (!this.debounceBackgroundOpacitySlider) {
+            this.debounceBackgroundOpacitySlider = debounce(() => this.changeBackgroundOpacity(), 100);
+        }
+
+        this.debounceBackgroundOpacitySlider();
+    }
+
+    changeBackgroundOpacity() {
+        let opacity = this.state.backgroundOpacityInput;
+        this.setState({ backgroundOpacity: opacity });
+    }
+
+    setBackgroundColorDebounced(color) {
+        this.setState({ backgroundColorInput: [color] });
+
+        if (!this.debounceBackgroundColor) {
+            this.debounceBackgroundColor = debounce(() => this.changeBackgroundColor(), 100);
+        }
+
+        this.debounceBackgroundColor();
+    }
+
+    changeBackgroundColor() {
+        let color = this.state.backgroundColorInput;
+        this.setState({ backgroundColor: color });
     }
 
     render() {
@@ -98,7 +143,7 @@ export default class FlairColor extends React.Component {
                 <div className="flair-color">
                     <p>Pick your flair colors!</p>
                     <p className="preview">
-                        <span key={this.state.colors} style={this.getFlairColors()} className={this.state.colors && this.state.colors.length > 1 && "gradient-text"}>This is a preview of your flair colors!</span>
+                        <span style={this.getFlairBackgroundColor()}><span key={this.state.colors} style={this.getFlairColors()} className={this.state.colors && this.state.colors.length > 1 && "gradient-text"}>This is a preview of your flair colors!</span></span>
                         {this.state.colors && this.state.colors.length > 1 && <div className="angle"><AngleInput defaultValue={this.state.angle} max="360" min="0" step="45"
                             onChange={newAngle => this.angleChange(newAngle)} onInput={newAngle => this.angleChange(newAngle)} /></div>}
                     </p>
@@ -116,7 +161,18 @@ export default class FlairColor extends React.Component {
                             /></button>}
                         </div>
                     ))}
+                    <div className="color">
+                        <label htmlFor="backgroundColor">Background color</label>
+                        <input name="backgroundColor" type="color" value={this.state.backgroundColorInput[0]} onChange={e => this.setBackgroundColorDebounced(e.target.value)} className="html5colorpicker" />
 
+                    </div>
+                    <div>
+                        <span>Background opacity:</span>
+                        <span className="slidecontainer">
+                            <input type="range" min="0" max="100" className="slider" id="opacityRange" value={this.state.backgroundOpacityInput}
+                                onChange={this.changeBackgroundOpacityDebounced} />
+                        </span>
+                    </div>
 
                 </div>
                 <div className="buttons">

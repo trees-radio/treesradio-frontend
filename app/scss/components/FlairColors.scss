@@ -79,3 +79,18 @@ input {
     /* box-shadow: 0 0 1px #04f; */
     border: 1px solid #0af;
 }
+
+.slider {
+    height: 0.5rem;
+    opacity: 1;
+}
+
+.flair-color .slider::-webkit-slider-thumb {
+    width: 1rem;
+    height: 1rem;
+}
+
+.flair-color .slider::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+}

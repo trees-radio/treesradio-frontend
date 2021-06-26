@@ -68,6 +68,17 @@ export default class UserName extends React.Component {
     };
   };
 
+  getFlairBackgroundColor() {
+    if (!this.state.userflairColors || !this.state.userflairColors.backgroundColor || this.state.userflairColors.backgroundColor.length === 0) {
+      return {};
+    }
+
+    let opacity = Math.floor(this.state.userflairColors.backgroundOpacity * 255 / 100);
+    return {
+      'background': this.state.userflairColors.backgroundColor[0] + opacity.toString(16).padStart(2, '0')
+    };
+  }
+
   render() {
     let userClass = "username-user";
     if (this.state.username == "BlazeBot") userClass = "username-bot";
@@ -100,7 +111,9 @@ export default class UserName extends React.Component {
           &nbsp;
           <img className={isPatreon} src="img/marijuana.png" />
         </span>
-        <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>
+        <span style={this.getFlairBackgroundColor()}>
+          <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>
+        </span>
       </span>
     );
   }
