@@ -63,8 +63,8 @@ export default new (class Playing {
 
     var pctdistance = Math.abs(
       Math.floor(
-        ((serverSeconds - Math.ceil(this.playerSeconds)) /
-          ((serverSeconds + Math.ceil(this.playerSeconds)) / 2)) *
+        ((serverSeconds * 1000 - Math.ceil(this.playerSeconds) * 1000) /
+          ((serverSeconds * 1000 + Math.ceil(this.playerSeconds) * 1000) / 2)) *
           100
       )
     );
