@@ -108,7 +108,6 @@ class Player extends React.Component {
               onEnded={() => {
                 this.syncs = 0;
                 this._player.playing = false;
-                this._player.seekTo(0, "seconds");
               }}
               onPause={undefined}
               controls={controls}
