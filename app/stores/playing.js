@@ -62,6 +62,11 @@ export default new (class Playing {
         100
     );
 
+    console.info(
+      `Server: ${serverSeconds}, Player: ${Math.ceil(
+        this.playerSeconds
+      )}, PCT: ${pctdistance}`
+    );
     if (pctdistance > PLAYER_SYNC_SENSITIVITY) {
       return true;
     }
@@ -123,12 +128,12 @@ export default new (class Playing {
     if (!this.data.time || !this.data.info.duration) {
       return 0;
     }
-    return this.data.time / (this.data.info.duration / 1000);
+    return this.data.time / Math.round(this.data.info.duration / 1000);
   }
 
-  @observable playerProgress = 0; //fraction (0.12, 0.57, etc.)
+  @observable playerProgress = 0; // fraction (0.12, 0.57, etc.)
 
-  @observable playerDuration = 0; //seconds
+  @observable playerDuration = 0; // seconds
 
   @computed get playerSeconds() {
     return this.playerDuration * this.playerProgress;
