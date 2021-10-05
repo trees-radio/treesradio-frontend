@@ -38,14 +38,13 @@ const rPlayerSoundcloudConfig = {
 @observer
 class Player extends React.Component {
   onProgress(p) {
-    console.log(p);
     playing.playerProgress = p.played;
     const syncTo = playing.shouldSync;
 
     if (syncTo && this.syncs < 3) {
       this.syncs++;
       console.info(`Setting to: ${syncTo}`);
-      this._player.seekTo(syncTo + 1, "seconds");
+      this._player.seekTo(syncTo, "seconds");
     }
   }
   playerError(e) {
@@ -122,7 +121,6 @@ class Player extends React.Component {
               onDuration={(d) => {
                 playing.playerDuration =
                   parseInt(playing.data.info.duration) / 1000;
-                console.info(`Song Duration: ${d}`);
               }}
             />
           )}{" "}

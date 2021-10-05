@@ -68,12 +68,6 @@ export default new (class Playing {
           100
       )
     );
-
-    console.info(
-      `Server: ${serverSeconds}, Player: ${Math.ceil(
-        this.playerSeconds
-      )}, PCT: ${pctdistance}`
-    );
     if (pctdistance > PLAYER_SYNC_SENSITIVITY) {
       return serverSeconds;
     }
