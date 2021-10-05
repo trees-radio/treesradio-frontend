@@ -15,10 +15,10 @@ const rPlayerYoutubeConfig = {
     controls: true,
     playsinline: true,
     color: "white",
-    autoplay: true
+    autoplay: true,
   },
   preload: true,
-  controls: true
+  controls: true,
 };
 
 const rPlayerSoundcloudConfig = {
@@ -30,27 +30,32 @@ const rPlayerSoundcloudConfig = {
     show_playcount: false,
     single_active: false,
     color: "#77b300",
-    show_user: false
+    show_user: false,
   },
-  preload: true
+  preload: true,
 };
 
 @observer
 class Player extends React.Component {
   onProgress(p) {
     playing.playerProgress = p.played;
-    if (playing.shouldSync) {
-      this._player.seekTo(playing.fraction);
+    const syncTo = playing.shouldSync;
+
+    if (syncTo && this.syncs < 3) {
+      this.syncs++;
+      console.info(`Setting to: ${syncTo}`);
+      this._player.seekTo(syncTo + 1, "seconds");
     }
   }
   playerError(e) {
     playing.userReportsError(e);
   }
 
+  @observable syncs = 0;
   @observable showVideo = true;
 
   componentDidMount() {
-    this.onkeydownListener = e => {
+    this.onkeydownListener = (e) => {
       if (e.ctrlKey && e.shiftKey && e.keyCode === 86) {
         e.preventDefault();
         this.showVideo = !this.showVideo;
@@ -66,7 +71,7 @@ class Player extends React.Component {
 
   render() {
     const containerStyle = {
-      backgroundImage: `url(${playing.backgroundImage})`
+      backgroundImage: `url(${playing.backgroundImage})`,
     };
     let controls = true;
     let progress = {};
@@ -80,11 +85,15 @@ class Player extends React.Component {
       <div id="vidcontainer" style={containerStyle}>
         <div
           id="player-size"
-          className={playing.playerSize === "BIG" ? "large-player-size" : "small-player-size"}
+          className={
+            playing.playerSize === "BIG"
+              ? "large-player-size"
+              : "small-player-size"
+          }
         >
           {this.showVideo && (
             <ReactPlayer
-              ref={c => (this._player = c)}
+              ref={(c) => (this._player = c)}
               className="reactplayer"
               width="100%"
               height="100%"
@@ -92,19 +101,24 @@ class Player extends React.Component {
               url={playing.data.info.url}
               playing={playing.data.playing}
               volume={playing.volume}
-              onProgress={p => this.onProgress(p)}
-              onError={e => this.playerError(e)}
+              onProgress={(p) => this.onProgress(p)}
+              onError={(e) => this.playerError(e)}
+              onStart={() => this._player.seekTo(0, "seconds")}
+              onEnded={() => {
+                this.syncs = 0;
+                this._player.seekTo(0, "seconds");
+              }}
               onPause={undefined}
               controls={controls}
               config={{
                 youtube: {
-                  rPlayerYoutubeConfig
+                  rPlayerYoutubeConfig,
                 },
                 soundcloud: {
-                  rPlayerSoundcloudConfig
-                }
+                  rPlayerSoundcloudConfig,
+                },
               }}
-              onDuration={d => (playing.playerDuration = d)}
+              onDuration={(d) => (playing.playerDuration = d)}
             />
           )}{" "}
         </div>{" "}

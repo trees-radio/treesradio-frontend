@@ -14,8 +14,8 @@ import spacePineapples from "img/spacepineapples.jpg";
 import gelatoGif from "img/gelatogif.gif";
 
 const PLAYER_SYNC_CAP = 30; //seconds on end of video to ignore syncing
-const PLAYER_SYNC_START = 30;
-const PLAYER_SYNC_SENSITIVITY = 10; //percent
+const PLAYER_SYNC_START = 5;
+const PLAYER_SYNC_SENSITIVITY = 5; //percent
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 export default new (class Playing {
@@ -37,6 +37,10 @@ export default new (class Playing {
             this.data = data;
             var newtitle = "TreesRadio [  " + data.info.title + " ] ";
             document.title = newtitle;
+            if (this.currentUrl !== this.data.info.url) {
+              this.currentUrl = this.data.info.url;
+              console.info(`Song change, reset player?`);
+            }
           }
         });
       this.localLikeState = this.liked;
@@ -47,6 +51,7 @@ export default new (class Playing {
 
   @computed get shouldSync() {
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
+      this.syncs = [];
       return false;
     }
     var serverSeconds = this.data.time;
@@ -56,10 +61,12 @@ export default new (class Playing {
       return false;
     }
 
-    var pctdistance = Math.floor(
-      ((serverSeconds - Math.ceil(this.playerSeconds)) /
-        ((serverSeconds + Math.ceil(this.playerSeconds)) / 2)) *
-        100
+    var pctdistance = Math.abs(
+      Math.floor(
+        ((serverSeconds - Math.ceil(this.playerSeconds)) /
+          ((serverSeconds + Math.ceil(this.playerSeconds)) / 2)) *
+          100
+      )
     );
 
     console.info(
@@ -68,10 +75,14 @@ export default new (class Playing {
       )}, PCT: ${pctdistance}`
     );
     if (pctdistance > PLAYER_SYNC_SENSITIVITY) {
-      return true;
+      return serverSeconds;
     }
     return false;
   }
+
+  @observable currentUrl = "";
+
+  @observable syncs = [];
 
   @observable fakeScroll = 0;
 
