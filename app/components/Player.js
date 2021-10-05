@@ -44,7 +44,7 @@ class Player extends React.Component {
     if (syncTo && this.syncs < 3) {
       this.syncs++;
       console.info(`Setting to: ${syncTo}`);
-      this._player.seekTo(syncTo + 1, "seconds");
+      this._player.seekTo(syncTo, "seconds");
     }
   }
   playerError(e) {
@@ -106,7 +106,7 @@ class Player extends React.Component {
               onStart={() => this._player.seekTo(0, "seconds")}
               onEnded={() => {
                 this.syncs = 0;
-                this._player.seekTo(0, "seconds");
+                this._player.playing = false;
               }}
               onPause={undefined}
               controls={controls}
@@ -118,7 +118,10 @@ class Player extends React.Component {
                   rPlayerSoundcloudConfig,
                 },
               }}
-              onDuration={(d) => (playing.playerDuration = d)}
+              onDuration={(d) => {
+                playing.playerDuration =
+                  parseInt(playing.data.info.duration) / 1000;
+              }}
             />
           )}{" "}
         </div>{" "}

@@ -14,7 +14,7 @@ import spacePineapples from "img/spacepineapples.jpg";
 import gelatoGif from "img/gelatogif.gif";
 
 const PLAYER_SYNC_CAP = 30; //seconds on end of video to ignore syncing
-const PLAYER_SYNC_START = 5;
+const PLAYER_SYNC_START = 30;
 const PLAYER_SYNC_SENSITIVITY = 5; //percent
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
@@ -63,16 +63,10 @@ export default new (class Playing {
 
     var pctdistance = Math.abs(
       Math.floor(
-        ((serverSeconds - Math.ceil(this.playerSeconds)) /
-          ((serverSeconds + Math.ceil(this.playerSeconds)) / 2)) *
+        ((serverSeconds * 1000 - Math.ceil(this.playerSeconds) * 1000) /
+          ((serverSeconds * 1000 + Math.ceil(this.playerSeconds) * 1000) / 2)) *
           100
       )
-    );
-
-    console.info(
-      `Server: ${serverSeconds}, Player: ${Math.ceil(
-        this.playerSeconds
-      )}, PCT: ${pctdistance}`
     );
     if (pctdistance > PLAYER_SYNC_SENSITIVITY) {
       return serverSeconds;
