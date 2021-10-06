@@ -56,7 +56,7 @@ class Main extends React.Component {
   }
 
   togglePlaylist() {
-    this.setState(state => ({ isPlaylistOpen: !state.isPlaylistOpen }));
+    this.setState((state) => ({ isPlaylistOpen: !state.isPlaylistOpen }));
   }
 
   onEnterKey(e, cb) {
@@ -114,26 +114,23 @@ class Main extends React.Component {
   }
 
   isPlaylistOpen() {
-    return this.state.isPlaylistOpen ? 'playlist-open' : '';
+    return this.state.isPlaylistOpen ? "playlist-open" : "";
   }
 
   render() {
-
     if (!app.init) {
-
       events.register("force_refresh", () => {
         location.reload();
       });
       let randmsg = [
         // No messages over 40 characters
         "Grab a Bong and Sing A Long!",
-        "Wands at the Ready - MobBarley",
         "Pimp Squad, Holdin it Down",
         "Livin' Young 'n Wild 'n Freeee",
-        "Loading... Or am I?",
+        "Loaded... Or am I?",
         "Grinding Vigorously",
+        "More uptime than Facebook",
         "Poking Badgers with Spoons",
-        "Eek! Exciting!",
         "Where's my Lighter?",
         'No officer, it\'s "Hi, how are you?"',
         "Home of the original musical inspiration",
@@ -155,22 +152,20 @@ class Main extends React.Component {
       );
     }
     return (
-      <div className={this.checkAprilFools() + ' ' + this.isPlaylistOpen()} id="app-grid" >
+      <div
+        className={this.checkAprilFools() + " " + this.isPlaylistOpen()}
+        id="app-grid"
+      >
         <link
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossOrigin="anonymous"
         />
-        <Nav show420={this.state.show420} /> {/* Start Container */}
-        {" "}
+        <Nav show420={this.state.show420} /> {/* Start Container */}{" "}
         {/* Video Component */}
-        <div
-          id="videotoplevel"
-        >
+        <div id="videotoplevel">
           <Player />
-
-
         </div>
         <div id="toolbar">
           <div id="playlists-container">
@@ -179,12 +174,8 @@ class Main extends React.Component {
           <a id="exportPlaylistDownload" />
         </div>
         {/* Chat Component */}
-        <div
-          id="chattoplevel"
-        >
-          <ToastContainer />
-
-          {" "}
+        <div id="chattoplevel">
+          <ToastContainer />{" "}
           {/* <Sidebar
                                 loginData={this.state.user}
                                 chatData={this.state.chat}
@@ -198,7 +189,6 @@ class Main extends React.Component {
                                 chatlock={this.state.chatlock}
                               /> */}
           <Sidebar />
-
         </div>
         {/* End Container */}
       </div>
