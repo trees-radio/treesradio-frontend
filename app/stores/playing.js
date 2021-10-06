@@ -37,10 +37,6 @@ export default new (class Playing {
             this.data = data;
             var newtitle = "TreesRadio [  " + data.info.title + " ] ";
             document.title = newtitle;
-            if (this.currentUrl !== this.data.info.url) {
-              this.currentUrl = this.data.info.url;
-              console.info(`Song change, reset player?`);
-            }
           }
         });
       this.localLikeState = this.liked;
@@ -182,6 +178,9 @@ export default new (class Playing {
   @observable localLikeState = false;
 
   @computed get likeLoading() {
+    console.info(
+      `${this.localLikeState} Local Like State, ${this.liked} Liked?`
+    );
     return this.localLikeState !== this.liked;
   }
 

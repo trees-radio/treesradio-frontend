@@ -14,7 +14,6 @@ import onClickOutside from "react-onclickoutside";
 import createClass from "create-react-class";
 import $ from "jquery";
 
-
 const loadingIconClass = "fa-spin fa-circle-o-notch";
 
 const GrabPlaylists = onClickOutside(
@@ -29,15 +28,21 @@ const GrabPlaylists = onClickOutside(
       render() {
         if (this.props.grabbing) {
           var grabPlaylists = playlists.playlists.map((p, i) => {
-            var onClick = () => { };
-            var songInPlaylist = playlists.checkPlaylistForSong(p.key, playing.data.info.url);
+            var onClick = () => {};
+            var songInPlaylist = playlists.checkPlaylistForSong(
+              p.key,
+              playing.data.info.url
+            );
             if (!songInPlaylist) {
               onClick = () => {
                 playing.grab(p.key);
                 this.props.toggleGrab();
               };
             }
-            var classes = classNames("fa", songInPlaylist ? "fa-check-circle-o" : "fa-circle-o");
+            var classes = classNames(
+              "fa",
+              songInPlaylist ? "fa-check-circle-o" : "fa-circle-o"
+            );
             return (
               <div key={i} className="grab-playlist" onClick={onClick}>
                 {p.name}
@@ -49,7 +54,7 @@ const GrabPlaylists = onClickOutside(
         } else {
           return <div />;
         }
-      }
+      },
     })
   )
 );
@@ -61,9 +66,7 @@ class Toolbar extends React.Component {
   componentDidMount() {
     this.cstmEaseInOut = document.getElementById("cstmEaseIn");
     // eslint-disable-next-line no-undef
-
   }
-
 
   @observable panelOpen = false;
 
@@ -72,7 +75,10 @@ class Toolbar extends React.Component {
       this.props.togglePlaylist();
       this.panelOpen = !this.panelOpen;
       if (playlists.selectedPlaylistName && this.cstmEaseInOut) {
-        this.cstmEaseInOut.style.setProperty('--PLlength', playlists.selectedPlaylistName.length.toString() + 'em');
+        this.cstmEaseInOut.style.setProperty(
+          "--PLlength",
+          playlists.selectedPlaylistName.length.toString() + "em"
+        );
       }
     } else {
       toast.error("You must be logged in to use playlists!");
@@ -155,21 +161,26 @@ class Toolbar extends React.Component {
             <i id="playlists-open-icon" className={openButtonIcon} />
           </div>
           <div id="playlist-metadata">
-            <a id={
-              playlists.selectedPlaylistName && playlists.selectedPlaylistName.length > 32
-                ? "cstmEaseIn"
-                : ""
-            } className={"current-playlist-name"}
+            <a
+              id={
+                playlists.selectedPlaylistName &&
+                playlists.selectedPlaylistName.length > 32
+                  ? "cstmEaseIn"
+                  : ""
+              }
+              className={"current-playlist-name"}
             >
               {playlists.selectedPlaylistName}
             </a>
             <br />
 
-            <a id={
-              playlists.selectedSong && playlists.selectedSong.length > 19
-                ? "cstmEaseIn2"
-                : ""
-            } className={"current-selected-media"}
+            <a
+              id={
+                playlists.selectedSong && playlists.selectedSong.length > 19
+                  ? "cstmEaseIn2"
+                  : ""
+              }
+              className={"current-selected-media"}
             >
               {playlists.selectedSong}
             </a>
@@ -186,9 +197,7 @@ class Toolbar extends React.Component {
                 {playing.data.info.title}
               </a>
             </span>
-            <span className="toolbar-playertxt">
-              Player:
-              </span>
+            <span className="toolbar-playertxt">Player:</span>
             <a
               className={
                 playing.data.info.user && playing.data.info.user.length > 18
@@ -196,10 +205,13 @@ class Toolbar extends React.Component {
                   : "current-playing-user"
               }
               onClick={() => {
-                $("#chatinput").val($("#chatinput").val() + " @" + playing.data.info.user + " ");
+                $("#chatinput").val(
+                  $("#chatinput").val() + " @" + playing.data.info.user + " "
+                );
               }}
             >
-              {" "}{" " + playing.data.info.user}
+              {" "}
+              {" " + playing.data.info.user}
             </a>
             <span className="media-time">
               {playing.humanCurrent} / {playing.humanDuration}
@@ -218,13 +230,13 @@ class Toolbar extends React.Component {
           </div>
           <GrabPlaylists
             grabbing={this.grabbing}
-            toggleGrab={setting => this.toggleGrab(setting)}
+            toggleGrab={(setting) => this.toggleGrab(setting)}
           />
           <div className="grab-button" onClick={() => this.toggleGrab()}>
             <i className={classNames("fa", grabIcon)} />
             <span className="feedback-grab">{playing.grabs}</span>
           </div>
-          <div className="volume-slider" onWheel={e => this.volumeWheel(e)}>
+          <div className="volume-slider" onWheel={(e) => this.volumeWheel(e)}>
             <i className={volClass} />
             <ReactSlider
               max={1}
@@ -235,14 +247,14 @@ class Toolbar extends React.Component {
               handleClassName="volume-slider-handle"
               handleActiveClassName="volume-slider-handle-active"
               barClassName="volume-slider-bar"
-              onChange={e => playing.setVolume(e)}
+              onChange={(e) => playing.setVolume(e)}
               withBars={true}
             />
           </div>
           <div
             className="like-button"
             onClick={() => {
-              if (!waitlist.playing) playing.like();
+              if (!waitlist.isPlaying) playing.like();
             }}
           >
             <i className={classNames("fa", likeIcon)} />

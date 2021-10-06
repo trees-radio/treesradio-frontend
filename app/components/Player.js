@@ -118,7 +118,7 @@ class Player extends React.Component {
                   rPlayerSoundcloudConfig,
                 },
               }}
-              onDuration={(d) => {
+              onDuration={() => {
                 playing.playerDuration =
                   parseInt(playing.data.info.duration) / 1000;
               }}
