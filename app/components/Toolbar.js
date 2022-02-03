@@ -28,7 +28,7 @@ const GrabPlaylists = onClickOutside(
       render() {
         if (this.props.grabbing) {
           var grabPlaylists = playlists.playlists.map((p, i) => {
-            var onClick = () => {};
+            var onClick = () => { };
             var songInPlaylist = playlists.checkPlaylistForSong(
               p.key,
               playing.data.info.url
@@ -164,7 +164,7 @@ class Toolbar extends React.Component {
             <a
               id={
                 playlists.selectedPlaylistName &&
-                playlists.selectedPlaylistName.length > 32
+                  playlists.selectedPlaylistName.length > 32
                   ? "cstmEaseIn"
                   : ""
               }
@@ -254,7 +254,7 @@ class Toolbar extends React.Component {
           <div
             className="like-button"
             onClick={() => {
-              if (!waitlist.isPlaying) playing.like();
+              if (!waitlist.playing) playing.like();
             }}
           >
             <i className={classNames("fa", likeIcon)} />
