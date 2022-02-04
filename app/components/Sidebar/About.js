@@ -28,7 +28,7 @@ export default class About extends React.Component {
     return (
       <div className="sidebar-about" style={this.props.show ? {} : { display: "none" }}>
         <div className="about-summary">
-          <p>TreesRadio is a online social music site.</p>
+          <p>TreesRadio is an online social music site.</p>
         </div>
         <div className="about-rules">
           <h5>Rules:</h5>
