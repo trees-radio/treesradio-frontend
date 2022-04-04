@@ -61,15 +61,11 @@ export default new (class Playing {
 
     var pctdistance = Math.floor(
       Math.abs(
-        ((serverSeconds * 1000 - Math.ceil(this.playerSeconds) * 1000) /
-          ((serverSeconds * 1000 + Math.ceil(this.playerSeconds) * 1000) / 2)) *
-          100
+        this.playerProgress * 100 - durationPercent
       )
     );
+
     if (pctdistance > PLAYER_SYNC_SENSITIVITY) {
-      console.info(
-        `DPCT: ${durationPercent}, PCT: ${pctdistance}, serverSeconds: ${serverSeconds}, playerSeconds ${this.playerSeconds}`
-      );
       return serverSeconds;
     }
     return false;

@@ -41,9 +41,7 @@ class Player extends React.Component {
     playing.playerProgress = p.played;
     const syncTo = playing.shouldSync;
 
-    if (syncTo && this.syncs < 3) {
-      this.syncs++;
-      console.info(`Setting to: ${syncTo}`);
+    if (syncTo) {
       this._player.seekTo(syncTo, "seconds");
     }
   }
@@ -51,7 +49,6 @@ class Player extends React.Component {
     playing.userReportsError(e);
   }
 
-  @observable syncs = 0;
   @observable showVideo = true;
 
   componentDidMount() {
