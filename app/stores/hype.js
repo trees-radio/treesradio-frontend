@@ -4,7 +4,7 @@ import { send } from "libs/events";
 import profile from "./profile";
 import epoch from "utils/epoch";
 
-export const hypetime = 120; // It was 260 = 4:20 before, people found that too long
+export const hypetime = 60; // It was 260 = 4:20 before, people found that too long
 
 export default new (class HypeTimer {
   constructor() {
