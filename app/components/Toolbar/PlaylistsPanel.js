@@ -424,8 +424,7 @@ export default class PlaylistsPanel extends React.Component {
           leftButtonText="Confirm"
         >
           <p>
-            Are you sure you want to remove the playlist &apos;{this.playlistToRemove.name}
-            @apos;?
+            Are you sure you want to remove the playlist &apos;{this.playlistToRemove.name}&apos;?
           </p>
         </Modal>
         <Modal
