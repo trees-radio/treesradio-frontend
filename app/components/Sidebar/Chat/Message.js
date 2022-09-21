@@ -150,7 +150,7 @@ class MessageItem extends React.Component {
     return (
       <span
         className={this.props.isEmote ? "chat-italic" : thisClass}
-        show={show}
+        style={{ visibility: show ? "visible" : "hidden" }}
         title={titletext}
       >
         {emojify(token, emojifyOptions)}{" "}
