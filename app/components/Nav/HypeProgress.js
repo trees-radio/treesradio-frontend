@@ -51,7 +51,7 @@ export default class HypeProgress extends React.Component {
           >
             <a
               className="hypedone"
-              text={
+              alt={
                 "Hype Recharging: " +
                 convertHoursMinutesSeconds(hypetime - hypetimer.secondsfromhype)
               }

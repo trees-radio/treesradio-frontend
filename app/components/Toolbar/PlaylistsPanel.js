@@ -189,7 +189,7 @@ export default class PlaylistsPanel extends React.Component {
               <a
                 target="_blank"
                 href={skipLink}
-                show={skipLink && skipLink.length > 0}
+                style={{visibility: skipLink && skipLink.length > 0 ? "visible" : "hidden"}}
                 rel="noopener noreferrer"
               >
                 <i className="fa fa-2x fa-globe add-to-playlist-btn" />

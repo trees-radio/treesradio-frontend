@@ -19,7 +19,7 @@ class UtilityModal extends React.Component {
     var leftButton;
     if (this.props.leftButton && this.props.leftButtonText) {
       leftButton = (
-        <button onClick={this.props.leftButton} variant="primary" className="btn btn-primary">
+        <button onClick={this.props.leftButton} className="btn btn-primary">
           {this.props.leftButtonText}
         </button>
       );
