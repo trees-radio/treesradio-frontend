@@ -54,6 +54,15 @@ export default class About extends React.Component {
             <ul className="about-rules">
               <li>
                 <a
+                  href="https://privacy.treesradio.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TreesRadio Privacy Policy & Contact
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.youtube.com/static?template=terms"
                   target="_blank"
                   rel="noopener noreferrer"
