@@ -244,6 +244,14 @@ export default class UserBit extends React.Component {
                         Your email hasn&apos;t been verified yet! Please click the link in the activation
                         email that was sent to your address or use one of the buttons below to help you.
                     </p>
+                    <a
+                     href="https://privacy.treesradio.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                  By registering you agree to the TreesRadio Privacy Policy
+                     </a>
+                     <p></p>
                     <button className="btn btn-primary" onClick={() => window.location.reload()}>
                         Re-check Verification Status
                     </button>
