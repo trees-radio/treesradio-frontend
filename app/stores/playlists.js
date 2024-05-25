@@ -1,54 +1,53 @@
-import {computed, observable} from "mobx";
+import { computed, observable } from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
 // import axios from 'axios';
 import moment from "moment";
-import {shuffle} from "lodash";
+import { shuffle } from "lodash";
 // import events from 'stores/events';
-import {send} from "../libs/events";
+import { send } from "../libs/events";
 import events from "stores/events";
+import { ref, set, get } from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
 
 export default new (class Playlists {
   constructor() {
-    fbase.auth().onAuthStateChanged(user => {
+    onAuthStateChanged(auth, user => {
       const me = this;
       if (user !== null) {
         events.register('searchfailed', (data) => {
-          if ( data.data.uid === profile.user.uid ) {
+          if (data.data.uid === profile.user.uid) {
             toast('Search failed, please try again later');
             me.searching = false;
             me.search = [];
-          } 
+          }
         });
         events.register('searchexceeded', (data) => {
-          if ( data.data.uid === profile.user.uid) {
+          if (data.data.uid === profile.user.uid) {
             toast('Search limit exceeded, try again in thirty minutes');
             me.searching = false;
             me.search = [];
           }
         });
         events.register('playlistImported', (data) => {
-          if ( data.data.uid === profile.user.uid ) {
+          if (data.data.uid === profile.user.uid) {
             toast(`${data.data.data.name} Imported`);
             me.importing = false;
-          } 
+          }
         });
-        fbase
-          .database()
-          .ref("searches")
-          .child(user.uid)
-          .on("value", snap => {
-            if (!snap.val() || snap.val() == null) return false;
-            me.search = snap.val();
-            me.openSearch = true;
-            me.searching = false;
-          });
+        const searchRef = ref(`searches/${user.uid}`);
+        onValue(searchRef, snap => {
+          if (!snap.val() || snap.val() == null) return false;
+          me.search = snap.val();
+          me.openSearch = true;
+          me.searching = false;
+        });
+
         this.uid = user.uid;
-        this.ref = fbase
-          .database()
-          .ref("playlists")
-          .child(this.uid);
+        this.ref = ref(fbase, `playlists/${user.uid}`);
         this.stopSync = this.ref.orderByKey().on("value", snap => {
           var playlists = [];
           snap.forEach(playlist => {
@@ -59,16 +58,12 @@ export default new (class Playlists {
           this.playlists = playlists;
 
           if (!this.init || this.removedPlaylist) {
-            fbase
-              .database()
-              .ref("private")
-              .child(this.uid)
-              .child("selectedPlaylist")
-              .once("value")
-              .then(selectedPlaylist => {
+            const privateRef = ref(fbase, `private/${user.uid}`);
+            get(privateRef).then(snap => {
+              if (snap.val() && snap.val().selectedPlaylist) {
                 var toSelect;
                 playlists.forEach((playlist, i) => {
-                  if (selectedPlaylist.val() && playlist.key === selectedPlaylist.val()) {
+                  if (playlist.key === snap.val().selectedPlaylist) {
                     toSelect = i;
                   }
                 });
@@ -77,7 +72,10 @@ export default new (class Playlists {
                 } else {
                   this.selectPlaylist(0);
                 }
-              });
+              } else {
+                this.selectPlaylist(0);
+              }
+            });
           }
 
           this.init = true;
@@ -124,21 +122,20 @@ export default new (class Playlists {
   }
 
   exportPlaylist() {
-    fbase
-      .database()
-      .ref("playlists")
-      .child(this.uid)
-      .child(this.selectedPlaylistKey)
-      .once("value")
-      .then(snap => {
+    const playlistRef = ref(fbase, `playlists/${this.uid}/${this.selectedPlaylistKey}`);
+    get(playlistRef).then(snap => {
+      if (snap.val()) {
         const dataStr =
+
+
           "data:text/json;charset=utf-8," +
           encodeURIComponent(JSON.stringify(snap.val(), false, 3));
         var anchorElem = document.getElementById("exportPlaylistDownload");
         anchorElem.setAttribute("href", dataStr);
         anchorElem.setAttribute("download", this.selectedPlaylistName + ".json");
         anchorElem.click();
-      });
+      }
+    });
   }
 
   clearSearch() {
@@ -154,26 +151,20 @@ export default new (class Playlists {
     if (this.playlists[index]) {
       var key = this.playlists[index].key;
       this.selectedPlaylistKey = key;
-      fbase
-        .database()
-        .ref("private")
-        .child(this.uid)
-        .child("selectedPlaylist")
-        .set(key);
+      const privateRef = ref(fbase, `private/${this.uid}/selectedPlaylist`);
+      set(privateRef, key);
+
       localforage.setItem("selectedPlaylist", key);
-      this.stopPlaylistSync = this.ref
-        .child(key)
-        .child("entries")
-        .orderByKey()
-        .on("value", snap => {
-          var playlist = [];
-          if (snap) {
-            snap.forEach(entry => {
-              playlist.push(entry.val());
-            });
-          }
-          this.playlist = playlist;
-        });
+      this.stopPlaylistSync = ref(fbase, `playlists/${this.uid}/${key}/entries`).orderByKey
+      onValue(snap => {
+        var playlist = [];
+        if (snap) {
+          snap.forEach(entry => {
+            playlist.push(entry.val());
+          });
+        }
+        this.playlist = playlist;
+      });
     }
   }
 
@@ -216,7 +207,7 @@ export default new (class Playlists {
 
   async runSearch(query) {
     this.searching = true;
-    if (profile.init) send("search", {source: this.searchSource, query: query});
+    if (profile.init) send("search", { source: this.searchSource, query: query });
   }
 
   addFromSearch(index) {
@@ -356,13 +347,13 @@ export default new (class Playlists {
   }
 
   sortPlaylist(direction, key) {
-    send("playlist.sort", {playlist: this.selectedPlaylistKey, direction: direction, field: key});
+    send("playlist.sort", { playlist: this.selectedPlaylistKey, direction: direction, field: key });
   }
 
   @observable importing = false;
 
   async importYouTubePlaylist(name, url) {
     this.importing = true;
-    if ( profile.init ) send('importPlaylist', { name, url });
+    if (profile.init) send('importPlaylist', { name, url });
   }
 })();

@@ -1,4 +1,5 @@
 import fbase from "libs/fbase";
+import { ref, set} from "firebase/database";
 import profile from "stores/profile";
 
 export function send(type, data = {}) {
@@ -7,11 +8,8 @@ export function send(type, data = {}) {
     let token = {};
     token[profile.user.uid] = {uid: profile.user.uid, type, data};
 
-    return fbase
-      .database()
-      .ref("event_bus")
-      .child(profile.user.uid)
-      .set(token);
+    const eventBus = ref(fbase, `event_bus/${profile.user.uid}`);
+    set(eventBus, token);
     //{uid: profile.user.uid, type, data});
   } else {
     return null;

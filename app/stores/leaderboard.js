@@ -1,5 +1,6 @@
 import { observable, autorun } from "mobx";
 import fbase from "libs/fbase";
+import { ref, onValue } from "firebase/database";
 
 export default new class LeadersBoard {
 
@@ -10,12 +11,10 @@ export default new class LeadersBoard {
   }
 
   setupLeaderboard() {
-    fbase
-      .database()
-      .ref("leaderboard")
-      .on("value", (snap) => {
-        let leaders = snap.val();
-        this.leaders = leaders;
-      });
+    const leaderboardRef = ref(fbase, "leaderboard");
+    onValue(leaderboardRef, (snap) => {
+      let leaders = snap.val();
+      this.leaders = leaders;
+    });
   }
 }

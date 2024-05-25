@@ -6,7 +6,7 @@ import './scss/core/index.scss'; // our scss entry
 // B u lma flex-fw
 import "./scss/core/bulma.sass";
 
-import 'font-awesome-webpack-4';
+// import 'font-awesome-webpack-4';
 import 'script-loader!localforage'; //needs to execute as script, ugly console warnings otherwise
 import Main from './components/Main';
 

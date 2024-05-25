@@ -8,6 +8,8 @@ var WebpackPwaManifest = require('webpack-pwa-manifest');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+const currentTime = new Date().toLocaleString();
+
 module.exports = new Config().merge({
   entry: "./app/index.js",
   output: {
@@ -20,9 +22,6 @@ module.exports = new Config().merge({
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
-        query: {
-          plugins: ["lodash"]
-        }
       },
       {
         test: /\.m?js$/,
@@ -134,7 +133,7 @@ module.exports = new Config().merge({
     new VersionFile({
       packageFile: path.join(__dirname, "package.json"),
       outputFile: path.join(__dirname, "app/version.json"),
-      templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "<%= currentTime %>", "version": "<%= package.version %>", "short": "${short}"}}`
+      templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "${currentTime}", "version": "<%= package.version %>", "short": "${short}"}}`
     })
   ]
 });

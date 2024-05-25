@@ -16,7 +16,7 @@ import profile from "stores/profile";
 import { observable } from "mobx";
 import events from "stores/events";
 
-toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
+// toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
 
 @observer
 class Main extends React.Component {
@@ -175,7 +175,10 @@ class Main extends React.Component {
         </div>
         {/* Chat Component */}
         <div id="chattoplevel">
-          <ToastContainer />{" "}
+          <ToastContainer 
+            position="top-right" 
+            draggable="false"
+            autoClose={8000}/>{" "}
           {/* <Sidebar
                                 loginData={this.state.user}
                                 chatData={this.state.chat}

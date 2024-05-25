@@ -1,98 +1,90 @@
-import {autorun, computed, observable} from "mobx";
+import { autorun, computed, observable } from "mobx";
 import toast from "utils/toast";
-import fbase from "libs/fbase";
+import fbase, {auth} from "libs/fbase";
 import epoch from "utils/epoch";
 import username from "libs/username";
-import {send} from "libs/events";
-import rank, {getSettingsForRank} from "libs/rank";
+import { send } from "libs/events";
+import rank, { getSettingsForRank } from "libs/rank";
 import disposable from "disposable-email";
 // const startup = epoch();
 import app from "stores/app";
 import * as localforage from "localforage";
+import { ref, onValue } from "firebase/database";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default new (class Profile {
     constructor() {
         this.init = false;
-        fbase.auth().onAuthStateChanged(user => {
+       auth.onAuthStateChanged(user => {
             this.user = user;
             if (user !== null) {
-                fbase
-                    .database()
-                    .ref()
-                    .child(".info/connected")
-                    .on("value", snap => {
-                        if (snap.val() === true) {
-                            fbase.auth().updateCurrentUser(fbase.auth().currentUser);
-                            clearInterval(this.presenceInterval); //stop any previous intervals
-                            this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
+                const connectedRef = ref(fbase, ".info/connected");
+                onValue(connectedRef, snap => {
+                    if (snap.val() === true) {
+                        auth.updateCurrentUser(auth.currentUser);
+                        clearInterval(this.presenceInterval); //stop any previous intervals
+                        this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
 
-                            let presenceRef = fbase.database().ref(`presence/${this.user.uid}`);
-                            let timestamp = epoch();
-                            this.presenceRef = presenceRef
-                                .child("connections")
-                                .push({timestamp, uid: this.user.uid});
+                        let presenceRef = ref(fbase, `presence/${this.user.uid}`);
+                        let timestamp = epoch();
+                        this.presenceRef = ref(presenceRef, this.user.uid)
+                            .child("connections")
+                            .push({ timestamp, uid: this.user.uid });
 
                         this.presenceRef.onDisconnect().remove(); //I have a feeling this is causing some issues.
 
-                            window.onbeforeunload = function () {
-                                fbase.database().ref(`presence/${this.user.uid}`).remove();
-                            };
+                        window.onbeforeunload = function () {
+                            ref(fbase, `presence/${this.user.uid}`).remove();
+                        };
 
-                            this.presenceRef.child("connected").set(epoch());
-                            this.presenceInterval = setInterval(() => {
-                                this.presenceRef.child("timestamp").set(epoch());
-                            }, 10000);
+                        this.presenceRef.child("connected").set(epoch());
+                        this.presenceInterval = setInterval(() => {
+                            this.presenceRef.child("timestamp").set(epoch());
+                        }, 10000);
 
-                            this.ipRef && this.ipRef.remove();
-                            this.ipRef = fbase
-                                .database()
-                                .ref("private")
-                                .child(user.uid)
-                                .child("ip")
-                                .child(this.presenceRef.key);
-
-                            this.ipRef.set(app.ipAddress);
-                            this.ipRef.onDisconnect().remove();
-                        }
-                    });
-                this.stopProfileSync = fbase
-                    .database()
-                    .ref("users")
-                    .child(user.uid)
-                    .on("value", snap => {
+                        this.ipRef && this.ipRef.remove();
+                        this.ipRef = ref(fbase, `private/${this.user.uid}/ip/${this.presenceRef.key}`)
+                        set(this.ipRef, app.ipAddress);
+                        this.ipRef.onDisconnect().remove();
+                    }
+                });
+                ref(fbase, `presence/${this.user.uid}`).onDisconnect().remove();
+                onValue(ref(fbase, `presence/${this.user.uid}`), snap => {
+                    if (snap.val() === null) {
                         this.profile = snap.val() || {};
-                    });
+                    };
+                });
 
                 send("hello");
 
-                this.stopPrivateSync = fbase
-                    .database()
-                    .ref("private")
-                    .child(user.uid)
-                    .on("value", snap => {
-                        this.private = snap.val() || {};
-                        this.privateInit = true;
-                    });
+                // this.stopPrivateSync = fbase
 
-                this.stopRegistrationSync = fbase
-                    .database()
-                    .ref("registered")
-                    .child(user.uid)
-                    .on("value", snap => {
-                        this.registeredEpoch = snap.val() || epoch();
-                    });
+                //     .ref("private")
+                //     .child(user.uid)
+                //     .on("value", snap => {
+                //         this.private = snap.val() || {};
+                //         this.privateInit = true;
+                //     });
 
-                this.stopBanSync = fbase
-                    .database()
-                    .ref("bans")
-                    .child(user.uid)
-                    .on("value", snap => (this.banData = snap.val()));
+                // this.stopRegistrationSync = fbase
 
-                this.stopSilenceSync = fbase
-                    .database()
-                    .ref("bans")
-                    .child(user.uid)
-                    .on("value", snap => (this.silenceData = snap.val()));
+                //     .ref("registered")
+                //     .child(user.uid)
+                //     .on("value", snap => {
+                //         this.registeredEpoch = snap.val() || epoch();
+                //     });
+
+                // this.stopBanSync = fbase
+
+                //     .ref("bans")
+                //     .child(user.uid)
+                //     .on("value", snap => (this.banData = snap.val()));
+
+                // this.stopSilenceSync = fbase
+
+                //     .ref("bans")
+                //     .child(user.uid)
+                //     .on("value", snap => (this.silenceData = snap.val()));
             } else {
                 this.stopProfileSync && this.stopProfileSync();
                 this.stopPrivateSync && this.stopPrivateSync();
@@ -188,11 +180,9 @@ export default new (class Profile {
 
     // TODO can probably move these top functions to a lib
     login(email, password) {
-        return fbase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
+        return signInWithEmailAndPassword(auth, email, password)
             .then(() => true)
-                  .catch(error => {
+            .catch(error => {
                 let msg = `Unknown error: ${error.code}`;
                 switch (error.code) {
                     case "auth/email-already-in-use":
@@ -217,13 +207,12 @@ export default new (class Profile {
     }
 
     logout() {
-        return fbase.auth().signOut();
+        return auth.signOut();
     }
 
     async register(email, password) {
         if (disposable.validate(email)) {
-            fbase
-                .auth()
+            auth
                 .createUserWithEmailAndPassword(email, password)
                 .catch(error => {
                     let msg = `Unknown error: ${error.code}`;
@@ -257,8 +246,7 @@ export default new (class Profile {
     }
 
     sendPassReset(email) {
-        return fbase
-            .auth()
+        return auth
             .sendPasswordResetEmail(email)
             .catch(error => {
                 let msg = `Unknown error: ${error.code}`;
@@ -336,7 +324,7 @@ export default new (class Profile {
     }
 
     getToken() {
-        return fbase.auth().currentUser.getToken(true); //returns promise with token
+        return auth.currentUser.getToken(true); //returns promise with token
     }
 
     @computed get safeUsername() {
@@ -363,7 +351,7 @@ export default new (class Profile {
         if (this.user === null) {
             return false;
         } else {
-            send("username_set", {username}).then(() => location.reload());
+            send("username_set", { username }).then(() => location.reload());
         }
     }
 
@@ -388,27 +376,18 @@ export default new (class Profile {
         if (!url) {
             return false;
         }
-        return fbase
-            .database()
-            .ref("avatars")
-            .child(this.user.uid)
-            .set(url);
+        const avatar = ref(fbase, `avatars/${this.user.uid}`);
+        set(avatar, url);
     }
 
     @computed get avatarURL() {
-        return fbase
-            .database()
-            .ref("avatars")
-            .child(this.user.uid)
-            .toString();
+        const avatar = ref(fbase, `avatars/${this.user.uid}`);
+        return  get(avatar).then(snap => snap.val().toString());
     }
 
     clearAvatar() {
-        return fbase
-            .database()
-            .ref("avatars")
-            .child(this.uid)
-            .remove();
+        const avatar = ref(fbase, `avatars/${this.user.uid}`);
+        return set(avatar, null);
     }
 
     changePassword(password) {

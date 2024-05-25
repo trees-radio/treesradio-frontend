@@ -2,17 +2,17 @@ import {computed, observable} from "mobx";
 import axios from "axios";
 import fbase from "libs/fbase";
 import epoch from "utils/epoch";
+import {ref, onValue} from "firebase/database";
 
 export default new (class App {
   constructor() {
     this.getIP();
-    fbase
-      .database()
-      .ref(".info/connected")
-      .on("value", snap => {
-        this.connected = snap.val() === true;
-        this.proceed = snap.val() === true;
-      });
+
+    const connectedRef = ref(fbase, ".info/connected");
+    onValue(connectedRef, snap => {
+      this.connected = snap.val() === true;
+      this.proceed = snap.val() === true;
+    });
 
     setInterval(() => (this.APP_EPOCH = epoch()), 1000); //keep time
   }

@@ -1,20 +1,19 @@
 import { computed, observable, autorun } from "mobx";
 import fbase from "libs/fbase";
 import { send } from "libs/events";
+import { ref, onValue } from "firebase/database";
 
 export default new (class TokeTimer {
   constructor() {
     autorun(() => {
-      fbase
-        .database()
-        .ref("toke")
-        .on("value", snap => {
-          var tokestatus = snap.val();
-          if (tokestatus != null) {
-            this.underway = tokestatus.tokeUnderway;
-            this.time = tokestatus.remainingTime;
-          }
-        });
+      const tokeRef = ref(fbase, "toke");
+      onValue(tokeRef, (snap) => {
+        var tokestatus = snap.val();
+        if (tokestatus != null) {
+          this.underway = tokestatus.tokeUnderway;
+          this.time = tokestatus.remainingTime;
+        }
+      });
     });
   }
 

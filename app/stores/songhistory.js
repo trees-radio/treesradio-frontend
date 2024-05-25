@@ -1,5 +1,6 @@
 import { observable, autorun } from "mobx";
 import fbase from "libs/fbase";
+import { ref, onValue } from "firebase/database";
 
 export default new class SongHistory {
 
@@ -10,12 +11,10 @@ export default new class SongHistory {
   }
 
   setupSongHistory() {
-    fbase
-      .database()
-      .ref("songhistory")
-      .on("value", (snap) => {
-        let history = snap.val();
-        this.history = history;
-      });
+    const historyRef = ref(fbase, "songhistory");
+    onValue(historyRef, (snap) => {
+      let history = snap.val();
+      this.history = history;
+    });
   }
 }

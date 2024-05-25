@@ -1,39 +1,30 @@
 import fbase from "libs/fbase";
+import { ref, set, get, onValue } from "firebase/database";
 
 export default function getRank(uid) {
-  return fbase
-    .database()
-    .ref("ranks")
-    .child(uid)
-    .once("value")
-    .then(snap => snap.val());
+  if (uid === undefined || uid.length == 0) return false;
+
+  const rankRef = ref(fbase, `ranks/${uid}`);
+  return get(rankRef).then((snapshot) => snapshot.val());
 }
 
 export async function getUserRank(uid) {
-  let rank = await fbase
-    .database()
-    .ref("ranks")
-    .child(uid)
-    .once("value")
-    .then(snap => snap.val());
-  if (!rank) rank = "User";
+  if (uid === undefined || uid.length == 0) return false;
+  const rankRef = ref(fbase, `ranks/${uid}`);
+  const rank = await get(rankRef).then((snapshot) => snapshot.val());
+  if (!rank) return "User";
   return rank;
 }
 
 export function listenRank(uid) {
-  return fbase
-    .database()
-    .ref("ranks")
-    .child(uid)
-    .on("value");
+  if (uid === undefined || uid.length == 0) return false;
+  const rankRef = ref(fbase, `ranks/${uid}`);
+  return onValue(rankRef);
 }
 
 function ranksSettings() {
-  return fbase
-    .database()
-    .ref("ranks_settings_READ_ONLY")
-    .once("value")
-    .then(snap => snap.val());
+  const ranksSettings = ref(fbase, "ranks_settings_READ_ONLY");
+  return get(ranksSettings).then((snapshot) => snapshot.val());
 }
 
 export async function getSettingsForRank(rank) {
@@ -42,8 +33,6 @@ export async function getSettingsForRank(rank) {
 }
 
 export async function getAllRanks(cbFunc) {
-  fbase
-    .database()
-    .ref("ranks")
-    .once("value", snap => cbFunc(snap.val()));
+  const rankRef = ref(fbase, `ranks`);
+  return await get(rankRef).then((snapshot) => cbFunc(snapshot.val()));
 }

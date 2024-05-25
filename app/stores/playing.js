@@ -12,6 +12,7 @@ import { send } from "libs/events";
 
 import spacePineapples from "img/spacepineapples.jpg";
 import gelatoGif from "img/gelatogif.gif";
+import { ref, get, onValue } from "firebase/database";
 
 const PLAYER_SYNC_CAP = 30; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_START = 25; // percent
@@ -28,17 +29,15 @@ export default new (class Playing {
       .then((s) => (s ? (this.playerSize = s) : false));
 
     autorun(() => {
-      fbase
-        .database()
-        .ref("playing")
-        .on("value", (snap) => {
-          var data = snap.val();
-          if (data) {
-            this.data = data;
-            var newtitle = "TreesRadio [  " + data.info.title + " ] ";
-            document.title = newtitle;
-          }
-        });
+      const playingRef = ref(fbase, "playing");
+      onValue(playingRef, (snap) => {
+        var data = snap.val();
+        if (data) {
+          this.data = data;
+          var newtitle = "TreesRadio [  " + data.info.title + " ] ";
+          document.title = newtitle;
+        }
+      });
       this.localLikeState = this.liked;
       this.localDislikeState = this.disliked;
       this.localGrabState = this.grabbed;

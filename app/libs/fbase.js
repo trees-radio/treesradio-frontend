@@ -1,14 +1,17 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
-const FB_ENV = {
+const firebaseConfig = {
   apiKey: FIREBASE_KEY,
   authDomain: FIREBASE_AUTH,
   databaseURL: FIREBASE_URL,
   storageBucket: FIREBASE_BUCKET
 };
 
-firebase.initializeApp(FB_ENV);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
 
-export default firebase;
+export { auth };
+export default database;

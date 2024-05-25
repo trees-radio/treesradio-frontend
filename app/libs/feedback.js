@@ -1,50 +1,22 @@
 import fbase from "libs/fbase";
+import { ref, get } from "firebase/database";
 
-export default function getLikes() {
-  return fbase
-    .database()
-    .ref("playing")
-    .child("feedback_users")
-    .child("likes")
-    .once("value")
-    .then(snap => snap.val());
+export default async function getLikes() {
+  const likesRef = ref(fbase, "playing/feedback_users/likes");
+  return await get(likesRef).then((snapshot) => snapshot.val());
 }
 
 export async function getUserLike(uid) {
-  let like = await fbase
-    .database()
-    .ref("playing")
-    .child("feedback_users")
-    .child("likes")
-    .child(uid)
-    .once("value")
-    .then(snap => snap.val());
-
-  return like;
+  const likeRef = ref(fbase, `playing/feedback_users/likes/${uid}`);
+  return await get(likeRef).then((snapshot) => snapshot.val());
 }
 
 export async function getUserDislike(uid) {
-  let dislike = await fbase
-    .database()
-    .ref("playing")
-    .child("feedback_users")
-    .child("dislikes")
-    .child(uid)
-    .once("value")
-    .then(snap => snap.val());
-
-  return dislike;
+  const dislikeRef = ref(fbase, `playing/feedback_users/dislikes/${uid}`);
+  return await get(dislikeRef).then((snapshot) => snapshot.val());
 }
 
 export async function getUserGrab(uid) {
-  let grab = await fbase
-    .database()
-    .ref("playing")
-    .child("feedback_users")
-    .child("grabs")
-    .child(uid)
-    .once("value")
-    .then(snap => snap.val());
-
-  return grab;
+  const grabRef = ref(fbase, `playing/feedback_users/grabs/${uid}`);
+  return await get(grabRef).then((snapshot) => snapshot.val());
 }

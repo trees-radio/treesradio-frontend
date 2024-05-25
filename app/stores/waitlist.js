@@ -5,11 +5,12 @@ import toast from "utils/toast";
 import playing from "stores/playing";
 import chat from "stores/chat";
 import { send } from "libs/events";
-import { clearInterval, setInterval } from "timers";
+// import { clearInterval, setInterval } from "timers";
 import epoch from "../utils/epoch";
 import events from "stores/events";
 import favicon from "img/favicon.png";
 import * as localforage from "localforage";
+import { ref, get, onValue } from "firebase/database";
 
 export default new (class Waitlist {
   constructor() {
@@ -19,12 +20,20 @@ export default new (class Waitlist {
         this.cancelAutojoin();
       }
     });
-    fbase
-      .database()
-      .ref("waitlist")
-      .on("value", () => {
-        this.reloadList();
-      });
+    const waitlistRef = ref(fbase, "waitlist");
+    onValue(waitlistRef, (snap) => {
+      var waitlist = snap.val();
+      if (waitlist == null) return;
+      var list = [];
+      this.list = [];
+      var wl = snap.val();
+      if (wl)
+        Object.keys(wl).forEach((key) => {
+          list.push(wl[key]);
+        });
+
+      this.list = list;
+    });
 
     autorun(() => {
       this.localJoinState = this.inWaitlist;
@@ -42,23 +51,6 @@ export default new (class Waitlist {
         clearInterval(checkAutojoin);
       }
     }, 60000);
-  }
-
-  reloadList() {
-    fbase
-      .database()
-      .ref("waitlist")
-      .once("value", (snap) => {
-        var list = [];
-        this.list = [];
-        var wl = snap.val();
-        if (wl)
-          Object.keys(wl).forEach((key) => {
-            list.push(wl[key]);
-          });
-
-        this.list = list;
-      });
   }
 
   @observable list = [];

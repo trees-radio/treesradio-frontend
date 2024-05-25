@@ -7,17 +7,12 @@ var config = new Config().extend("./webpack.config.js").merge({
   plugins: [new webpack.DefinePlugin(helpers.getWebpackDefine("development"))],
 });
 
-const path = require('path');
-
 var compiler = webpack(config);
 
-var server = new WebpackDevServer(compiler, {
-  contentBase: path.join(__dirname, 'public'),
-  contentBasePublicPath: path.join(__dirname, 'public'),
+var server = new WebpackDevServer({
   compress: true,
-  stats: { colors: true },
-  clientLogLevel: 'trace',
   historyApiFallback: true,
-});
+  port: 8081,
+}, compiler);
 
-server.listen(8081, "127.0.0.1");
+server.start();

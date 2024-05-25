@@ -15,7 +15,7 @@ module.exports = new Config().extend("./webpack.base.config.js").merge({
       maxAsyncRequests: 10,
       maxInitialRequests: 6,
       automaticNameDelimiter: "~",
-      name: true,
+      name: "treesradio",
       cacheGroups: {
         defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
