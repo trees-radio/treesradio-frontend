@@ -1,5 +1,3 @@
-I'll create an updated README.md that preserves the project's context while noting the current issues and providing more accurate information.
-
 # Trees Radio Frontend
 
 This repo comprises the front-end of Trees Radio. Backend served by Firebase and treesradio/pineapple
