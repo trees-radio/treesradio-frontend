@@ -1,15 +1,15 @@
-@import "variables";
+@use "variables" as vars;
 
 /* stylelint-enable scss/dollar-variable-pattern, scss/no-duplicate-dollar-variables */
 
 /* ## Toolbar ## */
 @mixin toolbar-button-small {
   border: none;
-  border-radius: $button-border-radius;
+  border-radius: vars.$button-border-radius;
   text-align: center;
   transition: background 500ms ease;
   background-size: 125%;
-  text-shadow: $text-shadow-light;
+  text-shadow: vars.$text-shadow-light;
   letter-spacing: 1.5px;
   font-size: 130%;
 }

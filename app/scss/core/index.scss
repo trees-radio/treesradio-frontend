@@ -1,34 +1,31 @@
 /* ## TREES RADIO PRE-MINIFICATION SASS ## */
 
-// IMPORT EXTERNALS
-// @import url(https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+// All @use statements must come first
+@use 'sass:math';
+@use 'sass:color';
+@use 'variables' as vars;
+@use 'mixins' as mix;
+@use '../components/Main';
+@use '../components/Userbit';
+@use '../components/Nav';
+@use '../components/Sidebar';
+@use '../components/Video';
+@use '../components/Playlists';
+@use '../components/Chat';
+@use '../components/About';
+@use '../components/OnlineUsers';
+@use '../components/Waitlist';
+@use '../buttons/join-waitlist';
+@use '../buttons/grab-button';
+@use '../buttons/like-button';
+@use '../buttons/dislike-button';
+@use '../components/LeaderBoard';
+@use '../components/FlairColors';
+@use 'emojione-awesome.css';
+@use '../../../node_modules/react-toastify/dist/ReactToastify.css';
+@use 'media-queries';
 
-// VARIABLES & MIXINS (SASS FEATURE, IGNORE POST-COMPILE)
-// Must come BEFORE component imports; should be imported into every SCSS file that uses them
-@import "variables";
-@import "mixins";
-
-// IMPORT INTERNALS
-@import "../components/Main";
-@import "../components/Userbit";
-@import "../components/Nav";
-@import "../components/Sidebar";
-@import "../components/Video";
-@import "../components/Playlists";
-@import "../components/Chat";
-@import "../components/About";
-@import "../components/OnlineUsers";
-@import "../components/Waitlist";
-@import "../buttons/join-waitlist";
-@import "../buttons/grab-button";
-@import "../buttons/like-button";
-@import "../buttons/dislike-button";
-@import "emojione-awesome.css";
-@import "../../../node_modules/react-toastify/dist/ReactToastify.css";
-@import "../components/LeaderBoard";
-@import "../components/FlairColors";
-
-// IMPORT MEDIA QUERIES
-// Must come AFTER component imports
-@import "media-queries";
+// Regular imports for fonts can come after @use statements
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");

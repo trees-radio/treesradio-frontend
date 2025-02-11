@@ -2,14 +2,23 @@ import { computed, observable } from "mobx";
 import toast from "utils/toast";
 import fbase from "libs/fbase";
 import profile from "stores/profile";
-// import axios from 'axios';
 import moment from "moment";
 import { shuffle } from "lodash";
-// import events from 'stores/events';
 import { send } from "../libs/events";
 import events from "stores/events";
-import { ref, set, get } from "firebase/database";
+import { 
+  ref, 
+  set, 
+  get, 
+  onValue, 
+  push,
+  child,
+  orderByKey,
+  query,
+  remove 
+} from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import localforage from "localforage";
 
 const auth = getAuth();
 
@@ -38,17 +47,20 @@ export default new (class Playlists {
             me.importing = false;
           }
         });
-        const searchRef = ref(`searches/${user.uid}`);
+        const searchRef = ref(fbase, `searches/${user.uid}`);
         onValue(searchRef, snap => {
           if (!snap.val() || snap.val() == null) return false;
-          me.search = snap.val();
-          me.openSearch = true;
-          me.searching = false;
+          this.search = snap.val();
+          this.openSearch = true;
+          this.searching = false;
         });
 
         this.uid = user.uid;
         this.ref = ref(fbase, `playlists/${user.uid}`);
-        this.stopSync = this.ref.orderByKey().on("value", snap => {
+        
+        // Fix the playlist sync
+        const playlistQuery = query(this.ref, orderByKey());
+        this.stopSync = onValue(playlistQuery, snap => {
           var playlists = [];
           snap.forEach(playlist => {
             var data = playlist.val();
@@ -67,7 +79,7 @@ export default new (class Playlists {
                     toSelect = i;
                   }
                 });
-                if (toSelect) {
+                if (toSelect !== undefined) {
                   this.selectPlaylist(toSelect);
                 } else {
                   this.selectPlaylist(0);
@@ -108,13 +120,15 @@ export default new (class Playlists {
   @observable openSearch = false;
 
   addPlaylist(name) {
-    return this.ref.push(
-      {
-        name,
-        entries: []
-      },
-      err => !err && toast.success(`Added playlist ${name}!`)
-    );
+    const newPlaylistRef = push(this.ref);
+    return set(newPlaylistRef, {
+      name,
+      entries: []
+    }).then(() => {
+      toast.success(`Added playlist ${name}!`);
+    }).catch(err => {
+      toast.error(`Error adding playlist: ${err.message}`);
+    });
   }
 
   @computed get playlistNames() {
@@ -145,19 +159,28 @@ export default new (class Playlists {
   selectPlaylist(index) {
     this.clearSearch();
     if (this.stopPlaylistSync) {
+      // Remove old listener
       this.stopPlaylistSync();
     }
+    
     this.selectedPlaylist = index;
     if (this.playlists[index]) {
-      var key = this.playlists[index].key;
+      const key = this.playlists[index].key;
       this.selectedPlaylistKey = key;
+      
+      // Update private ref
       const privateRef = ref(fbase, `private/${this.uid}/selectedPlaylist`);
       set(privateRef, key);
 
+      // Save to localforage
       localforage.setItem("selectedPlaylist", key);
-      this.stopPlaylistSync = ref(fbase, `playlists/${this.uid}/${key}/entries`).orderByKey
-      onValue(snap => {
-        var playlist = [];
+      
+      // Set up new listener
+      const entriesRef = ref(fbase, `playlists/${this.uid}/${key}/entries`);
+      const entriesQuery = query(entriesRef, orderByKey());
+      
+      this.stopPlaylistSync = onValue(entriesQuery, snap => {
+        const playlist = [];
         if (snap) {
           snap.forEach(entry => {
             playlist.push(entry.val());
@@ -171,11 +194,12 @@ export default new (class Playlists {
   @observable removedPlaylist = false;
 
   removePlaylist(index) {
-    var key = this.playlists[index].key;
+    const key = this.playlists[index].key;
     if (this.selectedPlaylist === index) {
       this.removedPlaylist = true;
     }
-    this.ref.child(key).remove();
+    const playlistRef = ref(fbase, `playlists/${this.uid}/${key}`);
+    remove(playlistRef);
   }
 
   @computed get selectedPlaylistName() {

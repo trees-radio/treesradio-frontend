@@ -1,8 +1,8 @@
-@import "../core/variables";
+@use "../core/variables" as vars;
 // TODO remove dependecy on media queries, then put media queries into media-queries.scss
 @media (min-width: 0) {
   #chattoplevel {
-    background-color: $color-chat-toplevel-bg;
+    background-color: vars.$color-chat-toplevel-bg;
     position: relative;
     height: 100%;
     width: 100%;
@@ -114,8 +114,8 @@
 .chat-item {
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  border-color: $color-chat-item-border;
-  color: $color-chat-item;
+  border-color: vars.$color-chat-item-border;
+  color: vars.$color-chat-item;
   list-style-position: inside;
   list-style-type: none;
   margin-top: 8px;
@@ -139,7 +139,7 @@
 }
 
 .userflair {
-  color: $color-user-flair;
+  color: vars.$color-user-flair;
   font-size: 1.2em;
   line-height: 1.5;
 }
@@ -159,77 +159,77 @@
 }
 
 .username-bot {
-  color: $color-username-bot;
+  color: vars.$color-username-bot;
 }
 
 .username-bot::after {
-  color: $color-rank-bot;
+  color: vars.$color-rank-bot;
   content: " (Bot)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-admin {
-  color: $color-username-admin;
+  color: vars.$color-username-admin;
 }
 
 .username-admin::after {
-  color: $color-rank-admin;
+  color: vars.$color-rank-admin;
   content: " (Admin)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-dev {
-  color: $color-username-dev;
+  color: vars.$color-username-dev;
 }
 
 .username-dev::after {
-  color: $color-rank-dev;
+  color: vars.$color-rank-dev;
   content: " (Developer)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-mod {
-  color: $color-username-mod;
+  color: vars.$color-username-mod;
 }
 
 .username-mod::after {
-  color: $color-rank-mod;
+  color: vars.$color-rank-mod;
   content: " (Mod)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-seniormod {
-  color: $color-username-mod;
+  color: vars.$color-username-mod;
 }
 
 .username-seniormod::after {
-  color: $color-rank-seniormod;
+  color: vars.$color-rank-seniormod;
   content: " (Senior Mod)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-vip {
-  color: $color-username-vip;
+  color: vars.$color-username-vip;
 }
 
 .username-vip::after {
-  color: $color-rank-vip;
+  color: vars.$color-rank-vip;
   content: " (VIP)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-frient {
-  color: $color-username-frient;
+  color: vars.$color-username-frient;
 }
 
 .username-frient::after {
-  color: $color-rank-frient;
+  color: vars.$color-rank-frient;
   content: " (Frient)";
-  font-size: $rank-font-size;
+  font-size: vars.$rank-font-size;
 }
 
 .username-user {
-  color: $color-username-default;
+  color: vars.$color-username-default;
 }
 
 .chat-text {
@@ -255,7 +255,7 @@
   width: 45px;
   object-fit: scale-down;
   object-position: center;
-  background-color: $color-avatar-background;
+  background-color: vars.$color-avatar-background;
 }
 
 .mentions-container {
@@ -355,24 +355,24 @@
 }
 
 .blazebot-msg {
-  color: $color-blazebot-message;
-  background-color: $color-blazebot-message-background;
+  color: vars.$color-blazebot-message;
+  background-color: vars.$color-blazebot-message-background;
 }
 
 .blazebot-msg a:link {
-  color: $color-blazebot-message-link;
+  color: vars.$color-blazebot-message-link;
 }
 
 .blazebot-msg a:visited {
-  color: $color-blazebot-message-link;
+  color: vars.$color-blazebot-message-link;
 }
 
 .blazebot-msg a:active {
-  color: $color-blazebot-message-link;
+  color: vars.$color-blazebot-message-link;
 }
 
 .blazebot-msg a:hover {
-  color: $color-blazebot-message-link-hover;
+  color: vars.$color-blazebot-message-link-hover;
 }
 
 .blazebot-hide {
@@ -402,7 +402,7 @@
 }
 
 .sendbox-loggedout {
-  background: $color-trees-bg !important;
+  background: vars.$color-trees-bg !important;
 }
 
 .sendbox-loggedout-msg {
@@ -451,7 +451,7 @@ img[alt="previewvideo"] {
   float: right;
 }
 
-@media #{$isPortrait}, (min-height: 1440px) AND (max-width: 1199px) {
+@media #{vars.$isPortrait}, (min-height: 1440px) AND (max-width: 1199px) {
   img[alt="previewvideo"] {
     height: unset;
     max-width: 90px;
@@ -474,7 +474,7 @@ img[alt="tenorgif"] {
   max-height: 25vh;
 }
 
-@media #{$isPortrait}, (min-height: 1440px) {
+@media #{vars.$isPortrait}, (min-height: 1440px) {
   img[alt="tenorgif"] {
     min-width: 4.2vw;
     max-width: 95%;
@@ -572,118 +572,118 @@ div > blockquote {
 }
 
 .emoji-weed {
-  background-image: $img-emoji-weed;
+  background-image: vars.$img-emoji-weed;
 }
 
 .emoji-plug {
-  background-image: $img-emoji-plug;
+  background-image: vars.$img-emoji-plug;
 }
 
 .emoji-toke {
-  background-image: $img-emoji-toke;
+  background-image: vars.$img-emoji-toke;
 }
 
 .emoji-joint {
-  background-image: $img-emoji-joint;
+  background-image: vars.$img-emoji-joint;
 }
 
 .emoji-ferris {
-  background-image: url $img-emoji-ferris;
+  background-image: url vars.$img-emoji-ferris;
 }
 
 .emoji-one {
-  background-image: $img-emoji-one;
+  background-image: vars.$img-emoji-one;
 }
 
 .img-heart-weed {
-  background-image: $img-heart-weed;
+  background-image: vars.$img-heart-weed;
 }
 .img-peace-weed {
-  background-image: $img-peace-weed;
+  background-image: vars.$img-peace-weed;
 }
 .img-weed1 {
-  background-image: $img-weed1;
+  background-image: vars.$img-weed1;
 }
 .img-weed2 {
-  background-image: $img-weed2;
+  background-image: vars.$img-weed2;
 }
 .img-weed3 {
-  background-image: $img-weed3;
+  background-image: vars.$img-weed3;
 }
 .img-weed4 {
-  background-image: $img-weed4;
+  background-image: vars.$img-weed4;
 }
 .img-weed5 {
-  background-image: $img-weed5;
+  background-image: vars.$img-weed5;
 }
 
 .emoji-two {
-  background-image: $img-emoji-two;
+  background-image: vars.$img-emoji-two;
 }
 
 .emoji-three {
-  background-image: $img-emoji-three;
+  background-image: vars.$img-emoji-three;
 }
 
 .emoji-four {
-  background-image: $img-emoji-four;
+  background-image: vars.$img-emoji-four;
 }
 
 .emoji-five {
-  background-image: $img-emoji-five;
+  background-image: vars.$img-emoji-five;
 }
 
 .emoji-six {
-  background-image: $img-emoji-six;
+  background-image: vars.$img-emoji-six;
 }
 
 .emoji-seven {
-  background-image: $img-emoji-seven;
+  background-image: vars.$img-emoji-seven;
 }
 
 .emoji-eight {
-  background-image: $img-emoji-eight;
+  background-image: vars.$img-emoji-eight;
 }
 
 .emoji-nine {
-  background-image: $img-emoji-nine;
+  background-image: vars.$img-emoji-nine;
 }
 
 .emoji-ten {
-  background-image: $img-emoji-ten;
+  background-image: vars.$img-emoji-ten;
 }
 
 .emoji-highaf {
-  background-image: $img-emoji-highaf;
+  background-image: vars.$img-emoji-highaf;
 }
 
 .emoji-owo {
-  background-image: $img-emoji-owo;
+  background-image: vars.$img-emoji-owo;
 }
 
 .emoji-rolling {
-  background-image: $img-emoji-rolling;
+  background-image: vars.$img-emoji-rolling;
 }
 
 .emoji-dude {
-  background-image: $img-emoji-dude;
+  background-image: vars.$img-emoji-dude;
 }
 
 .emoji-bong {
-  background-image: $img-emoji-bong;
+  background-image: vars.$img-emoji-bong;
   background-size: cover;
 }
 
 .emoji-neat {
-  background-image: $img-emoji-neat;
+  background-image: vars.$img-emoji-neat;
   background-size: 111%;
 }
 
 .emoji-420 {
-  background-image: $img-emoji-fourtwenty;
+  background-image: vars.$img-emoji-fourtwenty;
   background-size: 111%;
 }
 
 .emoji-rasta {
-  background-image: $img-emoji-rasta;
+  background-image: vars.$img-emoji-rasta;
 }

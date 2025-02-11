@@ -1,23 +1,23 @@
 // http://enjoycss.com/zbuttram/item/rQW/2
-@import "../core/variables";
-@import "../core/mixins";
+@use "../core/variables" as vars;
+@use "../core/mixins" as mix;
 
 .like-button {
   grid-area: like;
-  @include toolbar-button-small;
+  @include mix.toolbar-button-small;
 
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: $color-button-text;
-  background: $color-button-like;
+  color: vars.$color-button-text;
+  background: vars.$color-button-like;
 }
 
 .like-button:hover {
-  background: $color-button-like-hover;
+  background: vars.$color-button-like-hover;
 }
 
 .like-button:active {
-  background: $color-button-like-active 50% 50%;
+  background: vars.$color-button-like-active 50% 50%;
   transition-duration: 10ms;
 }

@@ -1,5 +1,5 @@
-@import "../core/variables";
-@import "../core/mixins";
+@use "../core/variables" as vars;
+@use "../core/mixins";
 
 // toolbar on mobile browsers hides whatever is below it, causing display issues on TR mobile
 body {
@@ -16,8 +16,8 @@ body {
   height: 100vh;
   font-size: 16px;
   overflow: hidden;
-  color: $color-trees-primary !important;
-  background-color: $color-trees-bg;
+  color: vars.$color-trees-primary !important;
+  background-color: vars.$color-trees-bg;
   font-family: "Open Sans", sans-serif;
   margin: 0;
 }
@@ -41,9 +41,9 @@ input {
 #app-grid {
   display: grid;
   grid:
-    [row1-start] "nav nav" $navbar-height [row1-end]
+    [row1-start] "nav nav" vars.$navbar-height [row1-end]
     [row2-start] "player chat" auto [row2-end]
-    [row3-start] "toolbar chat" $sidebar-height [row3-end]
+    [row3-start] "toolbar chat" vars.$sidebar-height [row3-end]
     / 3fr 1fr;
 }
 
@@ -67,7 +67,7 @@ input {
 
 a {
   text-decoration: none;
-  color: $color-trees-primary;
+  color: vars.$color-trees-primary;
 }
 
 h4 {
@@ -106,11 +106,11 @@ h4 {
 }
 
 .btn-primary {
-  background-color: $color-trees-primary;
+  background-color: vars.$color-trees-primary;
 }
 
 .btn-default {
-  background-color: $color-trees-primary;
+  background-color: vars.$color-trees-primary;
 }
 
 .navbar,
@@ -190,7 +190,7 @@ h4 {
   z-index: 420;
   // top: calc(#{$playlist-search-height} + 6px);
   left: 0.75rem;
-  background-color: $color-trees-bg;
+  background-color: vars.$color-trees-bg;
   width: 15rem;
 }
 
@@ -200,8 +200,8 @@ h4 {
 }
 
 .dropdown-menu {
-  background-color: $color-trees-bg;
-  color: $color-trees-primary;
+  background-color: vars.$color-trees-bg;
+  color: vars.$color-trees-primary;
   z-index: 422;
 
   font-size: 1.2em;
@@ -229,9 +229,9 @@ h4 {
 
 .form-control:focus {
   background-color: #fff;
-  border-color: $color-trees-primary !important;
+  border-color: vars.$color-trees-primary !important;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba($color-trees-primary, 0.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba(vars.$color-trees-primary, 0.25) !important;
 }
 
 .fa-2x {
@@ -246,15 +246,14 @@ h4 {
   height: 100%;
   width: 100%;
   display: block;
-  vertical-align: middle;
   text-align: center;
 }
 
 .main-loadingcard {
   width: 420px;
   height: 242px;
-  background-color: $color-loading-bg;
-  background-image: $img-trees-favicon;
+  background-color: vars.$color-loading-bg;
+  background-image: vars.$img-trees-favicon;
   background-repeat: no-repeat;
   background-position: center 42vh;
   background-size: 17vh;

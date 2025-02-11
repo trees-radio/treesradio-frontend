@@ -1,4 +1,4 @@
-@import "../core/variables";
+@use "../core/variables" as vars;
 
 .waitlist-item {
   list-style-position: inside;
@@ -75,11 +75,11 @@
 }
 
 .waitlist-line-1 {
-  background-color: $color-trees-bg; //light skin cbd6dc
+  background-color: vars.$color-trees-bg; //light skin cbd6dc
   padding: 10px;
 }
 
 .waitlist-line-0 {
-  background-color: $color-trees-bg; //light skin e9eef0
+  background-color: vars.$color-trees-bg; //light skin e9eef0
   padding: 10px;
 }

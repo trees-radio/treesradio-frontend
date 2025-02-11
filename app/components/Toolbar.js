@@ -11,19 +11,18 @@ import playing, { VOLUME_NUDGE_FRACTION } from "stores/playing";
 import toast from "utils/toast";
 import classNames from "classnames";
 import onClickOutside from "react-onclickoutside";
-import createClass from "create-react-class";
 import $ from "jquery";
 
 const loadingIconClass = "fa-spin fa-circle-o-notch";
 
 const GrabPlaylists = onClickOutside(
   observer(
-    createClass({
-      handleClickOutside() {
+    class GrabPlaylists extends React.Component {
+      handleClickOutside = () => {
         if (this.props.grabbing) {
           this.props.toggleGrab(false);
         }
-      },
+      }
 
       render() {
         if (this.props.grabbing) {
@@ -51,11 +50,10 @@ const GrabPlaylists = onClickOutside(
             );
           });
           return <div className="grab-playlists">{grabPlaylists}</div>;
-        } else {
-          return <div />;
         }
-      },
-    })
+        return <div />;
+      }
+    }
   )
 );
 

@@ -327,3 +327,7 @@ package-lock.json
 
 #Player:-module
 /.vs/
+
+# .gitignore
+.env*
+!.env.example

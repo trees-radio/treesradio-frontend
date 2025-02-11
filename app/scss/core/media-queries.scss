@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables" as vars;
 
 /* ## Main ## */
 @media (min-width: 1200px) {
@@ -7,28 +7,28 @@
   }
 }
 
-@media #{$isPortrait} {
+@media #{vars.$isPortrait} {
   @media only screen and (max-width: 700px) and (min-width: 0) {
     #app-grid {
       grid:
-        [row1-start] "nav" $navbar-height [row1-end]
+        [row1-start] "nav" vars.$navbar-height [row1-end]
         [row2-start] "player" 56.25vw [row2-end]
-        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
+        [row3-start] "toolbar" calc(#{vars.$sidebar-height-mini} * 2) [row3-end]
         [row4-start] "chat" 1fr [row4-end]/1fr !important;
     }
 
     #app-grid.playlist-open {
       grid:
-        [row1-start] "nav" $navbar-height [row1-end]
+        [row1-start] "nav" vars.$navbar-height [row1-end]
         [row2-start] "player" 56.25vw [row2-end]
         [row4-start] "chat" 1fr [row4-end]
-        [row3-start] "toolbar" calc(#{$sidebar-height-mini} * 2) [row3-end]
+        [row3-start] "toolbar" calc(#{vars.$sidebar-height-mini} * 2) [row3-end]
         / 1fr !important;
     }
 
     #app-grid.playlist-open #playlists-panel {
-      bottom: calc(#{$sidebar-height-mini} * 2) !important;
-      height: calc(100vh - #{$sidebar-height-mini} * 2 - #{$navbar-height}) !important;
+      bottom: calc(#{vars.$sidebar-height-mini} * 2) !important;
+      height: calc(100vh - #{vars.$sidebar-height-mini} * 2 - #{vars.$navbar-height}) !important;
     }
     #app-grid.playlist-open #toolbar {
       z-index: 419;
@@ -108,7 +108,7 @@
     }
 
     .join-waitlist {
-      line-height: calc(#{$sidebar-height-mini} * 2 / 3) !important;
+      line-height: calc(#{vars.$sidebar-height-mini} * 2 / 3) !important;
     }
 
     #playlist-metadata {
@@ -212,12 +212,12 @@
     }
 
     .grab-playlists {
-      bottom: calc(2 * #{$sidebar-height-mini} + 0.5rem) !important;
+      bottom: calc(2 * #{vars.$sidebar-height-mini} + 0.5rem) !important;
     }
   }
 
   .grab-playlists {
-    bottom: calc(#{$sidebar-height-mini} + 0.5rem);
+    bottom: calc(#{vars.$sidebar-height-mini} + 0.5rem);
     max-height: calc(56.25vw + 2.5rem);
   }
 
@@ -239,15 +239,15 @@
 
   #app-grid {
     grid:
-      [row1-start] "nav" $navbar-height [row1-end]
-      [row2-start] "player" $player-height [row2-end]
-      [row3-start] "toolbar" #{$sidebar-height-mini} [row3-end]
+      [row1-start] "nav" vars.$navbar-height [row1-end]
+      [row2-start] "player" vars.$player-height [row2-end]
+      [row3-start] "toolbar" #{vars.$sidebar-height-mini} [row3-end]
       [row4-start] "chat" 1fr [row4-end]
       / 1fr;
   }
 
   .sidebar-changer {
-    height: $chatmenu-mini;
+    height: vars.$chatmenu-mini;
   }
 
   #chatcontainertop {
@@ -259,14 +259,14 @@
   }
 
   #playlists-panel {
-    bottom: calc(100% - #{$player-height} - #{$navbar-height});
+    bottom: calc(100% - #{vars.$player-height} - #{vars.$navbar-height});
     width: 100%;
-    height: $player-height;
+    height: vars.$player-height;
     z-index: 419;
   }
 
   #playlists-open-icon {
-    line-height: $sidebar-height-mini;
+    line-height: vars.$sidebar-height-mini;
     z-index: 1;
   }
 
@@ -277,7 +277,7 @@
 
   .join-waitlist {
     font-size: 1em;
-    line-height: $sidebar-height-mini;
+    line-height: vars.$sidebar-height-mini;
   }
 }
 
@@ -288,7 +288,7 @@
   }
 }
 
-@media #{$isPortrait}, (min-height: 1439px) {
+@media #{vars.$isPortrait}, (min-height: 1439px) {
   .navbar-brand {
     font-size: 150%;
     height: unset;
@@ -296,7 +296,7 @@
   }
 }
 
-@media #{$isPortrait}, (min-height: 1440px) {
+@media #{vars.$isPortrait}, (min-height: 1440px) {
   #tr-nav {
     height: unset;
   }
@@ -323,7 +323,7 @@
 //   }
 
 //   .hypepb {
-//     font-size: $navbar-font-size;
+//     font-size: vars.$navbar-font-size;
 //   }
 // }
 

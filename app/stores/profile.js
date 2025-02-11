@@ -1,6 +1,16 @@
 import { autorun, computed, observable } from "mobx";
 import toast from "utils/toast";
 import fbase, {auth} from "libs/fbase";
+import { 
+    ref, 
+    onValue, 
+    set, 
+    remove, 
+    push, 
+    child,
+    get,
+    onDisconnect,
+} from "firebase/database";
 import epoch from "utils/epoch";
 import username from "libs/username";
 import { send } from "libs/events";
@@ -9,7 +19,6 @@ import disposable from "disposable-email";
 // const startup = epoch();
 import app from "stores/app";
 import * as localforage from "localforage";
-import { ref, onValue } from "firebase/database";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default new (class Profile {
@@ -22,33 +31,43 @@ export default new (class Profile {
                 onValue(connectedRef, snap => {
                     if (snap.val() === true) {
                         auth.updateCurrentUser(auth.currentUser);
-                        clearInterval(this.presenceInterval); //stop any previous intervals
-                        this.presenceRef && this.presenceRef.remove(); //remove any previous presence nodes we still know about
-
-                        let presenceRef = ref(fbase, `presence/${this.user.uid}`);
-                        let timestamp = epoch();
-                        this.presenceRef = ref(presenceRef, this.user.uid)
-                            .child("connections")
-                            .push({ timestamp, uid: this.user.uid });
-
-                        this.presenceRef.onDisconnect().remove(); //I have a feeling this is causing some issues.
-
-                        window.onbeforeunload = function () {
-                            ref(fbase, `presence/${this.user.uid}`).remove();
-                        };
-
-                        this.presenceRef.child("connected").set(epoch());
+                        clearInterval(this.presenceInterval);
+                        
+                        // Create references
+                        const userPresenceRef = ref(fbase, `presence/${this.user.uid}`);
+                        const connectionRef = push(child(userPresenceRef, "connections"));
+                        
+                        // Save this for cleanup
+                        this.presenceRef = connectionRef;
+                        
+                        // Handle disconnect
+                        onDisconnect(connectionRef).remove();
+                        
+                        // Set initial data
+                        set(connectionRef, {
+                            timestamp: epoch(),
+                            uid: this.user.uid
+                        });
+                        
+                        // Set connected status
+                        set(child(connectionRef, "connected"), epoch());
+                        
+                        // Update timestamp periodically
                         this.presenceInterval = setInterval(() => {
-                            this.presenceRef.child("timestamp").set(epoch());
+                            set(child(connectionRef, "timestamp"), epoch());
                         }, 10000);
-
-                        this.ipRef && this.ipRef.remove();
-                        this.ipRef = ref(fbase, `private/${this.user.uid}/ip/${this.presenceRef.key}`)
+                        
+                        // Handle IP tracking
+                        if (this.ipRef) {
+                            remove(this.ipRef);
+                        }
+                        
+                        this.ipRef = ref(fbase, `private/${this.user.uid}/ip/${connectionRef.key}`);
                         set(this.ipRef, app.ipAddress);
-                        this.ipRef.onDisconnect().remove();
+                        onDisconnect(this.ipRef).remove();
                     }
                 });
-                ref(fbase, `presence/${this.user.uid}`).onDisconnect().remove();
+                onDisconnect(ref(fbase, `presence/${this.user.uid}`)).remove();
                 onValue(ref(fbase, `presence/${this.user.uid}`), snap => {
                     if (snap.val() === null) {
                         this.profile = snap.val() || {};

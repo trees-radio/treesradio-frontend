@@ -1,7 +1,6 @@
 var webpack = require("webpack");
-
-// must be imported with .default in ES5 code: https://github.com/mdreizin/webpack-config/issues/29#issuecomment-236699084
 var Config = require("webpack-config").default;
+var helpers = require("./helpers");
 
 module.exports = new Config().extend("./webpack.base.config.js").merge({
   mode: "production",
@@ -30,12 +29,6 @@ module.exports = new Config().extend("./webpack.base.config.js").merge({
     }
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("production"),
-      FIREBASE_URL: JSON.stringify("https://treesradio-live.firebaseio.com"),
-      FIREBASE_KEY: JSON.stringify("AIzaSyBqtjxpWp17r6wfOTxF4WvzV6_MgRN-zwk"),
-      FIREBASE_AUTH: JSON.stringify("treesradio-live.firebaseapp.com"),
-      FIREBASE_BUCKET: JSON.stringify("treesradio-live.appspot.com")
-    })
+    new webpack.DefinePlugin(helpers.getWebpackDefine("production"))
   ]
 });

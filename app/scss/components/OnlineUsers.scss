@@ -1,4 +1,4 @@
-@import "../core/variables";
+@use "../core/variables" as vars;
 
 .users-scroll {
   overflow-x: hidden;
@@ -81,7 +81,7 @@
 }
 
 .users-upvote {
-  color: $color-user-upvote;
+  color: vars.$color-user-upvote;
   padding-left: 5px;
   float: right;
 }

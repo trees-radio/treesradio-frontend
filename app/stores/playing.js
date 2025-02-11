@@ -9,6 +9,7 @@ import { padStart } from "lodash";
 // import events from 'stores/events';
 import playlists from "stores/playlists";
 import { send } from "libs/events";
+import localforage from "localforage";
 
 import spacePineapples from "img/spacepineapples.jpg";
 import gelatoGif from "img/gelatogif.gif";
@@ -18,6 +19,7 @@ const PLAYER_SYNC_CAP = 30; //seconds on end of video to ignore syncing
 const PLAYER_SYNC_START = 25; // percent
 const PLAYER_SYNC_SENSITIVITY = 5; //percent
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
+
 
 export default new (class Playing {
   constructor() {

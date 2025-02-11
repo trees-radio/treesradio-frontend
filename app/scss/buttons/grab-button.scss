@@ -1,35 +1,34 @@
 // http://enjoycss.com/zbuttram/item/rQV/3
-@import "../core/variables";
-@import "../core/mixins";
+@use "../core/variables" as vars;
+@use "../core/mixins" as mix;
 
 .grab-button {
   grid-area: grab;
-  @include toolbar-button-small;
-
+  @include mix.toolbar-button-small;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: $color-button-text;
-  background: $color-button-grab;
+  color: vars.$color-button-text;
+  background: vars.$color-button-grab;
 }
 
 .grab-button:hover {
-  background: $color-button-grab-hover;
+  background: vars.$color-button-grab-hover;
 }
 
 .grab-button:active {
-  background: $color-button-grab-active 50% 50%;
+  background: vars.$color-button-grab-active 50% 50%;
   transition-duration: 10ms;
 }
 
 .grab-playlists {
   width: 25rem;
-  background: $color-grab-panel;
+  background: vars.$color-grab-panel;
   position: absolute;
   right: 0;
-  bottom: calc(#{$sidebar-height} + 0.5rem);
+  bottom: calc(#{vars.$sidebar-height} + 0.5rem);
   color: black;
-  border-radius: $button-border-radius;
+  border-radius: vars.$button-border-radius;
   text-align: left;
   overflow-y: scroll;
   max-height: 420px;
@@ -51,8 +50,8 @@
 
 .grab-playlist {
   line-height: 12px;
-  color: $color-button-text;
-  font-size: $toolbar-grab-panel-font-size;
+  color: vars.$color-button-text;
+  font-size: vars.$toolbar-grab-panel-font-size;
   padding: 2%;
 
   span {
@@ -66,5 +65,5 @@
 }
 
 .grab-playlist:hover {
-  background-color: $color-trees-primary;
+  background-color: vars.$color-trees-primary;
 }

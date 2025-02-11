@@ -1,4 +1,4 @@
-@import "../core/variables";
+@use "../core/variables" as vars;
 
 /////////////////////////////// Make Video Unclickable
 
@@ -39,14 +39,14 @@
 }
 
 .section-divider {
-  background-color: $color-trees-primary;
+  background-color: vars.$color-trees-primary;
   height: 5px;
   width: 100%;
 }
 
 .progressbar-container {
   z-index: 2;
-  border-top: 1px solid $color-border-top;
+  border-top: 1px solid vars.$color-border-top;
   background-color: black;
 }
 

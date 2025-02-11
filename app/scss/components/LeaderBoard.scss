@@ -1,4 +1,4 @@
-@import "../core/mixins";
+@use "../core/mixins" as mix;
 
 div.leaderboard-list {
   width: 100%;
@@ -14,14 +14,14 @@ div.leaderboard-row {
 }
 
 span.leaderboard-cell-rank {
-  @include leaderboard-table-cell;
+  @include mix.leaderboard-table-cell;
 
   font-size: 2em;
   width: 2.8em;
 }
 
 span.leaderboard-cell-avatar {
-  @include leaderboard-table-cell;
+  @include mix.leaderboard-table-cell;
 
   width: 40px;
   height: 40px;
@@ -30,15 +30,15 @@ span.leaderboard-cell-avatar {
 }
 
 span.leaderboard-cell-username {
-  @include leaderboard-table-cell;
+  @include mix.leaderboard-table-cell;
 }
 
 span.leaderboard-cell-songtitle {
-  @include leaderboard-table-cell;
+  @include mix.leaderboard-table-cell;
 }
 
 span.leaderboard-cell-song-thumb > img {
-  @include leaderboard-table-cell;
+  @include mix.leaderboard-table-cell;
   display: inline-flex;
   max-width: 6.3vw;
   height: 100px;

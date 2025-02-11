@@ -1,4 +1,4 @@
-@import "../core/variables";
+@use "../core/variables" as vars;
 
 #playlists-container {
   width: 100%;
@@ -13,17 +13,17 @@
 .media-time {
   grid-area: media-time;
   float: right;
-  background-color: $color-controlarea-background;
+  background-color: vars.$color-controlarea-background;
   padding-left: 0.5em;
   z-index: 2;
 }
 
 .current-playlist-name {
-  color: $color-trees-primary !important;
+  color: vars.$color-trees-primary !important;
 }
 
 .current-selected-media {
-  color: $color-trees-primary !important;
+  color: vars.$color-trees-primary !important;
 }
 
 .slidecontainer {
@@ -33,7 +33,6 @@
 }
 
 .slider {
-  -webkit-appearance: none;
   width: 100%;
   height: 1rem;
   background: #d3d3d3;
@@ -53,7 +52,7 @@
   appearance: none;
   width: 2rem;
   height: 2rem;
-  background: $color-trees-primary;
+  background: vars.$color-trees-primary;
   cursor: pointer;
   border-radius: 6px;
 }
@@ -61,7 +60,7 @@
 .slider::-moz-range-thumb {
   width: 2rem;
   height: 2rem;
-  background: $color-trees-primary;
+  background: vars.$color-trees-primary;
   cursor: pointer;
   border-radius: 6px;
 }
@@ -72,8 +71,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  bottom: $sidebar-height;
-  height: calc(100% - #{$navbar-height} - #{$sidebar-height});
+  bottom: vars.$sidebar-height;
+  height: calc(100% - #{vars.$navbar-height} - #{vars.$sidebar-height});
 }
 
 #playlists-footer {
@@ -84,7 +83,7 @@
 }
 
 .playlist-shuffle-btn {
-  color: $color-trees-primary;
+  color: vars.$color-trees-primary;
   cursor: pointer;
   z-index: 2;
   margin-right: 0.2rem;
@@ -97,7 +96,7 @@
   -webkit-transition: all 0.15s ease-in 50ms;
   -moz-transition: all 0.15s ease-in 50ms;
   -o-transition: all 0.15s ease-in 50ms;
-  background-color: $color-trees-bg;
+  background-color: vars.$color-trees-bg;
 }
 
 .playlists-panel-open {
@@ -145,7 +144,7 @@
 
   li {
     padding: 10px;
-    color: $color-trees-primary;
+    color: vars.$color-trees-primary;
   }
 
   ul li {
@@ -223,7 +222,7 @@
   background-color: #579300;
   border-color: #609606;
   //padding: 2px; Bacchus request March'20
-  text-shadow: $text-shadow-heavy;
+  text-shadow: vars.$text-shadow-heavy;
   font-size: 1.5em;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -267,7 +266,7 @@
     [row1-start] "playlist-btn playlist current-song waitlist-btn grab like" 1fr [row1-end]
     [row2-start] "playlist-btn playlist current-song waitlist-btn volume dislike" 1fr [row2-end]
     / 4rem 1fr 1fr 12rem 4.5rem 4.5rem;
-  color: $color-trees-primary;
+  color: vars.$color-trees-primary;
 
   background-color: #0c0c0e;
 }
@@ -313,8 +312,7 @@
 .current-selected-media,
 .current-playing-media {
   display: inline-block;
-  float: left;
-  color: $color-trees-primary;
+  color: vars.$color-trees-primary;
 }
 
 .current-selected-media:hover,
@@ -372,8 +370,8 @@
 #playlist-metadata {
   grid-area: playlist;
   // height: 100%;
-  color: $color-trees-primary !important;
-  border-top: solid $color-border-top;
+  color: vars.$color-trees-primary !important;
+  border-top: solid vars.$color-border-top;
   border-right: solid;
   border-bottom: solid;
   border-bottom-color: #0c0c0e;
@@ -432,26 +430,26 @@
   font-size: 0.75em;
   border-right: solid;
   border-color: #2d2f39;
-  background: $color-button-open-playlists;
+  background: vars.$color-button-open-playlists;
   padding: 0;
   margin: 0;
   border-radius: 10px;
 }
 
 #playlists-open-button:hover {
-  background: $color-button-open-playlists-hover;
+  background: vars.$color-button-open-playlists-hover;
 }
 
 #playlists-open-icon {
   color: white;
-  text-shadow: $text-shadow-light;
+  text-shadow: vars.$text-shadow-light;
   letter-spacing: 1.5px;
   height: inherit;
   width: inherit;
   padding-left: 25%;
   padding-right: 25%;
   padding-top: 0;
-  line-height: $sidebar-height;
+  line-height: vars.$sidebar-height;
 }
 
 #vote {
@@ -528,7 +526,7 @@
   left: calc(50% - 0.5em);
   top: calc(50% - 0.5em);
   color: white;
-  text-shadow: $text-shadow-light;
+  text-shadow: vars.$text-shadow-light;
   pointer-events: none;
 }
 
@@ -549,12 +547,12 @@
   text-align: center;
   cursor: pointer;
   margin-top: 0.3vw;
-  background-color: $color-trees-primary;
+  background-color: vars.$color-trees-primary;
   border: 1px solid #2e2e38;
 }
 
 .volume-slider-bar {
-  background-color: $color-trees-primary;
+  background-color: vars.$color-trees-primary;
   height: 100%;
 }
 
@@ -581,11 +579,11 @@
 .toolbar-playertxt {
   grid-area: player-text;
   float: left;
-  color: $color-trees-primary;
+  color: vars.$color-trees-primary;
   cursor: pointer;
   max-width: 7em;
   text-align: left;
-  background-color: $color-controlarea-background;
+  background-color: vars.$color-controlarea-background;
   position: inherit;
   padding-right: 0.5em;
   z-index: 2;
@@ -594,7 +592,7 @@
 .current-playing-user {
   grid-area: player-name;
   float: left;
-  color: $color-trees-primary;
+  color: vars.$color-trees-primary;
   cursor: pointer;
   max-width: 16em;
   text-align: left;

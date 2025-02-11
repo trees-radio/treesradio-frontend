@@ -344,7 +344,7 @@ export default class UserBit extends React.Component {
                 <div id="userbitContainer" className="btn-group">
                     <Dropdown >
 
-                        <Dropdown.Toggle id={'usernametop'} toRight="true" className={"btn btn-primary" + this.disableIfNecessary()}>
+                        <Dropdown.Toggle id={'usernametop'} toright="true" className={"btn btn-primary" + this.disableIfNecessary()}>
                             <><div className="userbit-avatar">
                                 {this.showAvatar()}
                             </div>

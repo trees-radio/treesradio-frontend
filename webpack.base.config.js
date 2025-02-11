@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+const Dotenv = require('dotenv-webpack');
 var path = require("path");
 var Config = require("webpack-config").default; // must be imported with .default in ES5 code: https://github.com/mdreizin/webpack-config/issues/29#issuecomment-236699084
 var HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,6 +8,7 @@ var short = require("git-rev-sync").short();
 var WebpackPwaManifest = require('webpack-pwa-manifest');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const currentTime = new Date().toLocaleString();
 
@@ -35,49 +37,57 @@ module.exports = new Config().merge({
         }
       },
       {
-        test: /\.s[ac]ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              implementation: require("sass")
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
-        loader: "css-loader"
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.less$/,
-        loader: "less-loader"
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader",
-        options: {
-          limit: "250000",
-          mimetype: "application/font-woff",
-          name: "fonts/[hash].[ext]",
-          esModule: false
+        test: /\.(woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 250000
+          }
+        },
+        generator: {
+          filename: 'fonts/[hash][ext]'
         }
       },
       {
         test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader",
-        options: {
-          name: "fonts/[hash].[ext]",
-          esModule: false
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[hash][ext]'
         }
       },
       {
         test: /\.(mp3|wav|ogg)$/,
-        loader: "file-loader",
-        options: {
-          name: "audio/[hash].[ext]",
-          esModule: false
+        type: 'asset/resource',
+        generator: {
+          filename: 'audio/[hash][ext]'
         }
       },
       {
         test: /\.(jpg|png|gif|svg|svgz|cur)$/,
-        loader: "file-loader",
-        options: {
-          name: "img/[name].[ext]",
-          esModule: false
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[name][ext]'
         }
       }
     ]
@@ -102,8 +112,13 @@ module.exports = new Config().merge({
       "window.jQuery": "jquery"
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
     new HtmlWebpackPlugin({
       filename: "index.html",
+      xhtml: true,
       template: require("html-webpack-template"),
       title: "TreesRadio",
       hash: true,
@@ -116,17 +131,14 @@ module.exports = new Config().merge({
       short_name: 'TR',
       description: 'Toke to great music with fellow ents',
       background_color: '#0a0a0a',
-      // crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
       icons: [
         {
           src: path.resolve('app/img/favicon.png'),
-          sizes: [96, 128, 192, 256, 384, 512, 1024] // multiple sizes
+          sizes: [96, 128, 192, 256, 384, 512, 1024]
         }
       ]
     }),
     new WorkboxPlugin.GenerateSW({
-      // these options encourage the ServiceWorkers to get in there fast
-      // and not allow any straggling "old" SWs to hang around
       clientsClaim: true,
       skipWaiting: true,
     }),
@@ -134,6 +146,10 @@ module.exports = new Config().merge({
       packageFile: path.join(__dirname, "package.json"),
       outputFile: path.join(__dirname, "app/version.json"),
       templateString: `{"version": {"name": "<%= package.name %>", "buildDate": "${currentTime}", "version": "<%= package.version %>", "short": "${short}"}}`
+    }),
+    new Dotenv({
+      path: `./.env.${process.env.NODE_ENV}`,
+      safe: true,
     })
   ]
 });

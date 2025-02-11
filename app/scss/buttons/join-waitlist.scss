@@ -1,20 +1,20 @@
 // http://enjoycss.com/zbuttram/item/rQT/1
-@import "../core/variables";
+@use "../core/variables" as vars;
 
 .join-waitlist {
-  line-height: $sidebar-height;
+  line-height: vars.$sidebar-height;
   height: 100%;
-  background: $color-button-waitlist-join;
+  background: vars.$color-button-waitlist-join;
   color: white;
   margin: 0 auto;
   box-sizing: content-box;
   cursor: pointer;
-  text-shadow: $text-shadow-light;
+  text-shadow: vars.$text-shadow-light;
   letter-spacing: 1.5px;
   font-size: 1.5em;
   text-overflow: clip;
   transition: background 500ms ease;
-  border-radius: $button-border-radius;
+  border-radius: vars.$button-border-radius;
   background-size: 125%;
 }
 
@@ -23,11 +23,11 @@
 }
 
 .join-waitlist-pressed {
-  background: $color-button-waitlist-active;
+  background: vars.$color-button-waitlist-active;
   transition: background 500ms ease;
   background-size: 125%;
   color: white;
-  text-shadow: $text-shadow-light;
+  text-shadow: vars.$text-shadow-light;
   letter-spacing: 1.5px;
 }
 

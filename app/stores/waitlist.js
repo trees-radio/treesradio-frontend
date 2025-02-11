@@ -14,7 +14,7 @@ import { ref, get, onValue } from "firebase/database";
 
 export default new (class Waitlist {
   constructor() {
-    this.reloadList();
+    // this.reloadList();
     events.register("stop_autoplay", (data) => {
       if (data.data.uid === profile.user.uid) {
         this.cancelAutojoin();

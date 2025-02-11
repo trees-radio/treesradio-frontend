@@ -1,4 +1,4 @@
-@import "../core/variables";
+@use "../core/variables" as vars;
 
 #usernametop {
   display: flex;
@@ -13,7 +13,7 @@
 }
 
 #usernamedropdown {
-  height: $navbar-button-height;
+  height: vars.$navbar-button-height;
   border-radius: 0 !important;
 }
 
@@ -53,21 +53,21 @@ div .userbit-avatar span .avatarimg {
 @media only screen and (max-width: 1625px) {
   #username,
   #usernamedropdown {
-    font-size: 0.7 * $navbar-font-size;
+    font-size: 0.7 * vars.$navbar-font-size;
   }
 }
 
 @media only screen and (max-width: 1730px) {
   #username,
   #usernamedropdown {
-    font-size: 0.65 * $navbar-font-size;
+    font-size: 0.65 * vars.$navbar-font-size;
   }
 }
 
 @media only screen and (max-width: 1300px) {
   #username,
   #usernamedropdown {
-    font-size: 0.6 * $navbar-font-size;
+    font-size: 0.6 * vars.$navbar-font-size;
   }
 }
 

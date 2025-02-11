@@ -47,7 +47,7 @@ export default new (class Online {
     this.userlist = names;
     return names;
   }
-  @observable usernames = [];
+  // @observable usernames = [];
 
   @computed get onlineCount() {
     return this.online.length;

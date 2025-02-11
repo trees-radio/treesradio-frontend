@@ -1,19 +1,19 @@
-// import {observable, computed, toJS} from 'mobx';
+// import { observable, computed, toJS } from 'mobx';
 import fbase from "libs/fbase";
 import moment from "moment";
 import mitt from "mitt";
 
-import { ref, set, get } from "firebase/database";
+import { ref, set, get, onValue } from "firebase/database"; // Added onValue
 
 const emitter = mitt();
 const events = {};
 
-
-export default new (class Events {
+class Events {
   constructor() {
     this.startup = moment().unix();
 
-    const eventsRef = ref("events");
+    // Need to pass the database instance to ref
+    const eventsRef = ref(fbase, "events");  // Changed this line
     onValue(eventsRef, snap => {
       var val = snap.val();
       if (val && val.timestamp > this.startup) {
@@ -27,10 +27,13 @@ export default new (class Events {
   }
 
   register(type, handler) {
-    if ( !events[type]) { //prevent reregistering events after regustering once.
+    if (!events[type]) { //prevent reregistering events after registering once.
       events[type] = true;
-    emitter.on(type, handler);
-    return () => emitter.off(handler);
+      emitter.on(type, handler);
+      return () => emitter.off(handler);
     }
   }
-})();
+}
+
+// Create instance after class definition
+export default new Events();

@@ -1,10 +1,6 @@
-// NEW MAIN COMPONENT
-
 import React from "react";
 import { observer } from "mobx-react";
-
 import app from "stores/app";
-
 import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
@@ -13,51 +9,39 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import $ from "jquery";
 import profile from "stores/profile";
-import { observable } from "mobx";
 import events from "stores/events";
-
-// toast.configure({ autoClose: 8000, position: toast.POSITION.TOP_CENTER });
 
 @observer
 class Main extends React.Component {
-  //#region test shit
-
-  @observable
-  legacyInterface = false;
-
-  @observable
-  gifsHidden = false;
-
-  @observable
-  resettingPassword = false;
-
-  @observable
-  showHelp = false;
-
-  @observable
-  settingAvatar = false;
-  @observable
-  avatarField = "";
-
-  @observable
-  changingPassword = false;
-
-  @observable
-  changingEmail = false;
-
-  constructor(props) {
-    super(props);
-    this.state = { show420: false, isPlaylistOpen: false };
-    this.togglePlaylist = this.togglePlaylist.bind(this);
-  }
+  state = {
+    show420: false,
+    isPlaylistOpen: false
+  };
 
   componentDidMount() {
+    console.log("Main component mounted, app.init:", app.init);
     this.check420();
+
+    // Fallback initialization
+    this.initTimeout = setTimeout(() => {
+      if (!app.init) {
+        console.log("Forcing initialization after timeout");
+        runInAction(() => {
+          app.proceed = true;
+        });
+      }
+    }, 5000);
   }
 
-  togglePlaylist() {
-    this.setState((state) => ({ isPlaylistOpen: !state.isPlaylistOpen }));
+  componentWillUnmount() {
+    if (this.initTimeout) {
+      clearTimeout(this.initTimeout);
+    }
   }
+
+  togglePlaylist = () => {
+    this.setState((state) => ({ isPlaylistOpen: !state.isPlaylistOpen }));
+  };
 
   onEnterKey(e, cb) {
     var key = e.keyCode || e.which;
@@ -118,12 +102,14 @@ class Main extends React.Component {
   }
 
   render() {
+    console.log("Main render, app.init:", app.init);
+    
     if (!app.init) {
       events.register("force_refresh", () => {
-        location.reload();
+        window.location.reload();
       });
-      let randmsg = [
-        // No messages over 40 characters
+
+      const randmsg = [
         "Grab a Bong and Sing A Long!",
         "Pimp Squad, Holdin it Down",
         "Livin' Young 'n Wild 'n Freeee",
@@ -141,8 +127,8 @@ class Main extends React.Component {
             <div className="main-vcenter">
               <div className="main-center">
                 <center className="loading-txt">
-                  {" "}
-                  {randmsg[Math.floor(Math.random() * randmsg.length)]} <br />
+                  {randmsg[Math.floor(Math.random() * randmsg.length)]}
+                  <br />
                   <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
                 </center>
               </div>
@@ -151,19 +137,10 @@ class Main extends React.Component {
         </div>
       );
     }
+
     return (
-      <div
-        className={this.checkAprilFools() + " " + this.isPlaylistOpen()}
-        id="app-grid"
-      >
-        <link
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossOrigin="anonymous"
-        />
-        <Nav show420={this.state.show420} /> {/* Start Container */}{" "}
-        {/* Video Component */}
+      <div className={`${this.checkAprilFools()} ${this.isPlaylistOpen()}`} id="app-grid">
+        <Nav show420={this.state.show420} />
         <div id="videotoplevel">
           <Player />
         </div>
@@ -173,27 +150,14 @@ class Main extends React.Component {
           </div>
           <a id="exportPlaylistDownload" />
         </div>
-        {/* Chat Component */}
         <div id="chattoplevel">
           <ToastContainer 
             position="top-right" 
-            draggable="false"
-            autoClose={8000}/>{" "}
-          {/* <Sidebar
-                                loginData={this.state.user}
-                                chatData={this.state.chat}
-                                sendMsg={this.handleSendMsg}
-                                loginState={this.state.loginstate}
-                                currentSidebar={this.state.currentSidebar}
-                                changeSidebar={this.changeSidebar}
-                                userPresence={this.state.userPresence}
-                                waitlist={this.state.waitlist}
-                                staff={this.state.staff}
-                                chatlock={this.state.chatlock}
-                              /> */}
+            draggable={false}
+            autoClose={8000}
+          />
           <Sidebar />
         </div>
-        {/* End Container */}
       </div>
     );
   }
