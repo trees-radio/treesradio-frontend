@@ -68,14 +68,14 @@ class ChatSend extends React.Component {
               placeholder="enter to send"
               id="chatinput"
               autoComplete="off"
-              className="form-control search"
+              className="bg-white h-11"
               value={chat.msg}
               onKeyPress={e => this.onKeyPress(e)}
               onKeyDown={e => this.onKeyDown(e)}
               onChange={e => this.onChange(e)}
               data-lpignore="true"
             />
-            <div id="chat-counter_test" className="input-group-addon">
+            <div id="chat-counter_test" className="input-group-addon w-17 h-11 content-center">
               {" "}
               {chat.chars}/{chat.limit}{" "}
             </div>
