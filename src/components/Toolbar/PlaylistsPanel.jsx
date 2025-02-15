@@ -176,7 +176,7 @@ class PlaylistsPanel extends React.Component {
               <span className="pl-time">
                 <i className="fa fa-clock-o" /> {humanDuration}
               </span>
-              <span className="pl-channel">{channelTitle}</span>
+              <span className="pl-channel">{channelTitle.trim()}</span>
               <i
                 onClick={() => playlists.addFromSearch(i)}
                 className="fa fa-2x fa-plus add-to-playlist-btn"
@@ -215,14 +215,13 @@ class PlaylistsPanel extends React.Component {
         return (
           <li className={playlistPosClass} key={i}>
             <a target="_blank" href={video.url} rel="noopener noreferrer">
-              <img className="pl-thumbnail" src={video.thumb} />
+              <img className="pl-thumbnail self-center" src={video.thumb} />
             </a>
             <span className="pl-media-title">{video.title}</span>
             <span className="pl-time">
               <i className="fa fa-clock-o" /> {humanDuration}
             </span>
-            <span className="pl-channel">{video.channel}</span>
-            <span className="pl-channel">{video.user ? "  (Grab: " + video.user + ")" : ""}</span>
+            <span className={`pl-channel ${video.user ? "self-center" : ""}`}>{video.channel.trim()}<br/>{video.user ? "  (Grab: " + video.user + ")" : ""}</span>
             <i
               onClick={() => playlists.removeVideo(i)}
               className="fa fa-2x fa-trash remove-from-playlist-btn"
