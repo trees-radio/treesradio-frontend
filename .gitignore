@@ -304,6 +304,8 @@ eggs/
 parts/
 var/
 sdist/
+dist/
+dist-ssr/
 develop-eggs/
 .installed.cfg
 
@@ -329,5 +331,6 @@ package-lock.json
 /.vs/
 
 # .gitignore
-.env*
+.env
+.env.*
 !.env.example
