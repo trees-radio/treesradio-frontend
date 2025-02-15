@@ -25,13 +25,8 @@ class TokeTimer extends React.Component {
 
     render() {
         return (
-            <div
-                style={{
-                    display: "inline-block",
-                    height: "100%"
-                }}
-            >
-                <div className="toke-button-container" style={{height: "100%", padding: "0.75rem"}}>
+            <div className="d-flex align-items-center">
+                <div className="pt-3 mx-3">
                     <a
                         id="toke-button"
                         className={this.getButtonClasses()}

@@ -38,10 +38,10 @@ const HypeProgress: FC = () => {
 
     return (
         <div
-            className={cn(["hypepb h-24", hypetimer.lasthype <= 0 && "hidden"])}
+            className={cn(["hypepb", hypetimer.lasthype <= 0 && "hidden"])}
             onClick={doHype}
         >
-            <div id="hypeboom">
+            <div id="hypeboom" className="pt-3 mx-auto self-center h-12">
                 {/* TODO style only works bc of mobx currently, replace with zustand store */}
                 <div
                     className={cn(["hypeprogress", profile.user === null && "greyDisabled"])}
