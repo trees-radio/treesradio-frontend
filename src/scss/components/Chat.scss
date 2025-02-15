@@ -152,6 +152,7 @@
   width: 18px;
   height: 18px;
   color: gold;
+  display: inline-block;
 }
 
 .nopatreon {
@@ -239,8 +240,9 @@
   font-size: 1.6em;
 }
 
-.chat-text div {
-  padding-bottom: 5px;
+.chat-text p {
+  padding-bottom: 8px;
+  padding-top: 4px;
 }
 
 .chat-avatar {
