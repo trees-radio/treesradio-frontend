@@ -19,6 +19,7 @@ import PlayHistory from "./SongHistory";
 
 import events from "../../stores/events";
 import Dropdown from "react-bootstrap/Dropdown";
+import Nothing from "../../assets/img/nothing.png";
 import { getFlair } from "../../libs/flair";
 
 class UserBit extends React.Component {
@@ -703,7 +704,7 @@ class UserBit extends React.Component {
             <UserAvatar uid={profile.uid} />
         ) : (
             <span>
-                <img className="avatarimg" src="img/nothing.png" alt="avatar" />
+                <img className="avatarimg" src={Nothing} alt="avatar" />
             </span>
         )
     }

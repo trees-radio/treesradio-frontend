@@ -10,10 +10,18 @@ import file from "../static/version.json";
 import profile from "../stores/profile";
 import $ from "cash-dom";
 import Modal from "./utility/Modal";
-import imageWhitelist from "../libs/imageWhitelist";
+// import imageWhitelist from "../libs/imageWhitelist";
 import tokeEvent from "../libs/tokeEvent";
 import {HypeProgress} from "./Nav/HypeProgress.tsx";
 import cn from "classnames";
+import HeartWeed from "../assets/img/heart_weed.svg";
+import PeaceWeed from "../assets/img/peace_and_weed.svg";
+import WeedOne from "../assets/img/weed1.svg";
+import WeedTwo from "../assets/img/weed2.svg";
+import WeedThree from "../assets/img/weed3.svg";
+import WeedFour from "../assets/img/weed4.svg";
+import WeedFive from "../assets/img/weed5.svg";
+
 
 /*
 const Version: FC = () => (
@@ -176,22 +184,22 @@ const Nav: FC<{ show420: boolean }> = ({show420}) => {
                 <div id="navbar-space">{!profile.user && <Login/>}</div>
                 {show420 && <div id="toke-effects">
                     {tokeEffect === "heart" && <div className="container-weed">
-                        <img className="heart" src="../assets/img/heart_weed.svg"/>
+                        <img className="heart" src={HeartWeed}/>
                     </div>}
                     {tokeEffect === "peace" && <div className="container-weed">
-                        <img className="peace" src="../assets/img/peace_and_weed.svg"/>
+                        <img className="peace" src={PeaceWeed}/>
                     </div>}
                     {tokeEffect === "weed" && <div className="container-weed">
-                        <img className="weed" src="../assets/img/weed1.svg"/>
-                        <img className="weed" src="../assets/img/weed2.svg"/>
-                        <img className="weed" src="../assets/img/weed3.svg"/>
-                        <img className="weed" src="../assets/img/weed4.svg"/>
-                        <img className="weed" src="../assets/img/weed5.svg"/>
-                        <img className="weed" src="../assets/img/weed1.svg"/>
-                        <img className="weed" src="../assets/img/weed2.svg"/>
-                        <img className="weed" src="../assets/img/weed3.svg"/>
-                        <img className="weed" src="../assets/img/weed4.svg"/>
-                        <img className="weed" src="../assets/img/weed5.svg"/>
+                        <img className="weed" src={WeedOne}/>
+                        <img className="weed" src={WeedTwo}/>
+                        <img className="weed" src={WeedThree}/>
+                        <img className="weed" src={WeedFour}/>
+                        <img className="weed" src={WeedFive}/>
+                        <img className="weed" src={WeedOne}/>
+                        <img className="weed" src={WeedTwo}/>
+                        <img className="weed" src={WeedThree}/>
+                        <img className="weed" src={WeedFour}/>
+                        <img className="weed" src={WeedFive}/>
                     </div>}
                 </div>}
                 <div id="hype-grid-container" className={cn([profile.user === null && "hide-small"])}>

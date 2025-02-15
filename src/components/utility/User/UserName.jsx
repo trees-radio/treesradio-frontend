@@ -4,6 +4,7 @@ import getUsername from "../../../libs/username";
 import { getFlair, getFlairColors } from "../../../libs/flair";
 import getPatreon from "../../../libs/patreon";
 import classNames from "classnames";
+import Marijuana from "../../../assets/img/marijuana.png";
 
 const noop = () => { };
 
@@ -109,7 +110,7 @@ export default class UserName extends React.Component {
         </span>
         <span>
           &nbsp;
-          <img className={isPatreon} src="img/marijuana.png" />
+          <img className={isPatreon} src={Marijuana} />
         </span>
         <span style={this.getFlairBackgroundColor()}>
           <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>

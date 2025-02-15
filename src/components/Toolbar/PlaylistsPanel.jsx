@@ -10,6 +10,7 @@ import toast from "../../utils/toast";
 import moment from "moment";
 import $ from "jquery";
 import Dropdown from "react-bootstrap/Dropdown";
+import Favicon from "../../assets/img/favicon.png";
 
 const PLAYLIST_OPACITY = 'playlistOpacity';
 
@@ -162,7 +163,7 @@ class PlaylistsPanel extends React.Component {
             mins = duration.minutes();
             secs = "0" + duration.seconds();
             humanDuration = hoursDisplay + mins + ":" + secs.substr(-2);
-            thumbnail = video.artwork_url || video.user.avatar_url || "/img/favicon.png";
+            thumbnail = video.artwork_url || video.user.avatar_url || Favicon;
             title = video.title;
             channelTitle = video.user.username;
           }

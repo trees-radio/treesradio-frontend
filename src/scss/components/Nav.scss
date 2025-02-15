@@ -560,7 +560,7 @@ div .userbit-avatar span .avatarimg {
   font-size: vars.$navbar-font-size-dynamic;
   font-weight: bold;
   color: rgb(26, 17, 26);
-  cursor: url("../../img/lighter.cur"), pointer;
+  cursor: url("/src/assets/img/lighter.cur"), pointer;
   //background: #77b420;
   line-height: 2.2rem;
 }
@@ -602,7 +602,7 @@ div .userbit-avatar span .avatarimg {
   -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
   box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
   border-radius: vars.$button-border-radius;
-  cursor: url("../../img/lighter.cur"), pointer;
+  cursor: url("/src/assets/img/lighter.cur"), pointer;
 }
 
 .hypepb:hover #progress {
