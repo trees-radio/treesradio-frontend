@@ -1,4 +1,5 @@
-@use "../core/variables" as vars;
+@use "../core/variables"as vars;
+
 // TODO remove dependecy on media queries, then put media queries into media-queries.scss
 @media (min-width: 0) {
   #chattoplevel {
@@ -453,7 +454,8 @@ img[alt="previewvideo"] {
   float: right;
 }
 
-@media #{vars.$isPortrait}, (min-height: 1440px) AND (max-width: 1199px) {
+@media #{vars.$isPortrait},
+(min-height: 1440px) AND (max-width: 1199px) {
   img[alt="previewvideo"] {
     height: unset;
     max-width: 90px;
@@ -476,7 +478,8 @@ img[alt="tenorgif"] {
   max-height: 25vh;
 }
 
-@media #{vars.$isPortrait}, (min-height: 1440px) {
+@media #{vars.$isPortrait},
+(min-height: 1440px) {
   img[alt="tenorgif"] {
     min-width: 4.2vw;
     max-width: 95%;
@@ -484,7 +487,7 @@ img[alt="tenorgif"] {
   }
 }
 
-strong > img {
+strong>img {
   max-width: 97%;
   padding: 2% 0;
 }
@@ -494,7 +497,7 @@ a[title="previewlink"] {
   font-weight: bold;
 }
 
-div > blockquote {
+div>blockquote {
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
@@ -517,6 +520,8 @@ div > blockquote {
   margin-bottom: 0;
   margin-block-start: 0;
   margin-block-end: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .songstats-dislikes {
@@ -526,6 +531,8 @@ div > blockquote {
   margin-bottom: 0;
   margin-block-start: 0;
   margin-block-end: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .songstats-grabs {
@@ -535,6 +542,8 @@ div > blockquote {
   margin-bottom: 0;
   margin-block-start: 0;
   margin-block-end: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .chat-bold {
@@ -600,21 +609,27 @@ div > blockquote {
 .img-heart-weed {
   background-image: vars.$img-heart-weed;
 }
+
 .img-peace-weed {
   background-image: vars.$img-peace-weed;
 }
+
 .img-weed1 {
   background-image: vars.$img-weed1;
 }
+
 .img-weed2 {
   background-image: vars.$img-weed2;
 }
+
 .img-weed3 {
   background-image: vars.$img-weed3;
 }
+
 .img-weed4 {
   background-image: vars.$img-weed4;
 }
+
 .img-weed5 {
   background-image: vars.$img-weed5;
 }
