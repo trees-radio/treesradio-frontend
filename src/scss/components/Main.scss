@@ -1,5 +1,6 @@
 @use "../core/variables" as vars;
 @use "../core/mixins";
+@use "tailwindcss";
 
 // toolbar on mobile browsers hides whatever is below it, causing display issues on TR mobile
 body {
@@ -388,7 +389,14 @@ div .userbit-avatar span .avatarimg {
   }
 
   input {
-    height: 1rem;
+    height: 2rem;
+  }
+
+  .login-form-button {
+    height: 2rem !important;
+    margin-left: 0.5rem;
+    align-self: center;
+    align-items: center;
   }
 }
 
@@ -580,4 +588,8 @@ div .userbit-avatar span .avatarimg {
 .gradient-text {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text !important;
+}
+
+#emailInput {
+  @apply h-18;
 }
