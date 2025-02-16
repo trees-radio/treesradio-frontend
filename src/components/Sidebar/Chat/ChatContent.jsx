@@ -1,77 +1,62 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import { observer } from "mobx-react";
-import { observable } from "mobx";
-import { debounce } from "lodash";
-import chat from "../../../stores/chat";
 import classNames from "classnames";
 import moment from "moment";
+import chat from "../../../stores/chat";
+import profile from "../../../stores/profile";
 import UserName from "../../utility/User/UserName";
 import UserAvatar from "../../utility/User/UserAvatar";
 import Message from "./Message";
-import profile from "../../../stores/profile";
-import $ from "jquery";
 
-const SCROLL_SENSITIVITY = 200;
+const SCROLL_THRESHOLD = 100; // Distance from bottom to trigger auto-scroll
 
-class ChatContent extends React.Component {
-
-  @observable accessor   touchOffset = 0;
-
-  componentDidMount() {
-    this.scroll();
-    this.startup = Date.now();
-    document
-      .getElementById("chatscroll")
-      .addEventListener("touchstart", (evt) => {
-        evt.preventDefault();
-
-        this.touchOffset = evt.changedTouches[0].clientY;
-      });
-    document
-      .getElementById("chatscroll")
-      .addEventListener("touchmove", (evt) => {
-        evt.preventDefault();
-
-        document
-          .getElementById("chatscroll")
-          .scrollBy(0, this.touchOffset - evt.changedTouches[0].clientY);
-
-        this.touchOffset = evt.changedTouches[0].clientY;
-      });
-  }
-
-  scroll = () =>
-    setTimeout(
-      () => (this.chatScrollAmount.scrollTop = this.chatScrollAmount.scrollHeight),
-      300
-    );
-
-  autoScroll = () => {
-    if (Date.now() - this.startup < 3000) {
-      this.debouncedScroll();
-    }
-    if (this.shouldScroll) {
-      this.scroll();
+const ChatContent = observer(({ goToChat }) => {
+  const scrollRef = useRef(null);
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  
+  const scrollToBottom = () => {
+    if (scrollRef.current && shouldAutoScroll && !isUserScrolling) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   };
 
-  debouncedScroll = debounce(this.scroll, 5000);
+  // Handle new messages
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat.messages]); // Scroll when messages change
 
-  componentDidUpdate() {
-    let test = this.chatScrollAmount.scrollHeight - this.chatScrollAmount.scrollTop;
-    let target = this.chatScrollAmount.clientHeight;
-    let testLow = test - SCROLL_SENSITIVITY;
-    let testHigh = test + SCROLL_SENSITIVITY;
-    this.shouldScroll = target > testLow && target < testHigh;
-    this.autoScroll();
-  }
+  // Handle scroll events
+  const handleScroll = (e) => {
+    if (!scrollRef.current) return;
+    
+    const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+    const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+    
+    // Only auto-scroll if we're near the bottom
+    setShouldAutoScroll(distanceFromBottom <= SCROLL_THRESHOLD);
+  };
 
-  render() {
-    let messages = chat.messages;
+  // Handle touch events for mobile
+  const handleTouchStart = (e) => {
+    setIsUserScrolling(true);
+  };
 
-    let content = messages.map((msg, i) => {
-      let chatPosClass = i % 2 == 0 ? "chat-line-1" : "chat-line-0";
-      let chatLineClasses = classNames(
+  const handleTouchEnd = () => {
+    setIsUserScrolling(false);
+    
+    // Check if we should resume auto-scroll
+    if (scrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+      setShouldAutoScroll(distanceFromBottom <= SCROLL_THRESHOLD);
+    }
+  };
+
+  const renderMessages = () => {
+    return chat.messages.map((msg, i) => {
+      const chatPosClass = i % 2 === 0 ? "chat-line-1" : "chat-line-0";
+      const chatLineClasses = classNames(
         "chat-item",
         chatPosClass,
         {
@@ -80,19 +65,8 @@ class ChatContent extends React.Component {
         profile.hideBlazeBot ? "blazebot-hide" : ""
       );
 
-      let humanTimestamp = moment.unix(msg.timestamp).format("LT");
-      let msgs = msg.msgs.map((innerMsg, i) => {
-        return (
-          <Message
-            key={i}
-            userName={msg.username}
-            isEmote={msg.isemote}
-            text={innerMsg}
-            onLoad={() => setTimeout(() => this.autoScroll(), 100)}
-          />
-        );
-      });
-
+      const humanTimestamp = moment.unix(msg.timestamp).format("LT");
+      
       return (
         <li key={i} className={chatLineClasses}>
           <div className="chat-avatar">
@@ -104,25 +78,42 @@ class ChatContent extends React.Component {
               className="chat-username"
               onClick={() => {
                 chat.appendMsg("@" + msg.username + " ");
-                this.props.goToChat();
-              }
-              }
+                goToChat();
+              }}
             />
             <span className="chat-timestamp">{humanTimestamp}</span>
             <br />
-            <span className="chat-text">{msgs}</span>
+            <span className="chat-text">
+              {msg.msgs.map((innerMsg, j) => (
+                <Message
+                  key={j}
+                  userName={msg.username}
+                  isEmote={msg.isemote}
+                  text={innerMsg}
+                  onLoad={scrollToBottom}
+                />
+              ))}
+            </span>
           </div>
         </li>
       );
     });
-    return (
-      <div id="chatscroll" ref={(c) => (this.chatScrollAmount = c)}>
-        <ul id="chatbox">{content}</ul>
-      </div>
-    );
-  }
+  };
 
-  @observable accessor chatScrollAmount = { scrollTop: 0, scrollHeight: 0 };
-}
+  return (
+    <div 
+      id="chatscroll"
+      ref={scrollRef}
+      className="h-96 overflow-y-auto"
+      onScroll={handleScroll}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <ul id="chatbox" className="p-4">
+        {renderMessages()}
+      </ul>
+    </div>
+  );
+});
 
-export default observer(ChatContent);
+export default ChatContent;
