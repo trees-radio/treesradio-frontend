@@ -353,19 +353,21 @@ class PlaylistsPanel extends React.Component {
             <div className="btn-group" id="playlist-btn">
               <Menu >
                 <MenuButton>
-                  <>{playlists.selectedPlaylistName || "Create or Select a Playlist"}
-                    <span className="fa fa-chevron-down"></span></>
+                  <div className="flex items-center justify-center cursor-pointer">
+                    <div className="button-nooverflow">{playlists.selectedPlaylistName || "Create or Select a Playlist"}</div>
+                    <span className="fa fa-chevron-down ml-1.5"></span>
+                    </div>
                 </MenuButton>
                 <MenuItems>
                   <div className="dropdown-inner-text">
 
                     <MenuItem>
-                      <a onClick={() => (this.addingPlaylist = true)}>
+                      <a onClick={() => (this.addingPlaylist = true)} className="cursor-pointer hover:bg-gray-800">
                         <i className="fa fa-plus" /> New Playlist
                       </a>
                     </MenuItem>
                     <MenuItem>
-                      <a onClick={() => (this.importingPlaylist = true)}>
+                      <a onClick={() => (this.importingPlaylist = true)} className="cursor-pointer hover:bg-gray-800">
                       <i className="fa fa-youtube-play" /> Import Playlist
                       </a>
                     </MenuItem>
