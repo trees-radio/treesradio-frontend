@@ -289,6 +289,7 @@ export default new (class Playlists {
         });
     }
 
+    @action
     checkPlaylistForSong(playlistKey, songUrl) {
         var playlist = this.getPlaylistByKey(playlistKey);
         if (playlist.entries && playlist.entries.some(s => s.url === songUrl)) {
@@ -298,6 +299,7 @@ export default new (class Playlists {
         }
     }
 
+    @action
     getPlaylistByKey(key) {
         var playlist;
         this.playlists.some(p => {
@@ -312,7 +314,7 @@ export default new (class Playlists {
     }
 
     // @observable accessor addedTo = [];
-
+    @action
     addSong(song, playlistKey, isGrab) {
         var playlist = this.getPlaylistByKey(playlistKey);
         var newPlaylist = [];
@@ -334,6 +336,7 @@ export default new (class Playlists {
         // this.addedTo.push(playlistKey);
     }
 
+    @action
     moveTop(index) {
         var newPlaylist = this.playlist.slice();
         var video = newPlaylist.splice(index, 1)[0];
@@ -345,6 +348,7 @@ export default new (class Playlists {
         toast.success(`Moved ${video.title} to top of playlist.`);
     }
 
+    @action
     moveBottom(index) {
         var newPlaylist = this.playlist.slice();
         var video = newPlaylist.splice(index, 1)[0];
@@ -356,6 +360,7 @@ export default new (class Playlists {
         toast.success(`Moved ${video.title} to bottom of playlist.`);
     }
 
+    @action
     removeVideo(index) {
         var newPlaylist = this.playlist.slice();
         var video = newPlaylist.splice(index, 1)[0];
@@ -366,6 +371,7 @@ export default new (class Playlists {
         toast.success(`Removed ${video.title} from playlist.`);
     }
 
+    @action
     shufflePlaylist() {
         var newPlaylist = shuffle(this.playlist.slice());
         this.ref
@@ -375,6 +381,7 @@ export default new (class Playlists {
         toast.success(`Playlist shuffled.`);
     }
 
+    @action
     sortPlaylist(direction, key) {
         send("playlist.sort", {playlist: this.selectedPlaylistKey, direction: direction, field: key});
     }

@@ -1,9 +1,7 @@
 import React from "react";
-import { observable } from "mobx";
+import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 import { debounce } from 'lodash';
-// import classNames from 'classnames';
-// import fbase from 'stores/fbase';
 import playlists from "../../stores/playlists";
 import Modal from "../utility/Modal";
 import toast from "../../utils/toast";
@@ -91,6 +89,11 @@ class PlaylistsPanel extends React.Component {
   removePlaylist() {
     playlists.removePlaylist(this.playlistToRemove.index);
     this.removingPlaylist = false;
+  }
+
+  @action
+  toggleMergePlaylists() {
+    this.mergingPlaylists = !this.mergingPlaylists;
   }
 
   @observable accessor   importingPlaylist = false;
@@ -431,7 +434,7 @@ class PlaylistsPanel extends React.Component {
         </Modal>
         <Modal
           show={this.mergingPlaylists}
-          hideModal={() => (this.mergingPlaylists = false)}
+          hideModal={() => this.toggleMergePlaylists()}
           title="Merge Playlists"
           leftButton={() => {
             playlists.mergePlaylists(
@@ -439,7 +442,7 @@ class PlaylistsPanel extends React.Component {
               $("#playlistb").val(),
               $("#newplaylistname").val()
             );
-            this.mergingPlaylists = false;
+            this.toggleMergePlaylists();
           }}
           leftButtonText="Merge"
         >
