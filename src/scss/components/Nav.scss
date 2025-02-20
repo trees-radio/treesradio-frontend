@@ -528,13 +528,11 @@ div .userbit-avatar span .avatarimg {
 }
 
 #hype-grid-container {
-  place-content: center;
-  margin-left: 0.75rem;
 }
 
 #usernav-container {
   place-self: center;
-  margin-top: -10px;
+  // margin-top: -10px;
   display: inline-flex;
   flex-flow: row nowrap;
   place-content: baseline;
@@ -543,18 +541,16 @@ div .userbit-avatar span .avatarimg {
 }
 
 #hype-container {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  height: 100%;
 }
 
 .hypepb {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
   width: 13.5vw;
+  height: 5rem;
   border-radius: vars.$button-border-radius;
   overflow: hidden;
   text-align: center;
-  font-size: vars.$navbar-font-size-dynamic;
+  font-size: 1.2em;
   font-weight: bold;
   color: rgb(26, 17, 26);
   cursor: url("/src/assets/img/lighter.cur"), pointer;
@@ -568,7 +564,6 @@ div .userbit-avatar span .avatarimg {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   width: 1.5vw;
-  height: 85%;
   border-radius: vars.$button-border-radius;
   background: vars.$color-button-hype;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -580,6 +575,7 @@ div .userbit-avatar span .avatarimg {
 #hypeboom {
   // padding-bottom: 0.75rem;
   padding-top: 0.75rem;
+  height: 100%;
 }
 
 .hypedone {
@@ -592,6 +588,8 @@ div .userbit-avatar span .avatarimg {
   //text-shadow: vars.$text-shadow-heavy;
   cursor: vars.$img-cursor-lighter, pointer;
   vertical-align: middle;
+  padding-top: 0.07rem;
+  padding-bottom: 0.07rem;
 }
 
 .hypedone:active {
