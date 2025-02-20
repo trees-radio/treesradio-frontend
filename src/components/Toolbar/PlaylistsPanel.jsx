@@ -9,7 +9,7 @@ import Modal from "../utility/Modal";
 import toast from "../../utils/toast";
 import moment from "moment";
 import $ from "jquery";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import Favicon from "../../assets/img/favicon.png";
 
 const PLAYLIST_OPACITY = 'playlistOpacity';
@@ -250,13 +250,15 @@ class PlaylistsPanel extends React.Component {
     }
 
     var playlistsList = playlists.playlistNames.map((name, i) => (
-      <Dropdown.Item key={i} onClick={() => this.selectPlaylist(i)}>
-        {name}
-        <div
-          onClick={() => this.startRemovingPlaylist(name, i)}
-          className="fa fa-trash remove-playlist"
-        />
-      </Dropdown.Item>
+      <MenuItem>
+        <div onClick={() => this.selectPlaylist(i)} className="cursor-pointer hover:bg-gray-800">
+          <a>{name}</a>
+          <div
+            onClick={() => this.startRemovingPlaylist(name, i)}
+            className="fa fa-trash remove-playlist"
+          />
+        </div>
+      </MenuItem>
     ));
 
     var shuffle = playlists.hasPlaylist ? (
@@ -349,24 +351,28 @@ class PlaylistsPanel extends React.Component {
               </div>
             </div>
             <div className="btn-group" id="playlist-btn">
-              <Dropdown >
-                <Dropdown.Toggle>
+              <Menu >
+                <MenuButton>
                   <>{playlists.selectedPlaylistName || "Create or Select a Playlist"}
                     <span className="fa fa-chevron-down"></span></>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="dropdown-menu" id="pl-dd-menu">
+                </MenuButton>
+                <MenuItems>
                   <div className="dropdown-inner-text">
 
-                    <Dropdown.Item onClick={() => (this.addingPlaylist = true)}>
-                      <i className="fa fa-plus" /> New Playlist
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={() => (this.importingPlaylist = true)}>
+                    <MenuItem>
+                      <a onClick={() => (this.addingPlaylist = true)}>
+                        <i className="fa fa-plus" /> New Playlist
+                      </a>
+                    </MenuItem>
+                    <MenuItem>
+                      <a onClick={() => (this.importingPlaylist = true)}>
                       <i className="fa fa-youtube-play" /> Import Playlist
-                    </Dropdown.Item>
+                      </a>
+                    </MenuItem>
                     {playlistsList}
                   </div>
-                </Dropdown.Menu>
-              </Dropdown>
+                </MenuItems>
+              </Menu>
             </div>
             <a href="#" onClick={() => (this.mergingPlaylists = true)}>
               <i
