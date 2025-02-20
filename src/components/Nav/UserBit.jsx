@@ -16,16 +16,43 @@ import { toast } from "react-toastify";
 import LeaderBoard from "./LeaderBoard";
 import FlairColor from "./FlairColor";
 import PlayHistory from "./SongHistory";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 import events from "../../stores/events";
-import Dropdown from "react-bootstrap/Dropdown";
+
 import Nothing from "../../assets/img/nothing.png";
 
 class UserBit extends React.Component {
+    dropdownItems = [
+        // User Account & Profile Items
+        { name: "Set Avatar", action: () => this.settingAvatar = true, icon: "fa-pencil", isCheckbox: false },
+        { name: "Change Password", action: () => this.changingPassword = true, icon: "fa-key", isCheckbox: false },
+        { name: "Change Email", action: () => this.changingEmail = true, icon: "fa-envelope", isCheckbox: false },
+        { name: "Change flair color", action: () => this.toggleFlairColor(), icon: "fa-paint-brush", isCheckbox: false },
+        
+        // Display & Notification Preferences
+        { name: "Desktop Notifications", action: () => this.toggleDesktopNotifications(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => profile.desktopNotifications },
+        { name: "Mention Audio?", action: () => this.toggleNotifications(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => profile.notifications },
+        { name: "Hide Gifs?", action: () => this.hideGifs(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => this.gifsHidden },
+        { name: "Hide BlazeBot?", action: () => this.hideBlazebot(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => profile.hideBlazeBot },
+        { name: "Hype Animation?", action: () => this.hideHypeBoom(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => profile.hypeBoom },
+        
+        // Playback & Participation Preferences
+        { name: "Auto Play?", action: () => waitlist.setAutoPlay(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => profile.autoplay },
+        { name: "Auto Join Waitlist", action: () => waitlist.setAutojoin(), icon: "fa-check-square-o", isCheckbox: true, checkboxFunction: () => profile.autoplay },
+        
+        // Information & Tools
+        { name: "Leader Board", action: () => this.toggleLeaderboard(), icon: "fa-trophy", isCheckbox: false },
+        { name: "Play History", action: () => this.toggleSongHistory(), icon: "fa-history", isCheckbox: false },
+        { name: "Region Check", action: () => window.open(`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`), icon: "fa-globe", isCheckbox: false },
+        { name: "Help", action: () => this.toggleHelp(), icon: "fa-question-circle", isCheckbox: false },
+        
+        // Always Last
+        { name: "Logout", action: () => this.logoutAndDisableButtons(), icon: "fa-sign-out", isCheckbox: false }
+    ];
 
     constructor(props) {
         super(props);
-        this.toggleFlairColor = this.toggleFlairColor.bind(this);
     }
 
     onEnterKey(e, cb) {
@@ -40,21 +67,18 @@ class UserBit extends React.Component {
     }
 
     @observable accessor     fontSize = 1.2;
-
     @observable accessor     modifierApplied = false;
-
     @observable accessor     legacyInterface = false;
-
     @observable accessor     gifsHidden = false;
-
     @observable accessor     showHelp = false;
-
     @observable accessor     settingAvatar = false;
     @observable accessor     avatarField = "";
-
     @observable accessor     changingPassword = false;
-
     @observable accessor     changingEmail = false;
+    @observable accessor     showLeaders = false;
+    @observable accessor     showFlairColor = false;
+    @observable accessor     showHistory = false;
+    
 
     @computed
     get avatarFieldValid() {
@@ -173,6 +197,7 @@ class UserBit extends React.Component {
 
     @action
     toggleFlairColor() {
+        console.log("toggleFlairColor");
         this.showFlairColor ? (this.showFlairColor = false) : (this.showFlairColor = true);
     }
 
@@ -216,6 +241,29 @@ class UserBit extends React.Component {
     @action
     disableIfNecessary() {
         return this.userLoggedIn() ? "" : " greyDisabled";
+    }
+
+    buildMenuItems() {
+        return this.dropdownItems.map((item, index) => {
+            if (item.isCheckbox) {
+                return (
+                    <MenuItem>
+                        <div key={index} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
+                        <i className={classNames("fa", item.checkboxFunction() ? "fa-check-square-o" : "fa-square-o", "")} />
+                            <span className="ml-2">{item.name}</span>
+                        </div>
+                    </MenuItem>
+                );
+            }
+            return (
+                <MenuItem>
+                    <div key={index} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
+                        <i className={classNames("fa", item.icon)} />
+                        <span className="ml-2">{item.name}</span>
+                    </div>
+                </MenuItem>
+            );
+        });
     }
 
 
@@ -264,41 +312,6 @@ class UserBit extends React.Component {
             resendVerification = "";
         }
 
-        /*     window.addEventListener("DOMContentLoaded", () => { //TODO !IMP
-                 let userNameLength = 0;
-
-                 username(profile.uid)
-                     .then(result => {
-                         if (profile.user !== null) {
-                             userNameLength = result.toString().length;
-
-                             let usernamespan = document.getElementById("username")
-
-                             // let fontSizeString = window.getComputedStyle(usernamespan).getPropertyValue("font-size");
-                             let fontSizeString = "1.2em";
-                             let fontSize = parseFloat(fontSizeString);
-                             let unit = fontSizeString.replace("!important", "").trim().replace(fontSize.toString(), "");
-
-                             fontSize = userNameLength >= 15 ? (fontSize * 0.7 * this.getQueryMultiplier()) : (fontSize * this.getQueryMultiplier());
-                             // fontSize = Math.round(((fontSize * (userNameLength / 100)) + Number.EPSILON) * 100) / 100;
-                             usernamespan.setAttribute("style", "font-size: " + fontSize + unit);
-                         }
-                     })
-             });*/
-
-
-        // if (userNameLength > 0){
-        //
-        // }
-
-        // if (profile.user !== null) {
-        //     let resendVerification = "";
-        // } else {
-        //     let resendVerification = (
-        //
-        //     );
-        // }
-
         const helpCommands = [];
         const allUserCommands = [
             "join",
@@ -342,93 +355,26 @@ class UserBit extends React.Component {
         return (
             <div id="userbit-wrapper">
                 <div id="userbitContainer" className="btn-group">
-                    <Dropdown >
+                    <Menu>
 
-                        <Dropdown.Toggle id={'usernametop'} toright="true" className={"btn btn-primary" + this.disableIfNecessary()}>
-                            <><div className="userbit-avatar">
-                                {this.showAvatar()}
-                            </div>
+                        <MenuButton>
+                            <div id={'usernametop'} toright="true" className={"btn btn-primary" + this.disableIfNecessary()}>
+                                <div className="userbit-avatar">
+                                    {this.showAvatar()}
+                                </div>
                                 <span id="username" className={"userLevel"}>
                                     <b>{profile.safeUsername}</b><span id="userbit-expander" className="fa fa-caret-down"></span>
-                                </span></>
-
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            <div className="dropdown-inner-text">
-                                {this.showSetAvatar()}
-                                {this.showSetFlairColor()}
-                                <Dropdown.Item key={1} onClick={() => (this.togglePlayer())}>
-                                    <i
-                                        className={classNames(
-                                            "fa",
-                                            this.legacyInterface ? playing.playerSize === "BIG" ? "fa-plus" : "fa-remove" : playing.playerSize === "BIG" ? "fa-compress" : "fa-expand"
-                                        )}
-                                    />
-                                    {this.legacyInterface ? (playing.playerSize === "BIG" ? " Show Small Player" : " Hide Player") : (playing.playerSize === "BIG" ? " Collapse Player" : " Expand Player")}
-                                </Dropdown.Item>
-                                <Dropdown.Item key={101} onClick={() => waitlist.setShowMinutesUntil()}>
-                                    <i className={
-                                        classNames(
-                                            "fa",
-                                            waitlist.showMinutesUntil ? "fa-check-square-o" : "fa-square-o"
-                                        )
-                                    } />
-                                    &nbsp;Waitlist Minutes Until
-                                </Dropdown.Item>
-                                {this.showChangeEmail()}
-                                {this.showChangePassword()}
-                                <Dropdown.Item key={2} href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target="_blank">
-                                    <i className="fa fa-globe" /> Region Check
-                                </Dropdown.Item>
-                                <Dropdown.Item key={3} onClick={() => this.hideGifs()}>
-                                    <i
-                                        className={classNames(
-                                            "fa",
-                                            this.gifsHidden === true ? "fa-check-square-o" : "fa-square-o"
-                                        )}
-                                    />{" "}
-                                    Hide Gifs?
-                                </Dropdown.Item>
-                                <Dropdown.Item key={4} onClick={() => this.hideBlazebot()}>
-                                    <i
-                                        className={classNames(
-                                            "fa",
-                                            profile.hideBlazebot === true ? "fa-check-square-o" : "fa-square-o"
-                                        )}
-                                    />{" "}
-                                    Hide BlazeBot?
-                                </Dropdown.Item>
-                                <Dropdown.Item key={5} onClick={() => this.hideHypeBoom()}>
-                                    <i
-                                        className={classNames(
-                                            "fa",
-                                            profile.hypeBoom === true ? "fa-check-square-o" : "fa-square-o"
-                                        )}
-                                    />{" "}
-                                    Hype Animation?
-                                </Dropdown.Item>
-                                {this.showToggleDesktopNotifications()}
-                                {this.showMentionAudio()}
-                                {this.showMute()}
-                                {this.showAutoplay()}
-                                <Dropdown.Item key={6} onClick={() => this.toggleLeaderboard()}>
-                                    <i className="fa fa-trophy"></i> Leader Board
-                                </Dropdown.Item>
-
-                                <Dropdown.Item key={66} onClick={() => this.toggleSongHistory()}>
-                                    <i className="fa fa-history"></i> Play History
-                                </Dropdown.Item>
-                                <Dropdown.Item key={7} onClick={() => this.toggleHelp()}>
-                                    <i className="fa fa-question-circle" /> Help
-                                </Dropdown.Item>
-                                {this.showGelato()}
-                                {/* logout @ bottom */}
-                                {this.showLogout()}
+                                </span>
                             </div>
-                        </Dropdown.Menu>
-                    </Dropdown>
 
+                        </MenuButton>
+
+                        <MenuItems anchor="top-right">
+                            <div className="bg-black p-1 my-4">
+                                {this.buildMenuItems()}
+                            </div>
+                        </MenuItems>
+                    </Menu>
                 </div>
                 {/*  */}
                 {/* LOGGED-IN MODALS */}
@@ -509,19 +455,28 @@ class UserBit extends React.Component {
                     title="Set Your Avatar"
                 >
                     <p>Avatars must be hosted at one of the following sites:</p>
-                    <ul>
+                    <Menu>
+                        <MenuButton>
+                            <div className="btn btn-primary my-4">
+                            Allowed Domains <i className="fa fa-caret-down"></i>
+                            </div>
+                        </MenuButton>
+                        <MenuItems>
                         {allowedDomains.map((d, i) => (
-                            <Dropdown.Item key={i*100}>{d}</Dropdown.Item>
+                            <MenuItem>
+                                <div  key={i*100}>{d}</div>
+                            </MenuItem>
                         ))}
-                    </ul>
-                    <hr />
+                        </MenuItems>
+                    </Menu>
+                    <hr className="my-3"/>
                     <div className="row">
                         <div className="col-md-8">
                             <div className="form-group">
                                 <label>Avatar URL</label>
-                                <div className="input-group">
+                                <div className="flex flex-row items-center">
                                     <input
-                                        className="form-control"
+                                        className="form-control p-2"
                                         placeholder="e.g. http://i.imgur.com/1y3IemI.gif"
                                         onChange={e => (this.avatarField = e.target.value)}
                                     />

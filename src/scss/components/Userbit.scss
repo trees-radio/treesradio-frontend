@@ -2,19 +2,16 @@
 
 #usernametop {
   display: flex;
-  border-radius: 0 !important;
-  vertical-align: baseline;
+  border-radius: 5px;
+  vertical-align: center;
   text-align: center;
-  align-self: baseline;
-  align-content: baseline;
+  align-self: center;
+  align-content: center;
   height: calc(100% - 2 * 0.75rem);
-  margin-left: 0 !important;
-  margin-right: 0 !important;
 }
 
 #usernamedropdown {
   height: vars.$navbar-button-height;
-  border-radius: 0 !important;
 }
 
 #username {
@@ -30,10 +27,8 @@
 }
 
 div .userbit-avatar span .avatarimg {
-  // height: 2.5rem !important;
-  // width: 2.5rem !important;
   place-self: center;
-  align-content: baseline;
+  align-content: center ;
   border-radius: 5px;
   text-align: center;
   margin-right: 10px;
@@ -53,21 +48,21 @@ div .userbit-avatar span .avatarimg {
 @media only screen and (max-width: 1625px) {
   #username,
   #usernamedropdown {
-    font-size: 0.7 * vars.$navbar-font-size;
+    font-size: 1.1em;
   }
 }
 
 @media only screen and (max-width: 1730px) {
   #username,
   #usernamedropdown {
-    font-size: 0.65 * vars.$navbar-font-size;
+    font-size: 1.1em;
   }
 }
 
 @media only screen and (max-width: 1300px) {
   #username,
   #usernamedropdown {
-    font-size: 0.6 * vars.$navbar-font-size;
+    font-size: 1.1em;
   }
 }
 
