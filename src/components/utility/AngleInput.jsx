@@ -1,7 +1,6 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
 
-
 function radToDeg(rad) {
     return rad * (180 / Math.PI);
 }
@@ -27,23 +26,34 @@ function angle(vector, element) {
 var $all = document.body;
 
 class AngleInput extends React.Component {
-    displayName = 'AngleInput';
-    propTypes = {
+    static displayName = 'AngleInput';
+    
+    static propTypes = {
         defaultValue: PropTypes.number,
         max: PropTypes.number,
         min: PropTypes.number,
         step: PropTypes.number,
         onChange: PropTypes.func,
         onInput: PropTypes.func,
-
         className: PropTypes.string,
         pivotClassName: PropTypes.string,
+    };
+
+    static defaultProps = {
+        defaultValue: 0,
+        max: 360,
+        min: 0,
+        step: 1,
+        className: 'angle-input',
+        pivotClassName: 'angle-input-pivot',
     };
 
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
-        this.state = this.getInitialState();
+        this.state = { value: props.defaultValue || 0 };
+        
+        // Bind methods
         this._onBlur = this._onBlur.bind(this);
         this._onFocus = this._onFocus.bind(this);
         this._onKeyDown = this._onKeyDown.bind(this);
@@ -52,51 +62,36 @@ class AngleInput extends React.Component {
         this._onMouseUp = this._onMouseUp.bind(this);
     }
 
-    getDefaultProps() {
-        return {
-            defaultValue: 0,
-            max: 360,
-            min: 0,
-            step: 1,
-
-            className: 'angle-input',
-            pivotClassName: 'angle-input-pivot',
-        }
-    }
-    getInitialState() {
-        return { value: this.props.defaultValue || 0 };
-    }
     normalize(degree) {
-        var max = this.props.max;
-        var min = this.props.min;
-        var step = this.props.step || 1;
-
-        var n = Math.max(min, Math.min(degree, max));
-        var s = n - (n % step);
-        var high = Math.ceil(n / step);
-        var low = Math.round(n / step);
+        const { max, min, step } = this.props;
+        
+        const n = Math.max(min, Math.min(degree, max));
+        const s = n - (n % step);
+        const high = Math.ceil(n / step);
+        const low = Math.round(n / step);
         return high >= (n / step)
-            ? (high * step == 360) ? 0 : (high * step)
+            ? (high * step === 360) ? 0 : (high * step)
             : low * step;
     }
+
     _onFocus(e) {
         this.beginKeyboardInput();
     }
+
     _onBlur(e) {
         this.endKeyboardInput();
     }
+
     _onKeyDown(e) {
-        var max = this.props.max;
-        var min = this.props.min;
-        var step = this.props.step || 1;
-        var value = this.state.value;
+        const { max, min, step } = this.props;
+        const { value } = this.state;
 
-        var LEFT_ARROW = 37;
-        var UP_ARROW = 38;
-        var RIGHT_ARROW = 39;
-        var DOWN_ARROW = 40;
+        const LEFT_ARROW = 37;
+        const UP_ARROW = 38;
+        const RIGHT_ARROW = 39;
+        const DOWN_ARROW = 40;
 
-        var dir = 0;
+        let dir = 0;
         switch (e.keyCode) {
             case UP_ARROW:
             case RIGHT_ARROW:
@@ -107,10 +102,12 @@ class AngleInput extends React.Component {
                 dir = -1;
                 break;
         }
-        var val = value + (dir * step);
+        
+        let val = value + (dir * step);
         if (val === max + 1) val = min;
         if (val === min - 1) val = max - 1;
         val = this.normalize(val);
+        
         if (dir) {
             e.preventDefault();
             this.setState({ value: val });
@@ -119,48 +116,57 @@ class AngleInput extends React.Component {
             }
         }
     }
+
     _onMouseDown(e) {
         this.beginTracking();
     }
+
     _onMouseMove(e) {
         this.updateWithEvent(e, false);
     }
+
     _onMouseUp(e) {
         this.updateWithEvent(e, true);
         this.endTracking();
     }
+
     beginTracking() {
         $all.addEventListener('mousemove', this._onMouseMove, false);
         $all.addEventListener('mouseup', this._onMouseUp, false);
         this.tracking = true;
     }
+
     endTracking() {
         $all.removeEventListener('mousemove', this._onMouseMove, false);
         $all.removeEventListener('mouseup', this._onMouseUp, false);
         this.tracking = false;
     }
+
     updateWithEvent(event, done) {
-        var $dom = this.myRef.current;
-        var vector = [event.x, event.y];
-        var deg = angle(vector, $dom);
-        var value = this.normalize(deg);
-        this.setState({ value: value });
-        var fx = done
-            ? this.props.onChange
-            : this.props.onInput;
+        const $dom = this.myRef.current;
+        const vector = [event.x, event.y];
+        const deg = angle(vector, $dom);
+        const value = this.normalize(deg);
+        this.setState({ value });
+        
+        const fx = done ? this.props.onChange : this.props.onInput;
         if (fx) fx(value);
     }
+
     beginKeyboardInput() {
         $all.addEventListener('keydown', this._onKeyDown, false);
         this.keyboardInput = true;
     }
+
     endKeyboardInput() {
         $all.removeEventListener('keydown', this._onKeyDown, false);
         this.keyboardInput = false;
     }
+
     render() {
-        var className = this.props.className || 'angle-input';
-        var pivotClassName = this.props.pivotClassName || 'angle-input-pivot';
+        const { className, pivotClassName, tabIndex, children } = this.props;
+        const { value } = this.state;
+
         return (
             <div
                 ref={this.myRef}
@@ -168,14 +174,15 @@ class AngleInput extends React.Component {
                 onFocus={this._onFocus}
                 onBlur={this._onBlur}
                 onMouseDown={this._onMouseDown}
-                tabIndex={this.props.tabIndex || 0}>
+                tabIndex={tabIndex || 0}>
                 <span
                     key="pivot"
                     className={pivotClassName}
-                    style={{ transform: "rotate(-" + this.state.value + "deg)" }}>
-                    {this.props.children || []}
+                    style={{ transform: `rotate(-${value}deg)` }}>
+                    {children || []}
                 </span>
-            </div>)
+            </div>
+        );
     }
 }
 

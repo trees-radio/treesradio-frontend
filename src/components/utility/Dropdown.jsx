@@ -7,7 +7,7 @@ const Dropdown = (props) => {
         setDropdownToggle(!dropdownToggle);
     }
 
-    const dropdownClasses = props.toRight ? 'dropdown-list to-right' : 'dropdown-list';
+    const dropdownClasses = props.toright ? 'dropdown-list to-right' : 'dropdown-list';
 
     return (
         <div className="dropdown">

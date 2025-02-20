@@ -142,11 +142,11 @@ export default class FlairColor extends React.Component {
             <>
                 <div className="flair-color">
                     <p>Pick your flair colors!</p>
-                    <p className="preview">
+                    <div className="preview">
                         <span style={this.getFlairBackgroundColor()}><span key={this.state.colors} style={this.getFlairColors()} className={this.state.colors && this.state.colors.length > 1 && "gradient-text"}>This is a preview of your flair colors!</span></span>
                         {this.state.colors && this.state.colors.length > 1 && <div className="angle"><AngleInput defaultValue={this.state.angle} max="360" min="0" step="45"
                             onChange={newAngle => this.angleChange(newAngle)} onInput={newAngle => this.angleChange(newAngle)} /></div>}
-                    </p>
+                    </div>
                     {this.state.colors.map((color, idx) => (
                         <div key={idx} className="color">
                             <label htmlFor={idx}>Color {idx + 1}</label>

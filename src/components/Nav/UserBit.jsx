@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { computed, observable } from "mobx";
+import { computed, observable, action } from "mobx";
 import classNames from "classnames";
 
 import profile from "../../stores/profile";
@@ -61,18 +61,21 @@ class UserBit extends React.Component {
         return this.avatarField && imageWhitelist(this.avatarField);
     }
 
+    @action
     changePassword() {
         const password = this._newPassword.value;
         this._newPassword.value = "";
         profile.changePassword(password).then(res => !!res && (this.changingPassword = false));
     }
 
+    @action
     changeEmail() {
         const email = this._newEmail.value;
         this._newEmail.value = "";
         profile.changeEmail(email).then(res => !!res && (this.changingEmail = false));
     }
 
+    @action
     checkNotificationPromise() {
         try {
             Notification.requestPermission().then();
@@ -83,6 +86,7 @@ class UserBit extends React.Component {
         return true;
     }
 
+    @action
     handleNotificationPermission(permission) {
         let permitted = false;
         if (!('permission' in Notification)) {
@@ -99,14 +103,17 @@ class UserBit extends React.Component {
 
     }
 
+    @action
     toggleNotifications() {
         profile.notifications ? (profile.notifications = false) : (profile.notifications = true);
     }
 
+    @action
     toggleShowMute() {
         profile.showmuted ? (profile.showmuted = false) : (profile.showmuted = true);
     }
 
+    @action
     toggleInterface() {
         this.legacyInterface ? (this.legacyInterface = false) : (this.legacyInterface = true);
 
@@ -121,12 +128,14 @@ class UserBit extends React.Component {
         }
     }
 
+    @action
     togglePlayer() {
         playing.togglePlayerSize();
 
         document.getElementById("reactplayerid").setAttribute("style", this.legacyInterface && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;");
     }
 
+    @action
     toggleDesktopNotifications() {
         if (profile.desktopNotifications) {
             profile.setDesktopNotifications(false)
@@ -142,30 +151,37 @@ class UserBit extends React.Component {
         }
     }
 
+    @action
     hideBlazebot() {
-        profile.hideBlazebot ? (profile.hideBlazebot = false) : (profile.hideBlazebot = true);
+        profile.hideBlazeBot ? (profile.hideBlazeBot = false) : (profile.hideBlazeBot = true);
     }
 
+    @action
     hideHypeBoom() {
         profile.hypeBoom = !profile.hypeBoom;
     }
 
+    @action
     toggleHelp() {
         this.showHelp ? (this.showHelp = false) : (this.showHelp = true);
     }
 
+    @action
     toggleLeaderboard() {
         this.showLeaders ? (this.showLeaders = false) : (this.showLeaders = true);
     }
 
+    @action
     toggleFlairColor() {
         this.showFlairColor ? (this.showFlairColor = false) : (this.showFlairColor = true);
     }
 
+    @action
     toggleSongHistory() {
         this.showHistory ? (this.showHistory = false) : (this.showHistory = true);
     }
 
+    @action
     hideGifs() {
         if (this.gifsHidden === false) {
             $("<div id='hidegifs' />")
@@ -180,6 +196,7 @@ class UserBit extends React.Component {
         }
     }
 
+    @action
     logoutAndDisableButtons() {
         profile.logout()
             .then(() => {
@@ -196,6 +213,7 @@ class UserBit extends React.Component {
             });
     }
 
+    @action
     disableIfNecessary() {
         return this.userLoggedIn() ? "" : " greyDisabled";
     }
@@ -326,7 +344,7 @@ class UserBit extends React.Component {
                 <div id="userbitContainer" className="btn-group">
                     <Dropdown >
 
-                        <Dropdown.Toggle id={'usernametop'} toRight="true" className={"btn btn-primary" + this.disableIfNecessary()}>
+                        <Dropdown.Toggle id={'usernametop'} toright="true" className={"btn btn-primary" + this.disableIfNecessary()}>
                             <><div className="userbit-avatar">
                                 {this.showAvatar()}
                             </div>
