@@ -1,4 +1,4 @@
-import {observable, computed} from "mobx";
+import {observable, computed, action} from "mobx";
 import fbase from "../libs/fbase";
 
 export default new (class Online {
@@ -13,6 +13,7 @@ export default new (class Online {
       });
   }
 
+  @action
   async loadOnlineEnts() {
     fbase
       .database()
@@ -37,6 +38,7 @@ export default new (class Online {
         this.userlist = users;
       });
   }
+  
   @observable accessor online = [];
   @observable accessor userlist = [];
   @observable accessor sorted = [];

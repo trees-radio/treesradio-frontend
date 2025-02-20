@@ -1,4 +1,4 @@
-import {computed, observable} from "mobx";
+import {computed, observable, action} from "mobx";
 import toast from "../utils/toast";
 import fbase, {auth, db} from "../libs/fbase";
 import profile from "./profile";
@@ -45,11 +45,13 @@ export default new (class Playlists {
                         me.importing = false;
                     }
                 });
-                const searchRef = db.ref(`searches/${user.uid}`).on("value", snap => {
+                db.ref(`searches/${user.uid}`).on("value", snap => {
                     if (!snap.val() || snap.val() == null) return false;
-                    this.search = snap.val();
-                    this.openSearch = true;
-                    this.searching = false;
+                    action(() => {
+                        this.search = snap.val();
+                        this.openSearch = true;
+                        this.searching = false;
+                    })
                 });
 
                 this.uid = user.uid;

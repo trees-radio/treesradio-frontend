@@ -20,7 +20,6 @@ import PlayHistory from "./SongHistory";
 import events from "../../stores/events";
 import Dropdown from "react-bootstrap/Dropdown";
 import Nothing from "../../assets/img/nothing.png";
-import { getFlair } from "../../libs/flair";
 
 class UserBit extends React.Component {
 
@@ -690,7 +689,7 @@ class UserBit extends React.Component {
     showSetFlairColor() {
         if (this.userLoggedIn()) {
             return (
-                <Dropdown.Item key={20} onClick={() => this.toggleFlairColor()}>
+                <Dropdown.Item key={25} onClick={() => this.toggleFlairColor()}>
                     <i className="fa fa-paint-brush" /> Change flair color
                 </Dropdown.Item>
             );

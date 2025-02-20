@@ -1,4 +1,4 @@
-import { autorun, computed, observable } from "mobx";
+import { autorun, computed, observable, action } from "mobx";
 import toast from "../utils/toast";
 import fbase from "../libs/fbase";
 import profile from "./profile";
@@ -19,6 +19,9 @@ const PLAYER_SYNC_START = 25; // percent
 const PLAYER_SYNC_SENSITIVITY = 5; //percent
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
+/*
+playing.js:39 [MobX] Since strict-mode is enabled, changing (observed) observable values without using an action is not allowed. Tried to modify: Playing@35.data
+*/
 
 export default new (class Playing {
   constructor() {
@@ -30,21 +33,28 @@ export default new (class Playing {
       .then((s) => (s ? (this.playerSize = s) : false));
 
     autorun(() => {
+      const me = this
       fbase
         .database()
         .ref("playing")
         .on("value", (snap) => {
-          var data = snap.val();
-          if (data) {
-            this.data = data;
-            var newtitle = "TreesRadio [  " + data.info.title + " ] ";
-            document.title = newtitle;
-          }
+            var data = snap.val();
+            if (data) {
+              me.updatePlayer(data);
+            }
         });
-      this.localLikeState = this.liked;
-      this.localDislikeState = this.disliked;
-      this.localGrabState = this.grabbed;
+      action(() => {
+        this.localLikeState = this.liked;
+        this.localDislikeState = this.disliked;
+        this.localGrabState = this.grabbed;
+      }
+      );
     });
+  }
+
+  @action
+  updatePlayer(data) {
+    this.data = data;
   }
 
   @computed get shouldSync() {

@@ -1,4 +1,4 @@
-import {computed, observable} from "mobx";
+import {computed, observable, action} from "mobx";
 import fbase from "../libs/fbase";
 import profile from "./profile";
 import events from "./events";
@@ -56,11 +56,10 @@ export default new (class Chat {
             this.messages[this.messages.length - 1] &&
             msg.username === this.messages[this.messages.length - 1].username
           ) {
-            this.messages[this.messages.length - 1].msgs.push(msg.msg);
-            this.messages[this.messages.length - 1].timestamp = msg.timestamp;
+            this.inlineMessage(msg);
           } else {
             msg.msgs = [msg.msg];
-            this.messages.push(msg);
+            this.pushMessage(msg);
           }
 
           if (msg.mentions && profile.username) {
@@ -105,6 +104,17 @@ export default new (class Chat {
   @observable accessor werefocused = true;
   @observable accessor mentioncount = 0;
 
+  @action inlineMessage(msg) {
+    this.messages[this.messages.length - 1].msgs.push(msg.msg);
+    this.messages[this.messages.length - 1].timestamp = msg.timestamp;
+  }
+
+  @action
+  pushMessage(msg) {
+    this.messages.push(msg);
+  }
+
+  @action
   updateMsg(msg) {
     if (msg.length <= MSG_CHAR_LIMIT) {
       this.msg = msg;
@@ -115,16 +125,19 @@ export default new (class Chat {
     return this.msg.length;
   }
 
+  @action
   appendMsg(msg) {
     this.msg += " " + msg;
   }
 
+  @action
   getMsg() {
     var msg = this.msg;
     this.msg = "";
     return msg;
   }
 
+  @action
   async pushMsg() {
     // moving throttling to the backend.
     if (this.msg.length !== 0) {
@@ -135,7 +148,7 @@ export default new (class Chat {
     }
   }
 
-
+  @action
   sendMsg(msg, cb) {
     var mentions = msg.match(mentionPattern) || [];
 
@@ -169,6 +182,7 @@ export default new (class Chat {
     }
   }
 
+  @action
   replaceMention(index) {
     var words = this.msg.split(" ");
     words[words.length - 1] = "@" + this.mentionMatches[index] + " ";

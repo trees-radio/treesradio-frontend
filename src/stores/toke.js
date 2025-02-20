@@ -1,4 +1,4 @@
-import { computed, observable, autorun } from "mobx";
+import { computed, observable, autorun, action } from "mobx";
 import fbase from "../libs/fbase";
 import { send } from "../libs/events";
 
@@ -11,8 +11,10 @@ export default new (class TokeTimer {
         .on("value", snap => {
           var tokestatus = snap.val();
           if (tokestatus != null) {
-            this.underway = tokestatus.tokeUnderway;
-            this.time = tokestatus.remainingTime;
+            action(() => {
+              this.underway = tokestatus.tokeUnderway;
+              this.time = tokestatus.remainingTime;
+            })();
           }
         });
     });
@@ -26,6 +28,7 @@ export default new (class TokeTimer {
   @computed get remainingTime() {
     return this.time;
   }
+  @action
   joinToke() {
     if (this.underway) {
       send("chat", { mentions: [], msg: "/join" });

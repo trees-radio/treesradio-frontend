@@ -1,16 +1,19 @@
 import React, {type FC, useEffect, useState} from "react";
 import {observer} from "mobx-react";
-
+import {action, runInAction} from "mobx";
 import {hypeIntervalSeconds, hypetimer} from "../../stores/hype";
 import profile from "../../stores/profile";
 import toast from "../../utils/toast";
 import cn from "classnames";
 import $ from "cash-dom";
 
-const doHype = () =>
-    (profile.user !== null && hypetimer.hypePercentageCharged === 100)
-        ? hypetimer.getHyped()
-        : toast.info("Log in to hype this song and boost it's likes!", {delay: 1300})
+const doHype = action(
+    "doHype", () => {
+        (profile.user !== null && hypetimer.hypePercentageCharged === 100)
+            ? hypetimer.getHyped()
+            : toast.info("Log in to hype this song and boost it's likes!", {delay: 1300})
+    }
+)
 
 const propertyUnitsStripped = (element: HTMLElement | null, property: string, unit: string) => {
     if (!element) {
@@ -29,12 +32,22 @@ const HypeProgress: FC = () => {
     const [explosiveButton, setExplosiveButton] = useState<ExplosiveButton | null>(null);
 
     useEffect(() => {
-        if (profile.user !== null && !explosiveButton) {
-            setExplosiveButton(new ExplosiveButton("#hypeboom"));
-        } else {
-            setExplosiveButton(null);
+        if (profile.user !== null) {
+            runInAction(() => {
+                setExplosiveButton(new ExplosiveButton("#hypeboom"));
+            });
         }
-    }, [explosiveButton]);
+
+        // Cleanup on unmount or when profile.user changes
+        return () => {
+            if (explosiveButton) {
+                runInAction(() => {
+                    setExplosiveButton(null);
+                });
+            }
+        };
+    }, [profile.user]); // Only depend on profile.user, not explosiveButton
+
 
     return (
         <div

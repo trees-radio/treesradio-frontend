@@ -1,4 +1,4 @@
-import { autorun, computed, observable } from "mobx";
+import { autorun, computed, observable, action } from "mobx";
 import fbase from "../libs/fbase";
 import profile from "./profile";
 import toast from "../utils/toast";
@@ -43,6 +43,7 @@ export default new (class Waitlist {
     }, 60000);
   }
 
+  @action
   reloadList() {
     fbase
       .database()
@@ -82,11 +83,13 @@ export default new (class Waitlist {
   @observable accessor autojoinTimer = false;
   @observable accessor showMinutesUntil = localforage.getItem("showminutes") || false;
 
+  @action
   setShowMinutesUntil() {
     this.showMinutesUntil = !this.showMinutesUntil;
     localforage.setItem("showminutes", this.showMinutesUntil);
   }
 
+  @action
   setAutojoin() {
     if (profile.canAutoplay && !profile.autoplay) {
       profile.autoplay = true;
@@ -124,6 +127,7 @@ export default new (class Waitlist {
     }
   }
 
+  @action
   cancelAutojoin() {
     if (profile.canAutoplay && this.autojoinTimer != false) {
       profile.autoplay = false;
@@ -139,6 +143,7 @@ export default new (class Waitlist {
     );
   }
 
+  @action
   bigButton() {
     if (!profile.user) {
       toast.error("You must be logged in to push the big button!");

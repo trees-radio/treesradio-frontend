@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { observable } from "mobx";
+import { observable, action } from "mobx";
 
 // Note that lazy loading doesn't work. Filing an issue with the project
 import ReactPlayer from "react-player";
@@ -37,12 +37,14 @@ const rPlayerSoundcloudConfig = {
 
 class Player extends React.Component {
   onProgress(p) {
-    playing.playerProgress = p.played;
-    const syncTo = playing.shouldSync;
+    action(() => {
+      playing.playerProgress = p.played;
+      const syncTo = playing.shouldSync;
 
-    if (syncTo) {
-      this._player.seekTo(syncTo, "seconds");
-    }
+      if (syncTo) {
+        this._player.seekTo(syncTo, "seconds");
+      }
+    });
   }
   playerError(e) {
     playing.userReportsError(e);
@@ -115,8 +117,10 @@ class Player extends React.Component {
                 },
               }}
               onDuration={() => {
-                playing.playerDuration =
-                  parseInt(playing.data.info.duration) / 1000;
+                action(() => {
+                  playing.playerDuration =
+                    parseInt(playing.data.info.duration) / 1000;
+                });
               }}
             />
           )}{" "}

@@ -5,7 +5,7 @@ import ReactSlider from "react-slider";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
 import waitlist from "../stores/waitlist";
-import playlists from "../stores/playlists";
+import playlists from "../stores/playlists.js";
 import profile from "../stores/profile";
 import playing, {VOLUME_NUDGE_FRACTION} from "../stores/playing";
 import toast from "../utils/toast";

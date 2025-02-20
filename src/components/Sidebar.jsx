@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { observable, autorun } from "mobx";
+import { observable, autorun, action } from "mobx";
 import classNames from "classnames";
 
 import online from "../stores/online";
@@ -25,25 +25,29 @@ class Sidebar extends React.Component {
     autorun(() => {
       const loggedInAfterRender = !loggedInAtRender && profile.loggedIn;
       if (this.currentSidebar === "ABOUT" && loggedInAfterRender) {
-        this.currentSidebar = "CHAT";
+        this.setCurrentSidebar("CHAT");
       }
     });
-
-    this.goToChat = this.goToChat.bind(this);
-    this.chatInputRef = React.createRef();
-  }
-
-  update(tab) {
-    if (tab === this.currentSidebar) return;
-    this.currentSidebar = tab;
-  }
-
-  goToChat() {
-    this.currentSidebar = "CHAT";
-    this.chatInputRef.current.focus();
   }
 
   @observable accessor currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
+
+  @action
+  setCurrentSidebar(tab) {
+    this.currentSidebar = tab;
+  }
+
+  @action
+  update(tab) {
+    if (tab === this.currentSidebar) return;
+    this.setCurrentSidebar(tab);
+  }
+
+  @action
+  goToChat = () => {
+    this.setCurrentSidebar("CHAT");
+    this.chatInputRef.current.focus();
+  }
 
   render() {
     const chatBtnClass = classNames("show-chat-btn", {
