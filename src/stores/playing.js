@@ -55,6 +55,7 @@ export default new (class Playing {
   @action
   updatePlayer(data) {
     this.data = data;
+    document.title = `${data.info.title} - ${data.info.user} | TreesRadio`;
   }
 
   @computed get shouldSync() {

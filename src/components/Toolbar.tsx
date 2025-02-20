@@ -1,6 +1,6 @@
 import React, {FC, Fragment, useCallback, useRef, useState} from "react";
 import {observer} from "mobx-react";
-import {observable} from "mobx";
+import {observable, action} from "mobx";
 import ReactSlider from "react-slider";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
@@ -257,6 +257,7 @@ class Toolbar_ extends React.Component {
 
     @observable accessor panelOpen = false;
 
+    @action
     togglePlaylistsPanel() {
         if (playlists.init) {
             this.props.togglePlaylist();
@@ -284,6 +285,7 @@ class Toolbar_ extends React.Component {
 
     @observable accessor grabbing = false;
 
+    @action
     toggleGrab(setting) {
         if (!profile.user) {
             toast.error("You must be logged in to grab songs!");

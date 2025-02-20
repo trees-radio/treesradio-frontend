@@ -116,6 +116,7 @@ export default new (class Playlists {
     @observable accessor searchSource = "youtube";
     @observable accessor openSearch = false;
 
+    @action
     addPlaylist(name) {
         const newPlaylistRef = push(this.ref);
         return set(newPlaylistRef, {
@@ -132,6 +133,7 @@ export default new (class Playlists {
         return this.playlists.map(playlist => playlist.name);
     }
 
+    @action
     exportPlaylist() {
         const playlistRef = db.ref(`playlists/${this.uid}/${this.selectedPlaylistKey}`);
         get(playlistRef).then(snap => {
@@ -149,10 +151,12 @@ export default new (class Playlists {
         });
     }
 
+    @action
     clearSearch() {
         this.openSearch = false;
     }
 
+    @action
     selectPlaylist(index) {
         this.clearSearch();
         if (this.stopPlaylistSync) {
@@ -190,6 +194,7 @@ export default new (class Playlists {
 
     @observable accessor removedPlaylist = false;
 
+    @action
     removePlaylist(index) {
         const key = this.playlists[index].key;
         if (this.selectedPlaylist === index) {
@@ -226,11 +231,13 @@ export default new (class Playlists {
         }
     }
 
+    @action
     async runSearch(query) {
         this.searching = true;
         if (profile.init) send("search", {source: this.searchSource, query: query});
     }
 
+    @action
     addFromSearch(index) {
         if (!this.hasPlaylist) {
             toast.error("You don't have a selected playlist!");
@@ -273,6 +280,7 @@ export default new (class Playlists {
         this.addSong(song, this.selectedPlaylistKey);
     }
 
+    @action
     mergePlaylists(playlista, playlistb, playlistname) {
         send("playlist.merge", {
             playlista: playlista,
@@ -373,6 +381,7 @@ export default new (class Playlists {
 
     @observable accessor importing = false;
 
+    @action
     async importYouTubePlaylist(name, url) {
         this.importing = true;
         if (profile.init) send('importPlaylist', {name, url});
