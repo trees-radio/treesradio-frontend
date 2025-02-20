@@ -360,8 +360,8 @@ class UserBit extends React.Component {
                                 </Dropdown.Item>
                                 {this.showChangeEmail()}
                                 {this.showChangePassword()}
-                                <Dropdown.Item key={2} href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`}>
-                                    <i className="fa fa-youtube-play" /> Region Check
+                                <Dropdown.Item key={2} href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${playing.data.info.url}`} target="_blank">
+                                    <i className="fa fa-globe" /> Region Check
                                 </Dropdown.Item>
                                 <Dropdown.Item key={3} onClick={() => this.hideGifs()}>
                                     <i
@@ -493,7 +493,7 @@ class UserBit extends React.Component {
                     <p>Avatars must be hosted at one of the following sites:</p>
                     <ul>
                         {allowedDomains.map((d, i) => (
-                            <Dropdown.Item key={i}>{d}</Dropdown.Item>
+                            <Dropdown.Item key={i*100}>{d}</Dropdown.Item>
                         ))}
                     </ul>
                     <hr />

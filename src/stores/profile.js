@@ -1,12 +1,12 @@
-import { autorun, computed, observable } from "mobx";
+import { autorun, computed, observable, action } from "mobx";
 import toast from "../utils/toast";
-import {auth, db} from "../libs/fbase";
-import { 
-    ref, 
-    onValue, 
-    set, 
-    remove, 
-    push, 
+import { auth, db } from "../libs/fbase";
+import {
+    ref,
+    onValue,
+    set,
+    remove,
+    push,
     child,
     get,
     onDisconnect,
@@ -20,49 +20,88 @@ import disposable from "disposable-email";
 import app from "./app";
 import * as localforage from "localforage";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { act } from "react";
 
 export default new (class Profile {
+    @action
+    setInit(val) {
+        this.init = val;
+    }
+
+    @action
+    setUser(user) {
+        this.user = user;
+    }
+
+    @action
+    setProfile(profile) {
+        this.profile = profile;
+    }
+
+    @action
+    setPresenceRef(ref) {
+        this.presenceRef = ref;
+    }
+
+    @action
+    setPresenceInterval(interval) {
+        this.presenceInterval = interval;
+    }
+
+    @action
+    setIpRef(ref) {
+        this.ipRef = ref;
+    }
+
+    @action
+    setRankAndPermissions(rank, permissions) {
+        this.rank = rank;
+        this.rankPermissions = permissions;
+    }
+
     constructor() {
-        this.init = false;
-       auth.onAuthStateChanged(user => {
-            this.user = user;
+        this.setInit(false);
+        auth.onAuthStateChanged(user => {
+            this.setUser(user);
             if (user !== null) {
                 const connectedRef = ref(db, ".info/connected");
                 onValue(connectedRef, snap => {
                     if (snap.val() === true) {
                         auth.updateCurrentUser(auth.currentUser);
                         clearInterval(this.presenceInterval);
-                        
+
                         // Create references
                         const userPresenceRef = ref(db, `presence/${this.user.uid}`);
                         const connectionRef = push(child(userPresenceRef, "connections"));
-                        
+
                         // Save this for cleanup
-                        this.presenceRef = connectionRef;
-                        
+                        this.setPresenceRef(connectionRef);
+
                         // Handle disconnect
                         onDisconnect(connectionRef).remove();
-                        
+
                         // Set initial data
                         set(connectionRef, {
                             timestamp: epoch(),
                             uid: this.user.uid
                         });
-                        
+
                         // Set connected status
                         set(child(connectionRef, "connected"), epoch());
-                        
+
                         // Update timestamp periodically
-                        this.presenceInterval = setInterval(() => {
+                        const presenceInterval = setInterval(() => {
                             set(child(connectionRef, "timestamp"), epoch());
                         }, 10000);
-                        
+
+                        this.setPresenceInterval(presenceInterval);
+
                         // Handle IP tracking
                         if (this.ipRef) {
                             remove(this.ipRef);
                         }
-                        
-                        this.ipRef = ref(db, `private/${this.user.uid}/ip/${connectionRef.key}`);
+
+                        this.setIpRef(ref(db, `private/${this.user.uid}/ip/${connectionRef.key}`));
                         set(this.ipRef, app.ipAddress);
                         onDisconnect(this.ipRef).remove();
                     }
@@ -70,40 +109,12 @@ export default new (class Profile {
                 onDisconnect(ref(db, `presence/${this.user.uid}`)).remove();
                 onValue(ref(db, `presence/${this.user.uid}`), snap => {
                     if (snap.val() === null) {
-                        this.profile = snap.val() || {};
+                        this.setProfile(snap.val() || {});
                     };
                 });
 
                 send("hello");
 
-                // this.stopPrivateSync = fbase
-
-                //     .ref("private")
-                //     .child(user.uid)
-                //     .on("value", snap => {
-                //         this.private = snap.val() || {};
-                //         this.privateInit = true;
-                //     });
-
-                // this.stopRegistrationSync = fbase
-
-                //     .ref("registered")
-                //     .child(user.uid)
-                //     .on("value", snap => {
-                //         this.registeredEpoch = snap.val() || epoch();
-                //     });
-
-                // this.stopBanSync = fbase
-
-                //     .ref("bans")
-                //     .child(user.uid)
-                //     .on("value", snap => (this.banData = snap.val()));
-
-                // this.stopSilenceSync = fbase
-
-                //     .ref("bans")
-                //     .child(user.uid)
-                //     .on("value", snap => (this.silenceData = snap.val()));
             } else {
                 this.stopProfileSync && this.stopProfileSync();
                 this.stopPrivateSync && this.stopPrivateSync();
@@ -133,12 +144,9 @@ export default new (class Profile {
         // permissions handling
         autorun(async () => {
             if (this.user) {
-                this.rank = await rank(this.user.uid);
-
-                this.rankPermissions = await getSettingsForRank(this.rank);
+                this.setRankAndPermissions(await rank(this.user.uid),await getSettingsForRank(this.rank));
             } else {
-                this.rank = null;
-                this.rankPermissions = {};
+                this.setRankAndPermissions(null, {});
             }
         });
     }
@@ -176,6 +184,7 @@ export default new (class Profile {
         return this.rank && this.rank !== "User";
     }
 
+    @action
     determineDesktopNotifications() {
         localforage.getItem("desktopnotify").then((result) => {
             let userEnabled = (result === 1);
@@ -192,6 +201,7 @@ export default new (class Profile {
         });
     }
 
+    @action
     setDesktopNotifications(enabled) {
         this.desktopNotifications = enabled;
         localforage.setItem("desktopnotify", enabled ? 1 : 0);
@@ -377,6 +387,7 @@ export default new (class Profile {
     @observable accessor resendVerificationResult = null;
     @observable accessor resendVerificationLoading = false;
 
+    @action
     resendVerification() {
         if (this.user) {
             this.resendVerificationLoading = true;
@@ -401,7 +412,7 @@ export default new (class Profile {
 
     @computed get avatarURL() {
         const avatar = ref(db, `avatars/${this.user.uid}`);
-        return  get(avatar).then(snap => snap.val().toString());
+        return get(avatar).then(snap => snap.val().toString());
     }
 
     clearAvatar() {

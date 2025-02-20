@@ -1,10 +1,9 @@
 import React from "react";
 import {observer} from "mobx-react";
-
 import SongHistory from "../../stores/songhistory";
 import UserAvatar from "../utility/User/UserAvatar";
 import UserName from "../utility/User/UserName";
-
+import Nothing from "../../assets/img/nothing.png";
 
 class PlayHistory extends React.Component {
 
@@ -19,8 +18,14 @@ class PlayHistory extends React.Component {
                 let s = "s";
                 if (hours === 1) s = "";
                 ago = `${hours} hour${s} ago`;
+                if (hours > 2) {
+                    return;   
+                }
             }
-
+            var thumb = song.thumb;
+            if (thumb == undefined || thumb == "") {
+                thumb = Nothing;
+            }
             return (
                 <div key={index} className="leaderboard-row">
                     <span className="leaderboard-cell-avatar"><UserAvatar uid={song.uid}/></span>
@@ -31,8 +36,10 @@ class PlayHistory extends React.Component {
                     ⊕ {song.grabs} │ 
                     🔥 {song.hypes} <br/>{ago}
                     </span>
-                    <span className="leaderboard-cell-songthumb"><img src={song.thumb} id="songHistory-img"
-                                                                      alt="imagine image"/></span>
+                    <span className="leaderboard-cell-songthumb">
+                        <img src={thumb} id="songHistory-img"
+                             alt="imagine image"/>
+                    </span>
                 </div>
             )
         });
