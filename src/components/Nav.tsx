@@ -3,7 +3,7 @@ import {observer} from "mobx-react";
 import {computed, observable} from "mobx";
 import {debounce} from "lodash";
 
-import UserBit from "./Nav/UserBit.jsx";
+import {UserBit} from "./Nav/UserBit.tsx";
 import TokeTimer from "./Nav/TokeTimer.jsx";
 
 import file from "../static/version.json";
