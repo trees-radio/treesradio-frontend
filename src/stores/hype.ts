@@ -1,5 +1,5 @@
-import { autorun, observable, action, makeAutoObservable } from "mobx";
-import fbase from "../libs/fbase";
+import { autorun, observable, action } from "mobx";
+import {getDatabaseRef} from "../libs/fbase";
 import { send } from "../libs/events";
 import profile from "./profile";
 import epoch from "../utils/epoch";
@@ -34,7 +34,7 @@ class HypeTimer {
 
   private initializeHypeData = action("initializeHypeData", async () => {
     try {
-      const snap = await fbase.database().ref("/hypes").child(profile.uid).once("value");
+      const snap = await getDatabaseRef("/hypes").child(profile.uid as string).once("value");
       const hypesnap = snap.val();
 
       if (hypesnap != null) {
@@ -53,10 +53,8 @@ class HypeTimer {
   });
 
   private setupHypeListener = action("setupHypeListener", () => {
-    fbase
-      .database()
-      .ref("/hypes")
-      .child(profile.uid)
+    getDatabaseRef("/hypes")
+      .child(profile.uid as string)
       .on("value", action("onHypeUpdate", (snap) => {
         const hypesnap = snap.val();
         if (hypesnap != null) {
@@ -75,7 +73,7 @@ class HypeTimer {
     this.hypePercentageCharged = timeleft;
   });
 
-  public getHyped = action("getHyped", async (): Promise<void> => {
+  public getHyped = action("getHyped", async (): Promise<void | boolean> => {
     return await send("chat", { mentions: [], msg: "/hype" });
   });
 }

@@ -5,11 +5,18 @@
 //  Suggestions Form
 
 import React from "react";
-import Karan from "../Sidebar/karan";
+import Karan from "./karan";
+
+interface AboutProps {
+  show: boolean;
+}
 
 export default class About extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  props: AboutProps;
+  state: { showKaran: boolean };
+  constructor(props: AboutProps) {
+    super(props);
+    this.props = props;
 
     this.state = {
       showKaran: false
@@ -139,7 +146,7 @@ export default class About extends React.Component {
             <img className="avatarimg" src="//i.imgur.com/NgqxUDF.jpg" alt="In Memory of Saeft" />
           </button>
         </div>
-        <Karan show={this.state.showKaran} hideCallback={this.showKaranObit} />
+        <Karan isVisible={this.state.showKaran} hideCallback={this.showKaranObit} />
       </div>
     );
   }

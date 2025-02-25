@@ -1,12 +1,12 @@
 import {computed, observable, action} from "mobx";
-import fbase from "../libs/fbase";
+import {getDatabaseRef} from "../libs/fbase";
 import profile from "./profile";
 import events from "./events";
 import online from "./online";
 import mention from "../libs/mention";
 import {send} from "../libs/events";
 import epoch from "../utils/epoch";
-import Favico from "favico.js";
+const Favico = require("favico.js");
 import $ from 'jquery';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
@@ -14,7 +14,27 @@ const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
 const favico = new Favico({ animation: "slide" });
 
+export interface ChatMessage {
+  uid: string;
+  username: string;
+  msgs?: string[];
+  timestamp: number;
+  silenced?: boolean;
+  adminOnly?: boolean;
+  mentions?: string[];
+  isemote?: boolean;
+}
+
+interface ChatMessageData {
+  mentions: string[];
+  msg: string;
+  timestamp: number;
+  uid: string;
+  username: string;
+  silenced?: boolean;
+}
 export default new (class Chat {
+  limit: number;
   constructor() {
     setInterval(()=> {
       if ( $('ul#chatbox').children().length > 20 ) 
@@ -30,10 +50,8 @@ export default new (class Chat {
     window.onblur = function () {
       myself.werefocused = false;
     };
-    this.fbase = fbase;
-    fbase
-      .database()
-      .ref("chat")
+    getDatabaseRef("chat")
+      .orderByChild("timestamp")
       .limitToLast(50)
       .on("child_added", snap => {
         var msg = snap.val();
@@ -64,13 +82,13 @@ export default new (class Chat {
 
           if (msg.mentions && profile.username) {
             //mention check
-            let mentions = msg.mentions.map(s => {
-              return s ? s.substr(1).toLowerCase() : "";
+            let mentions = msg.mentions.map((s: string) => {
+              return s ? s.substring(1).toLowerCase() : "";
             });
             let everyone = mentions.includes("everyone");
             let mentioned = everyone;
             if (!mentioned) {
-              mentioned = mentions.includes(profile.safeUsername.toLowerCase());
+              mentioned = mentions.includes(profile.safeUsername?.toLowerCase());
             }
             if (mentioned) {
               mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
@@ -87,14 +105,12 @@ export default new (class Chat {
 
     this.limit = MSG_CHAR_LIMIT;
 
-    fbase
-      .database()
-      .ref("backend")
+    getDatabaseRef("backend")
       .child("chatlock")
       .on("value", snap => (this.chatLocked = !!snap.val())); // listen to backend chatlock value
   }
 
-  @observable accessor messages = [];
+  @observable accessor messages: ChatMessage[] = [];
   @observable accessor msg = "";
 
   @observable accessor lastgif = epoch();
@@ -104,18 +120,21 @@ export default new (class Chat {
   @observable accessor werefocused = true;
   @observable accessor mentioncount = 0;
 
-  @action inlineMessage(msg) {
-    this.messages[this.messages.length - 1].msgs.push(msg.msg);
+  @action inlineMessage(msg: ChatMessageData) {
+    const lastMessage = this.messages[this.messages.length - 1];
+    if (lastMessage && lastMessage.msgs) {
+      lastMessage.msgs.push(msg.msg);
+    }
     this.messages[this.messages.length - 1].timestamp = msg.timestamp;
   }
 
   @action
-  pushMessage(msg) {
+  pushMessage(msg: ChatMessageData) {
     this.messages.push(msg);
   }
 
   @action
-  updateMsg(msg) {
+  updateMsg(msg: string) {
     if (msg.length <= MSG_CHAR_LIMIT) {
       this.msg = msg;
     }
@@ -126,7 +145,7 @@ export default new (class Chat {
   }
 
   @action
-  appendMsg(msg) {
+  appendMsg(msg: string) {
     this.msg += " " + msg;
   }
 
@@ -142,14 +161,14 @@ export default new (class Chat {
     // moving throttling to the backend.
     if (this.msg.length !== 0) {
       this.msg = this.msg.replace("<3", ":heart:");
-      this.sendMsg(this.getMsg());
+      this.sendMsg(this.getMsg(), () => {});
 
       profile.lastchat = epoch();
     }
   }
 
   @action
-  sendMsg(msg, cb) {
+  sendMsg(msg: string, cb: () => void) {
     var mentions = msg.match(mentionPattern) || [];
 
     send("chat", {
@@ -172,7 +191,7 @@ export default new (class Chat {
       }
 
       return online.userlist.filter(
-        n =>
+        (n: string) =>
           n &&
           n.toUpperCase().startsWith(name.toUpperCase()) &&
           n.toUpperCase() !== name.toUpperCase()
@@ -183,7 +202,7 @@ export default new (class Chat {
   }
 
   @action
-  replaceMention(index) {
+  replaceMention(index: number) {
     var words = this.msg.split(" ");
     words[words.length - 1] = "@" + this.mentionMatches[index] + " ";
     this.msg = words.join(" ");

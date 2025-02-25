@@ -1,5 +1,5 @@
 import { observable, autorun } from "mobx";
-import fbase from "../libs/fbase";
+import {getDatabaseRef} from "../libs/fbase";
 
 export default new class LeadersBoard {
 
@@ -10,9 +10,7 @@ export default new class LeadersBoard {
   }
 
   setupLeaderboard() {
-    fbase
-      .database()
-      .ref("leaderboard")
+    getDatabaseRef("leaderboard")
       .on("value", (snap) => {
         let leaders = snap.val();
         this.leaders = leaders;

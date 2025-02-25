@@ -51,7 +51,7 @@ export interface Profile {
     lastchat: number;
     canAutoplay: boolean;
     loggedIn: boolean;
-    uid: boolean;
+    uid: string;
     unverified: boolean;
     noName: boolean;
     banned: boolean;
@@ -70,6 +70,7 @@ export interface Profile {
     clearAvatar(): void;
     changePassword(password: string): any;
     changeEmail(email: string): any;
+    memberSince: number;
 }
 
 export default new (class Profile {

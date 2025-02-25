@@ -1,19 +1,15 @@
-import fbase from "./fbase";
+import {getDatabaseRef} from "./fbase";
 
 export default function getLikes() {
-  return fbase
-    .database()
-    .ref("playing")
+  return getDatabaseRef("playing")
     .child("feedback_users")
     .child("likes")
     .once("value")
     .then(snap => snap.val());
 }
 
-export async function getUserLike(uid) {
-  let like = await fbase
-    .database()
-    .ref("playing")
+export async function getUserLike(uid:string) {
+  let like = await getDatabaseRef("playing")
     .child("feedback_users")
     .child("likes")
     .child(uid)
@@ -23,10 +19,8 @@ export async function getUserLike(uid) {
   return like;
 }
 
-export async function getUserDislike(uid) {
-  let dislike = await fbase
-    .database()
-    .ref("playing")
+export async function getUserDislike(uid: string) {
+  let dislike = await getDatabaseRef("playing")
     .child("feedback_users")
     .child("dislikes")
     .child(uid)
@@ -36,10 +30,8 @@ export async function getUserDislike(uid) {
   return dislike;
 }
 
-export async function getUserGrab(uid) {
-  let grab = await fbase
-    .database()
-    .ref("playing")
+export async function getUserGrab(uid: string) {
+  let grab = await getDatabaseRef("playing")
     .child("feedback_users")
     .child("grabs")
     .child(uid)

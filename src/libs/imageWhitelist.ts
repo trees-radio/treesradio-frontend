@@ -12,7 +12,7 @@ export const allowedDomains = [
   "giant.gfycat.com"
 ];
 
-export default function imgUrlWhitelisted(url) {
+export default function imgUrlWhitelisted(url: string) {
   let parsed;
   try {
     parsed = new URL(url);

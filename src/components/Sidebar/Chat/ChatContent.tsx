@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { observer } from "mobx-react";
-import chat from "../../../stores/chat";
+import chat, {ChatMessage} from "../../../stores/chat";
 import profile from "../../../stores/profile";
 import classNames from "classnames";
 import moment from "moment";
@@ -11,7 +11,7 @@ import UserAvatar from "../../utility/User/UserAvatar";
 const SCROLL_THRESHOLD = 100;
 
 const ChatContent = observer(({ goToChat }) => {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const lastScrollHeightRef = useRef(0);
@@ -53,7 +53,7 @@ const ChatContent = observer(({ goToChat }) => {
   }, [chat.messages, scrollToBottom, shouldAutoScroll, isUserScrolling]);
 
   // Handle scroll events
-  const handleScroll = useCallback((e) => {
+  const handleScroll = useCallback((_e: React.UIEvent) => {
     if (!scrollRef.current || isUserScrolling) return;
     
     const scrollElement = scrollRef.current;
@@ -98,7 +98,7 @@ const ChatContent = observer(({ goToChat }) => {
       onTouchEnd={handleTouchEnd}
     >
       <ul id="chatbox" className="p-4">
-        {chat.messages.map((msg, i) => {
+        {chat.messages.map((msg: ChatMessage, i) => {
           const chatPosClass = i % 2 === 0 ? "chat-line-1" : "chat-line-0";
           const chatLineClasses = classNames(
             "chat-item",
@@ -128,11 +128,11 @@ const ChatContent = observer(({ goToChat }) => {
                 <span className="chat-timestamp">{humanTimestamp}</span>
                 <br />
                 <span className="chat-text">
-                  {msg.msgs.map((innerMsg, j) => (
+                  {msg.msgs?.map((innerMsg: string, j: number) => (
                     <Message
                       key={j}
                       userName={msg.username}
-                      isEmote={msg.isemote}
+                      isEmote={msg.isemote || false}
                       text={innerMsg}
                       onLoad={handleMessageLoad}
                     />

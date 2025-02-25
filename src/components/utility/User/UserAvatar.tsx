@@ -2,7 +2,7 @@ import React from "react";
 import {defaultAvatar, listenAvatar} from "../../../libs/avatar";
 import imageWhitelist from "../../../libs/imageWhitelist";
 import EMPTY_IMG from "../../../assets/img/nothing.png";
-import {DataSnapshot} from "firebase/database";
+import {DataSnapshot} from "@firebase/database-types";
 
 interface UserAvatarProps {
     uid: string;
@@ -41,7 +41,7 @@ export default class UserAvatar extends React.Component {
             },
             () => {
                 if (this._isMounted)
-                    listenAvatar(this.props.uid, (snap: DataSnapshot) => {
+                    listenAvatar(this.props.uid, (snap: DataSnapshot, _b?: string | null) => {
                         this.setState({
                             avatar: snap.val() || fallback
                         });
@@ -54,7 +54,7 @@ export default class UserAvatar extends React.Component {
 
     render() {
         let avatar: string | undefined = "";
-        if (imageWhitelist(this.state.avatar)) {
+        if (this.state.avatar && imageWhitelist(this.state.avatar)) {
             avatar = this.state.avatar;
         } else {
             avatar = EMPTY_IMG;

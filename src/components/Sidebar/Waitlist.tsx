@@ -7,7 +7,17 @@ import UserAvatar from "../utility/User/UserAvatar";
 import playing from "../../stores/playing";
 import getUsername from "../../libs/username";
 
+interface WaitlistProps {
+  show: boolean;
+  goToChat: () => void;
+}
+
 class Waitlist extends React.Component {
+  props: WaitlistProps;
+  constructor(props: WaitlistProps) {
+    super(props);
+    this.props = props;
+  }
   render() {
     var accumulator = 0;
     var list = waitlist.onlineOnly.map((u, i) => {
@@ -49,12 +59,12 @@ class Waitlist extends React.Component {
     );
   }
 }
-function minutesSeconds(time) {
+function minutesSeconds(time: number) {
   var minutes = Math.floor(time / 60);
   var seconds = time - minutes * 60;
   return `${minutes < 10 ? '0' : ''}${Math.floor(minutes)}:${seconds < 10 ? '0' : ''}${Math.floor(seconds)}`;
 }
-function startTime(dateObj) {
+function startTime(dateObj: number) {
   var today = new Date(dateObj);
   return today.toLocaleTimeString();
 }

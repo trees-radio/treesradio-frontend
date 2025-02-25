@@ -1,6 +1,10 @@
-import React from "react";
+interface ChatLockedProps {
+  locked: boolean;
+  loggedIn: boolean;
+  secondsUntilUnlock: number;
+}
 
-export default function ChatLocked({locked, loggedIn, secondsUntilUnlock}) {
+export default function ChatLocked({ locked, loggedIn, secondsUntilUnlock }: ChatLockedProps) {
   if (locked && loggedIn) {
     return (
       <div className="sendbox-locked">

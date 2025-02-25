@@ -2,14 +2,28 @@ import React from "react";
 import { observer } from "mobx-react";
 import UserName from "../utility/User/UserName";
 import UserAvatar from "../utility/User/UserAvatar";
-import profile from "../../stores/profile";
-import online from "../../stores/online";
+import profile, {Profile} from "../../stores/profile";
+import online, { OnlineEnt } from "../../stores/online";
 import getUsername from "../../libs/username";
+
+interface OnlineUsersProps {
+  show: boolean;
+  goToChat: () => void;
+}
 
 class OnlineUsers extends React.Component {
 
-  selectUser(user) {
+  selectUser(user: Profile) {
+    $("#chatinput").val($("#chatinput").val() + " @" + user.username + " ");
+    this.props.goToChat();
+  }
+  
+  props: OnlineUsersProps;
 
+  constructor(props: OnlineUsersProps) {
+    super(props);
+    this.props = props;
+    this.selectUser = this.selectUser.bind(this);
   }
 
   render() {
@@ -30,7 +44,7 @@ class OnlineUsers extends React.Component {
           }
         >
           <ul className="users-list">
-            {online.online.map((user, i) => {
+            {online.online.map((user: OnlineEnt, i: number) => {
               return (
                 <li title={`Member Since: ${user.memberSince}`}
                   key={i}

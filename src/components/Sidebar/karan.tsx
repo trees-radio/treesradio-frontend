@@ -2,9 +2,17 @@ import React from "react";
 import Modal from "../utility/Modal";
 import { observer } from "mobx-react";
 
+interface KaranProps {
+  isVisible: boolean;
+  hideCallback: () => void;
+}
+
 class Karan extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  props: KaranProps;
+  state: { modalIsOpen: boolean; hideCallback: () => void };
+  constructor(props: KaranProps) {
+    super(props);
+    this.props = props;
     this.state = {
       modalIsOpen: props.isVisible,
       hideCallback: props.hideCallback

@@ -12,13 +12,29 @@ import Favicon from "../../assets/img/favicon.png";
 
 const PLAYLIST_OPACITY = 'playlistOpacity';
 
+interface PlaylistsPanelProps {
+  open: boolean;
+}
+
+
+interface PlaylistRemove {
+  name: string;
+  index: number;
+}
 class PlaylistsPanel extends React.Component {
   @observable accessor   addingPlaylist = false;
   @observable accessor   removingPlaylist = false;
-  @observable accessor   playlistToRemove = {};
+  @observable accessor   playlistToRemove: PlaylistRemove | null = null;
+  props: PlaylistsPanelProps;
+  state: { sliderOpacity: number | string; opacity: number | string };
+  _newPlaylist!: HTMLInputElement;
+  _search!: HTMLInputElement;
+  _importName!: HTMLInputElement;
+  _importUrl!: HTMLInputElement;
 
-  constructor(props) {
+  constructor(props: PlaylistsPanelProps) {
     super(props);
+    this.props = props;
     let opacity = this.getOpacityFromLocalStorage();
     this.state = { sliderOpacity: opacity, opacity };
     this.changeOpacityDebounced = this.changeOpacityDebounced.bind(this);
@@ -29,7 +45,15 @@ class PlaylistsPanel extends React.Component {
     return opacity ? opacity : 90;
   }
 
-  changeOpacityDebounced(event) {
+  @action
+  debounceOpacitySlider() {
+    if (!this.debounceOpacitySlider) {
+      this.debounceOpacitySlider = debounce(() => this.changeOpacity(), 100);
+    }
+    this.debounceOpacitySlider
+  }
+
+  changeOpacityDebounced(event: React.ChangeEvent<HTMLInputElement>) {
     let opacity = event.target.value;
 
     this.setState({ sliderOpacity: opacity });
@@ -43,17 +67,17 @@ class PlaylistsPanel extends React.Component {
 
   changeOpacity() {
     let opacity = this.state.sliderOpacity;
-    window.localStorage.setItem(PLAYLIST_OPACITY, opacity);
+    window.localStorage.setItem(PLAYLIST_OPACITY, opacity.toString());
     this.setState({ opacity: opacity });
   }
 
   getOpacityStyle() {
     return {
-      backgroundColor: "rgba(11,11,11," + this.state.opacity / 100 + ")"
+      backgroundColor: "rgba(11,11,11," + parseFloat(this.state.opacity.toString()) / 100 + ")"
     };
   }
 
-  onEnterKey(e, cb) {
+  onEnterKey(e: React.KeyboardEvent, cb: () => void) {
     var key = e.keyCode || e.which;
     if (key === 13) {
       cb();
@@ -71,7 +95,7 @@ class PlaylistsPanel extends React.Component {
     this.addingPlaylist = false;
   }
 
-  selectPlaylist(i) {
+  selectPlaylist(i: number) {
     playlists.selectPlaylist(i);
   }
 
@@ -81,12 +105,15 @@ class PlaylistsPanel extends React.Component {
     playlists.runSearch(query);
   }
 
-  startRemovingPlaylist(name, index) {
+  startRemovingPlaylist(name: string, index: number) {
     this.playlistToRemove = { name, index };
     this.removingPlaylist = true;
   }
 
   removePlaylist() {
+    if (!this.playlistToRemove) {
+      return;
+    }
     playlists.removePlaylist(this.playlistToRemove.index);
     this.removingPlaylist = false;
   }
@@ -179,7 +206,7 @@ class PlaylistsPanel extends React.Component {
               <span className="pl-time">
                 <i className="fa fa-clock-o" /> {humanDuration}
               </span>
-              <span className="pl-channel">{channelTitle.trim()}</span>
+              <span className="pl-channel">{channelTitle?.trim()}</span>
               <i
                 onClick={() => playlists.addFromSearch(i)}
                 className="fa fa-2x fa-plus add-to-playlist-btn"
@@ -187,7 +214,6 @@ class PlaylistsPanel extends React.Component {
               <a
                 target="_blank"
                 href={skipLink}
-                show={skipLink && skipLink.length > 0}
                 rel="noopener noreferrer"
               >
                 <i className="fa fa-2x fa-globe add-to-playlist-btn" />
@@ -319,7 +345,7 @@ class PlaylistsPanel extends React.Component {
             <input
               type="text"
               id="playlist-search-box"
-              ref={c => (this._search = c)}
+              ref={c => { this._search = c!; }}
               placeholder="Search"
               className="form-control"
               onKeyPress={e => this.onEnterKey(e, () => this.search())}
@@ -328,7 +354,7 @@ class PlaylistsPanel extends React.Component {
               <div>
                 <input
                   type="radio"
-                  defaultChecked={playlists.searchSource == "youtube" ? "checked" : ""}
+                  defaultChecked={playlists.searchSource == "youtube"}
                   id="search-youtube"
                   name="search-youtube"
                   onClick={() => {
@@ -341,7 +367,7 @@ class PlaylistsPanel extends React.Component {
               <div className="inline-flex">
                 <input
                   type="radio"
-                  defaultChecked={playlists.searchSource == "soundcloud" ? "checked" : ""}
+                  defaultChecked={playlists.searchSource == "soundcloud"}
                   id="search-soundcloud"
                   name="search-soundcloud"
                   onClick={() => {
@@ -416,7 +442,7 @@ class PlaylistsPanel extends React.Component {
           <input
             className="form-control"
             type="text"
-            ref={c => (this._newPlaylist = c)}
+            ref={c => { this._newPlaylist = c!; }}
             onKeyPress={e => this.onEnterKey(e, () => this.addPlaylist())}
             placeholder="Playlist Name"
           />
@@ -429,7 +455,7 @@ class PlaylistsPanel extends React.Component {
           leftButtonText="Confirm"
         >
           <p>
-            Are you sure you want to remove the playlist &apos;{this.playlistToRemove.name}&apos;?
+            Are you sure you want to remove the playlist &apos;{this.playlistToRemove?.name}&apos;?
           </p>
         </Modal>
         <Modal
@@ -438,9 +464,9 @@ class PlaylistsPanel extends React.Component {
           title="Merge Playlists"
           leftButton={() => {
             playlists.mergePlaylists(
-              $("#playlista").val(),
-              $("#playlistb").val(),
-              $("#newplaylistname").val()
+              $("#playlista").val() as string || "",
+              $("#playlistb").val() as string || "",
+              $("#newplaylistname").val() as string || ""
             );
             this.toggleMergePlaylists();
           }}
@@ -475,19 +501,15 @@ class PlaylistsPanel extends React.Component {
           hideModal={() => (this.importingPlaylist = false)}
           title="Importing Playlist"
           leftButton={() => this.importPlaylist()}
-          leftButtonText={
-            <span>
-              Import {playlists.importing && <i className="fa fa-spin fa-circle-o-notch" />}
-            </span>
-          }
+          leftButtonText="Import"
         >
           <div className="form-group">
             <label>Playlist Name</label>
-            <input className="form-control" ref={c => (this._importName = c)} />
+            <input className="form-control" ref={c => { this._importName = c!; }} />
           </div>
           <div className="form-group">
             <label>Playlist URL</label>
-            <input className="form-control" ref={c => (this._importUrl = c)} />
+            <input className="form-control" ref={c => { this._importUrl = c!; }} />
           </div>
         </Modal>
       </div >

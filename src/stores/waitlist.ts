@@ -1,5 +1,5 @@
 import { autorun, computed, observable, action } from "mobx";
-import fbase from "../libs/fbase";
+import {getDatabaseRef} from "../libs/fbase";
 import profile from "./profile";
 import toast from "../utils/toast";
 import playing from "./playing";
@@ -10,17 +10,60 @@ import events from "./events";
 import favicon from "../assets/img/favicon.png";
 import * as localforage from "localforage";
 
+interface WaitlistEnt {
+  uid: string;
+  songlength: number;
+}
+
 export default new (class Waitlist {
+
+  @action
+  reloadList() {
+    getDatabaseRef("waitlist")
+      .once("value", (snap) => {
+        var list: WaitlistEnt[] = [];
+        this.list = [];
+        var wl = snap.val();
+        if (wl)
+          Object.keys(wl).forEach((key) => {
+            list.push(wl[key]);
+          });
+
+        this.list = list;
+      });
+  }
+
+  @observable accessor list: WaitlistEnt[] = [];
+
+  @computed get onlineOnly() {
+    return this.list.filter(function (user) {
+      return { uid: user.uid, songlength: user.songlength };
+    });
+    //return this.list.filter(usr => online.uids.includes(usr));
+  }
+
+  join() {
+    if (!profile.user) {
+      toast("You must be logged in to join the waitlist!", {type:"error"});
+      return;
+    }
+    send("join_waitlist");
+  }
+
+  @observable accessor localJoinState = false;
+  @observable accessor localPlayingState = false;
+  @observable accessor autojoinTimer: Timer | boolean = false;
+  @observable accessor showMinutesUntil: boolean = false;
+
   constructor() {
     // this.reloadList();
     events.register("stop_autoplay", (data) => {
-      if (data.data.uid === profile.user.uid) {
+      const eventData = data as { data: { uid: string } };
+      if (profile.user && eventData.data.uid === profile.user.uid) {
         this.cancelAutojoin();
       }
     });
-    fbase
-      .database()
-      .ref("waitlist")
+    getDatabaseRef("waitlist")
       .on("value", () => {
         this.reloadList();
       });
@@ -41,47 +84,11 @@ export default new (class Waitlist {
         clearInterval(checkAutojoin);
       }
     }, 60000);
-  }
 
-  @action
-  reloadList() {
-    fbase
-      .database()
-      .ref("waitlist")
-      .once("value", (snap) => {
-        var list = [];
-        this.list = [];
-        var wl = snap.val();
-        if (wl)
-          Object.keys(wl).forEach((key) => {
-            list.push(wl[key]);
-          });
-
-        this.list = list;
-      });
-  }
-
-  @observable accessor list = [];
-
-  @computed get onlineOnly() {
-    return this.list.filter(function (user) {
-      return { uid: user.uid, songlength: user.songlength };
+    localforage.getItem("showminutes").then((value) => {
+      this.showMinutesUntil = typeof value === "boolean" ? value : false;
     });
-    //return this.list.filter(usr => online.uids.includes(usr));
   }
-
-  join() {
-    if (!profile.user) {
-      toast("You must be logged in to join the waitlist!", {type:"error"});
-      return;
-    }
-    send("join_waitlist");
-  }
-
-  @observable accessor localJoinState = false;
-  @observable accessor localPlayingState = false;
-  @observable accessor autojoinTimer = false;
-  @observable accessor showMinutesUntil = localforage.getItem("showminutes") || false;
 
   @action
   setShowMinutesUntil() {
@@ -131,7 +138,7 @@ export default new (class Waitlist {
   cancelAutojoin() {
     if (profile.canAutoplay && this.autojoinTimer != false) {
       profile.autoplay = false;
-      clearInterval(this.autojoinTimer);
+      clearInterval(this.autojoinTimer as Timer);
       this.autojoinTimer = false;
     }
   }
@@ -155,12 +162,12 @@ export default new (class Waitlist {
       this.localJoinState = this.inWaitlist;
       this.localPlayingState = this.isPlaying;
     } else if (this.isPlaying) {
-      chat.sendMsg("/skip");
+      chat.sendMsg("/skip", () => {});
       this.localPlayingState = false;
     } else if (this.inWaitlist) {
       if (confirm("Are you sure?")) {
         send("leave_waitlist");
-        clearInterval(this.autojoinTimer);
+        clearInterval(this.autojoinTimer as Timer);
         this.autojoinTimer = false;
         this.localJoinState = false;
       }
@@ -177,7 +184,7 @@ export default new (class Waitlist {
     if (this.isPlaying) {
       return true;
     }
-    return this.list.some((w) => w.uid == profile.user.uid);
+    return profile.user ? this.list.some((w) => w.uid === profile.user?.uid) : false;
   }
 
   @computed get isPlaying() {
@@ -193,7 +200,7 @@ export default new (class Waitlist {
 
   @computed get waitlistPosition() {
     let waitlistpos = this.list.map(
-      (item) => item.uid === profile.user.uid && true
+      (item) => item.uid === profile.user?.uid && true
     );
     if (!waitlistpos) return false;
     if (waitlistpos.indexOf(true) >= 0) return waitlistpos.indexOf(true) + 1;

@@ -1,7 +1,5 @@
-import React, {FC, Fragment, useEffect, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {observer} from "mobx-react";
-import {computed, observable} from "mobx";
-import {debounce} from "lodash";
 
 import {UserBit} from "./Nav/UserBit.tsx";
 import TokeTimer from "./Nav/TokeTimer.js";
@@ -223,7 +221,6 @@ const $Nav = observer(Nav);
 
 export {$Nav as Nav};
 
-//
 // class Nav_ extends React.Component {
 //
 //     @observable accessor avatarField = "";

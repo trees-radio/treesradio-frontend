@@ -1,9 +1,9 @@
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 import {observer} from "mobx-react";
 import {observable, action} from "mobx";
 
 // Note that lazy loading doesn't work. Filing an issue with the project
-import ReactPlayer from "react-player";
+import ReactPlayer, {ReactPlayerProps} from "react-player";
 import {Line} from "rc-progress";
 
 import playing from "../stores/playing";
@@ -91,7 +91,7 @@ const Player: FC = () => {
                     onDuration={() => {
                         action(() => {
                             playing.playerDuration =
-                                parseInt(playing.data.info.duration) / 1000;
+                                playing.data.info.duration / 1000;
                         });
                     }}
                 />
@@ -113,7 +113,7 @@ const $Player = observer(Player);
 export {$Player as Player};
 
 class Player_ extends React.Component {
-    onProgress(p) {
+    onProgress(p: { played: number }) {
         action(() => {
             playing.playerProgress = p.played;
             const syncTo = playing.shouldSync;
@@ -124,11 +124,15 @@ class Player_ extends React.Component {
         });
     }
 
-    playerError(e) {
+    playerError(e: number) {
         playing.userReportsError(e);
     }
 
     @observable accessor showVideo = true;
+
+    _player!: ReactPlayerProps;
+    onkeydownListener!: (e: KeyboardEvent) => void;
+    syncs = 0;
 
     componentDidMount() {
         this.onkeydownListener = (e) => {
@@ -164,7 +168,7 @@ class Player_ extends React.Component {
                 >
                     {this.showVideo && (
                         <ReactPlayer
-                            ref={(c) => (this._player = c)}
+                            ref={(c) => { this._player = c!; }}
                             className="reactplayer"
                             width="100%"
                             height="100%"
@@ -182,17 +186,13 @@ class Player_ extends React.Component {
                             onPause={undefined}
                             controls={controls}
                             config={{
-                                youtube: {
-                                    rPlayerYoutubeConfig,
-                                },
-                                soundcloud: {
-                                    rPlayerSoundcloudConfig,
-                                },
+                                youtube: rPlayerYoutubeConfig,
+                                soundcloud: rPlayerSoundcloudConfig,
                             }}
                             onDuration={() => {
                                 action(() => {
                                     playing.playerDuration =
-                                        parseInt(playing.data.info.duration) / 1000;
+                                        playing.data.info.duration / 1000;
                                 });
                             }}
                         />
@@ -202,7 +202,7 @@ class Player_ extends React.Component {
                 <Line
                     className="progressbar-container"
                     style={progress}
-                    strokeWidth="2"
+                    strokeWidth={2}
                     percent={playing.fraction * 100 > 100 ? 100 : playing.fraction * 100}
                     strokeColor="#000000"
                     //TrailColor="#77b300"

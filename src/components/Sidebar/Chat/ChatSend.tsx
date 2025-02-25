@@ -1,27 +1,37 @@
 import React from "react";
 // import {observable} from 'mobx';
 import { observer } from "mobx-react";
+
+import EmojiPicker, {EmojiClickData} from "emoji-picker-react";
 // import fbase from 'stores/fbase';
 import chat from "../../../stores/chat";
 import profile from "../../../stores/profile";
 import toast from "../../../utils/toast";
 
 // const noop = () => {};
-
+interface ChatSendProps {
+  myref: React.RefObject<HTMLInputElement>;
+}
 class ChatSend extends React.Component {
-  onKeyPress(e) {
+  props: ChatSendProps;
+  constructor(props: ChatSendProps) {
+    super(props);
+    this.props = props;
+  }
+
+  onKeyPress(e: React.KeyboardEvent) {
     var key = e.keyCode || e.which;
     if (key === 13) {
       e.preventDefault();
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
-      } else if (e.target.value.length > 0) {
+      } else if ((e.target as HTMLInputElement).value.length > 0) {
         chat.pushMsg();
       }
     }
   }
 
-  onKeyDown(e) {
+  onKeyDown(e: React.KeyboardEvent) {
     var key = e.keyCode || e.which;
     if (key === 9) {
       if (chat.mentionMatches.length > 0) {
@@ -32,13 +42,21 @@ class ChatSend extends React.Component {
     }
   }
 
-  onChange(e) {
+  onChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!profile.user) {
       toast("You are not logged in!", {type:"error"});
     } else {
       e.preventDefault();
       chat.updateMsg(e.target.value);
     }
+  }
+
+  emojiPicked(emoji: EmojiClickData) {
+    if (emoji.isCustom) {
+      chat.updateMsg(chat.msg + emoji.getImageUrl());
+      return;
+    }
+    chat.updateMsg(chat.msg + emoji);
   }
 
   render() {
@@ -62,6 +80,9 @@ class ChatSend extends React.Component {
           {" "}
           {matchContainer}{" "}
           <div id="sendbox_test" className="input-group tr-form-group">
+            <EmojiPicker 
+              onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
+              />
             <input
               ref={this.props.myref}
               type="text"

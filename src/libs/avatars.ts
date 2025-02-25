@@ -1,20 +1,23 @@
-import {observable, asMap} from "mobx";
-import fbase from "./fbase";
+import {observable} from "mobx";
+import {getDatabaseRef} from "./fbase";
 import moment from "moment";
 
 // DEPRECATED, DO NOT USE. REMOVE IF NO LONGER USED.
 
 export default new (class Avatars {
+  error = false;
+  errorMsg: string | Event = "";
+
   constructor() {}
 
-  defaultAvatar(username) {
+  defaultAvatar(username: string) {
     return `//tr-avatars.herokuapp.com/avatars/50/${username}.png`;
   }
 
-  @observable accessor users = asMap({});
-  @observable accessor attemptedUsers = {};
+  @observable accessor users = new Map<string, string>();
+  @observable accessor attemptedUsers: {[key: string]: any} = {};
 
-  loadAvatar(username) {
+  loadAvatar(username: string) {
     var defaultAvatar = this.defaultAvatar(username);
     if (!this.users.has(username)) {
       this.users.set(username, defaultAvatar);
@@ -23,14 +26,12 @@ export default new (class Avatars {
 
     var delay = hasDefault ? 15 : 30;
 
-    var threshold = moment.unix().subtract(delay, "seconds");
+    var threshold = moment.unix(Date.now() / 1000).subtract(delay, "seconds");
     var hasNoAttempt = !this.attemptedUsers[username];
     var attemptBeforeThreshold = moment.unix(this.attemptedUsers[username]).isBefore(threshold);
 
     if (hasNoAttempt || attemptBeforeThreshold) {
-      fbase
-        .database()
-        .ref("avatars")
+      getDatabaseRef("avatars")
         .child(username)
         .once("value", snap => {
           var avatar = snap.val();
@@ -46,7 +47,7 @@ export default new (class Avatars {
             image.src = avatar;
           }
         });
-      this.attemptedUsers[username] = moment.unix();
+      this.attemptedUsers[username] = moment.unix(Date.now()/1000);
     }
   }
 })();

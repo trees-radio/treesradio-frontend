@@ -83,14 +83,23 @@ export default new (class Playing {
 
   @observable accessor fakeScroll = 0;
 
+  @observable accessor timeStarted = 0;
+
   @observable accessor data = {
     info: {
       title: "",
       user: "",
       duration: 0,
       url: "",
+      uid: "",
+      thumb: "",
+      channel: "",
     },
-    feedback: {},
+    feedback: {
+      likes: 0,
+      dislikes: 0,
+      grabs: 0,
+    },
     feedback_users: {
       likes: [] as string[],
       dislikes: [] as string[],
@@ -234,7 +243,7 @@ export default new (class Playing {
     return this.localGrabState !== this.grabbed;
   }
 
-  grab(playlistKey) {
+  grab(playlistKey: string) {
     playlists.addSong(this.data.info, playlistKey, true);
     playlists.selectPlaylist(playlists.selectedPlaylist);
     if (!this.grabbed) {
@@ -243,7 +252,7 @@ export default new (class Playing {
     }
   }
 
-  userReportsError(e) {
+  userReportsError(e: number) {
     if (epoch() - profile.lastchat < 600 && (e == 150 || e == 100))
       send("playerError", { e });
   }
@@ -312,7 +321,7 @@ export default new (class Playing {
 
   @observable accessor backgroundImage = spacePineapples;
 
-  updateBackgroundImage(gelato) {
+  updateBackgroundImage(gelato: boolean) {
     this.backgroundImage = gelato ? gelatoGif : spacePineapples;
   }
 })();

@@ -1,6 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-const Dropdown = (props) => {
+interface DropdownProps {
+    title: string;
+    toright?: boolean;
+    id?: string;
+    children: React.ReactNode;
+}
+const Dropdown = (props: DropdownProps) => {
     const [dropdownToggle, setDropdownToggle] = useState(false);
 
     function toggleDropdown() {

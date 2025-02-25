@@ -92,7 +92,7 @@ const Main: FC = () => {
 
             <div id="toolbar">
                 <div id="playlists-container">
-                    <Toolbar togglePlaylist={() => setIsPlaylistOpen(!isPlaylistOpen)}/>
+                    <Toolbar onPlaylistToggle={(open) => setIsPlaylistOpen(open)}/>
                 </div>
                 <a id="exportPlaylistDownload"/>
             </div>

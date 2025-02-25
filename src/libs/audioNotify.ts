@@ -4,7 +4,9 @@ import mp3 from "../assets/audio/tr-notify.mp3";
 import ogg from "../assets/audio/tr-notify.ogg";
 
 export class AudioNotify {
-  constructor(src) {
+  howl: Howl;
+
+  constructor(src: any) {
     src = [...src]; // array ftw
     this.howl = new Howl({
       src,
@@ -15,7 +17,7 @@ export class AudioNotify {
 
   loaded = false;
 
-  load(cb) {
+  load(cb: () => void) {
     if (this.loaded) {
       return;
     }

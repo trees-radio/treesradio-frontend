@@ -20,7 +20,7 @@ const Grab: FC<{ onClose: VoidFunction }> = ({onClose}) => {
 
     useOnClickOutside(ref as RefObject<HTMLDivElement>, () => handleClose());
 
-    const grabPlaylists = playlists.playlists.map((p, i) => {
+    const grabPlaylists = playlists.playlists.map((p, _i) => {
         const songInPlaylist = playlists.checkPlaylistForSong(
             p.key,
             playing.data.info.url
@@ -201,16 +201,12 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
                         defaultValue={0.15}
                         value={playing.volume}
                         className="volume-slider-node"
-                        handleClassName="volume-slider-handle"
-                        handleActiveClassName="volume-slider-handle-active"
-                        barClassName="volume-slider-bar"
                         onChange={(e) => playing.setVolume(e)}
-                        withBars={true}
                     />
                 </div>
                 <div
                     className="like-button"
-                    onClick={() => !waitlist.playing && playing.like()}
+                    onClick={() => !waitlist.isPlaying && playing.like()}
                 >
                     <i className={cn([
                         "fa",
@@ -224,7 +220,7 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
                 </div>
                 <div
                     className="dislike-button"
-                    onClick={() => !waitlist.playing && playing.dislike()}
+                    onClick={() => !waitlist.isPlaying && playing.dislike()}
                 >
                     <i className={cn([
                         "fa",

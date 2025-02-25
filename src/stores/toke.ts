@@ -1,13 +1,11 @@
 import { computed, observable, autorun, action } from "mobx";
-import fbase from "../libs/fbase";
+import {getDatabaseRef} from "../libs/fbase";
 import { send } from "../libs/events";
 
 export default new (class TokeTimer {
   constructor() {
     autorun(() => {
-      fbase
-        .database()
-        .ref("toke")
+      getDatabaseRef("toke")
         .on("value", snap => {
           var tokestatus = snap.val();
           if (tokestatus != null) {

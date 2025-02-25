@@ -1,10 +1,16 @@
 import {getDatabaseRef} from "./fbase";
 import profile from "../stores/profile";
 
+interface Token {
+  uid: string;
+  type: string;
+  data: {};
+}
+
 export function send(type: string, data = {}) {
   if (profile.user !== null) {
     if (type == "chat" && profile.username == undefined) return false;
-    let token = {};
+    let token: {[key: string]: Token} = {};
     token[profile.user.uid] = {uid: profile.user.uid, type, data};
 
     return getDatabaseRef("events")

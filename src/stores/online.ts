@@ -1,13 +1,22 @@
 import {observable, computed, action} from "mobx";
-import fbase from "../libs/fbase";
+import {getDatabaseRef} from "../libs/fbase";
+
+export interface OnlineEnt {
+  uid: string;
+  username: string;
+  memberSince: string;
+  feedback: {
+    likes: boolean;
+    dislikes: boolean;
+    grabs: boolean;
+  }
+}
 
 export default new (class Online {
   constructor() {
     this.loadOnlineEnts();
 
-    fbase
-      .database()
-      .ref("onlineents")
+    getDatabaseRef("onlineents")
       .on("value", () => {
         this.loadOnlineEnts();
       });
@@ -15,22 +24,20 @@ export default new (class Online {
 
   @action
   async loadOnlineEnts() {
-    fbase
-      .database()
-      .ref("onlineents")
+    getDatabaseRef("onlineents")
       .once("value", snap => {
         const thislist = snap.val();
         if (thislist == null) return;
-        let list = [];
+        let list: OnlineEnt[] = [];
         this.online = [];
         this.userlist = [];
 
-        thislist.forEach((item) => {
+        thislist.forEach((item: OnlineEnt) => {
           list.push(item);
         });
 
         this.online = list;
-        let users = [];
+        let users: string[] = [];
         Object.keys(thislist).forEach((key) => {
           users.push(thislist[key].username);
         });
@@ -39,12 +46,12 @@ export default new (class Online {
       });
   }
   
-  @observable accessor online = [];
-  @observable accessor userlist = [];
+  @observable accessor online: OnlineEnt[] = [];
+  @observable accessor userlist: string[] = [];
   @observable accessor sorted = [];
 
   @computed get usernames() {
-    let names = [];
+    let names: string[] = [];
     this.userlist = [];
     this.online.forEach((online) => {
       names.push(online.username);
@@ -60,7 +67,7 @@ export default new (class Online {
   }
 
   @computed get uids() {
-    let uids = [];
+    let uids: string[] = [];
     this.online.forEach((online) => {
       uids.push(online.uid);
     })

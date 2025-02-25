@@ -1,13 +1,11 @@
-import fbase from "./fbase";
+import {getDatabaseRef} from "./fbase";
 
-export default function getPatreon(uid) {
+export default function getPatreon(uid: string) {
   if (uid === undefined || uid.length == 0) return false;
   if (uid === "BLAZEBOT") {
     return Promise.resolve(false);
   }
-  return fbase
-    .database()
-    .ref("patreon")
+  return getDatabaseRef("patreon")
     .child(uid)
     .once("value")
     .then(snap => snap.val());

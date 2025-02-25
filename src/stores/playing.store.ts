@@ -16,14 +16,14 @@ const StorageKeys = {
 } as const;
 
 export const playingStore = createStore<State & Actions>()(
-    immer((set, get) => ({
+    immer((set, _get) => ({
         volume: parseFloat(localStorage.getItem(StorageKeys.VOLUME) || "0.5"),
         setVolume: (volume: number) => set((state) => {
             state.volume = volume;
             localStorage.setItem(StorageKeys.VOLUME, volume.toString(10));
         }),
 
-        playerSize: localStorage.getItem(StorageKeys.PLAYER_SIZE) as "BIG" | "SMALL" | undefineda ?? "BIG",
+        playerSize: localStorage.getItem(StorageKeys.PLAYER_SIZE) as "BIG" | "SMALL" | undefined ?? "BIG",
         setPlayerSize: (size: "BIG" | "SMALL") => set((state) => {
             state.playerSize = size;
             localStorage.setItem(StorageKeys.PLAYER_SIZE, size);

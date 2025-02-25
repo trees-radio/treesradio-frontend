@@ -1,6 +1,6 @@
-import React, {createRef, FC, useState} from "react";
-import {observer} from "mobx-react";
-import {action, autorun, observable} from "mobx";
+import React, { createRef, FC, useState } from "react";
+import { observer } from "mobx-react";
+import { action, autorun, observable } from "mobx";
 import classNames from "classnames";
 
 import online from "../stores/online";
@@ -20,6 +20,7 @@ const Sidebar: FC = () => {
     const selWaitlistRef = createRef<HTMLDivElement>();
     const selAboutRef = createRef<HTMLDivElement>();
     const chatInputRef = createRef<HTMLInputElement>();
+    // const chatComponentRef = createRef<HTMLDivElement>();
     const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(profile.loggedIn ? "CHAT" : "ABOUT");
 
     const chatBtnClass = classNames("show-chat-btn", {
@@ -60,11 +61,11 @@ const Sidebar: FC = () => {
                 >
                     Waitlist{" "}
                     <span className="waitlist-count">
-              {waitlist.inWaitlist && waitlist.waitlistPosition !== false
-                  ? waitlist.waitlistPosition + "/"
-                  : ""}
+                        {waitlist.inWaitlist && waitlist.waitlistPosition !== false
+                            ? waitlist.waitlistPosition + "/"
+                            : ""}
                         {waitlist.count}
-            </span>
+                    </span>
                 </div>
                 <div
                     className={aboutBtnClass}
@@ -74,29 +75,39 @@ const Sidebar: FC = () => {
                     About
                 </div>
             </div>
-            <div id="chatcontainertop" className="">
-                <Chat show={currentSidebar === "CHAT"} ref={chatInputRef} goToChat={goToChat}/>
-                <OnlineUsers show={currentSidebar === "ONLINE"} goToChat={goToChat}/>
-                <Waitlist show={currentSidebar === "WAITLIST"} goToChat={goToChat}/>
-                <About show={currentSidebar === "ABOUT"}/>
-            </div>
+            <Chat show={currentSidebar === "CHAT"} goToChat={goToChat} />
+            <Chat show={currentSidebar === "CHAT"} goToChat={goToChat} />
+            <OnlineUsers show={currentSidebar === "ONLINE"} goToChat={goToChat} />
+            <Waitlist show={currentSidebar === "WAITLIST"} goToChat={goToChat} />
+            <About show={currentSidebar === "ABOUT"} />
         </div>
     );
 }
 
 const $Sidebar = observer(Sidebar);
 
-export {$Sidebar as Sidebar};
+export { $Sidebar as Sidebar };
 
+interface SidebarProps {
+    show: boolean;
+    goToChat: () => void;
+}
 class Sidebar_ extends React.Component {
-    constructor() {
-        super();
-
+    props: SidebarProps;
+    selChatRef: React.RefObject<HTMLDivElement | null>;
+    selOnlineRef: React.RefObject<HTMLDivElement | null>;
+    selWaitlistRef: React.RefObject<HTMLDivElement | null>;    
+    selAboutRef: React.RefObject<HTMLDivElement | null>;
+    chatInputRef: React.RefObject<HTMLInputElement | null>;
+    constructor(props: SidebarProps) {
+        super(props);
+        this.props = props;
         const loggedInAtRender = profile.loggedIn;
         this.selChatRef = React.createRef();
         this.selOnlineRef = React.createRef();
         this.selWaitlistRef = React.createRef();
         this.selAboutRef = React.createRef();
+        this.chatInputRef = React.createRef();
 
         autorun(() => {
             const loggedInAfterRender = !loggedInAtRender && profile.loggedIn;
@@ -109,12 +120,12 @@ class Sidebar_ extends React.Component {
     @observable accessor currentSidebar = profile.loggedIn ? "CHAT" : "ABOUT";
 
     @action
-    setCurrentSidebar(tab) {
+    setCurrentSidebar(tab: string) {
         this.currentSidebar = tab;
     }
 
     @action
-    update(tab) {
+    update(tab: string) {
         if (tab === this.currentSidebar) return;
         this.setCurrentSidebar(tab);
     }
@@ -122,7 +133,7 @@ class Sidebar_ extends React.Component {
     @action
     goToChat = () => {
         this.setCurrentSidebar("CHAT");
-        this.chatInputRef.current.focus();
+        this.chatInputRef?.current?.focus();
     }
 
     render() {
@@ -159,11 +170,11 @@ class Sidebar_ extends React.Component {
                     >
                         Waitlist{" "}
                         <span className="waitlist-count">
-              {waitlist.inWaitlist && waitlist.waitlistPosition !== false
-                  ? waitlist.waitlistPosition + "/"
-                  : ""}
+                            {waitlist.inWaitlist && waitlist.waitlistPosition !== false
+                                ? waitlist.waitlistPosition + "/"
+                                : ""}
                             {waitlist.count}
-            </span>
+                        </span>
                     </div>
                     <div
                         className={aboutBtnClass}
@@ -174,10 +185,10 @@ class Sidebar_ extends React.Component {
                     </div>
                 </div>
                 <div id="chatcontainertop" className="">
-                    <Chat show={this.currentSidebar === "CHAT"} ref={this.chatInputRef} goToChat={this.goToChat}/>
-                    <OnlineUsers show={this.currentSidebar === "ONLINE"} goToChat={this.goToChat}/>
-                    <Waitlist show={this.currentSidebar === "WAITLIST"} goToChat={this.goToChat}/>
-                    <About show={this.currentSidebar === "ABOUT"}/>
+                    <Chat show={this.currentSidebar === "CHAT"} goToChat={this.goToChat} />
+                    <OnlineUsers show={this.currentSidebar === "ONLINE"} goToChat={this.goToChat} />
+                    <Waitlist show={this.currentSidebar === "WAITLIST"} goToChat={this.goToChat} />
+                    <About show={this.currentSidebar === "ABOUT"} />
                 </div>
             </div>
         );
