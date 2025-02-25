@@ -33,7 +33,7 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_STAGING_SERVICE_ACCOUNT }}'
-          channelId: staging
+          channelId: live
           projectId: treesradio-staging
           expires: 7d
         env:
