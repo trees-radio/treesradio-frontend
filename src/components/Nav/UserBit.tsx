@@ -311,7 +311,7 @@ const UserBit: FC = () => {
                     </MenuButton>
 
                     <MenuItems>
-                        <div className="bg-black my-4 flex flex-col gap-y-1">
+                        <div className="bg-black my-4 flex flex-col gap-y-1 relative z-10">
                             {dropdownItems.map((item) => (
                                 <MenuItem>
                                     <div key={item.name} onClick={item.action}
