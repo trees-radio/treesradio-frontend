@@ -13,7 +13,7 @@ export function send(type: string, data = {}) {
     let token: {[key: string]: Token} = {};
     token[profile.user.uid] = {uid: profile.user.uid, type, data};
 
-    return getDatabaseRef("events")
+    return getDatabaseRef("event_bus")
       .child(profile.user.uid)
       .set(token);
     //{uid: profile.user.uid, type, data});
