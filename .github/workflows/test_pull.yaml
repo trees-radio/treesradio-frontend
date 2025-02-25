@@ -36,5 +36,6 @@ jobs:
           channelId: live
           projectId: treesradio-staging
           expires: 7d
+          target: live
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
