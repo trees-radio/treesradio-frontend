@@ -72,7 +72,7 @@ export default class FlairColor extends React.Component<FlairColorProps, FlairCo
         });
     }
 
-    getFlairColors() : FlairColors | {} {
+    getFlairColors() : FlairColors {
         if (!this.state || !this.state.colors || this.state.colors.length === 0) {
             return {};
         }
@@ -177,18 +177,25 @@ export default class FlairColor extends React.Component<FlairColorProps, FlairCo
                         <span style={this.getFlairBackgroundColor()}>
                             <span 
                                 key={JSON.stringify(this.state.colors)} 
-                                style={flairColors['colors'] ? flairColors.colors.join(' ') : ''} 
-                                className={this.state.colors && this.state.colors.length > 1 && "gradient-text"}>
+                                style={flairColors.colors ? {color: flairColors.colors.join(' ')} : {}} 
+                                className={(this.state.colors && this.state.colors.length > 1) ? "gradient-text": ""}>
                                 This is a preview of your flair colors!
                             </span>
                         </span>
-                        {this.state.colors && this.state.colors.length > 1 && <div className="angle"><AngleInput defaultValue={this.state.angle} max="360" min="0" step="45"
-                            onChange={newAngle => this.angleChange(newAngle)} onInput={newAngle => this.angleChange(newAngle)} /></div>}
+                        {this.state.colors && this.state.colors.length > 1 && <div className="angle">
+                            <AngleInput 
+                                defaultValue={this.state.angle} 
+                                max={360} 
+                                min={0} 
+                                step={45}
+                                onChange={newAngle => this.angleChange(newAngle)} 
+                                onInput={newAngle => this.angleChange(newAngle)} 
+                                /></div>}
                     </div>
                     {this.state.colors.map((color, idx) => (
                         <div key={idx} className="color">
-                            <label htmlFor={idx}>Color {idx + 1}</label>
-                            <input name={idx} type="color" value={color} onChange={e => this.setColorDebounced(e.target.value, idx)} className="html5colorpicker" />
+                            <label htmlFor={idx.toString()}>Color {idx + 1}</label>
+                            <input name={idx.toString()} type="color" value={color} onChange={e => this.setColorDebounced(e.target.value, idx)} className="html5colorpicker" />
                             <button><i
                                 onClick={() => this.addColor(idx)}
                                 className="fa fa-2x fa-plus"

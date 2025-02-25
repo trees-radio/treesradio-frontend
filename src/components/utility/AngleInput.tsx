@@ -30,12 +30,12 @@ interface Props {
     max: number;
     min: number;
     step: number;
-    onChange: (value: number) => void;
-    onInput: (value: number) => void;
+    onChange?: (value: number) => void;
+    onInput?: (value: number) => void;
     className: string;
     pivotClassName: string;
-    tabIndex: number;
-    children: React.ReactNode;
+    tabIndex?: number;
+    children?: React.ReactNode;
 }
 
 class AngleInput extends React.Component {
