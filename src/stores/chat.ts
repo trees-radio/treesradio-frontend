@@ -6,13 +6,13 @@ import online from "./online";
 import mention from "../libs/mention";
 import {send} from "../libs/events";
 import epoch from "../utils/epoch";
-const Favico = require("favico.js");
+// import Favico from "favico.js";
 import $ from 'jquery';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
-const favico = new Favico({ animation: "slide" });
+// const favico = new Favico({ animation: "slide" });
 
 export interface ChatMessage {
   uid: string;
@@ -44,7 +44,7 @@ export default new (class Chat {
     const myself = this;
     window.onfocus = function () {
       myself.mentioncount = 0;
-      favico.badge(0);
+      // favico.badge(0);
       myself.werefocused = true;
     };
     window.onblur = function () {
@@ -94,7 +94,7 @@ export default new (class Chat {
               mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
               if (!this.werefocused) {
                 this.mentioncount++;
-                favico.badge(this.mentioncount);
+                // favico.badge(this.mentioncount);
               }
             }
           }

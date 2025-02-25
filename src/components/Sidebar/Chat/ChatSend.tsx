@@ -2,7 +2,7 @@ import React from "react";
 // import {observable} from 'mobx';
 import { observer } from "mobx-react";
 
-import EmojiPicker, {EmojiClickData} from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 // import fbase from 'stores/fbase';
 import chat from "../../../stores/chat";
 import profile from "../../../stores/profile";
@@ -37,14 +37,22 @@ class ChatSend extends React.Component {
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
       }
-      e.preventDefault();
-      return false;
     }
-  }
 
+    if (key === 13) {
+      e.preventDefault();
+      if (chat.mentionMatches.length > 0) {
+        chat.replaceMention(0);
+      } else if ((e.target as HTMLInputElement).value.length > 0) {
+        chat.pushMsg();
+      }
+    }
+
+    return false;
+  }
   onChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!profile.user) {
-      toast("You are not logged in!", {type:"error"});
+      toast("You are not logged in!", { type: "error" });
     } else {
       e.preventDefault();
       chat.updateMsg(e.target.value);
@@ -79,10 +87,12 @@ class ChatSend extends React.Component {
         <div className="form-group tr-form-group chatboxform">
           {" "}
           {matchContainer}{" "}
+          <EmojiPicker
+            onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
+            open={false}
+          />
           <div id="sendbox_test" className="input-group tr-form-group">
-            <EmojiPicker 
-              onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
-              />
+
             <input
               ref={this.props.myref}
               type="text"
@@ -91,7 +101,7 @@ class ChatSend extends React.Component {
               autoComplete="off"
               className="bg-white h-11"
               value={chat.msg}
-              onKeyPress={e => this.onKeyPress(e)}
+              // onKeyPress={e => this.onKeyPress(e)}
               onKeyDown={e => this.onKeyDown(e)}
               onChange={e => this.onChange(e)}
               data-lpignore="true"

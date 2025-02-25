@@ -131,7 +131,7 @@
 
 .chat-username {
   font-weight: bolder;
-  font-size: 1.5em;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -141,7 +141,7 @@
 
 .userflair {
   color: vars.$color-user-flair;
-  font-size: 1.2em;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -238,7 +238,7 @@
   // height: 1vw;
   width: 100%;
   position: relative;
-  font-size: 1.6em;
+  font-size: 1rem;
 }
 
 .chat-text p {
@@ -376,7 +376,7 @@
 
 .chat-timestamp {
   float: right;
-  font-size: 1em;
+  font-size: .8rem;
 }
 
 .inline-image {
