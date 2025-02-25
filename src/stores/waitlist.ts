@@ -72,7 +72,7 @@ export default new (class Waitlist {
 
   join() {
     if (!profile.user) {
-      toast.error("You must be logged in to join the waitlist!");
+      toast($2, {type:"error"});
       return;
     }
     send("join_waitlist");
@@ -116,7 +116,7 @@ export default new (class Waitlist {
             };
             new Notification("TreesRadio", options);
           } else {
-            toast.error(msg);
+            toast($2, {type:"error"});
           }
           profile.autoplay = false;
           this.cancelAutojoin();
@@ -146,7 +146,7 @@ export default new (class Waitlist {
   @action
   bigButton() {
     if (!profile.user) {
-      toast.error("You must be logged in to push the big button!");
+      toast($2, {type:"error"});
       return;
     }
 

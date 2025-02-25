@@ -11,7 +11,7 @@ class TokeTimer extends React.Component {
         if (profile.user !== null) {
             toketimer.joinToke();
         } else {
-            toast.info("Log in to start or join a toke and toke with other users!", {delay: 1300})
+            toast($2, {type:"info"})
         }
     };
 

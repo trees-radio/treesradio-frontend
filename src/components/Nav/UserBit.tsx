@@ -140,7 +140,7 @@ const UserBit: FC = () => {
                 const notificationsSupported = "Notification" in window;
 
                 if (!notificationsSupported) {
-                    toast.error("Seems like your browser doesn't support desktop notifications :/");
+                    toast($2, {type:"error"});
                     return;
                 }
 
@@ -151,10 +151,10 @@ const UserBit: FC = () => {
                         profile.setDesktopNotifications(true);
                         break;
                     case 'denied':
-                        toast.warn('Seems like you blocked notifications for this site. Please unblock and try again.');
+                        toast($2, {type:"warn"});
                         break;
                     case 'default':
-                        toast.warn('Please allow desktop notifications in your browser to use this feature.');
+                        toast($2, {type:"warn"});
                         break;
                 }
 
@@ -623,7 +623,7 @@ class UserBit_ extends React.Component {
         if (!(Notification.permission === 'denied' || Notification.permission === 'default')) {
             permitted = true;
         } else {
-            toast.warn('Seems like you blocked notifications for this site. Please unblock and try again.')
+            toast($2, {type:"warn"})
         }
 
         profile.setDesktopNotifications(permitted);
@@ -674,7 +674,7 @@ class UserBit_ extends React.Component {
             Notification.requestPermission()
                 .then((permission) => this.handleNotificationPermission(permission));
         } else {
-            toast.error("Seems like your browser doesn't support notifications :/");
+            toast($2, {type:"error"});
         }
     }
 
@@ -1085,7 +1085,7 @@ class UserBit_ extends React.Component {
     }
 
     triggerIfLoggedIn(action, errorMessage) {
-        return this.userLoggedIn() ? action : () => (toast.error(errorMessage));
+        return this.userLoggedIn() ? action : () => (toast($2, {type:"error"}));
     }
 
     userLoggedIn() {

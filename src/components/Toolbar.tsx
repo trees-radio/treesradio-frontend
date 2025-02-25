@@ -1,13 +1,12 @@
-import React, {FC, Fragment, JSX, RefObject, useCallback, useEffect, useRef, useState} from "react";
+import {FC, JSX, RefObject, useCallback, useEffect, useRef, useState} from "react";
 import {observer} from "mobx-react";
-import {observable, action} from "mobx";
 import ReactSlider from "react-slider";
-import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
+import PlaylistsPanel from "./Toolbar/PlaylistsPanel.js";
 
-import waitlist from "../stores/waitlist";
+import waitlist from "../stores/waitlist.js";
 import playlists from "../stores/playlists.js";
 import profile from "../stores/profile.js";
-import playing, {VOLUME_NUDGE_FRACTION} from "../stores/playing";
+import playing, {VOLUME_NUDGE_FRACTION} from "../stores/playing.js";
 import toast from "../utils/toast.js";
 import cn from "classnames";
 import $ from "cash-dom";
@@ -56,7 +55,7 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
 
     const togglePlaylistsPanel = () => {
         if (!playlists.init) {
-            return toast.error("You must be logged in to use playlists!");
+            return toast("You must be logged in to use playlists!", {type: "error"});
         }
         setPanelOpen(!panelOpen);
         handlePlaylistToggle(panelOpen);
@@ -70,7 +69,7 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
 
     const toggleGrab = (value?: boolean) => {
         if (!profile.user) {
-            return toast.error("You must be logged in to grab songs!");
+            return toast($2, {type:"error"});
         }
         setGrabbing(value ?? !grabbing);
     }
@@ -313,7 +312,7 @@ class Toolbar_ extends React.Component {
                 );
             }
         } else {
-            toast.error("You must be logged in to use playlists!");
+            toast($2, {type:"error"});
         }
     }
 
@@ -332,7 +331,7 @@ class Toolbar_ extends React.Component {
     @action
     toggleGrab(setting) {
         if (!profile.user) {
-            toast.error("You must be logged in to grab songs!");
+            toast($2, {type:"error"});
             return;
         }
         this.grabbing = typeof setting === "boolean" ? setting : !this.grabbing;

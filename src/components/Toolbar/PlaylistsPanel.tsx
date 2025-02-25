@@ -63,7 +63,7 @@ class PlaylistsPanel extends React.Component {
   addPlaylist() {
     var name = this._newPlaylist.value;
     if (!name) {
-      toast.error("You must provide a playlist name!");
+      toast($2, {type:"error"});
       return;
     }
     this._newPlaylist.value = "";
@@ -113,7 +113,7 @@ class PlaylistsPanel extends React.Component {
         this.importingPlaylist = false;
       }
     } catch (e) {
-      toast.error(`Error importing playlist!`);
+      toast($2, {type:"error"});
     }
   }
 

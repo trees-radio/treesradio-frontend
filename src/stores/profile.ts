@@ -463,29 +463,32 @@ export default new (class Profile {
         return this.rankPermissions.admin === true;
     }
 
-    setAvatar(url) {
+    setAvatar(url: string) {
         if (!url) {
             return false;
         }
-        const avatar = ref(db, `avatars/${this.user.uid}`);
+        const avatar = ref(db, `avatars/${this.user?.uid}`);
         set(avatar, url);
     }
 
     @computed get avatarURL() {
-        const avatar = ref(db, `avatars/${this.user.uid}`);
+        const avatar = ref(db, `avatars/${this.user?.uid}`);
         return get(avatar).then(snap => snap.val().toString());
     }
 
     clearAvatar() {
-        const avatar = ref(db, `avatars/${this.user.uid}`);
+        const avatar = ref(db, `avatars/${this.user?.uid}`);
         return set(avatar, null);
     }
 
-    changePassword(password) {
+    changePassword(password: string) {
+        if (!this.user) {
+            return false;
+        }
         return this.user
             .updatePassword(password)
             .then(() => {
-                toast.success("Password updated successfully!");
+                toast("Password updated successfully!", { type: "success" });
                 return true;
             })
             .catch(e => {
@@ -498,16 +501,19 @@ export default new (class Profile {
                         msg = `Changing your password requires a recent login, log out and log back in before trying again.`;
                         break;
                 }
-                toast.error(msg);
+                toast(msg, { type: "error" });
                 return false;
             });
     }
 
-    changeEmail(email) {
+    changeEmail(email: string) {
+        if (!this.user) {
+            return false;
+        }
         return this.user
             .updateEmail(email)
             .then(() => {
-                toast.success("Email changed successfully!");
+                toast("Email changed successfully!", { type: "success" });
                 return true;
             })
             .catch(e => {
@@ -525,7 +531,7 @@ export default new (class Profile {
                     case undefined:
                         return;
                 }
-                toast.error(msg);
+                toast(msg, { type: "error" });
                 return false;
             });
     }

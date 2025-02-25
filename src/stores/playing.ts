@@ -1,6 +1,6 @@
 import { autorun, computed, observable, action } from "mobx";
 import toast from "../utils/toast";
-import fbase from "../libs/fbase";
+import {getDatabaseRef} from "../libs/fbase";
 import profile from "./profile";
 import epoch from "../utils/epoch";
 // import ax from '../utils/ax';
@@ -19,24 +19,17 @@ const PLAYER_SYNC_START = 25; // percent
 const PLAYER_SYNC_SENSITIVITY = 5; //percent
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
-/*
-playing.js:39 [MobX] Since strict-mode is enabled, changing (observed) observable values without using an action is not allowed. Tried to modify: Playing@35.data
-*/
 
 export default new (class Playing {
   constructor() {
-    this.fbase = fbase;
-
-    localforage.getItem("volume").then((v) => (v ? (this.volume = v) : false));
+    localforage.getItem<number>("volume").then((v) => (v ? (this.volume = v) : false));
     localforage
-      .getItem("playerSize")
+      .getItem<string>("playerSize")
       .then((s) => (s ? (this.playerSize = s) : false));
 
     autorun(() => {
       const me = this
-      fbase
-        .database()
-        .ref("playing")
+      getDatabaseRef("playing")
         .on("value", (snap) => {
             var data = snap.val();
             if (data) {
@@ -53,7 +46,7 @@ export default new (class Playing {
   }
 
   @action
-  updatePlayer(data) {
+  updatePlayer(data: Playing["data"]) {
     this.data = data;
     document.title = `${data.info.title} - ${data.info.user} | TreesRadio`;
   }
@@ -91,37 +84,44 @@ export default new (class Playing {
   @observable accessor fakeScroll = 0;
 
   @observable accessor data = {
-    info: {},
+    info: {
+      title: "",
+      user: "",
+      duration: 0,
+      url: "",
+    },
     feedback: {},
     feedback_users: {
       likes: [],
       dislikes: [],
       grabs: [],
     },
+    time: 0,
+    playing: false,
   };
 
   @computed get humanDuration() {
     var mo = moment.duration(this.data.info.duration, "milliseconds");
-    var str = `${padStart(mo.minutes(), 1, "0")}:${padStart(
-      mo.seconds(),
+    var str = `${padStart(mo.minutes().toString(), 1, "0")}:${padStart(
+      mo.seconds().toString(),
       2,
       "0"
     )}`;
     if (mo.hours() > 0) {
-      str = `${padStart(mo.hours(), 2, "0")}:` + str;
+      str = `${padStart(mo.hours().toString(), 2, "0")}:` + str;
     }
     return str;
   }
 
   @computed get humanCurrent() {
     var mo = moment.duration(this.playerSeconds, "seconds");
-    var str = `${padStart(mo.minutes(), 1, "0")}:${padStart(
-      mo.seconds(),
+    var str = `${padStart(mo.minutes().toString(), 1, "0")}:${padStart(
+      mo.seconds().toString(),
       2,
       "0"
     )}`;
     if (mo.hours() > 0) {
-      str = `${padStart(mo.hours(), 1, "0")}:` + str;
+      str = `${padStart(mo.hours().toString(), 1, "0")}:` + str;
     }
     return str;
   }
@@ -201,7 +201,7 @@ export default new (class Playing {
     }
 
     if (this.liked) {
-      toast.error("You've already liked this song!");
+      toast($2, {type:"error"});
       return false;
     }
     send("like");
@@ -222,7 +222,7 @@ export default new (class Playing {
     }
 
     if (this.disliked) {
-      toast.error("You've already disliked this song!");
+      toast($2, {type:"error"});
     }
     send("dislike");
     this.localDislikeState = true;

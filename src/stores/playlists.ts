@@ -1,6 +1,6 @@
 import {computed, observable, action} from "mobx";
 import toast from "../utils/toast";
-import fbase, {auth, db} from "../libs/fbase";
+import fbase, {db} from "../libs/fbase";
 import profile from "./profile";
 import moment from "moment";
 import {shuffle} from "lodash";
@@ -123,9 +123,9 @@ export default new (class Playlists {
             name,
             entries: []
         }).then(() => {
-            toast.success(`Added playlist ${name}!`);
+            toast($2, {type:"success"});
         }).catch(err => {
-            toast.error(`Error adding playlist: ${err.message}`);
+            toast($2, {type:"error"});
         });
     }
 
@@ -240,7 +240,7 @@ export default new (class Playlists {
     @action
     addFromSearch(index) {
         if (!this.hasPlaylist) {
-            toast.error("You don't have a selected playlist!");
+            toast($2, {type:"error"});
             return;
         }
         var video = this.search[index];
@@ -273,7 +273,7 @@ export default new (class Playlists {
         };
 
         if (!this.selectedPlaylistKey) {
-            toast.error("Please select a playlist to add a song!");
+            toast($2, {type:"error"});
             return;
         }
 
@@ -332,7 +332,7 @@ export default new (class Playlists {
             .child(playlistKey)
             .child("entries")
             .set(newPlaylist);
-        toast.success(`Added ${song.title} to playlist ${playlist.name}.`);
+        toast($2, {type:"success"});
         // this.addedTo.push(playlistKey);
     }
 
@@ -345,7 +345,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast.success(`Moved ${video.title} to top of playlist.`);
+        toast($2, {type:"success"});
     }
 
     @action
@@ -357,7 +357,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast.success(`Moved ${video.title} to bottom of playlist.`);
+        toast($2, {type:"success"});
     }
 
     @action
@@ -368,7 +368,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast.success(`Removed ${video.title} from playlist.`);
+        toast($2, {type:"success"});
     }
 
     @action
@@ -378,7 +378,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast.success(`Playlist shuffled.`);
+        toast($2, {type:"success"});
     }
 
     @action

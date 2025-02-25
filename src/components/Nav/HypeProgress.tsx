@@ -1,4 +1,4 @@
-import React, {type FC, useEffect, useState} from "react";
+import {type FC, useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {action, runInAction} from "mobx";
 import {hypeIntervalSeconds, hypetimer} from "../../stores/hype";
@@ -11,7 +11,7 @@ const doHype = action(
     "doHype", () => {
         (profile.user !== null && hypetimer.hypePercentageCharged === 100)
             ? hypetimer.getHyped()
-            : toast.info("Log in to hype this song and boost it's likes!", {delay: 1300})
+            : toast("Log in to hype this song and boost it's likes!", {delay: 1300, type: "info"})
     }
 )
 

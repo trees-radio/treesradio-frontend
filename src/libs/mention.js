@@ -26,7 +26,7 @@ export default function mention(everyone, username, toke) {
                 n.onclick = () => document.getElementById("chatinput").focus();
 
             } else {
-                toast.info(notificationMessage);
+                toast($2, {type:"info"});
             }
         });
         if (profile.notifications) audioNotify.play();

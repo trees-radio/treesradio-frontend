@@ -34,7 +34,7 @@ class ChatSend extends React.Component {
 
   onChange(e) {
     if (!profile.user) {
-      toast.error("You must be logged in to chat!");
+      toast($2, {type:"error"});
     } else {
       e.preventDefault();
       chat.updateMsg(e.target.value);
