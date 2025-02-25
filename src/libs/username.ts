@@ -1,5 +1,4 @@
 import {getDatabaseRef} from "./fbase";
-import { DataSnapshot } from "@firebase/database-types";
 
 export default function getUsername(uid: string) {
   if (uid === undefined || uid.length == 0) return false;

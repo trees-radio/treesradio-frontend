@@ -2,12 +2,22 @@ import React from "react";
 import {defaultAvatar, listenAvatar} from "../../../libs/avatar";
 import imageWhitelist from "../../../libs/imageWhitelist";
 import EMPTY_IMG from "../../../assets/img/nothing.png";
+import {DataSnapshot} from "firebase/database";
+
+interface UserAvatarProps {
+    uid: string;
+    className?: string;
+    imgClass?: string;
+}
 
 export default class UserAvatar extends React.Component {
     _isMounted = false;
+    props: UserAvatarProps;
+    state: { avatar?: string; visible: boolean };
 
-    constructor(props) {
+    constructor(props: UserAvatarProps) {
         super(props);
+        this.props = props;
         this.state = {
             visible: true
         };
@@ -31,7 +41,7 @@ export default class UserAvatar extends React.Component {
             },
             () => {
                 if (this._isMounted)
-                    listenAvatar(this.props.uid, snap => {
+                    listenAvatar(this.props.uid, (snap: DataSnapshot) => {
                         this.setState({
                             avatar: snap.val() || fallback
                         });
@@ -40,17 +50,17 @@ export default class UserAvatar extends React.Component {
         );
     };
 
-    onVisibility = isVisible => this.setState({visible: isVisible});
+    onVisibility = (isVisible: boolean) => this.setState({visible: isVisible});
 
     render() {
-        let avatar;
+        let avatar: string | undefined = "";
         if (imageWhitelist(this.state.avatar)) {
             avatar = this.state.avatar;
         } else {
             avatar = EMPTY_IMG;
         }
 
-        avatar = avatar.replace("http:", "https:");
+        avatar = avatar?.replace("http:", "https:");
 
         let style = {};
 

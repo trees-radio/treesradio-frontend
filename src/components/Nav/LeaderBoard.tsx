@@ -8,7 +8,7 @@ import UserName from "../utility/User/UserName";
 class LeaderBoard extends React.Component {
 
     render() {
-        let leadersarray = LeadersBoard.leaders;
+        let leadersarray: Array<{ uid: string, timestamp: number, likes: number, grabs: number, dislikes: number, onlineents?: number, url: string, title: string, thumb: string }> = LeadersBoard.leaders;
         let leaders = leadersarray.map((leader, index) => {
             let now = Math.floor(Date.now() / 1000);
             let time = leader.timestamp;

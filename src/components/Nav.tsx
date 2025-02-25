@@ -4,14 +4,14 @@ import {computed, observable} from "mobx";
 import {debounce} from "lodash";
 
 import {UserBit} from "./Nav/UserBit.tsx";
-import TokeTimer from "./Nav/TokeTimer.jsx";
+import TokeTimer from "./Nav/TokeTimer.js";
 
 import file from "../static/version.json";
 import profile from "../stores/profile.ts";
 import $ from "cash-dom";
-import Modal from "./utility/Modal";
+import Modal from "./utility/Modal.tsx";
 // import imageWhitelist from "../libs/imageWhitelist";
-import tokeEvent from "../libs/tokeEvent";
+import tokeEvent from "../libs/tokeEvent.ts";
 import {HypeProgress} from "./Nav/HypeProgress.tsx";
 import cn from "classnames";
 import HeartWeed from "../assets/img/heart_weed.svg";

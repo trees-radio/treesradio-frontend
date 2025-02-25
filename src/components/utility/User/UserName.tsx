@@ -8,10 +8,20 @@ import Marijuana from "../../../assets/img/marijuana.png";
 
 const noop = () => { };
 
+interface UserNameProps {
+  uid: string;
+  className?: string;
+  onClick?: () => void;
+}
+
 export default class UserName extends React.Component {
   _isMounted = false;
-  constructor(props) {
+  props: UserNameProps;
+  state: { title?: string; username?: string; userflair?: string; userflairColors?: { colors: string[], angle: number, backgroundColor: string[], backgroundOpacity: number }; userpatreon?: boolean };
+
+  constructor(props: UserNameProps) {
     super(props);
+    this.props = props;
     this.state = {};
     this.getRank();
     this.getUsername();
