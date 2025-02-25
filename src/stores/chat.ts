@@ -52,7 +52,7 @@ export default new (class Chat {
     };
     getDatabaseRef("chat")
       .orderByChild("timestamp")
-      .limitToLast(50)
+      .limitToLast(200)
       .on("child_added", snap => {
         var msg = snap.val();
         if (msg) {

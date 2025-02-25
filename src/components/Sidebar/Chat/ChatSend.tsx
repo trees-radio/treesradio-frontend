@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { observable, action } from "mobx";
 import {EmojiPickerSpecialEmoji} from "../.././../libs/emoji";
 
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 // import fbase from 'stores/fbase';
 import chat from "../../../stores/chat";
 import profile from "../../../stores/profile";
@@ -98,8 +98,9 @@ class ChatSend extends React.Component {
       <EmojiPicker
         onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
         open={this.showEmojiPicker}
-        style={{ bottom: "85vh"}}
+        style={{ bottom: "5vh", position: "absolute"}}
         customEmojis={EmojiPickerSpecialEmoji}
+        theme={Theme.AUTO}
       />
         <div className="form-group tr-form-group chatboxform">
           {" "}
