@@ -123,9 +123,9 @@ export default new (class Playlists {
             name,
             entries: []
         }).then(() => {
-            toast($2, {type:"success"});
-        }).catch(err => {
-            toast($2, {type:"error"});
+            toast("Playlist added!", {type:"success"});
+        }).catch((err: Error) => {
+            toast(`Failed to add Playlist! ${err.toString()}`, {type:"error"});
         });
     }
 
@@ -240,7 +240,7 @@ export default new (class Playlists {
     @action
     addFromSearch(index) {
         if (!this.hasPlaylist) {
-            toast($2, {type:"error"});
+            toast("You really should select a playlist first.", {type:"error"});
             return;
         }
         var video = this.search[index];
@@ -273,7 +273,7 @@ export default new (class Playlists {
         };
 
         if (!this.selectedPlaylistKey) {
-            toast($2, {type:"error"});
+            toast("You really should select a playlist.", {type:"error"});
             return;
         }
 
@@ -332,7 +332,7 @@ export default new (class Playlists {
             .child(playlistKey)
             .child("entries")
             .set(newPlaylist);
-        toast($2, {type:"success"});
+        toast(`Added song ${song.name} to playlist!`, {type:"success"});
         // this.addedTo.push(playlistKey);
     }
 
@@ -345,7 +345,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast($2, {type:"success"});
+        toast(`Moved song to top of playlist!`, {type:"success"});
     }
 
     @action
@@ -357,7 +357,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast($2, {type:"success"});
+        toast("Moved song to bottom of playlist!", {type:"success"});
     }
 
     @action
@@ -368,7 +368,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast($2, {type:"success"});
+        toast(`Removed ${video.name} from playlist!`, {type:"success"});
     }
 
     @action
@@ -378,7 +378,7 @@ export default new (class Playlists {
             .child(this.selectedPlaylistKey)
             .child("entries")
             .set(newPlaylist);
-        toast($2, {type:"success"});
+        toast("Shuffled playlist!", {type:"success"});
     }
 
     @action

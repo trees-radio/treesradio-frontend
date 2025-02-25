@@ -92,9 +92,9 @@ export default new (class Playing {
     },
     feedback: {},
     feedback_users: {
-      likes: [],
-      dislikes: [],
-      grabs: [],
+      likes: [] as string[],
+      dislikes: [] as string[],
+      grabs: [] as string[],
     },
     time: 0,
     playing: false,
@@ -171,12 +171,12 @@ export default new (class Playing {
 
   @observable accessor volume = 0.15;
 
-  setVolume(v) {
+  setVolume(v: number) {
     this.volume = v;
     localforage.setItem("volume", v);
   }
 
-  nudgeVolume(dir) {
+  nudgeVolume(dir: string) {
     if (dir === "UP") {
       this.setVolume(this.volume + VOLUME_NUDGE_FRACTION);
     } else if (dir === "DOWN") {
@@ -201,7 +201,7 @@ export default new (class Playing {
     }
 
     if (this.liked) {
-      toast($2, {type:"error"});
+      toast("You've already liked this song!", {type:"error"});
       return false;
     }
     send("like");
@@ -222,7 +222,7 @@ export default new (class Playing {
     }
 
     if (this.disliked) {
-      toast($2, {type:"error"});
+      toast("You already disliked this song!", {type:"error"});
     }
     send("dislike");
     this.localDislikeState = true;

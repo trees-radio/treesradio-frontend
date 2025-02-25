@@ -140,7 +140,7 @@ const UserBit: FC = () => {
                 const notificationsSupported = "Notification" in window;
 
                 if (!notificationsSupported) {
-                    toast($2, {type:"error"});
+                    toast("Your browser does not accept notifications!", {type:"error"});
                     return;
                 }
 
@@ -151,10 +151,10 @@ const UserBit: FC = () => {
                         profile.setDesktopNotifications(true);
                         break;
                     case 'denied':
-                        toast($2, {type:"warn"});
+                        toast("You denied the notifications, they will not work.", {type:"warning"});
                         break;
                     case 'default':
-                        toast($2, {type:"warn"});
+                        toast("How did you get here?", {type:"warning"});
                         break;
                 }
 
@@ -623,7 +623,7 @@ class UserBit_ extends React.Component {
         if (!(Notification.permission === 'denied' || Notification.permission === 'default')) {
             permitted = true;
         } else {
-            toast($2, {type:"warn"})
+            toast("Notifications failed to register?", {type:"warning"})
         }
 
         profile.setDesktopNotifications(permitted);
@@ -673,8 +673,6 @@ class UserBit_ extends React.Component {
         if ("Notification" in window && this.checkNotificationPromise()) {
             Notification.requestPermission()
                 .then((permission) => this.handleNotificationPermission(permission));
-        } else {
-            toast($2, {type:"error"});
         }
     }
 
@@ -1084,8 +1082,8 @@ class UserBit_ extends React.Component {
         );
     }
 
-    triggerIfLoggedIn(action, errorMessage) {
-        return this.userLoggedIn() ? action : () => (toast($2, {type:"error"}));
+    triggerIfLoggedIn(action: string, errorMessage: string) {
+        return this.userLoggedIn() ? action : () => (toast(errorMessage, {type:"error"}));
     }
 
     userLoggedIn() {
