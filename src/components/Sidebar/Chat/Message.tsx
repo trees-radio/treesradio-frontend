@@ -178,7 +178,7 @@ class MessageItem extends React.Component {
         return (
             <span
                 className={this.props.isEmote ? "chat-italic" : thisClass}
-                style={show ? { display: "inline" } : { display: "none" }}
+                style={show ? { } : { display: "none" }}
                 title={titletext}
             >
                 {token}{" "}
