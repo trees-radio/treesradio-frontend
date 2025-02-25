@@ -9,7 +9,7 @@ class PlayHistory extends React.Component {
 
     render() {
         let historyarray = SongHistory.history;
-        let history = historyarray.map((song, index) => {
+        let history = historyarray.map((song: { time: number, thumb?: string, uid: string, url: string, title: string, likes: number, dislikes: number, grabs: number, hypes: number }, index) => {
             let now = Math.floor(Date.now() / 1000);
             let time = song.time;
             let ago = Math.floor((now - time) / 60) + " minutes ago";

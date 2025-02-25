@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, JSX} from "react";
 import {observer} from "mobx-react";
 import {computed, observable, action} from "mobx";
 import classNames from "classnames";
@@ -67,7 +67,6 @@ const UserNameModal: FC = observer(() => {
     return (
         <Modal
             show={profile.noName}
-            hideModal={!profile.noName}
             title="Missing Username"
             noClose={true}
             leftButton={() => profile.updateUsername(username.slice(0, MAX_USERNAME_LENGTH))}
@@ -90,6 +89,12 @@ const UserNameModal: FC = observer(() => {
     );
 });
 
+interface EventData {
+    data: {
+        uid: string;
+    };
+}
+
 const UserBit: FC = () => {
     const [isSettingAvatar, setIsSettingAvatar] = useState(false);
     const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -106,8 +111,13 @@ const UserBit: FC = () => {
     const [newPasswordField, setNewPasswordField] = useState("");
 
     useEffect(() => void events.register("show_leaderboard",
-            (data) => (profile.user.uid == data.data.uid) && setIsShowLeaders(true)),
-        []);
+                (event: unknown) => {
+                    const data = event as EventData;
+                    if (profile.user?.uid == data.data.uid) {
+                        setIsShowLeaders(true);
+                    }
+                }),
+            []);
 
     useEffect(() => void $("#reactplayerid").attr(
             "style",
@@ -223,6 +233,7 @@ const UserBit: FC = () => {
     ];
     //</editor-fold>
 
+
     //TODO Broken
     const helpCommandList =
         // TODO highly illegal shit to get this kinda workin for now
@@ -230,7 +241,7 @@ const UserBit: FC = () => {
                 (item, key) =>
                     (profile.rankPermissions.admin ||
                         (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||
-                        allUserCommands.includes(key)
+                        allUserCommands.includes(key as any) // TODO Horrible hack fuck that
                     ) && (
                         <tr key={key}>
                             <td>
@@ -254,7 +265,7 @@ const UserBit: FC = () => {
     let resendVerification = !!(profile.unverified && profile.user !== null) && (
         <Modal
             show={profile.unverified}
-            hideModal={!profile.unverified}
+            // hideModal={!profile.unverified}
             title="Please Verify Your Email"
             noClose={true}
         >
@@ -289,7 +300,7 @@ const UserBit: FC = () => {
                         <div id={'usernametop'}
                              className={"btn btn-primary"}>
                             <div className="userbit-avatar">
-                                <UserAvatar uid={profile.uid}/>
+                                <UserAvatar uid={profile.uid ? profile.uid : ""}/>
                             </div>
                             <span id="username" className="userLevel">
                                     <b>{profile.safeUsername}</b>
@@ -299,7 +310,7 @@ const UserBit: FC = () => {
 
                     </MenuButton>
 
-                    <MenuItems anchor="top-right">
+                    <MenuItems>
                         <div className="bg-black my-4 flex flex-col gap-y-1">
                             {dropdownItems.map((item) => (
                                 <MenuItem>
@@ -416,7 +427,7 @@ const UserBit: FC = () => {
                     </div>
                     <div className="col-md-4">
                         <UserAvatar
-                            uid={profile.uid}
+                            uid={profile.uid ? profile.uid : ""}
                             className="user-avatar-preview"
                             imgClass="user-avatar-preview-img"
                         />
@@ -443,7 +454,12 @@ const UserBit: FC = () => {
                 <br/>
                 <div>
                     <button className="btn btn-primary"
-                            onClick={async () => await profile.changePassword(password).then(res => !!res && setIsChangingPassword(false))}>
+                            onClick={async () => {
+                                const res = await profile.changePassword(newPasswordField);
+                                if (res) {
+                                    setIsChangingPassword(false);
+                                }
+                            }}>
                         Change Password
                     </button>
                 </div>
@@ -464,7 +480,12 @@ const UserBit: FC = () => {
                 <br/>
                 <div>
                     <button className="btn btn-primary"
-                            onClick={async () => await profile.changeEmail(email).then(res => !!res && setIsChangingEmail(false))}>
+                            onClick={async () => {
+                                const res = await profile.changeEmail(newEmailField);
+                                if (res) {
+                                    setIsChangingEmail(false);
+                                }
+                            }}>
                         Change Email
                     </button>
                 </div>
@@ -477,6 +498,10 @@ const UserBit: FC = () => {
 const $UserBit = observer(UserBit);
 
 export {$UserBit as UserBit};
+
+interface UserBitProps {
+    className?: string;
+}
 
 class UserBit_ extends React.Component {
     dropdownItems = [
@@ -525,13 +550,6 @@ class UserBit_ extends React.Component {
 
         // Playback & Participation Preferences
         {
-            name: "Auto Play?",
-            action: () => waitlist.setAutoPlay(),
-            icon: "fa-check-square-o",
-            isCheckbox: true,
-            checkboxFunction: () => profile.autoplay
-        },
-        {
             name: "Auto Join Waitlist",
             action: () => waitlist.setAutojoin(),
             icon: "fa-check-square-o",
@@ -554,19 +572,25 @@ class UserBit_ extends React.Component {
         {name: "Logout", action: () => this.logoutAndDisableButtons(), icon: "fa-sign-out", isCheckbox: false}
     ];
 
-    constructor(props) {
+    props: UserBitProps;
+    _username: HTMLInputElement | null = null;
+    _newPassword: HTMLInputElement | null = null;
+    _newEmail: HTMLInputElement | null = null;
+
+    constructor(props: UserBitProps) {
         super(props);
+        this.props = props;
     }
 
-    onEnterKey(e, cb) {
-        var key = e.keyCode || e.which;
+    onEnterKey(e: React.KeyboardEvent, cb: () => void) {
+        var key = e.code || e.which || e.keyCode;
         if (key === 13) {
             cb();
         }
     }
 
     addUsername() {
-        profile.updateUsername(this._username.value.substr(0, 24));
+        profile.updateUsername(this._username?.value?.substring(0, 24) || "");
     }
 
     @observable accessor fontSize = 1.2;
@@ -590,16 +614,24 @@ class UserBit_ extends React.Component {
 
     @action
     changePassword() {
-        const password = this._newPassword.value;
-        this._newPassword.value = "";
-        profile.changePassword(password).then(res => !!res && (this.changingPassword = false));
+        const password = this._newPassword?.value;
+        if (this._newPassword) {
+            this._newPassword.value = "";
+        }
+        if (password) {
+            Promise.resolve(profile.changePassword(password)).then(res => !!res && (this.changingPassword = false));
+        }
     }
 
     @action
     changeEmail() {
-        const email = this._newEmail.value;
-        this._newEmail.value = "";
-        profile.changeEmail(email).then(res => !!res && (this.changingEmail = false));
+        const email = this._newEmail?.value;
+        if (this._newEmail) {
+            this._newEmail.value = "";
+        }
+        if (email) {
+            Promise.resolve(profile.changeEmail(email)).then(res => !!res && (this.changingEmail = false));
+        }
     }
 
     @action
@@ -614,11 +646,8 @@ class UserBit_ extends React.Component {
     }
 
     @action
-    handleNotificationPermission(permission) {
+    handleNotificationPermission() {
         let permitted = false;
-        if (!('permission' in Notification)) {
-            Notification.permission = permission;
-        }
 
         if (!(Notification.permission === 'denied' || Notification.permission === 'default')) {
             permitted = true;
@@ -646,12 +675,12 @@ class UserBit_ extends React.Component {
 
         playing.updateBackgroundImage(this.legacyInterface);
 
-        document.getElementById("vidcontainer").setAttribute("style", "background-image: " + `url("${playing.backgroundImage}")`);
+        document.getElementById("vidcontainer")?.setAttribute("style", "background-image: " + `url("${playing.backgroundImage}")`);
 
         if ((playing.playerSize === "BIG" && this.legacyInterface === true) || (playing.playerSize === "SMALL" && this.legacyInterface === false)) {
             this.togglePlayer();
         } else if (this.legacyInterface === false && playing.playerSize === "BIG") {
-            document.getElementById("reactplayerid").setAttribute("style", "width:100%;height:100%;");
+            document.getElementById("reactplayerid")?.setAttribute("style", "width:100%;height:100%;");
         }
     }
 
@@ -659,7 +688,7 @@ class UserBit_ extends React.Component {
     togglePlayer() {
         playing.togglePlayerSize();
 
-        document.getElementById("reactplayerid").setAttribute("style", this.legacyInterface && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;");
+        document.getElementById("reactplayerid")?.setAttribute("style", this.legacyInterface && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;");
     }
 
     @action
@@ -672,7 +701,7 @@ class UserBit_ extends React.Component {
 
         if ("Notification" in window && this.checkNotificationPromise()) {
             Notification.requestPermission()
-                .then((permission) => this.handleNotificationPermission(permission));
+                .then(() => this.handleNotificationPermission());
         }
     }
 
@@ -727,15 +756,14 @@ class UserBit_ extends React.Component {
         profile.logout()
             .then(() => {
                 if (window.matchMedia("only screen and (orientation: portrait)")) {
-                    document.getElementById("navbar-grid")
-                        .setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
+                    document.getElementById("navbar-grid")?.setAttribute("grid-template-columns", "15vw 85vw 0 0 0");
                 }
 
                 let buttons = document.querySelectorAll('disabledNoLogin');
 
                 buttons.forEach(button => button.classList.add('greyDisabled'));
 
-                document.getElementById("chatscroll").setAttribute("style", "overflow:hidden;")
+                document.getElementById("chatscroll")?.setAttribute("style", "overflow:hidden;")
             });
     }
 
@@ -750,7 +778,7 @@ class UserBit_ extends React.Component {
                 return (
                     <MenuItem>
                         <div key={index} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
-                            <i className={classNames("fa", item.checkboxFunction() ? "fa-check-square-o" : "fa-square-o", "")}/>
+                            <i className={classNames("fa", item.checkboxFunction && item.checkboxFunction() ? "fa-check-square-o" : "fa-square-o", "")}/>
                             <span className="ml-2">{item.name}</span>
                         </div>
                     </MenuItem>
@@ -770,7 +798,8 @@ class UserBit_ extends React.Component {
 
     render() {
         events.register("show_leaderboard", (data) => {
-            if (profile.user.uid == data.data.uid) this.toggleLeaderboard()
+            const eventData = data as EventData;
+            if (profile.user?.uid == eventData.data.uid) this.toggleLeaderboard()
         });
         let emailVerificationResendIcon;
         if (profile.resendVerificationLoading) {
@@ -793,7 +822,7 @@ class UserBit_ extends React.Component {
             resendVerification = (
                 <Modal
                     show={profile.unverified}
-                    hideModal={profile === null || !profile.unverified}
+                    // hideModal={profile === null || !profile.unverified}
                     title="Please Verify Your Email"
                     noClose={true}
                 >
@@ -813,7 +842,7 @@ class UserBit_ extends React.Component {
             resendVerification = "";
         }
 
-        const helpCommands = [];
+        const helpCommands: JSX.Element[] = [];
         const allUserCommands = [
             "join",
             "toke",
@@ -838,7 +867,7 @@ class UserBit_ extends React.Component {
             "t"
         ];
         if (HelpList.helpCommands !== undefined)
-            HelpList.helpCommands.forEach((item, key) => {
+            HelpList.helpCommands.forEach((item: { helpstring: string }, key: string) => {
                 if (
                     profile.rankPermissions.admin === true ||
                     (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||
@@ -859,7 +888,7 @@ class UserBit_ extends React.Component {
                     <Menu>
 
                         <MenuButton>
-                            <div id={'usernametop'} toright="true"
+                            <div id={'usernametop'}
                                  className={"btn btn-primary" + this.disableIfNecessary()}>
                                 <div className="userbit-avatar">
                                     {this.showAvatar()}
@@ -872,7 +901,7 @@ class UserBit_ extends React.Component {
 
                         </MenuButton>
 
-                        <MenuItems anchor="top-right">
+                        <MenuItems>
                             <div className="bg-black p-1 my-4">
                                 {this.buildMenuItems()}
                             </div>
@@ -885,7 +914,7 @@ class UserBit_ extends React.Component {
                 {/* Missing Username Modal */}
                 <Modal
                     show={profile.noName}
-                    hideModal={!profile.noName}
+                    // hideModal={!profile.noName}
                     title="Missing Username"
                     noClose={true}
                     leftButton={() => this.addUsername()}
@@ -899,7 +928,7 @@ class UserBit_ extends React.Component {
                         className="form-control"
                         type="text"
                         maxLength={20}
-                        ref={c => (this._username = c)}
+                        ref={c => { this._username = c; }}
                         onKeyPress={e => this.onEnterKey(e, () => this.addUsername())}
                         placeholder="Username"
                     />
@@ -1001,7 +1030,7 @@ class UserBit_ extends React.Component {
                         </div>
                         <div className="col-md-4">
                             <UserAvatar
-                                uid={profile.uid}
+                                uid={profile.uid ? profile.uid : ""}
                                 className="user-avatar-preview"
                                 imgClass="user-avatar-preview-img"
                             />
@@ -1018,7 +1047,7 @@ class UserBit_ extends React.Component {
                 >
                     <div className="form-group">
                         <label>New Password</label>
-                        <input className="form-control" type="password" ref={c => (this._newPassword = c)}/>
+                        <input className="form-control" type="password" ref={c => { this._newPassword = c; }}/>
                     </div>
                     <br/>
                     <div>
@@ -1037,7 +1066,7 @@ class UserBit_ extends React.Component {
                 >
                     <div className="form-group">
                         <label>New Email</label>
-                        <input className="form-control" type="email" ref={c => (this._newEmail = c)}/>
+                        <input className="form-control" type="email" ref={c => { this._newEmail = c; }}/>
                     </div>
                     <br/>
                     <div>
@@ -1049,39 +1078,6 @@ class UserBit_ extends React.Component {
             </div>
         );
     }
-
-    showMute() {
-        return profile.rank && profile.rank.match(/Admin|Mod|Dev/) ?
-            (
-                <Dropdown.Item key={20} onClick={() => this.toggleShowMute()}>
-                    <i
-                        className={classNames(
-                            "fa",
-                            profile.showmuted ? "fa-check-square-o" : "fa-square-o"
-                        )}
-                    />{" "}
-                    Show Muted Users
-                </Dropdown.Item>
-            ) : (
-                <Dropdown.Item key={20}></Dropdown.Item>
-            )
-    }
-
-    showMentionAudio() {
-        return this.userLoggedIn() ? (<Dropdown.Item key={10} onClick={() => this.toggleNotifications()}>
-                <i
-                    className={classNames(
-                        "fa",
-                        profile.notifications === true ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                />{" "}
-                Mention Audio?
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={10}></Dropdown.Item>
-        );
-    }
-
     triggerIfLoggedIn(action: string, errorMessage: string) {
         return this.userLoggedIn() ? action : () => (toast(errorMessage, {type:"error"}));
     }
@@ -1090,111 +1086,14 @@ class UserBit_ extends React.Component {
         return profile.user !== null;
     }
 
-    showAutoplay() {
-        return profile.rank && profile.rank !== "User" ? (
-            <Dropdown.Item key={11} onClick={() => waitlist.setAutojoin()}>
-                <i
-                    className={classNames("fa", profile.autoplay ? "fa-check-square-o" : "fa-square-o")}
-                />{" "}
-                Auto Join Waitlist
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={11}></Dropdown.Item>
-        )
-    }
-
-    showToggleDesktopNotifications() {
-        return this.userLoggedIn() ? (
-            <Dropdown.Item key={100 /*TODO*/} onClick={() => this.toggleDesktopNotifications()}>
-                <i
-                    className={classNames(
-                        "fa",
-                        profile.desktopNotifications ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                />{" "}
-                Desktop Notifications<sup>BETA</sup>
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={100/*TODO*/}></Dropdown.Item>
-        );
-    }
-
-    showLogout() {
-        return this.userLoggedIn() ? (
-            <Dropdown.Item key={12} onClick={() => this.logoutAndDisableButtons()}>
-                <i className="fa fa-sign-out"/> Logout
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={12}></Dropdown.Item>
-        )
-    }
-
-    showChangePassword() {
-        return this.userLoggedIn() ? (
-            <Dropdown.Item key={13}
-                           onClick={this.triggerIfLoggedIn(() => (this.changingPassword = true), "Log in to change Password")}>
-                <i className="fa fa-key"/> Change Password
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={13}/>
-        )
-    }
-
-    showChangeEmail() {
-        return this.userLoggedIn() ? (
-            <Dropdown.Item key={14}
-                           onClick={this.triggerIfLoggedIn(() => (this.changingEmail = true), "log in to change Email")}>
-                <i className="fa fa-envelope"/> Change Email
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={14}></Dropdown.Item>
-        )
-    }
-
-    showSetAvatar() {
-        return this.userLoggedIn() ? (
-            <Dropdown.Item key={15}
-                           onClick={this.triggerIfLoggedIn(() => this.settingAvatar = true, "Log in to change Avatar")}>
-                <i className="fa fa-pencil fa-fw"/> Set Avatar
-            </Dropdown.Item>
-        ) : (
-            <Dropdown.Item key={15}></Dropdown.Item>
-        )
-    }
-
-    showSetFlairColor() {
-        if (this.userLoggedIn()) {
-            return (
-                <Dropdown.Item key={25} onClick={() => this.toggleFlairColor()}>
-                    <i className="fa fa-paint-brush"/> Change flair color
-                </Dropdown.Item>
-            );
-        }
-        return (<></>);
-
-    }
-
     showAvatar() {
         return this.userLoggedIn() ? (
-            <UserAvatar uid={profile.uid}/>
+            <UserAvatar uid={profile.uid ? profile.uid : ""}/>
         ) : (
             <span>
                 <img className="avatarimg" src={Nothing} alt="avatar"/>
             </span>
         )
-    }
-
-    showGelato() {
-        return this.userLoggedIn() ? (
-            <Dropdown.Item key={8} onClick={() => this.toggleInterface()}>
-                <i
-                    className={classNames(
-                        "fa",
-                        this.legacyInterface ? "fa-check-square-o" : "fa-square-o"
-                    )}
-                />{" "}
-                Gelato?
-            </Dropdown.Item>) : (<Dropdown.Item key={8}></Dropdown.Item>);
     }
 
     getQueryMultiplier() {

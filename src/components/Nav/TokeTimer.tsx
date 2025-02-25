@@ -43,9 +43,9 @@ class TokeTimer extends React.Component {
 }
 
 
-function millisToMinutesAndSeconds(millis) {
+function millisToMinutesAndSeconds(millis: number) {
     var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    var seconds = Math.round((millis % 60000) / 1000);
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 }
 

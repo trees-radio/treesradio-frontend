@@ -1,17 +1,33 @@
 import React from "react";
-import { Dialog } from '@headlessui/react';
+import { Dialog, DialogTitle, DialogPanel } from '@headlessui/react';
 import './Modal.scss';
 
+interface UtilityModalProps {
+  show: boolean;
+  hideModal?: () => void;
+  title: string;
+  children: React.ReactNode;
+  leftButton?: () => void;
+  leftButtonText?: string;
+  closeText?: string;
+  size?: 'sm' | 'lg' | 'xl' | '';
+  backdrop?: boolean;
+  keyboard?: boolean;
+  noClose?: boolean;
+}
 class UtilityModal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  props: UtilityModalProps;
+  state: { show: boolean; };
+  constructor(props: UtilityModalProps) {
+    super(props);
+    this.props = props;
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.state = { show: false };
   }
   
   handleClose() {
-    this.props.hideModal();
+    this.props.hideModal && this.props.hideModal();
   }
   
   handleShow() {
@@ -27,16 +43,6 @@ class UtilityModal extends React.Component {
         </button>
       );
     }
-
-    // Size classes mapping
-    const sizeClasses = {
-      sm: 'w-20',
-      lg: 'w-40',
-      xl: 'w-60',
-      '': 'w-30' // default
-    };
-    
-    const sizeClass = sizeClasses[this.props.size || ''];
     
     // Note: Headless UI's Dialog doesn't have direct equivalents for keyboard and backdrop props
     // For backdrop, we can control it with styling and render conditions
@@ -54,12 +60,12 @@ class UtilityModal extends React.Component {
         )}
         
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className={`w-[50vw] rounded bg-black shadow-xl overflow-hidden`}>
+          <DialogPanel className={`w-[50vw] rounded bg-black shadow-xl overflow-hidden`}>
             {/* Header */}
             <div className="flex items-center justify-between border-b p-4">
-              <Dialog.Title className="text-lg font-medium leading-6 ">
+              <DialogTitle className="text-lg font-medium leading-6 ">
                 {this.props.title}
-              </Dialog.Title>
+              </DialogTitle>
               {!this.props.noClose && (
                 <button 
                   type="button" 
@@ -92,7 +98,7 @@ class UtilityModal extends React.Component {
                 </button>
               )}
             </div>
-          </Dialog.Panel>
+          </DialogPanel>
         </div>
       </Dialog>
     );
