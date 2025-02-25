@@ -7,7 +7,7 @@ import UserBit from "./Nav/UserBit.jsx";
 import TokeTimer from "./Nav/TokeTimer.jsx";
 
 import file from "../static/version.json";
-import profile from "../stores/profile";
+import profile from "../stores/profile.ts";
 import $ from "cash-dom";
 import Modal from "./utility/Modal";
 // import imageWhitelist from "../libs/imageWhitelist";

@@ -1,15 +1,13 @@
-import fbase from "./fbase";
+import {getDatabaseRef} from "./fbase";
 import profile from "../stores/profile";
 
-export function send(type, data = {}) {
+export function send(type: string, data = {}) {
   if (profile.user !== null) {
     if (type == "chat" && profile.username == undefined) return false;
     let token = {};
     token[profile.user.uid] = {uid: profile.user.uid, type, data};
 
-    return fbase
-      .database()
-      .ref("event_bus")
+    return getDatabaseRef("events")
       .child(profile.user.uid)
       .set(token);
     //{uid: profile.user.uid, type, data});

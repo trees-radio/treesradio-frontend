@@ -20,41 +20,96 @@ import disposable from "disposable-email";
 import app from "./app";
 import * as localforage from "localforage";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { act } from "react";
+import { User } from "@firebase/auth-types";
+
+export interface Profile {
+    setInit(val: boolean): void;
+    setUser(user: string): void;
+    setProfile(profile: any): void;
+    setPresenceRef(ref: any): void;
+    setPresenceInterval(interval: any): void;
+    setIpRef(ref: any): void;
+    setRankAndPermissions(rank: string, permissions: string[]): void;
+    connected: boolean;
+    user: string;
+    username: string;
+    profile: any;
+    init: boolean;
+    private: any;
+    privateInit: boolean;
+    hideBlazeBot: boolean;
+    hypeBoom: boolean;
+    desktopNotifications: boolean;
+    rank: string;
+    rankPermissions: any;
+    registeredEpoch: number;
+    banData: any;
+    silenceData: any;
+    notifications: boolean;
+    showmuted: boolean;
+    autoplay: boolean;
+    lastchat: number;
+    canAutoplay: boolean;
+    loggedIn: boolean;
+    uid: boolean;
+    unverified: boolean;
+    noName: boolean;
+    banned: boolean;
+    silenced: boolean;
+    getToken(): any;
+    safeUsername: string;   
+    eventsPath: string;
+    secondsRegistered: number;
+    updateUsername(username: string): void;
+    resendVerificationResult: any;
+    resendVerificationLoading: boolean;
+    resendVerification(): void;
+    isAdmin: boolean;
+    setAvatar(url: string): void;
+    avatarURL: any;
+    clearAvatar(): void;
+    changePassword(password: string): any;
+    changeEmail(email: string): any;
+}
 
 export default new (class Profile {
     @action
-    setInit(val) {
+    setInit(val: boolean) {
         this.init = val;
     }
 
     @action
-    setUser(user) {
+    stopProfileSync() {
+        // Add logic to stop profile synchronization
+    }
+
+    @action
+    setUser(user: User) {
         this.user = user;
     }
 
     @action
-    setProfile(profile) {
+    setProfile(profile: any) {
         this.profile = profile;
     }
 
     @action
-    setPresenceRef(ref) {
+    setPresenceRef(ref: any) {
         this.presenceRef = ref;
     }
 
     @action
-    setPresenceInterval(interval) {
+    setPresenceInterval(interval: Timer) {
         this.presenceInterval = interval;
     }
 
     @action
-    setIpRef(ref) {
+    setIpRef(ref: any) {
         this.ipRef = ref;
     }
 
     @action
-    setRankAndPermissions(rank, permissions) {
+    setRankAndPermissions(rank: string, permissions: any) {
         this.rank = rank;
         this.rankPermissions = permissions;
     }
@@ -62,16 +117,16 @@ export default new (class Profile {
     constructor() {
         this.setInit(false);
         auth.onAuthStateChanged(user => {
-            this.setUser(user);
             if (user !== null) {
+                this.setUser(user);
                 const connectedRef = ref(db, ".info/connected");
                 onValue(connectedRef, snap => {
-                    if (snap.val() === true) {
+                    if (snap.val() === true && this.presenceInterval) {
                         auth.updateCurrentUser(auth.currentUser);
-                        clearInterval(this.presenceInterval);
+                        clearInterval(this.presenceInterval as number);
 
                         // Create references
-                        const userPresenceRef = ref(db, `presence/${this.user.uid}`);
+                        const userPresenceRef = ref(db, `presence/${this.user?.uid}`);
                         const connectionRef = push(child(userPresenceRef, "connections"));
 
                         // Save this for cleanup
@@ -83,7 +138,7 @@ export default new (class Profile {
                         // Set initial data
                         set(connectionRef, {
                             timestamp: epoch(),
-                            uid: this.user.uid
+                            uid: this.user?.uid
                         });
 
                         // Set connected status
@@ -101,13 +156,13 @@ export default new (class Profile {
                             remove(this.ipRef);
                         }
 
-                        this.setIpRef(ref(db, `private/${this.user.uid}/ip/${connectionRef.key}`));
+                        this.setIpRef(ref(db, `private/${this.user?.uid}/ip/${connectionRef.key}`));
                         set(this.ipRef, app.ipAddress);
                         onDisconnect(this.ipRef).remove();
                     }
                 });
-                onDisconnect(ref(db, `presence/${this.user.uid}`)).remove();
-                onValue(ref(db, `presence/${this.user.uid}`), snap => {
+                onDisconnect(ref(db, `presence/${this.user?.uid}`)).remove();
+                onValue(ref(db, `presence/${this.user?.uid}`), snap => {
                     if (snap.val() === null) {
                         this.setProfile(snap.val() || {});
                     };
@@ -117,12 +172,8 @@ export default new (class Profile {
 
             } else {
                 this.stopProfileSync && this.stopProfileSync();
-                this.stopPrivateSync && this.stopPrivateSync();
-                this.stopRegistrationSync && this.stopRegistrationSync();
-                this.stopBanSync && this.stopBanSync();
-                this.stopSilenceSync && this.stopSilenceSync();
 
-                clearInterval(this.presenceInterval);
+                clearInterval(this.presenceInterval as number);
             }
 
             //desktop notification check
@@ -132,10 +183,12 @@ export default new (class Profile {
         // self username handling
         autorun(() => {
             if (this.user) {
-                username(this.user.uid).then(username => {
-                    this.username = username;
-                    this.init = true;
-                });
+                const userStore = username(this.user.uid)
+                if (userStore) 
+                    userStore.then(username => {
+                        this.username = username;
+                        this.init = true;
+                    });
             } else {
                 this.username = undefined;
             }
@@ -143,10 +196,10 @@ export default new (class Profile {
 
         // permissions handling
         autorun(async () => {
-            if (this.user) {
-                this.setRankAndPermissions(await rank(this.user.uid),await getSettingsForRank(this.rank));
+            if (this.user && this.rank) {
+                this.setRankAndPermissions(await rank(this.user?.uid),await getSettingsForRank(this.rank));
             } else {
-                this.setRankAndPermissions(null, {});
+                this.setRankAndPermissions("", {});
             }
         });
     }
@@ -155,23 +208,23 @@ export default new (class Profile {
         return app.connected;
     }
 
-    @observable accessor user = null;
-    @observable accessor username = undefined;
-    @observable accessor profile = null;
-    @observable accessor init = false;
+    @observable accessor user: User | null = null;
+    @observable accessor username: string | undefined = undefined;
+    @observable accessor profile: any = null;
+    @observable accessor init: boolean = false;
 
-    @observable accessor private = null;
-    @observable accessor privateInit = false;
+    @observable accessor private: any = null;
+    @observable accessor privateInit: any = false;
     @observable accessor hideBlazeBot = false;
     @observable accessor hypeBoom = true;
     @observable accessor desktopNotifications = false;
 
-    @observable accessor rank = null;
-    @observable accessor rankPermissions = {};
+    @observable accessor rank: string | null = null;
+    @observable accessor rankPermissions: any = {};
 
-    @observable accessor registeredEpoch = null;
-    @observable accessor banData = null;
-    @observable accessor silenceData = null;
+    @observable accessor registeredEpoch: number | null = null;
+    @observable accessor banData: any = null;
+    @observable accessor silenceData: any = null;
 
     @observable accessor notifications = true;
     @observable accessor showmuted = false;
@@ -179,6 +232,9 @@ export default new (class Profile {
     @observable accessor autoplay = false;
 
     @observable accessor lastchat = epoch();
+    @observable accessor presenceRef: any = null;
+    @observable accessor presenceInterval: Timer | NodeJS.Timeout | string | number | undefined = undefined;
+    @observable accessor ipRef: any = null;
 
     @computed get canAutoplay() {
         return this.rank && this.rank !== "User";
@@ -193,7 +249,9 @@ export default new (class Profile {
             if (userEnabled && Notification.permission === "granted") {
                 notify = true;
             } else if (userEnabled) {
-                toast.error("Desktop notifications need your permission. Please re-enable from the menu.");
+                toast(
+                    "Desktop notifications are enabled, but your browser has not granted permission to show them. Please enable notifications in your browser settings.",
+                    { type: "error" });
             }
 
             localforage.setItem("desktopnotify", notify ? 1 : 0);
@@ -202,13 +260,13 @@ export default new (class Profile {
     }
 
     @action
-    setDesktopNotifications(enabled) {
+    setDesktopNotifications(enabled: boolean) {
         this.desktopNotifications = enabled;
         localforage.setItem("desktopnotify", enabled ? 1 : 0);
     }
 
     // TODO can probably move these top functions to a lib
-    login(email, password) {
+    login(email: string, password: string) {
         return signInWithEmailAndPassword(auth, email, password)
             .then(() => true)
             .catch(error => {
@@ -230,7 +288,9 @@ export default new (class Profile {
                         msg = `An unknown error occurred while trying to log you in :/`;
                         break;
                 }
-                toast.error(msg);
+                toast(msg, {
+                    type: "error"
+                });
                 return false;
             });
     }
@@ -239,7 +299,7 @@ export default new (class Profile {
         return auth.signOut();
     }
 
-    async register(email, password) {
+    async register(email: string, password: string) {
         if (disposable.validate(email)) {
             auth
                 .createUserWithEmailAndPassword(email, password)
@@ -261,20 +321,22 @@ export default new (class Profile {
                         case undefined:
                             return;
                     }
-                    toast.error(msg);
+                    toast(msg, { type: "error" });
                 })
                 .then(user => {
-                    user.sendEmailVerification();
+                    if (user) {
+                        user.user?.sendEmailVerification();
+                    }
                     setTimeout(() => {
                         this.logout();
                     }, 10000);
                 });
         } else {
-            toast.error(`You may not use "disposable" email addresses for TreesRadio`);
+            toast(`You may not use "disposable" email addresses for TreesRadio`, {type: "error"});
         }
     }
 
-    sendPassReset(email) {
+    sendPassReset(email: string) {
         return auth
             .sendPasswordResetEmail(email)
             .catch(error => {
@@ -289,11 +351,11 @@ export default new (class Profile {
                     case undefined:
                         return;
                 }
-                toast.error(msg);
+                toast(msg, {type: "error"});
                 return false;
             })
             .then(() => {
-                toast.success(`Success! An email with instructions has been sent to ${email}.`);
+                toast(`Success! An email with instructions has been sent to ${email}.`,{type: "success"});
                 return true;
             });
     }
@@ -353,7 +415,7 @@ export default new (class Profile {
     }
 
     getToken() {
-        return auth.currentUser.getToken(true); //returns promise with token
+        return auth?.currentUser?.getIdToken(true); //returns promise with token
     }
 
     @computed get safeUsername() {
@@ -368,23 +430,22 @@ export default new (class Profile {
         if (this.profile === null) {
             return false;
         } else {
-            return `user_events/${this.user.uid}`;
+            return `user_events/${this.user?.uid}`;
         }
     }
 
     @computed get secondsRegistered() {
-        return app.APP_EPOCH - this.registeredEpoch;
+        return app.APP_EPOCH - (this.registeredEpoch || epoch());
     }
 
-    updateUsername(username) {
-        if (this.user === null) {
-            return false;
-        } else {
-            send("username_set", { username }).then(() => location.reload());
+    updateUsername(username: string) {
+        if (this.user !== null) {
+            const sent = send("username_set", { username })
+            if (sent) sent.then(() => location.reload());
         }
     }
 
-    @observable accessor resendVerificationResult = null;
+    @observable accessor resendVerificationResult: boolean = false;
     @observable accessor resendVerificationLoading = false;
 
     @action

@@ -1,6 +1,9 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
+import { FirebaseAuth } from "@firebase/auth-types";
+import { FirebaseDatabase } from "@firebase/database-types";
+import { FirebaseApp } from "@firebase/app-compat";
 
 const firebaseConfig = {
   databaseURL: import.meta.env.VITE_FIREBASE_URL,
@@ -10,11 +13,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+const app: FirebaseApp = firebase.initializeApp(firebaseConfig);
 
 // Initialize services
-const auth = firebase.auth();
-const db = firebase.database();
+const auth: FirebaseAuth = firebase.auth();
+const db: FirebaseDatabase = firebase.database();
+
+export function getDatabaseRef(ref?: string) {
+  return db.ref(ref);
+}
 
 // Export the initialized instances
 export { auth, db };

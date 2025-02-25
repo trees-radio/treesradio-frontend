@@ -1,4 +1,4 @@
-import {computed, observable, makeAutoObservable} from "mobx";
+import {computed, observable} from "mobx";
 import axios from "axios";
 import {db} from "../libs/fbase";
 import epoch from "../utils/epoch";
@@ -7,7 +7,7 @@ import {ref, onValue} from "firebase/database";
 class App {
   @observable accessor connected = false;
   @observable accessor proceed = false;
-  @observable accessor ipAddress = null;
+  @observable accessor ipAddress: string | null = null;
   @observable accessor APP_EPOCH = epoch();
 
   constructor() {

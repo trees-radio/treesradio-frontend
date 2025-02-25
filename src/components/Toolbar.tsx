@@ -6,9 +6,9 @@ import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
 import waitlist from "../stores/waitlist";
 import playlists from "../stores/playlists.js";
-import profile from "../stores/profile";
+import profile from "../stores/profile.js";
 import playing, {VOLUME_NUDGE_FRACTION} from "../stores/playing";
-import toast from "../utils/toast";
+import toast from "../utils/toast.js";
 import cn from "classnames";
 import $ from "jquery";
 import {useOnClickOutside} from "../utils/hooks.js";

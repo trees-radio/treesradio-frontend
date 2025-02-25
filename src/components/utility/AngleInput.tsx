@@ -1,11 +1,11 @@
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-function radToDeg(rad) {
+function radToDeg(rad: number) {
     return rad * (180 / Math.PI);
 }
 
-function getCenter(element) {
+function getCenter(element: HTMLElement) {
     var rect = element.getBoundingClientRect();
     return [
         rect.left + (rect.width / 2),
@@ -13,7 +13,7 @@ function getCenter(element) {
     ];
 }
 
-function angle(vector, element) {
+function angle(vector: number[], element: HTMLElement) {
     var center = getCenter(element);
     var x = vector[0] - center[0];
     var y = vector[1] - center[1];
@@ -24,6 +24,19 @@ function angle(vector, element) {
 }
 
 var $all = document.body;
+
+interface Props {
+    defaultValue: number;
+    max: number;
+    min: number;
+    step: number;
+    onChange: (value: number) => void;
+    onInput: (value: number) => void;
+    className: string;
+    pivotClassName: string;
+    tabIndex: number;
+    children: React.ReactNode;
+}
 
 class AngleInput extends React.Component {
     static displayName = 'AngleInput';
@@ -48,8 +61,15 @@ class AngleInput extends React.Component {
         pivotClassName: 'angle-input-pivot',
     };
 
-    constructor(props) {
+    props: Props;
+    myRef: React.RefObject<HTMLDivElement | null>;
+    state: { value: number };
+    tracking: boolean = false;
+    keyboardInput: boolean = false;
+
+    constructor(props: Props) {
         super(props);
+        this.props = props;
         this.myRef = React.createRef();
         this.state = { value: props.defaultValue || 0 };
         
@@ -62,11 +82,11 @@ class AngleInput extends React.Component {
         this._onMouseUp = this._onMouseUp.bind(this);
     }
 
-    normalize(degree) {
+    normalize(degree: number) {
         const { max, min, step } = this.props;
         
         const n = Math.max(min, Math.min(degree, max));
-        const s = n - (n % step);
+        // const s = n - (n % step);
         const high = Math.ceil(n / step);
         const low = Math.round(n / step);
         return high >= (n / step)
@@ -74,15 +94,15 @@ class AngleInput extends React.Component {
             : low * step;
     }
 
-    _onFocus(e) {
+    _onFocus(_e: React.FocusEvent) {
         this.beginKeyboardInput();
     }
 
-    _onBlur(e) {
+    _onBlur(_e: React.FocusEvent) {
         this.endKeyboardInput();
     }
 
-    _onKeyDown(e) {
+    _onKeyDown(e: React.KeyboardEvent) {
         const { max, min, step } = this.props;
         const { value } = this.state;
 
@@ -117,35 +137,43 @@ class AngleInput extends React.Component {
         }
     }
 
-    _onMouseDown(e) {
+    _onMouseDown(_e: React.MouseEvent) {
         this.beginTracking();
     }
 
-    _onMouseMove(e) {
+    _onMouseMove(e: React.MouseEvent) {
         this.updateWithEvent(e, false);
     }
 
-    _onMouseUp(e) {
+    _onMouseUp(e: React.MouseEvent) {
         this.updateWithEvent(e, true);
         this.endTracking();
     }
 
     beginTracking() {
-        $all.addEventListener('mousemove', this._onMouseMove, false);
-        $all.addEventListener('mouseup', this._onMouseUp, false);
+        $all.addEventListener('mousemove', this._onMouseMove as unknown as EventListener, false);
+        $all.addEventListener('mouseup', this._onMouseUp as unknown as EventListener, false);
         this.tracking = true;
     }
 
     endTracking() {
-        $all.removeEventListener('mousemove', this._onMouseMove, false);
-        $all.removeEventListener('mouseup', this._onMouseUp, false);
+        $all.removeEventListener('mousemove', this._onMouseMove as unknown as EventListener, false);
+        $all.removeEventListener('mouseup', this._onMouseUp as unknown as EventListener, false);
         this.tracking = false;
     }
 
-    updateWithEvent(event, done) {
+    updateWithEvent(event: React.MouseEvent, done: boolean) {
         const $dom = this.myRef.current;
-        const vector = [event.x, event.y];
-        const deg = angle(vector, $dom);
+        const vector = [event.clientX, event.clientY];
+        var deg = 0;
+        if ($dom) {
+            deg = angle(vector, $dom);
+            const value = this.normalize(deg);
+            this.setState({ value });
+            
+            const fx = done ? this.props.onChange : this.props.onInput;
+            if (fx) fx(value);
+        }
         const value = this.normalize(deg);
         this.setState({ value });
         
@@ -154,12 +182,12 @@ class AngleInput extends React.Component {
     }
 
     beginKeyboardInput() {
-        $all.addEventListener('keydown', this._onKeyDown, false);
+        $all.addEventListener('keydown', this._onKeyDown as unknown as EventListener, false);
         this.keyboardInput = true;
     }
 
     endKeyboardInput() {
-        $all.removeEventListener('keydown', this._onKeyDown, false);
+        $all.removeEventListener('keydown', this._onKeyDown as unknown as EventListener, false);
         this.keyboardInput = false;
     }
 
