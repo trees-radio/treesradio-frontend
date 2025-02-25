@@ -1,6 +1,8 @@
 import React from "react";
 // import {observable} from 'mobx';
 import { observer } from "mobx-react";
+import { observable, action } from "mobx";
+import {EmojiPickerSpecialEmoji} from "../.././../libs/emoji";
 
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 // import fbase from 'stores/fbase';
@@ -14,6 +16,13 @@ interface ChatSendProps {
 }
 class ChatSend extends React.Component {
   props: ChatSendProps;
+
+  @observable accessor showEmojiPicker: boolean = false;
+
+  @action toggleEmojiPicker() {
+    console.log(`toggleEmojiPicker: ${this.showEmojiPicker}`);
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
   constructor(props: ChatSendProps) {
     super(props);
     this.props = props;
@@ -60,11 +69,13 @@ class ChatSend extends React.Component {
   }
 
   emojiPicked(emoji: EmojiClickData) {
+    this.showEmojiPicker = false;
+    console.log(emoji);
     if (emoji.isCustom) {
-      chat.updateMsg(chat.msg + emoji.getImageUrl());
+      chat.updateMsg(chat.msg + ` :${emoji.names[0]}: `);
       return;
     }
-    chat.updateMsg(chat.msg + emoji);
+    chat.updateMsg(chat.msg + emoji.emoji);
   }
 
   render() {
@@ -84,22 +95,30 @@ class ChatSend extends React.Component {
 
     return (
       <form className="form-inline chatbar" id="search">
+      <EmojiPicker
+        onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
+        open={this.showEmojiPicker}
+        style={{ bottom: "85vh"}}
+        customEmojis={EmojiPickerSpecialEmoji}
+      />
         <div className="form-group tr-form-group chatboxform">
           {" "}
           {matchContainer}{" "}
-          <EmojiPicker
-            onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
-            open={false}
-          />
           <div id="sendbox_test" className="input-group tr-form-group">
-
+            <div className="input-group-addon w-11 h-11 bg-white flex items-center justify-center rounded-l-md"
+              onClick={() => {
+                this.toggleEmojiPicker();
+              }}
+            >
+              🙂
+            </div>
             <input
               ref={this.props.myref}
               type="text"
               placeholder="enter to send"
               id="chatinput"
               autoComplete="off"
-              className="bg-white h-11"
+              className="bg-white h-11 rounded-l-none"
               value={chat.msg}
               // onKeyPress={e => this.onKeyPress(e)}
               onKeyDown={e => this.onKeyDown(e)}

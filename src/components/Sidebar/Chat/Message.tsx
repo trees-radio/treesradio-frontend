@@ -11,6 +11,36 @@ const regex = new RegExp(expression);
 const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
+const specialemoji = {
+    ":weed:": "emoji-weed",
+    ":marijuana:": "emoji-weed",
+    ":canabis:": "emoji-weed",
+    ":toke:": "emoji-toke",
+    ":smoke:": "emoji-toke",
+    ":hit:": "emoji-toke",
+    ":plug:": "emoji-plug",
+    ":joint:": "emoji-joint",
+    ":j:": "emoji-joint",
+    ":ferris:": "emoji-ferris",
+    ":1:": "emoji-one",
+    ":2:": "emoji-two",
+    ":3:": "emoji-three",
+    ":4:": "emoji-four",
+    ":5:": "emoji-five",
+    ":6:": "emoji-six",
+    ":7:": "emoji-seven",
+    ":8:": "emoji-eight",
+    ":9:": "emoji-nine",
+    ":10:": "emoji-ten",
+    ":highaf:": "emoji-highaf",
+    ":owo:": "emoji-owo",
+    ":rolling:": "emoji-rolling",
+    ":dude:": "emoji-dude",
+    ":bong:": "emoji-bong",
+    ":neat:": "emoji-neat",
+    ":420:": "emoji-420",
+    ":rasta:": "emoji-rasta"
+};
 
 interface MessageProps {
     text: string;
@@ -21,11 +51,11 @@ interface MessageProps {
 
 export default class Message extends React.Component {
     props: MessageProps;
-    state: {visible: boolean};
+    state: { visible: boolean };
     constructor(props: MessageProps) {
         super(props);
         this.props = props;
-        this.state = {visible: true};
+        this.state = { visible: true };
     }
 
     imageCheck(tkn: string) {
@@ -39,7 +69,7 @@ export default class Message extends React.Component {
         if (!tokens.some(this.imageCheck)) this.props.onLoad();
     }
 
-    onVisibility = (isVisible: boolean) => this.setState({visible: isVisible});
+    onVisibility = (isVisible: boolean) => this.setState({ visible: isVisible });
 
     render() {
         let text = this.props.text;
@@ -53,9 +83,10 @@ export default class Message extends React.Component {
                 // <div dangerouslySetInnerHTML={{__html: emojifyWrap(marked(text))}} />
                 <ReactMarkdown
                     rehypePlugins={isBlazeBot ? [rehypeRaw] : []}
-                    remarkRehypeOptions={{allowDangerousHtml: isBlazeBot, }}
+                    remarkRehypeOptions={{ allowDangerousHtml: isBlazeBot, }}
                 >
-                    {DOMPurify.sanitize(text)}
+                    {emojifyWrap(DOMPurify.sanitize(text))}
+
                 </ReactMarkdown>
             );
         }
@@ -100,7 +131,7 @@ class MessageItem extends React.Component {
     componentDidMount() {
         if (!this.imageCheck(this.props.token)) this.props.onLoad();
     }
-    
+
     props: MessageItemProps;
 
     constructor(props: MessageItemProps) {
@@ -109,7 +140,7 @@ class MessageItem extends React.Component {
     }
 
     render() {
-        var {token, show, onLoad} = this.props;
+        var { token, show, onLoad } = this.props;
         let thisClass;
         let bolded;
         let titletext;
@@ -120,8 +151,8 @@ class MessageItem extends React.Component {
 
             return (
                 <span>
-          <img src={token} onLoad={onLoad} style={style} className="inline-image"/>
-        </span>
+                    <img src={token} onLoad={onLoad} style={style} className="inline-image" />
+                </span>
             );
             // OR is this a plain URL?
         } else if (token.match(regex) && !token.match(/href/i)) {
@@ -131,23 +162,39 @@ class MessageItem extends React.Component {
             }
             return (
                 <span>
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            {token}{" "}
-          </a>
-        </span>
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                        {token}{" "}
+                    </a>
+                </span>
             );
-        }  else if ((bolded = token.match(/^\*\*(\w+)\*\*$/))) {
+        } else if (specialemoji[token as keyof typeof specialemoji]) {
+            thisClass = this.props.emojiSize + " " + specialemoji[token as keyof typeof specialemoji];
+            titletext = token;
+        } else if ((bolded = token.match(/^\*\*(\w+)\*\*$/))) {
+
             thisClass = "chat-bold";
             token = bolded[1];
         }
         return (
             <span
                 className={this.props.isEmote ? "chat-italic" : thisClass}
-                style={show ? {display: "inline"} : {display: "none"}}
+                style={show ? { display: "inline" } : { display: "none" }}
                 title={titletext}
             >
-        {token}{" "}
-      </span>
+                {token}{" "}
+            </span>
         );
     }
+}
+
+
+function emojifyWrap(text: string) {
+    var newtext = text.replace(/:(\w+):/g, function (match, p1) {
+        if (specialemoji[match as keyof typeof specialemoji]) {
+            return `<span class="emoji ${specialemoji[match as keyof typeof specialemoji]}" title="${match}"></span>`;
+        } else {
+            return `<span class="emoji e1a-${p1}" title="${match}"></span>`;
+        }
+    });
+    return newtext;
 }

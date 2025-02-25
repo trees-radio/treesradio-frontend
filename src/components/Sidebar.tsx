@@ -21,7 +21,7 @@ const Sidebar: FC = () => {
     const selAboutRef = createRef<HTMLDivElement>();
     const chatInputRef = createRef<HTMLInputElement>();
     // const chatComponentRef = createRef<HTMLDivElement>();
-    const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(profile.loggedIn ? "CHAT" : "ABOUT");
+    const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(!profile.loggedIn ? "ABOUT" : "CHAT");
 
     const chatBtnClass = classNames("show-chat-btn", {
         "sidebar-selected": currentSidebar === "CHAT"
@@ -75,7 +75,6 @@ const Sidebar: FC = () => {
                     About
                 </div>
             </div>
-            <Chat show={currentSidebar === "CHAT"} goToChat={goToChat} />
             <Chat show={currentSidebar === "CHAT"} goToChat={goToChat} />
             <OnlineUsers show={currentSidebar === "ONLINE"} goToChat={goToChat} />
             <Waitlist show={currentSidebar === "WAITLIST"} goToChat={goToChat} />

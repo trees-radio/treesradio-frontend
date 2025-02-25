@@ -1,120 +1,142 @@
 import {PickerProps} from "emoji-picker-react";
 
+import Weed from "../assets/img/marijuana.png";
+import Toke from "../assets/img/193.png";
+import Joint from "../assets/img/j.png";
+import Ferris from "../assets/img/ferris.png";
+import One from "../assets/img/1.png";
+import Two from "../assets/img/2.png";
+import Three from "../assets/img/3.png";
+import Four from "../assets/img/4.png";
+import Five from "../assets/img/5.png";
+import Six from "../assets/img/6.png";
+import Seven from "../assets/img/7.png";    
+import Eight from "../assets/img/8.png";
+import Nine from "../assets/img/9.png";
+import Ten from "../assets/img/10.png";
+import Highaf from "../assets/img/highaf.png";
+import Owo from "../assets/img/owo.png";
+import Rolling from "../assets/img/rolling.png";
+import Dude from "../assets/img/dude.png";
+import Bong from "../assets/img/bong.png";
+import Neat from "../assets/img/neat.png";
+import FourTwenty from "../assets/img/420.png";
+import Rasta from "../assets/img/rasta.png";
+
 export const EmojiPickerSpecialEmoji: PickerProps["customEmojis"] = [
     {
         names: ["weed", "marijuana", "canabis"],
-        imgUrl: "/src/assets/img/weed.png",
+        imgUrl: Weed,
         id: "weed"
     },
     {
         names: ["toke", "smoke", "hit"],
-        imgUrl: "/src/assets/img/toke.png",
+        imgUrl: Toke,
         id: "toke"
     },
     {
         names: ["plug"],
-        imgUrl: "/src/assets/img/plug.png",
+        imgUrl: "https://cdn.jsdelivr.net/emojione/assets/4.5/png/128/1f4a9.png",
         id: "plug"
     },
     {
         names: ["joint", "j"],
-        imgUrl: "/src/assets/img/joint.png",
+        imgUrl: Joint,
         id: "joint"
     },
     {
         names: ["ferris"],
-        imgUrl: "/src/assets/img/ferris.png",
+        imgUrl: Ferris,
         id: "ferris"
     },
     {
         names: ["1"],
-        imgUrl: "/src/assets/img/1.png",
+        imgUrl: One,
         id: "1"
     },
     {
         names: ["2"],
-        imgUrl: "/src/assets/img/2.png",
+        imgUrl: Two,
         id: "2"
     },
     {
         names: ["3"],
-        imgUrl: "/src/assets/img/3.png",
+        imgUrl: Three,
         id: "3"
     },
     {
         names: ["4"],
-        imgUrl: "/src/assets/img/4.png",
+        imgUrl: Four,
         id: "4"
     },
     {
         names: ["5"],
-        imgUrl: "/src/assets/img/5.png",
+        imgUrl: Five,
         id: "5"
     },
     {
         names: ["6"],
-        imgUrl: "/src/assets/img/6.png",
+        imgUrl: Six,
         id: "6"
     },
     {
         names: ["7"],
-        imgUrl: "/src/assets/img/7.png",
+        imgUrl: Seven,
         id: "7"
     },
     {
         names: ["8"],
-        imgUrl: "/src/assets/img/8.png",
+        imgUrl: Eight,
         id: "8"
     },
     {
         names: ["9"],
-        imgUrl: "/src/assets/img/9.png",
+        imgUrl: Nine,
         id: "9"
     },
     {
         names: ["10"],
-        imgUrl: "/src/assets/img/10.png",
+        imgUrl: Ten,
         id: "10"
     },
     {
         names: ["highaf"],
-        imgUrl: "/src/assets/img/highaf.png",
+        imgUrl: Highaf,
         id: "highaf"
     },
     {
         names: ["owo"],
-        imgUrl: "/src/assets/img/owo.png",
+        imgUrl: Owo,
         id: "owo"
     },
     {
         names: ["rolling"],
-        imgUrl: "/src/assets/img/rolling.png",
+        imgUrl: Rolling,
         id: "rolling"
     },
     {
-        names
-            : ["dude"],
-        imgUrl: "/src/assets/img/dude.png",
+        names: ["dude"],
+        imgUrl: Dude,
         id: "dude"
     },
     {
         names: ["bong"],
-        imgUrl: "/src/assets/img/bong.png",
+        imgUrl: Bong,
         id: "bong"
     },
     {
         names: ["neat"],
-        imgUrl: "/src/assets/img/neat.png",
+        imgUrl: Neat,
         id: "neat"
     },
     {
         names: ["420"],
-        imgUrl: "/src/assets/img/420.png",
+        imgUrl: FourTwenty,
         id: "420"
     },
     {
         names: ["rasta"],
-        imgUrl: "/src/assets/img/rasta.png",
+        imgUrl: Rasta,
         id: "rasta"
     }
 ]
