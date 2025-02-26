@@ -16,7 +16,6 @@ interface PlaylistsPanelProps {
   open: boolean;
 }
 
-
 interface PlaylistRemove {
   name: string;
   index: number;

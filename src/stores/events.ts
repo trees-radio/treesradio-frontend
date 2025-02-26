@@ -38,6 +38,10 @@ class Events {
       return () => emitter.off(type, handler);
     }
   }
+
+  unregister(type: string, handler: Handler<unknown>) {
+    this.emitter.off(type, handler);
+  }
 }
 
 // Create instance after class definition

@@ -1,13 +1,13 @@
 import {FC, JSX, RefObject, useCallback, useEffect, useRef, useState} from "react";
 import {observer} from "mobx-react";
 import ReactSlider from "react-slider";
-import PlaylistsPanel from "./Toolbar/PlaylistsPanel.js";
+import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
 
-import waitlist from "../stores/waitlist.js";
-import playlists from "../stores/playlists.js";
-import profile from "../stores/profile.js";
-import playing, {VOLUME_NUDGE_FRACTION} from "../stores/playing.js";
-import toast from "../utils/toast.js";
+import waitlist from "../stores/waitlist";
+import playlists from "../stores/playlists";
+import profile from "../stores/profile";
+import playing, {VOLUME_NUDGE_FRACTION} from "../stores/playing";
+import toast from "../utils/toast";
 import cn from "classnames";
 import $ from "cash-dom";
 import {useOnClickOutside} from "usehooks-ts";
@@ -90,7 +90,7 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
                 setWaitlistButtonText(<>Join Waitlist</>);
         }
     }, [waitlist.bigButtonLoading, waitlist.isPlaying, waitlist.inWaitlist, loadingIconClass]);
-
+    const selectedPlaylistName = playlists.selectedPlaylistName;
     return (
         <div id="playlists-component">
             {playlists.init && panelOpen ? <PlaylistsPanel open={panelOpen}/> : false}
@@ -109,14 +109,14 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
                 <div id="playlist-metadata">
                     <a
                         id={
-                            playlists.selectedPlaylistName &&
-                            playlists.selectedPlaylistName.length > 32
+                            selectedPlaylistName &&
+                            selectedPlaylistName.length > 32
                                 ? "cstmEaseIn"
                                 : undefined
                         }
                         className={"current-playlist-name"}
                     >
-                        {playlists.selectedPlaylistName}
+                        {selectedPlaylistName}
                     </a>
                     <br/>
 

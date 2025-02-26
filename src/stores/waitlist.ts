@@ -55,6 +55,16 @@ export default new (class Waitlist {
   @observable accessor autojoinTimer: Timer | boolean = false;
   @observable accessor showMinutesUntil: boolean = false;
 
+  @action
+  setLocalPlayingState(state: boolean) {
+    this.localPlayingState = state;
+  }
+
+  @action
+  setLocalJoinState(state: boolean) {
+    this.localJoinState = state;
+  }
+
   constructor() {
     // this.reloadList();
     events.register("stop_autoplay", (data) => {
@@ -69,14 +79,13 @@ export default new (class Waitlist {
       });
 
     autorun(() => {
-      this.localJoinState = this.inWaitlist;
-      this.localPlayingState = this.isPlaying;
+      this.setLocalJoinState(this.inWaitlist);
+      this.setLocalPlayingState(this.isPlaying);
     });
 
     let checkAutojoin = setInterval(async () => {
       if (profile.loggedIn && await profile.canAutoplay) {
-        let autoplay = false;
-
+        let autoplay = profile.autoplay;
         if (autoplay) {
           this.setAutojoin();
         }
@@ -98,6 +107,7 @@ export default new (class Waitlist {
 
   @action
   setAutoplay(state: boolean) {
+    console.log("autoplay set to: ", state);
     profile.autoplay = state;
     if (state) {
       this.setAutojoin();
@@ -109,6 +119,7 @@ export default new (class Waitlist {
   @action
   async setAutojoin() {
     if (await profile.canAutoplay && !profile.autoplay) {
+      console.log("autoplay is disabled");
       this.setAutoplay(true);
 
       this.setAutoJoinTimer(setInterval(() => {
