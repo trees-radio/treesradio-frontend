@@ -114,7 +114,7 @@ export default class UserName extends React.Component {
     const usernameClasses = classNames(this.props.className, userClass);
 
     return (
-      <span>
+      <>
         <span onClick={this.props.onClick || noop} className={usernameClasses}>
           {this.state.username}
         </span>
@@ -125,7 +125,7 @@ export default class UserName extends React.Component {
         <span style={this.getFlairBackgroundColor()}>
           <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>
         </span>
-      </span>
+      </>
     );
   }
 }
