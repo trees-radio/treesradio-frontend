@@ -3,6 +3,7 @@ import imageWhitelist from "../../../libs/imageWhitelist";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import DOMPurify from "dompurify";
+import Emoji from "react-emoji-render";
 
 const expression = /[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi;
 const regex = new RegExp(expression);
@@ -81,10 +82,12 @@ export default class Message extends React.Component {
             if (text.substring(0, 12) === "==markdown==") text = text.substring(12);
             return (
                 // <div dangerouslySetInnerHTML={{__html: emojifyWrap(marked(text))}} />
+
                 <ReactMarkdown
                     rehypePlugins={isBlazeBot ? [rehypeRaw] : []}
                     remarkRehypeOptions={{ allowDangerousHtml: isBlazeBot, }}
                 >
+
                     {emojifyWrap(DOMPurify.sanitize(text))}
 
                 </ReactMarkdown>
@@ -96,6 +99,7 @@ export default class Message extends React.Component {
         if (tokens.length == 1) emojisize = "emojilarge";
 
         const result = tokens.map((tkn, i) => (
+
             <MessageItem
                 key={i}
                 token={tkn}
@@ -178,10 +182,12 @@ class MessageItem extends React.Component {
         return (
             <span
                 className={this.props.isEmote ? "chat-italic" : thisClass}
-                style={show ? { } : { display: "none" }}
+                style={show ? {} : { display: "none" }}
                 title={titletext}
             >
-                {token}{" "}
+                <Emoji>
+                    {token}{" "}
+                </Emoji>
             </span>
         );
     }
@@ -189,6 +195,7 @@ class MessageItem extends React.Component {
 
 
 function emojifyWrap(text: string) {
+
     var newtext = text.replace(/:(\w+):/g, function (match, p1) {
         if (specialemoji[match as keyof typeof specialemoji]) {
             return `<span class="emoji ${specialemoji[match as keyof typeof specialemoji]}" title="${match}"></span>`;

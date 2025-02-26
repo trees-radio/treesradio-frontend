@@ -98,7 +98,7 @@ class ChatSend extends React.Component {
         open={this.showEmojiPicker}
         style={{ bottom: "5vh", position: "absolute"}}
         customEmojis={EmojiPickerSpecialEmoji}
-        theme={Theme.AUTO}
+        theme={Theme.DARK}
       />
         <div className="form-group tr-form-group chatboxform">
           {" "}
