@@ -65,7 +65,6 @@ const Player: FC = () => {
                     volume={playing.volume}
                     onProgress={(p) => {
                         action(() => {
-                            console.log("onProgress", p);
                             playing.playerProgress = p.played;
                             const syncTo = playing.shouldSync;
 

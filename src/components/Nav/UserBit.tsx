@@ -727,7 +727,6 @@ class UserBit_ extends React.Component {
 
     @action
     toggleFlairColor() {
-        console.log("toggleFlairColor");
         this.showFlairColor ? (this.showFlairColor = false) : (this.showFlairColor = true);
     }
 

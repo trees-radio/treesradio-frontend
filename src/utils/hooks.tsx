@@ -24,8 +24,6 @@ export const useOnClickOutside = <T extends HTMLElement>(ref: RefObject<T | null
         setListening(true);
         ([`click`, `touchstart`] as const).forEach((type: "click" | "touchstart") =>
             document.addEventListener(type, (evt) => {
-                console.log("useOnClickOutside ref", ref.current);
-                console.log("useOnClickOutside target", evt.target);
                 return ref.current && !ref.current.contains(evt.target as Node) && cb();
             }));
 

@@ -1,5 +1,5 @@
 import { autorun, computed, observable, action } from "mobx";
-import {getDatabaseRef} from "../libs/fbase";
+import { getDatabaseRef } from "../libs/fbase";
 import profile from "./profile";
 import toast from "../utils/toast";
 import playing from "./playing";
@@ -44,7 +44,7 @@ export default new (class Waitlist {
 
   join() {
     if (!profile.user) {
-      toast("You must be logged in to join the waitlist!", {type:"error"});
+      toast("You must be logged in to join the waitlist!", { type: "error" });
       return;
     }
     send("join_waitlist");
@@ -73,8 +73,8 @@ export default new (class Waitlist {
       this.localPlayingState = this.isPlaying;
     });
 
-    let checkAutojoin = setInterval(() => {
-      if (profile.loggedIn && profile.canAutoplay) {
+    let checkAutojoin = setInterval(async () => {
+      if (profile.loggedIn && await profile.canAutoplay) {
         let autoplay = false;
 
         if (autoplay) {
@@ -97,11 +97,21 @@ export default new (class Waitlist {
   }
 
   @action
-  setAutojoin() {
-    if (profile.canAutoplay && !profile.autoplay) {
-      profile.autoplay = true;
+  setAutoplay(state: boolean) {
+    profile.autoplay = state;
+    if (state) {
+      this.setAutojoin();
+    } else {
+      this.cancelAutojoin();
+    }
+  }
 
-      this.autojoinTimer = setInterval(() => {
+  @action
+  async setAutojoin() {
+    if (await profile.canAutoplay && !profile.autoplay) {
+      this.setAutoplay(true);
+
+      this.setAutoJoinTimer(setInterval(() => {
         if (
           !this.inWaitlist &&
           !this.localJoinState &&
@@ -123,23 +133,27 @@ export default new (class Waitlist {
             };
             new Notification("TreesRadio", options);
           } else {
-            toast(msg, {type:"error"});
+            toast(msg, { type: "error" });
           }
-          profile.autoplay = false;
+          this.setAutoplay(false);
           this.cancelAutojoin();
         }
-      }, 10000);
+      }, 10000));
     } else {
       this.cancelAutojoin();
     }
   }
 
   @action
-  cancelAutojoin() {
-    if (profile.canAutoplay && this.autojoinTimer != false) {
-      profile.autoplay = false;
+  setAutoJoinTimer(timer: Timer | boolean) {
+    this.autojoinTimer = timer;
+  }
+  @action
+  async cancelAutojoin() {
+    if (await profile.canAutoplay && this.autojoinTimer != false) {
+      this.setAutoplay(false);
       clearInterval(this.autojoinTimer as Timer);
-      this.autojoinTimer = false;
+      this.setAutoJoinTimer(false);
     }
   }
 
@@ -153,7 +167,7 @@ export default new (class Waitlist {
   @action
   bigButton() {
     if (!profile.user) {
-      toast("You must be logged in to do that!", {type:"error"});
+      toast("You must be logged in to do that!", { type: "error" });
       return;
     }
 
@@ -162,7 +176,7 @@ export default new (class Waitlist {
       this.localJoinState = this.inWaitlist;
       this.localPlayingState = this.isPlaying;
     } else if (this.isPlaying) {
-      chat.sendMsg("/skip", () => {});
+      chat.sendMsg("/skip", () => { });
       this.localPlayingState = false;
     } else if (this.inWaitlist) {
       if (confirm("Are you sure?")) {

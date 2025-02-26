@@ -20,7 +20,6 @@ class ChatSend extends React.Component {
   @observable accessor showEmojiPicker: boolean = false;
 
   @action toggleEmojiPicker() {
-    console.log(`toggleEmojiPicker: ${this.showEmojiPicker}`);
     this.showEmojiPicker = !this.showEmojiPicker;
   }
   constructor(props: ChatSendProps) {
@@ -70,7 +69,6 @@ class ChatSend extends React.Component {
 
   emojiPicked(emoji: EmojiClickData) {
     this.showEmojiPicker = false;
-    console.log(emoji);
     if (emoji.isCustom) {
       chat.updateMsg(chat.msg + ` :${emoji.names[0]}: `);
       return;

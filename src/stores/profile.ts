@@ -202,9 +202,9 @@ export default new (class Profile {
 
         // permissions handling
         autorun(async () => {
-            if (this.user && this.rank && this.user.uid) {
-                console.log(`this.user.uid: ${this.user.uid}`);
-                this.setRankAndPermissions(await rank(this.user.uid),await getSettingsForRank(this.rank));
+            if (this.user && this.user.uid) {
+                const userRank = await rank(this.user.uid);
+                this.setRankAndPermissions(userRank,await getSettingsForRank(userRank));
             }
         });
     }
@@ -243,8 +243,10 @@ export default new (class Profile {
     @observable accessor ipRef: any = null;
 
     @computed get canAutoplay() {
-        console.log(`this.rankPermissions.autoplay: ${this.rankPermissions.autoplay}`);
-        return this.rank && this.rank !== "User";
+        if (this.user && this.user.uid) {
+            return rank(this.user.uid).then(userRank => userRank !== "User");
+        }
+        return Promise.resolve(false);
     }
 
     @action

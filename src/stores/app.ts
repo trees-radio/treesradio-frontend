@@ -14,14 +14,11 @@ class App {
     // Bind methods explicitly
     this.getIP = this.getIP.bind(this);
 
-    console.log("App store initializing...");
-
     // Initialize immediately
     this.getIP();
 
     const connectedRef = ref(db, ".info/connected");
     onValue(connectedRef, (snap) => {
-      console.log("Firebase connection state:", snap.val());
       this.setConnected(snap.val() === true);
       this.setProceed(snap.val() === true);
     });
@@ -34,11 +31,6 @@ class App {
   }
 
   @computed get init() {
-    console.log("Init check:", {
-      connected: this.connected,
-      ipAddress: this.ipAddress,
-      proceed: this.proceed
-    });
     return this.proceed || this.ipAddress !== null;
   }
 
@@ -46,12 +38,10 @@ class App {
     return axios
       .get("https://api.ipify.org?format=json")
       .then((resp) => {
-        console.log("IP fetch success:", resp.data);
         this.setIpAddress(resp.data.ip);
         this.setProceed(true);
       })
-      .catch((error) => {
-        console.error("IP fetch failed:", error);
+      .catch((_error) => {
         this.setIpAddress("localhost");
         this.setProceed(true);
       });

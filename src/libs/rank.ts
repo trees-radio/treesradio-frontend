@@ -1,10 +1,11 @@
-import {getDatabaseRef} from "./fbase";
+import { getDatabaseRef } from "./fbase";
 
-export default function getRank(uid: string) {
-  return getDatabaseRef("ranks")
+export default async function getRank(uid: string) {
+  const ranks = await getDatabaseRef("ranks")
     .child(uid)
     .once("value")
     .then(snap => snap.val());
+  return ranks;
 }
 
 export async function getUserRank(uid: string) {
@@ -31,7 +32,6 @@ async function ranksSettings() {
 
 export async function getSettingsForRank(rank: string) {
   const settings = await ranksSettings();
-  console.log(`Rank settings for ${rank}:`, settings);
   return (await settings.ranks[rank]) || {};
 }
 
