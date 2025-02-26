@@ -163,6 +163,12 @@ export default new (class Playing {
     return this.playerDuration * this.playerProgress;
   }
 
+  @action
+  setPlayerDuration(d: number) {
+    console.log(`Setting Player Duration: ${d}`);
+    this.playerDuration = d;
+  }
+
   @computed get liked() {
     if (
       !this.data.feedback_users ||
@@ -323,5 +329,9 @@ export default new (class Playing {
 
   updateBackgroundImage(gelato: boolean) {
     this.backgroundImage = gelato ? gelatoGif : spacePineapples;
+  }
+  @action
+  setPlayerProgress(p: number) {
+    this.playerProgress = p;
   }
 })();

@@ -1,13 +1,13 @@
-import React, {useRef} from "react";
-import {observer} from "mobx-react";
-import {observable, action} from "mobx";
+import React, { useRef } from "react";
+import { observer } from "mobx-react";
+import { observable, action } from "mobx";
 
 // Note that lazy loading doesn't work. Filing an issue with the project
-import ReactPlayer, {ReactPlayerProps} from "react-player";
-import {Line} from "rc-progress";
+import ReactPlayer, { ReactPlayerProps } from "react-player";
+import { Line } from "rc-progress";
 
 import playing from "../stores/playing";
-import {FC} from "react";
+import { FC } from "react";
 
 const rPlayerYoutubeConfig = {
     playerVars: {
@@ -64,14 +64,13 @@ const Player: FC = () => {
                     playing={playing.data.playing}
                     volume={playing.volume}
                     onProgress={(p) => {
-                        action(() => {
-                            playing.playerProgress = p.played;
-                            const syncTo = playing.shouldSync;
+                        playing.setPlayerProgress(p.played);
+                        const syncTo = playing.shouldSync;
 
-                            if (syncTo) {
-                                playerRef.current?.seekTo(syncTo, "seconds");
-                            }
-                        });
+                        if (syncTo) {
+                            console.log(`syncing to ${syncTo}`);
+                            playerRef.current?.seekTo(syncTo, "seconds");
+                        }
                     }}
                     onError={(e) => playing.userReportsError(e)}
                     onStart={() => playerRef.current?.seekTo(0, "seconds")}
@@ -88,10 +87,7 @@ const Player: FC = () => {
                         soundcloud: rPlayerSoundcloudConfig,
                     }}
                     onDuration={() => {
-                        action(() => {
-                            playing.playerDuration =
-                                playing.data.info.duration / 1000;
-                        });
+                        playing.setPlayerDuration(playing.data.info.duration / 1000);
                     }}
                 />
             </div>
@@ -109,7 +105,7 @@ const Player: FC = () => {
 
 const $Player = observer(Player);
 
-export {$Player as Player};
+export { $Player as Player };
 
 class Player_ extends React.Component {
     onProgress(p: { played: number }) {
@@ -189,10 +185,7 @@ class Player_ extends React.Component {
                                 soundcloud: rPlayerSoundcloudConfig,
                             }}
                             onDuration={() => {
-                                action(() => {
-                                    playing.playerDuration =
-                                        playing.data.info.duration / 1000;
-                                });
+                                playing.setPlayerDuration(playing.data.info.duration / 1000);
                             }}
                         />
                     )}{" "}

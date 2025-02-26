@@ -143,6 +143,7 @@ class Sidebar_ extends React.Component {
 
     @action
     update(tab: string) {
+        console.log(`Switching to ${tab}`);
         if (tab === this.currentSidebar) return;
         if (tab === "CHAT") {
             this.setCurrentSidebar("CHAT");
@@ -154,6 +155,7 @@ class Sidebar_ extends React.Component {
 
     @action
     goToChat = () => {
+        console.log(`Switching to CHAT`);
         this.setCurrentSidebar("CHAT");
         this.chatInputRef?.current?.focus();
     }

@@ -243,9 +243,7 @@ export default new (class Profile {
     @observable accessor ipRef: any = null;
 
     @computed get canAutoplay() {
-        console.log("canAutoplay");
         if (this.user && this.user.uid) {
-            console.log("canAutoplay user.uid", this.user.uid);
             return rank(this.user.uid).then(userRank => userRank !== "User");
         }
         return Promise.resolve(false);

@@ -96,10 +96,14 @@ export default new (class Waitlist {
     }, 60000);
 
     localforage.getItem("showminutes").then((value) => {
-      this.showMinutesUntil = typeof value === "boolean" ? value : false;
+      this.loadShowMinutesUntil(typeof value === "boolean" ? value : false);
     });
   }
 
+  @action 
+  loadShowMinutesUntil(state: boolean) {
+    this.showMinutesUntil = state;
+  }
   @action
   setShowMinutesUntil() {
     this.showMinutesUntil = !this.showMinutesUntil;
@@ -126,9 +130,7 @@ export default new (class Waitlist {
     console.log("Autojoin started");
 
     profile.canAutoplay.then((canAutoplay) => {
-      console.log("can autoplay: ", canAutoplay);
       if (canAutoplay && !profile.autoplay) {
-        console.log("autoplay is disabled");
         this.setAutoplay(true);
 
         this.setAutoJoinTimer(setInterval(() => {
