@@ -15,8 +15,10 @@ interface ChatProps {
 
 const Chat = React.forwardRef<RefObject<HTMLInputElement>, ChatProps>((props, ref) =>
 (
+  <>
   <div id="chatcontainer" style={props.show ? {} : { display: "none" }}>
     <ChatContent goToChat={props.goToChat} />
+    <div>
     {chat.canChat ? (
       <ChatSend myref={ref as unknown as React.RefObject<HTMLInputElement>} />
     ) : (
@@ -27,6 +29,9 @@ const Chat = React.forwardRef<RefObject<HTMLInputElement>, ChatProps>((props, re
       />
     )}
   </div>
+  </div>
+  
+  </>
 ));
 
 Chat.displayName = "Chat";

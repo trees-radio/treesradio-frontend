@@ -21,23 +21,21 @@
 #chatcontainer {
   display: flex;
   flex-direction: column;
-  height: 85vh;
+  height: 88vh;
 }
 
 #chatscroll {
-  height: calc(100% - 2rem);
+  height: 100%;
 }
 
 .chatbar {
   height: 2.8rem;
-  bottom: 0;
-  position: absolute;
   width: 25vw;
 }
 
 #chatcontainertop {
   font-size: 10px;
-  height: calc(100% - 5rem);
+  height: 100%;
   width: 100%;
 }
 
