@@ -20,14 +20,14 @@ class Waitlist extends React.Component {
   }
   render() {
     var accumulator = 0;
-    var list = waitlist.onlineOnly.map((u, i) => {
+    var list = waitlist.list.map((u, i) => {
       var nextsong = playing.timeStarted + playing.playerDuration + accumulator;
       var until = playing.playerDuration - playing.elapsed + accumulator;
 
       accumulator += u.songlength / 1000;
       return (
         <li
-          key={i}
+          key={u.uid}
           className={classNames(
             "waitlist-item",
             Number.isInteger(i / 2) ? "waitlist-line-1" : "waitlist-line-0"
