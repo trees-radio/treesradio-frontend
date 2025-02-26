@@ -54,6 +54,7 @@ export default new (class Waitlist {
   @observable accessor localPlayingState = false;
   @observable accessor autojoinTimer: Timer | boolean = false;
   @observable accessor showMinutesUntil: boolean = false;
+  @observable accessor _autojoinInProgress = false;
 
   @action
   setLocalPlayingState(state: boolean) {
@@ -117,42 +118,56 @@ export default new (class Waitlist {
   }
 
   @action
-  async setAutojoin() {
-    if (await profile.canAutoplay && !profile.autoplay) {
-      console.log("autoplay is disabled");
-      this.setAutoplay(true);
+  setAutojoin() {
+    // Use a flag to prevent double execution
+    if (this._autojoinInProgress) return;
+    this._autojoinInProgress = true;
 
-      this.setAutoJoinTimer(setInterval(() => {
-        if (
-          !this.inWaitlist &&
-          !this.localJoinState &&
-          epoch() - profile.lastchat < 3600
-        ) {
-          // Hopefully prevent cycling of the button.
-          this.bigButton();
-        }
-        if (epoch() - profile.lastchat >= 3600) {
-          let msg =
-            "You were removed from the waitlist because it's been one hour since your last chat.";
+    console.log("Autojoin started");
 
-          if (profile.desktopNotifications) {
-            let options = {
-              icon: favicon,
-              badge: favicon,
-              body: msg,
-              silent: true,
-            };
-            new Notification("TreesRadio", options);
-          } else {
-            toast(msg, { type: "error" });
+    profile.canAutoplay.then((canAutoplay) => {
+      console.log("can autoplay: ", canAutoplay);
+      if (canAutoplay && !profile.autoplay) {
+        console.log("autoplay is disabled");
+        this.setAutoplay(true);
+
+        this.setAutoJoinTimer(setInterval(() => {
+          if (
+            !this.inWaitlist &&
+            !this.localJoinState &&
+            epoch() - profile.lastchat < 3600
+          ) {
+            // Hopefully prevent cycling of the button.
+            this.bigButton();
           }
-          this.setAutoplay(false);
-          this.cancelAutojoin();
-        }
-      }, 10000));
-    } else {
+          if (epoch() - profile.lastchat >= 3600) {
+            let msg =
+              "You were removed from the waitlist because it's been one hour since your last chat.";
+
+            if (profile.desktopNotifications) {
+              let options = {
+                icon: favicon,
+                badge: favicon,
+                body: msg,
+                silent: true,
+              };
+              new Notification("TreesRadio", options);
+            } else {
+              toast(msg, { type: "error" });
+            }
+            this.setAutoplay(false);
+            this.cancelAutojoin();
+          }
+        }, 10000));
+      } else {
+        this.cancelAutojoin();
+      }
+      this._autojoinInProgress = false;
+    }).catch(error => {
+      console.error("Error in autojoin:", error);
       this.cancelAutojoin();
-    }
+      this._autojoinInProgress = false;
+    });
   }
 
   @action

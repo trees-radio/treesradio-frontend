@@ -57,7 +57,7 @@ export interface Profile {
     banned: boolean;
     silenced: boolean;
     getToken(): any;
-    safeUsername: string;   
+    safeUsername: string;
     eventsPath: string;
     secondsRegistered: number;
     updateUsername(username: string): void;
@@ -190,7 +190,7 @@ export default new (class Profile {
         autorun(() => {
             if (this.user) {
                 const userStore = username(this.user.uid)
-                if (userStore) 
+                if (userStore)
                     userStore.then(username => {
                         this.setUserName(username);
                         this.setInit(true);
@@ -204,7 +204,7 @@ export default new (class Profile {
         autorun(async () => {
             if (this.user && this.user.uid) {
                 const userRank = await rank(this.user.uid);
-                this.setRankAndPermissions(userRank,await getSettingsForRank(userRank));
+                this.setRankAndPermissions(userRank, await getSettingsForRank(userRank));
             }
         });
     }
@@ -249,6 +249,15 @@ export default new (class Profile {
             return rank(this.user.uid).then(userRank => userRank !== "User");
         }
         return Promise.resolve(false);
+    }
+
+    @action
+    async checkCanAutoplay() {
+        if (this.user && this.user.uid) {
+            const userRank = await rank(this.user.uid);
+            return userRank !== "User";
+        }
+        return false;
     }
 
     @action
@@ -343,7 +352,7 @@ export default new (class Profile {
                     }, 10000);
                 });
         } else {
-            toast(`You may not use "disposable" email addresses for TreesRadio`, {type: "error"});
+            toast(`You may not use "disposable" email addresses for TreesRadio`, { type: "error" });
         }
     }
 
@@ -362,11 +371,11 @@ export default new (class Profile {
                     case undefined:
                         return;
                 }
-                toast(msg, {type: "error"});
+                toast(msg, { type: "error" });
                 return false;
             })
             .then(() => {
-                toast(`Success! An email with instructions has been sent to ${email}.`,{type: "success"});
+                toast(`Success! An email with instructions has been sent to ${email}.`, { type: "success" });
                 return true;
             });
     }

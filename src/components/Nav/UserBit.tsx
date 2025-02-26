@@ -201,7 +201,10 @@ const UserBit: FC = () => {
         // Playback & Participation Preferences
         {
             name: "Auto Join Waitlist",
-            action: () => { waitlist.setAutojoin() },
+            action: () => { Promise.resolve(waitlist.setAutojoin())
+                .then(() => console.log("Autojoin set"))
+                .catch(error => console.error("Error in auto join:", error));
+             },
             isCheckbox: true,
             isChecked: () => profile.autoplay
         },
