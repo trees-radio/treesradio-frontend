@@ -22,10 +22,10 @@ export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 export default new (class Playing {
   constructor() {
-    localforage.getItem<number>("volume").then((v) => (v ? (this.volume = v) : false));
+    localforage.getItem<number>("volume").then((v) => (v ? (this.setVolume(v)) : false));
     localforage
       .getItem<string>("playerSize")
-      .then((s) => (s ? (this.playerSize = s) : false));
+      .then((s) => (s ? (this.setPlayerSize(s)) : false));
 
     autorun(() => {
       const me = this
@@ -36,13 +36,27 @@ export default new (class Playing {
               me.updatePlayer(data);
             }
         });
-      action(() => {
-        this.localLikeState = this.liked;
-        this.localDislikeState = this.disliked;
-        this.localGrabState = this.grabbed;
-      }
-      );
+        this.setLocalLikeState(this.liked);
+        this.setLocalDislikeState(this.disliked);
+        this.setLocalGrabState(this.grabbed);
     });
+  }
+
+  @action setPlayerSize(s: string) {
+    this.playerSize = s;
+    localforage.setItem("playerSize", s);
+  }
+
+  @action setLocalLikeState(v: boolean) {
+    this.localLikeState = v;
+  }
+
+  @action setLocalDislikeState(v: boolean) {
+    this.localDislikeState = v;
+  }
+
+  @action setLocalGrabState(v: boolean) {
+    this.localGrabState = v;
   }
 
   @action
@@ -51,9 +65,14 @@ export default new (class Playing {
     document.title = `${data.info.title} - ${data.info.user} | TreesRadio`;
   }
 
+  @action
+  setSyncs(syncs: number[]) {
+    this.syncs = syncs;
+  }
+
   @computed get shouldSync() {
     if (!this.data.time || !this.data.info.duration || !this.data.playing) {
-      this.syncs = [];
+      this.setSyncs([]);
       return false;
     }
     var serverSeconds = this.data.time;
@@ -79,7 +98,7 @@ export default new (class Playing {
 
   @observable accessor currentUrl = "";
 
-  @observable accessor syncs = [];
+  @observable accessor syncs: number[] = [];
 
   @observable accessor fakeScroll = 0;
 
@@ -165,7 +184,6 @@ export default new (class Playing {
 
   @action
   setPlayerDuration(d: number) {
-    console.log(`Setting Player Duration: ${d}`);
     this.playerDuration = d;
   }
 
@@ -186,6 +204,7 @@ export default new (class Playing {
 
   @observable accessor volume = 0.15;
 
+  @action
   setVolume(v: number) {
     this.volume = v;
     localforage.setItem("volume", v);
@@ -211,7 +230,7 @@ export default new (class Playing {
   like() {
     // reset our state if the user clicks again while loading
     if (this.likeLoading) {
-      this.localLikeState = this.liked;
+      this.setLocalLikeState(this.liked);
       return;
     }
 
@@ -220,7 +239,7 @@ export default new (class Playing {
       return false;
     }
     send("like");
-    this.localLikeState = true;
+    this.setLocalLikeState(true);
   }
 
   @observable accessor localDislikeState = false;
@@ -232,7 +251,7 @@ export default new (class Playing {
   dislike() {
     // reset our state if the user clicks again while loading
     if (this.dislikeLoading) {
-      this.localDislikeState = this.disliked;
+      this.setLocalDislikeState(this.disliked);
       return;
     }
 
@@ -240,7 +259,7 @@ export default new (class Playing {
       toast("You already disliked this song!", {type:"error"});
     }
     send("dislike");
-    this.localDislikeState = true;
+    this.setLocalDislikeState(true);
   }
 
   @observable accessor localGrabState = false;
@@ -254,7 +273,7 @@ export default new (class Playing {
     playlists.selectPlaylist(playlists.selectedPlaylist);
     if (!this.grabbed) {
       send("grab");
-      // this.localGrabState = true;
+      this.setLocalGrabState(true);
     }
   }
 
@@ -316,6 +335,7 @@ export default new (class Playing {
 
   @observable accessor playerSize = "BIG";
 
+  @action
   togglePlayerSize() {
     if (this.playerSize === "BIG") {
       this.playerSize = "SMALL";
@@ -327,6 +347,7 @@ export default new (class Playing {
 
   @observable accessor backgroundImage = spacePineapples;
 
+  @action
   updateBackgroundImage(gelato: boolean) {
     this.backgroundImage = gelato ? gelatoGif : spacePineapples;
   }
