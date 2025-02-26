@@ -262,7 +262,7 @@ export default new (class Profile {
             }
 
             localforage.setItem("desktopnotify", notify ? 1 : 0);
-            this.desktopNotifications = notify;
+            this.setDesktopNotifications(notify);
         });
     }
 

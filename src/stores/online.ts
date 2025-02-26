@@ -28,14 +28,19 @@ export default new (class Online {
   }
 
   @action
+  setUserlist(users: string[]) {
+    this.userlist = users;
+  }
+
+  @action
   async loadOnlineEnts() {
     getDatabaseRef("onlineents")
       .once("value", snap => {
         const thislist = snap.val();
         if (thislist == null) return;
         let list: OnlineEnt[] = [];
-        this.online = [];
-        this.userlist = [];
+        this.setOnlineEnts([]);
+        this.setUserlist([]);
 
         thislist.forEach((item: OnlineEnt) => {
           list.push(item);
@@ -47,7 +52,7 @@ export default new (class Online {
           users.push(thislist[key].username);
         });
 
-        this.userlist = users;
+        this.setUserlist(users);
       });
   }
   
