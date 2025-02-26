@@ -773,11 +773,11 @@ class UserBit_ extends React.Component {
     }
 
     buildMenuItems() {
-        return this.dropdownItems.map((item, index) => {
+        return this.dropdownItems.map((item, _index) => {
             if (item.isCheckbox) {
                 return (
                     <MenuItem>
-                        <div key={index} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
+                        <div key={item.name} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
                             <i className={classNames("fa", item.checkboxFunction && item.checkboxFunction() ? "fa-check-square-o" : "fa-square-o", "")}/>
                             <span className="ml-2">{item.name}</span>
                         </div>
@@ -786,7 +786,7 @@ class UserBit_ extends React.Component {
             }
             return (
                 <MenuItem>
-                    <div key={index} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
+                    <div key={item.name} onClick={item.action} className="flex items-center hover:bg-gray-700 mx-2">
                         <i className={classNames("fa", item.icon)}/>
                         <span className="ml-2">{item.name}</span>
                     </div>

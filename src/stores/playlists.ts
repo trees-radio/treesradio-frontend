@@ -122,7 +122,7 @@ export default new (class Playlists {
                             data.key = playlist.key;
                             playlists.push(data);
                         });
-                        this.playlists = playlists;
+                        this.setPlaylists(playlists);
 
                         if (!this.init || this.removedPlaylist) {
                             db.ref(`private/${user.uid}`).once("value").then(snap => {
@@ -144,10 +144,10 @@ export default new (class Playlists {
                             });
                         }
 
-                        this.init = true;
+                        this.setInitState(true);
                     });
                 } else {
-                    this.init = false;
+                    this.setInitState(false);
                     if (this.disposeEvent) {
                         this.disposeEvent();
                         this.disposeEvent = null;
@@ -158,9 +158,19 @@ export default new (class Playlists {
                     if (this.stopPlaylistSync) {
                         this.stopPlaylistSync();
                     }
-                    this.playlists = [];
+                    this.setPlaylists([]);
                 }
             });
+    }
+
+    @action
+    setInitState(init: boolean) {
+        this.init = init;
+    }
+
+    @action
+    setPlaylists(playlists: PlaylistsEnt[]) {
+        this.playlists = playlists;
     }
 
     @observable accessor init = false;

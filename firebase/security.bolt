@@ -101,6 +101,7 @@ path /backend {
 
 path /chat {
   read() {true}
+  index() {".timestamp"}
 }
 
 path /motd {

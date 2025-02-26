@@ -90,6 +90,11 @@ export default new (class Profile {
     }
 
     @action
+    setUserName(username: string | undefined) {
+        this.username = username;
+    }
+
+    @action
     setProfile(profile: any) {
         this.profile = profile;
     }
@@ -187,23 +192,23 @@ export default new (class Profile {
                 const userStore = username(this.user.uid)
                 if (userStore) 
                     userStore.then(username => {
-                        this.username = username;
-                        this.init = true;
+                        this.setUserName(username);
+                        this.setInit(true);
                     });
             } else {
-                this.username = undefined;
+                this.setUserName(undefined);
             }
         });
 
         // permissions handling
         autorun(async () => {
-            if (this.user && this.rank) {
-                this.setRankAndPermissions(await rank(this.user?.uid),await getSettingsForRank(this.rank));
-            } else {
-                this.setRankAndPermissions("", {});
+            if (this.user && this.rank && this.user.uid) {
+                console.log(`this.user.uid: ${this.user.uid}`);
+                this.setRankAndPermissions(await rank(this.user.uid),await getSettingsForRank(this.rank));
             }
         });
     }
+
 
     @computed get connected() {
         return app.connected;
@@ -238,6 +243,7 @@ export default new (class Profile {
     @observable accessor ipRef: any = null;
 
     @computed get canAutoplay() {
+        console.log(`this.rankPermissions.autoplay: ${this.rankPermissions.autoplay}`);
         return this.rank && this.rank !== "User";
     }
 

@@ -23,15 +23,15 @@ export default class UserName extends React.Component {
     super(props);
     this.props = props;
     this.state = {};
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
     this.getRank();
     this.getUsername();
     this.getFlair();
     this.getFlairColors();
     this.getPatreon();
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
   }
 
   componentWillUnmount() {

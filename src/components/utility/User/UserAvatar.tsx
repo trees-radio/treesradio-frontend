@@ -10,22 +10,25 @@ interface UserAvatarProps {
     imgClass?: string;
 }
 
-export default class UserAvatar extends React.Component {
+interface UserAvatarState {
+    avatar?: string;
+    visible: boolean;
+}
+
+export default class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState> {
     _isMounted = false;
-    props: UserAvatarProps;
-    state: { avatar?: string; visible: boolean };
+
+    state: UserAvatarState = {
+        visible: true
+    };
 
     constructor(props: UserAvatarProps) {
         super(props);
-        this.props = props;
-        this.state = {
-            visible: true
-        };
-        this.getAvatar();
     }
 
     componentDidMount() {
         this._isMounted = true;
+        this.getAvatar();
     }
 
     componentWillUnmount() {
@@ -33,21 +36,26 @@ export default class UserAvatar extends React.Component {
     }
 
     getAvatar = async () => {
+        if (!this._isMounted) return;
+
         const fallback = await defaultAvatar(this.props.uid);
 
-        this.setState(
-            {
-                avatar: fallback
-            },
-            () => {
-                if (this._isMounted)
+        if (this._isMounted) {
+            this.setState(
+                {
+                    avatar: fallback
+                },
+                () => {
                     listenAvatar(this.props.uid, (snap: DataSnapshot, _b?: string | null) => {
-                        this.setState({
-                            avatar: snap.val() || fallback
-                        });
+                        if (this._isMounted) {
+                            this.setState({
+                                avatar: snap.val() || fallback
+                            });
+                        }
                     });
-            }
-        );
+                }
+            );
+        }
     };
 
     onVisibility = (isVisible: boolean) => this.setState({visible: isVisible});
@@ -66,9 +74,14 @@ export default class UserAvatar extends React.Component {
 
         return (
             <span className={this.props.className}>
-        <img src={avatar} className={this.props.imgClass || "avatarimg"} style={style} id="user-avatar"/>
+                <img 
+                    src={avatar} 
+                    className={this.props.imgClass || "avatarimg"} 
+                    style={style} 
+                    id="user-avatar"
+                />
                 {/*<VisibilitySensor onChange={this.onVisibility}/>*/}
-      </span>
+            </span>
         );
     }
 }

@@ -23,6 +23,11 @@ export default new (class Online {
   }
 
   @action
+  setOnlineEnts(ents: OnlineEnt[]) {
+    this.online = ents;
+  }
+
+  @action
   async loadOnlineEnts() {
     getDatabaseRef("onlineents")
       .once("value", snap => {
@@ -36,7 +41,7 @@ export default new (class Online {
           list.push(item);
         });
 
-        this.online = list;
+        this.setOnlineEnts(list);
         let users: string[] = [];
         Object.keys(thislist).forEach((key) => {
           users.push(thislist[key].username);

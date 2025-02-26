@@ -22,15 +22,16 @@ export function listenRank(uid: string) {
     .on("value", snap => snap.val());
 }
 
-function ranksSettings() {
-  return getDatabaseRef("settings")
+async function ranksSettings() {
+  const snap = await getDatabaseRef("settings")
     .child("ranks")
-    .once("value")
-    .then(snap => snap.val());
+    .once("value");
+  return snap.val();
 }
 
 export async function getSettingsForRank(rank: string) {
   const settings = await ranksSettings();
+  console.log(`Rank settings for ${rank}:`, settings);
   return (await settings.ranks[rank]) || {};
 }
 
