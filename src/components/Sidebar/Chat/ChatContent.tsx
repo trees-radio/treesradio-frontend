@@ -92,7 +92,7 @@ const ChatContent = observer(({ goToChat }) => {
     <div 
       id="chatscroll"
       ref={scrollRef}
-      className="h-96 overflow-y-auto"
+      className="md:h-[85vh] h-[31em] overflow-y-auto "
       onScroll={handleScroll}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
