@@ -21,7 +21,7 @@ const Sidebar: FC = () => {
     const selAboutRef = createRef<HTMLDivElement>();
     const chatInputRef = createRef<HTMLInputElement>();
     // const chatComponentRef = createRef<HTMLDivElement>();
-    const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(!profile.loggedIn ? "ABOUT" : "CHAT");
+    const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(!profile.uid ? "ABOUT" : "CHAT");
 
     const chatBtnClass = classNames("show-chat-btn", {
         "sidebar-selected": currentSidebar === "CHAT"
@@ -37,6 +37,13 @@ const Sidebar: FC = () => {
     });
 
     const goToChat = () => {
+        const chatContainer = document.getElementById("chatbox")
+        if (chatContainer) {
+            const lastMessage = chatContainer.lastElementChild;
+            if (lastMessage) {
+                lastMessage.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
         setCurrentSidebar("CHAT");
         chatInputRef.current?.focus();
     }
@@ -44,7 +51,7 @@ const Sidebar: FC = () => {
     return (
         <div id="sidebar">
             <div className="sidebar-changer">
-                <div className={chatBtnClass} ref={selChatRef} onClick={() => setCurrentSidebar("CHAT")}>
+                <div className={chatBtnClass} ref={selChatRef} onClick={() => { goToChat(); setCurrentSidebar("CHAT") }}>
                     Chat
                 </div>
                 <div
@@ -95,9 +102,10 @@ class Sidebar_ extends React.Component {
     props: SidebarProps;
     selChatRef: React.RefObject<HTMLDivElement | null>;
     selOnlineRef: React.RefObject<HTMLDivElement | null>;
-    selWaitlistRef: React.RefObject<HTMLDivElement | null>;    
+    selWaitlistRef: React.RefObject<HTMLDivElement | null>;
     selAboutRef: React.RefObject<HTMLDivElement | null>;
     chatInputRef: React.RefObject<HTMLInputElement | null>;
+
     constructor(props: SidebarProps) {
         super(props);
         this.props = props;
@@ -120,12 +128,27 @@ class Sidebar_ extends React.Component {
 
     @action
     setCurrentSidebar(tab: string) {
+        console.log(`Switching to ${tab}`);
+        if (tab === "CHAT") {
+            // Scroll to the bottom of the chat when switching to chat
+            const chatComponent = document.getElementById("chatcontainer");
+            console.log(`Scrolling to bottom of chat`, chatComponent);
+            if (chatComponent) {
+                chatComponent.scrollTop = chatComponent.scrollHeight;
+                console.log(`Scrolling to bottom of chat`, chatComponent.scrollTop, chatComponent.scrollHeight);
+            }
+        }
         this.currentSidebar = tab;
     }
 
     @action
     update(tab: string) {
         if (tab === this.currentSidebar) return;
+        if (tab === "CHAT") {
+            this.setCurrentSidebar("CHAT");
+            this.chatInputRef?.current?.focus();
+            return;
+        }
         this.setCurrentSidebar(tab);
     }
 
