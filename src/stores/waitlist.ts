@@ -16,20 +16,23 @@ interface WaitlistEnt {
 }
 
 export default new (class Waitlist {
+  @action setList(list: WaitlistEnt[]) {
+    this.list = list;
+  }
 
   @action
   reloadList() {
     getDatabaseRef("waitlist")
       .once("value", (snap) => {
         var list: WaitlistEnt[] = [];
-        this.list = [];
+        this.setList([]);
         var wl = snap.val();
         if (wl)
           Object.keys(wl).forEach((key) => {
             list.push(wl[key]);
           });
 
-        this.list = list;
+        this.setList(list);
       });
   }
 
