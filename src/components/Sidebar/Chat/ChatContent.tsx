@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { observer } from "mobx-react";
-import chat, {ChatMessage} from "../../../stores/chat";
+import chat, { ChatMessage } from "../../../stores/chat";
 import profile from "../../../stores/profile";
 import classNames from "classnames";
 import moment from "moment";
@@ -92,7 +92,7 @@ const ChatContent = observer(({ goToChat }) => {
     <div 
       id="chatscroll"
       ref={scrollRef}
-      className="md:h-[85vh] h-[31em] overflow-y-auto "
+      className="flex-1 overflow-y-auto min-h-0"
       onScroll={handleScroll}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}

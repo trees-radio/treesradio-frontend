@@ -6,7 +6,7 @@ import {observer} from "mobx-react";
 import app from "../stores/app";
 
 import {Nav} from "./Nav";
-import {Sidebar} from "./Sidebar";
+import Sidebar from "./Sidebar";
 import {Toolbar} from "./Toolbar";
 import {Player} from "./Player";
 import {ToastContainer} from "react-toastify";

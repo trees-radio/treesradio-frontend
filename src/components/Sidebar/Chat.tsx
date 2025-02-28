@@ -1,6 +1,4 @@
 import React, { RefObject } from "react";
-
-
 import chat from "../../stores/chat";
 import profile from "../../stores/profile";
 
@@ -11,29 +9,26 @@ import ChatLocked from "./Chat/ChatLocked";
 interface ChatProps {
   show: boolean;
   goToChat: () => void;
+  chatInputRef: RefObject<HTMLInputElement | null>;
 }
 
-const Chat = React.forwardRef<RefObject<HTMLInputElement>, ChatProps>((props, ref) =>
-(
-  <>
-  <div id="chatcontainer" style={props.show ? {} : { display: "none" }}>
+const Chat: React.FC<ChatProps> = (props) => (
+  <div id="chatcontainer" 
+       className="flex flex-col flex-1 overflow-hidden" 
+       style={props.show ? {} : { display: "none" }}>
     <ChatContent goToChat={props.goToChat} />
-    <div>
-    {chat.canChat ? (
-      <ChatSend myref={ref as unknown as React.RefObject<HTMLInputElement>} />
-    ) : (
-      <ChatLocked
-        locked={chat.chatLocked}
-        loggedIn={profile.loggedIn}
-        secondsUntilUnlock={chat.secondsUntilUnlock}
-      />
-    )}
+    <div className="flex-shrink-0">
+      {chat.canChat ? (
+        <ChatSend myref={props.chatInputRef} />
+      ) : (
+        <ChatLocked
+          locked={chat.chatLocked}
+          loggedIn={profile.loggedIn}
+          secondsUntilUnlock={chat.secondsUntilUnlock}
+        />
+      )}
+    </div>
   </div>
-  </div>
-  
-  </>
-));
-
-Chat.displayName = "Chat";
+);
 
 export default Chat;

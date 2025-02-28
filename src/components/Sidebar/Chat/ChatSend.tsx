@@ -12,7 +12,7 @@ import toast from "../../../utils/toast";
 
 // const noop = () => {};
 interface ChatSendProps {
-  myref: React.RefObject<HTMLInputElement>;
+  myref: React.RefObject<HTMLInputElement | null>;
 }
 class ChatSend extends React.Component {
   props: ChatSendProps;

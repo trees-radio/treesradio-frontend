@@ -103,6 +103,10 @@
       height: calc(100% - 4rem) !important;
     }
 
+    #chatscroll {
+      max-height: calc(100% - 3rem) !important;
+    }
+
     #playlists-panel.playlists-panel-closed {
       height: 0 !important;
     }
