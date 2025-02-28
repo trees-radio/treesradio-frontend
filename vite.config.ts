@@ -25,7 +25,7 @@ export default defineConfig({
             manifest: {
               name: 'TreesRadio',
               short_name: 'TR',
-              description: 'Music for the Broccoli People',
+              description: 'Music for the Broccoli People.',
               theme_color: '#85ac37',
               background_color: '#222222',
               display: 'standalone',
