@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import UserName from "../utility/User/UserName";
 import UserAvatar from "../utility/User/UserAvatar";
-import profile, {Profile} from "../../stores/profile";
+import profile from "../../stores/profile";
 import online, { OnlineEnt } from "../../stores/online";
 import getUsername from "../../libs/username";
 
