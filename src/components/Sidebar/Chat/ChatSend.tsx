@@ -43,6 +43,7 @@ class ChatSend extends React.Component {
     var key = e.keyCode || e.which;
     if (key === 9) {
       if (chat.mentionMatches.length > 0) {
+        e.preventDefault();
         chat.replaceMention(0);
       }
     }
