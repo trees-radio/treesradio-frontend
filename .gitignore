@@ -1,5 +1,4 @@
 ### Trees Radio Specific Ignores
-public
 firebase/rules.json
 .fbaseapi
 app/version.json
