@@ -1,14 +1,13 @@
+// vite.config.ts with fixed tree shaking configuration
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vite.dev/config/
 export default defineConfig({
     plugins: [
         tailwindcss(),
         react({
-            // only needed for mobx TODO: remove when mobx is removed and use react-swc instead
             babel: {
                 plugins: [
                     [
@@ -43,23 +42,47 @@ export default defineConfig({
                 }
               ]
             },
-            // Add these options to prevent build hanging
             workbox: {
               clientsClaim: true,
               skipWaiting: true,
-              maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, 
+              maximumFileSizeToCacheInBytes: 3 * 1024 * 1024
             }
-          })
+        })
     ],
-    // These should be at the top level, not inside plugins
     publicDir: 'public',
     build: {
-      outDir: 'dist',
-      assetsDir: 'assets',
-      rollupOptions: {
-        input: {
-          main: 'index.html'
+        outDir: 'dist',
+        assetsDir: 'assets',
+        // Enhanced build optimization
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,  // Remove console.* calls
+                pure_funcs: ['console.log', 'console.debug'] // Treat these functions as pure (removable)
+            }
+        },
+        rollupOptions: {
+            input: {
+                main: 'index.html'
+            },
+            output: {
+                // Split chunks for better caching
+                manualChunks: {
+                    // Group React and related packages
+                    react: ['react', 'react-dom'],
+                    // Put large vendor packages in separate chunks
+                    vendor: ['mobx', 'mobx-react-lite', 'tailwindcss'],
+                    // You can define more chunks as needed
+                }
+            },
+            // Preserve ESM modules for better tree shaking
+            preserveEntrySignatures: 'strict',
         }
-      }
+    },
+    // Remove the problematic esbuild configuration
+    // optimizeDeps config is safe to keep
+    optimizeDeps: {
+        include: [],
+        exclude: []
     }
 })
