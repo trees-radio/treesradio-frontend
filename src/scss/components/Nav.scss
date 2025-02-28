@@ -428,12 +428,12 @@
 }
 
 #loginbutton {
-  margin-left: 0.5vw;
-  margin-right: 0.5vw;
   font-weight: bold;
-  text-shadow: vars.$text-shadow-heavy;
+  text-shadow: 0.75px 0 0 #000, -0.6px 0 0 #000, 0 0.5px 0 #000, 0 -0.6px 0 #000, 0.6px 0.6px #000, -0.6px -0.6px 0 #000, 0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000;
   letter-spacing: 1.5px;
+  font-size: 110%;
   border-radius: 0;
+  color: white;
 }
 
 #reset-password-btn {

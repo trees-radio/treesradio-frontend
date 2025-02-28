@@ -6,8 +6,6 @@ import TokeTimer from "./Nav/TokeTimer.js";
 
 import file from "../static/version.json";
 import profile from "../stores/profile.ts";
-import $ from "cash-dom";
-import Modal from "./utility/Modal.tsx";
 // import imageWhitelist from "../libs/imageWhitelist";
 import tokeEvent from "../libs/tokeEvent.ts";
 import {HypeProgress} from "./Nav/HypeProgress.tsx";
@@ -19,123 +17,7 @@ import WeedTwo from "../assets/img/weed2.svg";
 import WeedThree from "../assets/img/weed3.svg";
 import WeedFour from "../assets/img/weed4.svg";
 import WeedFive from "../assets/img/weed5.svg";
-
-
-/*
-const Version: FC = () => (
-    <span className="version-tag hidden group-hover:inline">
-        v{file.version.version}-{file.version.short}
-    </span>
-);
-*/
-
-const Login: FC = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [resettingPassword, setResettingPassword] = useState(false);
-    const [resetEmail, setResetEmail] = useState("");
-
-    // TODO this is the most illegal dogshit code and needs to be completely rewritten p.s. kill me
-    const login = async () => {
-        if (await profile.login(email, password)) {
-            document.getElementById("chatscroll")?.setAttribute("style", "");
-
-            const navbarGrid = document.getElementById("navbar-grid");
-
-            navbarGrid?.classList.remove('navbar-grid-noLogin');
-
-            if (window.matchMedia("only screen and (orientation: portrait)")) {
-                navbarGrid
-                    ?.setAttribute("grid-template-columns",
-                        window
-                            .matchMedia("only screen and (max-width: 1500px")
-                            .matches ? "15vw 42vw 14vw 9vw 20vw" : "15vw 46vw 14vw 9vw 16vw");
-            }
-
-            const buttons = document.querySelectorAll('.disabledNoLogin');
-            buttons.forEach(button => button.classList.remove('greyDisabled'));
-
-            // TODO noop?
-            // profile.setAvatar(this.avatarField);
-        }
-    }
-    const resetPassword = async () =>
-        await profile.sendPassReset(resetEmail) && setResettingPassword(false);
-
-    //TODO mobile?
-    return (
-        <div id="loginWrapper">
-            <div className="form-inline" id="loginForm">
-                <div className="form-group" id="emailpassfields">
-                    <div className="input-group margin-bottom-sm" id="emailbox">
-                                <span className="input-group-addon">
-                                    <i className="fa fa-envelope-o fa-fw"></i>
-                                </span>
-                        <input
-                            className="form-control"
-                            type="email"
-                            id="emailInput"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            onKeyDown={e => e.key === "Enter" && $("#passInput").trigger("focus")}
-                        />
-                    </div>
-                    <div className="input-group">
-                                <span className="input-group-addon">
-                                    <i className="fa fa-key fa-fw"></i>
-                                </span>
-                        <input
-                            className="form-control"
-                            type="password"
-                            id="passInput"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            onKeyDown={e => e.key === 'Enter' && login()}
-                        />
-                    </div>
-                </div>
-                <div id="loginButtons">
-                    <button className="btn btn-primary login-form-button" id="loginbutton"
-                            onClick={login}>
-                        Login
-                    </button>
-                    <button
-                        className="btn btn-default login-form-button"
-                        id="regbutton"
-                        onClick={() => profile.register(email, password)}
-                    >
-                        Register
-                    </button>
-                    <button
-                        className="btn btn-primary login-form-button"
-                        id="reset-password-btn"
-                        onClick={() => setResettingPassword(true)}
-                    >
-                        Password Reset
-                    </button>
-                </div>
-            </div>
-            {/* Password Reset Modal */}
-            <Modal
-                title="Password Reset"
-                show={resettingPassword}
-                hideModal={() => setResettingPassword(false)}
-                leftButton={() => resetPassword()}
-                leftButtonText="Send!"
-            >
-                <p>Please enter the email of the account you would like to recover.</p>
-                <input
-                    className="form-control"
-                    type="text"
-                    value={resetEmail}
-                    onChange={e => setResetEmail(e.target.value)}
-                    onKeyDown={e => e.key === "Enter" && resetPassword()}
-                    placeholder="Email Address"
-                />
-            </Modal>
-        </div>
-    );
-};
+import Login from "./Login.tsx";
 
 const TrLogo: FC = () => (
     <a

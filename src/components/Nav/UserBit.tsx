@@ -230,6 +230,8 @@ const UserBit: FC = () => {
                     }
                     $(".disabledNoLogin").addClass("greyDisabled");
                     $("#chatscroll").css("overflow", "hidden")
+                    // Reload the page
+                    window.location.reload();
                 }),
             icon: "fa-sign-out",
             isCheckbox: false
