@@ -25,6 +25,12 @@ jobs:
         run: bun run build
         env:
           CI: true
+          VITE_FIREBASE_URL: ${{ secrets.VITE_FIREBASE_URL }}
+          VITE_FIREBASE_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_BUCKET: ${{ secrets.VITE_FIREBASE_BUCKET }}
+
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
