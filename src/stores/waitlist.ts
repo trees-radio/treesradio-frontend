@@ -56,7 +56,7 @@ export default new (class Waitlist {
   @observable accessor localJoinState = false;
   @observable accessor localPlayingState = false;
   @observable accessor autojoinTimer: Timer | boolean = false;
-  @observable accessor showMinutesUntil: boolean = false;
+  @observable accessor showMinutesUntil: boolean = true;
   @observable accessor _autojoinInProgress = false;
 
   @action

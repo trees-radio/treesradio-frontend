@@ -132,6 +132,7 @@ const UserBit: FC = () => {
         { name: "Set Avatar", action: () => setIsSettingAvatar(true), icon: "fa-pencil", isCheckbox: false },
         { name: "Change Password", action: () => setIsChangingPassword(true), icon: "fa-key", isCheckbox: false },
         { name: "Change Email", action: () => setIsChangingEmail(true), icon: "fa-envelope", isCheckbox: false },
+        { name: "Waitlist Minutes Until", action: () => waitlist.setShowMinutesUntil(), isChecked: () => waitlist.showMinutesUntil, isCheckbox: true },
         {
             name: "Change flair color",
             action: () => setIsShowFlairColor(true),
