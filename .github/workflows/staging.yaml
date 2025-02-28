@@ -1,10 +1,9 @@
 # Does everything but deploy the code.
 
-name: Test Pull Request
+name: Deploy to Staging
 on:
-  pull_request:
+  push:
     branches:
-      - main
       - staging
 
 jobs:
@@ -34,3 +33,13 @@ jobs:
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID_STAGING }}
           VITE_FIREBASE_BUCKET: ${{ secrets.VITE_FIREBASE_BUCKET_STAGING }}
 
+      - name: Deploy to Staging
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_STAGING_SERVICE_ACCOUNT }}'
+          channelId: live
+          projectId: treesradio-staging
+          expires: 7d
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
