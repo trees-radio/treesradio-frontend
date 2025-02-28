@@ -13,7 +13,7 @@ interface OnlineUsersProps {
 
 class OnlineUsers extends React.Component {
 
-  selectUser(user: Profile) {
+  selectUser(user: OnlineEnt) {
     $("#chatinput").val($("#chatinput").val() + " @" + user.username + " ");
     this.props.goToChat();
   }
@@ -47,7 +47,8 @@ class OnlineUsers extends React.Component {
             {online.online.map((user: OnlineEnt, i: number) => {
               return (
                 <li title={`Member Since: ${user.memberSince}`}
-                  key={i}
+                key={user.uid}
+                onClick={() => this.selectUser(user)}
                   className={i % 2 === 0 ? "user-line-1 user-item" : "user-line-0 user-item"}
                 >
                   <UserAvatar uid={user.uid} />
