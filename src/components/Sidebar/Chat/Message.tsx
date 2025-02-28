@@ -52,22 +52,79 @@ interface MessageProps {
 
 export default class Message extends React.Component {
     props: MessageProps;
-    state: { visible: boolean };
+    state: { visible: boolean; imagesLoaded: boolean; imageCount: number; loadedImages: number };
+    
     constructor(props: MessageProps) {
         super(props);
         this.props = props;
-        this.state = { visible: true };
+        
+        // Count the number of images in the message
+        const tokens = props.text.split(" ");
+        const imageCount = tokens.filter(this.imageCheck).length;
+        
+        this.state = { 
+            visible: true, 
+            imagesLoaded: imageCount === 0,
+            imageCount,
+            loadedImages: 0
+        };
+        
+        this.handleImageLoad = this.handleImageLoad.bind(this);
     }
 
     imageCheck(tkn: string) {
         return tkn.match(imgregex) && imageWhitelist(tkn);
     }
-
+    
+    hasLargeContent(text: string): boolean {
+        return text.includes("img") || 
+               text.includes("tenorgif") || 
+               text.includes("previewvideo") || 
+               text.includes("previewavatar");
+    }
+    
+    handleImageLoad() {
+        // Increment loaded images count
+        this.setState(
+            (prevState: any) => ({ 
+                loadedImages: prevState.loadedImages + 1,
+                imagesLoaded: prevState.loadedImages + 1 >= prevState.imageCount
+            }),
+            () => {
+                // Call onLoad when all images are loaded
+                if (this.state.imagesLoaded) {
+                    // Add a small delay to ensure rendering is complete
+                    setTimeout(() => {
+                        this.props.onLoad();
+                    }, 50);
+                }
+            }
+        );
+    }
 
     componentDidMount() {
         const text = this.props.text;
-        let tokens = text.split(" ");
-        if (!tokens.some(this.imageCheck)) this.props.onLoad();
+        const isBlazeBot = this.props.userName === "BlazeBot";
+        const hasLargeContent = this.hasLargeContent(text);
+        
+        // If no images and not a bot with large content, call onLoad immediately
+        if (this.state.imageCount === 0 && !(isBlazeBot && hasLargeContent)) {
+            this.props.onLoad();
+        }
+        
+        // For BlazeBot messages with large content, add an additional delayed onLoad
+        if (isBlazeBot && hasLargeContent) {
+            setTimeout(() => {
+                this.props.onLoad();
+            }, 300);
+            
+            // Add one more delayed load for very large content
+            if (text.includes("tenorgif") || text.length > 500) {
+                setTimeout(() => {
+                    this.props.onLoad();
+                }, 800);
+            }
+        }
     }
 
     onVisibility = (isVisible: boolean) => this.setState({ visible: isVisible });
@@ -81,31 +138,26 @@ export default class Message extends React.Component {
         if (text.substring(0, 12) === "==markdown==" || isBlazeBot) {
             if (text.substring(0, 12) === "==markdown==") text = text.substring(12);
             return (
-                // <div dangerouslySetInnerHTML={{__html: emojifyWrap(marked(text))}} />
-
                 <ReactMarkdown
                     rehypePlugins={isBlazeBot ? [rehypeRaw] : []}
                     remarkRehypeOptions={{ allowDangerousHtml: isBlazeBot, }}
                 >
-
                     {emojifyWrap(DOMPurify.sanitize(text))}
-
                 </ReactMarkdown>
             );
         }
 
         let tokens = text.split(" ");
         let emojisize = "emoji";
-        if (tokens.length == 1) emojisize = "emojilarge";
+        if (tokens.length === 1) emojisize = "emojilarge";
 
         const result = tokens.map((tkn, i) => (
-
             <MessageItem
                 key={i}
                 token={tkn}
                 isEmote={this.props.isEmote}
                 show={this.state.visible.toString()}
-                onLoad={this.props.onLoad}
+                onLoad={this.handleImageLoad}
                 emojiSize={emojisize}
             />
         ));
@@ -113,7 +165,6 @@ export default class Message extends React.Component {
         return (
             <div>
                 {result}
-                {/*<VisibilitySensor onChange={this.onVisibility} />*/}
             </div>
         );
     }
@@ -133,7 +184,11 @@ class MessageItem extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.imageCheck(this.props.token)) this.props.onLoad();
+        if (!this.imageCheck(this.props.token)) {
+            // If not an image, signal load is complete
+            this.props.onLoad();
+        }
+        // Image loading will be handled by the onLoad event in the render
     }
 
     props: MessageItemProps;
@@ -155,7 +210,13 @@ class MessageItem extends React.Component {
 
             return (
                 <span>
-                    <img src={token} onLoad={onLoad} style={style} className="inline-image" />
+                    <img 
+                        src={token} 
+                        onLoad={onLoad} 
+                        style={style} 
+                        className="inline-image" 
+                        loading="eager" // Use eager loading for chat images
+                    />
                 </span>
             );
             // OR is this a plain URL?
@@ -175,7 +236,6 @@ class MessageItem extends React.Component {
             thisClass = this.props.emojiSize + " " + specialemoji[token as keyof typeof specialemoji];
             titletext = token;
         } else if ((bolded = token.match(/^\*\*(\w+)\*\*$/))) {
-
             thisClass = "chat-bold";
             token = bolded[1];
         }
@@ -193,9 +253,7 @@ class MessageItem extends React.Component {
     }
 }
 
-
 function emojifyWrap(text: string) {
-
     var newtext = text.replace(/:(\w+):/g, function (match, p1) {
         if (specialemoji[match as keyof typeof specialemoji]) {
             return `<span class="emoji ${specialemoji[match as keyof typeof specialemoji]}" title="${match}"></span>`;

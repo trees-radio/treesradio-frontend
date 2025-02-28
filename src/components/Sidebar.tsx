@@ -1,4 +1,4 @@
-import { createRef, FC, useState } from "react";
+import { createRef, FC, useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import classNames from "classnames";
 
@@ -19,7 +19,18 @@ const Sidebar: FC = () => {
     const selWaitlistRef = createRef<HTMLDivElement>();
     const selAboutRef = createRef<HTMLDivElement>();
     const chatInputRef = createRef<HTMLInputElement>();
-    const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(!profile.uid ? "ABOUT" : "CHAT");
+    
+    // Initialize currentSidebar based on login status
+    const [currentSidebar, setCurrentSidebar] = useState<SidebarState>(
+        profile.loggedIn ? "CHAT" : "ABOUT"
+    );
+    
+    // Effect to change to CHAT tab when user logs in
+    useEffect(() => {
+        if (profile.loggedIn && currentSidebar === "ABOUT") {
+            setCurrentSidebar("CHAT");
+        }
+    }, [profile.loggedIn, currentSidebar]);
 
     const chatBtnClass = classNames("show-chat-btn", {
         "sidebar-selected": currentSidebar === "CHAT"
@@ -49,7 +60,7 @@ const Sidebar: FC = () => {
     return (
         <div id="sidebar" className="flex flex-col h-full">
             <div className="sidebar-changer flex-shrink-0">
-                <div className={chatBtnClass} ref={selChatRef} onClick={() => { goToChat(); setCurrentSidebar("CHAT") }}>
+                <div className={chatBtnClass} ref={selChatRef} onClick={() => { goToChat(); }}>
                     Chat
                 </div>
                 <div
