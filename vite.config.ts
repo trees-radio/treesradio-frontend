@@ -26,8 +26,8 @@ export default defineConfig({
               name: 'TreesRadio',
               short_name: 'TR',
               description: 'Music for the Broccoli People',
-              theme_color: '#00dd00',
-              background_color: '#ffffff',
+              theme_color: '#85ac37',
+              background_color: '#222222',
               display: 'standalone',
               icons: [
                 {
