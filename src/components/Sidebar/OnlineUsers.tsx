@@ -17,7 +17,7 @@ class OnlineUsers extends React.Component {
     $("#chatinput").val($("#chatinput").val() + " @" + user.username + " ");
     this.props.goToChat();
   }
-  
+
   props: OnlineUsersProps;
 
   constructor(props: OnlineUsersProps) {
@@ -47,8 +47,8 @@ class OnlineUsers extends React.Component {
             {online.online.map((user: OnlineEnt, i: number) => {
               return (
                 <li title={`Member Since: ${user.memberSince}`}
-                key={user.uid}
-                onClick={() => this.selectUser(user)}
+                  key={user.uid}
+                  onClick={() => this.selectUser(user)}
                   className={i % 2 === 0 ? "user-line-1 user-item" : "user-line-0 user-item"}
                 >
                   <UserAvatar uid={user.uid} />
@@ -57,7 +57,7 @@ class OnlineUsers extends React.Component {
                       const username = await getUsername(user.uid);
                       $("#chatinput").val($("#chatinput").val() + " @" + username + " ");
                       this.props.goToChat();
-                    }} />
+                    }} showFlair={false}/>
                     <i
                       className={
                         user.feedback.likes === true

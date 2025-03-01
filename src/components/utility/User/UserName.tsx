@@ -12,6 +12,7 @@ interface UserNameProps {
   uid: string;
   className?: string;
   onClick?: () => void;
+  showFlair?: boolean;
 }
 
 export default class UserName extends React.Component {
@@ -112,19 +113,21 @@ export default class UserName extends React.Component {
     }
 
     const usernameClasses = classNames(this.props.className, userClass);
-
+    let flair = (<> </>);
+    if (this.props.showFlair != false && userflair) {
+      flair = (
+        <span style={this.getFlairBackgroundColor()}>
+          <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>
+        </span>
+      )
+    }
     return (
       <>
         <span onClick={this.props.onClick || noop} className={usernameClasses}>
           {this.state.username}
-        </span>
-        <span>
-          &nbsp;
           <img className={isPatreon} src={Marijuana} />
         </span>
-        <span style={this.getFlairBackgroundColor()}>
-          <span className={classNames({ 'userflair': true, 'gradient-text': this.state.userflairColors && this.state.userflairColors.colors && this.state.userflairColors.colors.length > 1 })} style={this.getFlairStyle()}>&nbsp;{userflair}</span>
-        </span>
+        {flair}
       </>
     );
   }
