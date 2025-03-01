@@ -690,3 +690,45 @@ div>blockquote {
   background-color: rgba(28, 0, 51, 0.6); //light skin cbd6dc
   padding: 10px;
 }
+
+/* Mobile portrait mode adjustments */
+@media screen and (max-width: 480px) {
+  #chatscroll {
+    /* Subtract the height of the input box (approximately 4rem) with some buffer */
+    height: calc(100vh - 11rem) !important; /* Account for header, tabs, and input */
+    max-height: calc(100vh - 11rem) !important;
+  }
+  
+  /* Ensure chat input stays at bottom and doesn't overlap */
+  .chatbar,
+  .sendbox-locked,
+  .sendbox-loggedout {
+    position: fixed;
+    bottom: 3.5rem; /* Position above the bottom nav */
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: rgba(22, 0, 45, 0.95); /* Match your app's background */
+    padding: 0.5rem;
+  }
+  
+  /* Extra padding at the bottom of the chat content to prevent last message being hidden */
+  #chatbox {
+    padding-bottom: 5rem !important;
+  }
+}
+
+/* Special case for the orientation in your screenshot (narrow height, wider width) */
+@media screen and (max-height: 740px) and (min-width: 360px) {
+  #chatscroll {
+    height: calc(100vh - 12rem) !important;
+    max-height: calc(100vh - 12rem) !important;
+  }
+  
+  /* Adjust input position for this specific orientation */
+  .chatbar,
+  .sendbox-locked,
+  .sendbox-loggedout {
+    bottom: 3.5rem;
+  }
+}
