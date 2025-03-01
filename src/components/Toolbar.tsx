@@ -93,7 +93,7 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
     const selectedPlaylistName = playlists.selectedPlaylistName;
     return (
         <div id="playlists-component">
-            {playlists.init && panelOpen ? <PlaylistsPanel open={panelOpen}/> : false}
+            {playlists.init && panelOpen ? <PlaylistsPanel open={panelOpen} onClose={togglePlaylistsPanel}/> : false}
             <div id="playlists-bar">
                 <div
                     id="playlists-open-button"
