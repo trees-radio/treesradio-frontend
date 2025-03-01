@@ -107,19 +107,26 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
     componentDidMount() {
         window.addEventListener('resize', this.checkMobile);
         this.checkMobile();
+        
+        // If dialog is initially open, lock scrolling
+        if (this.props.open) {
+            this.lockBodyScrolling();
+        }
     }
 
     componentDidUpdate(prevProps: PlaylistsPanelProps) {
         if (!prevProps.open && this.props.open) {
-            // Dialog is opening - store body styles
-            this.storeBodyStyles();
+            // Dialog is opening
+            this.lockBodyScrolling();
+        } else if (prevProps.open && !this.props.open) {
+            // Dialog is closing
+            this.unlockBodyScrolling();
         }
     }
 
-
     handleClose() {
         // Restore body styles before closing
-        this.restoreBodyStyles();
+        this.unlockBodyScrolling();
 
         // Small delay to ensure DOM is ready
         setTimeout(() => {
@@ -129,9 +136,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.checkMobile);
-        this.restoreBodyStyles();
-        window.removeEventListener('resize', this.checkMobile);
-
+        this.unlockBodyScrolling();
     }
 
     checkMobile() {
@@ -224,6 +229,30 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
     @action
     toggleMergePlaylists() {
         this.mergingPlaylists = !this.mergingPlaylists;
+    }
+
+    lockBodyScrolling() {
+        // Save the original style first
+        this.storeBodyStyles();
+        
+        // Get scrollbar width to prevent layout shift when scrollbar disappears
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        
+        // Apply styles without causing reflow
+        document.body.style.overflow = 'hidden';
+        
+        // Prevent layout shift by adding padding equal to scrollbar width
+        if (scrollbarWidth > 0) {
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
+        }
+    }
+
+    unlockBodyScrolling() {
+        // Remove body locking styles
+        if (document.body) {
+            document.body.style.overflow = this.originalBodyStyle.overflow || '';
+            document.body.style.paddingRight = '';
+        }
     }
 
     @action

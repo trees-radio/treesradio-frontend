@@ -57,8 +57,17 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
         if (!playlists.init) {
             return toast("You must be logged in to use playlists!", {type: "error"});
         }
-        setPanelOpen(!panelOpen);
-        handlePlaylistToggle(panelOpen);
+        
+        // Set local state first
+        const newPanelState = !panelOpen;
+        setPanelOpen(newPanelState);
+        
+        // Important: Only notify parent AFTER dialog is fully rendered
+        // This prevents the layout from recalculating during the transition
+        requestAnimationFrame(() => {
+            handlePlaylistToggle(newPanelState);
+        });
+        
         if (playlists.selectedPlaylistName && cstmEaseInOut.current) {
             cstmEaseInOut.current.style.setProperty(
                 "--PLlength",
@@ -93,8 +102,23 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
     const selectedPlaylistName = playlists.selectedPlaylistName;
     return (
         <div id="playlists-component">
-            {playlists.init && panelOpen ? <PlaylistsPanel open={panelOpen} onClose={togglePlaylistsPanel}/> : false}
-            <div id="playlists-bar">
+        {playlists.init && panelOpen ? 
+            <PlaylistsPanel 
+                open={panelOpen} 
+                onClose={(fromDialog) => {
+                    // If the close came from the dialog itself, use requestAnimationFrame
+                    // to delay the parent notification until after animation completes
+                    setPanelOpen(false);
+                    if (fromDialog) {
+                        requestAnimationFrame(() => {
+                            handlePlaylistToggle(false);
+                        });
+                    } else {
+                        handlePlaylistToggle(false);
+                    }
+                }}
+            /> 
+            : false}    <div id="playlists-bar">
                 <div
                     id="playlists-open-button"
                     onClick={togglePlaylistsPanel}

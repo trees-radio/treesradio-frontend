@@ -922,3 +922,74 @@ body.headlessui-portal-open {
 [id^="headlessui-portal-root"] > * {
   pointer-events: auto;
 }
+
+/* Add these CSS rules to Playlists.scss */
+
+/* Isolate the dialog from the main page layout */
+[id^="headlessui-portal-root"] {
+  position: fixed !important;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Allow clicking through portal when empty */
+}
+
+[id^="headlessui-portal-root"] > * {
+  pointer-events: auto; /* Re-enable pointer events for dialog content */
+}
+
+/* Prevent body and document from changing layout when dialog opens */
+body.headlessui-portal-open {
+  /* Override headlessui styles */
+  overflow: visible !important;
+  position: static !important;
+  width: auto !important;
+  padding-right: 0 !important;
+}
+
+/* Prevent layout shifts in the main app grid */
+#app-grid {
+  /* Ensure stable grid layout even when scrollbar appears/disappears */
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden; /* Keep overflow controlled */
+}
+
+/* Ensure player toolbar maintains position */
+#playlists-bar {
+  position: relative;
+  display: grid;
+  /* Lock the grid definition to prevent reflow */
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 4rem 1fr 1fr 12rem 4.5rem 4.5rem;
+  grid-template-areas:
+    "playlist-btn playlist current-song waitlist-btn grab like"
+    "playlist-btn playlist current-song waitlist-btn volume dislike";
+}
+
+/* Important: prevent the play state from affecting layout */
+.current-song-title, .current-playing-media, .current-playing-user {
+  /* Lock these elements' sizes to prevent reflow */
+  position: relative;
+  display: inline-block;
+}
+
+#currentsong-metadata {
+  /* Ensure this element maintains its grid layout */
+  display: grid !important;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "current-song-title current-song-title current-song-title"
+    "player-text player-name media-time";
+}
+
+/* Ensure dialog transition doesn't affect page layout */
+.playlist-dialog {
+  transition: opacity 0.2s ease !important;
+  /* Prevent it from affecting layout during transitions */
+  contain: layout size style paint;
+}

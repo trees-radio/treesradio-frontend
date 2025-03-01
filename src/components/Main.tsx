@@ -45,6 +45,11 @@ const randomSplash = () =>
 const isSpecialOccasion = (event: SpecialOccasion) =>
     new Date().getDate() === specialOccasions[event][0] && (new Date().getMonth() + 1) === specialOccasions[event][1];
 
+const appClasses = cn({
+    "april-fools": isSpecialOccasion("april-fools"),
+    "playlist-open": false,
+})
+
 const Main: FC = () => {
     const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
 
@@ -72,10 +77,7 @@ const Main: FC = () => {
 
     return (
         <div
-            className={cn({
-                "april-fools": isSpecialOccasion("april-fools"),
-                "playlist-open": isPlaylistOpen,
-            })}
+            className={appClasses}
             id="app-grid"
         >
             <link
@@ -95,11 +97,15 @@ const Main: FC = () => {
             </div>
 
             <div id="toolbar">
-                <div id="playlists-container">
-                    <Toolbar onPlaylistToggle={(open) => setIsPlaylistOpen(open)}/>
-                </div>
-                <a id="exportPlaylistDownload"/>
+            <div id="playlists-container">
+                <Toolbar onPlaylistToggle={(open) => {
+                    requestAnimationFrame(() => {
+                        setIsPlaylistOpen(open);
+                    });
+                }}/>
             </div>
+            <a id="exportPlaylistDownload"/>
+        </div>
 
             <div id="chattoplevel">
                 <ToastContainer/>{" "}
