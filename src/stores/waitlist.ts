@@ -115,7 +115,6 @@ export default new (class Waitlist {
 
   @action
   setAutoplay(state: boolean) {
-    console.log("autoplay set to: ", state);
     profile.autoplay = state;
     if (state) {
       this.setAutojoin();
@@ -129,8 +128,6 @@ export default new (class Waitlist {
     // Use a flag to prevent double execution
     if (this._autojoinInProgress) return;
     this._autojoinInProgress = true;
-
-    console.log("Autojoin started");
 
     profile.canAutoplay.then((canAutoplay) => {
       if (canAutoplay && !profile.autoplay) {

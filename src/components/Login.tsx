@@ -40,7 +40,7 @@ const Login: FC = () => {
     return (
         <>
             <Dialog open={true} onClose={() => { }} className="relative z-50">
-                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
+                <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
                 
                 {/* Add this div to properly center the dialog content */}
                 <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 rounded-2xl">

@@ -470,16 +470,16 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
 
             // Small delay to ensure DOM is ready
             setTimeout(() => {
-                onClose(true);
+                onClose(false);
             }, 10);
         };
         return (
             <>
                 <Dialog
-                    open={open}
-                    onClose={this.handleClose}
+                    open={open || false}
+                    onClose={onclickHandler}
                     className="fixed inset-0 z-50 playlist-dialog"
-                    static
+                    // static
                 >
                     <div className="flex min-h-screen">
                         <DialogBackdrop className="fixed inset-0 bg-black opacity-70" />

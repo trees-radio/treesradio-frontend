@@ -1,8 +1,6 @@
 import {FC, JSX, RefObject, useCallback, useEffect, useRef, useState} from "react";
 import {observer} from "mobx-react";
 import ReactSlider from "react-slider";
-import PlaylistsPanel from "./Toolbar/PlaylistsPanel";
-
 import waitlist from "../stores/waitlist";
 import playlists from "../stores/playlists";
 import profile from "../stores/profile";
@@ -46,11 +44,9 @@ const Grab: FC<{ onClose: VoidFunction }> = ({onClose}) => {
     return <div ref={ref} className="grab-playlists">{grabPlaylists}</div>;
 }
 
-const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistToggle}) => {
-    const [panelOpen, setPanelOpen] = useState(false);
+const Toolbar: FC = () => {
     const [grabbing, setGrabbing] = useState(false);
     const [waitlistButtonText, setWaitlistButtonText] = useState<JSX.Element>((<>Join Waitlist</>));
-    const handlePlaylistToggle = useCallback(onPlaylistToggle, [onPlaylistToggle]);
     const cstmEaseInOut = useRef<HTMLElement | null>(document.getElementById("cstmEaseIn"));
 
     const togglePlaylistsPanel = () => {
@@ -59,14 +55,8 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
         }
         
         // Set local state first
-        const newPanelState = !panelOpen;
-        setPanelOpen(newPanelState);
-        
-        // Important: Only notify parent AFTER dialog is fully rendered
-        // This prevents the layout from recalculating during the transition
-        requestAnimationFrame(() => {
-            handlePlaylistToggle(newPanelState);
-        });
+        const newPanelState = !playlists.panelOpen;
+        playlists.setPanelOpen(newPanelState);
         
         if (playlists.selectedPlaylistName && cstmEaseInOut.current) {
             cstmEaseInOut.current.style.setProperty(
@@ -102,30 +92,14 @@ const Toolbar: FC<{ onPlaylistToggle: (open: boolean) => void }> = ({onPlaylistT
     const selectedPlaylistName = playlists.selectedPlaylistName;
     return (
         <div id="playlists-component">
-        {playlists.init && panelOpen ? 
-            <PlaylistsPanel 
-                open={panelOpen} 
-                onClose={(fromDialog) => {
-                    // If the close came from the dialog itself, use requestAnimationFrame
-                    // to delay the parent notification until after animation completes
-                    setPanelOpen(false);
-                    if (fromDialog) {
-                        requestAnimationFrame(() => {
-                            handlePlaylistToggle(false);
-                        });
-                    } else {
-                        handlePlaylistToggle(false);
-                    }
-                }}
-            /> 
-            : false}    <div id="playlists-bar">
+        <div id="playlists-bar">
                 <div
                     id="playlists-open-button"
                     onClick={togglePlaylistsPanel}
                 >
                     <i id="playlists-open-icon" className={cn([
                         "fa fa-4x",
-                        panelOpen && playlists.init
+                        playlists.panelOpen && playlists.init
                             ? "fa-angle-double-down"
                             : "fa-angle-double-up"
                     ])}/>

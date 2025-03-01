@@ -1,15 +1,17 @@
 // NEW MAIN COMPONENT
 
-import {type FC, useState} from "react";
-import {observer} from "mobx-react";
+import { type FC, useEffect } from "react";
+import { observer } from "mobx-react";
 
 import app from "../stores/app";
 
-import {Nav} from "./Nav";
+import { Nav } from "./Nav";
 import Sidebar from "./Sidebar";
-import {Toolbar} from "./Toolbar";
-import {Player} from "./Player";
-import {ToastContainer} from "react-toastify";
+import { Toolbar } from "./Toolbar";
+import { Player } from "./Player";
+import { ToastContainer } from "react-toastify";
+import PlaylistsPanel from "./Toolbar/PlaylistsPanel"
+import playlists from "../stores/playlists";
 import "react-toastify/dist/ReactToastify.css";
 import events from "../stores/events";
 import cn from "classnames";
@@ -50,11 +52,11 @@ const appClasses = cn({
     "playlist-open": false,
 })
 
+
+
 const Main: FC = () => {
-    const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
-
     //TODO April Fools Shenanigans
-
+    console.trace("Playists panel open: ", playlists.init && playlists.panelOpen);
     if (!app.init) {
         events.register("force_refresh", () => location.reload());
 
@@ -65,8 +67,8 @@ const Main: FC = () => {
                         <div className="main-center">
                             <center className="loading-txt">
                                 {" "}
-                                {randomSplash()} <br/>
-                                <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel"/>
+                                {randomSplash()} <br />
+                                <i className="fa fa-spin fa-2x fa-circle-o-notch loadingscreenwheel" />
                             </center>
                         </div>
                     </div>
@@ -75,47 +77,54 @@ const Main: FC = () => {
         );
     }
 
+    useEffect(() => {
+        // Force close playlist panel on component mount
+        playlists.setPanelOpen(false);
+    }, []);
+
     return (
-        <div
-            className={appClasses}
-            id="app-grid"
-        >
-            <link
-                href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-                rel="stylesheet"
-                integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-                crossOrigin="anonymous"
+        <>
+            <div
+                className={appClasses}
+                id="app-grid"
+            >
+                <link
+                    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                    rel="stylesheet"
+                    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+                    crossOrigin="anonymous"
+                />
+
+                {/* Add TokeManager component which will handle the toke dialog visibility */}
+                <TokeManager />
+
+                <Nav show420={isSpecialOccasion("420")} /> {/* Start Container */}{" "}
+
+                <div id="videotoplevel">
+                    <Player />
+                </div>
+
+                <div id="toolbar">
+                    <div id="playlists-container">
+                        <Toolbar />
+                    </div>
+                    <a id="exportPlaylistDownload" />
+                </div>
+
+                <div id="chattoplevel">
+                    <ToastContainer />{" "}
+                    <Sidebar />
+                </div>
+            </div>
+
+            <PlaylistsPanel
+                onClose={() => playlists.setPanelOpen(false)}
+                open={playlists.init && playlists.panelOpen}
             />
-
-            {/* Add TokeManager component which will handle the toke dialog visibility */}
-            <TokeManager />
-
-            <Nav show420={isSpecialOccasion("420")}/> {/* Start Container */}{" "}
-
-            <div id="videotoplevel">
-                <Player/>
-            </div>
-
-            <div id="toolbar">
-            <div id="playlists-container">
-                <Toolbar onPlaylistToggle={(open) => {
-                    requestAnimationFrame(() => {
-                        setIsPlaylistOpen(open);
-                    });
-                }}/>
-            </div>
-            <a id="exportPlaylistDownload"/>
-        </div>
-
-            <div id="chattoplevel">
-                <ToastContainer/>{" "}
-                <Sidebar/>
-            </div>
-
-        </div>
+        </>
     );
 };
 
 const $Main = observer(Main);
 
-export {$Main as Main};
+export { $Main as Main };

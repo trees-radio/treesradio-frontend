@@ -68,7 +68,6 @@ const Player: FC = () => {
                         const syncTo = playing.shouldSync;
 
                         if (syncTo) {
-                            console.log(`syncing to ${syncTo}`);
                             playerRef.current?.seekTo(syncTo, "seconds");
                         }
                     }}

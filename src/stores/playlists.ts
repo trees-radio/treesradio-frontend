@@ -73,12 +73,10 @@ export default new (
         searchUnsubscribe: any;
         
         constructor() {
-            console.log("Playlists store initialized");
             
             // Single auth state listener with proper cleanup
             if (fbase && fbase.auth) {
                 this.authUnsubscribe = fbase.auth().onAuthStateChanged(user => {
-                    console.log("Auth state changed", user ? "logged in" : "logged out");
                     
                     // Clean up previous listeners
                     this.cleanupListeners();
@@ -95,7 +93,6 @@ export default new (
         
         @action
         cleanupListeners() {
-            console.log("Cleaning up listeners");
             
             // Clean up all listeners
             if (this.disposeEvent) {
@@ -121,7 +118,6 @@ export default new (
         
         @action
         setupUserListeners(uid: string) {
-            console.log("Setting up listeners for user:", uid);
             this.setUid(uid);
             
             // Set up event handlers
@@ -132,6 +128,8 @@ export default new (
             
             // Set up playlists listener
             this.setupPlaylistsListener(uid);
+            // Reset panel state when user authenticates
+            this.setPanelOpen(false);
         }
         
         @action
@@ -189,7 +187,6 @@ export default new (
             
             const searchRef = ref(db, `searches/${uid}`);
             this.searchUnsubscribe = onValue(searchRef, snap => {
-                console.log("Search data changed");
                 if (!snap.val() || snap.val() == null) return;
                 
                 // Use runInAction to batch state changes
@@ -214,7 +211,6 @@ export default new (
             const playlistsQuery = query(playlistsRef, orderByKey());
             
             this.stopSync = onValue(playlistsQuery, (snap) => {
-                console.log("Playlists data changed");
                 
                 const playlists: PlaylistsEnt[] = [];
                 snap.forEach(playlist => {
@@ -246,7 +242,6 @@ export default new (
                 
                 if (snap.val() && snap.val().selectedPlaylist) {
                     const selectedKey = snap.val().selectedPlaylist;
-                    console.log("Selected Playlist Key: ", selectedKey);
                     
                     // Find index of playlist with matching key
                     const index = playlists.findIndex(playlist => playlist.key === selectedKey);
@@ -338,6 +333,11 @@ export default new (
         @observable accessor openSearch = false;
         @observable accessor importing = false;
         @observable accessor removedPlaylist = false;
+        @observable accessor panelOpen = false;
+
+        @action setPanelOpen(panelOpen: boolean) {
+            this.panelOpen = panelOpen;
+        }
 
         @action
         addPlaylist(name: string) {
@@ -434,7 +434,6 @@ export default new (
             const entriesQuery = query(entriesRef, orderByKey());
             
             this.stopPlaylistSync = onValue(entriesQuery, snap => {
-                console.log("Playlist entries changed");
                 
                 const playlist: Song[] = [];
                 if (snap) {
@@ -714,7 +713,6 @@ export default new (
         
         // Cleanup method for component unmounting
         destroy() {
-            console.log("Destroying Playlists store");
             
             // Clean up auth listener
             if (this.authUnsubscribe) {

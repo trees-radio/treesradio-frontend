@@ -203,7 +203,6 @@ const UserBit: FC = () => {
         {
             name: "Auto Join Waitlist",
             action: () => { Promise.resolve(waitlist.setAutojoin())
-                .then(() => console.log("Autojoin set"))
                 .catch(error => console.error("Error in auto join:", error));
              },
             isCheckbox: true,
