@@ -46,7 +46,7 @@ const Login: FC = () => {
                 <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 rounded-2xl">
                     <DialogPanel className="w-full max-w-sm sm:max-w-md rounded bg-black p-4 sm:p-6 shadow-xl">
                         <DialogTitle>
-                            <h2 className="text-lg sm:text-xl font-bold">Login</h2>
+                            <span className="text-lg sm:text-xl font-bold">Login</span>
                         </DialogTitle>
                         
                         <form className="mt-4 space-y-4">

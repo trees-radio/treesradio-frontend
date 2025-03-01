@@ -598,6 +598,8 @@ div>blockquote {
     padding-right: 0;
     padding-left: 0;
     float: left;
+
+    min-height: calc(70vh - 4rem);
   }
 
   .navbar-nav {
