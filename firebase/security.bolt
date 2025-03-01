@@ -78,6 +78,12 @@ path /_admin {
 path /events {
   read() {true}
 }
+
+path /events/${uid} {
+  read() {isUser($uid)}
+  write() {isUser($uid)}
+}
+
 path /toke {
   read() {true}
 }
@@ -95,6 +101,7 @@ path /backend {
 
 path /chat {
   read() {true}
+  index() {".timestamp"}
 }
 
 path /motd {

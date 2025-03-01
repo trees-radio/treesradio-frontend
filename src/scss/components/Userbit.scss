@@ -1,0 +1,71 @@
+@use "../core/variables" as vars;
+
+#usernametop {
+  display: flex;
+  border-radius: 5px;
+  vertical-align: center;
+  text-align: center;
+  align-self: center;
+  align-content: center;
+  height: calc(100% - 2 * 0.75rem);
+}
+
+#usernamedropdown {
+  height: vars.$navbar-button-height;
+}
+
+#username {
+  place-self: center;
+}
+
+#userbit-dropdown {
+  margin-right: 1.75vw !important;
+}
+
+#userbit-expander {
+  margin-left: 10px;
+}
+
+div .userbit-avatar span .avatarimg {
+  place-self: center;
+  align-content: center ;
+  border-radius: 5px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.userbit-avatar {
+  place-self: center;
+}
+
+.user-avatar-preview-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 2vh;
+}
+
+@media only screen and (max-width: 1625px) {
+  #username,
+  #usernamedropdown {
+    font-size: 1.1em;
+  }
+}
+
+@media only screen and (max-width: 1730px) {
+  #username,
+  #usernamedropdown {
+    font-size: 1.1em;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #username,
+  #usernamedropdown {
+    font-size: 1.1em;
+  }
+}
+
+div.modal-dialog {
+  max-height: 30vh;
+}

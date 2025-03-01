@@ -1,0 +1,995 @@
+@use "../core/variables" as vars;
+
+#playlists-container {
+  width: 100%;
+  height: 100%;
+}
+
+#playlists-component {
+  height: 100%;
+  width: 100%;
+}
+
+.media-time {
+  grid-area: media-time;
+  float: right;
+  background-color: vars.$color-controlarea-background;
+  padding-left: 0.5em;
+  z-index: 2;
+}
+
+.current-playlist-name {
+  color: vars.$color-trees-primary !important;
+}
+
+.current-selected-media {
+  color: vars.$color-trees-primary !important;
+}
+
+.slidecontainer {
+  width: 15rem;
+  display: inline-block;
+  padding-left: 1rem;
+}
+
+.slider {
+  width: 100%;
+  height: 1rem;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  border-radius: 6px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+  background: vars.$color-trees-primary;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.slider::-moz-range-thumb {
+  width: 2rem;
+  height: 2rem;
+  background: vars.$color-trees-primary;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+#playlists-panel {
+  position: absolute;
+  width: 75%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  bottom: vars.$sidebar-height;
+  height: calc(100% - #{vars.$navbar-height} - #{vars.$sidebar-height});
+}
+
+#playlists-footer {
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  background-color: rgba(11, 11, 11, 0.5);
+}
+
+.playlist-shuffle-btn {
+  color: vars.$color-trees-primary;
+  cursor: pointer;
+  z-index: 2;
+  margin-right: 0.2rem;
+}
+
+.playlists-panel-closed {
+  height: 0 !important;
+  overflow: hidden;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+  background-color: vars.$color-trees-bg;
+}
+
+.playlists-panel-open {
+  border-left: solid;
+  border-right: solid;
+  border-top: solid;
+  border-width: thin;
+  border-color: black;
+  transition: all 0.15s ease-in 50ms;
+  -webkit-transition: all 0.15s ease-in 50ms;
+  -moz-transition: all 0.15s ease-in 50ms;
+  -o-transition: all 0.15s ease-in 50ms;
+}
+
+.pl-thumbnail {
+  width: 4rem;
+  vertical-align: middle;
+}
+
+.pl-time {
+  padding-right: 2%;
+  font-size: 0.8em;
+}
+
+.pl-channel {
+  color: gray;
+  display: inline-block;
+  padding-left: 1%;
+  max-width: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  align-self: center;
+}
+
+.add-to-playlist-btn {
+  float: right;
+  cursor: pointer;
+  margin-right: 1%;
+}
+
+#playlist-ul,
+#playlist-ol {
+  margin-top: 1%;
+  padding-right: 0;
+  overflow-y: auto;
+}
+
+#playlists-panel-display {
+  flex-grow: 1;
+  overflow-y: auto;
+
+  li {
+    padding: 10px;
+    color: vars.$color-trees-primary;
+  }
+
+  ul li {
+    list-style-position: inside;
+    list-style-type: none;
+  }
+
+  ol li {
+    margin-left: 1rem;
+  }
+}
+
+#playlist-ul::-webkit-scrollbar {
+  width: 1em;
+}
+
+#playlist-ul::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#playlist-ul::-webkit-scrollbar-thumb {
+  background-color: #343642;
+  outline: 1px solid slategrey;
+}
+
+#playlist-search-box {
+  flex-grow: 1;
+  max-width: 40rem;
+  min-width: 5rem;
+  margin-right: 0.5rem;
+  margin-left: 0.2rem;
+  font-size: 1.25em;
+  display: block;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+}
+
+#playlist-btn {
+  flex-grow: 1;
+  margin-left: 0.75rem;
+  height: 100%;
+  font-size: 1.1em;
+  position: relative;
+}
+
+#playlist-btn > button {
+  font-size: 1em !important;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #b1ea00 0%, #77b420 40%, #77b420 60%, #689f38 100%);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
+  color: white;
+  width: 13vw;
+  padding-top: .6em;
+  padding-bottom: .6em;
+  padding-left: .4em;
+  padding-right: .4em;
+}
+
+#playlist-btn .button-nooverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#playlist-btn>div {
+  z-index: 999;
+  background-color: #0c0c0e;
+  padding: 0.5rem;
+}
+
+.remove-from-playlist-btn {
+  float: right;
+  cursor: pointer;
+}
+
+.pl-move-to-top {
+  float: right;
+  cursor: pointer;
+  margin-right: 1%;
+}
+
+#playlist-dropdown {
+  background-color: #579300;
+  border-color: #609606;
+  //padding: 2px; Bacchus request March'20
+  text-shadow: vars.$text-shadow-heavy;
+  font-size: 1.5em;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+#pl-carat {
+  margin-left: 4%;
+  margin-top: 5%;
+}
+
+.playlist-item-1 {
+  background-color: rgba(36, 38, 46, 0.5);
+}
+
+.playlist-item-2 {
+  background-color: rgba(11, 11, 11, 0.5);
+}
+
+#playlist-ol li a img {
+  display:inline-block;
+}
+
+.pl-media-title {
+  display: inline-block;
+  padding-left: 1.5rem;
+  margin-right: 1.5rem;
+  font-size: 125%;
+  width: 40vw;
+  white-space: nowrap;
+  overflow: hidden;
+  align-self: center;
+  vertical-align: middle;
+}
+
+.pl-timestamp {
+  font-size: 125%;
+}
+
+#playlists-bar {
+  position: relative;
+  display: grid;
+  grid-gap: 4px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  height: 100%;
+  grid:
+    [row1-start] "playlist-btn playlist current-song waitlist-btn grab like" 1fr [row1-end]
+    [row2-start] "playlist-btn playlist current-song waitlist-btn volume dislike" 1fr [row2-end]
+    / 4rem 1fr 1fr 12rem 4.5rem 4.5rem;
+  color: vars.$color-trees-primary;
+
+  background-color: #0c0c0e;
+}
+
+.marquee {
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: marquee 20s ease-in-out infinite;
+  // text-align: right;
+}
+
+#cstmEaseIn {
+  margin: 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation-name: cstmEaseInOut;
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  position: relative;
+
+  --PLlength: 9.5em;
+  // text-align: right;
+}
+
+@keyframes cstmEaseInOut {
+  from {
+    left: 0;
+  }
+
+  50% {
+    left: calc(-100% - 19em); //var(--PLlength) TODO huh...?!?
+  }
+
+  to {
+    left: 0;
+  }
+}
+
+.current-selected-media,
+.current-playing-media {
+  display: inline-block;
+  color: vars.$color-trees-primary;
+}
+
+.current-selected-media:hover,
+.current-playing-media:hover {
+  animation-play-state: paused;
+}
+
+#currentsong-metadata {
+  display: grid;
+  grid:
+    [row1-start] "current-song-title current-song-title current-song-title" 1fr [row1-end]
+    [row2-start] "player-text player-name media-time" auto [row2-end]
+    / auto 1fr auto;
+}
+
+.current-song-title {
+  grid-area: current-song-title;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(100%);
+  }
+
+  100% {
+    transform: translate(-101%);
+  }
+}
+
+.waitlist {
+  grid-area: waitlist-btn;
+  height: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  display: table-cell;
+  align-items: center;
+  cursor: pointer;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+// .dropdown-menu {
+//   width: auto;
+// }
+
+// .dropdown-menu > li > a {
+//   float: left;
+//   width: 100%;
+//   overflow-x: hidden;
+// }
+
+#playlist-metadata {
+  grid-area: playlist;
+  // height: 100%;
+  color: vars.$color-trees-primary !important;
+  border-top: solid vars.$color-border-top;
+  border-right: solid;
+  border-bottom: solid;
+  border-bottom-color: #0c0c0e;
+  border-right-width: 10px;
+  border-right-color: #0c0c0e;
+  line-height: 2rem;
+  padding: 0 5px;
+  overflow-x: hidden;
+  scrollbar-width: 10px;
+}
+
+#playlist-metadata a {
+  text-decoration: none;
+}
+
+#playlist-metadata::-webkit-scrollbar {
+  display: none;
+}
+
+#currentsong-metadata {
+  grid-area: current-song;
+  height: 100%;
+  border-top: solid;
+  border-bottom: solid;
+  border-color: #2d2f39;
+  line-height: 2rem;
+  padding: 0;
+  overflow-x: hidden;
+  text-align: left;
+  border-left: #0c0c0e solid 0.5em;
+  border-right: #0c0c0e solid 0.5em;
+  border-bottom-color: #0c0c0e;
+}
+
+#currentsong-metadata a {
+  text-decoration: none;
+}
+
+#currentsong-metadata::-webkit-scrollbar {
+  display: none;
+}
+
+#grabtrack {
+  cursor: pointer;
+  font-size: 150%;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+#playlists-open-button {
+  grid-area: playlist-btn;
+  height: 100%;
+  cursor: pointer;
+  width: 100%;
+  font-size: 0.75em;
+  border-right: solid;
+  border-color: #2d2f39;
+  background: vars.$color-button-open-playlists;
+  padding: 0;
+  margin: 0;
+  border-radius: 10px;
+}
+
+#playlists-open-button:hover {
+  background: vars.$color-button-open-playlists-hover;
+}
+
+#playlists-open-icon {
+  color: white;
+  text-shadow: vars.$text-shadow-light;
+  letter-spacing: 1.5px;
+  height: inherit;
+  width: inherit;
+  padding-left: 25%;
+  padding-right: 25%;
+  padding-top: 0;
+  line-height: vars.$sidebar-height;
+}
+
+#vote {
+  cursor: pointer;
+  font-size: 150%;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+#pl-dd-menu {
+  font-size: 110%;
+  padding-top: 0;
+  border-top-width: 0;
+  margin-top: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+#pl-dd-menu::-webkit-scrollbar {
+  width: 1em;
+}
+
+#pl-dd-menu::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#pl-dd-menu::-webkit-scrollbar-thumb {
+  background-color: #343642;
+  outline: 1px solid slategrey;
+}
+
+#pl-dd-menu > li > a {
+  width: 87%;
+}
+
+.add-to-playlist-button {
+  cursor: pointer;
+}
+
+.remove-playlist {
+  cursor: pointer;
+  float: right;
+  margin-right: 5%;
+  margin-top: 2%;
+  background-color: inherit;
+}
+
+.track {
+  height: 100%;
+}
+
+.track-0 {
+  background-image: linear-gradient(to right, #fffc00, #ffa71e);
+  border-radius: 5px;
+}
+
+.volume-slider {
+  grid-area: volume;
+  position: relative;
+}
+
+.volume-slider-icon {
+  z-index: 2;
+  font-size: 1.15em !important;
+  text-align: right;
+  padding: 0;
+  position: absolute;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  color: white;
+  text-shadow: vars.$text-shadow-light;
+  pointer-events: none;
+}
+
+.volume-slider-node {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.volume-slider-handle {
+  display: none;
+}
+
+.volume-slider-handle-active {
+  height: 25px;
+  width: 5px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 0.3vw;
+  background-color: vars.$color-trees-primary;
+  border: 1px solid #2e2e38;
+}
+
+.volume-slider-bar {
+  background-color: vars.$color-trees-primary;
+  height: 100%;
+}
+
+.volume-slider-bar-active {
+  background-color: white;
+}
+
+.volume-slider-bar-0 {
+  background: linear-gradient(135deg, rgba(119, 179, 0, 1) 35%, rgba(151, 211, 32, 1) 100%);
+  border-radius: 9px;
+}
+
+.volume-slider-bar-1 {
+  background-color: #000;
+}
+
+.playlist-loading {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-top: 20%;
+}
+
+.toolbar-playertxt {
+  grid-area: player-text;
+  float: left;
+  color: vars.$color-trees-primary;
+  cursor: pointer;
+  max-width: 7em;
+  text-align: left;
+  background-color: vars.$color-controlarea-background;
+  position: inherit;
+  padding-right: 0.5em;
+  z-index: 2;
+}
+
+.current-playing-user {
+  grid-area: player-name;
+  float: left;
+  color: vars.$color-trees-primary;
+  cursor: pointer;
+  max-width: 16em;
+  text-align: left;
+  position: inherit;
+  z-index: 1;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-50 {
+  z-index: 9999;
+}
+
+/* Playlist Dialog Specific Styles */
+.playlist-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.playlist-dialog > div {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Dialog overlay (background) */
+.playlist-dialog [role="dialog"] {
+  position: relative;
+  width: 100%;
+}
+
+/* Desktop specific */
+.playlist-desktop {
+  width: 98% !important;
+  height: 90vh !important;
+  margin: 4rem auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Dialog header */
+.playlist-header {
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2d2f39;
+}
+
+.playlist-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: white;
+}
+
+.playlist-close-btn {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.playlist-close-btn:focus {
+  outline: none;
+}
+
+/* Panel head section */
+.playlist-panel-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-bottom: 1px solid #2d2f39;
+  min-width: 100%;
+}
+
+.playlist-search-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  min-width: 100%;
+  padding: 0.5rem;
+}
+
+.playlist-search-box-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.playlist-search-btn {
+  background-color: vars.$color-trees-primary;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.playlist-sources {
+  display: flex;
+  gap: 1rem;
+}
+
+.playlist-search-source {
+  display: none;
+  flex-direction:row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.playlist-search-source label {
+  color: white;
+  margin-left: 0.5rem;
+  flex-direction: row;
+}
+
+/* Playlist selector and controls */
+.playlist-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.playlist-selector {
+  position: relative;
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+
+.playlist-selector-btn {
+  background-color: vars.$color-trees-primary;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.playlist-selector-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-nooverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playlist-menu {
+  position: absolute;
+  right: 0;
+  margin-top: 0.25rem;
+  width: 14rem;
+  background-color: #111827;
+  border-radius: 0.25rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 16rem;
+  overflow-y: auto;
+}
+
+.dropdown-inner-text {
+  display: flex;
+  flex-direction: column;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.playlist-menu-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: white;
+  cursor: pointer;
+}
+
+.playlist-menu-item:hover {
+  background-color: #1f2937;
+}
+
+/* Playlist actions */
+.playlist-actions {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.25rem 0;
+}
+
+.playlist-action-btn {
+  color: vars.$color-trees-primary;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.playlist-action-btn:hover {
+  color: #38a169;
+}
+
+/* Playlist content */
+.playlist-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Footer with opacity slider */
+.playlist-footer {
+  padding: 0.5rem;
+  border-top: 1px solid #2d2f39;
+  display: flex;
+  align-items: center;
+}
+
+.playlist-footer span {
+  color: white;
+  margin-right: 0.5rem;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .playlist-desktop {
+    width: 100% !important;
+    height: 100vh !important;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .playlist-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .playlist-selector {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .playlist-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+body.headlessui-portal-open {
+  overflow: visible !important; 
+  position: static !important;
+  width: auto !important;
+  padding-right: 0 !important;
+}
+
+.playlist-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  isolation: isolate;
+  contain: layout paint style;
+}
+
+[id^="headlessui-portal-root"] {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+[id^="headlessui-portal-root"] > * {
+  pointer-events: auto;
+}
+
+/* Add these CSS rules to Playlists.scss */
+
+/* Isolate the dialog from the main page layout */
+[id^="headlessui-portal-root"] {
+  position: fixed !important;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Allow clicking through portal when empty */
+}
+
+[id^="headlessui-portal-root"] > * {
+  pointer-events: auto; /* Re-enable pointer events for dialog content */
+}
+
+/* Prevent body and document from changing layout when dialog opens */
+body.headlessui-portal-open {
+  /* Override headlessui styles */
+  overflow: visible !important;
+  position: static !important;
+  width: auto !important;
+  padding-right: 0 !important;
+}
+
+/* Prevent layout shifts in the main app grid */
+#app-grid {
+  /* Ensure stable grid layout even when scrollbar appears/disappears */
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden; /* Keep overflow controlled */
+}
+
+/* Ensure player toolbar maintains position */
+#playlists-bar {
+  position: relative;
+  display: grid;
+  /* Lock the grid definition to prevent reflow */
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 4rem 1fr 1fr 12rem 4.5rem 4.5rem;
+  grid-template-areas:
+    "playlist-btn playlist current-song waitlist-btn grab like"
+    "playlist-btn playlist current-song waitlist-btn volume dislike";
+}
+
+/* Important: prevent the play state from affecting layout */
+.current-song-title, .current-playing-media, .current-playing-user {
+  /* Lock these elements' sizes to prevent reflow */
+  position: relative;
+  display: inline-block;
+}
+
+#currentsong-metadata {
+  /* Ensure this element maintains its grid layout */
+  display: grid !important;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "current-song-title current-song-title current-song-title"
+    "player-text player-name media-time";
+}
+
+/* Ensure dialog transition doesn't affect page layout */
+.playlist-dialog {
+  transition: opacity 0.2s ease !important;
+  /* Prevent it from affecting layout during transitions */
+  contain: layout size style paint;
+}

@@ -1,0 +1,36 @@
+# Does everything but deploy the code.
+
+name: Test Pull Request
+on:
+  pull_request:
+    branches:
+      - main
+      - staging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Build
+        run: bun run build
+        env:
+          CI: true
+          VITE_FIREBASE_URL: ${{ secrets.VITE_FIREBASE_URL_STAGING }}
+          VITE_FIREBASE_KEY: ${{ secrets.VITE_FIREBASE_API_KEY_STAGING }}
+          VITE_FIREBASE_AUTH: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN_STAGING }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID_STAGING }}
+          VITE_FIREBASE_BUCKET: ${{ secrets.VITE_FIREBASE_BUCKET_STAGING }}
+

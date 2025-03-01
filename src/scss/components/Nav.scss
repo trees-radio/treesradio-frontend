@@ -1,0 +1,676 @@
+@use 'sass:color';
+@use 'sass:math';
+@use "../core/variables" as vars;
+
+#tr-nav {
+  max-height: vars.$navbar-height;
+  top: 0 !important;
+  min-height: 3rem;
+  grid-area: nav;
+}
+
+#tr-watermark {
+  overflow: hidden;
+}
+
+.container-weed {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.heart {
+  width: 50%;
+  margin: 5em;
+  animation: 0.8s infinite beatHeart;
+}
+
+.peace {
+  width: 50%;
+  margin: 5em;
+  animation: 0.8s infinite pulseWeed;
+}
+
+.weed {
+  font-size: 1em;
+  font-family: Arial;
+  text-shadow: 0 0 1px #000;
+  width: 5%;
+}
+
+@-webkit-keyframes weed-fall {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@-webkit-keyframes weed-shake {
+  0% {
+    -webkit-transform: translateX(0px) rotate(-0.2turn);
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+  50% {
+    -webkit-transform: translateX(80px) rotate(0.2turn);
+    transform: translateX(80px) rotate(0.2turn);
+  }
+  100% {
+    -webkit-transform: translateX(0px) rotate(-0.2turn);
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+}
+@keyframes weed-fall {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@keyframes weed-shake {
+  0% {
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+  50% {
+    transform: translateX(80px) rotate(0.2turn);
+  }
+  100% {
+    transform: translateX(0px) rotate(-0.2turn);
+  }
+}
+.weed {
+  position: fixed;
+  top: -10%;
+  z-index: 9999;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  -webkit-animation-name: weed-fall, weed-shake;
+  -webkit-animation-duration: 10s, 3s;
+  -webkit-animation-timing-function: linear, ease-in-out;
+  -webkit-animation-iteration-count: infinite, infinite;
+  -webkit-animation-play-state: running, running;
+  animation-name: weed-fall, weed-shake;
+  animation-duration: 10s, 3s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-play-state: running, running;
+}
+.weed:nth-of-type(0) {
+  left: 1%;
+  -webkit-animation-delay: 0s, 0s;
+  animation-delay: 0s, 0s;
+}
+.weed:nth-of-type(1) {
+  left: 10%;
+  -webkit-animation-delay: 1s, 1s;
+  animation-delay: 1s, 1s;
+}
+.weed:nth-of-type(2) {
+  left: 20%;
+  -webkit-animation-delay: 6s, 0.5s;
+  animation-delay: 6s, 0.5s;
+}
+.weed:nth-of-type(3) {
+  left: 30%;
+  -webkit-animation-delay: 4s, 2s;
+  animation-delay: 4s, 2s;
+}
+.weed:nth-of-type(4) {
+  left: 40%;
+  -webkit-animation-delay: 2s, 2s;
+  animation-delay: 2s, 2s;
+}
+.weed:nth-of-type(5) {
+  left: 50%;
+  -webkit-animation-delay: 8s, 3s;
+  animation-delay: 8s, 3s;
+}
+.weed:nth-of-type(6) {
+  left: 60%;
+  -webkit-animation-delay: 6s, 2s;
+  animation-delay: 6s, 2s;
+}
+.weed:nth-of-type(7) {
+  left: 70%;
+  -webkit-animation-delay: 2.5s, 1s;
+  animation-delay: 2.5s, 1s;
+}
+.weed:nth-of-type(8) {
+  left: 80%;
+  -webkit-animation-delay: 1s, 0s;
+  animation-delay: 1s, 0s;
+}
+.weed:nth-of-type(9) {
+  left: 90%;
+  -webkit-animation-delay: 3s, 1.5s;
+  animation-delay: 3s, 1.5s;
+}
+
+@keyframes beatHeart {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseWeed {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shine {
+  10% {
+    opacity: 1;
+    top: 0;
+    left: 100%;
+    transition-property: left, top, opacity;
+    transition-duration: 1s, 1s, 0.15s;
+    transition-timing-function: ease;
+  }
+
+  100% {
+    opacity: 0;
+    top: 0;
+    left: 100%;
+    transition-property: left, top, opacity;
+  }
+}
+
+#toke-button {
+  place-self: flex-start;
+  padding: 0 1rem 0;
+  display: flex;
+  color: white;
+  text-shadow: vars.$text-shadow-light;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: vars.$navbar-font-size;
+  background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    );
+  border-radius: vars.$button-border-radius;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+
+  border: solid 1px color.adjust(#b38728, $lightness: -20%);
+
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    border: solid 1px white;
+  }
+
+  &:after {
+    animation: shine 3s ease-in-out infinite;
+    animation-fill-mode: forwards;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -200%;
+    width: 200%;
+    height: 100%;
+    opacity: 0;
+    transform: rotate(42deg);
+
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.13) 0%,
+      rgba(255, 255, 255, 0.13) 20%,
+      rgba(255, 255, 255, 0.8) 92%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  /* Hover state - trigger effect */
+
+  /* Active state */
+
+  &:active:after {
+    opacity: 0;
+  }
+}
+
+.toke-active {
+  border: 1px solid color.adjust(#ffac2b, $lightness: -30%) !important;
+  background: vars.$color-button-waitlist-active-invrt !important;
+}
+
+#navbar-grid {
+  height: 100%;
+  top: 0;
+  display: flex !important;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+#navbar-space {
+  display: inline-flex;
+  flex-grow: 1;
+  flex-flow: row nowrap;
+  height: inherit;
+  width: inherit;
+}
+
+#navbar-grid::before {
+  display: none !important;
+  content: none !important;
+}
+
+.navbar-header {
+  padding-bottom: 1vh;
+  display: flex;
+  align-items: baseline;
+  align-self: baseline;
+  float: left !important;
+  padding-bottom: 0;
+}
+
+.navbar-item {
+  overflow: hidden;
+}
+
+.nav-title {
+  font-family: "Roboto", sans-serif;
+  color: rgba(255, 255, 255, 0.87);
+  transition: 250ms;
+  overflow: hidden;
+}
+
+.nav-title:hover {
+  color: vars.$color-trees-primary;
+}
+
+.navbar {
+  margin-bottom: 1px;
+  background-color: #0c0c0e;
+  min-height: auto;
+}
+
+.navbar-collapse {
+  max-width: 75%;
+  max-height: 50px;
+  float: right;
+}
+
+.navbar-default {
+  background-color: vars.$color-trees-bg;
+}
+
+.navbar-brand {
+  line-height: normal !important;
+  position: relative;
+  font-size: 150%;
+  width: 25rem;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  vertical-align: baseline;
+  overflow: hidden;
+  margin-top: 0.75rem;
+  margin-left: 1rem;
+  padding: 0 !important;
+  height: auto;
+}
+
+//Trees Radio Logo Color
+.navbar-default .navbar-brand {
+  color: vars.$color-trees-primary; // old color = 77b300
+}
+
+#usernametop.btn.btn-primary {
+  background-color: vars.$color-trees-primary;
+}
+
+#usernamedropdown.btn.btn-primary.dropdown-toggle {
+  background-color: vars.$color-trees-primary;
+}
+
+#userbitContainer {
+  height: 100%;
+  // margin-top: 0.75rem;
+}
+
+#userbitContainer .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+.collapse {
+  display: block;
+}
+
+.login-form-button {
+  place-self: center;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  font-size: vars.$navbar-font-size;
+  height: vars.$navbar-button-height !important;
+  line-height: math.div(vars.$navbar-button-height, 2) !important;
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
+}
+
+#loginForm {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  place-items: baseline;
+  flex-wrap: wrap;
+}
+
+#loginWrapper {
+  place-self: start;
+  display: inline-flex;
+  height: 100%;
+}
+
+#emailpassfields {
+  z-index: 2;
+  place-self: center;
+  margin-bottom: unset !important;
+  display: flex;
+}
+
+#loginButtons {
+  display: inline-flex;
+  place-self: center;
+}
+
+#loginButtons button {
+  text-overflow: ellipsis;
+  border-radius: vars.$button-border-radius;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 30vw;
+}
+
+#loginbutton {
+  font-weight: bold;
+  text-shadow: 0.75px 0 0 #000, -0.6px 0 0 #000, 0 0.5px 0 #000, 0 -0.6px 0 #000, 0.6px 0.6px #000, -0.6px -0.6px 0 #000, 0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
+  color: white;
+}
+
+#reset-password-btn {
+  margin-left: 0.5vw;
+  font-weight: bold;
+  text-shadow: vars.$text-shadow-heavy;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
+}
+
+#regbutton {
+  font-weight: bold;
+  text-shadow: vars.$text-shadow-heavy;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
+  color: white;
+}
+
+#userbit-wrapper {
+  // margin-right: 1rem;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  height: vars.$navbar-button-height !important;
+  max-height: vars.$navbar-button-height !important;
+  place-self: start start;
+  place-items: baseline;
+  font-size: 0.75 * vars.$navbar-font-size !important;
+  border-radius: 0 !important;
+}
+
+div .userbit-avatar span .avatarimg {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  float: left;
+  margin-right: 5px;
+}
+
+.user-avatar-preview-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 2rem;
+}
+
+#ytregcheck {
+  margin-top: 5px;
+  border-radius: 0;
+  padding: -2px;
+}
+
+#logoutbutton {
+  margin-top: 6px;
+  margin-right: 10px;
+  font-weight: bold;
+  text-shadow: vars.$text-shadow-heavy;
+  letter-spacing: 1.5px;
+  font-size: 110%;
+  border-radius: 0;
+}
+
+#usernametop {
+  margin-top: 0.75rem;
+  text-shadow: vars.$text-shadow-heavy;
+  letter-spacing: 1.5px;
+  font-size: 1.1em;
+  padding: .25em;
+}
+
+#usernamedropdown {
+  margin-left: 0;
+  margin-right: 5px;
+  margin-top: 6px;
+  text-shadow: vars.$text-shadow-heavy;
+  font-size: 110%;
+  border-radius: 0;
+}
+
+#emailbox {
+  margin-right: 5px;
+}
+
+.version-tag {
+  font-size: 50%;
+}
+
+#toketimer-container {
+  justify-self: start;
+  // height: 100%;
+}
+
+#hype-grid-container {
+}
+
+#usernav-container {
+  place-self: center;
+  // margin-top: -10px;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  place-content: baseline;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#hype-container {
+}
+
+.hypepb {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 1px 1px 20px rgba(0, 0, 0, 0.5);
+  width: 13.5vw;
+  height: 5rem;
+  border-radius: vars.$button-border-radius;
+  overflow: hidden;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: rgb(26, 17, 26);
+  cursor: url("/src/assets/img/lighter.cur"), pointer;
+  //background: #77b420;
+}
+
+.hypeprogress {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  width: 1.5vw;
+  border-radius: vars.$button-border-radius;
+  background: vars.$color-button-hype;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  vertical-align: middle;
+  align-content: center;
+}
+
+#hypeboom {
+  // padding-bottom: 0.75rem;
+  padding-top: 0.75rem;
+  height: 100%;
+}
+
+.hypedone {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0.5px 0 0 #000000, -0.5px 0 0 #000000, 0 0.5px 0 #000000, 0 -0.5px 0 #000000, 0.5px 0.5px #000000,
+    -0.5px -0.5px 0 #000000, 0.5px -0.5px 0 #000000, -0.5px 0.7px 0 #000000;
+  // width: 13.5vw;
+  //text-shadow: vars.$text-shadow-heavy;
+  cursor: vars.$img-cursor-lighter, pointer;
+  vertical-align: middle;
+  padding-top: 0.07rem;
+  padding-bottom: 0.07rem;
+}
+
+.hypedone:active {
+  -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  border-radius: vars.$button-border-radius;
+  cursor: url("/src/assets/img/lighter.cur"), pointer;
+}
+
+.hypepb:hover #progress {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  //width: 125px;
+}
+
+.hypeprogress a:hover {
+  animation: pulse 1s infinite;
+  animation-timing-function: linear;
+  color: white;
+  text-decoration: none;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* #### Explosive Hype Button #### */
+
+/* Copyright (c) 2020 by Jon Kantner (https://codepen.io/jkantner/pen/oNjjEaJ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE */
+
+.exploding {
+  pointer-events: none;
+  position: relative;
+  will-change: transform;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  content: none;
+}
+
+.exploding,
+.exploding:focus,
+.exploding:hover,
+.exploding > div {
+  background: transparent;
+  color: transparent;
+}
+
+.particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+
+.particle--debris {
+  background: vars.$color-trees-primary;
+  background: vars.$color-button-hype;
+}
+
+.particle--fire {
+  border-radius: 50%;
+}

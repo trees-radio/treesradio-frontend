@@ -1,0 +1,53 @@
+@use '../core/variables' as vars;
+
+#sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+//moving sidebar-changer and online-Ents/Waitlist-Cnt classes to bottom
+
+.sel-chat {
+  //TODO needed?
+}
+
+.sel-online {
+  margin-left: 1%;
+}
+
+.sel-waitlist {
+  margin-left: 1%;
+}
+
+.sel-about {
+  //TODO needed?
+}
+
+.sidebar-changer {
+  display: flex;
+  height: vars.$chatmenu;
+  align-items: stretch;
+  justify-content: space-between;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  flex-flow: row nowrap;
+  align-content: center;
+  flex-shrink: 0; // Prevent shrinking
+}
+
+.sidebar-changer div {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-selected {
+  color: white;
+  text-align: center;
+  background-color: #27272c;
+  font-weight: bolder;
+  border-radius: 5px;
+}

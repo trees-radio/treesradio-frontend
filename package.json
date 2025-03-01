@@ -2,136 +2,85 @@
   "name": "treesradio-frontend",
   "version": "1.1.18",
   "description": "TreesRadio Frontend",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development node devserver.js",
-    "build-prod": "NODE_ENV=production webpack -p --config webpack.config.js",
-    "build-dev": "NODE_ENV=development webpack -d --config webpack.config.js",
-    "lint": "./node_modules/.bin/eslint --quiet app/**/*.js app/**/**/*.js app/**/**/**/*.js webpack*js",
-    "build-rules": "firebase-bolt firebase/security.bolt --output firebase/rules.json",
-    "format": "prettier --print-width 100 --bracket-spacing=false --write app/**/**/*.js app/**/*.js app/**/**/**/*.js webpack*js"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/vite": "^4.0.6",
+    "axios": "^1.7.9",
+    "cash-dom": "^8.1.5",
+    "classnames": "^2.5.1",
+    "date-fns": "^4.1.0",
+    "disposable-email": "^0.2.3",
+    "dompurify": "^3.2.4",
+    "emoji-picker-react": "^4.12.0",
+    "favico.js": "^0.3.10",
+    "firebase": "^11.4.0",
+    "howler": "^2.2.4",
+    "immer": "^10.1.1",
+    "jquery": "^3.7.1",
+    "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
+    "marked": "^15.0.7",
+    "mitt": "^3.0.1",
+    "mobx": "^6.13.6",
+    "mobx-react": "^9.2.0",
+    "moment": "^2.30.1",
+    "rc-progress": "^4.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-emoji-picker": "^1.0.13",
+    "react-emoji-render": "^2.0.1",
+    "react-markdown": "^9.0.3",
+    "react-player": "^2.16.0",
+    "react-slider": "^2.0.6",
+    "react-toastify": "^11.0.3",
+    "react-visibility-sensor": "^5.1.1",
+    "rehype-raw": "^7.0.0",
+    "tailwindcss": "^4.0.6",
+    "url-parse": "^1.5.10",
+    "usehooks-ts": "^3.1.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.25.9",
+    "@eslint/js": "^9.19.0",
+    "@types/bun": "^1.2.2",
+    "@types/disposable-email": "^0.2.2",
+    "@types/favico.js": "^0.0.32",
+    "@types/howler": "^2.2.12",
+    "@types/jquery": "^3.5.32",
+    "@types/lodash": "^4.17.15",
+    "@types/prop-types": "^15.7.14",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@types/react-slider": "^1.3.6",
+    "@types/url-parse": "^1.4.11",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^9.19.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "globals": "^15.14.0",
+    "sass-embedded": "^1.83.4",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.22.0",
+    "vite": "^6.1.0",
+    "vite-bundle-visualizer": "^1.2.1",
+    "vite-plugin-pwa": "^0.21.1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zbuttram/treesradio-frontend.git"
   },
-  "author": "",
-  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/zbuttram/treesradio-frontend/issues"
   },
-  "homepage": "https://github.com/zbuttram/treesradio-frontend#readme",
-  "devDependencies": {
-    "@babel/core": "^7.22.9",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-decorators": "^7.22.7",
-    "@babel/plugin-proposal-private-methods": "^7.18.6",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-env": "^7.22.9",
-    "@babel/preset-react": "^7.22.5",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^9.1.3",
-    "babel-plugin-lodash": "^3.3.4",
-    "bulma": "^0.9.4",
-    "clean-webpack-plugin": "^4.0.0",
-    "css-loader": "^6.8.1",
-    "dotenv-webpack": "^8.1.0",
-    "ejs": "^3.1.9",
-    "eslint": "^8.46.0",
-    "eslint-plugin-react": "^7.33.1",
-    "firebase-bolt": "^0.8.4",
-    "git-rev-sync": "^3.0.2",
-    "graceful-fs": "^4.2.11",
-    "html-webpack-plugin": "^5.5.3",
-    "html-webpack-template": "^6.2.0",
-    "json-loader": "^0.5.7",
-    "less": "^4.2.0",
-    "less-loader": "^11.1.3",
-    "mini-css-extract-plugin": "^2.9.2",
-    "mobx-react-devtools": "^6.1.1",
-    "optimize-css-assets-webpack-plugin": "^6.0.1",
-    "prettier": "^3.0.1",
-    "sass": "^1.84.0",
-    "sass-loader": "^13.3.2",
-    "script-loader": "^0.7.2",
-    "style-loader": "^3.3.3",
-    "stylelint": "^15.10.2",
-    "stylelint-config-standard": "^34.0.0",
-    "webpack": "^5.88.2",
-    "webpack-bundle-analyzer": "^4.9.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-config": "^7.5.0",
-    "webpack-dev-server": "^4.15.1",
-    "webpack-pwa-manifest": "^4.3.0",
-    "webpack-version-file-plugin": "^0.5.0",
-    "workbox-webpack-plugin": "^7.0.0"
-  },
-  "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.22.9",
-    "axios": "^1.4.0",
-    "classnames": "^2.3.2",
-    "create-react-class": "^15.7.0",
-    "disposable-email": "^0.2.3",
-    "emojione": "github:emojione/emojione",
-    "favico.js": "^0.3.10",
-    "firebase": "^10.1.0",
-    "font-awesome": "^4.7.0",
-    "font-awesome-webpack-4": "^1.0.0",
-    "howler": "^2.2.3",
-    "jquery": "^3.7.0",
-    "localforage": "^1.10.0",
-    "lodash": "^4.17.21",
-    "mitt": "^3.0.1",
-    "mobx": "^6.10.0",
-    "mobx-react": "^9.0.0",
-    "moment": "^2.29.4",
-    "popper": "^1.0.1",
-    "prop-types": "^15.8.1",
-    "rc-progress": "^3.4.2",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.8.0",
-    "react-dom": "^18.2.0",
-    "react-emojione": "^5.0.1",
-    "react-markdown": "^8.0.7",
-    "react-onclickoutside": "^6.13.0",
-    "react-player": "^2.12.0",
-    "react-slider": "^2.0.6",
-    "react-toastify": "^9.1.3",
-    "react-visibility-sensor": "^5.1.1",
-    "stylelint-scss": "^5.0.1",
-    "url-parse": "^1.5.10"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-private-methods",
-        {
-          "loose": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-private-property-in-object",
-        {
-          "loose": true
-        }
-      ]
-    ]
-  }
+  "homepage": "https://github.com/zbuttram/treesradio-frontend#readme"
 }

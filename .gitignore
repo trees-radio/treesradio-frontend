@@ -1,5 +1,4 @@
 ### Trees Radio Specific Ignores
-public
 firebase/rules.json
 .fbaseapi
 app/version.json
@@ -304,6 +303,8 @@ eggs/
 parts/
 var/
 sdist/
+dist/
+dist-ssr/
 develop-eggs/
 .installed.cfg
 
@@ -329,5 +330,6 @@ package-lock.json
 /.vs/
 
 # .gitignore
-.env*
+.env
+.env.*
 !.env.example

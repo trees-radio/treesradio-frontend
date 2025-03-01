@@ -1,0 +1,161 @@
+/* #### Images #### */
+
+/* ## Misc ## */
+$img-trees-favicon: url("/src/assets/img/favicon.png");
+$img-trees-loading: url("/src/assets/img/tr-loading.png");
+$img-trees-about: url(/src/assets/img/about.jpg);
+$img-cursor-lighter: url("/src/assets/img/lighter.cur");
+$img-powered-by-tenor: url(/src/assets/img/poweredbytenor.png);
+
+/* ## Emoji ## */
+$img-emoji-one: url("/src/assets/img/1.png");
+$img-emoji-two: url("/src/assets/img/2.png");
+$img-emoji-three: url("/src/assets/img/3.png");
+$img-emoji-four: url("/src/assets/img/4.png");
+$img-emoji-five: url("/src/assets/img/5.png");
+$img-emoji-six: url("/src/assets/img/6.png");
+$img-emoji-seven: url("/src/assets/img/7.png");
+$img-emoji-eight: url("/src/assets/img/8.png");
+$img-emoji-nine: url("/src/assets/img/9.png");
+$img-emoji-ten: url("/src/assets/img/10.png");
+$img-emoji-fourtwenty: url("/src/assets/img/420.png");
+$img-emoji-highaf: url("/src/assets/img/highaf.png");
+$img-emoji-owo: url("/src/assets/img/owo.png");
+$img-emoji-rolling: url("/src/assets/img/rolling.png");
+$img-emoji-dude: url("/src/assets/img/dude.png");
+$img-emoji-bong: url("/src/assets/img/bong.png");
+$img-emoji-neat: url("/src/assets/img/neat.png");
+$img-emoji-ferris: url("/src/assets/img/ferris.png");
+$img-emoji-joint: url("/src/assets/img/j.png");
+$img-emoji-toke: url("/src/assets/img/193.png");
+$img-emoji-plug: url("https://cdn.jsdelivr.net/emojione/assets/4.5/png/128/1f4a9.png");
+$img-emoji-weed: url("/src/assets/img/marijuana.png");
+$img-emoji-rasta: url("/src/assets/img/rasta.png");
+$img-heart-weed: url("/src/assets/img/heart_weed.svg");
+$img-peace-weed: url("/src/assets/img/peace_and_weed.svg");
+$img-weed1: url("/src/assets/img/weed1.svg");
+$img-weed2: url("/src/assets/img/weed2.svg");
+$img-weed3: url("/src/assets/img/weed3.svg");
+$img-weed4: url("/src/assets/img/weed4.svg");
+$img-weed5: url("/src/assets/img/weed5.svg");
+
+/* #### Colors #### */
+
+/* ## Common ## */
+$color-trees-primary: #77b420;
+
+$color-trees-bg: #0a0a0a;
+
+/* ## Misc ## */
+$color-avatar-background: rgba(0, 0, 0, 0.1);
+$color-controlarea-background: #0c0c0e;
+$color-loading-bg: rgba(83, 11, 57, 0.36);
+$color-border-top: #2d2f39;
+
+/* ## Chat ## */
+$color-chat-toplevel-bg: #0a0a0a; //dark skin #0A0A0A light skin e9eef0
+$color-chat-item-border: #000; //light skin 808080
+$color-chat-item: #c0c0c0; //light skin #000
+
+/* ## Toolbar ## */
+$color-grab-panel: linear-gradient(135deg, #e000ff, #46003f 100%);
+
+/* ## Names, Ranks etc. ## */
+$color-user-flair: rgb(128, 128, 128);
+$color-user-upvote: #1a62ff;
+
+$color-username-admin: #09f;
+$color-username-dev: #05a;
+$color-username-mod: #00b300;
+$color-username-seniormod: $color-username-mod;
+$color-username-vip: #aa6aa4;
+$color-username-frient: #ddc978;
+$color-username-default: #026455;
+$color-username-bot: rgb(199, 102, 76);
+
+$color-rank-admin: $color-username-admin;
+$color-rank-dev: $color-username-dev;
+$color-rank-mod: $color-username-mod;
+$color-rank-seniormod: #b507ff;
+$color-rank-vip: #faeaf4;
+$color-rank-frient: #34b7aa;
+$color-rank-bot: rgb(29, 131, 211);
+
+/* ## Buttons ##  */
+$color-button-text: rgba(255, 255, 255, 1);
+
+$color-button-grab: linear-gradient(135deg, #ad009c 24%, #46003f 100%);
+$color-button-like: linear-gradient(135deg, #bcff17 4%, $color-trees-primary 60%);
+$color-button-dislike: linear-gradient(135deg, #ff4f0a 42%, #b32226 100%);
+$color-button-toke: linear-gradient(
+    135deg,
+    #b1ea00 0%,
+    $color-trees-primary 40%,
+    $color-trees-primary 60%,
+    #689f38 100%
+);
+$color-button-hype: $color-button-toke;
+$color-button-open-playlists: linear-gradient(135deg, #b4ea00 30%, rgba(99, 163, 45, 0.987281) 100%);
+
+$color-button-grab-active: linear-gradient(135deg, #46003f 4%, #ad009c 100%);
+$color-button-like-active: linear-gradient(135deg, $color-trees-primary 4%, #bcff17 60%);
+$color-button-dislike-active: linear-gradient(135deg, #b32226 42%, #ff4f0a 100%);
+
+$color-button-grab-hover: linear-gradient(135deg, #ad009c 4%, #46003f 100%);
+$color-button-like-hover: linear-gradient(135deg, #bcff17 2%, $color-trees-primary 80%);
+$color-button-dislike-hover: linear-gradient(135deg, #ff4f0a 4%, #b32226 100%);
+$color-button-toke-hover: linear-gradient(
+    135deg,
+    #b1ea00 0%,
+    $color-trees-primary 35%,
+    $color-trees-primary 60%,
+    #689f38 100%
+);
+$color-button-open-playlists-hover: linear-gradient(135deg, #b4ea00 20%, rgba(99, 163, 45, 0.987281) 100%);
+
+$color-button-waitlist-join: linear-gradient(135deg, #4c7a20 10%, #77b420 34%, #93cf00 45%, #fffc00 81%);
+$color-button-waitlist-active: linear-gradient(135deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
+$color-button-waitlist-active-invrt: linear-gradient(-45deg, #1b0b1a 0%, #46003f 20%, #ffac2b 74%, #e1e802 100%);
+
+/* ## BlazeBot Messages ## */
+$color-blazebot-message: #bbb;
+$color-blazebot-message-background: rgba(18, 0, 41, 0.3);
+$color-blazebot-message-link: #87c300;
+$color-blazebot-message-link-hover: #97d300;
+
+/* --- --- --- --- */
+
+/* ### Common ### */
+$text-shadow-light: 0.5px 0 0 #000, -0.5px 0 0 #000, 0 0.5px 0 #000, 0 -0.5px 0 #000, 0.5px 0.5px #000,
+    -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.7px 0 #000;
+$text-shadow-heavy: 0.75px 0 0 #000, -0.6px 0 0 #000, 0 0.5px 0 #000, 0 -0.6px 0 #000, 0.6px 0.6px #000,
+    -0.6px -0.6px 0 #000, 0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000;
+$button-border-radius: 6px;
+
+/* ### Navbar ### */
+$navbar-font-size: 1.2em;
+$navbar-font-size-dynamic: 1em; //use in elements that break easily when cramped
+
+$navbar-height: 5vh;
+$navbar-button-height: 100%;
+
+$navbar-height-portrait: 3vh;
+$navbar-button-height-portrait: 2vh;
+
+/* ### Sidebar ### */
+$rank-font-size: 0.6em;
+
+/* ### Toolbar ### */
+$toolbar-grab-panel-font-size: 1em;
+$sidebar-height: 6rem;
+$sidebar-height-mini: 5rem;
+$navbar-height: 3.5rem;
+$player-height: 56.25vw; // 16 : 9 aspect ratio
+$playlist-search-height: 45px;
+$chatmenu: 4rem;
+$chatmenu-mini: 3rem;
+/* ### Playlists ### */
+
+/* ### Media Queries ### */
+$isPortrait: "only screen and (orientation: portrait)";
+$isLandscape: "only screen and (orientation: landscape)";
