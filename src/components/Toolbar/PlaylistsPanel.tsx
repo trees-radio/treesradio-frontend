@@ -111,27 +111,27 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
 
     componentDidUpdate(prevProps: PlaylistsPanelProps) {
         if (!prevProps.open && this.props.open) {
-          // Dialog is opening - store body styles
-          this.storeBodyStyles();
+            // Dialog is opening - store body styles
+            this.storeBodyStyles();
         }
-      }
+    }
 
 
-handleClose() {
-    // Restore body styles before closing
-    this.restoreBodyStyles();
-    
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
-      this.props.onClose(true);
-    }, 10);
-  }
+    handleClose() {
+        // Restore body styles before closing
+        this.restoreBodyStyles();
+
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+            this.props.onClose(true);
+        }, 10);
+    }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.checkMobile);
         this.restoreBodyStyles();
         window.removeEventListener('resize', this.checkMobile);
-      
+
     }
 
     checkMobile() {
@@ -436,14 +436,14 @@ handleClose() {
         ) : null;
 
         const onclickHandler = () => {
-                        // Restore body styles before closing
+            // Restore body styles before closing
             this.restoreBodyStyles();
-            
+
             // Small delay to ensure DOM is ready
             setTimeout(() => {
-                this.props.onClose(true);
+                onClose(true);
             }, 10);
-                };
+        };
         return (
             <>
                 <Dialog
