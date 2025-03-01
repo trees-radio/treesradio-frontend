@@ -77,10 +77,6 @@ const Main: FC = () => {
         );
     }
 
-    useEffect(() => {
-        // Force close playlist panel on component mount
-        playlists.setPanelOpen(false);
-    }, []);
 
     return (
         <>
