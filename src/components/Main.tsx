@@ -1,6 +1,6 @@
 // NEW MAIN COMPONENT
 
-import { type FC, useEffect } from "react";
+import { type FC } from "react";
 import { observer } from "mobx-react";
 
 import app from "../stores/app";
