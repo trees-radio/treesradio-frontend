@@ -905,16 +905,14 @@ body.headlessui-portal-open {
   padding-right: 0 !important;
 }
 
-/* Ensure dialog container doesn't affect page layout */
 .playlist-dialog {
   position: fixed;
-  inset: 0; /* shorthand for top, right, bottom, left: 0 */
+  inset: 0;
   z-index: 9999;
-  isolation: isolate; /* Create a new stacking context */
-  contain: layout paint style; /* Minimize impact on main page rendering */
+  isolation: isolate;
+  contain: layout paint style;
 }
 
-/* Prevent layout shifts by ensuring dialog portal is isolated */
 [id^="headlessui-portal-root"] {
   position: fixed;
   z-index: 9999;
