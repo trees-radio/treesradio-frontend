@@ -123,13 +123,10 @@ export default new (class Profile {
     constructor() {
         this.setInit(false);
         auth.onAuthStateChanged(user => {
-            console.log("auth state changed", user);
             if (user !== null) {
-                console.log("setting user", user);
                 this.setUser(user);
                 const connectedRef = ref(db, ".info/connected");
                 onValue(connectedRef, snap => {
-                    console.log(snap.val());
                     if (snap.val()) {
                         auth.updateCurrentUser(auth.currentUser);
                         clearInterval(this.presenceInterval as number);

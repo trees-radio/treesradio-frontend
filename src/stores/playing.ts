@@ -221,9 +221,6 @@ export default new (class Playing {
   @observable accessor localLikeState = false;
 
   @computed get likeLoading() {
-    console.info(
-      `${this.localLikeState} Local Like State, ${this.liked} Liked?`
-    );
     return this.localLikeState !== this.liked;
   }
 
