@@ -26,6 +26,7 @@ export default new (class TokeTimer {
   @observable accessor currentSession = 1;
   @observable accessor totalSessions = 1;
   @observable accessor sessionUid = "";
+  @observable accessor notifications: string[] = [];
 
   @action
   updateTokeState(tokeState: TokeState) {
@@ -35,6 +36,7 @@ export default new (class TokeTimer {
     this.initiator = tokeState.tokeUser || "";
     this.participants = tokeState.seshtoker || [];
     this.sessionUid = tokeState.uid || "";
+    this.notifications = tokeState.notifications || [];
     
     // Calculate current session and total sessions based on participants
     if (this.participants.length > 0) {
@@ -74,7 +76,8 @@ export default new (class TokeTimer {
       currentSession: this.currentSession,
       totalSessions: this.totalSessions,
       formattedTimeRemaining: this.formattedTimeRemaining,
-      percentRemaining: this.percentRemaining
+      percentRemaining: this.percentRemaining,
+      notifications: this.notifications,
     };
   }
 

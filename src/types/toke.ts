@@ -10,8 +10,9 @@ export interface TokeUser {
     tokeLength: number;
     remainingTime: number;
     tokeUser?: string;
-    seshtoker?: TokeUser[];
+    seshtoker: TokeUser[];
     uid?: string;
+    notifications: string[];
   }
   
   // This interface represents the processed data for display
@@ -25,4 +26,5 @@ export interface TokeUser {
     totalSessions: number;
     formattedTimeRemaining: string;
     percentRemaining: number;
+    notifications?: string[];
   }
