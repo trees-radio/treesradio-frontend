@@ -24,7 +24,7 @@ export function listenRank(uid: string) {
 }
 
 async function ranksSettings() {
-  const snap = await getDatabaseRef("settings")
+  const snap = await getDatabaseRef("ranks_settings_READ_ONLY")
     .child("ranks")
     .once("value");
   return snap.val();

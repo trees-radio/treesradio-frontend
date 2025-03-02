@@ -57,8 +57,12 @@ const appClasses = cn({
 const Main: FC = () => {
     //TODO April Fools Shenanigans
     console.trace("Playists panel open: ", playlists.init && playlists.panelOpen);
+    events.register("force_refresh", () => {
+        console.log("Forcing refresh");
+        location.reload()
+    });
+    console.log(events.emitter);
     if (!app.init) {
-        events.register("force_refresh", () => location.reload());
 
         return (
             <div className="main-load">
