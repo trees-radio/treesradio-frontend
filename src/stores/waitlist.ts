@@ -240,6 +240,16 @@ export default new (class Waitlist {
     return false;
   }
 
+  @computed get isPlayingAllowSelfUpvote() {
+    if (
+      playing.data.playing &&
+      profile.user 
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   @computed get waitlistPosition() {
     let waitlistpos = this.list.map(
       (item) => item.uid === profile.user?.uid && true

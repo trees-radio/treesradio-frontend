@@ -482,7 +482,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                     // static
                 >
                     <div className="flex min-h-screen">
-                        <DialogBackdrop className="fixed inset-0 bg-black opacity-70" />
+                        {/* <DialogBackdrop className="fixed inset-0 bg-black opacity-70" /> */}
 
                         <DialogPanel
                             className={`relative bg-black w-full h-screen flex flex-col ${isMobile ? '' : 'playlist-desktop'}`}

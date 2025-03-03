@@ -235,6 +235,7 @@ export default new (class Playing {
       toast("You've already liked this song!", {type:"error"});
       return false;
     }
+    console.log(`sending like`);
     send("like");
     this.setLocalLikeState(true);
   }

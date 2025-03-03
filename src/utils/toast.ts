@@ -7,5 +7,8 @@ export default (content: ToastContent, options: ToastOptions) : Id => toast(cont
     draggable: false,
     autoClose: 8000,
     theme: "dark",
-    transition: Flip
+    transition: Flip,
+    style: {
+        zIndex: 9999
+    }
 });

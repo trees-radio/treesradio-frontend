@@ -1,11 +1,11 @@
 import {getDatabaseRef} from "./fbase";
 
-export default function getLikes() {
-  return getDatabaseRef("playing")
+export default async function getLikes() {
+  const snap = await getDatabaseRef("playing")
     .child("feedback_users")
     .child("likes")
-    .once("value")
-    .then(snap => snap.val());
+    .once("value");
+  return snap.val();
 }
 
 export async function getUserLike(uid:string) {

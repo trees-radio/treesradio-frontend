@@ -32,7 +32,8 @@ async function ranksSettings() {
 
 export async function getSettingsForRank(rank: string) {
   const settings = await ranksSettings();
-  return (await settings.ranks[rank]) || {};
+  if (!settings.ranks) return {};
+  return settings.ranks[rank] || {};
 }
 
 export async function getAllRanks(cbFunc: (ranks: any) => void) {
