@@ -93,7 +93,7 @@ class ChatSend extends React.Component {
     }
 
     return (
-      <form className="form-inline chatbar" id="search">
+      <form className="form-inline chatbar" id="search" autoComplete="off">
       <EmojiPicker
         onEmojiClick={(emoji, _event) => this.emojiPicked(emoji)}
         open={this.showEmojiPicker}
@@ -114,7 +114,7 @@ class ChatSend extends React.Component {
             </div>
             <input
               ref={this.props.myref}
-              type="text"
+              type="search"
               placeholder="enter to send"
               id="chatinput"
               autoComplete="off"
