@@ -36,7 +36,8 @@ type DropdownItem = {
     icon: string;
 });
 
-const allUserCommands = [
+
+const allUserCommands: string[] = [
     "join",
     "toke",
     "session",
@@ -215,9 +216,10 @@ const UserBit: FC = () => {
         // Playback & Participation Preferences
         {
             name: "Auto Join Waitlist",
-            action: () => { Promise.resolve(waitlist.setAutojoin())
+            action: () => {
+                Promise.resolve(waitlist.setAutojoin())
                 .catch(error => console.error("Error in auto join:", error));
-             },
+            },
             isCheckbox: true,
             isChecked: () => profile.autoplay
         },
@@ -264,23 +266,23 @@ const UserBit: FC = () => {
         }));
     }, []); // Empty dependency array - only created once
 
-    //TODO Broken
+    console.log("Rank Permissions: ", profile.rankPermissions);
+    console.log("All User Commands: ", allUserCommands);
     const helpCommandList =
-        // TODO highly illegal shit to get this kinda workin for now
-        [...(HelpList?.helpCommands ?? [])].map(
+        Object.entries(HelpList.helpCommands).map(
             (item, key) =>
                 (profile.rankPermissions.admin ||
-                    (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(key)) ||
-                    allUserCommands.includes(key as any) // TODO Horrible hack fuck that
+                    (profile.rankPermissions.commands && profile.rankPermissions.commands.includes(item[0])) ||
+                    allUserCommands.indexOf(item[0]) > -1
                 ) && (
                     <tr key={key}>
                         <td>
-                            /{key} {item.helpstring.split(" -- ")[0].replace(/^\/(\w+)\s/, " ")}
+                            /{item[0]} {item[1].helpstring.split(" -- ")[0].replace(/^\/(\w+)\s/, " ")}
                         </td>
-                        <td>{item.helpstring.split(" -- ")[1]}</td>
+                        <td>{item[1].helpstring.split(" -- ")[1]}</td>
                     </tr>
                 )
-        ).filter(Boolean);
+        );
 
     let emailVerificationResendIcon = !!(profile.resendVerificationLoading || profile.resendVerificationResult) && (
         <span>
