@@ -204,7 +204,7 @@ const Toolbar: FC = () => {
                 </div>
                 <div
                     className="like-button"
-                    onClick={() => !waitlist.isPlayingAllowSelfUpvote && playing.like()}
+                    onClick={() => waitlist.isPlayingAllowSelfUpvote && playing.like()}
                 >
                     <i className={cn([
                         "fa",
@@ -218,7 +218,7 @@ const Toolbar: FC = () => {
                 </div>
                 <div
                     className="dislike-button"
-                    onClick={() => !waitlist.isPlayingAllowSelfUpvote && playing.dislike()}
+                    onClick={() => waitlist.isPlayingAllowSelfUpvote && playing.dislike()}
                 >
                     <i className={cn([
                         "fa",

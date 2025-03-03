@@ -242,8 +242,7 @@ export default new (class Waitlist {
 
   @computed get isPlayingAllowSelfUpvote() {
     if (
-      playing.data.playing &&
-      profile.user 
+      playing.data.playing
     ) {
       return true;
     }
