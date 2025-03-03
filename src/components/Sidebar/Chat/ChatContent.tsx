@@ -351,7 +351,7 @@ const ChatContent = observer(({ goToChat }) => {
         <div 
           style={{
             position: 'fixed',
-            bottom: isMobile ? '130px' : '70px',
+            top: isMobile ? '10vh' : '15vh',
             right: '10px',
             backgroundColor: 'rgba(0,0,0,0.7)',
             color: 'white',
