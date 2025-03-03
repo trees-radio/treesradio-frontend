@@ -1033,6 +1033,9 @@ body.headlessui-portal-open {
   position: relative;
   display: flex;
   flex-direction: row;
+  background-color: #111827;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
 }
 
 #playlist-search-box {
