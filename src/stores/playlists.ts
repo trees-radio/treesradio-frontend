@@ -334,6 +334,56 @@ export default new (
         @observable accessor importing = false;
         @observable accessor removedPlaylist = false;
         @observable accessor panelOpen = false;
+        @observable accessor searchWithinPlaylist = false;
+        @observable accessor playlistSearchResults: Song[] = [];
+        @observable accessor playlistSearchQuery = "";
+
+        @action
+        searchInCurrentPlaylist(query: string) {
+            console.time('searchInCurrentPlaylist');
+
+            // Store the search query
+            this.playlistSearchQuery = query;
+
+            if (!query || query.trim() === "") {
+                this.searchWithinPlaylist = false;
+                this.playlistSearchResults = [];
+                console.timeEnd('searchInCurrentPlaylist');
+                return;
+            }
+
+            // Convert query to lowercase for case-insensitive search
+            const lowerCaseQuery = query.toLowerCase();
+
+            // Filter the current playlist
+            const results = this.playlist.filter(song => {
+                return (
+                    (song.title && song.title.toLowerCase().includes(lowerCaseQuery)) ||
+                    (song.channel && song.channel.toLowerCase().includes(lowerCaseQuery)) ||
+                    (song.user && song.user.toLowerCase().includes(lowerCaseQuery))
+                );
+            });
+
+            // Update state
+            this.playlistSearchResults = results;
+            this.searchWithinPlaylist = true;
+
+            // Notify user
+            if (results.length === 0) {
+                toast(`No matches found for "${query}"`, { type: "info" });
+            } else {
+                toast(`Found ${results.length} matches for "${query}"`, { type: "success" });
+            }
+
+            console.timeEnd('searchInCurrentPlaylist');
+        }
+
+        @action
+        clearPlaylistSearch() {
+            this.searchWithinPlaylist = false;
+            this.playlistSearchResults = [];
+            this.playlistSearchQuery = "";
+        }
 
         @action setPanelOpen(panelOpen: boolean) {
             this.panelOpen = panelOpen;

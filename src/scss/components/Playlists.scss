@@ -86,7 +86,14 @@
   color: vars.$color-trees-primary;
   cursor: pointer;
   z-index: 2;
-  margin-right: 0.2rem;
+  background-color: rgb(3, 69, 18);
+  border-color: rgb(6, 138, 36);
+  border-style: inset;
+  border-width: 1px;
+
+  padding: 0.5rem;
+  border-radius: 5px;
+  min-width: 40px;
 }
 
 .playlists-panel-closed {
@@ -137,6 +144,9 @@
   margin-right: .5rem;
   border-radius: 5px;
   background-color: rgb(3, 69, 18);
+  border-color: rgb(6, 138, 36);
+  border-style: inset;
+  border-width: 1px;
   padding: 0.5rem;
 }
 
@@ -244,6 +254,9 @@
   margin-right: .5rem;
   border-radius: 5px;
   background-color: rgb(3, 69, 18);
+  border-color: rgb(6, 138, 36);
+  border-style: inset;
+  border-width: 1px;
   padding: 0.5rem;
 }
 
@@ -253,6 +266,9 @@
   margin-right: .5rem;
   border-radius: 5px;
   background-color: rgb(3, 69, 18);
+  border-color: rgb(6, 138, 36);
+  border-style: inset;
+  border-width: 1px;
   padding: 0.5rem;
   
 }
@@ -764,7 +780,6 @@
 }
 
 .playlist-search-source {
-  display: none;
   flex-direction:row;
   align-items: center;
   gap: 0.25rem;
@@ -858,6 +873,15 @@
   background: none;
   border: none;
   cursor: pointer;
+  
+  background-color: rgb(3, 69, 18);
+  border-color: rgb(6, 138, 36);
+  border-style: inset;
+  border-width: 1px;
+  padding: .5rem;
+  border-radius: 5px;
+  min-width: 40px;
+  text-align: center;
 }
 
 .playlist-action-btn:hover {
@@ -1003,4 +1027,188 @@ body.headlessui-portal-open {
   transition: opacity 0.2s ease !important;
   /* Prevent it from affecting layout during transitions */
   contain: layout size style paint;
+}
+
+.playlist-search-box-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+#playlist-search-box {
+  padding-right: 70px;
+  width: 100%;
+}
+
+.playlist-search-btn {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(3, 69, 18);
+  border-color: rgb(6, 138, 36);
+  border-style: inset;
+  border-width: 1px;
+  color: vars.$color-trees-primary;
+  cursor: pointer;
+}
+
+.playlist-clear-search-btn {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: vars.$color-trees-primary;
+  cursor: pointer;
+  background-color: rgb(3, 69, 18);
+}
+
+.playlist-search-btn:hover,
+.playlist-clear-search-btn:hover {
+  color: vars.$color-trees-primary;
+}
+
+.playlist-search-source {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.playlist-search-source label {
+  margin-left: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  color: vars.$color-trees-primary;
+}
+
+.playlist-search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(30, 30, 30, 0.7);
+  border-bottom: 1px solid #444;
+}
+
+.clear-search-btn {
+  background: rgba(10, 62, 1, 0.1);
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: vars.$color-trees-primary;
+  cursor: pointer;
+  padding: 4px 8px;
+  
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.clear-search-btn:hover {
+  background-color: rgba(80, 80, 80, 0.3);
+  color: #fff;
+}
+
+/* Make the search section responsive */
+@media (max-width: 768px) {
+  .playlist-search-container {
+    flex-direction: column;
+  }
+  
+  .playlist-search-box-container {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .playlist-search-source {
+    width: 100%;
+    justify-content: space-around;
+  }
+}
+
+#playlist-ul li, #playlist-ol li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 12px;
+  width: 100%;
+  min-height: 60px;
+  overflow: hidden;
+}
+
+/* Thumbnail styling */
+.pl-thumbnail {
+  width: 80px;
+  height: 45px;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+/* Title styling */
+.pl-media-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 10px;
+}
+
+/* Duration styling */
+.pl-time {
+  flex-shrink: 0;
+  width: 120px;
+  text-align: left;
+  color: vars.$color-trees-primary;
+  margin: 0 10px;
+}
+
+/* Channel info styling */
+.pl-channel {
+  flex-shrink: 0;
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: vars.$color-trees-primary;
+  margin: 0 10px;
+}
+
+/* Action buttons (add, globe, etc.) */
+.add-to-playlist-btn, .remove-from-playlist-btn, .pl-move-to-top {
+  flex-shrink: 0;
+  margin: 0 5px;
+  cursor: pointer;
+  color: vars.$color-trees-primary;
+  transition: color 0.2s;
+}
+
+.add-to-playlist-btn:hover, .remove-from-playlist-btn:hover, .pl-move-to-top:hover {
+  color: vars.$color-trees-primary;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .pl-channel {
+    width: 80px;
+  }
+  
+  .pl-time {
+    width: 60px;
+  }
+  
+  .pl-media-title {
+    max-width: 120px;
+  }
+}
+
+/* For very small screens, hide less important elements */
+@media (max-width: 480px) {
+  .pl-channel {
+    display: none;
+  }
 }
