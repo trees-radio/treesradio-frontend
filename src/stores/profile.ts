@@ -71,6 +71,7 @@ export interface Profile {
     changePassword(password: string): any;
     changeEmail(email: string): any;
     memberSince: number;
+    minimizedTokeDefault: boolean;
 }
 
 export default new (class Profile {
@@ -241,6 +242,8 @@ export default new (class Profile {
     @observable accessor presenceRef: any = null;
     @observable accessor presenceInterval: Timer | NodeJS.Timeout | string | number | undefined = undefined;
     @observable accessor ipRef: any = null;
+
+    @observable accessor minimizedTokeDefault = false;
 
     @computed get canAutoplay() {
         if (this.user && this.user.uid) {

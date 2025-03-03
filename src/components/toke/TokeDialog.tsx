@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite';
 import tokeStore from '../../stores/toke';
 import { XMarkIcon, UserPlusIcon, ClockIcon, FireIcon } from '@heroicons/react/24/outline';
 
+import profile from '../../stores/profile';
+
 // Check if it's 4/20
 const is420 = () => {
   const now = new Date();
@@ -15,6 +17,9 @@ const TokeDialog: React.FC = observer(() => {
   const [isOpen, setIsOpen] = useState(false);
   const tokeData = tokeStore.displayData;
   const [is420Day] = useState(is420());
+  const [minimized, setMinimized] = useState(profile.minimizedTokeDefault);
+
+  
 
   // Dragging state
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -24,11 +29,15 @@ const TokeDialog: React.FC = observer(() => {
 
   // Open dialog when toke becomes active, close when inactive
   useEffect(() => {
+    // Always set isOpen to true when toke becomes active
     setIsOpen(tokeData.isActive);
+    
+    // Set minimized state based on user preference when a new toke session starts
+    if (tokeData.isActive) {
+      setMinimized(profile.minimizedTokeDefault);
+    }
   }, [tokeData.isActive]);
 
-  // If the dialog is dismissed, show a minimized version
-  const [minimized, setMinimized] = useState(false);
 
   // Animation frames for the special 420 effect (smoke puffs)
   const [showSmoke, setShowSmoke] = useState(false);
@@ -123,6 +132,8 @@ const TokeDialog: React.FC = observer(() => {
       onClose={() => setMinimized(true)}
       className="fixed inset-0 z-50 overflow-y-auto pointer-events-none"
       draggable
+      autoFocus={false}
+      role="alertdialog"
     >
       <div
         ref={dialogRef}

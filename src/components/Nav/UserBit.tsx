@@ -106,7 +106,7 @@ const UserBit: FC = () => {
     const [isShowHelp, setIsShowHelp] = useState(false);
     const [isGifsHidden, setIsGifsHidden] = useState(false);
     const [isGelato, setIsGelato] = useState(false);
-
+    const [isMinimizedTokeDefault, setIsMinimizedTokeDefault] = useState(false);
     const [avatarField, setAvatarField] = useState("");
     const [newEmailField, setNewEmailField] = useState("");
     const [newPasswordField, setNewPasswordField] = useState("");
@@ -119,6 +119,10 @@ const UserBit: FC = () => {
             }
         }),
         []);
+
+    useEffect(() => {
+        setIsMinimizedTokeDefault(profile.minimizedTokeDefault);
+    }, [profile.minimizedTokeDefault]);
 
     useEffect(() => void $("#reactplayerid").attr(
         "style",
@@ -179,6 +183,15 @@ const UserBit: FC = () => {
             action: () => profile.notifications = !profile.notifications,
             isCheckbox: true,
             isChecked: () => profile.notifications
+        },
+        {
+            name: "Minimize Toke Dialog by Default?",
+            action: () => {
+                profile.minimizedTokeDefault = !profile.minimizedTokeDefault;
+                setIsMinimizedTokeDefault(!isMinimizedTokeDefault);
+            },
+            isCheckbox: true,
+            isChecked: () => isMinimizedTokeDefault
         },
         {
             name: "Hide Gifs?",
