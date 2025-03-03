@@ -6,7 +6,6 @@ import {
     Dialog,
     DialogPanel,
     DialogTitle,
-    DialogBackdrop,
 } from '@headlessui/react';
 import playlists from "../../stores/playlists";
 import Modal from "../utility/Modal";
