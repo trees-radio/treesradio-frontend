@@ -1,4 +1,4 @@
-import { createRef, FC, useState, useEffect } from "react";
+import { createRef, FC, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import classNames from "classnames";
 
@@ -25,12 +25,20 @@ const Sidebar: FC = () => {
         profile.loggedIn ? "CHAT" : "ABOUT"
     );
     
-    // Effect to change to CHAT tab when user logs in
+    // Track initial login state to prevent automatic tab switching after manual selection
+    const initialLoginRef = useRef(profile.loggedIn);
+    const userSelectedTabRef = useRef(false);
+    
+    // Modified effect that only switches tabs on initial login, not after user selects a tab
     useEffect(() => {
-        if (profile.loggedIn && currentSidebar === "ABOUT") {
+        // Only switch tabs automatically on the initial login transition
+        if (profile.loggedIn && !initialLoginRef.current && !userSelectedTabRef.current) {
             setCurrentSidebar("CHAT");
         }
-    }, [profile.loggedIn, currentSidebar]);
+        
+        // Update the initial login state
+        initialLoginRef.current = profile.loggedIn;
+    }, [profile.loggedIn]);
 
     const chatBtnClass = classNames("show-chat-btn", {
         "sidebar-selected": currentSidebar === "CHAT"
@@ -45,35 +53,41 @@ const Sidebar: FC = () => {
         "sidebar-selected": currentSidebar === "ABOUT"
     });
 
+    // Wrapper for tab selection that marks user interaction
+    const selectTab = (tab: SidebarState) => {
+        userSelectedTabRef.current = true;
+        setCurrentSidebar(tab);
+    };
+
     const goToChat = () => {
-        const chatContainer = document.getElementById("chatbox")
+        const chatContainer = document.getElementById("chatbox");
         if (chatContainer) {
             const lastMessage = chatContainer.lastElementChild;
             if (lastMessage) {
                 lastMessage.scrollIntoView({ behavior: 'smooth' });
             }
         }
-        setCurrentSidebar("CHAT");
+        selectTab("CHAT");
         chatInputRef.current?.focus();
     }
 
     return (
         <div id="sidebar" className="flex flex-col h-full">
             <div className="sidebar-changer flex-shrink-0">
-                <div className={chatBtnClass} ref={selChatRef} onClick={() => { goToChat(); }}>
+                <div className={chatBtnClass} ref={selChatRef} onClick={() => goToChat()}>
                     Chat
                 </div>
                 <div
                     className={onlineBtnClass}
                     ref={selOnlineRef}
-                    onClick={() => setCurrentSidebar("ONLINE")}
+                    onClick={() => selectTab("ONLINE")}
                 >
                     Online Ents <span className="online-count">{online.online.length}</span>
                 </div>
                 <div
                     className={waitlistBtnClass}
                     ref={selWaitlistRef}
-                    onClick={() => setCurrentSidebar("WAITLIST")}
+                    onClick={() => selectTab("WAITLIST")}
                 >
                     Waitlist{" "}
                     <span className="waitlist-count">
@@ -86,7 +100,7 @@ const Sidebar: FC = () => {
                 <div
                     className={aboutBtnClass}
                     ref={selAboutRef}
-                    onClick={() => setCurrentSidebar("ABOUT")}
+                    onClick={() => selectTab("ABOUT")}
                 >
                     About
                 </div>
