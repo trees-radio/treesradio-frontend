@@ -106,7 +106,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
     componentDidMount() {
         window.addEventListener('resize', this.checkMobile);
         this.checkMobile();
-        
+
         // If dialog is initially open, lock scrolling
         if (this.props.open) {
             this.lockBodyScrolling();
@@ -233,13 +233,13 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
     lockBodyScrolling() {
         // Save the original style first
         this.storeBodyStyles();
-        
+
         // Get scrollbar width to prevent layout shift when scrollbar disappears
         const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        
+
         // Apply styles without causing reflow
         document.body.style.overflow = 'hidden';
-        
+
         // Prevent layout shift by adding padding equal to scrollbar width
         if (scrollbarWidth > 0) {
             document.body.style.paddingRight = `${scrollbarWidth}px`;
@@ -375,23 +375,24 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                         </span>
                         <i
                             onClick={() => playlists.removeVideo(i)}
-                            className="fa fa-2x fa-trash remove-from-playlist-btn"
+                            className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
                         />
-                        <i
-                            onClick={() => playlists.moveTop(i)}
-                            className="fa fa-2x fa-arrow-up pl-move-to-top"
-                        />
-                        <i
-                            onClick={() => playlists.moveBottom(i)}
-                            className="fa fa-2x fa-arrow-down pl-move-to-top"
-                        />
+
                         <a
                             target="_blank"
                             href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
                             rel="noopener noreferrer"
                         >
-                            <i className="fa fa-2x fa-globe add-to-playlist-btn" />
+                            <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
                         </a>
+                        <i
+                            onClick={() => playlists.moveTop(i)}
+                            className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
+                        />
+                        <i
+                            onClick={() => playlists.moveBottom(i)}
+                            className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
+                        />
                     </li>
                 );
             });
@@ -478,7 +479,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                     open={open || false}
                     onClose={onclickHandler}
                     className="fixed inset-0 z-50 playlist-dialog"
-                    // static
+                // static
                 >
                     <div className="flex min-h-screen">
                         {/* <DialogBackdrop className="fixed inset-0 bg-black opacity-70" /> */}

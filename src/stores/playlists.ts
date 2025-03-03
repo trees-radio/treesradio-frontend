@@ -71,16 +71,16 @@ export default new (
         disposeEvent: any;
         authUnsubscribe: any;
         searchUnsubscribe: any;
-        
+
         constructor() {
-            
+
             // Single auth state listener with proper cleanup
             if (fbase && fbase.auth) {
                 this.authUnsubscribe = fbase.auth().onAuthStateChanged(user => {
-                    
+
                     // Clean up previous listeners
                     this.cleanupListeners();
-                    
+
                     if (user) {
                         this.setupUserListeners(user.uid);
                     } else {
@@ -90,52 +90,52 @@ export default new (
                 });
             }
         }
-        
+
         @action
         cleanupListeners() {
-            
+
             // Clean up all listeners
             if (this.disposeEvent) {
                 this.disposeEvent();
                 this.setDisposeEvent(null);
             }
-            
+
             if (this.stopSync) {
                 this.stopSync();
                 this.stopSync = null;
             }
-            
+
             if (this.stopPlaylistSync) {
                 this.stopPlaylistSync();
                 this.stopPlaylistSync = null;
             }
-            
+
             if (this.searchUnsubscribe) {
                 this.searchUnsubscribe();
                 this.searchUnsubscribe = null;
             }
         }
-        
+
         @action
         setupUserListeners(uid: string) {
             this.setUid(uid);
-            
+
             // Set up event handlers
             this.setupEventHandlers();
-            
+
             // Set up search listener
             this.setupSearchListener(uid);
-            
+
             // Set up playlists listener
             this.setupPlaylistsListener(uid);
             // Reset panel state when user authenticates
             this.setPanelOpen(false);
         }
-        
+
         @action
         setupEventHandlers() {
             console.time('setupEvents');
-            
+
             // Register search failed handler
             const searchFailedHandler = events.register('searchfailed', (data) => {
                 const eventData = data as { data: { uid: string } };
@@ -145,7 +145,7 @@ export default new (
                     this.setSearch([]);
                 }
             });
-            
+
             // Register search exceeded handler
             const searchExceededHandler = events.register('searchexceeded', (data) => {
                 const eventData = data as { data: { uid: string } };
@@ -155,7 +155,7 @@ export default new (
                     this.setSearch([]);
                 }
             });
-            
+
             // Register playlist imported handler
             const playlistImportedHandler = events.register('playlistImported', (data) => {
                 const eventData = data as { data: { uid: string, data: { name: string } } };
@@ -164,7 +164,7 @@ export default new (
                     this.setImporting(false);
                 }
             });
-            
+
             // Store disposal function
             this.setDisposeEvent(() => {
                 if (searchFailedHandler) {
@@ -177,18 +177,18 @@ export default new (
                     events.unregister('playlistImported', playlistImportedHandler);
                 }
             });
-            
+
             console.timeEnd('setupEvents');
         }
-        
+
         @action
         setupSearchListener(uid: string) {
             console.time('setupSearchListener');
-            
+
             const searchRef = ref(db, `searches/${uid}`);
             this.searchUnsubscribe = onValue(searchRef, snap => {
                 if (!snap.val() || snap.val() == null) return;
-                
+
                 // Use runInAction to batch state changes
                 runInAction(() => {
                     this.setSearch(snap.val());
@@ -196,56 +196,56 @@ export default new (
                     this.setSearching(false);
                 });
             });
-            
+
             console.timeEnd('setupSearchListener');
         }
-        
+
         @action
         setupPlaylistsListener(uid: string) {
             console.time('setupPlaylistsListener');
-            
+
             const playlistsRef = ref(db, `playlists/${uid}`);
             this.setRef(playlistsRef);
-            
+
             // Set up playlists listener using modern Firebase SDK
             const playlistsQuery = query(playlistsRef, orderByKey());
-            
+
             this.stopSync = onValue(playlistsQuery, (snap) => {
-                
+
                 const playlists: PlaylistsEnt[] = [];
                 snap.forEach(playlist => {
                     const data = playlist.val();
                     data.key = playlist.key;
                     playlists.push(data);
                 });
-                
+
                 this.setPlaylists(playlists);
-                
+
                 // Only load selected playlist on first load or when playlist is removed
                 if (!this.init || this.removedPlaylist) {
                     this.loadSelectedPlaylist(uid, playlists);
                 }
-                
+
                 this.setInitState(true);
             });
-            
+
             console.timeEnd('setupPlaylistsListener');
         }
-        
+
         @action
         async loadSelectedPlaylist(uid: string, playlists: PlaylistsEnt[]) {
             console.time('loadSelectedPlaylist');
-            
+
             try {
                 const privateRef = ref(db, `private/${uid}`);
                 const snap = await get(privateRef);
-                
+
                 if (snap.val() && snap.val().selectedPlaylist) {
                     const selectedKey = snap.val().selectedPlaylist;
-                    
+
                     // Find index of playlist with matching key
                     const index = playlists.findIndex(playlist => playlist.key === selectedKey);
-                    
+
                     if (index !== -1) {
                         this.selectPlaylist(index);
                     } else {
@@ -258,7 +258,7 @@ export default new (
                 console.error("Error loading selected playlist:", error);
                 this.selectPlaylist(0);
             }
-            
+
             console.timeEnd('loadSelectedPlaylist');
         }
 
@@ -286,12 +286,12 @@ export default new (
         setStopPlaylistSync(stopPlaylistSync: any) {
             this.stopPlaylistSync = stopPlaylistSync;
         }
-        
+
         @action
         setRef(ref: any) {
             this.ref = ref;
         }
-        
+
         @action
         setUid(uid: string) {
             this.uid = uid;
@@ -316,7 +316,7 @@ export default new (
         setPlaylists(playlists: PlaylistsEnt[]) {
             this.playlists = playlists;
         }
-        
+
         @action
         setPlaylist(playlist: Song[]) {
             this.playlist = playlist;
@@ -342,7 +342,7 @@ export default new (
         @action
         addPlaylist(name: string) {
             console.time('addPlaylist');
-            
+
             const newPlaylistRef = push(this.ref);
             return set(newPlaylistRef, {
                 name,
@@ -363,7 +363,7 @@ export default new (
         @action
         exportPlaylist() {
             console.time('exportPlaylist');
-            
+
             const playlistRef = ref(db, `playlists/${this.uid}/${this.selectedPlaylistKey}`);
             get(playlistRef).then(snap => {
                 if (snap.val()) {
@@ -401,54 +401,54 @@ export default new (
         @action
         selectPlaylist(index: number) {
             console.time('selectPlaylist');
-            
+
             this.clearSearch();
-            
+
             // Clean up previous playlist listener
             if (this.stopPlaylistSync) {
                 this.stopPlaylistSync();
             }
-            
+
             this.setSelectedPlaylist(index);
-            
+
             // Only proceed if playlist exists
             if (!this.playlists[index]) {
                 console.timeEnd('selectPlaylist');
                 return;
             }
-            
+
             const key = this.playlists[index].key;
             this.setSelectedPlaylistKey(key);
-            
+
             // Update private ref
             const privateRef = ref(db, `private/${this.uid}/selectedPlaylist`);
             set(privateRef, key);
-            
+
             // Save to localforage (can be done in background)
             localforage.setItem("selectedPlaylist", key).catch(err => {
                 console.error("Error saving selected playlist to localforage:", err);
             });
-            
+
             // Set up new listener with modern Firebase SDK
             const entriesRef = ref(db, `playlists/${this.uid}/${key}/entries`);
             const entriesQuery = query(entriesRef, orderByKey());
-            
+
             this.stopPlaylistSync = onValue(entriesQuery, snap => {
-                
+
                 const playlist: Song[] = [];
                 if (snap) {
                     snap.forEach(entry => {
                         playlist.push(entry.val());
                     });
                 }
-                
+
                 this.setPlaylist(playlist);
             });
-            
+
             console.timeEnd('selectPlaylist');
         }
 
-        @action 
+        @action
         setRemovedPlaylist(removedPlaylist: boolean) {
             this.removedPlaylist = removedPlaylist;
         }
@@ -456,7 +456,7 @@ export default new (
         @action
         removePlaylist(index: number) {
             console.time('removePlaylist');
-            
+
             const key = this.playlists[index].key;
             if (this.selectedPlaylist === index) {
                 this.setRemovedPlaylist(true);
@@ -500,34 +500,34 @@ export default new (
         @action
         async runSearch(query: string) {
             console.time('runSearch');
-            
+
             this.setSearching(true);
             if (profile.init) {
                 send("search", { source: this.searchSource, query: query });
             }
-            
+
             console.timeEnd('runSearch');
         }
 
         @action
         addFromSearch(index: number) {
             console.time('addFromSearch');
-            
+
             if (!this.hasPlaylist) {
                 toast("You really should select a playlist first.", { type: "error" });
                 console.timeEnd('addFromSearch');
                 return;
             }
-            
+
             var video = this.search[index];
             var url = "";
             var title = "";
             var thumb = "";
             var channel = "";
             var duration = 0;
-            
+
             this.setOpenSearch(false);
-            
+
             if (this.searchSource == "youtube") {
                 url = `https://www.youtube.com/watch?v=${video.id}`;
                 title = video.snippet.title;
@@ -563,13 +563,13 @@ export default new (
         @action
         mergePlaylists(playlista: string, playlistb: string, playlistname: string) {
             console.time('mergePlaylists');
-            
+
             send("playlist.merge", {
                 playlista: playlista,
                 playlistb: playlistb,
                 playlistname: playlistname
             });
-            
+
             console.timeEnd('mergePlaylists');
         }
 
@@ -591,7 +591,7 @@ export default new (
         @action
         addSong(song: Song, playlistKey: string, isGrab: boolean) {
             console.time('addSong');
-            
+
             var playlist = this.getPlaylistByKey(playlistKey);
             var newPlaylist: Song[] = [];
             if (playlist?.entries) {
@@ -617,11 +617,11 @@ export default new (
         @action
         moveTop(index: number) {
             console.time('moveTop');
-            
+
             var newPlaylist = this.playlist.slice();
             var video = newPlaylist.splice(index, 1)[0];
             newPlaylist.unshift(video);
-            
+
             const entriesRef = ref(db, `playlists/${this.uid}/${this.selectedPlaylistKey}/entries`);
             set(entriesRef, newPlaylist).then(() => {
                 toast(`Moved song to top of playlist!`, { type: "success" });
@@ -635,11 +635,11 @@ export default new (
         @action
         moveBottom(index: number) {
             console.time('moveBottom');
-            
+
             var newPlaylist = this.playlist.slice();
             var video = newPlaylist.splice(index, 1)[0];
             newPlaylist.push(video);
-            
+
             const entriesRef = ref(db, `playlists/${this.uid}/${this.selectedPlaylistKey}/entries`);
             set(entriesRef, newPlaylist).then(() => {
                 toast("Moved song to bottom of playlist!", { type: "success" });
@@ -653,26 +653,27 @@ export default new (
         @action
         removeVideo(index: number) {
             console.time('removeVideo');
-            
-            var newPlaylist = this.playlist.slice();
-            var video = newPlaylist.splice(index, 1)[0];
-            
-            const entriesRef = ref(db, `playlists/${this.uid}/${this.selectedPlaylistKey}/entries`);
-            set(entriesRef, newPlaylist).then(() => {
-                toast(`Removed ${video.title || video.name} from playlist!`, { type: "success" });
-                console.timeEnd('removeVideo');
-            }).catch(err => {
-                console.error("Error removing video:", err);
-                console.timeEnd('removeVideo');
-            });
+            if (confirm("Are you sure you want to remove this video from the playlist?")) {
+                var newPlaylist = this.playlist.slice();
+                var video = newPlaylist.splice(index, 1)[0];
+
+                const entriesRef = ref(db, `playlists/${this.uid}/${this.selectedPlaylistKey}/entries`);
+                set(entriesRef, newPlaylist).then(() => {
+                    toast(`Removed ${video.title || video.name} from playlist!`, { type: "success" });
+                    console.timeEnd('removeVideo');
+                }).catch(err => {
+                    console.error("Error removing video:", err);
+                    console.timeEnd('removeVideo');
+                });
+            }
         }
 
         @action
         shufflePlaylist() {
             console.time('shufflePlaylist');
-            
+
             var newPlaylist = shuffle(this.playlist.slice());
-            
+
             const entriesRef = ref(db, `playlists/${this.uid}/${this.selectedPlaylistKey}/entries`);
             set(entriesRef, newPlaylist).then(() => {
                 toast("Shuffled playlist!", { type: "success" });
@@ -686,39 +687,39 @@ export default new (
         @action
         sortPlaylist(direction: string, key: string) {
             console.time('sortPlaylist');
-            
-            send("playlist.sort", { 
-                playlist: this.selectedPlaylistKey, 
-                direction: direction, 
-                field: key 
+
+            send("playlist.sort", {
+                playlist: this.selectedPlaylistKey,
+                direction: direction,
+                field: key
             });
-            
+
             console.timeEnd('sortPlaylist');
         }
 
         @action
         async importYouTubePlaylist(name: string, url: string): Promise<boolean> {
             console.time('importYouTubePlaylist');
-            
+
             this.setImporting(true);
             if (profile.init) {
                 send('importPlaylist', { name, url });
                 console.timeEnd('importYouTubePlaylist');
                 return true;
             }
-            
+
             console.timeEnd('importYouTubePlaylist');
             return false;
         }
-        
+
         // Cleanup method for component unmounting
         destroy() {
-            
+
             // Clean up auth listener
             if (this.authUnsubscribe) {
                 this.authUnsubscribe();
             }
-            
+
             // Clean up all other listeners
             this.cleanupListeners();
         }
