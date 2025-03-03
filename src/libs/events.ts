@@ -12,8 +12,7 @@ export function send(type: string, data = {}) {
     if (type == "chat" && profile.username == undefined) return false;
     let token: {[key: string]: Token} = {};
     token[profile.user.uid] = {uid: profile.user.uid, type, data};
-    console.log(token);
-    
+
     return getDatabaseRef("event_bus")
       .child(profile.user.uid)
       .set(token);

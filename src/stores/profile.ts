@@ -119,7 +119,6 @@ export default new (class Profile {
     setRankAndPermissions(rank: string, permissions: any) {
         this.rank = rank;
         this.rankPermissions = permissions;
-        console.log("Rank and permissions set", rank, permissions);
     }
 
     constructor() {
@@ -206,8 +205,7 @@ export default new (class Profile {
         autorun(async () => {
             if (this.user && this.user.uid) {
                 const userRank = await rank(this.user.uid);
-                console.log("User rank", userRank);
-                
+
                 this.setRankAndPermissions(userRank, await getSettingsForRank(userRank));
             }
         });

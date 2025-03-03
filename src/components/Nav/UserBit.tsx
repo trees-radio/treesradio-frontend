@@ -266,8 +266,6 @@ const UserBit: FC = () => {
         }));
     }, []); // Empty dependency array - only created once
 
-    console.log("Rank Permissions: ", profile.rankPermissions);
-    console.log("All User Commands: ", allUserCommands);
     const helpCommandList =
         Object.entries(HelpList.helpCommands).map(
             (item, key) =>
