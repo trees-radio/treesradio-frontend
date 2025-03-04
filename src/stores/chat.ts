@@ -7,6 +7,9 @@ import mention from "../libs/mention";
 import { send } from "../libs/events";
 import epoch from "../utils/epoch";
 
+// Time window in seconds for considering mentions as "recent"
+const MENTION_RECENT_WINDOW = 3;
+
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
@@ -35,6 +38,9 @@ export interface ChatMessages {
 
 export default new (class Chat {
   limit: number;
+  // Track already processed messages by key
+  processedMessageKeys: Set<string> = new Set();
+  
   constructor() {
     const myself = this;
     window.onfocus = function () {
@@ -50,12 +56,14 @@ export default new (class Chat {
       .limitToLast(200)
       .on("value", snap => {
         var msg: ChatMessages = snap.val();
-        // Clear the mskkeys array
+        // Clear the msgkeys array
         this.clearMessageKeys();
 
         if (msg) {
           Object.entries(msg).forEach(([key, msg]) => {
-            // Makes chat messages appear to the silenced user.
+            // Push the key to our msgkeys array to track active messages
+            this.pushMessageKey(key);
+            
             // Test if this is a single message or an array of messages.
             if (Array.isArray(msg)) {
               msg.forEach((m: ChatMessage) => {
@@ -65,11 +73,12 @@ export default new (class Chat {
               });
               // This is supposed to be something but the backend doesn't do this??
             } else {
-              // First, check the this.messages array to see if the message is already 
-              // there. The key is the unique identifier for the message.
-              // If it is, then we don't need to add it again.
-              if (this.messages.some(m => m.key === key)) return;
-              this.pushMessageKey(key);
+              // Check if we've already processed this message
+              if (this.processedMessageKeys.has(key)) return;
+              
+              // Mark as processed to avoid duplicate processing
+              this.processedMessageKeys.add(key);
+              
               msg.key = key;
               if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
                 if ((profile.rank && !profile.showmuted) || !profile.rank) return;
@@ -103,7 +112,9 @@ export default new (class Chat {
                 if (!mentioned) {
                   mentioned = mentions.includes(profile.safeUsername?.toLowerCase() || "");
                 }
-                if (mentioned) {
+                // Only ping for mentions if the message is recent (within MENTION_RECENT_WINDOW seconds)
+                const isRecent = (epoch() - msg.timestamp) <= MENTION_RECENT_WINDOW;
+                if (mentioned && isRecent) {
                   mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
                   if (!this.werefocused) {
                     this.mentioncount++;
@@ -115,7 +126,6 @@ export default new (class Chat {
           });
           this.removeInactiveMessages();
         }
-
       });
 
     events.register("chat_clear", () => this.clearChat());
@@ -151,7 +161,11 @@ export default new (class Chat {
   }
 
   @action removeInactiveMessages() {
-    this.messages = this.messages.filter(m => m.key && this.msgkeys.includes(m.key));
+    // Don't use a filter as it causes the entire array to be re-rendered.
+    // Instead, we'll just remove the first element until we find one that is active.
+    while (this.messages.length > 0 && this.messages[0].key && !this.msgkeys.includes(this.messages[0].key)) {
+      this.messages.shift();
+    }
   }
 
   @action inlineMessage(msg: ChatMessage) {
@@ -164,6 +178,8 @@ export default new (class Chat {
 
   @action clearChat() {
     this.messages = [];
+    // Don't clear processedMessageKeys when clearing the chat
+    // This prevents re-processing all messages again
   }
 
   @action
