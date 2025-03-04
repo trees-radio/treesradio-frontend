@@ -665,7 +665,7 @@
 }
 
 .z-50 {
-  z-index: 9999;
+  z-index: 9900;
 }
 
 /* Playlist Dialog Specific Styles */
@@ -675,7 +675,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 9900;
   overflow-y: auto;
   display: flex;
   align-items: flex-start;
@@ -942,14 +942,14 @@ body.headlessui-portal-open {
 .playlist-dialog {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 9900;
   isolation: isolate;
   contain: layout paint style;
 }
 
 [id^="headlessui-portal-root"] {
   position: fixed;
-  z-index: 9999;
+  z-index: 9900;
   pointer-events: none;
 }
 
@@ -962,7 +962,7 @@ body.headlessui-portal-open {
 /* Isolate the dialog from the main page layout */
 [id^="headlessui-portal-root"] {
   position: fixed !important;
-  z-index: 9999;
+  z-index: 9900;
   top: 0;
   left: 0;
   right: 0;
