@@ -118,21 +118,9 @@
   -o-transition: all 0.15s ease-in 50ms;
 }
 
-.pl-thumbnail {
-  width: 4rem;
-  vertical-align: middle;
-}
-
-.pl-time {
-  padding-right: 2%;
-  font-size: 0.8em;
-}
-
 .pl-channel {
   color: gray;
   display: inline-block;
-  padding-left: 1%;
-  max-width: 20%;
   white-space: nowrap;
   overflow: hidden;
   align-self: center;
@@ -305,7 +293,7 @@
   padding-left: 1.5rem;
   margin-right: 1.5rem;
   font-size: 125%;
-  width: 40vw;
+  width: 60vw;
   white-space: nowrap;
   overflow: hidden;
   align-self: center;
@@ -932,6 +920,16 @@
     width: 100%;
     justify-content: space-between;
   }
+
+  .playlist-item-1 {
+    display:flex;
+    flex-direction: column;
+  }
+
+  .playlist-item-2 {
+    display:flex;
+    flex-direction: column;
+  }
 }
 
 body.headlessui-portal-open {
@@ -1147,10 +1145,10 @@ body.headlessui-portal-open {
 /* Thumbnail styling */
 .pl-thumbnail {
   width: 80px;
-  height: 45px;
+  aspect-ratio: auto;
   object-fit: cover;
   flex-shrink: 0;
-  margin-right: 10px;
+  // margin-right: 10px;
 }
 
 /* Title styling */
@@ -1165,16 +1163,26 @@ body.headlessui-portal-open {
 /* Duration styling */
 .pl-time {
   flex-shrink: 0;
-  width: 120px;
   text-align: left;
   color: vars.$color-trees-primary;
   margin: 0 10px;
+  width: 6vw;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+}
+
+.pl-button-section {
+  display: flex;
+  flex-direction: row;
+  width: 15vw;
 }
 
 /* Channel info styling */
 .pl-channel {
   flex-shrink: 0;
-  width: 180px;
+  width: 10vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1193,26 +1201,4 @@ body.headlessui-portal-open {
 
 .add-to-playlist-btn:hover, .remove-from-playlist-btn:hover, .pl-move-to-top:hover {
   color: vars.$color-trees-primary;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-  .pl-channel {
-    width: 80px;
-  }
-  
-  .pl-time {
-    width: 60px;
-  }
-  
-  .pl-media-title {
-    max-width: 120px;
-  }
-}
-
-/* For very small screens, hide less important elements */
-@media (max-width: 480px) {
-  .pl-channel {
-    display: none;
-  }
 }

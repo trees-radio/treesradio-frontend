@@ -322,12 +322,12 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
 
     @action
     clearExternalSearch() {
-    playlists.setOpenSearch(false);
-    playlists.setSearch([]);
-    
-    if (this._search) {
-        this._search.value = "";
-    }
+        playlists.setOpenSearch(false);
+        playlists.setSearch([]);
+
+        if (this._search) {
+            this._search.value = "";
+        }
     }
 
     renderPlaylistContent() {
@@ -372,59 +372,64 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                     }
 
                     return (
-                        <li className={playlistPosClass} key={i}>
-                            <a target="_blank" href={url} rel="noopener noreferrer">
-                                <img className="pl-thumbnail" src={thumbnail} alt={title} />
-                            </a>
-                            <span className="pl-media-title">{title}</span>
-                            <span className="pl-time">
-                                <i className="fa fa-clock-o" /> {humanDuration}
-                            </span>
-                            <span className="pl-channel">{channelTitle?.trim()}</span>
-                            <i
-                                onClick={() => playlists.addFromSearch(i)}
-                                className="fa fa-2x fa-plus add-to-playlist-btn"
-                            />
-                            {skipLink && (
-                                <a
-                                    target="_blank"
-                                    href={skipLink}
-                                    rel="noopener noreferrer"
-                                >
-                                    <i className="fa fa-2x fa-globe add-to-playlist-btn" />
+                        <li className={`${playlistPosClass}`} key={i}>
+                            <div className="pl-title-section ">
+                                <a target="_blank" href={url} rel="noopener noreferrer">
+                                    <img className="pl-thumbnail" src={thumbnail} alt={title} />
                                 </a>
-                            )}
+                                <span className="pl-media-title">{title}</span>
+
+                            </div>
+                            <div className="pl-button-section">
+                                <span className="pl-time">
+                                    <i className="fa fa-clock-o" /> {humanDuration}
+                                </span>
+                                <span className="pl-channel">{channelTitle?.trim()}</span>
+                                <i
+                                    onClick={() => playlists.addFromSearch(i)}
+                                    className="fa fa-2x fa-plus add-to-playlist-btn"
+                                />
+                                {skipLink && (
+                                    <a
+                                        target="_blank"
+                                        href={skipLink}
+                                        rel="noopener noreferrer"
+                                    >
+                                        <i className="fa fa-2x fa-globe add-to-playlist-btn" />
+                                    </a>
+                                )}
+                            </div>
                         </li>
                     );
                 });
                 return (
                     <div className="playlist-search-results">
-                      <div className="playlist-search-header">
-                        <span>Search results from {playlists.searchSource === "youtube" ? "YouTube" : "SoundCloud"}</span>
-                        <button
-                          onClick={() => this.clearExternalSearch()}
-                          className="clear-search-btn"
-                        >
-                          <i className="fa fa-times" /> Clear
-                        </button>
-                      </div>
-                      <ul id="playlist-ul">{list}</ul>
+                        <div className="playlist-search-header">
+                            <span>Search results from {playlists.searchSource === "youtube" ? "YouTube" : "SoundCloud"}</span>
+                            <button
+                                onClick={() => this.clearExternalSearch()}
+                                className="clear-search-btn"
+                            >
+                                <i className="fa fa-times" /> Clear
+                            </button>
+                        </div>
+                        <ol id="playlist-ol">{list}</ol>
                     </div>
-                  );
+                );
             }
             return (
                 <div className="empty-playlist">
-                  <div className="playlist-search-header">
-                    <span>No results found</span>
-                    <button
-                      onClick={() => this.clearExternalSearch()}
-                      className="clear-search-btn"
-                    >
-                      <i className="fa fa-times" /> Clear
-                    </button>
-                  </div>
+                    <div className="playlist-search-header">
+                        <span>No results found</span>
+                        <button
+                            onClick={() => this.clearExternalSearch()}
+                            className="clear-search-btn"
+                        >
+                            <i className="fa fa-times" /> Clear
+                        </button>
+                    </div>
                 </div>
-              );
+            );
         }
 
         if (playlists.searchWithinPlaylist) {
@@ -448,39 +453,45 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                     );
 
                     return (
-                        <li className={playlistPosClass} key={i}>
-                            <a target="_blank" href={video.url} rel="noopener noreferrer">
-                                <img className="pl-thumbnail self-center" src={video.thumb} alt={video.title} />
-                            </a>
-                            <span className="pl-media-title">{video.title}</span>
-                            <span className="pl-time">
-                                <i className="fa fa-clock-o" /> {humanDuration}
-                            </span>
-                            <span className={`pl-channel ${video.user ? "self-center" : ""}`}>
-                                {video.channel.trim()}
-                                {video.user && <br />}
-                                {video.user && `  (Grab: ${video.user})`}
-                            </span>
-                            <i
-                                onClick={() => playlists.removeVideo(originalIndex)}
-                                className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
-                            />
+                        <li className={`${playlistPosClass}`} key={i}>
+                            <div className="pl-title-section">
+                                <a target="_blank" href={video.url} rel="noopener noreferrer">
+                                    <img className="pl-thumbnail self-center" src={video.thumb} alt={video.title} />
+                                </a>
+                                <span className="pl-media-title">{video.title}</span>
 
-                            <a
-                                target="_blank"
-                                href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
-                                rel="noopener noreferrer"
-                            >
-                                <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
-                            </a>
-                            <i
-                                onClick={() => playlists.moveTop(originalIndex)}
-                                className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
-                            />
-                            <i
-                                onClick={() => playlists.moveBottom(originalIndex)}
-                                className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
-                            />
+                            </div>
+                            <div className="pl-button-section">
+                                <span className="pl-time">
+                                    <i className="fa fa-clock-o" /> {humanDuration}
+                                </span>
+                                <span className={`pl-channel ${video.user ? "self-center" : ""}`}>
+                                    {video.channel.trim()}
+                                    {video.user && <br />}
+                                    {video.user && `  (Grab: ${video.user})`}
+                                </span>
+
+                                <i
+                                    onClick={() => playlists.removeVideo(originalIndex)}
+                                    className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
+                                />
+
+                                <a
+                                    target="_blank"
+                                    href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
+                                    rel="noopener noreferrer"
+                                >
+                                    <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
+                                </a>
+                                <i
+                                    onClick={() => playlists.moveTop(originalIndex)}
+                                    className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
+                                />
+                                <i
+                                    onClick={() => playlists.moveBottom(originalIndex)}
+                                    className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
+                                />
+                            </div>
                         </li>
                     );
                 });
@@ -529,39 +540,44 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                 }
 
                 return (
-                    <li className={playlistPosClass} key={i}>
-                        <a target="_blank" href={video.url} rel="noopener noreferrer">
-                            <img className="pl-thumbnail self-center" src={video.thumb} alt={video.title} />
-                        </a>
-                        <span className="pl-media-title">{video.title}</span>
-                        <span className="pl-time">
-                            <i className="fa fa-clock-o" /> {humanDuration}
-                        </span>
-                        <span className={`pl-channel ${video.user ? "self-center" : ""}`}>
-                            {video.channel.trim()}
-                            {video.user && <br />}
-                            {video.user && `  (Grab: ${video.user})`}
-                        </span>
-                        <i
-                            onClick={() => playlists.removeVideo(i)}
-                            className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
-                        />
+                    <li className={`${playlistPosClass}`} key={i}>
+                        <div className="pl-title-section">
+                            <a target="_blank" href={video.url} rel="noopener noreferrer">
+                                <img className="pl-thumbnail self-center" src={video.thumb} alt={video.title} />
+                            </a>
+                            <span className="pl-media-title">{video.title}</span>
+                        </div>
+                        <div className="pl-button-section">
 
-                        <a
-                            target="_blank"
-                            href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
-                            rel="noopener noreferrer"
-                        >
-                            <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
-                        </a>
-                        <i
-                            onClick={() => playlists.moveTop(i)}
-                            className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
-                        />
-                        <i
-                            onClick={() => playlists.moveBottom(i)}
-                            className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
-                        />
+                            <span className="pl-time">
+                                <i className="fa fa-clock-o" /> {humanDuration}
+                            </span>
+                            <span className={`pl-channel ${video.user ? "self-center" : ""}`}>
+                                {video.channel.trim()}
+                                {video.user && <br />}
+                                {video.user && `  (Grab: ${video.user})`}
+                            </span>
+                            <i
+                                onClick={() => playlists.removeVideo(i)}
+                                className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
+                            />
+
+                            <a
+                                target="_blank"
+                                href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
+                                rel="noopener noreferrer"
+                            >
+                                <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
+                            </a>
+                            <i
+                                onClick={() => playlists.moveTop(i)}
+                                className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
+                            />
+                            <i
+                                onClick={() => playlists.moveBottom(i)}
+                                className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
+                            />
+                        </div>
                     </li>
                 );
             });

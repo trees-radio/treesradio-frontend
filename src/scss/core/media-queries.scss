@@ -54,8 +54,19 @@
 
     .pl-media-title {
       overflow: hidden;
-      font-size: 100%;
+      font-size: 1.25rem;
       flex-grow: 1;
+      margin-left:0px;
+      width: 78vw;
+    }
+
+    .pl-button-section {
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      width: 100%;
     }
 
     #playlists-panel-display ol li {
@@ -63,15 +74,38 @@
       justify-content: space-around;
       flex-wrap: nowrap;
       align-items: center;
+      flex-direction: column;
+      width: 100%;
+      margin-left: 0;
+      padding-left: 0;
     }
     .pl-thumbnail {
-      width: 2rem;
+      width: 4rem;
+      aspect-ratio: auto;
+    }
+
+    .pl-title-section {
+      width: 100%;
     }
 
     .pl-channel {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 40vw;
+      width: 40vw;
+      font-size: 1.1rem;
+    }
+    .pl-channel:before {
+      content: "by: (";
+    }
+    .pl-channel:after {
+      content: ")";
+    }
+
+    .pl-time {
+      width: auto;
+      font-size: 1rem;
     }
 
     .dropdown-btn {
