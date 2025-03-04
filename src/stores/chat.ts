@@ -6,6 +6,7 @@ import online from "./online";
 import mention from "../libs/mention";
 import { send } from "../libs/events";
 import epoch from "../utils/epoch";
+import $ from "jquery";
 
 // Time window in seconds for considering mentions as "recent"
 const MENTION_RECENT_WINDOW = 3;
