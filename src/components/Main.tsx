@@ -13,7 +13,6 @@ import { ToastContainer } from "react-toastify";
 import PlaylistsPanel from "./Toolbar/PlaylistsPanel"
 import playlists from "../stores/playlists";
 import "react-toastify/dist/ReactToastify.css";
-import events from "../stores/events";
 import cn from "classnames";
 import TokeManager from "./toke/TokeManager"; // Import the TokeManager component
 
@@ -56,10 +55,6 @@ const appClasses = cn({
 
 const Main: FC = () => {
     //TODO April Fools Shenanigans
-    console.trace("Playists panel open: ", playlists.init && playlists.panelOpen);
-    events.register("force_refresh", () => {
-        location.reload()
-    });
     if (!app.init) {
 
         return (
@@ -78,7 +73,6 @@ const Main: FC = () => {
             </div>
         );
     }
-
 
     return (
         <>

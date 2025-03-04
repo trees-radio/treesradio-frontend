@@ -14,11 +14,10 @@ export default function mention(_everyone: boolean, username: string, toke: bool
                 tokeEvent.tokeNow();
             }
             if (profile.desktopNotifications) {
-                let options = {
+                let options: NotificationOptions = {
                     icon: favicon,
                     badge: favicon,
                     body: notificationMessage,
-                    renotify: true,
                     silent: true,
                 }
 

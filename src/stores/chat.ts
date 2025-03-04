@@ -1,10 +1,10 @@
-import {computed, observable, action} from "mobx";
-import {getDatabaseRef} from "../libs/fbase";
+import { computed, observable, action } from "mobx";
+import { getDatabaseRef } from "../libs/fbase";
 import profile from "./profile";
 import events from "./events";
 import online from "./online";
 import mention from "../libs/mention";
-import {send} from "../libs/events";
+import { send } from "../libs/events";
 import epoch from "../utils/epoch";
 // import Favico from "favico.js";
 import $ from 'jquery';
@@ -36,10 +36,10 @@ interface ChatMessageData {
 export default new (class Chat {
   limit: number;
   constructor() {
-    setInterval(()=> {
-      if ( $('ul#chatbox').children().length > 20 ) 
+    setInterval(() => {
+      if ($('ul#chatbox').children().length > 20)
         $('ul#chatbox').children()[0].remove();
-      
+
     }, 1000);
     const myself = this;
     window.onfocus = function () {
@@ -103,6 +103,10 @@ export default new (class Chat {
 
     events.register("chat_clear", () => (this.messages = []));
 
+    events.register("force_refresh", () => {
+      location.reload()
+    });
+    
     this.limit = MSG_CHAR_LIMIT;
 
     getDatabaseRef("backend")
@@ -161,7 +165,7 @@ export default new (class Chat {
     // moving throttling to the backend.
     if (this.msg.length !== 0) {
       this.msg = this.msg.replace("<3", ":heart:");
-      this.sendMsg(this.getMsg(), () => {});
+      this.sendMsg(this.getMsg(), () => { });
 
       profile.lastchat = epoch();
     }

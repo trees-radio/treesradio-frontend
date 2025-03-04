@@ -420,7 +420,7 @@ const UserBit: FC = () => {
                     <MenuItems>
                         {allowedDomains.map((d, i) => (
                             <MenuItem>
-                                <div key={i * 100}>{d}</div>
+                                <div key={d}>{d}</div>
                             </MenuItem>
                         ))}
                     </MenuItems>
