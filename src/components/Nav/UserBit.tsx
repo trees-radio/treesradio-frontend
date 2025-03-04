@@ -128,8 +128,7 @@ const UserBit: FC = () => {
     useEffect(() => void $("#reactplayerid").attr(
         "style",
         isGelato && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;"
-    ),
-        [isGelato, playing.playerSize]);
+    ), [isGelato, playing.playerSize]);
 
     //<editor-fold desc="Dropdown Items">
     const dropdownItems: DropdownItem[] = [
@@ -192,7 +191,7 @@ const UserBit: FC = () => {
                 setIsMinimizedTokeDefault(!isMinimizedTokeDefault);
             },
             isCheckbox: true,
-            isChecked: () => isMinimizedTokeDefault
+            isChecked: () => profile.minimizedTokeDefault
         },
         {
             name: "Hide Gifs?",
@@ -218,7 +217,7 @@ const UserBit: FC = () => {
             name: "Auto Join Waitlist",
             action: () => {
                 Promise.resolve(waitlist.setAutojoin())
-                .catch(error => console.error("Error in auto join:", error));
+                    .catch(error => console.error("Error in auto join:", error));
             },
             isCheckbox: true,
             isChecked: () => profile.autoplay

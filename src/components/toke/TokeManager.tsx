@@ -1,7 +1,7 @@
 // src/components/TokeManager.tsx
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import TokeDialog from './TokeDialog';
+import NonModalTokeDialog from './NonModalTokeDialog';
 import tokeStore from '../../stores/toke';
 
 // This component can be placed in your main App to manage the toke dialog visibility
@@ -11,7 +11,7 @@ const TokeManager: React.FC = observer(() => {
     return null;
   }
   
-  return <TokeDialog />;
+  return <NonModalTokeDialog />;
 });
 
 export default TokeManager;
