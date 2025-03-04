@@ -245,6 +245,11 @@ export default new (class Profile {
     @observable accessor ipRef: any = null;
 
     @observable accessor minimizedTokeDefault = false;
+    @observable accessor isGifsHidden = false;
+
+    @action setGifsHidden(hidden: boolean) {
+        this.isGifsHidden = hidden;
+    }
 
     @computed get canAutoplay() {
         if (this.user && this.user.uid) {

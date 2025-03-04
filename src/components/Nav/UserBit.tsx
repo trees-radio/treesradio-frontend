@@ -97,6 +97,7 @@ interface EventData {
     };
 }
 
+
 const UserBit: FC = () => {
     const [isSettingAvatar, setIsSettingAvatar] = useState(false);
     const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -129,6 +130,15 @@ const UserBit: FC = () => {
         "style",
         isGelato && playing.playerSize === "BIG" ? "display:none;" : "width:100%;height:100%;"
     ), [isGelato, playing.playerSize]);
+
+    // are gifs hidden? Apply global css that hides gifs for any element with alt="tenorgif"
+    useEffect(() => {
+        if (profile.isGifsHidden) {
+            $("img[alt='tenorgif']").css("display", "none");
+        } else {
+            $("img[alt='tenorgif']").css("display", "block");
+        }
+    }, [profile.isGifsHidden]);
 
     //<editor-fold desc="Dropdown Items">
     const dropdownItems: DropdownItem[] = [
@@ -195,9 +205,9 @@ const UserBit: FC = () => {
         },
         {
             name: "Hide Gifs?",
-            action: () => setIsGifsHidden(!isGifsHidden),
+            action: () => profile.isGifsHidden = !profile.isGifsHidden,
             isCheckbox: true,
-            isChecked: () => isGifsHidden
+            isChecked: () => profile.isGifsHidden
         },
         {
             name: "Hide BlazeBot?",

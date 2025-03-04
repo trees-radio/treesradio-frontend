@@ -40,7 +40,7 @@ export default new (class Chat {
   limit: number;
   // Track already processed messages by key
   processedMessageKeys: Set<string> = new Set();
-  
+
   constructor() {
     const myself = this;
     window.onfocus = function () {
@@ -53,6 +53,7 @@ export default new (class Chat {
     };
     getDatabaseRef("chat")
       .orderByChild("timestamp")
+      .limitToLast(200)
       .on("value", snap => {
         var msg: ChatMessages = snap.val();
         // Clear the msgkeys array
@@ -62,7 +63,7 @@ export default new (class Chat {
           Object.entries(msg).forEach(([key, msg]) => {
             // Push the key to our msgkeys array to track active messages
             this.pushMessageKey(key);
-            
+
             // Test if this is a single message or an array of messages.
             if (Array.isArray(msg)) {
               msg.forEach((m: ChatMessage) => {
@@ -74,10 +75,10 @@ export default new (class Chat {
             } else {
               // Check if we've already processed this message
               if (this.processedMessageKeys.has(key)) return;
-              
+
               // Mark as processed to avoid duplicate processing
               this.processedMessageKeys.add(key);
-              
+
               msg.key = key;
               if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
                 if ((profile.rank && !profile.showmuted) || !profile.rank) return;
@@ -123,6 +124,11 @@ export default new (class Chat {
               }
             }
           });
+          if (profile.isGifsHidden) {
+            $("img[alt='tenorgif']").css("display", "none");
+          } else {
+            $("img[alt='tenorgif']").css("display", "block");
+          }
           this.removeInactiveMessages();
         }
       });
