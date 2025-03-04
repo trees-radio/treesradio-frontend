@@ -19,10 +19,7 @@ class Events {
       var val = snap.val();
       if (val)
         Object.keys(val).forEach(key => {
-          console.log(key);
-          console.log(`Event: ${val[key].type}`);
           if (val[key] && val[key].timestamp > this.startup) {
-            console.log("Event: ", val);
             this.onEvent(val[key]);
           }
         }
@@ -38,7 +35,6 @@ class Events {
     if (!events[type]) { //prevent reregistering events after registering once.
       events[type] = true;
       this.emitter.on(type, handler);
-      console.trace(`Registered event: ${type}`);
       return () => emitter.off(type, handler);
     }
   }
