@@ -53,7 +53,6 @@ export default new (class Chat {
     };
     getDatabaseRef("chat")
       .orderByChild("timestamp")
-      .limitToLast(200)
       .on("value", snap => {
         var msg: ChatMessages = snap.val();
         // Clear the msgkeys array
