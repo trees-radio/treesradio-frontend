@@ -201,7 +201,7 @@ export default new (
         }
 
         @action
-        setupPlaylistsListener(uid: string) {
+        async setupPlaylistsListener(uid: string) {
             console.time('setupPlaylistsListener');
 
             const playlistsRef = ref(db, `playlists/${uid}`);

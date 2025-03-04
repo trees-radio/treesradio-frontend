@@ -314,7 +314,7 @@ const ChatContent = observer(({ goToChat }) => {
           const humanTimestamp = moment.unix(msg.timestamp).format("LT");
           
           return (
-            <li key={i} className={chatLineClasses}>
+            <li key={`${msg.key}+${i}`} className={chatLineClasses}>
               <div className="chat-avatar">
                 <UserAvatar uid={msg.uid} />
               </div>
@@ -332,7 +332,7 @@ const ChatContent = observer(({ goToChat }) => {
                 <span className="chat-text">
                   {msg.msgs?.map((innerMsg: string, j: number) => (
                     <Message
-                      key={j}
+                      key={`${msg.key}-${j}`}
                       userName={msg.username}
                       isEmote={msg.isemote || false}
                       text={innerMsg}

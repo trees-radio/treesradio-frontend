@@ -27,7 +27,7 @@ class Events {
     });
   }
 
-  onEvent(evt: Event) {
+  async onEvent(evt: Event) {
     emitter.emit(evt.type, evt);
   }
 

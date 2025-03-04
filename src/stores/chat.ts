@@ -6,41 +6,36 @@ import online from "./online";
 import mention from "../libs/mention";
 import { send } from "../libs/events";
 import epoch from "../utils/epoch";
-// import Favico from "favico.js";
-import $ from 'jquery';
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const MSG_CHAR_LIMIT = 500;
 const CHAT_LOCK_REGISTRATION_SEC = 1800;
-// const favico = new Favico({ animation: "slide" });
 
 export interface ChatMessage {
+  adminOnly?: boolean;
+  bot?: boolean;
+  chatgpt?: boolean;
+  isemote?: boolean;
+  msg: string;
+  replyMsg?: string;
+  replyTo?: string;
+  silenced?: boolean;
+  timestamp: number;
+  title: string;
   uid: string;
   username: string;
   msgs?: string[];
-  timestamp: number;
-  silenced?: boolean;
-  adminOnly?: boolean;
   mentions?: string[];
-  isemote?: boolean;
+  key?: string;
 }
 
-interface ChatMessageData {
-  mentions: string[];
-  msg: string;
-  timestamp: number;
-  uid: string;
-  username: string;
-  silenced?: boolean;
+export interface ChatMessages {
+  [key: string]: ChatMessage | ChatMessage[];
 }
+
 export default new (class Chat {
   limit: number;
   constructor() {
-    setInterval(() => {
-      if ($('ul#chatbox').children().length > 20)
-        $('ul#chatbox').children()[0].remove();
-
-    }, 1000);
     const myself = this;
     window.onfocus = function () {
       myself.mentioncount = 0;
@@ -53,60 +48,82 @@ export default new (class Chat {
     getDatabaseRef("chat")
       .orderByChild("timestamp")
       .limitToLast(200)
-      .on("child_added", snap => {
-        var msg = snap.val();
+      .on("value", snap => {
+        var msg: ChatMessages = snap.val();
+        // Clear the mskkeys array
+        this.clearMessageKeys();
+
         if (msg) {
-          // Makes chat messages appear to the silenced user.
+          Object.entries(msg).forEach(([key, msg]) => {
+            // Makes chat messages appear to the silenced user.
+            // Test if this is a single message or an array of messages.
+            if (Array.isArray(msg)) {
+              msg.forEach((m: ChatMessage) => {
+                if (m.uid !== profile.uid && m.silenced !== undefined && m.silenced === true) {
+                  if ((profile.rank && !profile.showmuted) || !profile.rank) return;
+                }
+              });
+              // This is supposed to be something but the backend doesn't do this??
+            } else {
+              // First, check the this.messages array to see if the message is already 
+              // there. The key is the unique identifier for the message.
+              // If it is, then we don't need to add it again.
+              if (this.messages.some(m => m.key === key)) return;
+              this.pushMessageKey(key);
+              msg.key = key;
+              if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
+                if ((profile.rank && !profile.showmuted) || !profile.rank) return;
+              }
 
-          if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
-            if ((profile.rank && !profile.showmuted) || !profile.rank) return;
-          }
+              if (
+                msg.adminOnly !== undefined &&
+                msg.adminOnly === true &&
+                (profile.rank === null || profile.rank.match(/User|Frient|VIP/i))
+              ) {
+                // This is an admin only message.
+                return;
+              }
+              if (
+                this.messages[this.messages.length - 1] &&
+                msg.username === this.messages[this.messages.length - 1].username
+              ) {
+                this.inlineMessage(msg);
+              } else {
+                msg.msgs = [msg.msg];
+                this.pushMessage(msg);
+              }
 
-          if (
-            msg.adminOnly !== undefined &&
-            msg.adminOnly === true &&
-            (profile.rank === null || profile.rank.match(/User|Frient|VIP/i))
-          ) {
-            // This is an admin only message.
-            return;
-          }
-          if (
-            this.messages[this.messages.length - 1] &&
-            msg.username === this.messages[this.messages.length - 1].username
-          ) {
-            this.inlineMessage(msg);
-          } else {
-            msg.msgs = [msg.msg];
-            this.pushMessage(msg);
-          }
-
-          if (msg.mentions && profile.username) {
-            //mention check
-            let mentions = msg.mentions.map((s: string) => {
-              return s ? s.substring(1).toLowerCase() : "";
-            });
-            let everyone = mentions.includes("everyone");
-            let mentioned = everyone;
-            if (!mentioned) {
-              mentioned = mentions.includes(profile.safeUsername?.toLowerCase());
-            }
-            if (mentioned) {
-              mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
-              if (!this.werefocused) {
-                this.mentioncount++;
-                // favico.badge(this.mentioncount);
+              if (msg.mentions && profile.username) {
+                //mention check
+                let mentions = msg.mentions.map((s: string) => {
+                  return s ? s.substring(1).toLowerCase() : "";
+                });
+                let everyone = mentions.includes("everyone");
+                let mentioned = everyone;
+                if (!mentioned) {
+                  mentioned = mentions.includes(profile.safeUsername?.toLowerCase() || "");
+                }
+                if (mentioned) {
+                  mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
+                  if (!this.werefocused) {
+                    this.mentioncount++;
+                    // favico.badge(this.mentioncount);
+                  }
+                }
               }
             }
-          }
+          });
+          this.removeInactiveMessages();
         }
+
       });
 
-    events.register("chat_clear", () => (this.messages = []));
+    events.register("chat_clear", () => this.clearChat());
 
     events.register("force_refresh", () => {
       location.reload()
     });
-    
+
     this.limit = MSG_CHAR_LIMIT;
 
     getDatabaseRef("backend")
@@ -123,8 +140,21 @@ export default new (class Chat {
 
   @observable accessor werefocused = true;
   @observable accessor mentioncount = 0;
+  @observable accessor msgkeys: string[] = [];
 
-  @action inlineMessage(msg: ChatMessageData) {
+  @action clearMessageKeys() {
+    this.msgkeys = [];
+  }
+
+  @action pushMessageKey(key: string) {
+    this.msgkeys.push(key);
+  }
+
+  @action removeInactiveMessages() {
+    this.messages = this.messages.filter(m => m.key && this.msgkeys.includes(m.key));
+  }
+
+  @action inlineMessage(msg: ChatMessage) {
     const lastMessage = this.messages[this.messages.length - 1];
     if (lastMessage && lastMessage.msgs) {
       lastMessage.msgs.push(msg.msg);
@@ -132,8 +162,12 @@ export default new (class Chat {
     this.messages[this.messages.length - 1].timestamp = msg.timestamp;
   }
 
+  @action clearChat() {
+    this.messages = [];
+  }
+
   @action
-  pushMessage(msg: ChatMessageData) {
+  pushMessage(msg: ChatMessage) {
     this.messages.push(msg);
   }
 
