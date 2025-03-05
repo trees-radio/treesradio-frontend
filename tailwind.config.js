@@ -6,20 +6,31 @@ module.exports = {
     ],
     theme: {
       extend: {
-        // Custom animations for smoke effects
-        animation: {
-          'smoke-1': 'float 5s ease-out forwards 0.2s',
-          'smoke-2': 'float 5s ease-out forwards 0.5s',
-          'smoke-3': 'float 5s ease-out forwards 0.8s',
-        },
         keyframes: {
-          float: {
-            '0%': { transform: 'translateY(0) scale(1)', opacity: '0.8' },
-            '100%': { transform: 'translateY(-100px) scale(3)', opacity: '0' },
+          'smoke-1': {
+            '0%': { transform: 'scale(1) translate(0, 0)', opacity: '0.4' },
+            '100%': { transform: 'scale(4) translate(10px, -50px)', opacity: '0' }
           },
+          'smoke-2': {
+            '0%': { transform: 'scale(1) translate(0, 0)', opacity: '0.4' },
+            '100%': { transform: 'scale(3.5) translate(-15px, -40px)', opacity: '0' }
+          },
+          'smoke-3': {
+            '0%': { transform: 'scale(1) translate(0, 0)', opacity: '0.4' },
+            '100%': { transform: 'scale(3) translate(5px, -60px)', opacity: '0' }
+          },
+          'smoke-cloud': {
+            '0%': { opacity: '0' },
+            '20%': { opacity: '0.8' },
+            '80%': { opacity: '0.6' },
+            '100%': { opacity: '0' }
+          }
         },
-        transitionProperty: {
-          'width': 'width',
+        animation: {
+          'smoke-1': 'smoke-1 3s ease-out forwards',
+          'smoke-2': 'smoke-2 3.5s ease-out forwards',
+          'smoke-3': 'smoke-3 4s ease-out forwards',
+          'smoke-cloud': 'smoke-cloud 6s ease-in-out forwards'
         },
       },
     },
