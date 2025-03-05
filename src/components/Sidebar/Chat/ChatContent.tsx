@@ -347,7 +347,7 @@ const ChatContent = observer(({ goToChat }) => {
       </ul>
       
       {/* Admin-only debugging overlay */}
-      {isAdmin && (
+      {isAdmin && chat.showDebug && (
         <div 
           style={{
             position: 'fixed',

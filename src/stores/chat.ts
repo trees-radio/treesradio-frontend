@@ -157,6 +157,7 @@ export default new (class Chat {
   @observable accessor werefocused = true;
   @observable accessor mentioncount = 0;
   @observable accessor msgkeys: string[] = [];
+  @observable accessor showDebug = false;
 
   @action clearMessageKeys() {
     this.msgkeys = [];
