@@ -9,7 +9,9 @@ import epoch from "../utils/epoch";
 import $ from "jquery";
 
 // Time window in seconds for considering mentions as "recent"
-const MENTION_RECENT_WINDOW = 3;
+const MENTION_RECENT_WINDOW = 5;
+// Message expiration time in seconds (24 hours)
+const MESSAGE_EXPIRATION = 86400;
 
 const mentionPattern = /\B@[a-z0-9_-]+/gi;
 const MSG_CHAR_LIMIT = 500;
@@ -39,8 +41,8 @@ export interface ChatMessages {
 
 export default new (class Chat {
   limit: number;
-  // Track already processed messages by key
-  processedMessageKeys: Set<string> = new Set();
+  // Track processed messages by key with their timestamps
+  processedMessageKeys: Map<string, number> = new Map();
 
   constructor() {
     const myself = this;
@@ -59,6 +61,9 @@ export default new (class Chat {
         var msg: ChatMessages = snap.val();
         // Clear the msgkeys array
         this.clearMessageKeys();
+        
+        // Clean expired message keys before processing new messages
+        this.cleanExpiredMessageKeys();
 
         if (msg) {
           Object.entries(msg).forEach(([key, msg]) => {
@@ -74,11 +79,17 @@ export default new (class Chat {
               });
               // This is supposed to be something but the backend doesn't do this??
             } else {
+              // Skip processing if message timestamp is too old
+              const currentTime = epoch();
+              const messageAge = currentTime - msg.timestamp;
+              // Skip messages older than MESSAGE_EXPIRATION seconds
+              if (messageAge > MESSAGE_EXPIRATION) return;
+              
               // Check if we've already processed this message
-              if (this.processedMessageKeys.has(key)) return;
+              if (this.isMessageProcessed(key, msg.timestamp)) return;
 
-              // Mark as processed to avoid duplicate processing
-              this.processedMessageKeys.add(key);
+              // Mark as processed with its timestamp
+              this.markMessageProcessed(key, msg.timestamp);
 
               msg.key = key;
               if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
@@ -159,6 +170,49 @@ export default new (class Chat {
   @observable accessor msgkeys: string[] = [];
   @observable accessor showDebug = false;
 
+  // Check if a message has been processed already using both key and timestamp
+  isMessageProcessed(key: string, timestamp: number): boolean {
+    const processedTimestamp = this.processedMessageKeys.get(key);
+    if (processedTimestamp !== undefined) {
+      // If the message already exists with same timestamp, it's processed
+      if (processedTimestamp === timestamp) {
+        return true;
+      }
+      
+      // If the timestamp is older than what we've seen before, 
+      // consider it a stale message and skip it
+      if (timestamp < processedTimestamp) {
+        return true;
+      }
+      
+      // If the message has the same key but newer timestamp,
+      // we'll process it (this could be an edit)
+      return false;
+    }
+    return false;
+  }
+  
+  // Mark a message as processed with its timestamp
+  markMessageProcessed(key: string, timestamp: number): void {
+    this.processedMessageKeys.set(key, timestamp);
+  }
+  
+  // Clean up expired message keys to prevent memory leaks
+  cleanExpiredMessageKeys(): void {
+    const currentTime = epoch();
+    const keysToDelete: string[] = [];
+    
+    this.processedMessageKeys.forEach((timestamp, key) => {
+      if (currentTime - timestamp > MESSAGE_EXPIRATION) {
+        keysToDelete.push(key);
+      }
+    });
+    
+    keysToDelete.forEach(key => {
+      this.processedMessageKeys.delete(key);
+    });
+  }
+
   @action clearMessageKeys() {
     this.msgkeys = [];
   }
@@ -185,8 +239,8 @@ export default new (class Chat {
 
   @action clearChat() {
     this.messages = [];
-    // Don't clear processedMessageKeys when clearing the chat
-    // This prevents re-processing all messages again
+    // Note: We're now keeping the processedMessageKeys to prevent reprocessing
+    // but we clean expired keys regularly to prevent memory issues
   }
 
   @action
