@@ -456,7 +456,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                         <li className={`${playlistPosClass}`} key={i}>
                             <div className="pl-title-section">
                                 <a target="_blank" href={video.url} rel="noopener noreferrer">
-                                    <img className="pl-thumbnail self-center" src={video.thumb} alt={video.title} />
+                                    <img className="self-center pl-thumbnail" src={video.thumb} alt={video.title} />
                                 </a>
                                 <span className="pl-media-title">{video.title}</span>
 
@@ -473,7 +473,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
 
                                 <i
                                     onClick={() => playlists.removeVideo(originalIndex)}
-                                    className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
+                                    className="border-green-500 fa fa-2x fa-trash remove-from-playlist-btn"
                                 />
 
                                 <a
@@ -481,15 +481,15 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                                     href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
                                     rel="noopener noreferrer"
                                 >
-                                    <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
+                                    <i className="border-green-500 fa fa-2x fa-globe add-to-playlist-btn" />
                                 </a>
                                 <i
                                     onClick={() => playlists.moveTop(originalIndex)}
-                                    className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
+                                    className="border-green-500 fa fa-2x fa-arrow-up pl-move-to-top"
                                 />
                                 <i
                                     onClick={() => playlists.moveBottom(originalIndex)}
-                                    className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
+                                    className="border-green-500 fa fa-2x fa-arrow-down pl-move-to-top"
                                 />
                             </div>
                         </li>
@@ -543,7 +543,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                     <li className={`${playlistPosClass}`} key={i}>
                         <div className="pl-title-section">
                             <a target="_blank" href={video.url} rel="noopener noreferrer">
-                                <img className="pl-thumbnail self-center" src={video.thumb} alt={video.title} />
+                                <img className="self-center pl-thumbnail" src={video.thumb} alt={video.title} />
                             </a>
                             <span className="pl-media-title">{video.title}</span>
                         </div>
@@ -559,7 +559,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                             </span>
                             <i
                                 onClick={() => playlists.removeVideo(i)}
-                                className="fa fa-2x fa-trash remove-from-playlist-btn border-green-500"
+                                className="border-green-500 fa fa-2x fa-trash remove-from-playlist-btn"
                             />
 
                             <a
@@ -567,15 +567,15 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                                 href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
                                 rel="noopener noreferrer"
                             >
-                                <i className="fa fa-2x fa-globe add-to-playlist-btn border-green-500" />
+                                <i className="border-green-500 fa fa-2x fa-globe add-to-playlist-btn" />
                             </a>
                             <i
-                                onClick={() => playlists.moveTop(i)}
-                                className="fa fa-2x fa-arrow-up pl-move-to-top border-green-500"
+                                onClick={() => playlists.moveBottom(i)}
+                                className="border-green-500 fa fa-2x fa-arrow-down pl-move-to-top"
                             />
                             <i
-                                onClick={() => playlists.moveBottom(i)}
-                                className="fa fa-2x fa-arrow-down pl-move-to-top border-green-500"
+                                onClick={() => playlists.moveTop(i)}
+                                className="border-green-500 fa fa-2x fa-arrow-up pl-move-to-top"
                             />
                         </div>
                     </li>
@@ -736,7 +736,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                                     </div>
 
                                     <div className="playlist-controls">
-                                        <Menu as="div" className="playlist-selector pr-4">
+                                        <Menu as="div" className="pr-4 playlist-selector">
                                             <MenuButton className="playlist-selector-btn">
                                                 <div className="playlist-selector-content">
                                                     <div className="button-nooverflow">
