@@ -2,6 +2,26 @@
   "database": {
     "rules": "./firebase/rules.json"
   },
+  "headers": [
+    {
+      "source": "/**/*.@(js|css)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=1800"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ],
   "hosting": {
     "public": "dist",
     "ignore": [
