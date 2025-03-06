@@ -26,6 +26,8 @@ interface PlaylistsEnt {
 }
 
 interface SearchResult {
+    source: string;
+    link?: string;
     id: string;
     title: string;
     thumb: string;
@@ -34,6 +36,9 @@ interface SearchResult {
     snippet: {
         title: string;
         thumbnails: {
+            medium: {
+                url: string;
+            };
             default: {
                 url: string;
             };
@@ -590,6 +595,12 @@ export default new (
                 channel = video.user.username;
                 duration = parseInt(moment.duration(video.duration).valueOf().toString());
                 title = video.title;
+            } else if (this.searchSource === "vimeo") {
+                url = video.link || `https://vimeo.com/${video.id}`;
+                title = video.snippet.title;
+                thumb = video.snippet.thumbnails.medium.url;
+                channel = video.snippet.channelTitle;
+                duration = parseInt(moment.duration(video.contentDetails.duration).valueOf().toString());
             }
 
             var song = {

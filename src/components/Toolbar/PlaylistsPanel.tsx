@@ -10,10 +10,11 @@ import {
 import playlists from "../../stores/playlists";
 import Modal from "../utility/Modal";
 import toast from "../../utils/toast";
-import moment from "moment";
 import $ from "jquery";
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import Favicon from "../../assets/img/favicon.png";
+import PlaylistSearch from "./PlaylistSearch";
+import PlaylistContent from "./PlaylistContent";
+import PlaylistSelector from "./PlaylistSelector";
+import PlaylistControls from "./PlaylistControls";
 
 const PLAYLIST_OPACITY = 'playlistOpacity';
 
@@ -47,10 +48,8 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
     };
 
     _newPlaylist: HTMLInputElement | null = null;
-    _search: HTMLInputElement | null = null;
     _importName: HTMLInputElement | null = null;
     _importUrl: HTMLInputElement | null = null;
-    _playlistSearch: HTMLInputElement | null = null;
     debounceOpacitySlider: ReturnType<typeof debounce> | null = null;
 
     constructor(props: PlaylistsPanelProps) {
@@ -68,45 +67,9 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
         this.changeOpacityDebounced = this.changeOpacityDebounced.bind(this);
         this.onEnterKey = this.onEnterKey.bind(this);
         this.addPlaylist = this.addPlaylist.bind(this);
-        this.search = this.search.bind(this);
         this.importPlaylist = this.importPlaylist.bind(this);
     }
 
-    @action
-    searchInPlaylist() {
-        if (!this._search) return;
-
-        const query = this._search.value;
-        if (query) {
-            playlists.searchInCurrentPlaylist(query);
-        } else {
-            playlists.clearPlaylistSearch();
-        }
-    }
-
-    @action
-    clearPlaylistSearch() {
-        if (this._search) {
-            this._search.value = "";
-        }
-        playlists.clearPlaylistSearch();
-    }
-
-    @action
-    changeSearchSource(source: string) {
-        // Clear previous search results
-        playlists.clearPlaylistSearch();
-        playlists.setOpenSearch(false);
-        playlists.search = [];
-
-        // Set new search source
-        playlists.searchSource = source;
-
-        // Clear search input when switching search modes
-        if (this._search) {
-            this._search.value = "";
-        }
-    }
     // Store original body style when dialog opens
     @action
     storeBodyStyles() {
@@ -157,16 +120,6 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
             // Dialog is closing
             this.unlockBodyScrolling();
         }
-    }
-
-    handleClose() {
-        // Restore body styles before closing
-        this.unlockBodyScrolling();
-
-        // Small delay to ensure DOM is ready
-        setTimeout(() => {
-            this.props.onClose(true);
-        }, 10);
     }
 
     componentWillUnmount() {
@@ -233,30 +186,6 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
         playlists.selectPlaylist(i);
     }
 
-    @action closeDialog() {
-
-    }
-
-    @action
-    search() {
-        if (!this._search) return;
-
-        const query = this._search.value;
-
-        if (playlists.searchSource === "playlist") {
-            // Search within playlist
-            this.searchInPlaylist();
-        } else {
-            // External search (YouTube or SoundCloud)
-            playlists.runSearch(query);
-        }
-
-        // Don't clear search input for playlist search
-        if (playlists.searchSource !== "playlist") {
-            this._search.value = "";
-        }
-    }
-
     @action
     startRemovingPlaylist(name: string, index: number) {
         this.playlistToRemove = { name, index };
@@ -320,334 +249,16 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
         }
     }
 
-    @action
-    clearExternalSearch() {
-        playlists.setOpenSearch(false);
-        playlists.setSearch([]);
-
-        if (this._search) {
-            this._search.value = "";
-        }
-    }
-
-    renderPlaylistContent() {
-        if (playlists.searching) {
-            return <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />;
-        }
-
-        if (playlists.openSearch) {
-            if (playlists.search.length > 0) {
-                const list = playlists.search.map((video, i) => {
-                    const playlistPosClass = i % 2 === 0 ? "playlist-item-1" : "playlist-item-2";
-                    let url = "";
-                    let humanDuration = "";
-                    let title = "";
-                    let channelTitle = "";
-                    let thumbnail = "";
-                    let skipLink = "";
-
-                    if (video.snippet) {
-                        url = `https://www.youtube.com/watch?v=${video.id}`;
-                        const duration = moment.duration(video.contentDetails.duration);
-                        const hours = duration.hours();
-                        const hoursDisplay = hours > 0 ? `${hours}h ` : "";
-                        const mins = duration.minutes();
-                        const secs = `0${duration.seconds()}`.slice(-2);
-                        humanDuration = `${hoursDisplay}${mins}:${secs}`;
-                        thumbnail = video.snippet.thumbnails.default.url;
-                        title = video.snippet.title;
-                        channelTitle = video.snippet.channelTitle;
-                        skipLink = `https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.id}`;
-                    } else if (video.title) {
-                        url = video.permalink_url;
-                        const duration = moment.duration(video.duration);
-                        const hours = duration.hours();
-                        const hoursDisplay = hours > 0 ? `${hours}h ` : "";
-                        const mins = duration.minutes();
-                        const secs = `0${duration.seconds()}`.slice(-2);
-                        humanDuration = `${hoursDisplay}${mins}:${secs}`;
-                        thumbnail = video.artwork_url || video.user.avatar_url || Favicon;
-                        title = video.title;
-                        channelTitle = video.user?.username || "";
-                    }
-
-                    return (
-                        <li className={`${playlistPosClass}`} key={i}>
-                            <div className="pl-title-section ">
-                                <a target="_blank" href={url} rel="noopener noreferrer">
-                                    <img className="pl-thumbnail" src={thumbnail} alt={title} />
-                                </a>
-                                <span className="pl-media-title">{title}</span>
-
-                            </div>
-                            <div className="pl-button-section">
-                                <span className="pl-time">
-                                    <i className="fa fa-clock-o" /> {humanDuration}
-                                </span>
-                                <span className="pl-channel">{channelTitle?.trim()}</span>
-                                <i
-                                    onClick={() => playlists.addFromSearch(i)}
-                                    className="fa fa-2x fa-plus add-to-playlist-btn"
-                                />
-                                {skipLink && (
-                                    <a
-                                        target="_blank"
-                                        href={skipLink}
-                                        rel="noopener noreferrer"
-                                    >
-                                        <i className="fa fa-2x fa-globe add-to-playlist-btn" />
-                                    </a>
-                                )}
-                            </div>
-                        </li>
-                    );
-                });
-                return (
-                    <div className="playlist-search-results">
-                        <div className="playlist-search-header">
-                            <span>Search results from {playlists.searchSource === "youtube" ? "YouTube" : "SoundCloud"}</span>
-                            <button
-                                onClick={() => this.clearExternalSearch()}
-                                className="clear-search-btn"
-                            >
-                                <i className="fa fa-times" /> Clear
-                            </button>
-                        </div>
-                        <ol id="playlist-ol">{list}</ol>
-                    </div>
-                );
-            }
-            return (
-                <div className="empty-playlist">
-                    <div className="playlist-search-header">
-                        <span>No results found</span>
-                        <button
-                            onClick={() => this.clearExternalSearch()}
-                            className="clear-search-btn"
-                        >
-                            <i className="fa fa-times" /> Clear
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        if (playlists.searchWithinPlaylist) {
-            if (playlists.playlistSearchResults.length > 0) {
-                const list = playlists.playlistSearchResults.map((video, i) => {
-                    const playlistPosClass = i % 2 === 0 ? "playlist-item-1" : "playlist-item-2";
-                    let humanDuration = "Unknown";
-
-                    if (video.duration) {
-                        const duration = moment.duration(video.duration);
-                        const hours = duration.hours();
-                        const hoursDisplay = hours > 0 ? `${hours}h ` : "";
-                        const mins = duration.minutes();
-                        const secs = `0${duration.seconds()}`.slice(-2);
-                        humanDuration = `${hoursDisplay}${mins}:${secs}`;
-                    }
-
-                    // Find the original index of this video in the full playlist
-                    const originalIndex = playlists.playlist.findIndex(
-                        item => item.url === video.url && item.title === video.title
-                    );
-
-                    return (
-                        <li className={`${playlistPosClass}`} key={i}>
-                            <div className="pl-title-section">
-                                <a target="_blank" href={video.url} rel="noopener noreferrer">
-                                    <img className="self-center pl-thumbnail" src={video.thumb} alt={video.title} />
-                                </a>
-                                <span className="pl-media-title">{video.title}</span>
-
-                            </div>
-                            <div className="pl-button-section">
-                                <span className="pl-time">
-                                    <i className="fa fa-clock-o" /> {humanDuration}
-                                </span>
-                                <span className={`pl-channel ${video.user ? "self-center" : ""}`}>
-                                    {video.channel.trim()}
-                                    {video.user && <br />}
-                                    {video.user && `  (Grab: ${video.user})`}
-                                </span>
-
-                                <i
-                                    onClick={() => playlists.removeVideo(originalIndex)}
-                                    className="border-green-500 fa fa-2x fa-trash remove-from-playlist-btn"
-                                />
-
-                                <a
-                                    target="_blank"
-                                    href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
-                                    rel="noopener noreferrer"
-                                >
-                                    <i className="border-green-500 fa fa-2x fa-globe add-to-playlist-btn" />
-                                </a>
-                                <i
-                                    onClick={() => playlists.moveTop(originalIndex)}
-                                    className="border-green-500 fa fa-2x fa-arrow-up pl-move-to-top"
-                                />
-                                <i
-                                    onClick={() => playlists.moveBottom(originalIndex)}
-                                    className="border-green-500 fa fa-2x fa-arrow-down pl-move-to-top"
-                                />
-                            </div>
-                        </li>
-                    );
-                });
-                return (
-                    <div className="playlist-search-results">
-                        <div className="playlist-search-header">
-                            <span>Search results for "{playlists.playlistSearchQuery}"</span>
-                            <button
-                                onClick={() => this.clearPlaylistSearch()}
-                                className="clear-search-btn"
-                            >
-                                <i className="fa fa-times" /> Clear
-                            </button>
-                        </div>
-                        <ol id="playlist-ol">{list}</ol>
-                    </div>
-                );
-            }
-            return (
-                <div className="empty-playlist">
-                    <div className="playlist-search-header">
-                        <span>No results found for "{playlists.playlistSearchQuery}"</span>
-                        <button
-                            onClick={() => this.clearPlaylistSearch()}
-                            className="clear-search-btn"
-                        >
-                            <i className="fa fa-times" /> Clear
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        if (playlists.playlist.length > 0) {
-            const list = playlists.playlist.map((video, i) => {
-                const playlistPosClass = i % 2 === 0 ? "playlist-item-1" : "playlist-item-2";
-                let humanDuration = "Unknown";
-
-                if (video.duration) {
-                    const duration = moment.duration(video.duration);
-                    const hours = duration.hours();
-                    const hoursDisplay = hours > 0 ? `${hours}h ` : "";
-                    const mins = duration.minutes();
-                    const secs = `0${duration.seconds()}`.slice(-2);
-                    humanDuration = `${hoursDisplay}${mins}:${secs}`;
-                }
-
-                return (
-                    <li className={`${playlistPosClass}`} key={i}>
-                        <div className="pl-title-section">
-                            <a target="_blank" href={video.url} rel="noopener noreferrer">
-                                <img className="self-center pl-thumbnail" src={video.thumb} alt={video.title} />
-                            </a>
-                            <span className="pl-media-title">{video.title}</span>
-                        </div>
-                        <div className="pl-button-section">
-
-                            <span className="pl-time">
-                                <i className="fa fa-clock-o" /> {humanDuration}
-                            </span>
-                            <span className={`pl-channel ${video.user ? "self-center" : ""}`}>
-                                {video.channel.trim()}
-                                {video.user && <br />}
-                                {video.user && `  (Grab: ${video.user})`}
-                            </span>
-                            <i
-                                onClick={() => playlists.removeVideo(i)}
-                                className="border-green-500 fa fa-2x fa-trash remove-from-playlist-btn"
-                            />
-
-                            <a
-                                target="_blank"
-                                href={`https://polsy.org.uk/stuff/ytrestrict.cgi?ytid=${video.url}`}
-                                rel="noopener noreferrer"
-                            >
-                                <i className="border-green-500 fa fa-2x fa-globe add-to-playlist-btn" />
-                            </a>
-                            <i
-                                onClick={() => playlists.moveBottom(i)}
-                                className="border-green-500 fa fa-2x fa-arrow-down pl-move-to-top"
-                            />
-                            <i
-                                onClick={() => playlists.moveTop(i)}
-                                className="border-green-500 fa fa-2x fa-arrow-up pl-move-to-top"
-                            />
-                        </div>
-                    </li>
-                );
-            });
-            return <ol id="playlist-ol">{list}</ol>;
-        }
-
-        return <div className="empty-playlist">Empty playlist.</div>;
-    }
-
     render() {
         const { open, onClose } = this.props;
         const { isMobile } = this.state;
 
-        const playlistsList = playlists.playlistNames.map((name, i) => (
-            <MenuItem key={i}>
-                <div
-                    onClick={() => this.selectPlaylist(i)}
-                    className="cursor-pointer hover:bg-gray-800"
-                >
-                    <a>{name}</a>
-                    <div
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            this.startRemovingPlaylist(name, i);
-                        }}
-                        className="fa fa-trash remove-playlist"
-                    />
-                </div>
-            </MenuItem>
-        ));
-
-        const shuffle = playlists.hasPlaylist ? (
-            <span
-                onClick={() => playlists.shufflePlaylist()}
-                className="playlist-shuffle-btn fa fa-random fa-2x"
-                title="Shuffle this Playlist"
-            />
-        ) : null;
-
-        const sortnameasc = playlists.hasPlaylist ? (
-            <span
-                onClick={() => playlists.sortPlaylist("asc", "title")}
-                className="playlist-shuffle-btn fa fa-sort-alpha-asc fa-2x"
-                title="Sort this Playlist Alphabetically"
-            />
-        ) : null;
-
-        const sortnamedesc = playlists.hasPlaylist ? (
-            <span
-                onClick={() => playlists.sortPlaylist("desc", "title")}
-                className="playlist-shuffle-btn fa fa-sort-alpha-desc fa-2x"
-                title="Sort this Playlist Reverse Alphabetically"
-            />
-        ) : null;
-
-        const sorttimeasc = playlists.hasPlaylist ? (
-            <span
-                onClick={() => playlists.sortPlaylist("asc", "duration")}
-                className="playlist-shuffle-btn fa fa-sort-numeric-asc fa-2x"
-                title="Sort this Playlist by shortest song first"
-            />
-        ) : null;
-
-        const sorttimedesc = playlists.hasPlaylist ? (
-            <span
-                onClick={() => playlists.sortPlaylist("desc", "duration")}
-                className="playlist-shuffle-btn fa fa-sort-numeric-desc fa-2x"
-                title="Sort this Playlist by longest song first"
-            />
-        ) : null;
+        const playlistsList = playlists.playlistNames.map((name, i) => ({
+            name,
+            index: i,
+            onSelect: () => this.selectPlaylist(i),
+            onRemove: () => this.startRemovingPlaylist(name, i)
+        }));
 
         const onclickHandler = () => {
             // Restore body styles before closing
@@ -658,17 +269,15 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                 onClose(false);
             }, 10);
         };
+
         return (
             <>
                 <Dialog
                     open={open || false}
                     onClose={onclickHandler}
                     className="fixed inset-0 z-50 playlist-dialog"
-                // static
                 >
                     <div className="flex min-h-screen">
-                        {/* <DialogBackdrop className="fixed inset-0 bg-black opacity-70" /> */}
-
                         <DialogPanel
                             className={`relative bg-black w-full h-screen flex flex-col ${isMobile ? '' : 'playlist-desktop'}`}
                             style={this.getOpacityStyle()}
@@ -690,97 +299,25 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                             {/* Panel header with search and controls */}
                             <div id="playlists-panel-head" className="playlist-panel-head">
                                 <div className="playlist-search-container">
-                                    <div className="playlist-search-box-container">
-                                        <input
-                                            type="text"
-                                            id="playlist-search-box"
-                                            ref={el => { this._search = el; }}
-                                            placeholder={playlists.searchSource === "playlist" ? "Search in playlist..." : "Search YouTube/SoundCloud"}
-                                            className="form-control md:w-8"
-                                            onKeyPress={e => this.onEnterKey(e, this.search)}
-                                        />
-                                        <button
-                                            onClick={() => this.search()}
-                                            className="playlist-search-btn"
-                                        >
-                                            <i className="fa fa-search"></i>
-                                        </button>
-                                        {playlists.searchSource === "playlist" && playlists.searchWithinPlaylist && (
-                                            <button
-                                                onClick={() => this.clearPlaylistSearch()}
-                                                className="playlist-clear-search-btn"
-                                            >
-                                                <i className="fa fa-times"></i>
-                                            </button>
-                                        )}
-                                        <div className="playlist-search-source">
-                                            <input
-                                                type="radio"
-                                                checked={playlists.searchSource === "youtube"}
-                                                id="search-youtube"
-                                                name="search-source"
-                                                onChange={() => this.changeSearchSource("youtube")}
-                                            />
-                                            <label htmlFor="search-youtube">YouTube</label>
-
-                                            <input
-                                                type="radio"
-                                                checked={playlists.searchSource === "playlist"}
-                                                id="search-playlist"
-                                                name="search-source"
-                                                onChange={() => this.changeSearchSource("playlist")}
-                                                className="ml-4"
-                                            />
-                                            <label htmlFor="search-playlist">Playlist</label>
-                                        </div>
-                                    </div>
-
+                                    <PlaylistSearch />
+                                    
                                     <div className="playlist-controls">
-                                        <Menu as="div" className="pr-4 playlist-selector">
-                                            <MenuButton className="playlist-selector-btn">
-                                                <div className="playlist-selector-content">
-                                                    <div className="button-nooverflow">
-                                                        {playlists.selectedPlaylistName || "Select Playlist"}
-                                                    </div>
-                                                    <span className="fa fa-chevron-down"></span>
-                                                </div>
-                                            </MenuButton>
-                                            <MenuItems className="playlist-menu">
-                                                <div className="dropdown-inner-text">
-                                                    <MenuItem>
-                                                        <a onClick={() => (this.addingPlaylist = true)} className="playlist-menu-item">
-                                                            <i className="fa fa-plus"></i> New Playlist
-                                                        </a>
-                                                    </MenuItem>
-                                                    <MenuItem>
-                                                        <a onClick={() => (this.importingPlaylist = true)} className="playlist-menu-item">
-                                                            <i className="fa fa-youtube-play"></i> Import Playlist
-                                                        </a>
-                                                    </MenuItem>
-                                                    {playlistsList}
-                                                </div>
-                                            </MenuItems>
-                                        </Menu>
-                                        <div className="playlist-actions">
-                                            <button onClick={() => (this.mergingPlaylists = true)} className="playlist-action-btn">
-                                                <i className="fa fa-code-fork fa-lg" title="Merge Two Playlists"></i>
-                                            </button>
-                                            <button onClick={() => playlists.exportPlaylist()} className="playlist-action-btn">
-                                                <i className="fa fa-download fa-lg" title="Download Playlist (json)"></i>
-                                            </button>
-                                            {sorttimedesc && sorttimedesc}
-                                            {sorttimeasc && sorttimeasc}
-                                            {sortnamedesc && sortnamedesc}
-                                            {sortnameasc && sortnameasc}
-                                            {shuffle && shuffle}
-                                        </div>
+                                        <PlaylistSelector 
+                                            playlists={playlistsList}
+                                            onAddPlaylist={() => this.addingPlaylist = true}
+                                            onImportPlaylist={() => this.importingPlaylist = true}
+                                        />
+                                        
+                                        <PlaylistControls 
+                                            onMergePlaylists={() => this.mergingPlaylists = true}
+                                        />
                                     </div>
                                 </div>
                             </div>
 
                             {/* Panel content with playlist or search results */}
                             <div id="playlists-panel-display" className="playlist-content">
-                                {this.renderPlaylistContent()}
+                                <PlaylistContent />
                             </div>
 
                             {/* Panel footer with opacity slider */}

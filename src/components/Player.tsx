@@ -35,6 +35,20 @@ const rPlayerSoundcloudConfig = {
     preload: true,
 };
 
+// Configuration for Vimeo player
+const rPlayerVimeoConfig = {
+    playerOptions: {
+        autoplay: true,
+        controls: true,
+        responsive: true,
+        dnt: false,
+        loop: false,
+        transparent: false,
+        color: "#77b300"
+    },
+    preload: true,
+};
+
 // TODO sync is not working :o
 const Player: FC = () => {
     const playerRef = useRef<ReactPlayer>(null);
@@ -56,7 +70,7 @@ const Player: FC = () => {
 
                 <ReactPlayer
                     ref={playerRef}
-                    className="reactplayer border-0 outline-0 appearance-none active:outline-none"
+                    className="border-0 appearance-none reactplayer outline-0 active:outline-none"
                     width="100%"
                     height="100%"
                     id="reactplayerid"
@@ -84,6 +98,7 @@ const Player: FC = () => {
                     config={{
                         youtube: rPlayerYoutubeConfig,
                         soundcloud: rPlayerSoundcloudConfig,
+                        vimeo: rPlayerVimeoConfig,
                     }}
                     onDuration={() => {
                         playing.setPlayerDuration(playing.data.info.duration / 1000);
@@ -182,6 +197,7 @@ class Player_ extends React.Component {
                             config={{
                                 youtube: rPlayerYoutubeConfig,
                                 soundcloud: rPlayerSoundcloudConfig,
+                                vimeo: rPlayerVimeoConfig,
                             }}
                             onDuration={() => {
                                 playing.setPlayerDuration(playing.data.info.duration / 1000);
