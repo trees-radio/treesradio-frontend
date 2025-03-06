@@ -656,7 +656,7 @@ export default new (
 
             const entriesRef = ref(db, `playlists/${this.uid}/${playlistKey}/entries`);
             set(entriesRef, newPlaylist).then(() => {
-                toast(`Added song ${song.title || song.name} to playlist!`, { type: "success" });
+                toast(`Added song ${song.title || song.name} to playlist ${playlist?.name}.`, { type: "success" });
                 console.timeEnd('addSong');
             }).catch(err => {
                 console.error("Error adding song:", err);
