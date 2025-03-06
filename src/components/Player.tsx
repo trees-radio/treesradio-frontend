@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { observable, action } from "mobx";
 
 // Note that lazy loading doesn't work. Filing an issue with the project
-import ReactPlayer, { ReactPlayerProps, Config } from "react-player";
+import ReactPlayer, { ReactPlayerProps, Config } from "react-player/lazy";
 import { Line } from "rc-progress";
 
 import playing from "../stores/playing";
@@ -44,6 +44,7 @@ const rPlayerVimeoConfig: Config["vimeo"] = {
         transparent: false,
         color: "#77b300",
         title: true,
+        playsinline: true,
     },
 };
 
