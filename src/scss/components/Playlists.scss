@@ -1536,3 +1536,79 @@ body.headlessui-portal-open {
 .search-option i {
   margin-right: 4px;
 }
+/* Updated button styles for YouTube branding compliance */
+
+/* YouTube-specific button styling */
+.search-option.youtube-option {
+  color: #fff;
+  border-color: #cc0000;
+}
+
+.search-option.youtube-option:hover {
+  background: rgba(204, 0, 0, 0.2);
+  color: #fff;
+}
+
+.search-option.youtube-option.active {
+  background: rgba(204, 0, 0, 0.7);
+  color: #fff;
+  border-color: #cc0000;
+}
+
+.search-option.youtube-option i {
+  color: #cc0000; /* YouTube red */
+}
+
+.search-option.youtube-option.active i {
+  color: #fff;
+}
+
+/* Vimeo-specific button styling */
+.search-option.vimeo-option {
+  color: #fff;
+  border-color: #1ab7ea;
+}
+
+.search-option.vimeo-option:hover {
+  background: rgba(26, 183, 234, 0.2);
+  color: #fff;
+}
+
+.search-option.vimeo-option.active {
+  background: rgba(26, 183, 234, 0.7);
+  color: #fff;
+  border-color: #1ab7ea;
+}
+
+.search-option.vimeo-option i {
+  color: #1ab7ea; /* Vimeo blue */
+}
+
+.search-option.vimeo-option.active i {
+  color: #fff;
+}
+
+/* Playlist-specific button styling - keeping your green theme */
+.search-option.playlist-option {
+  color: rgba(152, 255, 0, 0.8);
+  border-color: rgba(152, 255, 0, 0.5);
+}
+
+.search-option.playlist-option:hover {
+  background: rgba(0, 0, 0, 0.4);
+  color: rgba(152, 255, 0, 1);
+}
+
+.search-option.playlist-option.active {
+  background: rgba(152, 255, 0, 0.15);
+  color: rgba(152, 255, 0, 1);
+  border-color: rgba(152, 255, 0, 0.8);
+}
+
+.search-option.playlist-option i {
+  color: rgba(152, 255, 0, 0.8);
+}
+
+.search-option.playlist-option.active i {
+  color: rgba(152, 255, 0, 1);
+}

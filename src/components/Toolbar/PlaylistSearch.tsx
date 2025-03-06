@@ -121,19 +121,19 @@ class PlaylistSearch extends React.Component<PlaylistSearchProps> {
         
         <div className="search-options">
           <button 
-            className={`search-option ${playlists.searchSource === "youtube" ? "active" : ""}`}
+            className={`search-option youtube-option ${playlists.searchSource === "youtube" ? "active" : ""}`}
             onClick={() => this.changeSearchSource("youtube")}
           >
             <i className="mr-1 fa fa-youtube-play"></i> YouTube
           </button>
           <button 
-            className={`search-option ${playlists.searchSource === "vimeo" ? "active" : ""}`}
+            className={`search-option vimeo-option ${playlists.searchSource === "vimeo" ? "active" : ""}`}
             onClick={() => this.changeSearchSource("vimeo")}
           >
             <i className="mr-1 fa fa-vimeo"></i> Vimeo
           </button>
           <button 
-            className={`search-option ${playlists.searchSource === "playlist" ? "active" : ""}`}
+            className={`search-option playlist-option ${playlists.searchSource === "playlist" ? "active" : ""}`}
             onClick={() => this.changeSearchSource("playlist")}
           >
             <i className="mr-1 fa fa-list"></i> Playlist
