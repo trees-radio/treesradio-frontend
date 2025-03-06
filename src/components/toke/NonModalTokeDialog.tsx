@@ -288,7 +288,7 @@ const NonModalTokeDialog: React.FC = observer(() => {
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Session:</span>
+                <span className="text-sm text-gray-400">Toke:</span>
                 <span className={cn(
                   "font-medium",
                   is420Day ? "text-green-400" : "text-orange-400"
