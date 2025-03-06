@@ -3,13 +3,13 @@ import { observer } from "mobx-react";
 import { observable, action } from "mobx";
 
 // Note that lazy loading doesn't work. Filing an issue with the project
-import ReactPlayer, { ReactPlayerProps } from "react-player";
+import ReactPlayer, { ReactPlayerProps, Config } from "react-player";
 import { Line } from "rc-progress";
 
 import playing from "../stores/playing";
 import { FC } from "react";
 
-const rPlayerYoutubeConfig = {
+const rPlayerYoutubeConfig: Config["youtube"] = {
     playerVars: {
         iv_load_policy: 1,
         controls: true,
@@ -17,11 +17,9 @@ const rPlayerYoutubeConfig = {
         color: "white",
         autoplay: true,
     },
-    preload: true,
-    controls: true,
 };
 
-const rPlayerSoundcloudConfig = {
+const rPlayerSoundcloudConfig: Config["soundcloud"] = {
     options: {
         auto_play: true,
         buying: false,
@@ -31,12 +29,12 @@ const rPlayerSoundcloudConfig = {
         single_active: false,
         color: "#77b300",
         show_user: false,
+        
     },
-    preload: true,
 };
 
 // Configuration for Vimeo player
-const rPlayerVimeoConfig = {
+const rPlayerVimeoConfig: Config["vimeo"] = {
     playerOptions: {
         autoplay: true,
         controls: true,
@@ -44,12 +42,11 @@ const rPlayerVimeoConfig = {
         dnt: false,
         loop: false,
         transparent: false,
-        color: "#77b300"
+        color: "#77b300",
+        title: true,
     },
-    preload: true,
 };
 
-// TODO sync is not working :o
 const Player: FC = () => {
     const playerRef = useRef<ReactPlayer>(null);
 
