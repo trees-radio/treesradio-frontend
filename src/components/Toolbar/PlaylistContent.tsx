@@ -5,6 +5,10 @@ import SearchResults from './SearchResults';
 import PlaylistSearchResults from './PlaylistSearchResults';
 import PlaylistItems from './PlaylistItems';
 
+interface PlaylistContentProps {
+  isMobile: boolean;
+}
+
 /**
  * Component that renders the appropriate content based on the current state:
  * - Loading indicator
@@ -12,7 +16,7 @@ import PlaylistItems from './PlaylistItems';
  * - Playlist search results
  * - Regular playlist items
  */
-const PlaylistContent: React.FC = () => {
+const PlaylistContent: React.FC<PlaylistContentProps> = ({ isMobile }) => {
   // Show loading indicator when searching
   if (playlists.searching) {
     return <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />;
@@ -30,7 +34,7 @@ const PlaylistContent: React.FC = () => {
 
   // Show regular playlist
   if (playlists.playlist.length > 0) {
-    return <PlaylistItems items={playlists.playlist} />;
+    return <PlaylistItems items={playlists.playlist} isMobile={isMobile} />;
   }
 
   // Show empty state

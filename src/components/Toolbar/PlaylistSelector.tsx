@@ -14,6 +14,7 @@ interface PlaylistSelectorProps {
   playlists: PlaylistItem[];
   onAddPlaylist: () => void;
   onImportPlaylist: () => void;
+  isMobile: boolean;
 }
 
 /**
@@ -22,7 +23,8 @@ interface PlaylistSelectorProps {
 const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({ 
   playlists: playlistItems,
   onAddPlaylist,
-  onImportPlaylist 
+  onImportPlaylist,
+  isMobile 
 }) => {
   const playlistsList = playlistItems.map((playlist, i) => (
     <MenuItem key={i}>
@@ -43,7 +45,7 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
   ));
 
   return (
-    <Menu as="div" className="pr-4 playlist-selector">
+    <Menu as="div" className={`playlist-selector ${isMobile ? 'playlist-selector-mobile' : ''}`}>
       <MenuButton className="playlist-selector-btn">
         <div className="playlist-selector-content">
           <div className="button-nooverflow">

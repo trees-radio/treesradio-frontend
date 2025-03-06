@@ -4,14 +4,57 @@ import playlists from '../../stores/playlists';
 
 interface PlaylistControlsProps {
   onMergePlaylists: () => void;
+  isMobile: boolean;
 }
 
 /**
  * Component for playlist action buttons including export, shuffle, and sorting
  */
 const PlaylistControls: React.FC<PlaylistControlsProps> = ({ 
-  onMergePlaylists 
+  onMergePlaylists,
+  isMobile
 }) => {
+  // If on mobile, show a simplified interface with fewer buttons
+  if (isMobile) {
+    return (
+      <div className="playlist-actions-mobile">
+        <button onClick={() => playlists.exportPlaylist()} className="playlist-action-btn mobile-action-btn">
+          <i className="fa fa-download fa-lg"></i>
+          <span className="action-label">Export</span>
+        </button>
+        {playlists.hasPlaylist && (
+          <>
+            <button onClick={() => playlists.shufflePlaylist()} className="playlist-action-btn mobile-action-btn">
+              <i className="fa fa-random fa-lg"></i>
+              <span className="action-label">Shuffle</span>
+            </button>
+            <button onClick={onMergePlaylists} className="playlist-action-btn mobile-action-btn">
+              <i className="fa fa-code-fork fa-lg"></i>
+              <span className="action-label">Merge</span>
+            </button>
+            <button onClick={() => playlists.sortPlaylist("asc", "title")} className="playlist-action-btn mobile-action-btn">
+              <i className="fa fa-sort-alpha-asc fa-lg"></i>
+              <span className="action-label">Sort A-Z</span>
+            </button>
+            <button onClick={() => playlists.sortPlaylist("desc", "title")} className="playlist-action-btn mobile-action-btn">
+              <i className="fa fa-sort-alpha-desc fa-lg"></i>
+              <span className="action-label">Sort Z-A</span>
+            </button>
+            <button onClick={() => playlists.sortPlaylist("asc", "duration")} className="playlist-action-btn mobile-action-btn">
+              <i className="fa fa-sort-numeric-asc fa-lg"></i>
+              <span className="action-label">Sort Shortest</span>
+            </button>
+            <button onClick={() => playlists.sortPlaylist("desc", "duration")} className="playlist-action-btn mobile-action-btn">
+              <i className="fa fa-sort-numeric-desc fa-lg"></i>
+              <span className="action-label">Sort Longest</span>
+            </button>
+          </>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop view with all controls
   const shuffle = playlists.hasPlaylist ? (
     <span
       onClick={() => playlists.shufflePlaylist()}

@@ -1,6 +1,6 @@
 import React from "react";
-import { observable, action, makeObservable } from "mobx";
 import { observer } from "mobx-react";
+import { observable, action, makeObservable } from "mobx";
 import { debounce } from 'lodash';
 import {
     Dialog,
@@ -279,7 +279,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                 >
                     <div className="flex min-h-screen">
                         <DialogPanel
-                            className={`relative bg-black w-full h-screen flex flex-col ${isMobile ? '' : 'playlist-desktop'}`}
+                            className={`relative bg-black w-full h-screen flex flex-col ${isMobile ? 'playlist-mobile' : 'playlist-desktop'}`}
                             style={this.getOpacityStyle()}
                         >
                             {/* Header with title and close button */}
@@ -297,19 +297,24 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
                             </div>
 
                             {/* Panel header with search and controls */}
-                            <div id="playlists-panel-head" className="playlist-panel-head">
-                                <div className="playlist-search-container">
-                                    <PlaylistSearch />
+                            <div 
+                                id="playlists-panel-head" 
+                                className={`playlist-panel-head ${isMobile ? 'playlist-panel-head-mobile' : ''}`}
+                            >
+                                <div className={`playlist-search-container ${isMobile ? 'playlist-search-container-mobile' : ''}`}>
+                                    <PlaylistSearch isMobile={isMobile} />
                                     
-                                    <div className="playlist-controls">
+                                    <div className={`playlist-controls ${isMobile ? 'playlist-controls-mobile' : ''}`}>
                                         <PlaylistSelector 
                                             playlists={playlistsList}
                                             onAddPlaylist={() => this.addingPlaylist = true}
                                             onImportPlaylist={() => this.importingPlaylist = true}
+                                            isMobile={isMobile}
                                         />
                                         
                                         <PlaylistControls 
                                             onMergePlaylists={() => this.mergingPlaylists = true}
+                                            isMobile={isMobile}
                                         />
                                     </div>
                                 </div>
@@ -317,7 +322,7 @@ class PlaylistsPanel extends React.Component<PlaylistsPanelProps> {
 
                             {/* Panel content with playlist or search results */}
                             <div id="playlists-panel-display" className="playlist-content">
-                                <PlaylistContent />
+                                <PlaylistContent isMobile={isMobile} />
                             </div>
 
                             {/* Panel footer with opacity slider */}
