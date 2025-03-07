@@ -1,0 +1,10 @@
+[build]
+# Target commonjs for Firebase Functions
+target = "node"
+format = "cjs"
+
+[test]
+coverage = true
+
+[install]
+production = false

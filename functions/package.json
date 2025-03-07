@@ -2,16 +2,13 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "build": "bun build ./src/index.ts --outdir=lib --target=node",
+    "build:watch": "bun build ./src/index.ts --outdir=lib --target=node --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
-  },
-  "engines": {
-    "node": "18"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -19,6 +16,7 @@
     "firebase-functions": "6.3.2"
   },
   "devDependencies": {
+    "@types/bun": "1.2.4",
     "@typescript-eslint/eslint-plugin": "8.26.0",
     "@typescript-eslint/parser": "8.26.0",
     "eslint": "9.21.0",
