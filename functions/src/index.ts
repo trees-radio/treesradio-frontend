@@ -1,5 +1,5 @@
-import * as functions from "firebase-functions/v1";
-import * as admin from "firebase-admin";
+import * as functions from 'firebase-functions/v1';
+import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
@@ -17,17 +17,17 @@ interface ChatMessage {
 
 /**
  * Scheduled function that runs every hour to delete expired chat images
- * Based on the "expires_at" metadata field set during upload
+ * Based on the 'expires_at' metadata field set during upload
  */
 export const cleanupExpiredChatImages = functions.pubsub
-  .schedule("every 1 hours")
+  .schedule('every 1 hours')
   .onRun(async () => {
     const currentTimestamp = Math.floor(Date.now() / 1000);
     console.log(`Starting cleanup job at ${new Date().toISOString()}`);
 
     try {
       // Get all files in the chat_images directory
-      const [files] = await bucket.getFiles({prefix: "chat_images/"});
+      const [files] = await bucket.getFiles({prefix: 'chat_images/'});
       console.log(`Found ${files.length} total chat images to check`);
 
       let deletedCount = 0;
@@ -84,7 +84,7 @@ export const cleanupExpiredChatImages = functions.pubsub
           expired chat images.`);
       return null;
     } catch (error) {
-      console.error("Error in cleanup job:", error);
+      console.error('Error in cleanup job:', error);
       return null;
     }
   });
@@ -95,7 +95,7 @@ export const cleanupExpiredChatImages = functions.pubsub
  * job misses some images
  */
 export const deleteChatImage = functions.database
-  .ref("/chat/{messageId}")
+  .ref('/chat/{messageId}')
   .onDelete(async (snapshot, context) => {
     try {
       const message = snapshot.val() as ChatMessage | null;
@@ -128,7 +128,7 @@ export const deleteChatImage = functions.database
       }
       return null;
     } catch (error) {
-      console.error("Error deleting chat image:", error);
+      console.error('Error deleting chat image:', error);
       return null;
     }
   });
@@ -150,11 +150,11 @@ interface ImageStats {
  * This helps track storage usage and cleanup efficiency
  */
 export const generateChatImageStats = functions.pubsub
-  .schedule("every 24 hours")
+  .schedule('every 24 hours')
   .onRun(async () => {
     try {
       // Get all files in chat_images directory
-      const [files] = await bucket.getFiles({prefix: "chat_images/"});
+      const [files] = await bucket.getFiles({prefix: 'chat_images/'});
 
       let totalSize = 0;
       let oldestTimestamp = Infinity;
@@ -196,12 +196,12 @@ export const generateChatImageStats = functions.pubsub
       };
 
       // Store stats in database
-      await admin.database().ref("stats/chatImages").set(stats);
-      console.log("Chat image stats updated:", stats);
+      await admin.database().ref('stats/chatImages').set(stats);
+      console.log('Chat image stats updated:', stats);
 
       return null;
     } catch (error) {
-      console.error("Error generating chat image stats:", error);
+      console.error('Error generating chat image stats:', error);
       return null;
     }
   });
