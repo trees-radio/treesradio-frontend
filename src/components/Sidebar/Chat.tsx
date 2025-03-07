@@ -15,6 +15,20 @@ interface ChatProps {
 }
 
 const Chat: React.FC<ChatProps> = (props) => {
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+  
   // Add an effect to handle resize events for better layout management
   useEffect(() => {
     const handleResize = () => {
@@ -82,7 +96,7 @@ const Chat: React.FC<ChatProps> = (props) => {
       <ChatContent goToChat={props.goToChat} />
       <div className="flex-shrink-0 chat-input-container">
         {chat.canChat ? (
-          <ChatSend myref={props.chatInputRef} />
+          <ChatSend myref={props.chatInputRef} isMobile={isMobile} />
         ) : (
           <ChatLocked
             locked={chat.chatLocked}

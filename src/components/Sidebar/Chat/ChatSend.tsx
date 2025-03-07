@@ -16,6 +16,7 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/gif"];
 
 interface ChatSendProps {
   myref: React.RefObject<HTMLInputElement | null>;
+  isMobile: boolean;
 }
 
 class ChatSend extends React.Component {
@@ -512,7 +513,7 @@ class ChatSend extends React.Component {
 
     return (
       <form 
-        className="form-inline chatbar" 
+        className={`form-inline chatbarform ${this.props.isMobile && this.previewImage ? 'bottom-2.5 relative' : ''}`} 
         id="search" 
         autoComplete="off"
         ref={this.formRef}
@@ -524,7 +525,7 @@ class ChatSend extends React.Component {
           customEmojis={EmojiPickerSpecialEmoji}
           theme={Theme.DARK}
         />
-        <div className="form-group tr-form-group chatboxform">
+        <div className={`form-group tr-form-group chatboxform`}>
           {matchContainer}
           
           {/* Image preview container */}
