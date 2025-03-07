@@ -2,8 +2,8 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "bun build ./src/index.ts --outdir=lib --target=node",
-    "build:watch": "bun build ./src/index.ts --outdir=lib --target=node --watch",
+    "build": "tsc -b",
+    "build:watch": "tsc -b --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
