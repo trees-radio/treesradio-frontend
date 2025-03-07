@@ -18,11 +18,16 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Install Dependencies (Frontend)
         run: bun install
 
       - name: Install Dependencies (Functions)
-        run: bun install
+        run: npm ci 
         working-directory: ./functions
 
       - name: Build Frontend
@@ -37,7 +42,7 @@ jobs:
           VITE_APP_TITLE: "TreesRadio"
 
       - name: Build Functions
-        run: bun run build
+        run: npm run build
         working-directory: ./functions
 
       - name: Deploy to Firebase
