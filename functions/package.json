@@ -19,7 +19,7 @@
     "@types/bun": "1.2.4",
     "@typescript-eslint/eslint-plugin": "8.26.0",
     "@typescript-eslint/parser": "8.26.0",
-    "eslint": "^9.19.0",
+    "eslint": "^8.10.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^3.1.0",
