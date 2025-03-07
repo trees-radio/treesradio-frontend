@@ -52,6 +52,9 @@ jobs:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
 
       - name: Deploy Firebase Functions
-        run: npx firebase-tools deploy --only functions --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }} --token "${{ secrets.FIREBASE_CLI_TOKEN }}"
+        run: |
+          echo "Project ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}"
+          npx firebase-tools deploy --only functions --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }} --token "${{ secrets.FIREBASE_CLI_TOKEN }}"
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+        
