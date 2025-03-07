@@ -12,35 +12,12 @@ const regex = new RegExp(expression);
 const imgexpr = /(https?:)?\/\/?[^'"<>]+?\.(jpg|jpeg|gif|png)/i;
 const imgregex = new RegExp(imgexpr);
 
+// regex for detecting our embedded image format
+const embeddedImageRegex = /\[img:([^\]]+)\]/;
+
+// Special emoji mappings
 const specialemoji = {
-    ":weed:": "emoji-weed",
-    ":marijuana:": "emoji-weed",
-    ":canabis:": "emoji-weed",
-    ":toke:": "emoji-toke",
-    ":smoke:": "emoji-toke",
-    ":hit:": "emoji-toke",
-    ":plug:": "emoji-plug",
-    ":joint:": "emoji-joint",
-    ":j:": "emoji-joint",
-    ":ferris:": "emoji-ferris",
-    ":1:": "emoji-one",
-    ":2:": "emoji-two",
-    ":3:": "emoji-three",
-    ":4:": "emoji-four",
-    ":5:": "emoji-five",
-    ":6:": "emoji-six",
-    ":7:": "emoji-seven",
-    ":8:": "emoji-eight",
-    ":9:": "emoji-nine",
-    ":10:": "emoji-ten",
-    ":highaf:": "emoji-highaf",
-    ":owo:": "emoji-owo",
-    ":rolling:": "emoji-rolling",
-    ":dude:": "emoji-dude",
-    ":bong:": "emoji-bong",
-    ":neat:": "emoji-neat",
-    ":420:": "emoji-420",
-    ":rasta:": "emoji-rasta"
+    // ... existing emoji mappings ...
 };
 
 interface MessageProps {
@@ -58,29 +35,44 @@ export default class Message extends React.Component {
         super(props);
         this.props = props;
         
-        // Count the number of images in the message
+        // Count the number of images in the message (both regular and embedded)
         const tokens = props.text.split(" ");
-        const imageCount = tokens.filter(this.imageCheck).length;
+        const regularImageCount = tokens.filter(this.imageCheck).length;
+        const embeddedImageCount = tokens.filter(this.embeddedImageCheck).length;
+        const totalImageCount = regularImageCount + embeddedImageCount;
         
         this.state = { 
             visible: true, 
-            imagesLoaded: imageCount === 0,
-            imageCount,
+            imagesLoaded: totalImageCount === 0,
+            imageCount: totalImageCount,
             loadedImages: 0
         };
         
         this.handleImageLoad = this.handleImageLoad.bind(this);
     }
 
-    imageCheck(tkn: string) {
-        return tkn.match(imgregex) && imageWhitelist(tkn);
+    // Check for regular image URLs
+    imageCheck(tkn: string): boolean {
+        return !!tkn.match(imgregex) && imageWhitelist(tkn);
+    }
+    
+    // Check for our embedded image format: [img:url]
+    embeddedImageCheck(tkn: string) {
+        return embeddedImageRegex.test(tkn);
+    }
+    
+    // Extract URL from embedded image format
+    extractImageUrl(tkn: string) {
+        const match = tkn.match(embeddedImageRegex);
+        return match ? match[1] : null;
     }
     
     hasLargeContent(text: string): boolean {
         return text.includes("img") || 
                text.includes("tenorgif") || 
                text.includes("previewvideo") || 
-               text.includes("previewavatar");
+               text.includes("previewavatar") ||
+               embeddedImageRegex.test(text);
     }
     
     handleImageLoad() {
@@ -159,6 +151,9 @@ export default class Message extends React.Component {
                 show={this.state.visible.toString()}
                 onLoad={this.handleImageLoad}
                 emojiSize={emojisize}
+                embeddedImageCheck={this.embeddedImageCheck}
+                extractImageUrl={this.extractImageUrl}
+                imageCheck={this.imageCheck}
             />
         ));
 
@@ -176,21 +171,12 @@ interface MessageItemProps {
     show: string;
     onLoad: () => void;
     emojiSize: string;
+    embeddedImageCheck: (tkn: string) => boolean;
+    extractImageUrl: (tkn: string) => string | null;
+    imageCheck: (tkn: string) => boolean;
 }
 
 class MessageItem extends React.Component {
-    imageCheck(tkn: string) {
-        return tkn.match(imgregex) && imageWhitelist(tkn);
-    }
-
-    componentDidMount() {
-        if (!this.imageCheck(this.props.token)) {
-            // If not an image, signal load is complete
-            this.props.onLoad();
-        }
-        // Image loading will be handled by the onLoad event in the render
-    }
-
     props: MessageItemProps;
 
     constructor(props: MessageItemProps) {
@@ -198,13 +184,40 @@ class MessageItem extends React.Component {
         this.props = props;
     }
 
+    componentDidMount() {
+        if (!this.props.imageCheck(this.props.token) && !this.props.embeddedImageCheck(this.props.token)) {
+            // If not an image, signal load is complete
+            this.props.onLoad();
+        }
+        // Image loading will be handled by the onLoad event in the render
+    }
+
     render() {
-        var { token, show, onLoad } = this.props;
+        var { token, show, onLoad, embeddedImageCheck, extractImageUrl, imageCheck } = this.props;
         let thisClass;
         let bolded;
         let titletext;
 
-        if (this.imageCheck(token)) {
+        // Handle embedded images [img:url]
+        if (embeddedImageCheck(token)) {
+            const imageUrl = extractImageUrl(token);
+            if (imageUrl) {
+                return (
+                    <span className="chat-embedded-image">
+                        <img 
+                            src={imageUrl} 
+                            onLoad={onLoad} 
+                            className="chat-image-uploaded" 
+                            loading="eager"
+                            max-width="240px"
+                            max-height="240px"
+                        />
+                    </span>
+                );
+            }
+        }
+        // Handle regular image URLs
+        else if (imageCheck(token)) {
             let style = {};
             token.replace("http:", "https:");
 
@@ -215,12 +228,13 @@ class MessageItem extends React.Component {
                         onLoad={onLoad} 
                         style={style} 
                         className="inline-image" 
-                        loading="eager" // Use eager loading for chat images
+                        loading="eager" 
                     />
                 </span>
             );
-            // OR is this a plain URL?
-        } else if (token.match(regex) && !token.match(/href/i)) {
+        } 
+        // Handle URLs
+        else if (token.match(regex) && !token.match(/href/i)) {
             let link = token;
             if (link.slice(0, 4) !== "http") {
                 link = `//${link}`;
@@ -232,13 +246,19 @@ class MessageItem extends React.Component {
                     </a>
                 </span>
             );
-        } else if (specialemoji[token as keyof typeof specialemoji]) {
+        } 
+        // Handle special emoji
+        else if (specialemoji[token as keyof typeof specialemoji]) {
             thisClass = this.props.emojiSize + " " + specialemoji[token as keyof typeof specialemoji];
             titletext = token;
-        } else if ((bolded = token.match(/^\*\*(\w+)\*\*$/))) {
+        } 
+        // Handle bold text
+        else if ((bolded = token.match(/^\*\*(\w+)\*\*$/))) {
             thisClass = "chat-bold";
             token = bolded[1];
         }
+        
+        // Handle regular text/emoji
         return (
             <span
                 className={this.props.isEmote ? "chat-italic" : thisClass}

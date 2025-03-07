@@ -1,5 +1,6 @@
 @use "../core/variables"as vars;
 
+// Chat message and item containers
 .chat-msg {
   vertical-align: bottom;
   width: 90%;
@@ -24,26 +25,29 @@
   border-radius: 8px;
 }
 
+// Username styles
 .chat-username {
   font-weight: bolder;
   font-size: 1rem;
   cursor: pointer;
+  
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.chat-username:hover {
-  text-decoration: underline;
-}
-
+// User flair styles
 .userflair {
   color: vars.$color-user-flair;
   font-size: 0.75rem;
   line-height: 1.5;
+  
+  .modal-body & {
+    font-size: 0.8rem;
+  }
 }
 
-.modal-body .userflair {
-  font-size: 0.8rem;
-}
-
+// Patreon badge
 .patreon {
   width: 18px;
   height: 18px;
@@ -55,92 +59,100 @@
   display: none;
 }
 
-.username-bot {
-  color: vars.$color-username-bot;
+// Username roles
+%username-base {
+  &::after {
+    font-size: vars.$rank-font-size;
+  }
 }
 
-.username-bot::after {
-  color: vars.$color-rank-bot;
-  content: " (Bot)";
-  font-size: vars.$rank-font-size;
+.username-bot {
+  color: vars.$color-username-bot;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-bot;
+    content: " (Bot)";
+  }
 }
 
 .username-admin {
   color: vars.$color-username-admin;
-}
-
-.username-admin::after {
-  color: vars.$color-rank-admin;
-  content: " (Admin)";
-  font-size: vars.$rank-font-size;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-admin;
+    content: " (Admin)";
+  }
 }
 
 .username-dev {
   color: vars.$color-username-dev;
-}
-
-.username-dev::after {
-  color: vars.$color-rank-dev;
-  content: " (Developer)";
-  font-size: vars.$rank-font-size;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-dev;
+    content: " (Developer)";
+  }
 }
 
 .username-mod {
   color: vars.$color-username-mod;
-}
-
-.username-mod::after {
-  color: vars.$color-rank-mod;
-  content: " (Mod)";
-  font-size: vars.$rank-font-size;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-mod;
+    content: " (Mod)";
+  }
 }
 
 .username-seniormod {
   color: vars.$color-username-mod;
-}
-
-.username-seniormod::after {
-  color: vars.$color-rank-seniormod;
-  content: " (Senior Mod)";
-  font-size: vars.$rank-font-size;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-seniormod;
+    content: " (Senior Mod)";
+  }
 }
 
 .username-vip {
   color: vars.$color-username-vip;
-}
-
-.username-vip::after {
-  color: vars.$color-rank-vip;
-  content: " (VIP)";
-  font-size: vars.$rank-font-size;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-vip;
+    content: " (VIP)";
+  }
 }
 
 .username-frient {
   color: vars.$color-username-frient;
-}
-
-.username-frient::after {
-  color: vars.$color-rank-frient;
-  content: " (Frient)";
-  font-size: vars.$rank-font-size;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-frient;
+    content: " (Frient)";
+  }
 }
 
 .username-user {
   color: vars.$color-username-default;
 }
 
+// Chat text styles
 .chat-text {
-  // height: 1vw;
   width: 100%;
   position: relative;
   font-size: 1rem;
+  
+  p {
+    padding-bottom: 8px;
+    padding-top: 4px;
+  }
 }
 
-.chat-text p {
-  padding-bottom: 8px;
-  padding-top: 4px;
-}
-
+// Avatar styles
 .chat-avatar {
   padding-right: 5px;
   padding-bottom: 5px;
@@ -156,6 +168,7 @@
   background-color: vars.$color-avatar-background;
 }
 
+// Mentions container
 .mentions-container {
   background-color: lightsteelblue;
   position: absolute;
@@ -168,24 +181,25 @@
   display: table;
 }
 
-.mention-item:hover {
-  text-decoration: underline;
-}
-
 .mention-item {
   padding-left: 2%;
   padding-right: 2%;
   cursor: pointer;
   display: table-row;
+  
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
+// Chat input area
 #sendbox {
   position: absolute;
   height: 5%;
   max-height: 45px;
   left: 0.75%;
   margin-top: 1px;
-  padding-top: 1px; //rem position: absolute;
+  padding-top: 1px;
   bottom: 0rem;
 }
 
@@ -195,6 +209,12 @@
 
 .chatboxform {
   height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  background-color: var(--background-color, #ffffff);
+  margin-top: auto;
+  width: 100%;
 }
 
 #sendbox_test {
@@ -208,13 +228,11 @@
 #chatinput {
   z-index: 3;
   width: calc(100% - 1rem);
+  max-width: 100%;
+  box-sizing: border-box;
   border: 1px solid #ccc;
-  // border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-  // border-radius: 6px 0 0 6px;
   padding: 0;
   padding-left: 0.5rem;
   margin: 0;
@@ -229,9 +247,6 @@
   text-align: center;
   background-color: #eee;
   border: 1px solid #ccc;
-  border-left-color: rgb(204, 204, 204);
-  border-left-style: solid;
-  border-left-width: 1px;
   border-radius: 4px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -239,48 +254,46 @@
   align-items: center;
 }
 
+// BlazeBot styles
 .blazebot-msg {
   color: vars.$color-blazebot-message;
   background-color: vars.$color-blazebot-message-background;
-}
-
-.blazebot-msg a:link {
-  color: vars.$color-blazebot-message-link;
-}
-
-.blazebot-msg a:visited {
-  color: vars.$color-blazebot-message-link;
-}
-
-.blazebot-msg a:active {
-  color: vars.$color-blazebot-message-link;
-}
-
-.blazebot-msg a:hover {
-  color: vars.$color-blazebot-message-link-hover;
+  
+  a {
+    &:link, &:visited, &:active {
+      color: vars.$color-blazebot-message-link;
+    }
+    
+    &:hover {
+      color: vars.$color-blazebot-message-link-hover;
+    }
+  }
 }
 
 .blazebot-hide {
   display: none;
 }
 
+// Chat timestamps
 .chat-timestamp {
   float: right;
   font-size: .8rem;
 }
 
+// Image styles
 .inline-image {
   max-width: 100%;
   max-height: 200px;
 }
 
+// Chat counter
 #chat-counter {
   position: absolute;
   z-index: 1;
-  // margin-left: 21.9vw;
   margin-top: 2rem;
 }
 
+// Sendbox states
 .sendbox-locked {
   height: 6%;
   width: 100%;
@@ -314,123 +327,99 @@
   color: #77b300;
 }
 
-img[alt="previewimg"] {
-  width: 130px;
-  float: right;
-}
-
-img[alt="previewimgsm"] {
-  height: 130px;
-  float: right;
-}
-
-img[alt="previewimgxs"] {
-  height: 65px;
-  float: right;
-  margin-top: -21px;
-}
-
-img[alt="previewvideo"] {
-  height: 100px;
-  width: 130px;
-  float: right;
-}
-
-@media #{vars.$isPortrait},
-(min-height: 1440px) AND (max-width: 1199px) {
-  img[alt="previewvideo"] {
-    height: unset;
-    max-width: 90px;
+// Preview images
+img {
+  &[alt="previewimg"] {
+    width: 130px;
     float: right;
   }
-  .chat-text {
-    font-size: 1.3rem;
+  
+  &[alt="previewimgsm"] {
+    height: 130px;
+    float: right;
   }
-}
-
-img[alt="previewavatar"] {
-  height: 40px;
-  width: 40px;
-  float: right;
-  margin-top: -1vh;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-img[alt="tenorgif"] {
-  min-width: 4.2vw;
-  max-width: 95%;
-  max-height: 25vh;
-}
-
-@media #{vars.$isPortrait},
-(min-height: 1440px) {
-  img[alt="tenorgif"] {
+  
+  &[alt="previewimgxs"] {
+    height: 65px;
+    float: right;
+    margin-top: -21px;
+  }
+  
+  &[alt="previewvideo"] {
+    height: 100px;
+    width: 130px;
+    float: right;
+  }
+  
+  &[alt="previewavatar"] {
+    height: 40px;
+    width: 40px;
+    float: right;
+    margin-top: -1vh;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  &[alt="tenorgif"] {
     min-width: 4.2vw;
     max-width: 95%;
-    max-height: 35vh;
+    max-height: 25vh;
   }
 }
 
-strong>img {
+strong > img {
   max-width: 97%;
   padding: 2% 0;
 }
 
+// Links and quotes
 a[title="previewlink"] {
   color: white !important;
   font-weight: bold;
 }
 
-div>blockquote {
+div > blockquote {
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
 }
 
+// Alert and song styles
 .joinalert {
-  font-size: 1.15em; //rem font-style: bold; mismatched prop
+  font-size: 1.15em;
 }
 
 .sidebar-song-title {
   font-size: 1.65em;
-  color: #06d; //rem font-style: bold; mismatched prop
+  color: #06d;
+}
+
+// Song stats shared properties
+%songstats-base {
+  padding-left: 20px;
+  font-size: 1.1em;
+  border-left: 5px solid #282828;
+  margin-bottom: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .songstats-likes {
-  padding-left: 20px;
-  font-size: 1.1em;
-  border-left: 5px solid #282828;
-  margin-bottom: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  @extend %songstats-base;
 }
 
 .songstats-dislikes {
-  padding-left: 20px;
-  font-size: 1.1em;
-  border-left: 5px solid #282828;
-  margin-bottom: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  @extend %songstats-base;
 }
 
 .songstats-grabs {
-  padding-left: 20px;
-  font-size: 1.1em;
-  border-left: 5px solid #282828;
-  margin-bottom: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  @extend %songstats-base;
 }
 
+// Text formatting
 .chat-bold {
   font-weight: bold;
 }
@@ -439,21 +428,8 @@ div>blockquote {
   font-style: italic;
 }
 
-.emojilarge {
-  height: 48px;
-  width: 48px;
-  font-size: inherit;
-  background-size: cover;
-  top: -3px;
-  position: relative;
-  display: inline-block;
-  line-height: normal;
-  vertical-align: middle;
-  background-repeat: no-repeat;
-  text-indent: -9999em;
-}
-
-.emoji {
+// Emoji base styles
+%emoji-base {
   height: 24px;
   width: 24px;
   font-size: inherit;
@@ -467,130 +443,61 @@ div>blockquote {
   text-indent: -9999em;
 }
 
-.emoji-weed {
-  background-image: vars.$img-emoji-weed;
-}
-
-.emoji-plug {
-  background-image: vars.$img-emoji-plug;
-}
-
-.emoji-toke {
-  background-image: vars.$img-emoji-toke;
-}
-
-.emoji-joint {
-  background-image: vars.$img-emoji-joint;
-}
-
-.emoji-ferris {
-  background-image: url vars.$img-emoji-ferris;
-}
-
-.emoji-one {
-  background-image: vars.$img-emoji-one;
-}
-
-.img-heart-weed {
-  background-image: vars.$img-heart-weed;
-}
-
-.img-peace-weed {
-  background-image: vars.$img-peace-weed;
-}
-
-.img-weed1 {
-  background-image: vars.$img-weed1;
-}
-
-.img-weed2 {
-  background-image: vars.$img-weed2;
-}
-
-.img-weed3 {
-  background-image: vars.$img-weed3;
-}
-
-.img-weed4 {
-  background-image: vars.$img-weed4;
-}
-
-.img-weed5 {
-  background-image: vars.$img-weed5;
-}
-
-.emoji-two {
-  background-image: vars.$img-emoji-two;
-}
-
-.emoji-three {
-  background-image: vars.$img-emoji-three;
-}
-
-.emoji-four {
-  background-image: vars.$img-emoji-four;
-}
-
-.emoji-five {
-  background-image: vars.$img-emoji-five;
-}
-
-.emoji-six {
-  background-image: vars.$img-emoji-six;
-}
-
-.emoji-seven {
-  background-image: vars.$img-emoji-seven;
-}
-
-.emoji-eight {
-  background-image: vars.$img-emoji-eight;
-}
-
-.emoji-nine {
-  background-image: vars.$img-emoji-nine;
-}
-
-.emoji-ten {
-  background-image: vars.$img-emoji-ten;
-}
-
-.emoji-highaf {
-  background-image: vars.$img-emoji-highaf;
-}
-
-.emoji-owo {
-  background-image: vars.$img-emoji-owo;
-}
-
-.emoji-rolling {
-  background-image: vars.$img-emoji-rolling;
-}
-
-.emoji-dude {
-  background-image: vars.$img-emoji-dude;
-}
-
-.emoji-bong {
-  background-image: vars.$img-emoji-bong;
+.emojilarge {
+  @extend %emoji-base;
+  height: 48px;
+  width: 48px;
   background-size: cover;
 }
 
-.emoji-neat {
+.emoji {
+  @extend %emoji-base;
+}
+
+// Emoji specific styles
+.emoji-weed { background-image: vars.$img-emoji-weed; }
+.emoji-plug { background-image: vars.$img-emoji-plug; }
+.emoji-toke { background-image: vars.$img-emoji-toke; }
+.emoji-joint { background-image: vars.$img-emoji-joint; }
+.emoji-ferris { background-image: url vars.$img-emoji-ferris; }
+.emoji-one { background-image: vars.$img-emoji-one; }
+.emoji-two { background-image: vars.$img-emoji-two; }
+.emoji-three { background-image: vars.$img-emoji-three; }
+.emoji-four { background-image: vars.$img-emoji-four; }
+.emoji-five { background-image: vars.$img-emoji-five; }
+.emoji-six { background-image: vars.$img-emoji-six; }
+.emoji-seven { background-image: vars.$img-emoji-seven; }
+.emoji-eight { background-image: vars.$img-emoji-eight; }
+.emoji-nine { background-image: vars.$img-emoji-nine; }
+.emoji-ten { background-image: vars.$img-emoji-ten; }
+.emoji-highaf { background-image: vars.$img-emoji-highaf; }
+.emoji-owo { background-image: vars.$img-emoji-owo; }
+.emoji-rolling { background-image: vars.$img-emoji-rolling; }
+.emoji-dude { background-image: vars.$img-emoji-dude; }
+.emoji-bong { 
+  background-image: vars.$img-emoji-bong;
+  background-size: cover;
+}
+.emoji-neat { 
   background-image: vars.$img-emoji-neat;
   background-size: 111%;
 }
-
-.emoji-420 {
+.emoji-420 { 
   background-image: vars.$img-emoji-fourtwenty;
   background-size: 111%;
 }
+.emoji-rasta { background-image: vars.$img-emoji-rasta; }
 
-.emoji-rasta {
-  background-image: vars.$img-emoji-rasta;
-}
+// Image backgrounds
+.img-heart-weed { background-image: vars.$img-heart-weed; }
+.img-peace-weed { background-image: vars.$img-peace-weed; }
+.img-weed1 { background-image: vars.$img-weed1; }
+.img-weed2 { background-image: vars.$img-weed2; }
+.img-weed3 { background-image: vars.$img-weed3; }
+.img-weed4 { background-image: vars.$img-weed4; }
+.img-weed5 { background-image: vars.$img-weed5; }
 
-// TODO remove dependecy on media queries, then put media queries into media-queries.scss
+// Chat container layout
 @media (min-width: 0) {
   #chattoplevel {
     background-color: vars.$color-chat-toplevel-bg;
@@ -601,7 +508,6 @@ div>blockquote {
     padding-right: 0;
     padding-left: 0;
     float: left;
-
     min-height: calc(65vh - 4rem);
   }
 
@@ -615,12 +521,14 @@ div>blockquote {
   flex-direction: column;
   flex: 1;
   overflow: hidden;
+  height: 100%;
+  max-height: 100%;
 }
 
 .chatbar {
   height: 2.8rem;
   width: 25vw;
-  flex-shrink: 0; // Prevent shrinking
+  flex-shrink: 0;
 }
 
 #chatcontainertop {
@@ -635,22 +543,28 @@ div>blockquote {
 #chatscroll {
   margin: 0;
   overflow-y: auto;
-  flex: 1; // Take all available space
-  min-height: 0; // Allow shrinking below content size
-}
-
-#chatscroll::-webkit-scrollbar {
-  width: 1em;
-}
-
-#chatscroll::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-#chatscroll::-webkit-scrollbar-thumb {
-  background-color: #343642;
-  outline: 1px solid slategrey;
+  flex: 1;
+  min-height: 0;
+  
+  &::-webkit-scrollbar {
+    width: 1em;
+    
+    &-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    &-thumb {
+      background-color: #343642;
+      outline: 1px solid slategrey;
+    }
+  }
+  
+  // Override Tailwind fixed heights
+  &.md\:h-\[85vh\],
+  &.h-\[31em\] {
+    height: auto !important;
+  }
 }
 
 #chatbox {
@@ -659,12 +573,106 @@ div>blockquote {
   padding: 0;
 }
 
-// Override Tailwind fixed heights
-#chatscroll.md\:h-\[85vh\],
-#chatscroll.h-\[31em\] {
-  height: auto !important;
+// Chat line styles
+.chat-line-0 {
+  background-color: rgba(18, 0, 41, 0.6);
+  padding: 10px;
 }
 
+.chat-line-1 {
+  background-color: rgba(28, 0, 51, 0.6);
+  padding: 10px;
+}
+
+// Basic image preview and upload styles
+// These are placed before media queries to allow overrides
+.image-preview-container {
+  padding: 8px 12px;
+  background-color: #0a0a2a;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.image-preview-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.image-preview {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+}
+
+.cancel-image-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+// Drag and drop styling
+.active-drop-zone {
+  border: 2px dashed #4a90e2;
+  background-color: rgba(74, 144, 226, 0.05);
+  border-radius: 4px;
+}
+
+// Chat image styling
+.chat-embedded-image {
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.chat-image-uploaded {
+  max-width: 240px;
+  max-height: 240px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// Additional special media queries moved to end
+@media #{vars.$isPortrait}, (min-height: 1440px) {
+  img[alt="tenorgif"] {
+    min-width: 4.2vw;
+    max-width: 95%;
+    max-height: 35vh;
+  }
+}
+
+@media #{vars.$isPortrait}, (min-height: 1440px) AND (max-width: 1199px) {
+  img[alt="previewvideo"] {
+    height: unset;
+    max-width: 90px;
+    float: right;
+  }
+  
+  .chat-text {
+    font-size: 1.3rem;
+  }
+}
+
+// CSS fixes for layout issues - MOVED TO END to ensure these override all previous declarations
 // Media query for tablets in landscape mode
 @media screen and (max-width: 915px) and (max-height: 412px) {
   #sidebar {
@@ -672,11 +680,9 @@ div>blockquote {
   }
   
   #chatscroll {
-    // Let flex handle the height
     height: auto !important;
   }
   
-  // Ensure input area is properly sized
   #sendbox_test, 
   .chatbar, 
   .sendbox-locked, 
@@ -686,54 +692,66 @@ div>blockquote {
   }
 }
 
-.chat-line-0 {
-  background-color: rgba(18, 0, 41, 0.6); //light skin e9eef0
-  padding: 10px;
+@media (max-width: 768px) {
+  .chat-image-uploaded {
+    max-width: 200px;
+    max-height: 200px;
+  }
+  
+  .image-preview {
+    max-width: 80px;
+    max-height: 80px;
+  }
+  
+  // Make sure mentions container doesn't overflow
+  .mentions-container {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 4px;
+  }
 }
 
-.chat-line-1 {
-  background-color: rgba(28, 0, 51, 0.6); //light skin cbd6dc
-  padding: 10px;
-}
-
-/* Mobile portrait mode adjustments */
+// Mobile portrait mode adjustments
 @media screen and (max-width: 480px) {
   #chatscroll {
-    /* Subtract the height of the input box (approximately 4rem) with some buffer */
-    height: calc(100vh - 11rem) !important; /* Account for header, tabs, and input */
+    height: calc(100vh - 11rem) !important;
     max-height: calc(100vh - 11rem) !important;
   }
   
-  /* Ensure chat input stays at bottom and doesn't overlap */
   .chatbar,
   .sendbox-locked,
   .sendbox-loggedout {
     position: fixed;
-    bottom: 3.5rem; /* Position above the bottom nav */
+    bottom: 3.5rem;
     left: 0;
     right: 0;
     z-index: 100;
-    background-color: rgba(22, 0, 45, 0.95); /* Match your app's background */
+    background-color: rgba(22, 0, 45, 0.95);
     padding: 0.5rem;
   }
   
-  /* Extra padding at the bottom of the chat content to prevent last message being hidden */
   #chatbox {
     padding-bottom: 5rem !important;
   }
+  
+  .chat-image-uploaded {
+    max-width: 150px;
+    max-height: 150px;
+  }
 }
 
-/* Special case for the orientation in your screenshot (narrow height, wider width) */
+// Special case for narrow height, wider width
 @media screen and (max-height: 740px) and (min-width: 360px) {
   #chatscroll {
     height: calc(100vh - 12rem) !important;
     max-height: calc(100vh - 12rem) !important;
   }
   
-  /* Adjust input position for this specific orientation */
   .chatbar,
   .sendbox-locked,
   .sendbox-loggedout {
     bottom: 3.5rem;
   }
 }
+

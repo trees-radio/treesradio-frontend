@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting
+name: Deploy to Firebase Hosting and Functions
 on:
   push:
     branches:
@@ -18,10 +18,14 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install Dependencies
+      - name: Install Dependencies (Frontend)
         run: bun install
 
-      - name: Build
+      - name: Install Dependencies (Functions)
+        run: bun install
+        working-directory: ./functions
+
+      - name: Build Frontend
         run: bun run build
         env:
           CI: true
@@ -32,6 +36,9 @@ jobs:
           VITE_FIREBASE_BUCKET: ${{ secrets.VITE_FIREBASE_BUCKET }}
           VITE_APP_TITLE: "TreesRadio"
 
+      - name: Build Functions
+        run: bun run build
+        working-directory: ./functions
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -41,5 +48,10 @@ jobs:
           channelId: live
           projectId: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
           expires: 7d
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
+
+      - name: Deploy Firebase Functions
+        run: npx firebase-tools deploy --only functions --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }} --token "${{ secrets.FIREBASE_CLI_TOKEN }}"
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks

@@ -41,6 +41,7 @@ const ChatContent = observer(({ goToChat }) => {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
   
   // Check if user is near bottom
   const checkIfNearBottom = useCallback(() => {
@@ -59,20 +60,47 @@ const ChatContent = observer(({ goToChat }) => {
     
     if (force || (shouldAutoScroll && !isUserScrolling)) {
       const scrollElement = scrollRef.current;
-      scrollElement.scrollTo({
-        top: scrollElement.scrollHeight,
-        behavior: smooth ? 'smooth' : 'auto'
-      });
       
-      lastScrollHeightRef.current = scrollElement.scrollHeight;
-      lastScrollTopRef.current = scrollElement.scrollTop;
-      
-      if (force) {
-        setIsUserNearBottom(true);
-        setShouldAutoScroll(true);
-      }
+      // Delay scrolling slightly to ensure images are rendered
+      // This helps with the layout shifting problem
+      setTimeout(() => {
+        scrollElement.scrollTo({
+          top: scrollElement.scrollHeight,
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+        
+        lastScrollHeightRef.current = scrollElement.scrollHeight;
+        lastScrollTopRef.current = scrollElement.scrollTop;
+        
+        if (force) {
+          setIsUserNearBottom(true);
+          setShouldAutoScroll(true);
+        }
+      }, 10); // Small delay to let layout settle
     }
   }, [shouldAutoScroll, isUserScrolling]);
+
+  useEffect(() => {
+    // This effect handles layout changes caused by image loading
+    const handleResize = () => {
+      if (shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
+        scrollToBottom(false, false);
+      }
+    };
+    
+    // Create a ResizeObserver to detect content changes, including images loading
+    if (scrollRef.current) {
+      const chatbox = scrollRef.current.querySelector('#chatbox');
+      if (chatbox) {
+        const resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(chatbox);
+        
+        return () => {
+          resizeObserver.disconnect();
+        };
+      }
+    }
+  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, scrollToBottom]);
 
   // Handle image loading
   const handleImageLoad = useCallback(() => {
