@@ -52,9 +52,6 @@ jobs:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
 
       - name: Deploy Firebase Functions
-        uses: FirebaseExtended/
-
-      - name: Deploy Firebase Functions
         run: |
           echo "Project ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}"
           # Strip newlines from project_id ugh
