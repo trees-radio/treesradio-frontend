@@ -15,9 +15,35 @@ const imgregex = new RegExp(imgexpr);
 // regex for detecting our embedded image format
 const embeddedImageRegex = /\[img:([^\]]+)\]/;
 
-// Special emoji mappings
 const specialemoji = {
-    // ... existing emoji mappings ...
+    ":weed:": "emoji-weed",
+    ":marijuana:": "emoji-weed",
+    ":canabis:": "emoji-weed",
+    ":toke:": "emoji-toke",
+    ":smoke:": "emoji-toke",
+    ":hit:": "emoji-toke",
+    ":plug:": "emoji-plug",
+    ":joint:": "emoji-joint",
+    ":j:": "emoji-joint",
+    ":ferris:": "emoji-ferris",
+    ":1:": "emoji-one",
+    ":2:": "emoji-two",
+    ":3:": "emoji-three",
+    ":4:": "emoji-four",
+    ":5:": "emoji-five",
+    ":6:": "emoji-six",
+    ":7:": "emoji-seven",
+    ":8:": "emoji-eight",
+    ":9:": "emoji-nine",
+    ":10:": "emoji-ten",
+    ":highaf:": "emoji-highaf",
+    ":owo:": "emoji-owo",
+    ":rolling:": "emoji-rolling",
+    ":dude:": "emoji-dude",
+    ":bong:": "emoji-bong",
+    ":neat:": "emoji-neat",
+    ":420:": "emoji-420",
+    ":rasta:": "emoji-rasta"
 };
 
 interface MessageProps {
