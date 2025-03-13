@@ -153,7 +153,7 @@ class ChatSend extends React.Component {
       e.preventDefault();
       if (chat.mentionMatches.length > 0) {
         chat.replaceMention(0);
-      } else if ((e.target as HTMLInputElement).value.length > 0) {
+      } else if ((e.target as HTMLInputElement).value.length > 0 || (this.previewImage && (this.fileInputRef.current?.files?.[0] || this.currentFile))) {
         this.sendMessage();
       }
     }
