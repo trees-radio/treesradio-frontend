@@ -29,7 +29,8 @@ class ChatSend extends React.Component {
   @observable accessor uploadingImage: boolean = false;
   @observable accessor previewImage: string | null = null;
   @observable accessor isDraggingOver: boolean = false;
-
+  @observable accessor currentFile: File | null = null;
+  
   @action toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
@@ -275,6 +276,8 @@ class ChatSend extends React.Component {
       // Resize image if needed
       const resizedFile = await this.resizeImageIfNeeded(file);
       
+      this.currentFile = resizedFile;
+      
       // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -422,9 +425,10 @@ class ChatSend extends React.Component {
     const hasText = chat.msg.length > 0;
     
     // Handle image upload if there's a preview
-    if (this.previewImage && this.fileInputRef.current?.files?.[0]) {
+    if (this.previewImage && (this.fileInputRef.current?.files?.[0] || this.currentFile)) {
       try {
-        const file = this.fileInputRef.current.files[0];
+        const file = this.fileInputRef.current?.files ? this.fileInputRef.current.files[0] : this.currentFile;
+        if (!file) return;
         const imageUrl = await this.uploadImage(file);
         
         // Send message with image URL (embedded in the message)
@@ -440,6 +444,7 @@ class ChatSend extends React.Component {
         
         // Reset preview
         this.setPreviewImage(null);
+        this.currentFile = null;
         if (this.fileInputRef.current) {
           this.fileInputRef.current.value = '';
         }
