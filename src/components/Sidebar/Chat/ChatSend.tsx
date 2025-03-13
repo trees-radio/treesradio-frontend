@@ -361,6 +361,7 @@ class ChatSend extends React.Component {
 
   cancelImage = () => {
     this.setPreviewImage(null);
+    this.currentFile = null;
     if (this.fileInputRef.current) {
       this.fileInputRef.current.value = '';
     }
@@ -427,7 +428,7 @@ class ChatSend extends React.Component {
     // Handle image upload if there's a preview
     if (this.previewImage && (this.fileInputRef.current?.files?.[0] || this.currentFile)) {
       try {
-        const file = this.fileInputRef.current?.files ? this.fileInputRef.current.files[0] : this.currentFile;
+        const file = this.fileInputRef.current?.files?.[0] || this.currentFile;
         if (!file) return;
         const imageUrl = await this.uploadImage(file);
         
