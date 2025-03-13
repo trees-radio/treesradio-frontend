@@ -260,102 +260,174 @@ class ChatSend extends React.Component {
   
   // Process image file (common function for all input methods)
   processImageFile = async (file: File) => {
-    // Check file size
-    if (file.size > MAX_IMAGE_SIZE) {
-      toast("Image too large (max 2MB)", { type: "error" });
-      return;
-    }
-
-    // Check file type
+    // Check file type first
     if (!SUPPORTED_FORMATS.includes(file.type)) {
       toast("Unsupported image format", { type: "error" });
       return;
     }
+    
+    // For extremely large files, warn the user but continue processing
+    if (file.size > 10 * 1024 * 1024) { // 10MB
+      toast("Large image - processing may take a moment", { type: "info" });
+    }
 
     try {
-      // Resize image if needed
-      const resizedFile = await this.resizeImageIfNeeded(file);
+      // Process image: resize and strip EXIF data
+      const processedFile = await this.processImage(file);
       
-      this.currentFile = resizedFile;
+      this.currentFile = processedFile;
       
       // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
         this.setPreviewImage(e.target?.result as string);
       };
-      reader.readAsDataURL(resizedFile);
+      reader.readAsDataURL(processedFile);
     } catch (error) {
       console.error("Error processing image:", error);
       toast("Failed to process image", { type: "error" });
     }
   }
   
-  // Resize image if dimensions exceed maximum
-  resizeImageIfNeeded = async (file: File): Promise<File> => {
+  // Process image: resize and strip EXIF data
+  processImage = async (file: File): Promise<File> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.src = URL.createObjectURL(file);
       
+      // When image loads, process it
       img.onload = () => {
         URL.revokeObjectURL(img.src);
         
         const width = img.width;
         const height = img.height;
         
-        // If image is within size limits, return original
-        if (width <= 1200 && height <= 1200) {
-          resolve(file);
-          return;
-        }
-        
-        // Calculate new dimensions
+        // Always resize to ensure reasonable dimensions and file size
+        // Target 1200px max dimension for standard images
         let newWidth, newHeight;
+        
         if (width > height) {
-          newWidth = 1200;
-          newHeight = Math.round(height * (1200 / width));
+          newWidth = Math.min(width, 1200);
+          newHeight = Math.round(height * (newWidth / width));
         } else {
-          newHeight = 1200;
-          newWidth = Math.round(width * (1200 / height));
+          newHeight = Math.min(height, 1200);
+          newWidth = Math.round(width * (newHeight / height));
         }
         
-        // Create canvas for resizing
+        // Create canvas for processing
         const canvas = document.createElement('canvas');
         canvas.width = newWidth;
         canvas.height = newHeight;
         
-        // Draw resized image on canvas
+        // Draw image to canvas (this strips EXIF data)
         const ctx = canvas.getContext('2d');
         if (!ctx) {
           reject(new Error("Could not get canvas context"));
           return;
         }
         
+        // Draw image to remove EXIF data
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
         
-        // Convert to blob with quality adjustment for JPEGs
-        const quality = file.type === 'image/jpeg' ? 0.85 : 1;
-        canvas.toBlob(
-          (blob) => {
-            if (blob) {
-              // Create new file from blob
-              const resizedFile = new File([blob], file.name, {
-                type: file.type,
-                lastModified: Date.now()
-              });
-              resolve(resizedFile);
-            } else {
-              reject(new Error("Could not create blob from canvas"));
-            }
-          },
-          file.type,
-          quality
-        );
+        // Convert canvas to blob with adaptive quality
+        const processWithQuality = (initialQuality: number) => {
+          // Function to recursively try different qualities until size is acceptable
+          const tryQuality = (currentQuality: number, attempt: number = 1) => {
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  reject(new Error("Failed to create image blob"));
+                  return;
+                }
+                
+                // If size is acceptable or we've reached minimum quality, use this blob
+                if (blob.size <= MAX_IMAGE_SIZE || 
+                    (file.type === 'image/jpeg' && currentQuality <= 0.5) || 
+                    attempt >= 3) {
+                  
+                  // If we still have an extremely large file, do more aggressive dimension reduction
+                  if (blob.size > MAX_IMAGE_SIZE && attempt < 4) {
+                    // Create a new smaller canvas
+                    const rescaleCanvas = document.createElement('canvas');
+                    // Calculate a scale factor based on target size
+                    const scaleFactor = Math.min(0.7, Math.sqrt(MAX_IMAGE_SIZE / blob.size) * 0.9);
+                    rescaleCanvas.width = Math.max(300, Math.floor(canvas.width * scaleFactor));
+                    rescaleCanvas.height = Math.max(300, Math.floor(canvas.height * scaleFactor));
+                    
+                    const rescaleCtx = rescaleCanvas.getContext('2d');
+                    if (rescaleCtx) {
+                      rescaleCtx.drawImage(canvas, 0, 0, rescaleCanvas.width, rescaleCanvas.height);
+                      rescaleCanvas.toBlob(
+                        (rescaledBlob) => {
+                          if (rescaledBlob) {
+                            console.log(`Final size after dimension reduction: ${(rescaledBlob.size/1024).toFixed(1)}KB`);
+                            const finalFile = new File([rescaledBlob], file.name, {
+                              type: file.type,
+                              lastModified: Date.now()
+                            });
+                            resolve(finalFile);
+                          } else {
+                            // If all else fails, use the previous blob
+                            const finalFile = new File([blob], file.name, {
+                              type: file.type,
+                              lastModified: Date.now()
+                            });
+                            resolve(finalFile);
+                          }
+                        },
+                        file.type,
+                        currentQuality
+                      );
+                    } else {
+                      // Fallback if context fails
+                      const finalFile = new File([blob], file.name, {
+                        type: file.type,
+                        lastModified: Date.now()
+                      });
+                      resolve(finalFile);
+                    }
+                    return;
+                  }
+                  
+                  // Create file from blob
+                  const finalFile = new File([blob], file.name, {
+                    type: file.type,
+                    lastModified: Date.now()
+                  });
+                  console.log(`Final image size: ${(blob.size/1024).toFixed(1)}KB with quality ${currentQuality.toFixed(2)}`);
+                  resolve(finalFile);
+                  return;
+                }
+                
+                // Still too large, try with lower quality
+                const newQuality = Math.max(0.5, currentQuality - 0.15);
+                console.log(`Image still too large (${(blob.size/1024).toFixed(1)}KB), reducing quality to ${newQuality.toFixed(2)}`);
+                tryQuality(newQuality, attempt + 1);
+              },
+              file.type,
+              currentQuality
+            );
+          };
+          
+          // Start with the provided quality
+          tryQuality(initialQuality);
+        };
+        
+        // Initial quality depends on file type
+        if (file.type === 'image/jpeg') {
+          processWithQuality(0.85); // Start with good quality for JPEG
+        } else {
+          processWithQuality(0.9); // Higher quality for PNG/GIF initially
+        }
       };
       
+      // Handle image load error
       img.onerror = () => {
         URL.revokeObjectURL(img.src);
-        reject(new Error("Failed to load image for resizing"));
+        reject(new Error("Failed to load image for processing"));
       };
+      
+      // Set image source
+      img.src = URL.createObjectURL(file);
     });
   }
 
