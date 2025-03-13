@@ -116,6 +116,16 @@
   }
 }
 
+.username-shrubber {
+  color: vars.$color-username-shrubber;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-shrubber;
+    content: " (Shrubber)";
+  }
+}
+
 .username-vip {
   color: vars.$color-username-vip;
   @extend %username-base;
