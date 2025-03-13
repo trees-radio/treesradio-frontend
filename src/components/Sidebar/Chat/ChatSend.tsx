@@ -233,7 +233,7 @@ class ChatSend extends React.Component {
   }
   
   // Handle paste event
-  handlePaste(e: ClipboardEvent) {
+  handlePaste = async (e: ClipboardEvent) => {
     if (!profile.user) {
       toast("You are not logged in!", { type: "error" });
       return;
@@ -246,10 +246,10 @@ class ChatSend extends React.Component {
         if (items[i].type.indexOf('image') !== -1) {
           const file = items[i].getAsFile();
           if (file) {
-            // If we found an image, process it
-            this.processImageFile(file);
-            // To prevent the clipboard from attempting to paste as text
+            // Prevent default paste behavior
             e.preventDefault();
+            // Process the image (wait for it to complete)
+            await this.processImageFile(file);
             return;
           }
         }
