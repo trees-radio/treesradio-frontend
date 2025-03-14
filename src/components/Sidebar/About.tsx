@@ -43,14 +43,14 @@ export default class About extends React.Component {
 
   render() {
     return (
-      <div className="px-4 pb-20 sidebar-about" style={this.props.show ? {} : { display: "none" }}>
-        <div className="my-3 about-summary font-bold text-[#77B420]">
-          <p className="text-xl">TreesRadio is an online social music site.</p>
+      <div className="px-4 pb-20 overflow-scroll" style={this.props.show ? {} : { display: "none" }}>
+        <div className="my-3 font-bold text-[#77B420] bg-gray-900 p-3 rounded">
+          <p className="text-lg text-center text-[#77B420] font-extrabold">TreesRadio is an online social music site.</p>
         </div>
         
-        <div className="mb-4 about-rules">
-          <div className="mb-2">Rules:</div>
-          <ol className="space-y-1 list-decimal outside ml-7">
+        <div className="mb-4 text-[#77B420] bg-[#131836] p-3 rounded">
+          <div className="mb-2 text-[#95d43d] font-bold bg-gray-900 p-3 rounded text-lg">Rules</div>
+          <ol className="space-y-1 list-decimal outside ml-7 text-[#77B420]">
             <li>Max Video length is 8 minutes without a mod exemption.</li>
             <li>Like/Dislike Skip Ratio = 1:1.5 (Must have atleast 5 dislikes)</li>
             <li>Do not try to buy/sell/give/trade drugs on TreesRadio.</li>
@@ -63,11 +63,9 @@ export default class About extends React.Component {
           </ol>
         </div>
         
-        <div className="mb-4 text-[#77B420]">Legal Information</div>
-        
         <div className="grid grid-cols-1 gap-3 mb-6 md:grid-cols-2">
           <div className="bg-[#131836] rounded p-3">
-            <div className="mb-2">Terms of Service</div>
+            <div className="m-0 mb-2 text-[#95d43d] font-bold bg-gray-900 p-3 rounded text-lg">Terms of Service</div>
             <ul className="space-y-2">
               <li className="flex items-center">
                 <span className="inline-block mr-2">→</span>
@@ -116,7 +114,7 @@ export default class About extends React.Component {
           </div>
           
           <div className="bg-[#131836] rounded p-3">
-            <div className="mb-2">Community Links</div>
+            <div className="mb-2 text-[#95d43d] font-bold bg-gray-900 p-3 rounded text-lg">Community Links</div>
             <ul className="space-y-2">
               <li className="flex items-center">
                 <span className="inline-block mr-2">→</span>
