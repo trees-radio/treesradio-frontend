@@ -1,17 +1,30 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Dialog, DialogTitle, DialogPanel } from '@headlessui/react';
-// import '../scss/Modal.scss';
 import profile from "../stores/profile";
 import Modal from "./utility/Modal";
+import { hasTosBeenAccepted, CURRENT_TOS_VERSION } from "../libs/tos";
 
 import $ from "cash-dom";
+
 const Login: FC = () => {
     // This is a login modal that's centered on the screen with a backdrop preventing interaction with the rest of the page.
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [resettingPassword, setResettingPassword] = useState(false);
     const [resetEmail, setResetEmail] = useState("");
+    const [tosAccepted, setTosAccepted] = useState(false);
+    
+    useEffect(() => {
+        // Check if user has already accepted TOS
+        const accepted = hasTosBeenAccepted();
+        setTosAccepted(accepted);
+    }, []);
+    
     const login = async () => {
+        if (!tosAccepted) {
+            return; // Prevent login if TOS not accepted
+        }
+        
         if (await profile.login(email, password)) {
             document.getElementById("chatscroll")?.setAttribute("style", "");
 
@@ -29,13 +42,19 @@ const Login: FC = () => {
 
             const buttons = document.querySelectorAll('.disabledNoLogin');
             buttons.forEach(button => button.classList.remove('greyDisabled'));
-
-            // TODO noop?
-            // profile.setAvatar(this.avatarField);
         }
     }
+    
     const resetPassword = async () =>
         await profile.sendPassReset(resetEmail) && setResettingPassword(false);
+
+    const register = () => {
+        if (!tosAccepted) {
+            return; // Prevent registration if TOS not accepted
+        }
+        
+        profile.register(email, password);
+    };
 
     return (
         <>
@@ -44,9 +63,9 @@ const Login: FC = () => {
                 
                 {/* Add this div to properly center the dialog content */}
                 <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 rounded-2xl">
-                    <DialogPanel className="w-full max-w-sm sm:max-w-md rounded bg-black p-4 sm:p-6 shadow-xl">
+                    <DialogPanel className="w-full max-w-sm p-4 bg-black rounded shadow-xl sm:max-w-md sm:p-6">
                         <DialogTitle>
-                            <span className="text-lg sm:text-xl font-bold">Login</span>
+                            <span className="text-lg font-bold sm:text-xl">Login</span>
                         </DialogTitle>
                         
                         <form className="mt-4 space-y-4">
@@ -57,7 +76,7 @@ const Login: FC = () => {
                                     name="email" 
                                     id="emailInput" 
                                     value={email}
-                                    className="p-2 mt-1 block w-full rounded-md border-gray-300 bg-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base sm:text-sm"
+                                    className="block w-full p-2 mt-1 text-base bg-gray-200 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     onChange={e => setEmail(e.target.value)}
                                     onKeyDown={e => e.key === "Enter" && $("#passInput").trigger("focus")} 
                                 />
@@ -69,32 +88,46 @@ const Login: FC = () => {
                                     type="password" 
                                     name="password" 
                                     id="passInput"
-                                    className="p-2 mt-1 block w-full rounded-md border-gray-300 bg-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base sm:text-sm"
+                                    className="block w-full p-2 mt-1 text-base bg-gray-200 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     onChange={e => setPassword(e.target.value)}
                                     value={password} 
                                 />
                             </div>
                             
-                            <div className="flex flex-col sm:flex-row gap-2 pt-3">
+                            <div className="flex flex-col gap-2 pt-3 sm:flex-row">
                                 <button 
                                     type="button"
-                                    className="btn btn-primary w-full p-2"
+                                    className={`btn btn-primary w-full p-2 ${!tosAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     id="loginbutton"
-                                    onClick={login}>Login</button>
+                                    onClick={login}
+                                    disabled={!tosAccepted}>
+                                    Login
+                                </button>
                                 <button 
                                     type="button"
-                                    className="btn btn-primary w-full p-2"
+                                    className={`btn btn-primary w-full p-2 ${!tosAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     id="regbutton"
-                                    onClick={() => profile.register(email, password)}>Register</button>
+                                    onClick={register}
+                                    disabled={!tosAccepted}>
+                                    Register
+                                </button>
                             </div>
                             
                             <div className="text-center">
                                 <button 
                                     type="button"
-                                    className="btn btn-secondary text-sm p-2"
+                                    className="p-2 text-sm btn btn-secondary"
                                     id="reset-password-btn"
-                                    onClick={() => setResettingPassword(true)}>Reset Password</button>
+                                    onClick={() => setResettingPassword(true)}>
+                                    Reset Password
+                                </button>
                             </div>
+                            
+                            {!tosAccepted && (
+                                <div className="text-sm text-center text-yellow-500">
+                                    You must accept the Terms of Service v{CURRENT_TOS_VERSION} before logging in
+                                </div>
+                            )}
                         </form>
                     </DialogPanel>
                 </div>
@@ -109,7 +142,7 @@ const Login: FC = () => {
             >
                 <p className="text-sm sm:text-base">Please enter the email of the account you would like to recover.</p>
                 <input
-                    className="form-control w-full mt-2 text-base sm:text-sm p-2 border rounded"
+                    className="w-full p-2 mt-2 text-base border rounded form-control sm:text-sm"
                     type="text"
                     value={resetEmail}
                     onChange={e => setResetEmail(e.target.value)}

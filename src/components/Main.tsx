@@ -1,6 +1,6 @@
 // NEW MAIN COMPONENT
 
-import { type FC } from "react";
+import { type FC, useState, useEffect } from "react";
 import { observer } from "mobx-react";
 
 import app from "../stores/app";
@@ -14,7 +14,9 @@ import PlaylistsPanel from "./Toolbar/PlaylistsPanel"
 import playlists from "../stores/playlists";
 import "react-toastify/dist/ReactToastify.css";
 import cn from "classnames";
-import TokeManager from "./toke/TokeManager"; // Import the TokeManager component
+import TokeManager from "./toke/TokeManager";
+import TOSAgreement from "./TOSAgreement";
+import { hasTosBeenAccepted, setTosAccepted } from "../libs/tos";
 
 // both are 1-indexed
 type DateTuple = [month: number, day: number];
@@ -46,17 +48,24 @@ const randomSplash = () =>
 const isSpecialOccasion = (event: SpecialOccasion) =>
     new Date().getDate() === specialOccasions[event][0] && (new Date().getMonth() + 1) === specialOccasions[event][1];
 
-const appClasses = cn({
-    "april-fools": isSpecialOccasion("april-fools"),
-    "playlist-open": false,
-})
-
-
-
 const Main: FC = () => {
+    // State to track TOS acceptance
+    const [tosAccepted, setTosAcceptedState] = useState<boolean>(hasTosBeenAccepted());
+    
+    // Handler for when TOS is accepted
+    const handleTosAccept = () => {
+        console.log("TOS accepted in Main component");
+        setTosAcceptedState(true);
+        setTosAccepted(true);
+    };
+    
+    // Log the current state for debugging
+    useEffect(() => {
+        console.log("TOS accepted state in Main:", tosAccepted);
+    }, [tosAccepted]);
+    
     //TODO April Fools Shenanigans
     if (!app.init) {
-
         return (
             <div className="main-load">
                 <div className="container main-loadingcard">
@@ -74,8 +83,17 @@ const Main: FC = () => {
         );
     }
 
+    const appClasses = cn({
+        "april-fools": isSpecialOccasion("april-fools"),
+        "playlist-open": false,
+    });
+
     return (
         <>
+            {/* TOS Agreement Dialog - only render when app is initialized */}
+            <TOSAgreement onAccept={handleTosAccept} />
+            
+            {/* Main App UI - will be visually obscured by the TOS dialog until accepted */}
             <div
                 className={appClasses}
                 id="app-grid"
