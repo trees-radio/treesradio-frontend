@@ -116,6 +116,16 @@
   }
 }
 
+.username-floridaman {
+  color: vars.$color-username-floridaman;
+  @extend %username-base;
+  
+  &::after {
+    color: vars.$color-rank-floridaman;
+    content: " (Florida Man)";
+  }
+}
+
 .username-shrubber {
   color: vars.$color-username-shrubber;
   @extend %username-base;
