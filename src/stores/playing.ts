@@ -15,8 +15,8 @@ import spacePineapples from "../assets/img/spacepineapples.jpg";
 import gelatoGif from "../assets/img/gelatogif.gif";
 
 const PLAYER_SYNC_CAP = 3; //seconds on end of video to ignore syncing
-const PLAYER_SYNC_START = 5; // percent
-const PLAYER_SYNC_SENSITIVITY = 2; //percent
+const PLAYER_SYNC_START = 2; // percent
+const PLAYER_SYNC_SENSITIVITY = 10; //percent
 export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 

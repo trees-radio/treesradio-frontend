@@ -81,6 +81,7 @@ const Player: FC = () => {
 
                         if (syncTo) {
                             playerRef.current?.seekTo(syncTo, "seconds");
+                            
                         }
                     }}
                     onError={(e) => playing.userReportsError(e)}
