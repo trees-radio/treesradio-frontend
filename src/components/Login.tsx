@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { Dialog, DialogTitle, DialogPanel } from '@headlessui/react';
 import profile from "../stores/profile";
 import Modal from "./utility/Modal";
-import { hasTosBeenAccepted, CURRENT_TOS_VERSION } from "../libs/tos";
+import { hasTosBeenAccepted } from "../libs/tos";
 
 import $ from "cash-dom";
 
@@ -18,7 +18,19 @@ const Login: FC = () => {
         // Check if user has already accepted TOS
         const accepted = hasTosBeenAccepted();
         setTosAccepted(accepted);
-    }, []);
+        
+        // Set up a listener to check for TOS acceptance changes
+        const checkTosInterval = setInterval(() => {
+            const currentAcceptance = hasTosBeenAccepted();
+            if (currentAcceptance !== tosAccepted) {
+                setTosAccepted(currentAcceptance);
+            }
+        }, 1000);
+        
+        return () => {
+            clearInterval(checkTosInterval);
+        };
+    }, [tosAccepted]);
     
     const login = async () => {
         if (!tosAccepted) {
@@ -55,6 +67,11 @@ const Login: FC = () => {
         
         profile.register(email, password);
     };
+
+    // If TOS not accepted, don't render the login form at all
+    if (!tosAccepted) {
+        return null;
+    }
 
     return (
         <>
@@ -97,18 +114,16 @@ const Login: FC = () => {
                             <div className="flex flex-col gap-2 pt-3 sm:flex-row">
                                 <button 
                                     type="button"
-                                    className={`btn btn-primary w-full p-2 ${!tosAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className="w-full p-2 btn btn-primary"
                                     id="loginbutton"
-                                    onClick={login}
-                                    disabled={!tosAccepted}>
+                                    onClick={login}>
                                     Login
                                 </button>
                                 <button 
                                     type="button"
-                                    className={`btn btn-primary w-full p-2 ${!tosAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className="w-full p-2 btn btn-primary"
                                     id="regbutton"
-                                    onClick={register}
-                                    disabled={!tosAccepted}>
+                                    onClick={register}>
                                     Register
                                 </button>
                             </div>
@@ -122,12 +137,6 @@ const Login: FC = () => {
                                     Reset Password
                                 </button>
                             </div>
-                            
-                            {!tosAccepted && (
-                                <div className="text-sm text-center text-yellow-500">
-                                    You must accept the Terms of Service v{CURRENT_TOS_VERSION} before logging in
-                                </div>
-                            )}
                         </form>
                     </DialogPanel>
                 </div>

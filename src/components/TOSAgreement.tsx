@@ -8,7 +8,7 @@ interface TOSAgreementProps {
 
 const TOSAgreement: FC<TOSAgreementProps> = ({ onAccept }) => {
   // Use state to control dialog visibility
-  const [showDialog, setShowDialog] = useState<boolean>(true);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
   const [previousVersion, setPreviousVersion] = useState<string | null>(null);
   
   useEffect(() => {
@@ -24,9 +24,14 @@ const TOSAgreement: FC<TOSAgreementProps> = ({ onAccept }) => {
       console.log("Current TOS version already accepted, hiding dialog");
       setShowDialog(false);
       onAccept();
-    } else if (hasAcceptedPreviously) {
-      // User has accepted a previous version, show dialog with update message
-      setPreviousVersion(acceptedVersion);
+    } else {
+      // Current version not accepted, show the dialog
+      setShowDialog(true);
+      
+      if (hasAcceptedPreviously) {
+        // User has accepted a previous version, show dialog with update message
+        setPreviousVersion(acceptedVersion);
+      }
     }
   }, [onAccept]);
 
@@ -44,13 +49,14 @@ const TOSAgreement: FC<TOSAgreementProps> = ({ onAccept }) => {
     <Dialog 
       open={showDialog} 
       onClose={() => {}} 
-      className="relative z-50"
+      className="relative z-[9999]"
       aria-labelledby="dialog-title" 
       aria-describedby="dialog-description"
+      id="terms-of-service"
     >
       <div className="fixed inset-0 bg-black/80" aria-hidden="true" />
       
-      <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6">
         <DialogPanel className="w-full max-w-md rounded bg-black p-6 shadow-xl border border-[rgb(119, 180, 32)]">
           <DialogTitle id="dialog-title">
             <div className="flex items-center justify-between">
