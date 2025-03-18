@@ -61,7 +61,6 @@ const TermsOfServicePage: FC = () => {
               <li>Freedom of expression and human rights</li>
             </ul>
             <p className="mb-2 font-medium text-[rgb(119, 180, 32)]">If you take issue with these values, or stand behind people like Trump, Putin, etc., you are not welcome here.</p>
-            <p className="text-xs italic">Note: Our community will be on hiatus from March 20 to April 20.</p>
             
             <h3 className="mt-4 mb-1 font-bold">3. User Content</h3>
             <p>You are solely responsible for the content you share, submit, or display on or through Trees Radio. You agree not to share content that violates any laws or infringes on others' rights.</p>
