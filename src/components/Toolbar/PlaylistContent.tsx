@@ -17,9 +17,25 @@ interface PlaylistContentProps {
  * - Regular playlist items
  */
 const PlaylistContent: React.FC<PlaylistContentProps> = ({ isMobile }) => {
+  const clearPlaylistSearch = () => {
+    playlists.clearPlaylistSearch();
+  };
   // Show loading indicator when searching
   if (playlists.searching) {
-    return <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />;
+    return (
+      <div className="playlist-search-results">
+        <div className="playlist-search-header">
+          <span>Waiting for results.</span>
+          <button
+            onClick={clearPlaylistSearch}
+            className="clear-search-btn"
+          >
+            <i className="fa fa-times" /> Clear
+          </button>
+        </div>
+        <i className="fa fa-spin fa-4x fa-circle-o-notch playlist-loading" />
+      </div>
+    );
   }
 
   // Show external search results

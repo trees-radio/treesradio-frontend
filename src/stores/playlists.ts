@@ -581,7 +581,7 @@ export default new (
             var channel = "";
             var duration = 0;
 
-            this.setOpenSearch(false);
+            // this.setOpenSearch(false);
 
             if (this.searchSource == "youtube") {
                 url = `https://www.youtube.com/watch?v=${video.id}`;
