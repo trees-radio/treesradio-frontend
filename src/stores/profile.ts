@@ -106,7 +106,7 @@ export default new (class Profile {
     }
 
     @action
-    setPresenceInterval(interval: Timer) {
+    setPresenceInterval(interval: Timer | undefined) {
         this.presenceInterval = interval;
     }
 
@@ -128,12 +128,15 @@ export default new (class Profile {
                 this.setUser(user);
                 const connectedRef = ref(db, ".info/connected");
                 onValue(connectedRef, snap => {
-                    if (snap.val()) {
+                    if (snap.val() && this.user) {
                         auth.updateCurrentUser(auth.currentUser);
-                        clearInterval(this.presenceInterval as number);
+                        if (this.presenceInterval) {
+                            clearInterval(this.presenceInterval as number);
+                            this.setPresenceInterval(undefined);
+                        }
 
                         // Create references
-                        const userPresenceRef = ref(db, `presence/${this.user?.uid}`);
+                        const userPresenceRef = ref(db, `presence/${this.user.uid}`);
                         const connectionRef = push(child(userPresenceRef, "connections"));
 
                         // Save this for cleanup
@@ -145,7 +148,7 @@ export default new (class Profile {
                         // Set initial data
                         set(connectionRef, {
                             timestamp: epoch(),
-                            uid: this.user?.uid
+                            uid: this.user.uid
                         });
 
                         // Set connected status
@@ -153,7 +156,8 @@ export default new (class Profile {
 
                         // Update timestamp periodically
                         const presenceInterval = setInterval(() => {
-                            set(child(connectionRef, "timestamp"), epoch());
+                            set(child(connectionRef, "timestamp"), epoch())
+                                .catch((error) => console.error("Error updating presence timestamp", error));
                         }, 10000);
 
                         this.setPresenceInterval(presenceInterval);
@@ -163,16 +167,14 @@ export default new (class Profile {
                             remove(this.ipRef);
                         }
 
-                        this.setIpRef(ref(db, `private/${this.user?.uid}/ip/${connectionRef.key}`));
+                        this.setIpRef(ref(db, `private/${this.user.uid}/ip/${connectionRef.key}`));
                         set(this.ipRef, app.ipAddress);
                         onDisconnect(this.ipRef).remove();
                     }
                 });
-                onDisconnect(ref(db, `presence/${this.user?.uid}`)).remove();
-                onValue(ref(db, `presence/${this.user?.uid}`), snap => {
-                    if (snap.val() === null) {
-                        this.setProfile(snap.val() || {});
-                    };
+                this.user && onDisconnect(ref(db, `presence/${this.user.uid}`)).remove();
+                this.user && onValue(ref(db, `presence/${this.user.uid}`), snap => {
+                    this.setProfile(snap.val() || {});
                 });
 
                 send("hello");
@@ -456,8 +458,8 @@ export default new (class Profile {
     @computed get eventsPath() {
         if (this.profile === null) {
             return false;
-        } else {
-            return `user_events/${this.user?.uid}`;
+        } else if (this.user) {
+            return `user_events/${this.user.uid}`;
         }
     }
 
@@ -491,20 +493,26 @@ export default new (class Profile {
     }
 
     setAvatar(url: string) {
-        if (!url) {
+        if (!url || !this.user) {
             return false;
         }
-        const avatar = ref(db, `avatars/${this.user?.uid}`);
+        const avatar = ref(db, `avatars/${this.user.uid}`);
         set(avatar, url);
     }
 
     @computed get avatarURL() {
-        const avatar = ref(db, `avatars/${this.user?.uid}`);
+        if (!this.user) {
+            return false;
+        }
+        const avatar = ref(db, `avatars/${this.user.uid}`);
         return get(avatar).then(snap => snap.val().toString());
     }
 
     clearAvatar() {
-        const avatar = ref(db, `avatars/${this.user?.uid}`);
+        if (!this.user) {
+            return false;
+        }
+        const avatar = ref(db, `avatars/${this.user.uid}`);
         return set(avatar, null);
     }
 
