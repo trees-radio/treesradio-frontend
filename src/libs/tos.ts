@@ -13,7 +13,6 @@ export const CURRENT_TOS_VERSION = "1.0.0";
 export const hasTosBeenAccepted = (): boolean => {
   try {
     const acceptedVersion = localStorage.getItem(TOS_ACCEPTED_KEY);
-    console.log("TOS check from storage - accepted version:", acceptedVersion, "current version:", CURRENT_TOS_VERSION);
     
     // Return true only if the accepted version matches the current version
     return acceptedVersion === CURRENT_TOS_VERSION;
