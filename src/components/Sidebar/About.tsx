@@ -71,6 +71,7 @@ export default class About extends React.Component {
                 <span className="inline-block mr-2">→</span>
                 <a
                   href="#"
+                  target="_blank"
                   onClick={this.resetTosAndRedirect}
                   className="text-[#77B420] hover:underline"
                 >
@@ -116,6 +117,12 @@ export default class About extends React.Component {
           <div className="bg-[#131836] rounded p-3">
             <div className="mb-2 text-[#95d43d] font-bold bg-gray-900 p-3 rounded text-lg">Community Links</div>
             <ul className="space-y-2">
+              <li className="flex items-center">
+                <span className="inline-block mr-2">→</span>
+                <a href="https://patreon.com/c/treesradio" target="_blank" rel="noopener noreferrer" className="text-[#77B420] hover:underline">
+                  Patreon
+                </a>
+              </li>
               <li className="flex items-center">
                 <span className="inline-block mr-2">→</span>
                 <a 
