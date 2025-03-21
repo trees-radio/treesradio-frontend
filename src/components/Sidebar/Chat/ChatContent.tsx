@@ -8,7 +8,12 @@ import Message from "./Message";
 import UserName from "../../utility/User/UserName";
 import UserAvatar from "../../utility/User/UserAvatar";
 
-const SCROLL_THRESHOLD = 150;
+// Increased scroll threshold to give users more room to scroll up
+const SCROLL_THRESHOLD = 300;
+// Higher threshold for detecting active reading
+const READING_THRESHOLD = 800;
+// Delay between auto-scrolls to avoid multiple scrolls
+const SCROLL_DEBOUNCE = 500;
 const IMAGE_LOAD_DELAY = 500;
 
 const ChatContent = observer(({ goToChat }) => {
@@ -16,6 +21,7 @@ const ChatContent = observer(({ goToChat }) => {
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [isUserNearBottom, setIsUserNearBottom] = useState(true);
+  const [isUserActivelyReading, setIsUserActivelyReading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const lastScrollHeightRef = useRef(0);
   const lastScrollTopRef = useRef(0);
@@ -23,6 +29,8 @@ const ChatContent = observer(({ goToChat }) => {
   const userScrollTimerRef = useRef<NodeJS.Timeout | Timer | null>(null);
   const pendingImageLoadsRef = useRef(0);
   const imageLoadTimerRef = useRef<NodeJS.Timeout | Timer | null>(null);
+  const scrollDebounceTimerRef = useRef<NodeJS.Timeout | Timer | null>(null);
+  const lastAutoScrollTimeRef = useRef(0);
   
   // Detect mobile devices
   useEffect(() => {
@@ -54,15 +62,49 @@ const ChatContent = observer(({ goToChat }) => {
     return distanceFromBottom <= SCROLL_THRESHOLD;
   }, []);
   
-  // Scroll to bottom function
+  // Check if user is actively reading previous messages
+  const checkIfActivelyReading = useCallback(() => {
+    if (!scrollRef.current) return false;
+    
+    const scrollElement = scrollRef.current;
+    const { scrollTop, scrollHeight, clientHeight } = scrollElement;
+    const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+    
+    // If user has scrolled up significantly, consider them as actively reading
+    return distanceFromBottom > READING_THRESHOLD;
+  }, []);
+  
+  // Scroll to bottom function with debouncing and respect for user reading
   const scrollToBottom = useCallback((smooth = false, force = false) => {
     if (!scrollRef.current) return;
     
+    const now = Date.now();
+    const timeSinceLastScroll = now - lastAutoScrollTimeRef.current;
+    
+    // Debounce scroll events to prevent rapid-fire scrolling
+    if (timeSinceLastScroll < SCROLL_DEBOUNCE && !force) {
+      // If we're already planning to scroll, don't schedule another one
+      if (scrollDebounceTimerRef.current) return;
+      
+      // Schedule a scroll after debounce period
+      scrollDebounceTimerRef.current = setTimeout(() => {
+        scrollToBottom(smooth, force);
+        scrollDebounceTimerRef.current = null;
+      }, SCROLL_DEBOUNCE - timeSinceLastScroll);
+      
+      return;
+    }
+    
+    // Don't auto-scroll if user is actively reading, unless forced
+    if (isUserActivelyReading && !force) {
+      return;
+    }
+    
+    // Only scroll if appropriate conditions are met
     if (force || (shouldAutoScroll && !isUserScrolling)) {
       const scrollElement = scrollRef.current;
       
       // Delay scrolling slightly to ensure images are rendered
-      // This helps with the layout shifting problem
       setTimeout(() => {
         scrollElement.scrollTo({
           top: scrollElement.scrollHeight,
@@ -71,19 +113,21 @@ const ChatContent = observer(({ goToChat }) => {
         
         lastScrollHeightRef.current = scrollElement.scrollHeight;
         lastScrollTopRef.current = scrollElement.scrollTop;
+        lastAutoScrollTimeRef.current = Date.now();
         
         if (force) {
           setIsUserNearBottom(true);
           setShouldAutoScroll(true);
+          setIsUserActivelyReading(false);
         }
       }, 10); // Small delay to let layout settle
     }
-  }, [shouldAutoScroll, isUserScrolling]);
+  }, [shouldAutoScroll, isUserScrolling, isUserActivelyReading]);
 
   useEffect(() => {
     // This effect handles layout changes caused by image loading
     const handleResize = () => {
-      if (shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
+      if (shouldAutoScroll && isUserNearBottom && !isUserScrolling && !isUserActivelyReading) {
         scrollToBottom(false, false);
       }
     };
@@ -100,7 +144,7 @@ const ChatContent = observer(({ goToChat }) => {
         };
       }
     }
-  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, scrollToBottom]);
+  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, scrollToBottom]);
 
   // Handle image loading
   const handleImageLoad = useCallback(() => {
@@ -112,13 +156,13 @@ const ChatContent = observer(({ goToChat }) => {
     
     if (pendingImageLoadsRef.current <= 0) {
       imageLoadTimerRef.current = setTimeout(() => {
-        if (shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
-          scrollToBottom(true, true);
+        if (shouldAutoScroll && isUserNearBottom && !isUserScrolling && !isUserActivelyReading) {
+          scrollToBottom(true, false);
         }
         pendingImageLoadsRef.current = 0;
       }, IMAGE_LOAD_DELAY);
     }
-  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, scrollToBottom]);
+  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, scrollToBottom]);
   
   const registerImageLoad = useCallback(() => {
     pendingImageLoadsRef.current += 1;
@@ -141,23 +185,21 @@ const ChatContent = observer(({ goToChat }) => {
         )
       );
       
+      // For important messages (bot messages or those with media), scroll more aggressively
       if (hasBotMessage || hasImages) {
-        setTimeout(() => scrollToBottom(false, true), 50);
-        setTimeout(() => scrollToBottom(false, true), 300);
-        // For mobile devices, add an extra delayed scroll to handle layout shifts
-        if (isMobile) {
-          setTimeout(() => scrollToBottom(false, true), 600);
-          setTimeout(() => scrollToBottom(false, true), 1000);
-        } else {
-          setTimeout(() => scrollToBottom(false, true), 800);
+        // Only force scroll if user is near bottom or it's a new session
+        if (isUserNearBottom || chat.messages.length <= 5) {
+          setTimeout(() => scrollToBottom(false, true), 50);
+          setTimeout(() => scrollToBottom(false, false), 300);
         }
-      } else if (shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
+      } else if (shouldAutoScroll && isUserNearBottom && !isUserScrolling && !isUserActivelyReading) {
+        // For regular messages, only scroll if user is near bottom and not actively reading
         setTimeout(() => scrollToBottom(false), 50);
       }
     }
     
     messagesLengthRef.current = chat.messages.length;
-  }, [chat.messages, scrollToBottom, shouldAutoScroll, isUserNearBottom, isUserScrolling, isMobile]);
+  }, [chat.messages, scrollToBottom, shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, isMobile]);
 
   // Use MutationObserver for DOM changes
   useEffect(() => {
@@ -188,8 +230,9 @@ const ChatContent = observer(({ goToChat }) => {
         }
       });
       
-      if (hasNewImages && pendingImageLoadsRef.current === 0 && shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
-        setTimeout(() => scrollToBottom(false, true), 50);
+      if (hasNewImages && pendingImageLoadsRef.current === 0 && 
+          shouldAutoScroll && isUserNearBottom && !isUserScrolling && !isUserActivelyReading) {
+        setTimeout(() => scrollToBottom(false, false), 50);
       }
     });
     
@@ -206,17 +249,17 @@ const ChatContent = observer(({ goToChat }) => {
         clearTimeout(imageLoadTimerRef.current);
       }
     };
-  }, [scrollToBottom, shouldAutoScroll, isUserNearBottom, isUserScrolling, handleImageLoad, registerImageLoad]);
+  }, [scrollToBottom, shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, handleImageLoad, registerImageLoad]);
 
   // Handle resize events
   useEffect(() => {
     if (!scrollRef.current) return;
     
     const resizeObserver = new ResizeObserver(() => {
-      if (shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
+      if (shouldAutoScroll && isUserNearBottom && !isUserScrolling && !isUserActivelyReading) {
         // Use longer delay on mobile for layout to stabilize
         const delay = isMobile ? 200 : 100;
-        setTimeout(() => scrollToBottom(false, true), delay);
+        setTimeout(() => scrollToBottom(false, false), delay);
       }
     });
     
@@ -225,7 +268,7 @@ const ChatContent = observer(({ goToChat }) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, scrollToBottom, isMobile]);
+  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, scrollToBottom, isMobile]);
 
   // Handle scroll events
   const handleScroll = useCallback(() => {
@@ -236,11 +279,18 @@ const ChatContent = observer(({ goToChat }) => {
     const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
     
     const isNearBottom = distanceFromBottom <= SCROLL_THRESHOLD;
-    setIsUserNearBottom(isNearBottom);
+    const isReading = distanceFromBottom > READING_THRESHOLD;
     
-    // Re-enable auto-scroll when user returns to bottom
+    setIsUserNearBottom(isNearBottom);
+    setIsUserActivelyReading(isReading);
+    
+    // Re-enable auto-scroll only when user returns to bottom
+    // This prevents accidentally toggling auto-scroll when scrolling through chat
     if (isNearBottom) {
       setShouldAutoScroll(true);
+    } else if (isReading) {
+      // Only disable auto-scroll when user has scrolled significantly up
+      setShouldAutoScroll(false);
     }
     
     lastScrollHeightRef.current = scrollHeight;
@@ -261,14 +311,18 @@ const ChatContent = observer(({ goToChat }) => {
       setIsUserScrolling(false);
       
       const isNearBottom = checkIfNearBottom();
-      setIsUserNearBottom(isNearBottom);
+      const isReading = checkIfActivelyReading();
       
+      setIsUserNearBottom(isNearBottom);
+      setIsUserActivelyReading(isReading);
+      
+      // Only re-enable auto-scroll if user is at the bottom
       if (isNearBottom) {
         setShouldAutoScroll(true);
         scrollToBottom(true);
       }
     }, 300);
-  }, [checkIfNearBottom, scrollToBottom]);
+  }, [checkIfNearBottom, checkIfActivelyReading, scrollToBottom]);
   
   // Mouse wheel handler
   const handleWheel = useCallback(() => {
@@ -282,13 +336,17 @@ const ChatContent = observer(({ goToChat }) => {
       setIsUserScrolling(false);
       
       const isNearBottom = checkIfNearBottom();
-      setIsUserNearBottom(isNearBottom);
+      const isReading = checkIfActivelyReading();
       
+      setIsUserNearBottom(isNearBottom);
+      setIsUserActivelyReading(isReading);
+      
+      // Only re-enable auto-scroll if user is at the bottom
       if (isNearBottom) {
         setShouldAutoScroll(true);
       }
     }, 300);
-  }, [checkIfNearBottom]);
+  }, [checkIfNearBottom, checkIfActivelyReading]);
 
   // Cleanup
   useEffect(() => {
@@ -299,14 +357,17 @@ const ChatContent = observer(({ goToChat }) => {
       if (imageLoadTimerRef.current) {
         clearTimeout(imageLoadTimerRef.current);
       }
+      if (scrollDebounceTimerRef.current) {
+        clearTimeout(scrollDebounceTimerRef.current);
+      }
     };
   }, []);
 
   const handleMessageLoad = useCallback(() => {
-    if (shouldAutoScroll && isUserNearBottom && !isUserScrolling) {
+    if (shouldAutoScroll && isUserNearBottom && !isUserScrolling && !isUserActivelyReading) {
       scrollToBottom();
     }
-  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, scrollToBottom]);
+  }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, scrollToBottom]);
 
   // Check if user has admin permissions
   const isAdmin = profile.isAdmin;
@@ -394,6 +455,7 @@ const ChatContent = observer(({ goToChat }) => {
           <div>Mobile view: {isMobile ? 'YES' : 'NO'}</div>
           <div>Auto-scroll: {shouldAutoScroll ? 'ON' : 'OFF'}</div>
           <div>Near bottom: {isUserNearBottom ? 'YES' : 'NO'}</div>
+          <div>Reading mode: {isUserActivelyReading ? 'YES' : 'NO'}</div>
           <div>User scrolling: {isUserScrolling ? 'YES' : 'NO'}</div>
           <div>Distance: {scrollRef.current ? 
             (scrollRef.current.scrollHeight - scrollRef.current.scrollTop - scrollRef.current.clientHeight).toFixed(0) : 'N/A'} px
