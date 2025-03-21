@@ -143,7 +143,7 @@ export default new (class Profile {
                         this.setPresenceRef(connectionRef);
 
                         // Handle disconnect
-                        onDisconnect(connectionRef).remove();
+                        // onDisconnect(connectionRef).remove();
 
                         // Set initial data
                         set(connectionRef, {
