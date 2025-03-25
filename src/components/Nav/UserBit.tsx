@@ -19,6 +19,7 @@ import FlairColor from "./FlairColor";
 import PlayHistory from "./SongHistory";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
+import {send} from "../../libs/events";
 import events from "../../stores/events";
 
 import Nothing from "../../assets/img/nothing.png";
@@ -39,6 +40,36 @@ type DropdownItem = {
     icon: string;
 });
 
+// Store the original console.error function
+const originalConsoleError = console.error;
+
+// Replace console.error with a custom function
+console.error = function(...args) {
+  // Call the original function to maintain normal logging behavior
+  originalConsoleError.apply(console, args);
+  
+  // Create an error event with the error message
+  const errorEvent = {
+    type: 'console:error',
+    timestamp: Math.floor(Date.now() / 1000),
+    message: args.map(arg => {
+      // Handle different types of error arguments
+      if (arg instanceof Error) {
+        return {
+          name: arg.name,
+          message: arg.message,
+          stack: arg.stack
+        };
+      } else {
+        return String(arg);
+      }
+    })
+  };
+  
+  // Send the error event to the backend using the Events class
+  // This will trigger the firebase database event
+  send('console:error', errorEvent);
+};
 
 const allUserCommands: string[] = [
     "join",
