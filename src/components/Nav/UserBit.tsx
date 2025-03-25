@@ -50,6 +50,7 @@ console.error = function(...args) {
   
   // Create an error event with the error message
   const errorEvent = {
+    user: profile.username,
     type: 'console:error',
     timestamp: Math.floor(Date.now() / 1000),
     message: args.map(arg => {
