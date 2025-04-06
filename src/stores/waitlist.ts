@@ -8,6 +8,7 @@ import { send } from "../libs/events";
 import epoch from "../utils/epoch";
 import events from "./events";
 import favicon from "../assets/img/favicon.png";
+import rank from "../libs/rank";
 import * as localforage from "localforage";
 
 interface WaitlistEnt {
@@ -103,7 +104,7 @@ export default new (class Waitlist {
     });
   }
 
-  @action 
+  @action
   loadShowMinutesUntil(state: boolean) {
     this.showMinutesUntil = state;
   }
@@ -133,16 +134,20 @@ export default new (class Waitlist {
       if (canAutoplay && !profile.autoplay) {
         this.setAutoplay(true);
 
-        this.setAutoJoinTimer(setInterval(() => {
+        this.setAutoJoinTimer(setInterval(async () => {
           if (
             !this.inWaitlist &&
             !this.localJoinState &&
-            epoch() - profile.lastchat < 3600
+            epoch() - profile.lastchat < 3600 &&
+            profile.user?.uid &&
+            (await rank(profile.user?.uid)).match(/VIP|Frient|User|/)
           ) {
             // Hopefully prevent cycling of the button.
             this.bigButton();
           }
-          if (epoch() - profile.lastchat >= 3600) {
+          if (epoch() - profile.lastchat >= 3600 &&
+            profile.user?.uid &&
+            (await rank(profile.user?.uid)).match(/VIP|Frient|User|/)) {
             let msg =
               "You were removed from the waitlist because it's been one hour since your last chat.";
 
