@@ -136,14 +136,16 @@ export default new (class Waitlist {
 
         this.setAutoJoinTimer(setInterval(async () => {
           if (
+            !this.isPlaying && // Add check to prevent autojoin during playback
             !this.inWaitlist &&
             !this.localJoinState &&
             epoch() - profile.lastchat < 3600 &&
             profile.user?.uid &&
             (await rank(profile.user?.uid)).match(/VIP|Frient|User|/)
           ) {
-            // Hopefully prevent cycling of the button.
-            this.bigButton();
+            // Only attempt to join, never skip
+            send("join_waitlist");
+            this.localJoinState = true;
           }
           if (epoch() - profile.lastchat >= 3600 &&
             profile.user?.uid &&
@@ -198,6 +200,18 @@ export default new (class Waitlist {
   }
 
   @action
+  skipSong() {
+    if (!profile.user) {
+      toast("You must be logged in to do that!", { type: "error" });
+      return;
+    }
+    if (this.isPlaying) {
+      chat.sendMsg("/skip", () => { });
+      this.localPlayingState = false;
+    }
+  }
+
+  @action
   bigButton() {
     if (!profile.user) {
       toast("You must be logged in to do that!", { type: "error" });
@@ -209,8 +223,7 @@ export default new (class Waitlist {
       this.localJoinState = this.inWaitlist;
       this.localPlayingState = this.isPlaying;
     } else if (this.isPlaying) {
-      chat.sendMsg("/skip", () => { });
-      this.localPlayingState = false;
+      this.skipSong();
     } else if (this.inWaitlist) {
       if (confirm("Are you sure?")) {
         send("leave_waitlist");
