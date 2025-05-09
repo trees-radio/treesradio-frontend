@@ -19,7 +19,7 @@ import disposable from "disposable-email";
 // const startup = epoch();
 import app from "./app";
 import * as localforage from "localforage";
-import { RANKS, RANKS_WITH_AUTOPLAY } from "../libs/constants";
+import { RANKS, RANKS_WITH_AUTOPLAY, hasRank } from "../libs/constants";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { User } from "@firebase/auth-types";
 
@@ -276,15 +276,7 @@ export default new (class Profile {
 
     @computed get canAutoplay() {
         if (this.user && this.user.uid) {
-            return rank(this.user.uid).then(userRank => {
-                console.log(`[DEBUG] canAutoplay check for rank: "${userRank}"`);
-
-                // Handle null or undefined ranks as "User"
-                if (!userRank) return false;
-
-                // Use our centralized constants
-                return RANKS_WITH_AUTOPLAY.includes(userRank);
-            });
+            return hasRank(this.user.uid, RANKS_WITH_AUTOPLAY);
         }
         return Promise.resolve(false);
     }
@@ -292,13 +284,7 @@ export default new (class Profile {
     @action
     async checkCanAutoplay() {
         if (this.user && this.user.uid) {
-            const userRank = await rank(this.user.uid);
-            console.log(`[DEBUG] checkCanAutoplay for rank: "${userRank}"`);
-
-            // Handle null or undefined ranks as "User"
-            if (!userRank) return false;
-
-            return RANKS_WITH_AUTOPLAY.includes(userRank);
+            return await hasRank(this.user.uid, RANKS_WITH_AUTOPLAY);
         }
         return false;
     }

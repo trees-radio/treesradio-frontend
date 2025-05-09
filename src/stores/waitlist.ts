@@ -15,7 +15,8 @@ import {
   RANKS_WITH_UNLIMITED_AUTOJOIN,
   HOUR_IN_SECONDS,
   AUTOJOIN_CHECK_INTERVAL,
-  STAFF_REFRESH_INTERVAL
+  STAFF_REFRESH_INTERVAL,
+  hasRank
 } from "../libs/constants";
 
 interface WaitlistEnt {
@@ -90,13 +91,12 @@ export default new (class Waitlist {
     // This ensures they don't get removed from the waitlist due to inactivity
     setInterval(async () => {
       if (profile.user?.uid) {
-        const userRank = await rank(profile.user.uid);
-        // Use our constants for consistent rank checking
-        const isStaff = RANKS_WITH_UNLIMITED_AUTOJOIN.includes(userRank);
+        // Use our utility function for consistent rank checking
+        const isStaff = await hasRank(profile.user.uid, RANKS_WITH_UNLIMITED_AUTOJOIN);
         
         if (isStaff && profile.autoplay) {
           // For staff users with autoplay enabled, refresh lastchat time to prevent timeout
-          console.log(`[DEBUG] Refreshing lastchat time for ${userRank} user`);
+          console.log(`[DEBUG] Refreshing lastchat time for staff user with UID: ${profile.user.uid}`);
           profile.lastchat = epoch();
         }
       }
@@ -167,16 +167,8 @@ export default new (class Waitlist {
   async hasAutoJoinTimeLimit(uid: string | undefined): Promise<boolean> {
     if (!uid) return true; // Default to having time limit if no uid
     
-    const userRank = await rank(uid);
-    console.log(`[DEBUG] User rank for ${uid}: "${userRank}"`);
-    
-    // Handle null or undefined ranks as "User"
-    if (!userRank) return true;
-    
-    // Use our centralized constants for ranks without time limits
-    
-    // Check if user's rank is in the list of ranks without time limits
-    const hasNoTimeLimit = RANKS_WITH_UNLIMITED_AUTOJOIN.includes(userRank);
+    // Use our utility function to check if user has a rank with unlimited autojoin
+    const hasNoTimeLimit = await hasRank(uid, RANKS_WITH_UNLIMITED_AUTOJOIN);
     console.log(`[DEBUG] User has no time limit: ${hasNoTimeLimit}`);
     
     // Inverse logic: return true if user HAS time limits (User or Frient)
@@ -224,7 +216,7 @@ export default new (class Waitlist {
           // Only check for time limits if the user actually has time restrictions
           // Also double-check that we're not mistakenly applying time limits to higher ranks
           if (userHasTimeLimit && timeSinceLastChat >= HOUR_IN_SECONDS && profile.user?.uid &&
-              !RANKS_WITH_UNLIMITED_AUTOJOIN.includes(await rank(profile.user.uid))) {
+              !(await hasRank(profile.user.uid, RANKS_WITH_UNLIMITED_AUTOJOIN))) {
             console.log(`[DEBUG] Auto-join removed: User has time limits and exceeded 1 hour`);
             let msg =
               "You were removed from the waitlist because it's been one hour since your last chat.";

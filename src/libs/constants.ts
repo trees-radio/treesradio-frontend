@@ -32,6 +32,25 @@ export const RANKS_WITH_UNLIMITED_AUTOJOIN = [
   RANKS.VIP
 ];
 
+// Rank utility function for consistent rank checking
+import { getUserRank } from './rank';
+
+/**
+ * Safely checks if a user has a specific rank or higher
+ * @param uid User ID to check
+ * @param allowedRanks Array of ranks that are allowed (in order of highest to lowest privilege)
+ * @returns Promise<boolean> True if user has one of the allowed ranks
+ */
+export async function hasRank(uid: string | undefined, allowedRanks: string[]): Promise<boolean> {
+  if (!uid) return false;
+  
+  // Use getUserRank instead of default rank function to ensure we have a fallback to "User"
+  const userRank = await getUserRank(uid);
+  console.log(`[RANK CHECK] User ${uid} has rank: "${userRank}"`);
+  
+  return allowedRanks.includes(userRank);
+}
+
 // Time constants
 export const HOUR_IN_SECONDS = 3600;
 export const AUTOJOIN_CHECK_INTERVAL = 10000; // 10 seconds
