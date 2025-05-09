@@ -10,6 +10,13 @@ import events from "./events";
 import favicon from "../assets/img/favicon.png";
 import rank from "../libs/rank";
 import * as localforage from "localforage";
+import {
+  RANKS,
+  RANKS_WITH_UNLIMITED_AUTOJOIN,
+  HOUR_IN_SECONDS,
+  AUTOJOIN_CHECK_INTERVAL,
+  STAFF_REFRESH_INTERVAL
+} from "../libs/constants";
 
 interface WaitlistEnt {
   uid: string;
@@ -84,7 +91,8 @@ export default new (class Waitlist {
     setInterval(async () => {
       if (profile.user?.uid) {
         const userRank = await rank(profile.user.uid);
-        const isStaff = ["Admin", "Mod", "Senior Mod", "Florida Man", "VIP"].includes(userRank);
+        // Use our constants for consistent rank checking
+        const isStaff = RANKS_WITH_UNLIMITED_AUTOJOIN.includes(userRank);
         
         if (isStaff && profile.autoplay) {
           // For staff users with autoplay enabled, refresh lastchat time to prevent timeout
@@ -92,7 +100,7 @@ export default new (class Waitlist {
           profile.lastchat = epoch();
         }
       }
-    }, 1800000); // Check every 30 minutes
+    }, STAFF_REFRESH_INTERVAL); // Check every 30 minutes
     getDatabaseRef("waitlist")
       .on("value", () => {
         this.reloadList();
@@ -165,11 +173,10 @@ export default new (class Waitlist {
     // Handle null or undefined ranks as "User"
     if (!userRank) return true;
     
-    // Explicitly defined list of ranks without time limits
-    const ranksWithoutTimeLimits = ["Admin", "Mod", "Senior Mod", "Florida Man", "Dev", "VIP"];
+    // Use our centralized constants for ranks without time limits
     
     // Check if user's rank is in the list of ranks without time limits
-    const hasNoTimeLimit = ranksWithoutTimeLimits.includes(userRank);
+    const hasNoTimeLimit = RANKS_WITH_UNLIMITED_AUTOJOIN.includes(userRank);
     console.log(`[DEBUG] User has no time limit: ${hasNoTimeLimit}`);
     
     // Inverse logic: return true if user HAS time limits (User or Frient)
@@ -203,7 +210,7 @@ export default new (class Waitlist {
             !this.isPlaying && // Add check to prevent autojoin during playback
             !this.inWaitlist &&
             !this.localJoinState &&
-            (!userHasTimeLimit || timeSinceLastChat < 3600) // Either user has no time limit OR has been active recently
+            (!userHasTimeLimit || timeSinceLastChat < HOUR_IN_SECONDS) // Either user has no time limit OR has been active recently
           ) {
             console.log(`[DEBUG] Auto-joining waitlist: User can join`);
             // Only attempt to join, never skip
@@ -216,8 +223,8 @@ export default new (class Waitlist {
           
           // Only check for time limits if the user actually has time restrictions
           // Also double-check that we're not mistakenly applying time limits to higher ranks
-          if (userHasTimeLimit && timeSinceLastChat >= 3600 && profile.user?.uid &&
-              !["Admin", "Mod", "Homie", "Supporter", "VIP"].includes(await rank(profile.user.uid))) {
+          if (userHasTimeLimit && timeSinceLastChat >= HOUR_IN_SECONDS && profile.user?.uid &&
+              !RANKS_WITH_UNLIMITED_AUTOJOIN.includes(await rank(profile.user.uid))) {
             console.log(`[DEBUG] Auto-join removed: User has time limits and exceeded 1 hour`);
             let msg =
               "You were removed from the waitlist because it's been one hour since your last chat.";
@@ -236,7 +243,7 @@ export default new (class Waitlist {
             this.setAutoplay(false);
             this.cancelAutojoin();
           }
-        }, 10000));
+        }, AUTOJOIN_CHECK_INTERVAL));
       } else {
         this.cancelAutojoin();
       }

@@ -19,6 +19,7 @@ import disposable from "disposable-email";
 // const startup = epoch();
 import app from "./app";
 import * as localforage from "localforage";
+import { RANKS, RANKS_WITH_AUTOPLAY } from "../libs/constants";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { User } from "@firebase/auth-types";
 
@@ -281,8 +282,8 @@ export default new (class Profile {
                 // Handle null or undefined ranks as "User"
                 if (!userRank) return false;
 
-                // Define ranks that can autoplay
-                return ranksWithAutoplay.includes(userRank);
+                // Use our centralized constants
+                return RANKS_WITH_AUTOPLAY.includes(userRank);
             });
         }
         return Promise.resolve(false);
@@ -297,7 +298,7 @@ export default new (class Profile {
             // Handle null or undefined ranks as "User"
             if (!userRank) return false;
 
-            return ranksWithAutoplay.includes(userRank);
+            return RANKS_WITH_AUTOPLAY.includes(userRank);
         }
         return false;
     }
