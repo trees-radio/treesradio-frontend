@@ -1,0 +1,47 @@
+---
+description: Specification for app algorithms including playlist management, toke sessions, waitlists, and chat synchronization
+globs: src/stores/*,src/components/**/toke/*,src/components/**/waitlist/*,src/components/**/chat/*
+alwaysApply: false
+---
+
+
+# Algorithms
+
+## Core Playlist Management
+- Playlist deduplication prevents duplicate songs by checking metadata before insertion
+- Custom ranking system for song scoring based on likes, grabs and time elapsed
+- Waitlist auto-join mechanism factors user rank and last chat activity
+- Toke session synchronized countdown with 4/20 special event handling
+
+## Chat Synchronization 
+- Message deduplication using key-timestamp map
+- Chat lock enforcement for new users based on registration time
+- Real-time chat image cleanup based on expiration metadata
+- Mention notification system with configurable time window
+
+## Waitlist Management
+- Time-based restrictions per user rank (User/Frient ranks limited)
+- Position calculation based on current song duration and elapsed time
+- Auto-removal on inactivity with desktop notifications
+- Skip protection during first 30 seconds of song
+
+## Toke Session Timing
+- Synchronized countdown across all participants
+- Special smoke effect algorithms during 4/20 events
+- Multi-session joining with participant tracking
+- Progress bar with dynamic color based on remaining time
+
+## Song History Tracking
+- Score calculation based on likes/grabs with online multiplier
+- Time-based filtering of expired entries 
+- Deduplication within configurable time window
+- Custom sorting by score with decay factor
+
+## File Paths
+- src/stores/playlist.ts
+- src/stores/chat.ts 
+- src/stores/waitlist.ts
+- src/stores/toke.ts
+- src/stores/songhistory.ts
+
+$END$

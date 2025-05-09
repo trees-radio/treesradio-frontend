@@ -1,0 +1,22 @@
+[
+  {
+    "fileName": "main-overview.mdc",
+    "description": "High-level system overview documenting the core architecture, key components, and their interactions within the TreesRadio application"
+  },
+  {
+    "fileName": "data-models.mdc",
+    "description": "Comprehensive documentation of the core data models including Profile, Chat, Playlist, Song, and User models with their relationships and Firebase schema definitions"
+  },
+  {
+    "fileName": "state-management.mdc",
+    "description": "Detailed documentation of the custom store implementations (profile, playlists, chat, playing) including state flow, computed properties, and real-time synchronization with Firebase"
+  },
+  {
+    "fileName": "algorithms.mdc",
+    "description": "Documentation of key algorithms including playlist management, toke session timing, waitlist management, and chat synchronization mechanisms"
+  },
+  {
+    "fileName": "component-flow.mdc",
+    "description": "Documentation of data and event flow between major components, focusing on the player, chat, playlist, and toke session interactions"
+  }
+]

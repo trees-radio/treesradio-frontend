@@ -1,0 +1,69 @@
+---
+description: Documents data and event flow between player, chat, playlist, and toke session components focusing on their interactions and dependencies.
+globs: src/components/**/*.{ts,tsx},src/stores/**/*.ts
+alwaysApply: false
+---
+
+
+# component-flow
+
+## Core Component Interactions
+
+### Player ↔ Chat Flow
+- Player state updates trigger chat notifications for song changes and errors
+- Chat commands can control player actions (volume, skip, etc.)
+- Player events update chat user status (watching/not watching)
+
+### Player ↔ Playlist Flow 
+- Playlist changes trigger player loading/unloading
+- Player completion advances to next playlist item
+- Player errors trigger playlist item skipping
+- Grab/like/dislike actions sync between components
+
+### Chat ↔ Toke Session Flow
+- Toke session announcements post to chat
+- Chat commands can initiate/join toke sessions 
+- User participation status syncs between components
+- Special 4/20 mode activates enhanced visuals in both
+
+### Player ↔ Waitlist Flow
+- Player completion triggers waitlist advancement
+- Waitlist position updates player queue
+- Skip actions coordinate between components
+- Auto-join triggered by player state
+
+## Key Integration Points
+
+### Profile Store Integration
+- Profile changes affect component permissions
+- Login state controls feature availability 
+- User preferences sync across components
+- Rank-based restrictions enforced
+
+### Event Store Integration 
+- Coordinates cross-component notifications
+- Manages state synchronization
+- Handles error propagation
+- Routes commands between components
+
+### Playlist Store Integration
+- Manages shared playlist state
+- Coordinates add/remove operations
+- Syncs play order changes
+- Handles search results routing
+
+## Data Flow Architecture
+
+### Real-time Updates
+- Firebase events trigger component updates
+- State changes propagate through stores
+- Components react to store mutations
+- Bi-directional sync maintained
+
+### User Action Flow
+- UI actions route through stores
+- Stores update Firebase state
+- Firebase updates trigger store mutations 
+- Components react to store changes
+
+$END$

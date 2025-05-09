@@ -1,0 +1,75 @@
+---
+description: Specification for complex state management patterns in a music streaming application with real-time synchronization and custom stores
+globs: src/stores/**/*.ts,src/stores/**/*.tsx
+alwaysApply: false
+---
+
+
+# state-management
+
+## Core Stores
+
+### Profile Store
+- Manages user authentication state and profile data
+- Implements custom rank system with permissions
+- Tracks user presence and IP logging
+- Handles email verification workflows
+- Maintains user preferences and settings
+
+### Playing Store
+- Synchronizes player state across clients
+- Implements custom volume nudging system
+- Manages feedback states (likes/dislikes/grabs)
+- Handles player size toggling and persistence
+- Reports player errors based on business rules
+
+### Chat Store
+- Implements message deduplication using key-timestamp mapping
+- Enforces chat lock for new users based on registration time
+- Handles mention notifications with time window checks
+- Filters messages based on user rank and silenced status
+
+### Waitlist Store
+- Manages auto-join functionality with rank-based time limits
+- Tracks user inactivity and enforces removals
+- Handles custom events for waitlist actions
+- Implements desktop notification system
+
+### Playlist Store
+- Synchronizes playlist data across devices using Firebase
+- Implements YouTube playlist import functionality
+- Manages playlist merging and song reordering
+- Handles search within playlists and result filtering
+
+### Toke Store
+- Manages timed "toke" sessions with participant tracking
+- Implements special 4/20 event handling
+- Controls session joining and cancellation permissions
+- Manages minimized state preferences
+
+### Hype Store
+- Implements hype timer with progress tracking
+- Manages hype readiness state
+- Controls explosive animation triggers
+- Tracks user hype actions
+
+## Real-time Synchronization
+- Uses Firebase for real-time data updates
+- Implements custom event system for state changes
+- Handles connection status and reconnection
+- Manages data persistence across sessions
+
+## State Flow
+- Profile → Permissions → Feature Access
+- Playing → Feedback → Leaderboard
+- Chat → Notifications → User Interaction
+- Waitlist → Auto-join → Player
+
+## Computed Properties
+- User status (banned, silenced, verified)
+- Player sync requirements
+- Hype availability
+- Session time remaining
+- Search result filtering
+
+$END$

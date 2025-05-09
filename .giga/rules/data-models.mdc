@@ -1,0 +1,62 @@
+---
+description: Specifies core data models and Firebase schemas for user profiles, chat, playlists, songs and relationships
+globs: src/stores/**/*.ts,src/components/**/Profile*.tsx,src/components/**/Chat*.tsx
+alwaysApply: false
+---
+
+
+# data-models
+
+## Core Data Models
+
+### Profile Model
+- User authentication state with rank-based permissions
+- Custom validation for disposable email addresses 
+- Session tracking with IP logging and presence detection
+- Computed states for user status (banned, silenced, verified)
+- Desktop notification preferences and autoplay settings
+
+### Chat Model
+- Message filtering based on user rank and silence status
+- Deduplication using key-timestamp mapping
+- Mention notifications with time window tracking
+- Chat lock enforcement for new registrations
+- Real-time message synchronization via Firebase
+
+### Playlist Model 
+- Playlist state management with Firebase sync
+- Search within playlist functionality
+- Playlist merging capabilities
+- YouTube playlist import handling
+- Selected playlist persistence in local storage
+
+### Song Model
+- Duration and progress tracking
+- Like/dislike/grab feedback system
+- Player synchronization thresholds
+- Error reporting with user feedback
+- Size toggle persistence
+
+### Relationships
+- Profile <-> Songs: User feedback and preferences
+- Profile <-> Playlists: Ownership and permissions 
+- Chat <-> Profile: Message filtering and ranking
+- Songs <-> Playlists: Organization and playback
+
+## Firebase Schema
+
+### Collections
+- /profiles/{uid}: User profile data
+- /chat/{messageId}: Chat messages
+- /playlists/{uid}/{playlistId}: User playlists
+- /songs/{songId}: Song metadata
+- /feedback/{songId}: Song feedback data
+- /online/{uid}: Online user presence
+
+### Security Rules
+- Profile write access requires email verification
+- Chat messages require valid username
+- Playlist modifications restricted to owners
+- Song feedback limited to authenticated users
+
+$END$
