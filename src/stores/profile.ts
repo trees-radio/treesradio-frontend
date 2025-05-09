@@ -74,6 +74,9 @@ export interface Profile {
     minimizedTokeDefault: boolean;
 }
 
+
+const ranksWithAutoplay = ["Admin", "Mod", "Senior Mod", "Florida Man", "VIP", "Dev", "Frient"];
+
 export default new (class Profile {
     @action
     setInit(val: boolean) {
@@ -272,7 +275,15 @@ export default new (class Profile {
 
     @computed get canAutoplay() {
         if (this.user && this.user.uid) {
-            return rank(this.user.uid).then(userRank => userRank !== "User");
+            return rank(this.user.uid).then(userRank => {
+                console.log(`[DEBUG] canAutoplay check for rank: "${userRank}"`);
+
+                // Handle null or undefined ranks as "User"
+                if (!userRank) return false;
+
+                // Define ranks that can autoplay
+                return ranksWithAutoplay.includes(userRank);
+            });
         }
         return Promise.resolve(false);
     }
@@ -281,7 +292,12 @@ export default new (class Profile {
     async checkCanAutoplay() {
         if (this.user && this.user.uid) {
             const userRank = await rank(this.user.uid);
-            return userRank !== "User";
+            console.log(`[DEBUG] checkCanAutoplay for rank: "${userRank}"`);
+
+            // Handle null or undefined ranks as "User"
+            if (!userRank) return false;
+
+            return ranksWithAutoplay.includes(userRank);
         }
         return false;
     }
