@@ -123,6 +123,14 @@ export default new (class Profile {
 
     constructor() {
         this.setInit(false);
+
+        // Load autoplay setting from localforage
+        localforage.getItem("autoplay").then((value) => {
+            if (value !== null) {
+                this._autoplay = value as boolean;
+            }
+        });
+
         auth.onAuthStateChanged(user => {
             if (user !== null) {
                 this.setUser(user);
@@ -239,7 +247,16 @@ export default new (class Profile {
     @observable accessor notifications = true;
     @observable accessor showmuted = false;
 
-    @observable accessor autoplay = false;
+    @observable accessor _autoplay = false;
+
+    @computed get autoplay() {
+        return this._autoplay;
+    }
+
+    set autoplay(value: boolean) {
+        this._autoplay = value;
+        localforage.setItem("autoplay", value);
+    }
 
     @observable accessor lastchat = epoch();
     @observable accessor presenceRef: any = null;

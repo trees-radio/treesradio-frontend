@@ -88,17 +88,30 @@ export default new (class Waitlist {
       this.setLocalPlayingState(this.isPlaying);
     });
 
-    let checkAutojoin = setInterval(async () => {
+    // Initialize autojoin immediately if user is logged in
+    const initAutojoin = async () => {
       if (profile.loggedIn && await profile.canAutoplay) {
-        let autoplay = profile.autoplay;
-        if (autoplay) {
+        if (profile.autoplay) {
           this.setAutojoin();
         }
-
-        clearInterval(checkAutojoin);
+        return true;
       }
-    }, 60000);
+      return false;
+    };
 
+    // Try to initialize autojoin immediately, and if it fails, check again periodically
+    initAutojoin().then(initialized => {
+      if (!initialized) {
+        // User wasn't logged in or couldn't autoplay yet, check again periodically
+        let checkAutojoin = setInterval(async () => {
+          if (await initAutojoin()) {
+            clearInterval(checkAutojoin);
+          }
+        }, 5000); // Check every 5 seconds instead of every minute
+      }
+    });
+
+    // Load UI preferences
     localforage.getItem("showminutes").then((value) => {
       this.loadShowMinutesUntil(typeof value === "boolean" ? value : false);
     });
@@ -116,12 +129,25 @@ export default new (class Waitlist {
 
   @action
   setAutoplay(state: boolean) {
+    // Update profile autoplay state (which now persists via localforage)
     profile.autoplay = state;
+    
+    // Update UI to reflect the current state
     if (state) {
       this.setAutojoin();
     } else {
       this.cancelAutojoin();
     }
+  }
+
+  // Check if a user has time restrictions on autojoin
+  async hasAutoJoinTimeLimit(uid: string | undefined): Promise<boolean> {
+    if (!uid) return true; // Default to having time limit if no uid
+    
+    const userRank = await rank(uid);
+    // Only User and Frient ranks have time limits
+    // All other ranks (VIP, Supporter, Homie, Mod, Admin) have unlimited autojoin
+    return userRank === "User" || userRank === "Frient";
   }
 
   @action
@@ -139,9 +165,8 @@ export default new (class Waitlist {
             !this.isPlaying && // Add check to prevent autojoin during playback
             !this.inWaitlist &&
             !this.localJoinState &&
-            epoch() - profile.lastchat < 3600 &&
-            profile.user?.uid &&
-            (await rank(profile.user?.uid)).match(/VIP|Frient|User|/)
+            (!(await this.hasAutoJoinTimeLimit(profile.user?.uid)) || // No time limit for higher ranks
+              (epoch() - profile.lastchat < 3600)) // Time limit for User/Frient ranks
           ) {
             // Only attempt to join, never skip
             send("join_waitlist");
@@ -149,7 +174,7 @@ export default new (class Waitlist {
           }
           if (epoch() - profile.lastchat >= 3600 &&
             profile.user?.uid &&
-            (await rank(profile.user?.uid)).match(/VIP|Frient|User|/)) {
+            await this.hasAutoJoinTimeLimit(profile.user?.uid)) {
             let msg =
               "You were removed from the waitlist because it's been one hour since your last chat.";
 
