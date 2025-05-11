@@ -53,5 +53,6 @@ export async function hasRank(uid: string | undefined, allowedRanks: string[]): 
 
 // Time constants
 export const HOUR_IN_SECONDS = 3600;
+export const FOUR_HOURS_IN_SECONDS = 14400; // 4 hours
 export const AUTOJOIN_CHECK_INTERVAL = 10000; // 10 seconds
 export const STAFF_REFRESH_INTERVAL = 1800000; // 30 minutes

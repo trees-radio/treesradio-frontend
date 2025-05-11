@@ -14,6 +14,7 @@ import {
   RANKS,
   RANKS_WITH_UNLIMITED_AUTOJOIN,
   HOUR_IN_SECONDS,
+  FOUR_HOURS_IN_SECONDS,
   AUTOJOIN_CHECK_INTERVAL,
   STAFF_REFRESH_INTERVAL,
   hasRank
@@ -164,46 +165,67 @@ export default new (class Waitlist {
   }
 
   // Check if a user has time restrictions on autojoin
-  async hasAutoJoinTimeLimit(uid: string | undefined): Promise<boolean> {
-    if (!uid) return true; // Default to having time limit if no uid
+  // Returns an object with boolean flags for different time limit types
+  async checkAutoJoinTimeLimit(uid: string | undefined): Promise<{
+    hasTimeLimit: boolean;
+    isFreint: boolean;
+  }> {
+    if (!uid) return { hasTimeLimit: true, isFreint: false }; // Default to having time limit if no uid
     
-    // Use our utility function to check if user has a rank with unlimited autojoin
+    // Check if user has no time limit (Admin, Mod, etc.)
     const hasNoTimeLimit = await hasRank(uid, RANKS_WITH_UNLIMITED_AUTOJOIN);
-    console.log(`[DEBUG] User has no time limit: ${hasNoTimeLimit}`);
     
-    // Inverse logic: return true if user HAS time limits (User or Frient)
-    return !hasNoTimeLimit;
+    // Check if user is a Frient (special 1-hour time limit)
+    const isFreint = !hasNoTimeLimit && await hasRank(uid, [RANKS.FRIENT]);
+    
+    console.log(`[DEBUG] Time limits: hasNoTimeLimit=${hasNoTimeLimit}, isFreint=${isFreint}`);
+    
+    return {
+      hasTimeLimit: !hasNoTimeLimit, // true if user has any time limits
+      isFreint // true only if user is specifically a Frient
+    };
   }
 
   @action
   setAutojoin() {
-    // Use a flag to prevent double execution
-    if (this._autojoinInProgress) return;
-    this._autojoinInProgress = true;
+    try {
+      // Use a flag to prevent double execution
+      if (this._autojoinInProgress) {
+        console.log("[DEBUG] Autojoin already in progress, ignoring request");
+        return;
+      }
+      this._autojoinInProgress = true;
 
-    profile.canAutoplay.then((canAutoplay) => {
-      console.log(`[DEBUG] setAutojoin: canAutoplay=${canAutoplay}, profileAutoplay=${profile.autoplay}`);
-      
-      // If user can autoplay, enable it regardless of current autoplay state
-      if (canAutoplay) {
-        // Don't set autoplay again if it's already true to avoid recursive calls
-        if (!profile.autoplay) {
-          this.setAutoplay(true);
-        }
+      profile.canAutoplay.then((canAutoplay) => {
+        console.log(`[DEBUG] setAutojoin: canAutoplay=${canAutoplay}, profileAutoplay=${profile.autoplay}`);
+        
+        // If user can autoplay, enable it regardless of current autoplay state
+        if (canAutoplay) {
+          // Don't set autoplay again if it's already true to avoid recursive calls
+          if (!profile.autoplay) {
+            this.setAutoplay(true);
+          }
 
         this.setAutoJoinTimer(setInterval(async () => {
-          const userHasTimeLimit = await this.hasAutoJoinTimeLimit(profile.user?.uid);
+          if (!profile.user?.uid) return;
+
+          // Get detailed time limit information
+          const timeLimits = await this.checkAutoJoinTimeLimit(profile.user.uid);
           const timeSinceLastChat = epoch() - profile.lastchat;
           
-          console.log(`[DEBUG] Auto-join check: hasTimeLimit=${userHasTimeLimit}, timeSinceLastChat=${timeSinceLastChat}s`);
+          console.log(`[DEBUG] Auto-join check: hasTimeLimit=${timeLimits.hasTimeLimit}, isFreint=${timeLimits.isFreint}, timeSinceLastChat=${timeSinceLastChat}s`);
           
           // Check if user should join waitlist
-          if (
-            !this.isPlaying && // Add check to prevent autojoin during playback
-            !this.inWaitlist &&
-            !this.localJoinState &&
-            (!userHasTimeLimit || timeSinceLastChat < HOUR_IN_SECONDS) // Either user has no time limit OR has been active recently
-          ) {
+          const shouldJoin = !this.isPlaying && // Don't join if already playing
+                            !this.inWaitlist && // Don't join if already in waitlist
+                            !this.localJoinState && // Don't join if local state says we're joining
+                            (
+                              !timeLimits.hasTimeLimit || // Either user has no time limits
+                              (timeLimits.isFreint && timeSinceLastChat < HOUR_IN_SECONDS) || // Frient with activity in last hour
+                              (!timeLimits.isFreint && timeSinceLastChat < FOUR_HOURS_IN_SECONDS) // Other ranks with activity in last 4 hours
+                            );
+          
+          if (shouldJoin) {
             console.log(`[DEBUG] Auto-joining waitlist: User can join`);
             // Only attempt to join, never skip
             send("join_waitlist");
@@ -213,13 +235,20 @@ export default new (class Waitlist {
           // Additional debug info about last chat time
           console.log(`[DEBUG] Last chat time: ${new Date(profile.lastchat * 1000).toLocaleTimeString()}, ${timeSinceLastChat} seconds ago`);
           
-          // Only check for time limits if the user actually has time restrictions
-          // Also double-check that we're not mistakenly applying time limits to higher ranks
-          if (userHasTimeLimit && timeSinceLastChat >= HOUR_IN_SECONDS && profile.user?.uid &&
-              !(await hasRank(profile.user.uid, RANKS_WITH_UNLIMITED_AUTOJOIN))) {
-            console.log(`[DEBUG] Auto-join removed: User has time limits and exceeded 1 hour`);
-            let msg =
-              "You were removed from the waitlist because it's been one hour since your last chat.";
+          // Check if we need to remove user from waitlist due to timeout
+          const shouldRemove =
+            timeLimits.hasTimeLimit && // Only apply to users with time limits
+            (
+              (timeLimits.isFreint && timeSinceLastChat >= HOUR_IN_SECONDS) || // Frient timeout after 1 hour
+              (!timeLimits.isFreint && timeSinceLastChat >= FOUR_HOURS_IN_SECONDS) // Other ranks timeout after 4 hours
+            );
+            
+          if (shouldRemove) {
+            console.log(`[DEBUG] Auto-join removed: User has time limits and exceeded time limit`);
+            
+            // Create appropriate message based on user rank
+            const timeLimit = timeLimits.isFreint ? "one hour" : "four hours";
+            let msg = `You were removed from the waitlist because it's been ${timeLimit} since your last chat.`;
 
             if (profile.desktopNotifications) {
               let options = {
@@ -237,26 +266,51 @@ export default new (class Waitlist {
           }
         }, AUTOJOIN_CHECK_INTERVAL));
       } else {
+        console.log("[DEBUG] User cannot autoplay, canceling autojoin");
         this.cancelAutojoin();
+        toast("Your rank doesn't allow auto-join", { type: "error" });
       }
       this._autojoinInProgress = false;
     }).catch(error => {
       console.error("Error in autojoin:", error);
+      toast("There was a problem enabling auto-join", { type: "error" });
       this.cancelAutojoin();
       this._autojoinInProgress = false;
+    }).finally(() => {
+      // Ensure flag is reset even if there's an uncaught error
+      setTimeout(() => {
+        if (this._autojoinInProgress) {
+          console.log("[DEBUG] Forcibly resetting autojoin flag after timeout");
+          this._autojoinInProgress = false;
+        }
+      }, 5000);
     });
+  } catch (error) {
+    console.error("Unexpected error in setAutojoin:", error);
+    this._autojoinInProgress = false;
+    toast("Unexpected error enabling auto-join", { type: "error" });
   }
+}
 
   @action
   setAutoJoinTimer(timer: Timer | boolean) {
     this.autojoinTimer = timer;
   }
   @action
-  async cancelAutojoin() {
-    if (await profile.canAutoplay && this.autojoinTimer != false) {
-      this.setAutoplay(false);
-      clearInterval(this.autojoinTimer as Timer);
-      this.setAutoJoinTimer(false);
+  cancelAutojoin() {
+    try {
+      // Always allow users to cancel auto-join regardless of permissions
+      if (this.autojoinTimer !== false) {
+        this.setAutoplay(false);
+        clearInterval(this.autojoinTimer as Timer);
+        this.setAutoJoinTimer(false);
+        console.log(`[DEBUG] Auto-join successfully canceled`);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Error canceling auto-join:", error);
+      return false;
     }
   }
 
@@ -306,13 +360,18 @@ export default new (class Waitlist {
   }
 
   @computed get inWaitlist() {
-    if (!profile.user) {
+    try {
+      if (!profile.user) {
+        return false;
+      }
+      if (this.isPlaying) {
+        return true;
+      }
+      return profile.user ? this.list.some((w) => w.uid === profile.user?.uid) : false;
+    } catch (error) {
+      console.error("Error checking waitlist status:", error);
       return false;
     }
-    if (this.isPlaying) {
-      return true;
-    }
-    return profile.user ? this.list.some((w) => w.uid === profile.user?.uid) : false;
   }
 
   @computed get isPlaying() {

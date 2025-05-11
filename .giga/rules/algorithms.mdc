@@ -1,47 +1,52 @@
 ---
-description: Specification for app algorithms including playlist management, toke sessions, waitlists, and chat synchronization
-globs: src/stores/*,src/components/**/toke/*,src/components/**/waitlist/*,src/components/**/chat/*
+description: Documents core algorithms for playlist management, user synchronization, and specialized event timing systems
+globs: src/stores/**/*.ts,src/components/**/toke/*.tsx,src/components/**/Player*.tsx,src/components/**/Playlist*.tsx
 alwaysApply: false
 ---
 
 
 # Algorithms
 
-## Core Playlist Management
-- Playlist deduplication prevents duplicate songs by checking metadata before insertion
-- Custom ranking system for song scoring based on likes, grabs and time elapsed
-- Waitlist auto-join mechanism factors user rank and last chat activity
-- Toke session synchronized countdown with 4/20 special event handling
+Key algorithm implementations across the platform:
 
-## Chat Synchronization 
-- Message deduplication using key-timestamp map
-- Chat lock enforcement for new users based on registration time
-- Real-time chat image cleanup based on expiration metadata
-- Mention notification system with configurable time window
+1. Playlist Synchronization (Importance: 95)
+- Custom sync threshold with 3-second end-of-video ignore window
+- Position tracking with 2% minimum play requirement
+- 10% time differential tolerance between server/client
+- Cross-platform media source normalization (YouTube/SoundCloud/Vimeo)
 
-## Waitlist Management
-- Time-based restrictions per user rank (User/Frient ranks limited)
-- Position calculation based on current song duration and elapsed time
-- Auto-removal on inactivity with desktop notifications
-- Skip protection during first 30 seconds of song
+2. Toke Session Management (Importance: 90) 
+- Multi-session coordination with participant frequency tracking
+- Special 4/20 event amplification (5 intensity levels)
+- Session progression percentage calculation
+- Time-based participant window management
 
-## Toke Session Timing
-- Synchronized countdown across all participants
-- Special smoke effect algorithms during 4/20 events
-- Multi-session joining with participant tracking
-- Progress bar with dynamic color based on remaining time
+3. Waitlist Algorithm (Importance: 85)
+- Tiered access control based on user rank
+- 1-hour activity requirement for standard users
+- Auto-removal after 60 minutes of inactivity
+- Position preservation during playback
 
-## Song History Tracking
-- Score calculation based on likes/grabs with online multiplier
-- Time-based filtering of expired entries 
-- Deduplication within configurable time window
-- Custom sorting by score with decay factor
+4. Chat System Rules (Importance: 80)
+- 24-hour message lifetime
+- 5-second mention notification window
+- 1800-second new user restriction period
+- Message grouping for consecutive posts
+- 500 character limit enforcement
 
-## File Paths
-- src/stores/playlist.ts
-- src/stores/chat.ts 
-- src/stores/waitlist.ts
-- src/stores/toke.ts
-- src/stores/songhistory.ts
+5. Media Management (Importance: 75)
+- Cross-platform search result normalization
+- Duplicate detection during playlist merging
+- Custom media duration calculations
+- Regional restriction validation
+
+File Paths:
+```
+src/stores/playlists.ts
+src/stores/toke.ts
+src/stores/waitlist.ts
+src/components/toke/TokeManager.tsx
+src/components/Player/PlayerSync.tsx
+```
 
 $END$

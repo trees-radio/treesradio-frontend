@@ -272,8 +272,26 @@ const UserBit: FC = () => {
         {
             name: "Auto Join Waitlist",
             action: () => {
-                Promise.resolve(waitlist.setAutojoin())
-                    .catch(error => console.error("Error in auto join:", error));
+                try {
+                    // Toggle between on and off
+                    if (profile.autoplay) {
+                        // Currently enabled, so turn it off
+                        const success = waitlist.cancelAutojoin();
+                        if (!success) {
+                            toast("Failed to turn off auto-join. Try refreshing the page.", { type: "error" });
+                        }
+                    } else {
+                        // Currently disabled, so turn it on
+                        Promise.resolve(waitlist.setAutojoin())
+                            .catch(error => {
+                                console.error("Error enabling auto-join:", error);
+                                toast("Error enabling auto-join. Please try again.", { type: "error" });
+                            });
+                    }
+                } catch (error) {
+                    console.error("Error toggling auto-join:", error);
+                    toast("Error with auto-join feature. Try refreshing your browser.", { type: "error" });
+                }
             },
             isCheckbox: true,
             isChecked: () => profile.autoplay
