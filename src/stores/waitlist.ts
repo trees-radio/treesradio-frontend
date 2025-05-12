@@ -8,7 +8,6 @@ import { send } from "../libs/events";
 import epoch from "../utils/epoch";
 import events from "./events";
 import favicon from "../assets/img/favicon.png";
-import rank from "../libs/rank";
 import * as localforage from "localforage";
 import {
   RANKS,

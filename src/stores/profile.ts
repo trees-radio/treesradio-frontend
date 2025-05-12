@@ -19,7 +19,7 @@ import disposable from "disposable-email";
 // const startup = epoch();
 import app from "./app";
 import * as localforage from "localforage";
-import { RANKS, RANKS_WITH_AUTOPLAY, hasRank } from "../libs/constants";
+import { RANKS_WITH_AUTOPLAY, hasRank } from "../libs/constants";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { User } from "@firebase/auth-types";
 
@@ -75,8 +75,6 @@ export interface Profile {
     minimizedTokeDefault: boolean;
 }
 
-
-const ranksWithAutoplay = ["Admin", "Mod", "Senior Mod", "Florida Man", "VIP", "Dev", "Frient"];
 
 export default new (class Profile {
     @action
