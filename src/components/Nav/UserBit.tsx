@@ -273,14 +273,30 @@ const UserBit: FC = () => {
             name: "Auto Join Waitlist",
             action: () => {
                 try {
-                    // Toggle between on and off
+                    console.log(`[DEBUG] Auto-join toggle clicked, current state: ${profile.autoplay}`);
+                    
+                    // Always directly use the cancelAutojoin method to turn off
+                    // and the setAutojoin method to turn on - this avoids relying on the profile.autoplay
+                    // state which might be out of sync
                     if (profile.autoplay) {
-                        // Currently enabled, so turn it off
-                        const success = waitlist.cancelAutojoin();
-                        if (!success) {
-                            toast("Failed to turn off auto-join. Try refreshing the page.", { type: "error" });
-                        }
+                        console.log("[DEBUG] Attempting to turn off auto-join");
+                        
+                        // Force autoplay state to false first to ensure UI updates
+                        profile.autoplay = false;
+                        
+                        // Then call our cancelAutojoin method
+                        setTimeout(() => {
+                            const success = waitlist.cancelAutojoin();
+                            console.log(`[DEBUG] Cancel autojoin result: ${success}`);
+                            
+                            if (!success) {
+                                toast("Failed to turn off auto-join. Try refreshing the page.", { type: "error" });
+                            } else {
+                                toast("Auto-join disabled", { type: "success" });
+                            }
+                        }, 0);
                     } else {
+                        console.log("[DEBUG] Attempting to turn on auto-join");
                         // Currently disabled, so turn it on
                         Promise.resolve(waitlist.setAutojoin())
                             .catch(error => {

@@ -152,14 +152,15 @@ export default new (class Waitlist {
   }
 
   @action
-  setAutoplay(state: boolean) {
+  setAutoplay(state: boolean, skipRecursion: boolean = false) {
     // Update profile autoplay state (which now persists via localforage)
     profile.autoplay = state;
+    console.log(`[DEBUG] Setting autoplay to: ${state}`);
     
-    // Update UI to reflect the current state
-    if (state) {
+    // Update UI to reflect the current state, but avoid recursion
+    if (state && !skipRecursion) {
       this.setAutojoin();
-    } else {
+    } else if (!state && !skipRecursion) {
       this.cancelAutojoin();
     }
   }
@@ -299,15 +300,19 @@ export default new (class Waitlist {
   @action
   cancelAutojoin() {
     try {
-      // Always allow users to cancel auto-join regardless of permissions
+      console.log(`[DEBUG] Canceling auto-join, current state: timer=${this.autojoinTimer}, autoplay=${profile.autoplay}`);
+      
+      // First stop the timer regardless of current state
       if (this.autojoinTimer !== false) {
-        this.setAutoplay(false);
         clearInterval(this.autojoinTimer as Timer);
         this.setAutoJoinTimer(false);
-        console.log(`[DEBUG] Auto-join successfully canceled`);
-        return true;
       }
-      return false;
+      
+      // Then update the profile state with skipRecursion=true to avoid infinite recursion
+      this.setAutoplay(false, true);
+      
+      console.log(`[DEBUG] Auto-join successfully canceled`);
+      return true;
     } catch (error) {
       console.error("Error canceling auto-join:", error);
       return false;
