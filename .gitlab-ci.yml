@@ -65,7 +65,8 @@ deploy_staging:
     - develop
   script:
     - 'dpl --skip_cleanup --provider=firebase
-    --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging'
+    --token=$FIREBASE_DEPLOY_STAGING --project=treesradio-staging
+    --extra-args="--force"'
 
 deploy_production:
   stage: deploy
@@ -80,4 +81,5 @@ deploy_production:
     - master
   script:
     - 'dpl --skip_cleanup --provider=firebase
-    --token=$FIREBASE_DEPLOY_PROD --project=treesradio-live'
+    --token=$FIREBASE_DEPLOY_PROD --project=treesradio-live
+    --extra-args="--force"'
