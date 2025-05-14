@@ -6,6 +6,7 @@ export const RANKS = {
   SENIOR_MOD: "Senior Mod",
   FLORIDA_MAN: "Florida Man",
   MOD: "Mod",
+  SHRUBBER: "Shrubber",
   VIP: "VIP",
   FRIENT: "Frient",
   USER: "User"
@@ -19,7 +20,8 @@ export const RANKS_WITH_AUTOPLAY = [
   RANKS.FLORIDA_MAN,
   RANKS.DEV,
   RANKS.VIP,
-  RANKS.FRIENT
+  RANKS.FRIENT,
+  RANKS.SHRUBBER
 ];
 
 // Ranks with unlimited autojoin time (no activity timeout)
@@ -29,7 +31,8 @@ export const RANKS_WITH_UNLIMITED_AUTOJOIN = [
   RANKS.SENIOR_MOD,
   RANKS.FLORIDA_MAN,
   RANKS.DEV,
-  RANKS.VIP
+  RANKS.VIP,
+  RANKS.SHRUBBER
 ];
 
 // Rank utility function for consistent rank checking
