@@ -9,8 +9,6 @@ import toast from "../../../utils/toast";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
-// Max image size in bytes (2MB)
-const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
 // Supported image types
 const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/gif"];
 
@@ -267,7 +265,7 @@ class ChatSend extends React.Component {
     }
     
     // For extremely large files, warn the user but continue processing
-    if (file.size > 10 * 1024 * 1024) { // 10MB
+    if (file.size > 50 * 1024 * 1024) { // 50MB
       toast("Large image - processing may take a moment", { type: "info" });
     }
 
@@ -339,69 +337,14 @@ class ChatSend extends React.Component {
                   return;
                 }
                 
-                // If size is acceptable or we've reached minimum quality, use this blob
-                if (blob.size <= MAX_IMAGE_SIZE || 
-                    (file.type === 'image/jpeg' && currentQuality <= 0.5) || 
-                    attempt >= 3) {
-                  
-                  // If we still have an extremely large file, do more aggressive dimension reduction
-                  if (blob.size > MAX_IMAGE_SIZE && attempt < 4) {
-                    // Create a new smaller canvas
-                    const rescaleCanvas = document.createElement('canvas');
-                    // Calculate a scale factor based on target size
-                    const scaleFactor = Math.min(0.7, Math.sqrt(MAX_IMAGE_SIZE / blob.size) * 0.9);
-                    rescaleCanvas.width = Math.max(300, Math.floor(canvas.width * scaleFactor));
-                    rescaleCanvas.height = Math.max(300, Math.floor(canvas.height * scaleFactor));
-                    
-                    const rescaleCtx = rescaleCanvas.getContext('2d');
-                    if (rescaleCtx) {
-                      rescaleCtx.drawImage(canvas, 0, 0, rescaleCanvas.width, rescaleCanvas.height);
-                      rescaleCanvas.toBlob(
-                        (rescaledBlob) => {
-                          if (rescaledBlob) {
-                            console.log(`Final size after dimension reduction: ${(rescaledBlob.size/1024).toFixed(1)}KB`);
-                            const finalFile = new File([rescaledBlob], file.name, {
-                              type: file.type,
-                              lastModified: Date.now()
-                            });
-                            resolve(finalFile);
-                          } else {
-                            // If all else fails, use the previous blob
-                            const finalFile = new File([blob], file.name, {
-                              type: file.type,
-                              lastModified: Date.now()
-                            });
-                            resolve(finalFile);
-                          }
-                        },
-                        file.type,
-                        currentQuality
-                      );
-                    } else {
-                      // Fallback if context fails
-                      const finalFile = new File([blob], file.name, {
-                        type: file.type,
-                        lastModified: Date.now()
-                      });
-                      resolve(finalFile);
-                    }
-                    return;
-                  }
-                  
-                  // Create file from blob
-                  const finalFile = new File([blob], file.name, {
-                    type: file.type,
-                    lastModified: Date.now()
-                  });
-                  console.log(`Final image size: ${(blob.size/1024).toFixed(1)}KB with quality ${currentQuality.toFixed(2)}`);
-                  resolve(finalFile);
-                  return;
-                }
-                
-                // Still too large, try with lower quality
-                const newQuality = Math.max(0.5, currentQuality - 0.15);
-                console.log(`Image still too large (${(blob.size/1024).toFixed(1)}KB), reducing quality to ${newQuality.toFixed(2)}`);
-                tryQuality(newQuality, attempt + 1);
+                // Always accept the processed image since we removed size limits
+                // The image has been resized and EXIF data stripped
+                const finalFile = new File([blob], file.name, {
+                  type: file.type,
+                  lastModified: Date.now()
+                });
+                console.log(`Final image size: ${(blob.size/1024).toFixed(1)}KB with quality ${currentQuality.toFixed(2)}`);
+                resolve(finalFile);
               },
               file.type,
               currentQuality
