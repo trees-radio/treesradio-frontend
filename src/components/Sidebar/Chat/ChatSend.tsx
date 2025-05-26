@@ -403,7 +403,9 @@ class ChatSend extends React.Component {
     const metadata = {
       customMetadata: {
         'expires_at': (Math.floor(Date.now() / 1000) + (6 * 60 * 60)).toString()
-      }
+      },
+      // Also add expires_at to root metadata for Firebase rules
+      expires_at: (Math.floor(Date.now() / 1000) + (6 * 60 * 60)).toString()
     };
 
     return new Promise((resolve, reject) => {
