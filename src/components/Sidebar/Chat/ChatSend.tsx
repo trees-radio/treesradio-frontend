@@ -329,7 +329,7 @@ class ChatSend extends React.Component {
         // Convert canvas to blob with adaptive quality
         const processWithQuality = (initialQuality: number) => {
           // Function to recursively try different qualities until size is acceptable
-          const tryQuality = (currentQuality: number, attempt: number = 1) => {
+          const tryQuality = (currentQuality: number) => {
             canvas.toBlob(
               (blob) => {
                 if (!blob) {
