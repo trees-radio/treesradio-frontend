@@ -416,9 +416,9 @@ const ChatContent = observer(({ goToChat }) => {
             "chat-item",
             chatPosClass,
             {
-              "blazebot-msg": msg.username === "BlazeBot"
-            },
-            profile.hideBlazeBot ? "blazebot-hide" : ""
+              "blazebot-msg": msg.username === "BlazeBot",
+              "blazebot-hide": profile.hideBlazeBot && msg.username === "BlazeBot"
+            }
           );
 
           const humanTimestamp = moment.unix(msg.timestamp).format("LT");
