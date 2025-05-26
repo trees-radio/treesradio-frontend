@@ -6,7 +6,8 @@ import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import chat from "../../../stores/chat";
 import profile from "../../../stores/profile";
 import toast from "../../../utils/toast";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
 import { v4 as uuidv4 } from "uuid";
 
 // Supported image types
@@ -337,14 +338,25 @@ class ChatSend extends React.Component {
                   return;
                 }
                 
-                // Always accept the processed image since we removed size limits
-                // The image has been resized and EXIF data stripped
-                const finalFile = new File([blob], file.name, {
-                  type: file.type,
-                  lastModified: Date.now()
-                });
-                console.log(`Final image size: ${(blob.size/1024).toFixed(1)}KB with quality ${currentQuality.toFixed(2)}`);
-                resolve(finalFile);
+                // Check if file size is under 2MB (Firebase Storage rule limit)
+                const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+                
+                if (blob.size <= maxSize) {
+                  // File is acceptable size
+                  const finalFile = new File([blob], file.name, {
+                    type: file.type,
+                    lastModified: Date.now()
+                  });
+                  console.log(`Final image size: ${(blob.size/1024).toFixed(1)}KB with quality ${currentQuality.toFixed(2)}`);
+                  resolve(finalFile);
+                } else if (currentQuality > 0.1) {
+                  // File too large, try lower quality
+                  console.log(`Image too large (${(blob.size/1024).toFixed(1)}KB), reducing quality from ${currentQuality.toFixed(2)} to ${(currentQuality * 0.8).toFixed(2)}`);
+                  tryQuality(currentQuality * 0.8);
+                } else {
+                  // Quality too low, reject
+                  reject(new Error(`Unable to compress image below 2MB limit. Current size: ${(blob.size/1024/1024).toFixed(1)}MB`));
+                }
               },
               file.type,
               currentQuality
@@ -390,28 +402,36 @@ class ChatSend extends React.Component {
   }
 
   uploadImage = async (file: File): Promise<string> => {
-    const storage = getStorage();
+    const storage = firebase.storage();
     const userId = profile.uid || 'anonymous';
     const timestamp = Date.now();
     const uniqueId = uuidv4().substring(0, 8);
     const extension = file.name.split('.').pop();
     
+    // Debug logging
+    console.log('Upload attempt:', {
+      userId,
+      authenticated: !!profile.user,
+      userUid: profile.user?.uid,
+      fileSize: file.size,
+      fileType: file.type
+    });
+    
     // Path format: chat_images/userId/timestamp_uniqueId.extension
-    const storageRef = ref(storage, `chat_images/${userId}/${timestamp}_${uniqueId}.${extension}`);
+    const storageRef = storage.ref(`chat_images/${userId}/${timestamp}_${uniqueId}.${extension}`);
     
     // Add expiration metadata - 6 hours from now in seconds
+    const expiresAt = (Math.floor(Date.now() / 1000) + (6 * 60 * 60)).toString();
     const metadata = {
       customMetadata: {
-        'expires_at': (Math.floor(Date.now() / 1000) + (6 * 60 * 60)).toString()
-      },
-      // Also add expires_at to root metadata for Firebase rules
-      expires_at: (Math.floor(Date.now() / 1000) + (6 * 60 * 60)).toString()
+        'expires_at': expiresAt
+      }
     };
 
     return new Promise((resolve, reject) => {
       this.setUploadingImage(true);
       
-      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+      const uploadTask = storageRef.put(file, metadata);
       
       uploadTask.on('state_changed',
         (snapshot) => {
@@ -420,12 +440,17 @@ class ChatSend extends React.Component {
           console.log(`Upload progress: ${progress.toFixed(2)}%`);
         },
         (error) => {
+          console.error('Upload error details:', {
+            code: error.code,
+            message: error.message,
+            serverResponse: error.serverResponse
+          });
           this.setUploadingImage(false);
           reject(error);
         },
         async () => {
           // Get download URL
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
           this.setUploadingImage(false);
           resolve(downloadURL);
         }
