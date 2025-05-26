@@ -43,107 +43,125 @@ export default new (class Chat {
   limit: number;
   // Track processed messages by key with their timestamps
   processedMessageKeys: Map<string, number> = new Map();
+  
+  // Store cleanup references
+  private chatRef: any = null;
+  private chatCallback: ((snap: any) => void) | null = null;
+  private chatLockRef: any = null;
+  private chatLockCallback: ((snap: any) => void) | null = null;
+  private focusHandler: (() => void) | null = null;
+  private blurHandler: (() => void) | null = null;
 
   constructor() {
     const myself = this;
-    window.onfocus = function () {
+    
+    // Fix: Store event handlers for proper cleanup
+    this.focusHandler = function () {
       myself.mentioncount = 0;
       // favico.badge(0);
       myself.werefocused = true;
     };
-    window.onblur = function () {
+    this.blurHandler = function () {
       myself.werefocused = false;
     };
-    getDatabaseRef("chat")
+    
+    window.addEventListener('focus', this.focusHandler);
+    window.addEventListener('blur', this.blurHandler);
+    
+    // Fix: Store chat listener reference and callback for cleanup
+    this.chatRef = getDatabaseRef("chat")
       .orderByChild("timestamp")
-      .limitToLast(200)
-      .on("value", snap => {
-        var msg: ChatMessages = snap.val();
-        // Clear the msgkeys array
-        this.clearMessageKeys();
-        
-        // Clean expired message keys before processing new messages
-        this.cleanExpiredMessageKeys();
+      .limitToLast(200);
+      
+    this.chatCallback = (snap: any) => {
+      var msg: ChatMessages = snap.val();
+      // Clear the msgkeys array
+      this.clearMessageKeys();
+      
+      // Clean expired message keys before processing new messages
+      this.cleanExpiredMessageKeys();
 
-        if (msg) {
-          Object.entries(msg).forEach(([key, msg]) => {
-            // Push the key to our msgkeys array to track active messages
-            this.pushMessageKey(key);
+      if (msg) {
+        Object.entries(msg).forEach(([key, msg]) => {
+          // Push the key to our msgkeys array to track active messages
+          this.pushMessageKey(key);
 
-            // Test if this is a single message or an array of messages.
-            if (Array.isArray(msg)) {
-              msg.forEach((m: ChatMessage) => {
-                if (m.uid !== profile.uid && m.silenced !== undefined && m.silenced === true) {
-                  if ((profile.rank && !profile.showmuted) || !profile.rank) return;
-                }
-              });
-              // This is supposed to be something but the backend doesn't do this??
-            } else {
-              // Skip processing if message timestamp is too old
-              const currentTime = epoch();
-              const messageAge = currentTime - msg.timestamp;
-              // Skip messages older than MESSAGE_EXPIRATION seconds
-              if (messageAge > MESSAGE_EXPIRATION) return;
-              
-              // Check if we've already processed this message
-              if (this.isMessageProcessed(key, msg.timestamp)) return;
-
-              // Mark as processed with its timestamp
-              this.markMessageProcessed(key, msg.timestamp);
-
-              msg.key = key;
-              if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
+          // Test if this is a single message or an array of messages.
+          if (Array.isArray(msg)) {
+            msg.forEach((m: ChatMessage) => {
+              if (m.uid !== profile.uid && m.silenced !== undefined && m.silenced === true) {
                 if ((profile.rank && !profile.showmuted) || !profile.rank) return;
               }
+            });
+            // This is supposed to be something but the backend doesn't do this??
+          } else {
+            // Skip processing if message timestamp is too old
+            const currentTime = epoch();
+            const messageAge = currentTime - msg.timestamp;
+            // Skip messages older than MESSAGE_EXPIRATION seconds
+            if (messageAge > MESSAGE_EXPIRATION) return;
+            
+            // Check if we've already processed this message
+            if (this.isMessageProcessed(key, msg.timestamp)) return;
 
-              if (
-                msg.adminOnly !== undefined &&
-                msg.adminOnly === true &&
-                (profile.rank === null || profile.rank.match(/User|Frient|VIP/i))
-              ) {
-                // This is an admin only message.
-                return;
-              }
-              if (
-                this.messages[this.messages.length - 1] &&
-                msg.username === this.messages[this.messages.length - 1].username
-              ) {
-                this.inlineMessage(msg);
-              } else {
-                msg.msgs = [msg.msg];
-                this.pushMessage(msg);
-              }
+            // Mark as processed with its timestamp
+            this.markMessageProcessed(key, msg.timestamp);
 
-              if (msg.mentions && profile.username) {
-                //mention check
-                let mentions = msg.mentions.map((s: string) => {
-                  return s ? s.substring(1).toLowerCase() : "";
-                });
-                let everyone = mentions.includes("everyone");
-                let mentioned = everyone;
-                if (!mentioned) {
-                  mentioned = mentions.includes(profile.safeUsername?.toLowerCase() || "");
-                }
-                // Only ping for mentions if the message is recent (within MENTION_RECENT_WINDOW seconds)
-                const isRecent = (epoch() - msg.timestamp) <= MENTION_RECENT_WINDOW;
-                if (mentioned && isRecent) {
-                  mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
-                  if (!this.werefocused) {
-                    this.mentioncount++;
-                    // favico.badge(this.mentioncount);
-                  }
+            msg.key = key;
+            if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
+              if ((profile.rank && !profile.showmuted) || !profile.rank) return;
+            }
+
+            if (
+              msg.adminOnly !== undefined &&
+              msg.adminOnly === true &&
+              (profile.rank === null || profile.rank.match(/User|Frient|VIP/i))
+            ) {
+              // This is an admin only message.
+              return;
+            }
+            if (
+              this.messages[this.messages.length - 1] &&
+              msg.username === this.messages[this.messages.length - 1].username
+            ) {
+              this.inlineMessage(msg);
+            } else {
+              msg.msgs = [msg.msg];
+              this.pushMessage(msg);
+            }
+
+            if (msg.mentions && profile.username) {
+              //mention check
+              let mentions = msg.mentions.map((s: string) => {
+                return s ? s.substring(1).toLowerCase() : "";
+              });
+              let everyone = mentions.includes("everyone");
+              let mentioned = everyone;
+              if (!mentioned) {
+                mentioned = mentions.includes(profile.safeUsername?.toLowerCase() || "");
+              }
+              // Only ping for mentions if the message is recent (within MENTION_RECENT_WINDOW seconds)
+              const isRecent = (epoch() - msg.timestamp) <= MENTION_RECENT_WINDOW;
+              if (mentioned && isRecent) {
+                mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
+                if (!this.werefocused) {
+                  this.mentioncount++;
+                  // favico.badge(this.mentioncount);
                 }
               }
             }
-          });
-          if (profile.isGifsHidden) {
-            $("img[alt='tenorgif']").css("display", "none");
-          } else {
-            $("img[alt='tenorgif']").css("display", "block");
           }
-          this.removeInactiveMessages();
+        });
+        if (profile.isGifsHidden) {
+          $("img[alt='tenorgif']").css("display", "none");
+        } else {
+          $("img[alt='tenorgif']").css("display", "block");
         }
-      });
+        this.removeInactiveMessages();
+      }
+    };
+    
+    this.chatRef.on("value", this.chatCallback);
 
     events.register("chat_clear", () => this.clearChat());
 
@@ -153,9 +171,37 @@ export default new (class Chat {
 
     this.limit = MSG_CHAR_LIMIT;
 
-    getDatabaseRef("backend")
-      .child("chatlock")
-      .on("value", snap => (this.chatLocked = !!snap.val())); // listen to backend chatlock value
+    // Fix: Store chat lock listener reference and callback for cleanup
+    this.chatLockRef = getDatabaseRef("backend").child("chatlock");
+    this.chatLockCallback = (snap: any) => (this.chatLocked = !!snap.val());
+    this.chatLockRef.on("value", this.chatLockCallback);
+  }
+
+  // Cleanup method to prevent memory leaks
+  cleanup() {
+    // Clean up chat listener
+    if (this.chatRef && this.chatCallback) {
+      this.chatRef.off("value", this.chatCallback);
+      this.chatRef = null;
+      this.chatCallback = null;
+    }
+    
+    // Clean up chat lock listener
+    if (this.chatLockRef && this.chatLockCallback) {
+      this.chatLockRef.off("value", this.chatLockCallback);
+      this.chatLockRef = null;
+      this.chatLockCallback = null;
+    }
+    
+    // Clean up window event listeners
+    if (this.focusHandler) {
+      window.removeEventListener('focus', this.focusHandler);
+      this.focusHandler = null;
+    }
+    if (this.blurHandler) {
+      window.removeEventListener('blur', this.blurHandler);
+      this.blurHandler = null;
+    }
   }
 
   @observable accessor messages: ChatMessage[] = [];

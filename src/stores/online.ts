@@ -13,13 +13,29 @@ export interface OnlineEnt {
 }
 
 export default new (class Online {
+  // Store cleanup references
+  private onlineEntsRef: any = null;
+  private onlineEntsCallback: (() => void) | null = null;
+
   constructor() {
     this.loadOnlineEnts();
 
-    getDatabaseRef("onlineents")
-      .on("value", () => {
-        this.loadOnlineEnts();
-      });
+    // Fix: Store reference and callback for proper cleanup
+    this.onlineEntsRef = getDatabaseRef("onlineents");
+    this.onlineEntsCallback = () => {
+      this.loadOnlineEnts();
+    };
+    
+    this.onlineEntsRef.on("value", this.onlineEntsCallback);
+  }
+
+  // Cleanup method to prevent memory leaks
+  cleanup() {
+    if (this.onlineEntsRef && this.onlineEntsCallback) {
+      this.onlineEntsRef.off("value", this.onlineEntsCallback);
+      this.onlineEntsRef = null;
+      this.onlineEntsCallback = null;
+    }
   }
 
   @action

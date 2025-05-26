@@ -21,25 +21,52 @@ export const VOLUME_NUDGE_FRACTION = 0.05; // out of 1
 
 
 export default new (class Playing {
+  // Store cleanup references
+  private playingRef: any = null;
+  private playingCallback: ((snap: any) => void) | null = null;
+  private autorunDisposer: (() => void) | null = null;
+
   constructor() {
     localforage.getItem<number>("volume").then((v) => (v ? (this.setVolume(v)) : false));
     localforage
       .getItem<string>("playerSize")
       .then((s) => (s ? (this.setPlayerSize(s)) : false));
 
-    autorun(() => {
-      const me = this
-      getDatabaseRef("playing")
-        .on("value", (snap) => {
-            var data = snap.val();
-            if (data) {
-              me.updatePlayer(data);
-            }
-        });
-        this.setLocalLikeState(this.liked);
-        this.setLocalDislikeState(this.disliked);
-        this.setLocalGrabState(this.grabbed);
+    // Fix: Store the autorun disposer and properly manage Firebase listener
+    this.autorunDisposer = autorun(() => {
+      // Clean up previous listener if it exists
+      if (this.playingRef && this.playingCallback) {
+        this.playingRef.off("value", this.playingCallback);
+      }
+      
+      const me = this;
+      this.playingRef = getDatabaseRef("playing");
+      this.playingCallback = (snap: any) => {
+        var data = snap.val();
+        if (data) {
+          me.updatePlayer(data);
+        }
+      };
+      
+      this.playingRef.on("value", this.playingCallback);
+      
+      this.setLocalLikeState(this.liked);
+      this.setLocalDislikeState(this.disliked);
+      this.setLocalGrabState(this.grabbed);
     });
+  }
+
+  // Cleanup method to prevent memory leaks
+  cleanup() {
+    if (this.playingRef && this.playingCallback) {
+      this.playingRef.off("value", this.playingCallback);
+      this.playingRef = null;
+      this.playingCallback = null;
+    }
+    if (this.autorunDisposer) {
+      this.autorunDisposer();
+      this.autorunDisposer = null;
+    }
   }
 
   @action setPlayerSize(s: string) {

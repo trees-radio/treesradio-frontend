@@ -17,21 +17,12 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = (props) => {
   const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
   
+  // Fix: Combine both resize handlers into a single useEffect to prevent duplicate listeners
   useEffect(() => {
     const handleResize = () => {
+      // Update mobile state
       setIsMobile(window.innerWidth < 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
-  
-  // Add an effect to handle resize events for better layout management
-  useEffect(() => {
-    const handleResize = () => {
+      
       // Force a scroll adjustment when the window resizes
       const chatScroll = document.getElementById('chatscroll');
       if (chatScroll) {
@@ -42,13 +33,15 @@ const Chat: React.FC<ChatProps> = (props) => {
       }
     };
     
-    // Add event listener for resize
+    // Add single resize event listener
     window.addEventListener('resize', handleResize);
     
     // Add a MutationObserver to watch for chat content changes
     const chatbox = document.getElementById('chatbox');
+    let observer: MutationObserver | null = null;
+    
     if (chatbox) {
-      const observer = new MutationObserver((mutations) => {
+      observer = new MutationObserver((mutations) => {
         let hasNewImages = false;
         
         mutations.forEach(mutation => {
@@ -70,20 +63,18 @@ const Chat: React.FC<ChatProps> = (props) => {
         }
       });
       
-      observer.observe(chatbox, { 
-        childList: true, 
-        subtree: true 
+      observer.observe(chatbox, {
+        childList: true,
+        subtree: true
       });
-      
-      // Cleanup
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        observer.disconnect();
-      };
     }
     
+    // Cleanup function
     return () => {
       window.removeEventListener('resize', handleResize);
+      if (observer) {
+        observer.disconnect();
+      }
     };
   }, []);
   

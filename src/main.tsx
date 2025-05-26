@@ -5,6 +5,8 @@ import './scss/core/index.scss'; // our scss entry
 import './scss/core/bulma.sass';
 import {Main} from './components/Main'
 import TermsOfServicePage from './components/TermsOfService'
+// Import cleanup manager to prevent memory leaks
+import './libs/cleanup'
 
 // Register service worker (if using vite-plugin-pwa)
 if ('serviceWorker' in navigator) {

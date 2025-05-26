@@ -12,19 +12,37 @@ const events: { [key: string]: boolean } = {};
 class Events {
   startup: number = epoch();
   emitter: Emitter<Record<EventType, unknown>>;
+  
+  // Store cleanup references
+  private eventsRef: any = null;
+  private eventsCallback: ((snap: any) => void) | null = null;
+  
   constructor() {
     this.startup = moment().unix();
     this.emitter = emitter;
-    getDatabaseRef("events").on("value", snap => {
+    
+    // Fix: Store reference and callback for proper cleanup
+    this.eventsRef = getDatabaseRef("events");
+    this.eventsCallback = (snap: any) => {
       var val = snap.val();
       if (val)
         Object.keys(val).forEach(key => {
           if (val[key] && val[key].timestamp > this.startup) {
             this.onEvent(val[key]);
           }
-        }
-        );
-    });
+        });
+    };
+    
+    this.eventsRef.on("value", this.eventsCallback);
+  }
+
+  // Cleanup method to prevent memory leaks
+  cleanup() {
+    if (this.eventsRef && this.eventsCallback) {
+      this.eventsRef.off("value", this.eventsCallback);
+      this.eventsRef = null;
+      this.eventsCallback = null;
+    }
   }
 
   async onEvent(evt: Event) {

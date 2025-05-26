@@ -9,6 +9,10 @@ class App {
   @observable accessor proceed = false;
   @observable accessor ipAddress: string | null = null;
   @observable accessor APP_EPOCH = epoch();
+  
+  // Store cleanup references
+  private epochInterval: number | null = null;
+  private connectedUnsubscribe: (() => void) | null = null;
 
   constructor() {
     // Bind methods explicitly
@@ -18,16 +22,28 @@ class App {
     this.getIP();
 
     const connectedRef = ref(db, ".info/connected");
-    onValue(connectedRef, (snap) => {
+    this.connectedUnsubscribe = onValue(connectedRef, (snap) => {
       this.setConnected(snap.val() === true);
       this.setProceed(snap.val() === true);
     });
 
-    setInterval(() => {
+    this.epochInterval = Number(setInterval(() => {
       this.APP_EPOCH = epoch();
-    }, 1000);
+    }, 1000));
 
     // makeAutoObservable(this);
+  }
+
+  // Cleanup method to prevent memory leaks
+  cleanup() {
+    if (this.epochInterval) {
+      clearInterval(this.epochInterval);
+      this.epochInterval = null;
+    }
+    if (this.connectedUnsubscribe) {
+      this.connectedUnsubscribe();
+      this.connectedUnsubscribe = null;
+    }
   }
 
   @computed get init() {
