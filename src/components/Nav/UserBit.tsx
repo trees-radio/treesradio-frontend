@@ -229,10 +229,9 @@ const UserBit: FC = () => {
         },
         {
             name: "Mention Audio?",
-            action: () => { profile.notifications = !profile.notifications; },
+            action: () => { profile.mentionAudio = !profile.mentionAudio; },
             isCheckbox: true,
-            isChecked: () => profile.notifications,
-            isAdminOnly: true
+            isChecked: () => profile.mentionAudio
         },
         {
             name: "Show Admin Debug?",

@@ -8,6 +8,9 @@ export default (content: ToastContent, options: ToastOptions) : Id => toast(cont
     autoClose: 8000,
     theme: "dark",
     transition: Flip,
+    closeOnClick: true,
+    pauseOnHover: false,
+    pauseOnFocusLoss: false,
     style: {
         zIndex: 9999
     }

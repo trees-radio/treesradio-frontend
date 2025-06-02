@@ -47,6 +47,7 @@ export interface Profile {
     banData: any;
     silenceData: any;
     notifications: boolean;
+    mentionAudio: boolean;
     showmuted: boolean;
     autoplay: boolean;
     lastchat: number;
@@ -130,6 +131,13 @@ export default new (class Profile {
         localforage.getItem("autoplay").then((value) => {
             if (value !== null) {
                 this._autoplay = value as boolean;
+            }
+        });
+
+        // Load mention audio setting from localforage
+        localforage.getItem("mentionAudio").then((value) => {
+            if (value !== null) {
+                this._mentionAudio = value as boolean;
             }
         });
 
@@ -219,6 +227,12 @@ export default new (class Profile {
                 const userRank = await rank(this.user.uid);
 
                 this.setRankAndPermissions(userRank, await getSettingsForRank(userRank));
+                
+                // Initialize mention audio setting based on rank
+                // FloridaMan defaults to no mention audio (as a "feature")
+                if (userRank === "Florida Man") {
+                    this._mentionAudio = false;
+                }
             }
         });
     }
@@ -258,6 +272,17 @@ export default new (class Profile {
     set autoplay(value: boolean) {
         this._autoplay = value;
         localforage.setItem("autoplay", value);
+    }
+
+    @observable accessor _mentionAudio = true;
+
+    @computed get mentionAudio() {
+        return this._mentionAudio;
+    }
+
+    set mentionAudio(value: boolean) {
+        this._mentionAudio = value;
+        localforage.setItem("mentionAudio", value);
     }
 
     @observable accessor lastchat = epoch();

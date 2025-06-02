@@ -28,7 +28,7 @@ export default function mention(_everyone: boolean, username: string, toke: bool
                 toast(notificationMessage, {type:"info"});
             }
         });
-        if (profile.notifications) audioNotify.play();
+        if (profile.mentionAudio) audioNotify.play();
     }
 
 }
