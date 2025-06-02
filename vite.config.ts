@@ -66,13 +66,83 @@ export default defineConfig({
                 main: 'index.html'
             },
             output: {
-                // Split chunks for better caching
+                // Enhanced chunk splitting for better caching and smaller bundles
                 manualChunks: {
-                    // Group React and related packages
+                    // Core React ecosystem
                     react: ['react', 'react-dom'],
-                    // Put large vendor packages in separate chunks
-                    vendor: ['mobx', 'mobx-react-lite', 'tailwindcss'],
-                    // You can define more chunks as needed
+                    
+                    // State management
+                    mobx: ['mobx', 'mobx-react'],
+                    
+                    // UI Libraries and components
+                    ui: [
+                        '@headlessui/react',
+                        '@heroicons/react',
+                        'react-toastify',
+                        'emoji-picker-react',
+                        'react-slider',
+                        'react-visibility-sensor'
+                    ],
+                    
+                    // Media and player related
+                    player: ['react-player', 'howler'],
+                    
+                    // Firebase core
+                    'firebase-core': [
+                        'firebase/compat/app',
+                        'firebase/app'
+                    ],
+                    
+                    // Firebase auth
+                    'firebase-auth': [
+                        'firebase/compat/auth',
+                        'firebase/auth'
+                    ],
+                    
+                    // Firebase database
+                    'firebase-database': [
+                        'firebase/compat/database',
+                        'firebase/compat/storage',
+                        'firebase/database'
+                    ],
+                    
+                    // Utility libraries
+                    utils: [
+                        'lodash',
+                        'axios',
+                        'uuid',
+                        'date-fns',
+                        'url-parse',
+                        'localforage',
+                        'mitt'
+                    ],
+                    
+                    // Date/time libraries (separate from utils due to size)
+                    datetime: ['moment'],
+                    
+                    
+                    // Markdown and text processing
+                    markdown: [
+                        'react-markdown',
+                        'marked',
+                        'dompurify',
+                        'rehype-raw'
+                    ],
+                    
+                    // Styling and CSS
+                    styles: ['tailwindcss', 'classnames'],
+                    
+                    // Legacy/jQuery and DOM manipulation
+                    legacy: ['jquery', 'cash-dom'],
+                    
+                    // Specialized libraries
+                    specialized: [
+                        'favico.js',
+                        'disposable-email',
+                        'immer',
+                        'rc-progress',
+                        'zustand'
+                    ]
                 }
             },
             // Preserve ESM modules for better tree shaking
