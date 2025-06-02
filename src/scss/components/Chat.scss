@@ -212,6 +212,53 @@
   }
 }
 
+// Mobile-specific mention styles
+.mentions-container-mobile {
+  background-color: rgba(173, 216, 230, 0.95);
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
+  min-width: 200px;
+  max-width: 90%;
+}
+
+.mention-hint-mobile {
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 4px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 4px;
+}
+
+.mention-item-mobile {
+  padding: 8px 12px;
+  margin: 2px 0;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: 500;
+  min-height: 44px; // Minimum touch target size
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  
+  &:active {
+    background-color: #4a90e2;
+    color: white;
+    transform: scale(0.98);
+  }
+  
+  &:hover {
+    background-color: rgba(74, 144, 226, 0.2);
+    text-decoration: none;
+  }
+}
+
 // Chat input area
 #sendbox {
   position: absolute;

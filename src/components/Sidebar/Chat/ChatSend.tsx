@@ -142,10 +142,12 @@ class ChatSend extends React.Component {
   onKeyDown(e: React.KeyboardEvent) {
     var key = e.keyCode || e.which;
     if (key === 9) {
+      // Always prevent default tab behavior to avoid tabbing out of chat
+      e.preventDefault();
       if (chat.mentionMatches.length > 0) {
-        e.preventDefault();
         chat.replaceMention(0);
       }
+      // If no matches, just prevent the default tab behavior but don't do anything else
     }
 
     if (key === 13) {
@@ -546,13 +548,31 @@ class ChatSend extends React.Component {
     if (chat.mentionMatches.length > 0) {
       var matches = chat.mentionMatches.map((m, i) => {
         return (
-          <span key={i} className="mention-item" onClick={() => chat.replaceMention(i)}>
+          <span
+            key={i}
+            className={`mention-item ${this.props.isMobile ? 'mention-item-mobile' : ''}`}
+            onClick={() => chat.replaceMention(i)}
+            onTouchEnd={(e) => {
+              // Prevent double-tap zoom on mobile
+              e.preventDefault();
+              chat.replaceMention(i);
+            }}
+          >
             {" "}
             @{m}
           </span>
         );
       });
-      matchContainer = <div className="mentions-container"> {matches} </div>;
+      matchContainer = (
+        <div className={`mentions-container ${this.props.isMobile ? 'mentions-container-mobile' : ''}`}>
+          {this.props.isMobile && (
+            <div className="mention-hint-mobile">
+              Tap to complete username:
+            </div>
+          )}
+          {matches}
+        </div>
+      );
     }
 
     const dropZoneClass = this.isDraggingOver 
