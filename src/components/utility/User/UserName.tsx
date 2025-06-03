@@ -123,11 +123,13 @@ export default class UserName extends React.Component {
     }
     return (
       <>
-        <span onClick={this.props.onClick || noop} className={usernameClasses}>
-          {this.state.username}
-          <img className={isPatreon} src={Marijuana} />
-        </span>
-        {flair}
+        {this.props.showFlair !== true && (
+          <span onClick={this.props.onClick || noop} className={usernameClasses}>
+            {this.state.username}
+            <img className={isPatreon} src={Marijuana} />
+          </span>
+        )}
+        {this.props.showFlair !== false && flair}
       </>
     );
   }

@@ -829,16 +829,32 @@ div > blockquote {
 // Message editing styles
 .chat-header {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 2px;
   margin-bottom: 4px;
+}
+
+.chat-username-container {
+  display: flex;
+  align-items: center;
+}
+
+.chat-flair-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  
+  .chat-flair-only {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
 }
 
 .chat-timestamp-actions {
   position: absolute;
   top: 8px;
   right: 8px;
-  z-index: 10;
+  z-index: 5;
   
   .chat-timestamp {
     margin: 0;

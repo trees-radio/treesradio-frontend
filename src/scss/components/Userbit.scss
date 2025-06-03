@@ -69,3 +69,14 @@ div .userbit-avatar span .avatarimg {
 div.modal-dialog {
   max-height: 30vh;
 }
+
+// Fix z-index for UserBit dropdown to appear above chat timestamps
+#userbitContainer {
+  position: relative;
+  z-index: 20;
+  
+  // Ensure the dropdown menu has proper z-index
+  [role="menu"] {
+    z-index: 30;
+  }
+}

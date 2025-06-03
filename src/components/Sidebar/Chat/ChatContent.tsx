@@ -453,14 +453,24 @@ const ChatContent = observer(({ goToChat }) => {
               </div>
               <div className="chat-msg">
                 <div className="chat-header">
-                  <UserName
-                    uid={msg.uid}
-                    className="chat-username"
-                    onClick={() => {
-                      chat.appendMsg("@" + msg.username + " ");
-                      goToChat();
-                    }}
-                  />
+                  <div className="chat-username-container">
+                    <UserName
+                      uid={msg.uid}
+                      className="chat-username"
+                      onClick={() => {
+                        chat.appendMsg("@" + msg.username + " ");
+                        goToChat();
+                      }}
+                      showFlair={false}
+                    />
+                  </div>
+                  <div className="chat-flair-container">
+                    <UserName
+                      uid={msg.uid}
+                      className="chat-flair-only"
+                      showFlair={true}
+                    />
+                  </div>
                 </div>
                 
                 <div className="chat-timestamp-actions">

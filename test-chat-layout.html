@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Layout Test</title>
+    <style>
+        body {
+            background: #1a0029;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .chat-item {
+            border-bottom: 1px solid #444;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+            background: rgba(18, 0, 41, 0.6);
+            display: flex;
+        }
+
+        .chat-avatar {
+            padding-right: 10px;
+        }
+
+        .avatarimg {
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+            background: #444;
+        }
+
+        .chat-msg {
+            flex: 1;
+            position: relative;
+        }
+
+        /* NEW LAYOUT STRUCTURE */
+        .chat-header {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .chat-username-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-flair-container {
+            display: flex;
+            align-items: center;
+            margin-left: 0;
+        }
+
+        .chat-username {
+            font-weight: bold;
+            color: #3498db;
+            cursor: pointer;
+            margin-right: 6px;
+        }
+
+        .username-admin {
+            color: #e74c3c;
+        }
+
+        .username-admin::after {
+            content: " (Admin)";
+            font-size: 0.8rem;
+            margin-left: 4px;
+            font-weight: normal;
+            color: #c0392b;
+        }
+
+        .username-mod {
+            color: #f39c12;
+        }
+
+        .username-mod::after {
+            content: " (Mod)";
+            font-size: 0.8rem;
+            margin-left: 4px;
+            font-weight: normal;
+            color: #e67e22;
+        }
+
+        .userflair {
+            color: #9b59b6;
+            font-size: 0.75rem;
+            line-height: 1.2;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chat-flair-only {
+            font-size: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .patreon {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 4px;
+            background: gold;
+            border-radius: 2px;
+        }
+
+        .chat-timestamp-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 5;
+        }
+
+        .chat-timestamp {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: normal;
+            white-space: nowrap;
+            transition: opacity 0.2s ease;
+        }
+
+        .message-actions {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            display: flex;
+            gap: 4px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 3px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 6px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .chat-item:hover .message-actions {
+            opacity: 1;
+        }
+
+        .chat-item:hover .chat-timestamp {
+            opacity: 0;
+        }
+
+        .chat-text {
+            margin-top: 4px;
+            font-size: 1rem;
+        }
+
+        .edited-indicator {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        /* UserBit dropdown simulation */
+        .userbit-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            background: #2c3e50;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #34495e;
+        }
+
+        .userbit-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: black;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 10px;
+            min-width: 200px;
+            z-index: 30;
+            margin-top: 5px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .comparison-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .comparison-section h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+
+        .old-layout .chat-header {
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .old-layout .chat-flair-container {
+            display: contents;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chat Layout Improvements</h1>
+        
+        <div class="userbit-container">
+            UserBit (z-index: 20)
+            <div class="userbit-dropdown">
+                Dropdown Menu (z-index: 30)
+                <div>• Set Avatar</div>
+                <div>• Change Password</div>
+                <div>• Logout</div>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <div class="comparison-section">
+                <h3>❌ Before (Crowded Layout)</h3>
+                <div class="chat-item old-layout">
+                    <div class="chat-avatar">
+                        <div class="avatarimg"></div>
+                    </div>
+                    <div class="chat-msg">
+                        <div class="chat-header">
+                            <div class="chat-username-container">
+                                <span class="chat-username username-admin">yellerjeep</span>
+                                <div class="patreon"></div>
+                            </div>
+                            <div class="chat-flair-container">
+                                <span class="userflair">keeper of magic</span>
+                            </div>
+                        </div>
+                        <div class="chat-timestamp-actions">
+                            <span class="chat-timestamp">8:39 AM <span class="edited-indicator">(edited)</span></span>
+                            <div class="message-actions">
+                                <button class="action-btn">Edit</button>
+                                <button class="action-btn">Delete</button>
+                            </div>
+                        </div>
+                        <div class="chat-text">
+                            working on a feature that allows you to edit your own messages. ← now edited
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <h3>✅ After (Improved Layout)</h3>
+                <div class="chat-item">
+                    <div class="chat-avatar">
+                        <div class="avatarimg"></div>
+                    </div>
+                    <div class="chat-msg">
+                        <div class="chat-header">
+                            <div class="chat-username-container">
+                                <span class="chat-username username-admin">yellerjeep</span>
+                                <div class="patreon"></div>
+                            </div>
+                            <div class="chat-flair-container">
+                                <span class="userflair">keeper of magic</span>
+                            </div>
+                        </div>
+                        <div class="chat-timestamp-actions">
+                            <span class="chat-timestamp">8:39 AM <span class="edited-indicator">(edited)</span></span>
+                            <div class="message-actions">
+                                <button class="action-btn">Edit</button>
+                                <button class="action-btn">Delete</button>
+                            </div>
+                        </div>
+                        <div class="chat-text">
+                            working on a feature that allows you to edit your own messages. ← now edited
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>More Examples</h2>
+        
+        <div class="chat-item">
+            <div class="chat-avatar">
+                <div class="avatarimg"></div>
+            </div>
+            <div class="chat-msg">
+                <div class="chat-header">
+                    <div class="chat-username-container">
+                        <span class="chat-username username-mod">IceMandrake</span>
+                    </div>
+                    <div class="chat-flair-container">
+                        <span class="userflair">Wishes they were cold</span>
+                    </div>
+                </div>
+                <div class="chat-timestamp-actions">
+                    <span class="chat-timestamp">8:41 AM</span>
+                    <div class="message-actions">
+                        <button class="action-btn">Edit</button>
+                        <button class="action-btn">Delete</button>
+                    </div>
+                </div>
+                <div class="chat-text">
+                    interesting
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-item">
+            <div class="chat-avatar">
+                <div class="avatarimg"></div>
+            </div>
+            <div class="chat-msg">
+                <div class="chat-header">
+                    <div class="chat-username-container">
+                        <span class="chat-username">BlazeBot</span>
+                    </div>
+                    <div class="chat-flair-container">
+                        <span class="userflair">(Bot)</span>
+                    </div>
+                </div>
+                <div class="chat-timestamp-actions">
+                    <span class="chat-timestamp">8:42 AM</span>
+                </div>
+                <div class="chat-text">
+                    Here I am, brain the size of a planet, and they tell me to play music for you stoners.
+                </div>
+            </div>
+        </div>
+
+        <h2>Key Improvements</h2>
+        <ul>
+            <li>✅ <strong>Flair moved below username</strong> - Reduces horizontal crowding</li>
+            <li>✅ <strong>Fixed z-index issue</strong> - UserBit dropdown (z-index: 20/30) now appears above chat timestamps (z-index: 5)</li>
+            <li>✅ <strong>Better vertical spacing</strong> - Chat header uses flex-direction: column</li>
+            <li>✅ <strong>Maintained functionality</strong> - Hover effects and edit controls still work</li>
+            <li>✅ <strong>Responsive design</strong> - Layout adapts to different content lengths</li>
+        </ul>
+
+        <p><em>Hover over the messages above to see the edit/delete buttons appear and timestamps hide.</em></p>
+    </div>
+</body>
+</html>
