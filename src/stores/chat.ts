@@ -33,6 +33,15 @@ export interface ChatMessage {
   msgs?: string[];
   mentions?: string[];
   key?: string;
+  // Message editing fields
+  edited?: boolean;
+  editedAt?: number;
+  deleted?: boolean;
+  deletedAt?: number;
+  editHistory?: Array<{
+    content: string;
+    timestamp: number;
+  }>;
 }
 
 export interface ChatMessages {
@@ -102,12 +111,28 @@ export default new (class Chat {
             if (messageAge > MESSAGE_EXPIRATION) return;
             
             // Check if we've already processed this message
-            if (this.isMessageProcessed(key, msg.timestamp)) return;
-
+            const wasProcessed = this.isMessageProcessed(key, msg.timestamp);
+            
             // Mark as processed with its timestamp
             this.markMessageProcessed(key, msg.timestamp);
 
             msg.key = key;
+            
+            // Handle deleted messages
+            if (msg.deleted) {
+              this.removeMessage(key);
+              return;
+            }
+            
+            // If this message was already processed but has a newer timestamp,
+            // it might be an edit - update the existing message
+            if (wasProcessed && msg.edited) {
+              this.updateExistingMessage(key, msg);
+              return;
+            }
+            
+            // Skip if already processed and not edited
+            if (wasProcessed) return;
             if (msg.uid !== profile.uid && msg.silenced !== undefined && msg.silenced === true) {
               if ((profile.rank && !profile.showmuted) || !profile.rank) return;
             }
@@ -290,6 +315,25 @@ export default new (class Chat {
   }
 
   @action
+  updateExistingMessage(key: string, updatedMsg: ChatMessage) {
+    const messageIndex = this.messages.findIndex(msg => msg.key === key);
+    if (messageIndex !== -1) {
+      // Update the existing message while preserving the msgs array structure
+      const existingMessage = this.messages[messageIndex];
+      this.messages[messageIndex] = {
+        ...existingMessage,
+        ...updatedMsg,
+        msgs: [updatedMsg.msg] // Update the message content
+      };
+    }
+  }
+
+  @action
+  removeMessage(key: string) {
+    this.messages = this.messages.filter(msg => msg.key !== key);
+  }
+
+  @action
   pushMessage(msg: ChatMessage) {
     this.messages.push(msg);
   }
@@ -340,6 +384,37 @@ export default new (class Chat {
     if (cb) {
       cb();
     }
+  }
+
+  @action
+  editMsg(messageKey: string, newMsg: string) {
+    console.log('editMsg called with:', messageKey, newMsg);
+    const mentions = newMsg.match(mentionPattern) || [];
+    
+    console.log('Sending chat_edit event:', {
+      messageKey,
+      msg: newMsg,
+      mentions
+    });
+    
+    send("chat_edit", {
+      messageKey,
+      msg: newMsg,
+      mentions
+    });
+  }
+
+  @action
+  deleteMsg(messageKey: string) {
+    console.log('deleteMsg called with:', messageKey);
+    
+    console.log('Sending chat_delete event:', {
+      messageKey
+    });
+    
+    send("chat_delete", {
+      messageKey
+    });
   }
 
   @computed get mentionMatches() {

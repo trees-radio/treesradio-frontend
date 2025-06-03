@@ -7,6 +7,8 @@ import moment from "moment";
 import Message from "./Message";
 import UserName from "../../utility/User/UserName";
 import UserAvatar from "../../utility/User/UserAvatar";
+import MessageActions from "./MessageActions";
+import MessageEditor from "./MessageEditor";
 
 // Increased scroll threshold to give users more room before auto-scrolling
 const SCROLL_THRESHOLD = 250;
@@ -21,6 +23,7 @@ const ChatContent = observer(({ goToChat }) => {
   const [isUserNearBottom, setIsUserNearBottom] = useState(true);
   const [isUserActivelyReading, setIsUserActivelyReading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [editingMessageKey, setEditingMessageKey] = useState<string | null>(null);
   const lastScrollHeightRef = useRef(0);
   const lastScrollTopRef = useRef(0);
   const messagesLengthRef = useRef(0);
@@ -390,6 +393,19 @@ const ChatContent = observer(({ goToChat }) => {
     }
   }, [shouldAutoScroll, isUserNearBottom, isUserScrolling, isUserActivelyReading, scrollToBottom]);
 
+  // Message editing handlers
+  const handleEditMessage = useCallback((messageKey: string) => {
+    setEditingMessageKey(messageKey);
+  }, []);
+
+  const handleSaveEdit = useCallback(() => {
+    setEditingMessageKey(null);
+  }, []);
+
+  const handleCancelEdit = useCallback(() => {
+    setEditingMessageKey(null);
+  }, []);
+
   // Check if user has admin permissions
   const isAdmin = profile.isAdmin;
 
@@ -422,34 +438,67 @@ const ChatContent = observer(({ goToChat }) => {
           );
 
           const humanTimestamp = moment.unix(msg.timestamp).format("LT");
+          const isEditing = editingMessageKey === msg.key;
+          const isDeleted = msg.deleted;
+          
+          // Don't render deleted messages
+          if (isDeleted) {
+            return null;
+          }
           
           return (
-            <li key={`${msg.key}+${i}`} className={chatLineClasses}>
+            <li key={`${msg.key}+${i}`} className={classNames(chatLineClasses, { 'editing': isEditing })}>
               <div className="chat-avatar">
                 <UserAvatar uid={msg.uid} />
               </div>
               <div className="chat-msg">
-                <UserName
-                  uid={msg.uid}
-                  className="chat-username"
-                  onClick={() => {
-                    chat.appendMsg("@" + msg.username + " ");
-                    goToChat();
-                  }}
-                />
-                <span className="chat-timestamp">{humanTimestamp}</span>
-                <br />
-                <span className="chat-text">
-                  {msg.msgs?.map((innerMsg: string, j: number) => (
-                    <Message
-                      key={`${msg.key}-${j}`}
-                      userName={msg.username}
-                      isEmote={msg.isemote || false}
-                      text={innerMsg}
-                      onLoad={handleMessageLoad}
-                    />
-                  ))}
-                </span>
+                <div className="chat-header">
+                  <UserName
+                    uid={msg.uid}
+                    className="chat-username"
+                    onClick={() => {
+                      chat.appendMsg("@" + msg.username + " ");
+                      goToChat();
+                    }}
+                  />
+                </div>
+                
+                <div className="chat-timestamp-actions">
+                  <span className="chat-timestamp">
+                    {humanTimestamp}
+                    {msg.edited && (
+                      <span className="edited-indicator" title={`Edited ${moment.unix(msg.editedAt || 0).format("LT")}`}>
+                        {" "}(edited)
+                      </span>
+                    )}
+                  </span>
+                  <MessageActions
+                    message={msg}
+                    onEdit={() => handleEditMessage(msg.key!)}
+                    onCancelEdit={handleCancelEdit}
+                    isEditing={isEditing}
+                  />
+                </div>
+                
+                {isEditing ? (
+                  <MessageEditor
+                    message={msg}
+                    onSave={handleSaveEdit}
+                    onCancel={handleCancelEdit}
+                  />
+                ) : (
+                  <span className="chat-text">
+                    {msg.msgs?.map((innerMsg: string, j: number) => (
+                      <Message
+                        key={`${msg.key}-${j}`}
+                        userName={msg.username}
+                        isEmote={msg.isemote || false}
+                        text={innerMsg}
+                        onLoad={handleMessageLoad}
+                      />
+                    ))}
+                  </span>
+                )}
               </div>
             </li>
           );

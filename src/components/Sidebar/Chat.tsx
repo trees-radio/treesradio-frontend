@@ -79,9 +79,9 @@ const Chat: React.FC<ChatProps> = (props) => {
   }, []);
   
   return (
-    <div 
-      id="chatcontainer" 
-      className="flex flex-col flex-1 overflow-hidden" 
+    <div
+      id="chatcontainer"
+      className="flex flex-col flex-1 overflow-hidden"
       style={props.show ? {} : { display: "none" }}
     >
       <ChatContent goToChat={props.goToChat} />

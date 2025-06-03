@@ -23,6 +23,7 @@
   width: 98%;
   display: flex;
   border-radius: 8px;
+  position: relative;
 }
 
 // Username styles
@@ -30,9 +31,14 @@
   font-weight: bolder;
   font-size: 1rem;
   cursor: pointer;
+  margin-right: 6px;
   
   &:hover {
     text-decoration: underline;
+  }
+  
+  .chat-header & {
+    margin-right: 0;
   }
 }
 
@@ -41,9 +47,15 @@
   color: vars.$color-user-flair;
   font-size: 0.75rem;
   line-height: 1.5;
+  margin-left: 4px;
   
   .modal-body & {
     font-size: 0.8rem;
+  }
+  
+  .chat-header & {
+    margin-left: 4px;
+    margin-right: 4px;
   }
 }
 
@@ -53,6 +65,9 @@
   height: 18px;
   color: gold;
   display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  margin-right: 2px;
 }
 
 .nopatreon {
@@ -63,6 +78,8 @@
 %username-base {
   &::after {
     font-size: vars.$rank-font-size;
+    margin-left: 4px;
+    font-weight: normal;
   }
 }
 
@@ -343,8 +360,10 @@
 
 // Chat timestamps
 .chat-timestamp {
-  float: right;
-  font-size: .8rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: normal;
+  white-space: nowrap;
 }
 
 // Image styles
@@ -804,6 +823,286 @@ div > blockquote {
   .chat-image-uploaded {
     max-width: 150px;
     max-height: 150px;
+  }
+}
+
+// Message editing styles
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.chat-timestamp-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  
+  .chat-timestamp {
+    margin: 0;
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+  
+  .message-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin: 0;
+    
+    // Hide timestamp when actions are visible
+    &:not(:empty) {
+      ~ .chat-timestamp {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+// Show actions on hover, hide timestamp
+.chat-item:hover .chat-timestamp-actions {
+  .message-actions {
+    opacity: 1;
+  }
+  
+  .chat-timestamp {
+    opacity: 0;
+  }
+}
+
+// On mobile, always show actions if they exist
+@media (max-width: 768px) {
+  .chat-timestamp-actions .message-actions:not(:empty) {
+    opacity: 1;
+    
+    ~ .chat-timestamp {
+      opacity: 0;
+    }
+  }
+}
+
+.edited-indicator {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.message-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-left: 8px;
+
+  .action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    &.edit-btn:hover {
+      background: rgba(52, 152, 219, 0.3);
+      color: #3498db;
+    }
+
+    &.delete-btn:hover {
+      background: rgba(231, 76, 60, 0.3);
+      color: #e74c3c;
+    }
+
+    &.confirm-delete-btn {
+      background: rgba(231, 76, 60, 0.3);
+      color: #e74c3c;
+
+      &:hover {
+        background: rgba(231, 76, 60, 0.5);
+      }
+    }
+
+    &.cancel-delete-btn {
+      background: rgba(149, 165, 166, 0.3);
+      color: #95a5a6;
+
+      &:hover {
+        background: rgba(149, 165, 166, 0.5);
+      }
+    }
+  }
+
+  .delete-confirmation {
+    display: flex;
+    gap: 2px;
+  }
+}
+
+
+.chat-item.editing {
+  background-color: rgba(52, 152, 219, 0.1) !important;
+  border-left: 3px solid #3498db;
+}
+
+// Message editor styles
+.message-editor {
+  margin-top: 8px;
+  
+  .editor-container {
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .edit-textarea {
+    width: 100%;
+    min-height: 60px;
+    max-height: 200px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    
+    &:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .mention-suggestions {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    max-height: 120px;
+    overflow-y: auto;
+    z-index: 1000;
+
+    .mention-suggestion {
+      padding: 6px 12px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.8);
+      
+      &:hover {
+        background: rgba(52, 152, 219, 0.3);
+        color: white;
+      }
+    }
+  }
+
+  .editor-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .save-btn, .cancel-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .save-btn {
+      background: #27ae60;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background: #2ecc71;
+      }
+    }
+
+    .cancel-btn {
+      background: #95a5a6;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background: #bdc3c7;
+      }
+    }
+  }
+
+  .editor-help {
+    margin-top: 4px;
+    
+    small {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 11px;
+    }
+  }
+}
+
+// Mobile responsiveness for editing
+@media (max-width: 480px) {
+  .chat-header {
+    gap: 6px;
+    
+    .chat-username {
+      font-size: 0.95rem;
+    }
+    
+    .userflair {
+      font-size: 0.7rem;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+  }
+  
+  .chat-timestamp-actions {
+    top: 6px;
+    right: 6px;
+    
+    .chat-timestamp {
+      font-size: 0.7rem;
+    }
+    
+    .message-actions .action-btn {
+      padding: 4px 6px;
+      font-size: 12px;
+      min-width: 28px;
+      height: 28px;
+    }
+  }
+
+  .message-editor {
+    .edit-textarea {
+      font-size: 16px; // Prevent zoom on iOS
+    }
+
+    .editor-actions {
+      .save-btn, .cancel-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+    }
   }
 }
 
