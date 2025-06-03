@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react';
 import chat, { ChatMessage } from '../../../stores/chat';
 import online from '../../../stores/online';
-import classNames from 'classnames';
 
 interface MessageEditorProps {
   message: ChatMessage;
@@ -97,7 +96,7 @@ const MessageEditor = observer(({ message, onSave, onCancel }: MessageEditorProp
         
         {mentionMatches.length > 0 && (
           <div className="mention-suggestions">
-            {mentionMatches.slice(0, 5).map((username, index) => (
+            {mentionMatches.slice(0, 5).map((username) => (
               <div
                 key={username}
                 className="mention-suggestion"

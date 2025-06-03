@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { observer } from 'mobx-react';
 import chat, { ChatMessage } from '../../../stores/chat';
 import profile from '../../../stores/profile';
-import classNames from 'classnames';
 
 interface MessageActionsProps {
   message: ChatMessage;

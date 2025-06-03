@@ -78,7 +78,7 @@ const MessageEditingDemo = observer(() => {
       </p>
       
       <div style={{ background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '5px' }}>
-        {demoMessages.map((msg, i) => {
+        {demoMessages.map((msg) => {
           const isEditing = editingMessageKey === msg.key;
           const humanTimestamp = moment.unix(msg.timestamp).format("LT");
           
