@@ -35,6 +35,20 @@ class PlaylistSearch extends React.Component<PlaylistSearchProps> {
   }
 
   @action
+  addManualSong() {
+    if (!this._search) return;
+    
+    // Set the URL from the search input
+    playlists.setManualUrl(this._search.value);
+    
+    // Add the song
+    playlists.addManualSong();
+    
+    // Clear the input
+    this._search.value = "";
+  }
+
+  @action
   clearPlaylistSearch() {
     if (this._search) {
       this._search.value = "";
@@ -84,13 +98,16 @@ class PlaylistSearch extends React.Component<PlaylistSearchProps> {
     if (playlists.searchSource === "playlist") {
       // Search within playlist
       this.searchInPlaylist();
+    } else if (playlists.searchSource === "manual") {
+      // Manual add
+      this.addManualSong();
     } else {
       // External search (YouTube or Vimeo)
       playlists.runSearch(query);
     }
 
-    // Don't clear search input for playlist search
-    if (playlists.searchSource !== "playlist") {
+    // Don't clear search input for playlist search or manual add
+    if (playlists.searchSource !== "playlist" && playlists.searchSource !== "manual") {
       this._search.value = "";
     }
   }
@@ -105,9 +122,13 @@ class PlaylistSearch extends React.Component<PlaylistSearchProps> {
             type="text"
             id="playlist-search-box"
             ref={el => { this._search = el; }}
-            placeholder={playlists.searchSource === "playlist" 
-              ? "Search in playlist..." 
-              : `Search ${playlists.searchSource === "youtube" ? "YouTube" : "Vimeo"}`}
+            placeholder={
+              playlists.searchSource === "playlist"
+                ? "Search in playlist..."
+                : playlists.searchSource === "manual"
+                  ? "Paste Soundcloud URL here..."
+                  : `Search ${playlists.searchSource === "youtube" ? "YouTube" : "Vimeo"}`
+            }
             className="form-control search-input"
             onKeyPress={e => this.onEnterKey(e, this.search)}
           />
@@ -115,7 +136,7 @@ class PlaylistSearch extends React.Component<PlaylistSearchProps> {
             onClick={this.search}
             className="search-button"
           >
-            <i className="fa fa-search"></i>
+            <i className={playlists.searchSource === "manual" ? "fa fa-plus" : "fa fa-search"}></i>
           </button>
         </div>
         
@@ -132,13 +153,32 @@ class PlaylistSearch extends React.Component<PlaylistSearchProps> {
           >
             <i className="mr-1 fa fa-vimeo"></i> Vimeo
           </button>
-          <button 
+          <button
             className={`search-option playlist-option ${playlists.searchSource === "playlist" ? "active" : ""}`}
             onClick={() => this.changeSearchSource("playlist")}
           >
             <i className="mr-1 fa fa-list"></i> Playlist
           </button>
+          <button
+            className={`search-option manual-option ${playlists.searchSource === "manual" ? "active" : ""}`}
+            onClick={() => this.changeSearchSource("manual")}
+          >
+            <i className="mr-1 fa fa-plus"></i> Manual Add
+          </button>
         </div>
+        
+        {playlists.searchSource === "manual" && (
+          <div className="manual-add-options">
+            <input
+              type="text"
+              placeholder="Optional: Custom title"
+              className="form-control manual-title-input"
+              value={playlists.manualTitle}
+              onChange={(e) => playlists.setManualTitle(e.target.value)}
+            />
+            <small className="text-muted">Leave empty to auto-detect title from URL</small>
+          </div>
+        )}
         
         {playlists.searchSource === "playlist" && playlists.searchWithinPlaylist && (
           <button

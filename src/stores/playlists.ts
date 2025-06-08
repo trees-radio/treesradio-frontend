@@ -273,6 +273,16 @@ export default new (
         }
 
         @action
+        setManualUrl(url: string) {
+            this.manualUrl = url;
+        }
+
+        @action
+        setManualTitle(title: string) {
+            this.manualTitle = title;
+        }
+
+        @action
         setOpenSearch(openSearch: boolean) {
             this.openSearch = openSearch;
         }
@@ -335,6 +345,8 @@ export default new (
         @observable accessor searching = false;
         @observable accessor search: SearchResult[] = [];
         @observable accessor searchSource = "youtube";
+        @observable accessor manualUrl = "";
+        @observable accessor manualTitle = "";
         @observable accessor openSearch = false;
         @observable accessor importing = false;
         @observable accessor removedPlaylist = false;
@@ -632,6 +644,91 @@ export default new (
             });
 
             console.timeEnd('mergePlaylists');
+        }
+
+        @action
+        validateSoundcloudUrl(url: string): boolean {
+            // Basic Soundcloud URL validation
+            const soundcloudPattern = /^https?:\/\/(www\.)?(soundcloud\.com|snd\.sc)\/.+/i;
+            return soundcloudPattern.test(url);
+        }
+
+        @action
+        extractTitleFromUrl(url: string): string {
+            try {
+                // Extract title from Soundcloud URL structure
+                // Example: https://soundcloud.com/artist/track-name
+                const urlParts = url.split('/');
+                if (urlParts.length >= 4) {
+                    const trackPart = urlParts[urlParts.length - 1];
+                    // Remove query parameters and decode
+                    const cleanTrack = trackPart.split('?')[0];
+                    // Replace hyphens and underscores with spaces, capitalize words
+                    return cleanTrack
+                        .replace(/[-_]/g, ' ')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+                }
+            } catch (error) {
+                console.error('Error extracting title from URL:', error);
+            }
+            return '';
+        }
+
+        @action
+        addManualSong() {
+            console.time('addManualSong');
+
+            if (!this.hasPlaylist) {
+                toast("Please select a playlist first.", { type: "error" });
+                console.timeEnd('addManualSong');
+                return;
+            }
+
+            if (!this.manualUrl.trim()) {
+                toast("Please enter a URL.", { type: "error" });
+                console.timeEnd('addManualSong');
+                return;
+            }
+
+            if (!this.validateSoundcloudUrl(this.manualUrl)) {
+                toast("Please enter a valid Soundcloud URL.", { type: "error" });
+                console.timeEnd('addManualSong');
+                return;
+            }
+
+            // Extract title from URL if no manual title provided
+            let title = this.manualTitle.trim();
+            if (!title) {
+                title = this.extractTitleFromUrl(this.manualUrl);
+                if (!title) {
+                    title = "Untitled Track";
+                }
+            }
+
+            // Create song object
+            const song: Song = {
+                url: this.manualUrl.trim(),
+                title: title,
+                thumb: Favicon, // Use default favicon as thumbnail
+                channel: "Soundcloud", // Default channel name
+                duration: 0 // Unknown duration
+            };
+
+            // Check if song already exists in playlist
+            if (this.checkPlaylistForSong(this.selectedPlaylistKey, song.url)) {
+                toast("This track is already in the playlist.", { type: "warning" });
+                console.timeEnd('addManualSong');
+                return;
+            }
+
+            // Add song to playlist
+            this.addSong(song, this.selectedPlaylistKey, false);
+
+            // Clear manual input fields
+            this.setManualUrl("");
+            this.setManualTitle("");
+
+            console.timeEnd('addManualSong');
         }
 
         @action
