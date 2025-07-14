@@ -1,5 +1,3 @@
-// Update your Chat.tsx component with these changes
-
 import React, { RefObject, useEffect } from "react";
 import chat from "../../stores/chat";
 import profile from "../../stores/profile";
@@ -7,6 +5,7 @@ import profile from "../../stores/profile";
 import ChatContent from "./Chat/ChatContent";
 import ChatSend from "./Chat/ChatSend";
 import ChatLocked from "./Chat/ChatLocked";
+import ChatErrorBoundary from "./Chat/ChatErrorBoundary";
 
 interface ChatProps {
   show: boolean;
@@ -84,7 +83,9 @@ const Chat: React.FC<ChatProps> = (props) => {
       className="flex flex-col flex-1 overflow-hidden"
       style={props.show ? {} : { display: "none" }}
     >
-      <ChatContent goToChat={props.goToChat} />
+      <ChatErrorBoundary>
+        <ChatContent goToChat={props.goToChat} />
+      </ChatErrorBoundary>
       <div className="flex-shrink-0 chat-input-container">
         {chat.canChat ? (
           <ChatSend myref={props.chatInputRef} isMobile={isMobile} />

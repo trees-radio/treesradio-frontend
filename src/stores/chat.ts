@@ -84,16 +84,18 @@ export default new (class Chat {
       
     this.chatCallback = (snap: any) => {
       var msg: ChatMessages = snap.val();
-      // Clear the msgkeys array
-      this.clearMessageKeys();
       
       // Clean expired message keys before processing new messages
       this.cleanExpiredMessageKeys();
 
       if (msg) {
+        // Collect new active keys and process messages atomically
+        const newActiveKeys: string[] = [];
+        const messagesToProcess: Array<{key: string, msg: ChatMessage}> = [];
+        
         Object.entries(msg).forEach(([key, msg]) => {
-          // Push the key to our msgkeys array to track active messages
-          this.pushMessageKey(key);
+          // Add to new active keys
+          newActiveKeys.push(key);
 
           // Test if this is a single message or an array of messages.
           if (Array.isArray(msg)) {
@@ -145,43 +147,59 @@ export default new (class Chat {
               // This is an admin only message.
               return;
             }
-            if (
-              this.messages[this.messages.length - 1] &&
-              msg.username === this.messages[this.messages.length - 1].username
-            ) {
-              this.inlineMessage(msg);
-            } else {
-              msg.msgs = [msg.msg];
-              this.pushMessage(msg);
-            }
+            
+            // Add to processing queue instead of immediate processing
+            messagesToProcess.push({key, msg});
+          }
+        });
+        
+        // Atomically update active keys - this prevents race condition
+        this.updateActiveKeys(newActiveKeys);
+        
+        // Sort messages by timestamp before processing to ensure proper order
+        messagesToProcess.sort((a, b) => a.msg.timestamp - b.msg.timestamp);
+        
+        // Process messages in correct chronological order
+        messagesToProcess.forEach(({key, msg}) => {
+          if (
+            this.messages[this.messages.length - 1] &&
+            msg.username === this.messages[this.messages.length - 1].username
+          ) {
+            this.inlineMessage(msg);
+          } else {
+            msg.msgs = [msg.msg];
+            this.pushMessage(msg);
+          }
 
-            if (msg.mentions && profile.username) {
-              //mention check
-              let mentions = msg.mentions.map((s: string) => {
-                return s ? s.substring(1).toLowerCase() : "";
-              });
-              let everyone = mentions.includes("everyone");
-              let mentioned = everyone;
-              if (!mentioned) {
-                mentioned = mentions.includes(profile.safeUsername?.toLowerCase() || "");
-              }
-              // Only ping for mentions if the message is recent (within MENTION_RECENT_WINDOW seconds)
-              const isRecent = (epoch() - msg.timestamp) <= MENTION_RECENT_WINDOW;
-              if (mentioned && isRecent) {
-                mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
-                if (!this.werefocused) {
-                  this.mentioncount++;
-                  // favico.badge(this.mentioncount);
-                }
+          if (msg.mentions && profile.username) {
+            //mention check
+            let mentions = msg.mentions.map((s: string) => {
+              return s ? s.substring(1).toLowerCase() : "";
+            });
+            let everyone = mentions.includes("everyone");
+            let mentioned = everyone;
+            if (!mentioned) {
+              mentioned = mentions.includes(profile.safeUsername?.toLowerCase() || "");
+            }
+            // Only ping for mentions if the message is recent (within MENTION_RECENT_WINDOW seconds)
+            const isRecent = (epoch() - msg.timestamp) <= MENTION_RECENT_WINDOW;
+            if (mentioned && isRecent) {
+              mention(everyone, msg.username, (msg.username === "BlazeBot" && msg.msg.includes("toke! :weed: :fire: :dash:")));
+              if (!this.werefocused) {
+                this.mentioncount++;
+                // favico.badge(this.mentioncount);
               }
             }
           }
         });
+        
         if (profile.isGifsHidden) {
           $("img[alt='tenorgif']").css("display", "none");
         } else {
           $("img[alt='tenorgif']").css("display", "block");
         }
+        
+        // Remove inactive messages after processing is complete
         this.removeInactiveMessages();
       }
     };
@@ -290,6 +308,11 @@ export default new (class Chat {
 
   @action pushMessageKey(key: string) {
     this.msgkeys.push(key);
+  }
+
+  @action updateActiveKeys(newKeys: string[]) {
+    // Atomically update the active keys array to prevent race conditions
+    this.msgkeys = [...newKeys];
   }
 
   @action removeInactiveMessages() {
