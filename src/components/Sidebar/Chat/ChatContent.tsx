@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { observer } from "mobx-react";
 import chat from "../../../stores/chat";
 import classNames from "classnames";
-import ScrollManager, { useScrollManager } from "./ScrollManager";
+import { useScrollManager } from "./ScrollManager";
 import MessageList from "./MessageList";
 
 const ChatContent = observer(({ goToChat }) => {
