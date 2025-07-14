@@ -160,7 +160,7 @@ export default new (class Chat {
         messagesToProcess.sort((a, b) => a.msg.timestamp - b.msg.timestamp);
         
         // Process messages in correct chronological order
-        messagesToProcess.forEach(({key, msg}) => {
+        messagesToProcess.forEach(({ msg }) => {
           if (
             this.messages[this.messages.length - 1] &&
             msg.username === this.messages[this.messages.length - 1].username
