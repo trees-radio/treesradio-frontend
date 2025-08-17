@@ -413,7 +413,7 @@ const UserBit: FC = () => {
 
     return (
         <div id="userbit-wrapper">
-            <div id="userbitContainer" className="btn-group">
+            <div id="userbitContainer" className="btn-group relative">
                 <Menu>
                     <MenuButton>
                         <div id={'usernametop'}
@@ -429,24 +429,29 @@ const UserBit: FC = () => {
 
                     </MenuButton>
 
-                    <MenuItems>
-                        <div className="relative z-10 flex flex-col my-4 bg-black gap-y-1">
+                    <MenuItems className="absolute right-0 top-full mt-1 w-64 max-w-[85vw] sm:max-w-xs origin-top-right rounded-md bg-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 max-h-[70vh] overflow-y-auto userbit-dropdown-scroll">
+                        <div className="py-0.5 relative">
+                            {/* Top scroll indicator - only shows when scrollable */}
+                            <div className="scroll-indicator-top" />
                             {debouncedActions.map((item) => (
                                 <MenuItem key={item.name}>
                                     <div key={item.name} onClick={(e) => {
                                         e.preventDefault();
                                         item.debouncedAction();  // Use the pre-debounced function
                                     }}
-                                        className="flex items-center px-2 rounded-md hover:bg-gray-700">
+                                        className="flex items-center px-3 py-1 text-sm hover:bg-gray-700 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
                                         <i className={cn([
                                             "fa",
                                             item.isCheckbox && (item.isChecked() ? "fa-check-square-o" : "fa-square-o"),
                                             !item.isCheckbox && item.icon,
+                                            "w-4"
                                         ])} />
-                                        <span className="ml-2">{item.name}</span>
+                                        <span className="ml-2 truncate">{item.name}</span>
                                     </div>
                                 </MenuItem>
                             ))}
+                            {/* Bottom scroll indicator */}
+                            <div className="scroll-indicator-bottom" />
                         </div>
                     </MenuItems>
                 </Menu>
