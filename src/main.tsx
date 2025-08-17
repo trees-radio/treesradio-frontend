@@ -9,6 +9,7 @@ import './libs/cleanup'
 // Lazy load components for better code splitting
 const Main = lazy(() => import('./components/Main').then(module => ({ default: module.Main })));
 const TermsOfServicePage = lazy(() => import('./components/TermsOfService'));
+const PasswordReset = lazy(() => import('./components/PasswordReset'));
 
 // Register service worker (if using vite-plugin-pwa)
 if ('serviceWorker' in navigator) {
@@ -36,11 +37,15 @@ const LoadingSpinner = () => (
 // Simple router component with lazy loading
 const AppRouter = () => {
   const path = window.location.pathname;
+  const searchParams = new URLSearchParams(window.location.search);
+  const mode = searchParams.get('mode');
   
   return (
     <Suspense fallback={<LoadingSpinner />}>
       {path === '/terms-of-service' ? (
         <TermsOfServicePage />
+      ) : mode === 'resetPassword' ? (
+        <PasswordReset />
       ) : (
         <div id="app">
           <Main />
