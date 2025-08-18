@@ -430,9 +430,7 @@ const UserBit: FC = () => {
                     </MenuButton>
 
                     <MenuItems className="absolute right-0 top-full mt-1 w-64 max-w-[85vw] sm:max-w-xs origin-top-right rounded-md bg-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 max-h-[70vh] overflow-y-auto userbit-dropdown-scroll">
-                        <div className="py-0.5 relative">
-                            {/* Top scroll indicator - only shows when scrollable */}
-                            <div className="scroll-indicator-top" />
+                        <div className="py-0.5">
                             {debouncedActions.map((item) => (
                                 <MenuItem key={item.name}>
                                     <div key={item.name} onClick={(e) => {
@@ -450,8 +448,6 @@ const UserBit: FC = () => {
                                     </div>
                                 </MenuItem>
                             ))}
-                            {/* Bottom scroll indicator */}
-                            <div className="scroll-indicator-bottom" />
                         </div>
                     </MenuItems>
                 </Menu>
