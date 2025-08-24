@@ -30,8 +30,8 @@ jobs:
         run: npm ci 
         working-directory: ./functions
 
-      - name: Compile Firebase Rules from Bolt
-        run: bun run compile-rules
+      - name: Compile and Validate Firebase Rules
+        run: ./scripts/validate-rules.sh
 
       - name: Build Frontend
         run: bun run build

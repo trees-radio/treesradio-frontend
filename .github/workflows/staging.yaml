@@ -23,8 +23,8 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
-      - name: Compile Firebase Rules from Bolt
-        run: bun run compile-rules
+      - name: Compile and Validate Firebase Rules  
+        run: ./scripts/validate-rules.sh
 
       - name: Build
         run: bun run build
