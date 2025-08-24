@@ -30,6 +30,9 @@ jobs:
         run: npm ci 
         working-directory: ./functions
 
+      - name: Compile Firebase Rules from Bolt
+        run: bun run compile-rules
+
       - name: Build Frontend
         run: bun run build
         env:
@@ -56,13 +59,19 @@ jobs:
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
 
-      - name: Deploy Firebase Functions
+      - name: Deploy Firebase Functions, Database Rules, and Storage Rules
         run: |
           echo "Project ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}"
           # Strip newlines from project_id ugh
           export VITE_FIREBASE_PROJECT_ID=$(echo ${{ secrets.VITE_FIREBASE_PROJECT_ID }} | tr -d '\n')
           echo "Project ID: $VITE_FIREBASE_PROJECT_ID"
-          npx firebase-tools deploy --only functions --project "${VITE_FIREBASE_PROJECT_ID}" --token "${{ secrets.FIREBASE_CLI_TOKEN }}"
+          npx firebase-tools deploy --only functions,database,storage --project "${VITE_FIREBASE_PROJECT_ID}" --token "${{ secrets.FIREBASE_CLI_TOKEN }}"
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+
+      - name: Apply Storage CORS Configuration
+        run: |
+          export VITE_FIREBASE_PROJECT_ID=$(echo ${{ secrets.VITE_FIREBASE_PROJECT_ID }} | tr -d '\n')
+          ./scripts/apply-cors.sh "${VITE_FIREBASE_PROJECT_ID}"
+        continue-on-error: true  # Don't fail the build if CORS setup fails
         

@@ -1,5 +1,6 @@
 import React from "react";
 import imageWhitelist from "../../../libs/imageWhitelist";
+import { processImageUrl } from "../../../libs/imageProxy";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import DOMPurify from "dompurify";
@@ -155,12 +156,36 @@ export default class Message extends React.Component {
 
         if (text.substring(0, 12) === "==markdown==" || isBlazeBot) {
             if (text.substring(0, 12) === "==markdown==") text = text.substring(12);
+            
+            // For BlazeBot, add referrer protection to all img tags
+            if (isBlazeBot) {
+                // Configure DOMPurify to add referrer policy to images
+                DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+                    if (node.tagName === 'IMG') {
+                        node.setAttribute('referrerpolicy', 'origin');
+                        node.setAttribute('crossorigin', 'anonymous');
+                        // Process the src URL if needed
+                        const src = node.getAttribute('src');
+                        if (src) {
+                            node.setAttribute('src', processImageUrl(src));
+                        }
+                    }
+                });
+            }
+            
+            const sanitizedContent = DOMPurify.sanitize(text);
+            
+            // Clean up the hook after use
+            if (isBlazeBot) {
+                DOMPurify.removeAllHooks();
+            }
+            
             return (
                 <ReactMarkdown
                     rehypePlugins={isBlazeBot ? [rehypeRaw] : []}
                     remarkRehypeOptions={{ allowDangerousHtml: isBlazeBot, }}
                 >
-                    {emojifyWrap(DOMPurify.sanitize(text))}
+                    {emojifyWrap(sanitizedContent)}
                 </ReactMarkdown>
             );
         }
@@ -228,15 +253,18 @@ class MessageItem extends React.Component {
         if (embeddedImageCheck(token)) {
             const imageUrl = extractImageUrl(token);
             if (imageUrl) {
+                const processedUrl = processImageUrl(imageUrl);
                 return (
                     <span className="chat-embedded-image">
                         <img 
-                            src={imageUrl} 
+                            src={processedUrl} 
                             onLoad={onLoad} 
                             className="chat-image-uploaded" 
                             loading="eager"
                             max-width="240px"
                             max-height="240px"
+                            referrerPolicy="origin"
+                            crossOrigin="anonymous"
                         />
                     </span>
                 );
@@ -245,16 +273,19 @@ class MessageItem extends React.Component {
         // Handle regular image URLs
         else if (imageCheck(token)) {
             let style = {};
-            token.replace("http:", "https:");
+            token = token.replace("http:", "https:");
+            const processedUrl = processImageUrl(token);
 
             return (
                 <span>
                     <img 
-                        src={token} 
+                        src={processedUrl} 
                         onLoad={onLoad} 
                         style={style} 
                         className="inline-image" 
-                        loading="eager" 
+                        loading="eager"
+                        referrerPolicy="origin"
+                        crossOrigin="anonymous"
                     />
                 </span>
             );

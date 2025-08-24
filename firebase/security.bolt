@@ -79,7 +79,7 @@ path /events {
   read() {true}
 }
 
-path /events/${uid} {
+path /events/{$uid} {
   read() {isUser($uid)}
   write() {isUser($uid)}
 }
@@ -155,6 +155,7 @@ path /private/{$uid} {
 
 path /user_events/{$uid} {
   read() {isUser($uid)}
+  write() {isUser($uid) && hasValidatedEmail()}
 }
 
 path /moderator {

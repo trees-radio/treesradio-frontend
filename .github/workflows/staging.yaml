@@ -23,6 +23,9 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
+      - name: Compile Firebase Rules from Bolt
+        run: bun run compile-rules
+
       - name: Build
         run: bun run build
         env:
@@ -43,3 +46,11 @@ jobs:
           expires: 7d
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+
+      - name: Deploy Staging Rules (Database and Storage)
+        run: |
+          echo "Deploying rules to staging..."
+          npx firebase-tools deploy --only database,storage --project treesradio-staging --token "${{ secrets.FIREBASE_CLI_TOKEN_STAGING }}"
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
+        continue-on-error: true  # Don't fail staging if rules deployment fails

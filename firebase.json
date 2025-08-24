@@ -2,6 +2,9 @@
   "database": {
     "rules": "./firebase/rules.json"
   },
+  "storage": {
+    "rules": "storage.rules"
+  },
   "headers": [
     {
       "source": "/**/*.@(js|css)",

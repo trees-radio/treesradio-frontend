@@ -1,0 +1,47 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Function to check if the request has a valid referrer
+    function hasValidReferrer() {
+      return request.headers['referer'] != null && 
+             (request.headers['referer'].matches('https://treesradio.com/.*') ||
+              request.headers['referer'].matches('https://www.treesradio.com/.*') ||
+              request.headers['referer'].matches('http://localhost:.*') || // Development
+              request.headers['referer'].matches('http://127.0.0.1:.*')); // Development
+    }
+
+    // Function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Function to check if the file has expired (based on custom metadata)
+    function isNotExpired() {
+      return resource == null || 
+             resource.metadata == null ||
+             resource.metadata.expires_at == null ||
+             int(resource.metadata.expires_at) > request.time.seconds();
+    }
+
+    // Chat images directory
+    match /chat_images/{userId}/{fileName} {
+      // Allow authenticated users to upload their own images
+      allow write: if isAuthenticated() && 
+                      request.auth.uid == userId &&
+                      request.resource.size < 10 * 1024 * 1024 && // Max 10MB
+                      request.resource.contentType.matches('image/.*');
+      
+      // Allow reading only with valid referrer and if not expired
+      allow read: if hasValidReferrer() && isNotExpired();
+    }
+
+    // Legacy image paths (if any exist)
+    match /{allPaths=**} {
+      // Default: require valid referrer for all reads
+      allow read: if hasValidReferrer();
+      
+      // Prevent writes to any other paths
+      allow write: if false;
+    }
+  }
+}
