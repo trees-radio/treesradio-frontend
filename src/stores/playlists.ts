@@ -73,6 +73,25 @@ interface Song {
     added?: number;
 }
 
+// TODO: These interfaces will be used after deduplication migration
+// Normalized song data stored in songs collection
+// interface NormalizedSong {
+//     title: string;
+//     url: string;
+//     duration: number;
+//     thumbnail: string;
+//     platform: 'youtube' | 'soundcloud' | 'vimeo';
+//     firstAdded: number;
+//     addCount: number;
+// }
+
+// Playlist entry that references a normalized song
+// interface PlaylistEntry {
+//     songRef: string; // "platform/id" reference to songs collection
+//     addedAt: number;
+//     addedBy: string;
+// }
+
 export default new (
     class Playlists {
         uid: string = "";
@@ -1009,6 +1028,81 @@ export default new (
             console.timeEnd('importYouTubePlaylist');
             return false;
         }
+
+        // TODO: These methods will be enabled after deduplication migration
+        // /**
+        //  * Extract platform and song ID from URL
+        //  */
+        // @action
+        // extractSongInfo(url: string): { platform: string; songId: string } {
+        //     try {
+        //         const urlObj = new URL(url);
+        //         
+        //         if (urlObj.hostname.includes('youtube.com') || urlObj.hostname === 'youtu.be') {
+        //             const videoId = urlObj.hostname === 'youtu.be' 
+        //                 ? urlObj.pathname.slice(1)
+        //                 : urlObj.searchParams.get('v');
+        //             return { platform: 'youtube', songId: videoId || 'unknown' };
+        //         } else if (urlObj.hostname.includes('soundcloud.com')) {
+        //             const songId = urlObj.pathname.slice(1); // Remove leading /
+        //             return { platform: 'soundcloud', songId: songId || 'unknown' };
+        //         } else if (urlObj.hostname.includes('vimeo.com')) {
+        //             const match = urlObj.pathname.match(/\/(\d+)/);
+        //             const videoId = match ? match[1] : 'unknown';
+        //             return { platform: 'vimeo', songId: videoId };
+        //         }
+        //     } catch (error) {
+        //         console.error('Error extracting song info from URL:', url, error);
+        //     }
+        //     
+        //     // Fallback for unknown URLs
+        //     return { platform: 'unknown', songId: url.replace(/[^a-zA-Z0-9]/g, '_') };
+        // }
+
+        // /**
+        //  * Resolve a song reference to full song data
+        //  */
+        // @action
+        // async resolveSongReference(songRef: string): Promise<Song | null> {
+        //     try {
+        //         const songDataRef = ref(db, `songs/${songRef}`);
+        //         const songSnap = await get(songDataRef);
+        //         
+        //         if (songSnap.exists()) {
+        //             const normalizedSong = songSnap.val() as NormalizedSong;
+        //             return {
+        //                 url: normalizedSong.url,
+        //                 title: normalizedSong.title,
+        //                 thumb: normalizedSong.thumbnail,
+        //                 channel: 'Unknown', // Could be enhanced with channel data
+        //                 duration: normalizedSong.duration,
+        //                 songRef: songRef
+        //             };
+        //         }
+        //         
+        //         console.warn(`Song reference not found: ${songRef}`);
+        //         return null;
+        //         
+        //     } catch (error) {
+        //         console.error(`Error resolving song reference ${songRef}:`, error);
+        //         return null;
+        //     }
+        // }
+
+        // /**
+        //  * Check if current database has been migrated to use song references
+        //  */
+        // @action
+        // async checkMigrationStatus(): Promise<boolean> {
+        //     try {
+        //         const songsRef = ref(db, 'songs');
+        //         const songsSnap = await get(songsRef);
+        //         return songsSnap.exists();
+        //     } catch (error) {
+        //         console.error('Error checking migration status:', error);
+        //         return false;
+        //     }
+        // }
 
         // Cleanup method for component unmounting
         destroy() {

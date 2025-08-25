@@ -123,6 +123,36 @@ path /playlists/{$uid} {
 }
 
 ////////////////////////////////////////////////////////////////
+// SONGS COLLECTION (Normalized Song Storage)
+// TODO: Enable after deduplication migration
+////////////////////////////////////////////////////////////////
+// type NormalizedSong {
+//   title: String,
+//   url: String,
+//   duration: Number,
+//   thumbnail: String,
+//   platform: String,
+//   firstAdded: Number,
+//   addCount: Number
+// }
+
+// path /songs {
+//   read() {true}  // Allow all users to read song data
+//   write() {false}  // Only allow writes through authenticated playlist operations
+// }
+
+// path /songs/{platform} {
+//   read() {true}
+// }
+
+// path /songs/{platform}/{songId} {
+//   read() {true}
+//   // Allow writes only from authenticated users with validated email
+//   // This enables the frontend to create/update normalized songs when adding to playlists
+//   write() {isAuth() && hasValidatedEmail()}
+// }
+
+////////////////////////////////////////////////////////////////
 // PLAYING MEDIA
 ////////////////////////////////////////////////////////////////
 
