@@ -729,7 +729,7 @@ export default new (
         }
 
         @action
-        addFromSearch(index: number) {
+        async addFromSearch(index: number) {
             console.time('addFromSearch');
 
             if (!this.hasPlaylist) {
@@ -788,7 +788,7 @@ export default new (
                 return;
             }
 
-            this.addSong(song, this.selectedPlaylistKey, false);
+            await this.addSong(song, this.selectedPlaylistKey, false);
             console.timeEnd('addFromSearch');
         }
 
@@ -834,7 +834,7 @@ export default new (
         }
 
         @action
-        addManualSong() {
+        async addManualSong() {
             console.time('addManualSong');
 
             if (!this.hasPlaylist) {
@@ -881,7 +881,7 @@ export default new (
             }
 
             // Add song to playlist
-            this.addSong(song, this.selectedPlaylistKey, false);
+            await this.addSong(song, this.selectedPlaylistKey, false);
 
             // Clear manual input fields
             this.setManualUrl("");
@@ -906,29 +906,40 @@ export default new (
         }
 
         @action
-        addSong(song: Song, playlistKey: string, isGrab: boolean) {
+        async addSong(song: Song, playlistKey: string, isGrab: boolean) {
             console.time('addSong');
 
-            var playlist = this.getPlaylistByKey(playlistKey);
-            var newPlaylist: Song[] = [];
-            if (playlist?.entries) {
-                newPlaylist = playlist.entries.slice();
-            }
+            try {
+                var playlist = this.getPlaylistByKey(playlistKey);
+                
+                // CRITICAL FIX: Always load current Firebase data instead of relying on cached entries
+                // This prevents the lazy loading from causing playlist data loss
+                const entriesRef = ref(db, `playlists/${this.uid}/${playlistKey}/entries`);
+                const currentSnapshot = await get(entriesRef);
+                
+                var newPlaylist: Song[] = [];
+                if (currentSnapshot.exists()) {
+                    // Load existing songs from Firebase
+                    const existingSongs = currentSnapshot.val();
+                    if (Array.isArray(existingSongs)) {
+                        newPlaylist = existingSongs.slice();
+                    }
+                }
 
-            if (isGrab) {
-                newPlaylist.push(song);
-            } else {
-                newPlaylist.unshift(song);
-            }
+                if (isGrab) {
+                    newPlaylist.push(song);
+                } else {
+                    newPlaylist.unshift(song);
+                }
 
-            const entriesRef = ref(db, `playlists/${this.uid}/${playlistKey}/entries`);
-            set(entriesRef, newPlaylist).then(() => {
+                await set(entriesRef, newPlaylist);
                 toast(`Added song ${song.title || song.name} to playlist ${playlist?.name}.`, { type: "success" });
                 console.timeEnd('addSong');
-            }).catch(err => {
+            } catch (err) {
                 console.error("Error adding song:", err);
+                toast(`Failed to add song: ${err}`, { type: "error" });
                 console.timeEnd('addSong');
-            });
+            }
         }
 
         @action
