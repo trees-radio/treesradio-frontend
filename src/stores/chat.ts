@@ -153,9 +153,6 @@ export default new (class Chat {
           }
         });
         
-        // Atomically update active keys - this prevents race condition
-        this.updateActiveKeys(newActiveKeys);
-        
         // Sort messages by timestamp before processing to ensure proper order
         messagesToProcess.sort((a, b) => a.msg.timestamp - b.msg.timestamp);
         
@@ -199,7 +196,10 @@ export default new (class Chat {
           $("img[alt='tenorgif']").css("display", "block");
         }
         
-        // Remove inactive messages after processing is complete
+        // Update active keys AFTER processing messages to prevent premature removal
+        this.updateActiveKeys(newActiveKeys);
+        
+        // Remove only expired inactive messages, not all inactive ones
         this.removeInactiveMessages();
       }
     };
@@ -316,10 +316,39 @@ export default new (class Chat {
   }
 
   @action removeInactiveMessages() {
-    // Don't use a filter as it causes the entire array to be re-rendered.
-    // Instead, we'll just remove the first element until we find one that is active.
-    while (this.messages.length > 0 && this.messages[0].key && !this.msgkeys.includes(this.messages[0].key)) {
-      this.messages.shift();
+    // Only remove messages that are:
+    // 1. Not in the current Firebase snapshot (msgkeys)
+    // 2. Older than MESSAGE_EXPIRATION seconds
+    // 3. Not part of the recent 200 messages (to prevent sudden disappearance)
+    
+    const currentTime = epoch();
+    const messagesToRemove: string[] = [];
+    const messageCount = this.messages.length;
+    const keepRecentCount = 200; // Keep at least the most recent 200 messages
+    
+    this.messages.forEach((msg, index) => {
+      if (msg.key && !this.msgkeys.includes(msg.key)) {
+        // Don't remove if it's one of the recent messages
+        const isRecent = index >= messageCount - keepRecentCount;
+        
+        // Only mark for removal if the message is expired AND not recent
+        const messageAge = currentTime - msg.timestamp;
+        if (messageAge > MESSAGE_EXPIRATION && !isRecent) {
+          messagesToRemove.push(msg.key);
+        }
+      }
+    });
+    
+    // Remove only the expired and old messages
+    if (messagesToRemove.length > 0) {
+      this.messages = this.messages.filter(msg => !msg.key || !messagesToRemove.includes(msg.key));
+    }
+    
+    // Also trim the messages array if it gets too large (prevent memory leak)
+    const maxMessages = 500;
+    if (this.messages.length > maxMessages) {
+      // Keep only the most recent messages
+      this.messages = this.messages.slice(-maxMessages);
     }
   }
 
