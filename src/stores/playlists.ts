@@ -20,8 +20,8 @@ import localforage from "localforage";
 import Favicon from "../assets/img/favicon.png";
 
 // SECURITY LIMITS: Prevent playlist abuse
-const MAX_PLAYLISTS_PER_USER = 200;
-const MAX_SONGS_PER_PLAYLIST = 1000;
+const MAX_PLAYLISTS_PER_USER = 500;
+const MAX_SONGS_PER_PLAYLIST = 10000;
 
 interface PlaylistsEnt {
     key: string;
