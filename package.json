@@ -73,7 +73,7 @@
     "sass-embedded": "^1.83.4",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
-    "vite": "^6.1.0",
+    "vite": "^6.3.6",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-pwa": "^0.21.1",
     "firebase-bolt": "^0.8.4"
