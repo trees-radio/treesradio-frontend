@@ -168,7 +168,7 @@ export default new (class Chat {
             this.pushMessage(msg);
           }
 
-          if (msg.mentions && profile.username) {
+          if (msg.mentions && profile.safeUsername) {
             //mention check
             let mentions = msg.mentions.map((s: string) => {
               return s ? s.substring(1).toLowerCase() : "";
