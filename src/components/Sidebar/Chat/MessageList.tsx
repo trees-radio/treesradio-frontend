@@ -7,6 +7,7 @@ import moment from "moment";
 import Message from "./Message";
 import UserName from "../../utility/User/UserName";
 import UserAvatar from "../../utility/User/UserAvatar";
+import ProfilePicturePreview from "../../utility/User/ProfilePicturePreview";
 import MessageActions from "./MessageActions";
 import MessageEditor from "./MessageEditor";
 
@@ -60,7 +61,9 @@ const MessageList: React.FC<MessageListProps> = observer(({
         return (
           <li key={`${msg.key}-${i}-${msg.timestamp}`} className={classNames(chatLineClasses, { 'editing': isEditing })}>
             <div className="chat-avatar">
-              <UserAvatar uid={msg.uid} />
+              <ProfilePicturePreview uid={msg.uid} username={msg.username}>
+                <UserAvatar uid={msg.uid} />
+              </ProfilePicturePreview>
             </div>
             <div className="chat-msg">
               <div className="chat-header">

@@ -1,0 +1,83 @@
+.profile-picture-preview {
+  .profile-preview-container {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #4a5568;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+    max-width: 150px;
+    animation: profilePreviewFadeIn 0.2s ease-out;
+  }
+
+  .profile-preview-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #68d391;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .profile-preview-username {
+    color: #e2e8f0;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+    line-height: 1.2;
+  }
+}
+
+@keyframes profilePreviewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+// Dark theme adjustments
+.dark .profile-picture-preview {
+  .profile-preview-container {
+    background: rgba(26, 32, 44, 0.95);
+    border-color: #2d3748;
+  }
+
+  .profile-preview-image {
+    border-color: #48bb78;
+  }
+
+  .profile-preview-username {
+    color: #f7fafc;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .profile-picture-preview {
+    .profile-preview-container {
+      padding: 8px;
+      min-width: 100px;
+      max-width: 120px;
+    }
+
+    .profile-preview-image {
+      width: 60px;
+      height: 60px;
+    }
+
+    .profile-preview-username {
+      font-size: 11px;
+    }
+  }
+}
