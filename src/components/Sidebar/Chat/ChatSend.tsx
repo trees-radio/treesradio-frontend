@@ -391,6 +391,7 @@ class ChatSend extends React.Component {
   cancelImage = () => {
     this.setPreviewImage(null);
     this.currentFile = null;
+    this.setUploadingImage(false); // Reset upload state when canceling
     if (this.fileInputRef.current) {
       this.fileInputRef.current.value = '';
     }
@@ -487,15 +488,18 @@ class ChatSend extends React.Component {
           chat.sendMsg(imageTag, () => {});
         }
         
-        // Reset preview
+        // Reset preview and upload state
         this.setPreviewImage(null);
         this.currentFile = null;
+        this.setUploadingImage(false);
         if (this.fileInputRef.current) {
           this.fileInputRef.current.value = '';
         }
       } catch (error) {
         console.error("Error uploading image:", error);
         toast("Failed to upload image", { type: "error" });
+        // Reset upload state on error
+        this.setUploadingImage(false);
       }
     } else if (hasText) {
       // Just send the text message if no image
