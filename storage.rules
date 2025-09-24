@@ -19,8 +19,8 @@ service firebase.storage {
                       request.auth.uid == userId &&
                       isValidImageFile();
       
-      // Allow reading for all authenticated users (simplified for testing)
-      allow read: if isAuthenticated();
+      // Allow public read access for chat images (they're meant to be shared)
+      allow read: if true;
       
       // Allow users to delete their own images
       allow delete: if isAuthenticated() && 
