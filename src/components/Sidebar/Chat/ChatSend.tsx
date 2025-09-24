@@ -406,7 +406,13 @@ class ChatSend extends React.Component {
 
   uploadImage = async (file: File): Promise<string> => {
     const storage = firebase.storage();
-    const userId = profile.uid || 'anonymous';
+    
+    // Ensure user is authenticated
+    if (!profile.user || !profile.user.uid) {
+      throw new Error('User must be authenticated to upload images');
+    }
+    
+    const userId = profile.user.uid; // Use the actual authenticated user ID
     const timestamp = Date.now();
     const uniqueId = uuidv4().substring(0, 8);
     const extension = file.name.split('.').pop();
@@ -417,7 +423,8 @@ class ChatSend extends React.Component {
       authenticated: !!profile.user,
       userUid: profile.user?.uid,
       fileSize: file.size,
-      fileType: file.type
+      fileType: file.type,
+      authToken: await profile.user.getIdToken().catch(() => 'no-token')
     });
     
     // Path format: chat_images/userId/timestamp_uniqueId.extension
@@ -446,10 +453,33 @@ class ChatSend extends React.Component {
           console.error('Upload error details:', {
             code: error.code,
             message: error.message,
-            serverResponse: error.serverResponse
+            serverResponse: error.serverResponse,
+            userId: userId,
+            fileSize: file.size,
+            fileType: file.type,
+            storagePath: `chat_images/${userId}/${timestamp}_${uniqueId}.${extension}`
           });
+          
+          // Provide more specific error messages
+          let errorMessage = 'Failed to upload image';
+          if (error.code === 'storage/unauthorized') {
+            errorMessage = 'Permission denied. Please check your authentication.';
+          } else if (error.code === 'storage/invalid-format') {
+            errorMessage = 'Invalid file format. Please use JPEG, PNG, or GIF.';
+          } else if (error.code === 'storage/object-not-found') {
+            errorMessage = 'Storage path not found.';
+          } else if (error.code === 'storage/bucket-not-found') {
+            errorMessage = 'Storage bucket not found.';
+          } else if (error.code === 'storage/project-not-found') {
+            errorMessage = 'Firebase project not found.';
+          } else if (error.code === 'storage/quota-exceeded') {
+            errorMessage = 'Storage quota exceeded.';
+          } else if (error.code === 'storage/unauthenticated') {
+            errorMessage = 'Authentication required. Please log in again.';
+          }
+          
           this.setUploadingImage(false);
-          reject(error);
+          reject(new Error(errorMessage));
         },
         async () => {
           // Get download URL
@@ -497,7 +527,8 @@ class ChatSend extends React.Component {
         }
       } catch (error) {
         console.error("Error uploading image:", error);
-        toast("Failed to upload image", { type: "error" });
+        const errorMessage = error instanceof Error ? error.message : "Failed to upload image";
+        toast(errorMessage, { type: "error" });
         // Reset upload state on error
         this.setUploadingImage(false);
       }
