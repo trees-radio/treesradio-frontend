@@ -424,7 +424,9 @@ class ChatSend extends React.Component {
       userUid: profile.user?.uid,
       fileSize: file.size,
       fileType: file.type,
-      authToken: await profile.user.getIdToken().catch(() => 'no-token')
+      authToken: await profile.user.getIdToken().catch(() => 'no-token'),
+      currentUser: firebase.auth().currentUser?.uid,
+      authState: firebase.auth().currentUser ? 'authenticated' : 'not authenticated'
     });
     
     // Path format: chat_images/userId/timestamp_uniqueId.extension
@@ -483,9 +485,17 @@ class ChatSend extends React.Component {
         },
         async () => {
           // Get download URL
-          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-          this.setUploadingImage(false);
-          resolve(downloadURL);
+          try {
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+            console.log('Upload successful, download URL:', downloadURL);
+            this.setUploadingImage(false);
+            resolve(downloadURL);
+          } catch (urlError) {
+            console.error('Error getting download URL:', urlError);
+            this.setUploadingImage(false);
+            const errorMessage = urlError instanceof Error ? urlError.message : 'Unknown error';
+            reject(new Error('Failed to get download URL: ' + errorMessage));
+          }
         }
       );
     });
