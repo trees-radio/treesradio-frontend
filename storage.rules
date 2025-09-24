@@ -19,8 +19,9 @@ service firebase.storage {
     function isNotExpired() {
       return resource == null || 
              resource.metadata == null ||
-             resource.metadata.expires_at == null ||
-             int(resource.metadata.expires_at) > request.time.seconds();
+             resource.metadata.customMetadata == null ||
+             resource.metadata.customMetadata.expires_at == null ||
+             int(resource.metadata.customMetadata.expires_at) > request.time.seconds();
     }
 
     // Function to validate image file
@@ -36,8 +37,8 @@ service firebase.storage {
                       request.auth.uid == userId &&
                       isValidImageFile();
       
-      // Allow reading only with valid referrer and if not expired
-      allow read: if hasValidReferrer() && isNotExpired();
+      // Allow reading for authenticated users or with valid referrer (and if not expired)
+      allow read: if (isAuthenticated() || hasValidReferrer()) && isNotExpired();
       
       // Allow users to delete their own images (for cleanup)
       allow delete: if isAuthenticated() && 
