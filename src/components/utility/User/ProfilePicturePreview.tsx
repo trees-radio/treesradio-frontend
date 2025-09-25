@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { defaultAvatar } from '../../../libs/avatar';
+import { defaultAvatar, listenAvatar } from '../../../libs/avatar';
 import imageWhitelist from '../../../libs/imageWhitelist';
 import EMPTY_IMG from '../../../assets/img/nothing.png';
+import { DataSnapshot } from '@firebase/database-types';
 
 interface ProfilePicturePreviewProps {
   uid: string;
@@ -29,18 +30,37 @@ const ProfilePicturePreview: React.FC<ProfilePicturePreviewProps> = ({
   const previewRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Load avatar on mount
+  // Load avatar on mount and listen for updates
   useEffect(() => {
+    let isMounted = true;
+    
     const loadAvatar = async () => {
       try {
-        const avatar = await defaultAvatar(uid);
-        setState(prev => ({ ...prev, avatar }));
+        const fallback = await defaultAvatar(uid);
+        
+        if (isMounted) {
+          setState(prev => ({ ...prev, avatar: fallback }));
+          
+          // Listen for avatar updates
+          listenAvatar(uid, (snap: DataSnapshot, _b?: string | null) => {
+            if (isMounted) {
+              setState(prev => ({
+                ...prev,
+                avatar: snap.val() || fallback
+              }));
+            }
+          });
+        }
       } catch (error) {
         console.error('Failed to load avatar:', error);
       }
     };
     
     loadAvatar();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [uid]);
 
   const handleMouseEnter = () => {
