@@ -1,5 +1,5 @@
 import React from "react";
-import {defaultAvatar, listenAvatar} from "../../../libs/avatar";
+import getAvatar, {defaultAvatar, listenAvatar} from "../../../libs/avatar";
 import imageWhitelist from "../../../libs/imageWhitelist";
 import EMPTY_IMG from "../../../assets/img/nothing.png";
 import {DataSnapshot} from "@firebase/database-types";
@@ -38,16 +38,18 @@ export default class UserAvatar extends React.Component<UserAvatarProps, UserAva
     getAvatar = async () => {
         if (!this._isMounted) return;
 
-        const fallback = await defaultAvatar(this.props.uid);
+        // Get the actual avatar (custom or fallback)
+        const avatar = await getAvatar(this.props.uid);
 
         if (this._isMounted) {
             this.setState(
                 {
-                    avatar: fallback
+                    avatar: avatar
                 },
                 () => {
                     listenAvatar(this.props.uid, (snap: DataSnapshot, _b?: string | null) => {
                         if (this._isMounted) {
+                            const fallback = defaultAvatar(this.props.uid);
                             this.setState({
                                 avatar: snap.val() || fallback
                             });

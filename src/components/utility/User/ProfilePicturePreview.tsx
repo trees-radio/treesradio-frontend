@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { defaultAvatar, listenAvatar } from '../../../libs/avatar';
+import getAvatar, { defaultAvatar, listenAvatar } from '../../../libs/avatar';
 import imageWhitelist from '../../../libs/imageWhitelist';
 import EMPTY_IMG from '../../../assets/img/nothing.png';
 import { DataSnapshot } from '@firebase/database-types';
@@ -36,14 +36,16 @@ const ProfilePicturePreview: React.FC<ProfilePicturePreviewProps> = ({
     
     const loadAvatar = async () => {
       try {
-        const fallback = await defaultAvatar(uid);
+        // Get the actual avatar (custom or fallback)
+        const avatar = await getAvatar(uid);
         
         if (isMounted) {
-          setState(prev => ({ ...prev, avatar: fallback }));
+          setState(prev => ({ ...prev, avatar }));
           
           // Listen for avatar updates
           listenAvatar(uid, (snap: DataSnapshot, _b?: string | null) => {
             if (isMounted) {
+              const fallback = defaultAvatar(uid);
               setState(prev => ({
                 ...prev,
                 avatar: snap.val() || fallback
