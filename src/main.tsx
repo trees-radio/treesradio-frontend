@@ -10,6 +10,7 @@ import './libs/cleanup'
 const Main = lazy(() => import('./components/Main').then(module => ({ default: module.Main })));
 const TermsOfServicePage = lazy(() => import('./components/TermsOfService'));
 const PasswordReset = lazy(() => import('./components/PasswordReset'));
+const EmailVerification = lazy(() => import('./components/EmailVerification'));
 
 // Register service worker (if using vite-plugin-pwa)
 if ('serviceWorker' in navigator) {
@@ -46,6 +47,8 @@ const AppRouter = () => {
         <TermsOfServicePage />
       ) : mode === 'resetPassword' ? (
         <PasswordReset />
+      ) : mode === 'verifyEmail' ? (
+        <EmailVerification />
       ) : (
         <div id="app">
           <Main />
